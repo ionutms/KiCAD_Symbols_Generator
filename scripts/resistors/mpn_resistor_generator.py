@@ -42,6 +42,7 @@ HEADER_MAPPING: Final[dict] = {
     "Manufacturer": lambda part: part.manufacturer,
     "MPN": lambda part: part.mpn,
     "Tolerance": lambda part: part.tolerance,
+    "Temperature Coefficient": lambda part: part.temperature_coefficient,
     "Voltage Rating": lambda part: part.voltage_rating,
     "Case Code - in": lambda part: part.case_code_in,
     "Case Code - mm": lambda part: part.case_code_mm,
