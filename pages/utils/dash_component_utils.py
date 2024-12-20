@@ -366,7 +366,7 @@ def table_controls_row(
             ),
             html.Br(),
         ], className="d-flex flex-column align-items-start"),
-    ], xs=12, sm=2)
+    ], xs=12, sm=3, md=2)
 
     col_right = dbc.Col([
         html.Div([
@@ -383,7 +383,7 @@ def table_controls_row(
             ),
             html.Br(),
         ]),
-    ], xs=12, sm=10)
+    ], xs=12, sm=9, md=10)
 
     return dbc.Row([col_left, col_right], className="mb-1")
 
