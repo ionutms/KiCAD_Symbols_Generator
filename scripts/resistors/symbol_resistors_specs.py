@@ -968,6 +968,23 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             "https://www.yageo.com/en/ProductSearch/"
             "PartNumberSearch?part_number="),
         trustedparts_url="https://www.trustedparts.com/en/search/"),
+
+    "RT1210FRE07": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="RT1210FRE07",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_1210_3225Metric",
+        voltage_rating="200V",
+        case_code_in="1210",
+        case_code_mm="3225",
+        power_rating="0.125W",
+        temperature_coefficient="50 ppm/°C",
+        resistance_range=[10, 1_000_000],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageo.com/en/ProductSearch/"
+            "PartNumberSearch?part_number="),
+        trustedparts_url="https://www.trustedparts.com/en/search/"),
 }
 
 # Combined specifications dictionary
