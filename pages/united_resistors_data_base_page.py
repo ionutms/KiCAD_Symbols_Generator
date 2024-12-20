@@ -78,6 +78,7 @@ hidden_columns = [
     "Case Code - mm",
     "Case Code - in",
     "Series",
+    "Footprint",
 ]
 
 visible_columns = [
