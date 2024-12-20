@@ -50,7 +50,8 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     manufacturer: str
     trustedparts_url: str
-    resistance_range: list[Union[int, float]] = [10, 1_000_000]  # noqa: FA100, RUF012
+    resistance_range: list[Union[int, float]]  # noqa: FA100
+    temperature_coefficient: str
     reference: str = "R"
     excluded_values: Optional[list[float]] = None  # noqa: FA100
     specified_values: Optional[list[float]] = None  # noqa: FA100
@@ -114,6 +115,7 @@ class PartInfo(NamedTuple):
     case_code_mm: str
     series: str
     trustedparts_link: str
+    temperature_coefficient: str
 
     @classmethod
     def format_resistance_value(cls, resistance: float) -> str:
@@ -302,6 +304,7 @@ class PartInfo(NamedTuple):
             case_code_mm=specs.case_code_mm,
             series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
+            temperature_coefficient=specs.temperature_coefficient,
         )
 
     @classmethod
@@ -393,6 +396,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0402",
         case_code_mm="1005",
         power_rating="0.1W",
+        temperature_coefficient="100 ppm/°C",
         resistance_range=[10, 1_000_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -409,6 +413,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0603",
         case_code_mm="1608",
         power_rating="0.1W",
+        temperature_coefficient="100 ppm/°C",
         resistance_range=[10, 1_000_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -425,6 +430,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="100 ppm/°C",
         resistance_range=[10, 2_200_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -441,6 +447,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="1206",
         case_code_mm="3216",
         power_rating="0.66W",
+        temperature_coefficient="100 ppm/°C",
         resistance_range=[10, 1_000_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -457,6 +464,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.5W",
+        temperature_coefficient="100 ppm/°C",
         resistance_range=[10, 1_000_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -473,6 +481,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0603",
         case_code_mm="1608",
         power_rating="0.25W",
+        temperature_coefficient="150 ppm/°C",
         resistance_range=[10, 1_000_000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
@@ -489,6 +498,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0402",
         case_code_mm="1005",
         power_rating="0.1W",
+        temperature_coefficient="200 ppm/°C",
         resistance_range=[1, 1_000_000],
         tolerance_map={"E24": "5%"},
         datasheet=(
@@ -505,6 +515,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0603",
         case_code_mm="1608",
         power_rating="0.1W",
+        temperature_coefficient="200 ppm/°C",
         resistance_range=[1, 1_000_000],
         tolerance_map={"E24": "5%"},
         datasheet=(
@@ -521,6 +532,7 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="200 ppm/°C",
         resistance_range=[1, 1_000_000],
         tolerance_map={"E24": "5%"},
         datasheet=(
@@ -539,6 +551,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="5 ppm/°C",
         resistance_range=[20, 50_000],
         specified_values=[41.2, 205, 806, 1000, 1800, 2000, 3000, 6800],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
@@ -556,6 +569,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="10 ppm/°C",
         resistance_range=[4.7, 1_000_000],
         excluded_values=[
             6.04, 8.06, 9.09, 1070, 2050, 3010, 4020, 6040, 8060, 9090,
@@ -589,6 +603,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="15 ppm/°C",
         resistance_range=[4.7, 1_000_000],
         excluded_values=[
             6.04, 8.06, 9.09, 1070, 2050, 3010, 4020, 6040, 8060, 9090,
@@ -622,6 +637,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="25 ppm/°C",
         resistance_range=[1, 1_500_000],
         excluded_values=[
             1.07, 2.05, 3.01, 4.02, 6.04, 8.06, 9.09, 1070, 2050, 3010, 4020,
@@ -655,6 +671,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
         excluded_values=[
             1.07, 2.05, 3.01, 3.9, 4.02, 6.04, 8.06, 9.09, 1070, 2050, 3010,
@@ -688,6 +705,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_050_000],
         tolerance_map={"E96": "0.25%", "E24": "0.25%"},
         excluded_values=[
@@ -755,6 +773,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
         excluded_values=[
             1.02, 1.05, 1.07, 1.1, 1.13, 1.15, 1.18, 1.2, 1.21, 1.24, 1.27,
@@ -803,6 +822,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
         excluded_values=[
             1.07, 1.1, 1.13, 1.15, 1.18, 1.21, 1.24, 1.27, 1.3, 1.33, 1.37,
@@ -848,6 +868,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0805",
         case_code_mm="2012",
         power_rating="0.125W",
+        temperature_coefficient="25 ppm/°C",
         resistance_range=[1, 1_050_000],
         excluded_values=[
             1.07, 1.1, 1.13, 1.15, 1.18, 1.2, 1.21, 1.24, 1.27, 1.3, 1.33,
