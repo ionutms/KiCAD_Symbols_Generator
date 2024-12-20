@@ -26,7 +26,7 @@ def analyze_webpage_content(url: str) -> str:
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/91.0.4472.124 Safari/537.36",
         }
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
         print_message_utilities.print_info(
             f"Time for HTTP request: {time.time() - start_time:.2f} seconds")
@@ -125,6 +125,6 @@ def check_url(
                 f"at search number {index}")
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805FRE07"]
+    mpn_prefixes = ["RT0805FRD07"]
     for mpn_prefix in mpn_prefixes:
         check_url(f"data/{mpn_prefix}_part_numbers.csv", mpn_prefix)
