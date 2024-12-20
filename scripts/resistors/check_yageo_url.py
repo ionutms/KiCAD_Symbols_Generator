@@ -26,7 +26,7 @@ def analyze_webpage_content(url: str) -> str:
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/91.0.4472.124 Safari/537.36",
         }
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=60)
         response.raise_for_status()
         print_message_utilities.print_info(
             f"Time for HTTP request: {time.time() - start_time:.2f} seconds")
