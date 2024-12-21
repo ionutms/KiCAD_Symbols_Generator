@@ -125,14 +125,16 @@ def check_url(
                 f"at search number {index}")
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT1210FRE07"]
+    mpn_prefixes = ["RT2010FKE07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
         dataframe = pd.read_csv(file_path)
         resistance_values = [
             convert_resistance_string(val) for val in dataframe["Value"]]
-        print_message_utilities.print_info(
+        print_message_utilities.print_success(
             f"Initial Resistance values: {resistance_values}")
+        print_message_utilities.print_info(
+            f"{len(resistance_values)} parts found")
 
         check_url(file_path, mpn_prefix)
