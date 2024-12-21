@@ -180,17 +180,16 @@ class PartInfo(NamedTuple):
     @classmethod
     def _generate_yageo_resistance_code(cls, resistance: float) -> str:
         """Generate resistance code for Yageo manufacturer."""
-        if resistance < 1000:  # < 1kΩ  # noqa: PLR2004
+        if resistance < 1000:  # noqa: PLR2004
             whole = int(resistance)
             decimal = str(int(round((resistance - whole) * 100))).rstrip("0")
             return f"{whole:01d}R{decimal}"
 
-        if resistance < 10_000:  # 1-10kΩ  # noqa: PLR2004
+        if resistance < 1_000_000:  # noqa: PLR2004
             whole = int(resistance / 1000)
             decimal = str(int(round((resistance % 1000) / 10))).rstrip("0")
             return f"{whole}K{decimal}"
 
-        # ≥ 10kΩ
         whole = int(resistance / 1000000)
         decimal = str(int(round((resistance % 1000000) / 10))).rstrip("0")
         return f"{whole}M{decimal}"
@@ -1000,12 +999,29 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_mm="5025",
         power_rating="0.5W",
         temperature_coefficient="50 ppm/°C",
-        resistance_range=[10, 1_000_000],
+        resistance_range=[1, 1_000_000],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageo.com/en/ProductSearch/"
+            "PartNumberSearch?part_number="),
+        trustedparts_url="https://www.trustedparts.com/en/search/"),
+
+    "RT2512FKE07": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="RT2512FKE07",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_2512_6332Metric",
+        voltage_rating="200V",
+        case_code_in="2512",
+        case_code_mm="6332",
+        power_rating="0.75W",
+        temperature_coefficient="50 ppm/°C",
+        resistance_range=[4.7, 1_000_000],
         specified_values=[
-            10, 13.7, 15, 18, 20, 24, 30, 33, 39, 39.2, 40.2, 49.9, 56, 61.9,
-            64.9, 68, 73.2, 78.7, 100, 120, 130, 180, 215, 348, 374, 470, 475,
-            487, 511, 820, 1000, 1470, 1800, 2100, 2200, 4750, 5600, 5620,
-            6800, 6810, 1000000],
+            8.2, 10, 12, 14, 15, 16.9, 18, 20, 21, 22, 24, 47, 100, 150, 200,
+            220, 390, 511, 1000, 2000, 2200, 2400, 2700, 4700, 5620, 10000,
+            12000, 22000, 27000, 51000, 100000, 120000, 150000, 220000,
+            240000, 499000, 1000000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
