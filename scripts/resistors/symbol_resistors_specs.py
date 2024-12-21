@@ -989,6 +989,28 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             "https://www.yageo.com/en/ProductSearch/"
             "PartNumberSearch?part_number="),
         trustedparts_url="https://www.trustedparts.com/en/search/"),
+
+    "RT2010FKE07": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="RT2010FKE07",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_2010_5025Metric",
+        voltage_rating="200V",
+        case_code_in="2010",
+        case_code_mm="5025",
+        power_rating="0.5W",
+        temperature_coefficient="50 ppm/°C",
+        resistance_range=[10, 1_000_000],
+        specified_values=[
+            10, 13.7, 15, 18, 20, 24, 30, 33, 39, 39.2, 40.2, 49.9, 56, 61.9,
+            64.9, 68, 73.2, 78.7, 100, 120, 130, 180, 215, 348, 374, 470, 475,
+            487, 511, 820, 1000, 1470, 1800, 2100, 2200, 4750, 5600, 5620,
+            6800, 6810, 1000000],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageo.com/en/ProductSearch/"
+            "PartNumberSearch?part_number="),
+        trustedparts_url="https://www.trustedparts.com/en/search/"),
 }
 
 # Combined specifications dictionary
