@@ -126,5 +126,13 @@ def check_url(
 
 if __name__ == "__main__":
     mpn_prefixes = ["RT1210FRE07"]
+
     for mpn_prefix in mpn_prefixes:
-        check_url(f"data/{mpn_prefix}_part_numbers.csv", mpn_prefix)
+        file_path = f"data/{mpn_prefix}_part_numbers.csv"
+        dataframe = pd.read_csv(file_path)
+        resistance_values = [
+            convert_resistance_string(val) for val in dataframe["Value"]]
+        print_message_utilities.print_info(
+            f"Initial Resistance values: {resistance_values}")
+
+        check_url(file_path, mpn_prefix)
