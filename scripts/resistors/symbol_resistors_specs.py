@@ -619,7 +619,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         excluded_values=[
             806000, 820000, 825000, 845000, 866000, 887000, 909000, 910000,
             931000, 953000, 976000],
-        extra_values=[37],
+        extra_values=[37, 50, 1720, 1930, 6890, 22900],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -640,6 +640,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         excluded_values=[
             806000, 820000, 825000, 845000, 866000, 887000, 909000, 910000,
             931000, 953000, 976000, 1000000],
+        extra_values=[49200, 706000],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
