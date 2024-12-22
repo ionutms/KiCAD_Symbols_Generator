@@ -165,7 +165,7 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805CRE07"]
+    mpn_prefixes = ["RT0805DRE07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
