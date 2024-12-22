@@ -5,6 +5,7 @@ import re
 import sys
 import time
 
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
@@ -118,18 +119,24 @@ def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
     all_part_numbers = []
 
     for page_number in range(1, (int(number))//100 + 2):
-        print(f"Page number: {page_number}")
 
         url_page = f"page={page_number}&"
         url = f"{base_url}{url_partnumber}{url_page}{url_page_size}"
+        print(url)
 
-        print_message_utilities.print_info(f"\nURL: {url}")
+        # Fetch webpage
+        html_content = fetch_webpage(url)
+
+        # Parse HTML
+        start_time = time.time()
+        soup = BeautifulSoup(html_content, "html.parser")
+        print_message_utilities.print_info(
+            f"Time for parsing HTML: {time.time() - start_time:.2f} seconds")
+
         if number == "0":
             print_message_utilities.print_error(
                 f"Total Records: {number}")
             return number, []
-
-        print_message_utilities.print_success(f"Total Records: {number}")
 
         # Extract part numbers
         part_numbers = extract_part_numbers(soup)
@@ -138,8 +145,31 @@ def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
     return number, all_part_numbers
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805BRA07", "RT0805BRB07"]
+    mpn_prefixes = ["RT0805BRC07"]
 
     for mpn_prefix in mpn_prefixes:
+        file_path = f"data/{mpn_prefix}_part_numbers.csv"
+        dataframe = pd.read_csv(file_path)
+        mpn_csv_list = dataframe["MPN"].tolist()
+
         records, partnumbers = analyze_webpage_content(mpn_prefix)
-        print(f"{mpn_prefixes} {records} {partnumbers}")
+        mpn_web_list = set(partnumbers)
+
+        print(
+            f"Number of MPNs in CSV: {len(mpn_csv_list)}, "
+            f"Number of MPNs from web: {len(mpn_web_list)}")
+
+        difference_web_csv = [
+            part_number for part_number
+            in mpn_web_list if part_number not in mpn_csv_list]
+        print(
+            "Parts found on web but not in CSV "
+            f"({len(difference_web_csv)}):", difference_web_csv)
+
+        difference_csv_web = [
+            part_number for part_number
+            in mpn_csv_list if part_number not in mpn_web_list]
+        print(
+            "Parts found in CSV but not on web "
+            f"({len(difference_csv_web)}):", difference_csv_web)
+
