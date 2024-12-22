@@ -688,6 +688,10 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         power_rating="0.125W",
         temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
+        excluded_values=[3.9],
+        extra_values=[
+            61.2, 96.5, 448, 1350, 3280, 3610, 7770, 9000, 10010, 10100,
+            20300, 21300, 21800, 30500, 92000, 101000, 126000],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
