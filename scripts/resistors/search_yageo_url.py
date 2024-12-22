@@ -165,7 +165,7 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805BRD07"]
+    mpn_prefixes = ["RT0805BRE07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
@@ -197,11 +197,6 @@ if __name__ == "__main__":
             in mpn_csv_list if part_number not in mpn_web_list]
         print_message_utilities.print_info(
             f"Parts found in CSV but not on web ({len(difference_csv_web)}):")
-        for part_number in difference_csv_web:
-            print_message_utilities.print_error(
-                "https://www.yageo.com/en/ProductSearch/"
-                f"PartNumberSearch?part_number={part_number} "
-                f"{part_number.replace(mpn_prefix, '')[:-1]}")
 
         missing_values = [
             extract_resistance_value(part_number, mpn_prefix)
