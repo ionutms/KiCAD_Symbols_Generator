@@ -894,6 +894,23 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             "https://www.yageo.com/en/ProductSearch/"
             "PartNumberSearch?part_number="),
         trustedparts_url="https://www.trustedparts.com/en/search/"),
+
+    "AA0805FR-07": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="AA0805FR-07",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_0805_2012Metric",
+        voltage_rating="150V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        power_rating="0.125W",
+        temperature_coefficient="25 ppm/°C",
+        resistance_range=[1, 10_000_000],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageo.com/en/ProductSearch/"
+            "PartNumberSearch?part_number="),
+        trustedparts_url="https://www.trustedparts.com/en/search/"),
 }
 
 # Combined specifications dictionary
