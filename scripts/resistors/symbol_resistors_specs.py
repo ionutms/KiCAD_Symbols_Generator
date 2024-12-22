@@ -554,8 +554,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         resistance_range=[20, 50_000],
         specified_values=[
             41.2, 205, 806, 1000, 1050, 1800, 2000, 3000, 4020, 6800, 8060,
-            10000, 11000, 12100, 15000, 20000, 22000, 27000, 49900,
-            ],
+            10000, 11000, 12100, 15000, 20000, 22000, 27000, 49900],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -575,7 +574,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         resistance_range=[4.7, 1_000_000],
         excluded_values=[
             806000, 820000, 825000, 845000, 866000, 887000, 909000, 910000,
-            931000, 953000, 976000.0],
+            931000, 953000, 976000],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -676,8 +675,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         resistance_range=[1, 1_500_000],
         tolerance_map={"E96": "0.5%", "E24": "0.5%"},
         excluded_values=[
-            3.09, 11300, 14700, 37400, 53600, 60400, 1020000, 1050000,
-        ],
+            3.09, 11300, 14700, 37400, 53600, 60400, 1020000, 1050000],
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
             "PartNumberSearch?part_number="),
@@ -743,8 +741,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             68000, 68100, 75000, 80600, 82500, 100000, 120000, 121000, 140000,
             147000, 150000, 180000, 182000, 200000, 220000, 237000, 270000,
             300000, 324000, 330000, 430000, 470000, 475000, 499000, 560000,
-            590000, 604000, 634000, 680000, 750000, 820000, 953000, 1000000,
-        ],
+            590000, 604000, 634000, 680000, 750000, 820000, 953000, 1000000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -778,8 +775,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             158000, 196000, 267000, 294000, 412000, 487000, 523000, 698000,
             715000, 732000, 768000, 1020000, 1050000, 1070000, 1130000,
             1150000, 1180000, 1240000, 1270000, 1330000, 1370000, 1400000,
-            1430000, 1470000,
-            ],
+            1430000, 1470000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
