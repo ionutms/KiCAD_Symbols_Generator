@@ -39,11 +39,13 @@ class FootprintSpecs(NamedTuple):
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
     "0402": FootprintSpecs(
         body_dimensions=BodyDimensions(width=1.86, height=0.94),
-        pad_dimensions=PadDimensions(width=0.54, height=0.64, center_x=0.51),
+        pad_dimensions=PadDimensions(
+            width=0.54, height=0.64, center_x=0.51),
         ref_offset_y=-1.27),
     "0603": FootprintSpecs(
         body_dimensions=BodyDimensions(width=2.96, height=1.46),
-        pad_dimensions=PadDimensions(width=0.8, height=0.95, center_x=0.825),
+        pad_dimensions=PadDimensions(
+            width=0.8, height=0.95, center_x=0.825),
         ref_offset_y=-1.524),
     "0805": FootprintSpecs(
         body_dimensions=BodyDimensions(width=3.36, height=1.9),
@@ -55,4 +57,19 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         pad_dimensions=PadDimensions(
             width=1.125, height=1.75, center_x=1.462),
         ref_offset_y=-2.032),
+    "1210": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=4.56, height=3.16),
+        pad_dimensions=PadDimensions(
+            width=1.125, height=2.65, center_x=1.462),
+        ref_offset_y=-2.286),
+    "2010": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=6.36, height=3.16),
+        pad_dimensions=PadDimensions(
+            width=1.225, height=2.65, center_x=2.312),
+        ref_offset_y=-2.286),
+    "2512": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=7.64, height=3.84),
+        pad_dimensions=PadDimensions(
+            width=1.225, height=3.35, center_x=2.962),
+        ref_offset_y=-2.794),
 }
