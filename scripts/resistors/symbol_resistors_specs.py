@@ -118,7 +118,7 @@ class PartInfo(NamedTuple):
     temperature_coefficient: str
 
     @classmethod
-    def format_resistance_value(cls, resistance: float) -> str:
+    def format_value(cls, resistance: float) -> str:
         """Convert a resistance value to a human-readable string format.
 
         Args:
@@ -280,7 +280,7 @@ class PartInfo(NamedTuple):
         mpn = f"{specs.mpn_prefix}{resistance_code}{packaging_code}"
 
         description = (
-            f"RES SMD {cls.format_resistance_value(resistance)} "
+            f"RES SMD {cls.format_value(resistance)} "
             f"{tolerance_value} {specs.case_code_in} {specs.voltage_rating}")
         trustedparts_link = f"{specs.trustedparts_url}{mpn}"
 
