@@ -165,7 +165,7 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805BRE07"]
+    mpn_prefixes = ["RT0805CRE07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
@@ -183,7 +183,8 @@ if __name__ == "__main__":
             part_number for part_number
             in mpn_web_list if part_number not in mpn_csv_list]
         print_message_utilities.print_success(
-            f"Parts found on web but not in CSV ({len(difference_web_csv)}):")
+            "\nParts found on web but not in CSV "
+            f"({len(difference_web_csv)}):")
 
         missing_values = [
             extract_resistance_value(part_number, mpn_prefix)
@@ -196,7 +197,8 @@ if __name__ == "__main__":
             part_number for part_number
             in mpn_csv_list if part_number not in mpn_web_list]
         print_message_utilities.print_info(
-            f"Parts found in CSV but not on web ({len(difference_csv_web)}):")
+            "\nParts found in CSV but not on web "
+            f"({len(difference_csv_web)}):")
 
         missing_values = [
             extract_resistance_value(part_number, mpn_prefix)
