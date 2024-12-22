@@ -1,0 +1,145 @@
+"""Module to check Yageo URL for resistors."""
+
+import os
+import re
+import sys
+import time
+
+import requests
+from bs4 import BeautifulSoup
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from utilities import print_message_utilities
+
+
+def fetch_webpage(url: str) -> str:
+    """Fetch webpage content with timing information.
+
+    Args:
+        url: The URL to fetch
+
+    Returns:
+        The webpage content as text
+
+    Raises:
+        requests.exceptions.RequestException: If the request fails
+
+    """
+    start_time = time.time()
+    headers = {
+        "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/91.0.4472.124 Safari/537.36",
+    }
+    response = requests.get(url, headers=headers, timeout=60)
+    response.raise_for_status()
+    print_message_utilities.print_info(
+        f"Time for HTTP request: {time.time() - start_time:.2f} seconds")
+    return response.text
+
+
+def parse_total_records(page_text: str) -> str:
+    """Extract total records count from page text.
+
+    Args:
+        page_text: The webpage text content
+
+    Returns:
+        The number of records found as a string
+
+    """
+    match = re.search(r"Total records\s*(\d+)", page_text)
+    return match.group(1) if match else "0"
+
+
+def extract_part_numbers(soup: BeautifulSoup) -> list[str]:
+    """Extract part numbers from webpage tables.
+
+    Args:
+        soup: BeautifulSoup object of the parsed webpage
+
+    Returns:
+        List of extracted part numbers
+
+    """
+    part_numbers = []
+    tables = soup.find_all("table")
+
+    for table in tables:
+        rows = table.find_all("tr")
+        for row in rows[1:]:  # Skip header row
+            cells = row.find_all("td")
+            if cells:  # Assuming part number is in first column
+                part_number = cells[0].get_text(strip=True)
+                if part_number:
+                    # Remove "Stock" string if present
+                    cleaned_part_number = part_number.replace(
+                        "Stock", "").strip()
+                    if cleaned_part_number:
+                        part_numbers.append(cleaned_part_number)
+
+    return part_numbers
+
+
+def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
+    """Analyze webpage content.
+
+    Args:
+        partnumber_prefix: The part number prefix to search for
+
+    Returns:
+        A tuple containing:
+        - The total number of records found as a string
+        - A list of part numbers (empty if no records found)
+
+    """
+    base_url = "https://www.yageo.com/en/ProductSearch/PartNumberSearch?"
+    url_partnumber = f"part_number={partnumber_prefix}&"
+    page_number = 1
+    url_page = f"page={page_number}&"
+    url_page_size = "page_size=100"
+
+    url = f"{base_url}{url_partnumber}{url_page}{url_page_size}"
+
+    # Fetch webpage
+    html_content = fetch_webpage(url)
+
+    # Parse HTML
+    start_time = time.time()
+    soup = BeautifulSoup(html_content, "html.parser")
+    print_message_utilities.print_info(
+        f"Time for parsing HTML: {time.time() - start_time:.2f} seconds")
+
+    # Get record count
+    number = parse_total_records(soup.get_text())
+
+    all_part_numbers = []
+
+    for page_number in range(1, (int(number))//100 + 2):
+        print(f"Page number: {page_number}")
+
+        url_page = f"page={page_number}&"
+        url = f"{base_url}{url_partnumber}{url_page}{url_page_size}"
+
+        print_message_utilities.print_info(f"\nURL: {url}")
+        if number == "0":
+            print_message_utilities.print_error(
+                f"Total Records: {number}")
+            return number, []
+
+        print_message_utilities.print_success(f"Total Records: {number}")
+
+        # Extract part numbers
+        part_numbers = extract_part_numbers(soup)
+        all_part_numbers.extend(part_numbers)
+
+    return number, all_part_numbers
+
+if __name__ == "__main__":
+    mpn_prefixes = ["RT0805BRA07", "RT0805BRB07"]
+
+    for mpn_prefix in mpn_prefixes:
+        records, partnumbers = analyze_webpage_content(mpn_prefix)
+        print(f"{mpn_prefixes} {records} {partnumbers}")
