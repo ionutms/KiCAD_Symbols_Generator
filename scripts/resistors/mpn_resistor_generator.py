@@ -78,7 +78,6 @@ def generate_files_for_series(
         raise ValueError(msg)
 
     specs = symbol_resistors_specs.SYMBOLS_SPECS[series_name]
-    series_code = series_name.replace("-", "")
 
     # Ensure required directories exist
     file_handler_utilities.ensure_directory_exists("data")
@@ -88,8 +87,8 @@ def generate_files_for_series(
     footprint_dir = "footprints/resistor_footprints.pretty"
     file_handler_utilities.ensure_directory_exists(footprint_dir)
 
-    csv_filename = f"{series_code}_part_numbers.csv"
-    symbol_filename = f"RESISTORS_{series_code}_DATA_BASE.kicad_sym"
+    csv_filename = f"{series_name}_part_numbers.csv"
+    symbol_filename = f"RESISTORS_{series_name}_DATA_BASE.kicad_sym"
 
     # Generate part numbers and sort by value
     parts_list = symbol_resistors_specs.PartInfo.generate_part_numbers(specs)
