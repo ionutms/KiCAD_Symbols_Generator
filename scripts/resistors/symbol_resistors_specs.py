@@ -778,6 +778,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         power_rating="0.125W",
         temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
+        extra_values=[706, 246000],
         excluded_values=[
             1.02, 1.05, 1.07, 1.1, 1.13, 1.15, 1.18, 1.21, 1.24, 1.27, 1.3,
             1.33, 1.37, 1.47, 1.54, 1.58, 1.62, 1.69, 1.74, 1.78, 1.82, 1.87,
@@ -845,6 +846,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         power_rating="0.125W",
         temperature_coefficient="50 ppm/°C",
         resistance_range=[1, 1_500_000],
+        extra_values=[3880, 5000, 1110000],
         excluded_values=[
             1.02, 1.05, 1.07, 1.13, 1.15, 1.18, 1.21, 1.24, 1.27, 1.33, 1.37,
             1.4, 1.43, 1.47, 1.54, 1.58, 1.62, 1.65, 1.69, 1.74, 1.78, 1.82,
@@ -878,11 +880,14 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_mm="3225",
         power_rating="0.125W",
         temperature_coefficient="50 ppm/°C",
-        resistance_range=[10, 6_800],
+        resistance_range=[4.7, 1_000_000],
+        extra_values=[42, 54],
         specified_values=[
-            10, 15, 20, 24.9, 27, 33.2, 73.2, 100, 105, 110, 137, 150, 158,
-            220, 240, 330, 470, 511, 909, 1000, 1070, 1470, 1500, 2490, 3300,
-            3600, 3650, 3900, 4700, 4990, 6650, 6800],
+            7.5, 10, 15, 20, 24.9, 27, 33.2, 42, 54, 73.2, 100, 105, 110, 137,
+            150, 158, 220, 240, 330, 470, 511, 909, 1000, 1070, 1470, 1500,
+            2490, 3300, 3600, 3650, 3900, 4700, 4990, 6650, 6800, 10000,
+            15800, 20500, 22100, 30100, 33000, 36000, 39200, 52300, 68000,
+            120000, 130000, 150000, 180000, 200000, 220000, 301000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -899,12 +904,13 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_mm="5025",
         power_rating="0.5W",
         temperature_coefficient="50 ppm/°C",
-        resistance_range=[10, 1_000_000],
+        resistance_range=[4.7, 1_000_000],
+        extra_values=[150000],
         specified_values=[
-            10, 13.7, 15, 18, 20, 24, 30, 33, 39, 39.2, 40.2, 49.9, 56, 61.9,
-            64.9, 68, 73.2, 78.7, 100, 120, 130, 180, 215, 348, 374, 470, 475,
-            487, 511, 820, 1000, 1470, 1800, 2100, 2200, 4750, 5600, 5620,
-            6800, 6810, 10000, 12000, 20000, 27000, 33000, 39000, 47000,
+            6.04, 10, 13.7, 15, 18, 20, 24, 30, 33, 39, 39.2, 40.2, 49.9, 56,
+            61.9, 64.9, 68, 73.2, 78.7, 100, 120, 130, 180, 215, 348, 374,
+            470, 475, 487, 511, 820, 1000, 1470, 1800, 2100, 2200, 4750, 5600,
+            5620, 6800, 6810, 10000, 12000, 20000, 27000, 33000, 39000, 47000,
             49900, 68000, 100000, 200000, 220000, 330000, 383000, 470000,
             510000, 560000, 619000, 1000000],
         tolerance_map={"E96": "1%", "E24": "1%"},
@@ -946,6 +952,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         power_rating="0.125W",
         temperature_coefficient="25 ppm/°C",
         resistance_range=[1, 10_000_000],
+        extra_values=[481, 2710, 4480],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
