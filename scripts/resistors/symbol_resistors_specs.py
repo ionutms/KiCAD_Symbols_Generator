@@ -36,6 +36,7 @@ class SeriesSpec(NamedTuple):
         reference: Reference designator for the component
         excluded_values: Optional list of values to exclude from calculations
         specified_values: Optional list of values to specifically include
+        extra_values: Optional list of non-standard values to include
 
     """
 
@@ -55,6 +56,7 @@ class SeriesSpec(NamedTuple):
     reference: str = "R"
     excluded_values: Optional[list[float]] = None  # noqa: FA100
     specified_values: Optional[list[float]] = None  # noqa: FA100
+    extra_values: Optional[list[float]] = None  # noqa: FA100
 
 
 E96_BASE_VALUES: Final[list[float]] = [
@@ -118,7 +120,7 @@ class PartInfo(NamedTuple):
     temperature_coefficient: str
 
     @classmethod
-    def format_resistance_value(cls, resistance: float) -> str:
+    def format_value(cls, resistance: float) -> str:
         """Convert a resistance value to a human-readable string format.
 
         Args:
@@ -280,7 +282,7 @@ class PartInfo(NamedTuple):
         mpn = f"{specs.mpn_prefix}{resistance_code}{packaging_code}"
 
         description = (
-            f"RES SMD {cls.format_resistance_value(resistance)} "
+            f"RES SMD {cls.format_value(resistance)} "
             f"{tolerance_value} {specs.case_code_in} {specs.voltage_rating}")
         trustedparts_link = f"{specs.trustedparts_url}{mpn}"
 
@@ -313,6 +315,10 @@ class PartInfo(NamedTuple):
     ) -> list["PartInfo"]:
         """Generate all possible part numbers for a resistor series.
 
+        Generates part numbers for both standard series values and any extra
+        custom values specified in the SeriesSpec. For extra values, uses E96
+        tolerance if available, otherwise uses the first available tolerance.
+
         Args:
             specs: SeriesSpec instance containing series specifications
 
@@ -320,22 +326,59 @@ class PartInfo(NamedTuple):
             List of PartInfo instances for all valid combinations
 
         """
-        return [
-            cls.create_part_info(
-                resistance,
-                tolerance_value,
-                specs.mpn_sufix,
-                specs,
+        parts = []
+
+        # Generate standard series parts
+        for series_type in specs.tolerance_map:
+            # Determine base values based on series type
+            base_values = (
+                E96_BASE_VALUES if series_type == "E96" else E24_BASE_VALUES
             )
-            for series_type in specs.tolerance_map
-            for resistance in cls._filtered_resistance_values(
-                E96_BASE_VALUES if series_type == "E96" else E24_BASE_VALUES,
+
+            # Get tolerance value for this series
+            tolerance_value = specs.tolerance_map[series_type]
+
+            # Generate filtered values
+            filtered_values = cls._filtered_resistance_values(
+                base_values,
                 specs.resistance_range,
                 specs.excluded_values,
                 specs.specified_values,
             )
-            for tolerance_value in [specs.tolerance_map[series_type]]
-        ]
+
+            # Create parts for each valid resistance value
+            for resistance in filtered_values:
+                part = cls.create_part_info(
+                    resistance=resistance,
+                    tolerance_value=tolerance_value,
+                    packaging=specs.mpn_sufix,
+                    specs=specs,
+                )
+                parts.append(part)
+
+        # Handle extra non-standard values if provided
+        if specs.extra_values:
+            min_resistance, max_resistance = specs.resistance_range
+
+            # Determine tolerance to use for extra values
+            extra_tolerance = (
+                specs.tolerance_map.get("E96")  # Prefer E96 tolerance
+                or next(iter(specs.tolerance_map.values()))  # Fallback
+            )
+
+            # Process each extra value
+            for resistance in specs.extra_values:
+                # Check if value is within valid range
+                if min_resistance <= resistance <= max_resistance:
+                    part = cls.create_part_info(
+                        resistance=resistance,
+                        tolerance_value=extra_tolerance,
+                        packaging=specs.mpn_sufix,
+                        specs=specs,
+                    )
+                    parts.append(part)
+
+        return parts
 
     @classmethod
     def _filtered_resistance_values(
@@ -366,19 +409,20 @@ class PartInfo(NamedTuple):
                 resistance = round(base_value * multiplier, 2)
 
                 # Check if resistance is within range
-                is_within_range = \
+                is_within_range = (
                     min_resistance <= resistance <= max_resistance
+                )
 
                 # Check exclusion conditions
                 is_not_excluded = (
-                    excluded_values is None or
-                    resistance not in excluded_values
+                    excluded_values is None
+                    or resistance not in excluded_values
                 )
 
                 # Check specified values condition
                 is_specified = (
-                    specified_values is None or
-                    resistance in specified_values
+                    specified_values is None
+                    or resistance in specified_values
                 )
 
                 # Yield only if all conditions are met
@@ -575,6 +619,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         excluded_values=[
             806000, 820000, 825000, 845000, 866000, 887000, 909000, 910000,
             931000, 953000, 976000],
+        extra_values=[37],
         tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"

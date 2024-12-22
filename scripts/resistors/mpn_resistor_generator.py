@@ -34,8 +34,7 @@ HEADER_MAPPING: Final[dict] = {
     "Symbol Name": lambda part: part.symbol_name,
     "Reference": lambda part: part.reference,
     "Value":
-        lambda part: symbol_resistors_specs.PartInfo.format_resistance_value(
-            part.value),
+        lambda part: symbol_resistors_specs.PartInfo.format_value(part.value),
     "Footprint": lambda part: part.footprint,
     "Datasheet": lambda part: part.datasheet,
     "Description": lambda part: part.description,
