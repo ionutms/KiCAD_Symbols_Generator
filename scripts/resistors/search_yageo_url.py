@@ -144,8 +144,28 @@ def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
 
     return number, all_part_numbers
 
+
+def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
+    """Extract resistance value from MPN."""
+    value_code = mpn.replace(mpn_prefix, "")[:-1]
+
+    if "M" in value_code:
+        multiplier = 1_000_000
+        value = value_code.split("M")
+    elif "K" in value_code:
+        multiplier = 1_000
+        value = value_code.split("K")
+    else:
+        multiplier = 1
+        value = value_code.split("R")
+
+    if len(value) == 2:  # noqa: PLR2004
+        return float(value[0] + "." + value[1]) * multiplier
+    return float(value[0]) * multiplier
+
+
 if __name__ == "__main__":
-    mpn_prefixes = ["RT0805BRC07"]
+    mpn_prefixes = ["AA0805FR-07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
@@ -162,14 +182,28 @@ if __name__ == "__main__":
         difference_web_csv = [
             part_number for part_number
             in mpn_web_list if part_number not in mpn_csv_list]
-        print(
-            "Parts found on web but not in CSV "
-            f"({len(difference_web_csv)}):", difference_web_csv)
+        print_message_utilities.print_success(
+            "\nParts found on web but not in CSV "
+            f"({len(difference_web_csv)}):")
+
+        missing_values = [
+            extract_resistance_value(part_number, mpn_prefix)
+            for part_number in difference_web_csv]
+        missing_values.sort()
+        print_message_utilities.print_success(
+            f"Missing resistance values: {missing_values}")
 
         difference_csv_web = [
             part_number for part_number
             in mpn_csv_list if part_number not in mpn_web_list]
-        print(
-            "Parts found in CSV but not on web "
-            f"({len(difference_csv_web)}):", difference_csv_web)
+        print_message_utilities.print_info(
+            "\nParts found in CSV but not on web "
+            f"({len(difference_csv_web)}):")
+
+        missing_values = [
+            extract_resistance_value(part_number, mpn_prefix)
+            for part_number in difference_csv_web]
+        missing_values.sort()
+        print_message_utilities.print_info(
+            f"Missing resistance values: {missing_values}")
 
