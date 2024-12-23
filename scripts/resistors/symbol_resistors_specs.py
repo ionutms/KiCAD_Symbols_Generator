@@ -1003,6 +1003,24 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             "PartNumberSearch?part_number="),
         trustedparts_url="https://www.trustedparts.com/en/search/"),
 
+    "RC0402FR-07": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="RC0402FR-07",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        power_rating="0.063W",
+        temperature_coefficient="200 ppm/°C",
+        resistance_range=[1, 10_000_000],
+        extra_values=[2710, 35000],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageo.com/en/ProductSearch/"
+            "PartNumberSearch?part_number="),
+        trustedparts_url="https://www.trustedparts.com/en/search/"),
+
     "RC0603FR-07": SeriesSpec(
         manufacturer="Yageo",
         mpn_prefix="RC0603FR-07",
@@ -1014,13 +1032,6 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         power_rating="0.125W",
         temperature_coefficient="200 ppm/°C",
         resistance_range=[1, 10_000_000],
-        specified_values=[
-            10, 10.2, 10.5, 10.7, 11, 11.3, 11.5, 11.8, 12, 12.1, 12.4, 12.7,
-            13, 13.3, 13.7, 100, 102, 105, 107, 110, 113, 115, 118, 120, 121,
-            124, 127, 130, 133, 137, 10000, 10200, 10500, 10700, 11000, 11300,
-            11500, 11800, 12000, 12100, 12400, 12700, 13000, 13300, 13700,
-            100000, 102000, 105000, 107000, 110000, 113000, 115000, 118000,
-            120000, 121000, 124000, 127000, 130000, 133000, 137000, 10000000],
         tolerance_map={"E96": "1%", "E24": "1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
@@ -1031,10 +1042,10 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         manufacturer="Yageo",
         mpn_prefix="RC0805BR-07",
         mpn_sufix="L",
-        footprint="resistor_footprints:R_0603_1608Metric",
-        voltage_rating="75V",
-        case_code_in="0603",
-        case_code_mm="1608",
+        footprint="resistor_footprints:R_0805_2012Metric",
+        voltage_rating="150V",
+        case_code_in="0805",
+        case_code_mm="2012",
         power_rating="0.125W",
         temperature_coefficient="200 ppm/°C",
         resistance_range=[1, 10_000_000],
@@ -1042,7 +1053,7 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             10, 47, 100, 499, 698, 820, 1000, 1200, 1500, 2100, 6980, 10000,
             10500, 15000, 16900, 20000, 33000, 52300, 75000, 84500, 100000,
             140000, 240000, 390000, 750000, 806000, 1000000],
-        tolerance_map={"E96": "1%", "E24": "1%"},
+        tolerance_map={"E96": "0.1%", "E24": "0.1%"},
         datasheet=(
             "https://www.yageo.com/en/ProductSearch/"
             "PartNumberSearch?part_number="),
