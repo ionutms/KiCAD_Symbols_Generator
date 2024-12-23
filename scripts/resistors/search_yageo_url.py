@@ -176,6 +176,7 @@ if __name__ == "__main__":
         ("AA0805FR-07", "L"),
         ("RC0402FR-7W", "L"),
         ("RC0603FR-07", "L"),
+        ("RC0805BR-07", "L"),
         ]
 
     for mpn_prefix, mpn_sufix in parametters:
