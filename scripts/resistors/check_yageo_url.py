@@ -44,11 +44,11 @@ def analyze_webpage_content(url: str) -> str:
 
         start_time = time.time()
         # Look for the pattern "Total records" followed by numbers
-        match = re.search(r"Total records\s*(\d+)", page_text)
+        match = re.search(r"Total records\s*([\d,]+)", page_text)
 
         print_message_utilities.print_info(f"\nURL: {url}")
         if match:
-            number = match.group(1)
+            number = match.group(1).replace(",", "")
             if number == "0":
                 print_message_utilities.print_error(
                     f"Total Records: {number}")
@@ -125,7 +125,10 @@ def check_url(
                 f"at search number {index}")
 
 if __name__ == "__main__":
-    mpn_prefixes = ["RC0805BR-07"]
+
+    analyze_webpage_content(
+        "https://www.yageo.com/en/ProductSearch/PartNumberSearch?part_number=RC0402FR-07")
+    mpn_prefixes = ["RC0402FR-07"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
