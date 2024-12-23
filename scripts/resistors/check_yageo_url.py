@@ -125,10 +125,7 @@ def check_url(
                 f"at search number {index}")
 
 if __name__ == "__main__":
-
-    analyze_webpage_content(
-        "https://www.yageo.com/en/ProductSearch/PartNumberSearch?part_number=RC0402FR-07")
-    mpn_prefixes = ["RC0402FR-07"]
+    mpn_prefixes = ["RC0402FR-7W"]
 
     for mpn_prefix in mpn_prefixes:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
