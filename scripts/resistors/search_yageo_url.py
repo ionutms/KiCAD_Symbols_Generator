@@ -55,11 +55,14 @@ def parse_total_records(page_text: str) -> str:
     return match.group(1) if match else "0"
 
 
-def extract_part_numbers(soup: BeautifulSoup) -> list[str]:
+def extract_part_numbers(
+        soup: BeautifulSoup,
+        partnumber_sufix: str) -> list[str]:
     """Extract part numbers from webpage tables.
 
     Args:
         soup: BeautifulSoup object of the parsed webpage
+        partnumber_sufix: Suffix to filter part numbers
 
     Returns:
         List of extracted part numbers
@@ -78,17 +81,21 @@ def extract_part_numbers(soup: BeautifulSoup) -> list[str]:
                     # Remove "Stock" string if present
                     cleaned_part_number = part_number.replace(
                         "Stock", "").strip()
-                    if cleaned_part_number:
+                    if cleaned_part_number and \
+                            cleaned_part_number[-1:] == partnumber_sufix:
                         part_numbers.append(cleaned_part_number)
 
     return part_numbers
 
 
-def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
+def analyze_webpage_content(
+        partnumber_prefix: str,
+        partnumber_sufix: str) -> tuple[str, list[str]]:
     """Analyze webpage content.
 
     Args:
         partnumber_prefix: The part number prefix to search for
+        partnumber_sufix: The part number suffix to filter with
 
     Returns:
         A tuple containing:
@@ -139,7 +146,7 @@ def analyze_webpage_content(partnumber_prefix: str) -> tuple[str, list[str]]:
             return number, []
 
         # Extract part numbers
-        part_numbers = extract_part_numbers(soup)
+        part_numbers = extract_part_numbers(soup, partnumber_sufix)
         all_part_numbers.extend(part_numbers)
 
     return number, all_part_numbers
@@ -165,14 +172,18 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 
 if __name__ == "__main__":
-    mpn_prefixes = ["AA0805FR-07"]
+    parametters = [
+        ("AA0805FR-07", "L"),
+        ("RC0402FR-7W", "L"),
+        ("RC0603FR-07", "L"),
+        ]
 
-    for mpn_prefix in mpn_prefixes:
+    for mpn_prefix, mpn_sufix in parametters:
         file_path = f"data/{mpn_prefix}_part_numbers.csv"
         dataframe = pd.read_csv(file_path)
         mpn_csv_list = dataframe["MPN"].tolist()
 
-        records, partnumbers = analyze_webpage_content(mpn_prefix)
+        records, partnumbers = analyze_webpage_content(mpn_prefix, mpn_sufix)
         mpn_web_list = set(partnumbers)
 
         print(
