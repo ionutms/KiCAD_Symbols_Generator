@@ -51,8 +51,8 @@ def parse_total_records(page_text: str) -> str:
         The number of records found as a string
 
     """
-    match = re.search(r"Total records\s*(\d+)", page_text)
-    return match.group(1) if match else "0"
+    match = re.search(r"Total records\s*([\d,]+)", page_text)
+    return match.group(1).replace(",", "") if match else "0"
 
 
 def extract_part_numbers(
@@ -129,7 +129,7 @@ def analyze_webpage_content(
 
         url_page = f"page={page_number}&"
         url = f"{base_url}{url_partnumber}{url_page}{url_page_size}"
-        print(url)
+        print_message_utilities.print_error(f"{number} {url}")
 
         # Fetch webpage
         html_content = fetch_webpage(url)
@@ -173,10 +173,7 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 if __name__ == "__main__":
     parametters = [
-        ("AA0805FR-07", "L"),
-        ("RC0402FR-7W", "L"),
-        ("RC0603FR-07", "L"),
-        ("RC0805BR-07", "L"),
+        ("RC0402FR-07", "L"),
         ]
 
     for mpn_prefix, mpn_sufix in parametters:
