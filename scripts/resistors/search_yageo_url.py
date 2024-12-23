@@ -173,7 +173,7 @@ def extract_resistance_value(mpn: str, mpn_prefix: str) -> float:
 
 if __name__ == "__main__":
     parametters = [
-        ("RC0402FR-07", "L"),
+        ("RC0805BR-07", "L"),
         ]
 
     for mpn_prefix, mpn_sufix in parametters:
