@@ -1,4 +1,19 @@
-"""TODO."""
+"""Utilities for generating KiCad symbol files.
+
+This module provides functions for creating KiCad symbol files, including
+writing headers, properties, and drawing various electronic components like
+capacitors, resistors, inductors, transformers, and transistors.
+Key features:
+- Symbol file header generation
+- Property handling and writing
+- Component drawing utilities
+- Pin configuration and placement
+- Support for various electronic components
+
+The module follows KiCad's symbol format specifications and provides a
+structured way to generate symbol files programmatically.
+
+"""
 
 from typing import TextIO
 
