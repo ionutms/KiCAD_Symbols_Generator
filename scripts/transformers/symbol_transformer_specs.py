@@ -355,4 +355,56 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("6", -7.62, "unspecified", 2.54)],
         ),
     ),
+    "YA8916": SeriesSpec(
+        manufacturer="Coilcraft",
+        base_series="YA8916",
+        footprint="transformer_footprints:YA8916",
+        tolerance="±10%",
+        datasheet=(
+            "https://www.coilcraft.com/getmedia/"
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
+        inductance_values=[27.0],
+        max_dc_current=[0.2],
+        max_dc_resistance=[0.36],
+        value_suffix="-BLD",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig("1", 5.08, "unspecified", 5.08),
+                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("4", -5.08, "unspecified", 5.08)],
+            right=[
+                PinConfig("8", 12.7, "unspecified", 5.08),
+                PinConfig("7", 2.54, "unspecified", 5.08),
+                PinConfig("6", -2.54, "unspecified", 5.08),
+                PinConfig("5", -12.7, "unspecified", 5.08)],
+        ),
+    ),
+    "YA8864": SeriesSpec(
+        manufacturer="Coilcraft",
+        base_series="YA8864",
+        footprint="transformer_footprints:YA8864",
+        tolerance="±10%",
+        datasheet=(
+            "https://www.coilcraft.com/getmedia/"
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
+        inductance_values=[27.0],
+        max_dc_current=[0.2],
+        max_dc_resistance=[0.36],
+        value_suffix="-BLD",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig("1", 5.08, "unspecified", 5.08),
+                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("4", -5.08, "unspecified", 5.08)],
+            right=[
+                PinConfig("8", 12.7, "unspecified", 5.08),
+                PinConfig("7", 2.54, "unspecified", 5.08),
+                PinConfig("6", -2.54, "unspecified", 5.08),
+                PinConfig("5", -12.7, "unspecified", 5.08)],
+        ),
+    ),
 }
