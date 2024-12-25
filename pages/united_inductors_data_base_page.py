@@ -193,18 +193,19 @@ def update_distribution_graph(
             "domain": (0.0, 1.0), "showgrid": True,
             "title": {"text": "Indunctance Value", "standoff": 10},
             "title_font_weight": "bold", "tickmode": "array",
-            "tickangle": -30, "fixedrange": True,
+            "tickangle": -45, "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
             "titlefont": {"color": "#808080"},
         },
         "yaxis": {
             "gridcolor": "#808080", "griddash": "dash",
             "zerolinecolor": "lightgray", "zeroline": False,
-            "tickangle": -30, "title_font_weight": "bold", "position": 0.0,
+            "tickangle": -45, "title_font_weight": "bold", "position": 0.0,
             "title": "Number of Inductors", "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
             "titlefont": {"color": "#808080"}, "showgrid": True,
             "anchor": "free", "autorange": True, "tickformat": ".0f",
+            "dtick": 2, "tickmode": "linear",
         },
         "title": {
             "text":
@@ -234,22 +235,56 @@ def update_distribution_graph(
             x=values_tolerance,
             y=counts_tolerance,
             name=config["name"],
-            textposition="auto",
+            textposition="none",
             textangle=-30,
             text=counts_tolerance,
             hovertemplate=(
-                "Capacitance: %{x}<br>"
+                "Indunctance: %{x}<br>"
                 "Number of Inductors: %{y}<extra></extra>"
             ),
         ))
 
-    # Update x-axis range based on slider
+    def get_visible_y_max(
+            figure_data: list[go.Bar],
+            x_range: tuple[int, int],
+        ) -> int:
+        """Get the maximum y value within the visible x range.
+
+        Args:
+            figure_data (list[go.Bar]): List of bar traces in the figure.
+            x_range (tuple[int, int]): The visible x-axis range.
+
+        Returns:
+            int: The maximum y value within the visible x range.
+
+        """
+        x_min, x_max = x_range
+        maximum_y_value = 0
+
+        for trace in figure_data:
+            # Get positions within range
+            positions = range(len(trace.x))
+            visible_positions = [
+                index for index in positions if x_min <= index <= x_max]
+
+            if visible_positions:
+                y_values = [trace.y[index] for index in visible_positions]
+                maximum_y_value += max(y_values)
+
+        return maximum_y_value
+
+    # In update_distribution_graph function:
+    x_min, x_max = rangeslider_value[0], rangeslider_value[1]
+    y_max = get_visible_y_max(figure.data, (x_min, x_max))
+
+    # Update layout with new ranges
     figure.update_layout(
-        xaxis_range=[rangeslider_value[0] - 0.5, rangeslider_value[1] + 0.5],
-        # Horizontal legend configuration
+        xaxis_range=[x_min - 0.5, x_max + 0.5],
+        yaxis_range=[0, y_max],
+        yaxis_autorange=False,
         legend={
             "orientation": "h", "yanchor": "bottom", "xanchor": "center",
-            "y": 0.98, "x": 0.5})
+            "y": -0.5, "x": 0.5})
 
     # Define theme settings
     theme = {
@@ -258,7 +293,6 @@ def update_distribution_graph(
         "plot_bgcolor": "white" if theme_switch else "#222222",
         "font_color": "black" if theme_switch else "white",
         "margin": {"l": 0, "r": 0, "t": 50, "b": 50},
-        "xaxis": {"tickangle": -45},
     }
 
     # Update figure layout with theme and remove unnecessary modebar options
@@ -266,7 +300,7 @@ def update_distribution_graph(
         **theme,
         barmode="stack",
         bargap=0.0,
-        bargroupgap=0.0,
+        bargroupgap=0.05,
         modebar={"remove": [
             "zoom", "pan", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d",
             "autoScale2d", "resetScale2d", "toImage",
