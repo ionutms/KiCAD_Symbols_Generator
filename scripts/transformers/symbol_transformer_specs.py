@@ -336,7 +336,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         inductance_values=[24.0],
         max_dc_current=[1.2],
         max_dc_resistance=[0.14],
