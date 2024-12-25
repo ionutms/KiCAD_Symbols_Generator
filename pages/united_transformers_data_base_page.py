@@ -76,6 +76,8 @@ hidden_columns = [
     "Series",
     "Maximum DC Current (A)",
     "Maximum DC Resistance (Ω)",
+    "Value",
+    "Tolerance",
 ]
 
 visible_columns = [

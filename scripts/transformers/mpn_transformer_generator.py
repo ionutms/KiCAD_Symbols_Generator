@@ -52,12 +52,12 @@ HEADER_MAPPING: Final[dict] = {
     "Value": lambda part: part.mpn,
     "Footprint": lambda part: part.footprint,
     "Datasheet": lambda part: part.datasheet,
+    "Trustedparts Search": lambda part: part.trustedparts_link,
     "Description": lambda part: part.description,
     "Manufacturer": lambda part: part.manufacturer,
     "MPN": lambda part: part.mpn,
     "Tolerance": lambda part: part.tolerance,
     "Series": lambda part: part.series,
-    "Trustedparts Search": lambda part: part.trustedparts_link,
     "Maximum DC Current (A)": lambda part: f"{part.max_dc_current:.1f}",
     "Maximum DC Resistance (Ω)": lambda part: f"{part.max_dc_resistance:.3f}",
 }
@@ -65,14 +65,12 @@ HEADER_MAPPING: Final[dict] = {
 
 def generate_files_for_series(
     series_name: str,
-    is_aec: bool,  # noqa: FBT001
     unified_parts_list: list[symbol_transformer_specs.PartInfo],
 ) -> None:
     """Generate CSV, KiCad symbol, and footprint files for a specific series.
 
     Args:
         series_name: Series identifier (must exist in SYMBOLS_SPECS)
-        is_aec: If True, generate AEC-Q200 qualified parts
         unified_parts_list: List to append generated parts to
 
     Raises:
@@ -107,7 +105,7 @@ def generate_files_for_series(
     # Generate part numbers and write to CSV
     try:
         parts_list = symbol_transformer_specs.PartInfo.generate_part_numbers(
-            specs, is_aec)
+            specs)
         file_handler_utilities.write_to_csv(
             parts_list, csv_filename, HEADER_MAPPING)
         print_message_utilities.print_success(
@@ -198,8 +196,7 @@ if __name__ == "__main__":
         for series in symbol_transformer_specs.SYMBOLS_SPECS:
             print_message_utilities.print_info(
                 f"\nGenerating files for {series} series:")
-            generate_files_for_series(
-                series, True, unified_parts)  # noqa: FBT003
+            generate_files_for_series(series, unified_parts)
 
         # Generate unified files after all series are processed
         UNIFIED_CSV = "UNITED_TRANSFORMERS_DATA_BASE.csv"
