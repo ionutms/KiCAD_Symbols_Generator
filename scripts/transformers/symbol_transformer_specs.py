@@ -329,4 +329,30 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("9", -5.08, "unspecified", 5.08)],
         ),
     ),
+    "YA8779": SeriesSpec(
+        manufacturer="Coilcraft",
+        base_series="YA8779",
+        footprint="transformer_footprints:YA8779",
+        tolerance="±10%",
+        datasheet=(
+            "https://www.coilcraft.com/getmedia/"
+            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
+        inductance_values=[24.0],
+        max_dc_current=[1.2],
+        max_dc_resistance=[0.14],
+        value_suffix="-BLD",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig("1", 5.08, "unspecified", 5.08),
+                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("4", -5.08, "unspecified", 5.08)],
+            right=[
+                PinConfig("8", 7.62, "unspecified", 2.54),
+                PinConfig("7", 5.08, "unspecified", 2.54),
+                PinConfig("5", -5.08, "unspecified", 2.54),
+                PinConfig("6", -7.62, "unspecified", 2.54)],
+        ),
+    ),
 }
