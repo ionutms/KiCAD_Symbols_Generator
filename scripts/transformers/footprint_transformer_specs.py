@@ -1,4 +1,19 @@
-"""Specifications for transformer footprint generation."""
+"""Specifications module for transformer footprint generation in KiCAD.
+
+This module defines the data structures and specifications needed to generate
+transformer footprints in KiCAD format. It provides classes for defining body
+dimensions, pad specifications, and complete footprint parameters.
+Classes:
+    BodyDimensions:
+        Defines rectangular dimensions for transformer body outlines
+    PadDimensions: Defines dimensions and positioning for transformer pads
+    FootprintSpecs:
+        Combines body and pad specs for complete footprint definition
+Constants:
+    FOOTPRINTS_SPECS:
+        Dictionary mapping transformer models to their footprint
+        specifications
+"""
 
 from typing import NamedTuple
 
