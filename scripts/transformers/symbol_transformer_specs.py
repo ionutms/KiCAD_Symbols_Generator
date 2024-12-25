@@ -150,27 +150,21 @@ class PartInfo(NamedTuple):
         cls,
         value: float,
         specs: "SeriesSpec",
-        is_aec: bool,  # noqa: FBT001
     ) -> str:
         """Create component description.
 
         Args:
             value: Inductance value in µH
             specs: Series specifications
-            is_aec: If True, add AEC-Q200 qualification
 
         Returns:
             Formatted description string
 
         """
         parts = [
-            "POWER TRANSFORMER SMD",
             cls.format_inductance_value(value),
             specs.tolerance,
         ]
-
-        if is_aec and specs.has_aec:
-            parts.append("AEC-Q200")
 
         return " ".join(parts)
 
@@ -179,14 +173,12 @@ class PartInfo(NamedTuple):
         cls,
         inductance: float,
         specs: SeriesSpec,
-        is_aec: bool = True,  # noqa: FBT001, FBT002
     ) -> "PartInfo":
         """Create complete part information.
 
         Args:
             inductance: Value in µH
             specs: Series specifications
-            is_aec: If True, create AEC-Q200 qualified part
 
         Returns:
             PartInfo instance with all specifications
@@ -212,7 +204,7 @@ class PartInfo(NamedTuple):
             value=inductance,
             footprint=specs.footprint,
             datasheet=specs.datasheet,
-            description=cls.create_description(inductance, specs, is_aec),
+            description=cls.create_description(inductance, specs),
             manufacturer=specs.manufacturer,
             mpn=mpn,
             tolerance=specs.tolerance,
@@ -226,20 +218,18 @@ class PartInfo(NamedTuple):
     def generate_part_numbers(
         cls,
         specs: SeriesSpec,
-        is_aec: bool = True,  # noqa: FBT001, FBT002
     ) -> list["PartInfo"]:
         """Generate all part numbers for the series.
 
         Args:
             specs: Series specifications
-            is_aec: If True, generate AEC-Q200 qualified parts
 
         Returns:
             List of PartInfo instances
 
         """
         return [
-            cls.create_part_info(value, specs, is_aec)
+            cls.create_part_info(value, specs)
             for value in specs.inductance_values
         ]
 
