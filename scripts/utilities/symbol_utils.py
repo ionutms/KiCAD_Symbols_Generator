@@ -336,6 +336,48 @@ def write_inductor_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def get_symbol_bounds(pin_config: dict) -> tuple:
+    """Calculate symbol bounds based on pin configuration."""
+    y_positions = (
+        [pin["y_pos"] for pin in pin_config["left"]] +
+        [pin["y_pos"] for pin in pin_config["right"]]
+    )
+    max_y = max(y_positions)
+    min_y = min(y_positions)
+    return min_y, max_y
+
+
+def write_arcs(
+    symbol_file: TextIO,
+    start_x: float,
+    offset: list[float],
+    num_arcs: int = 4,
+) -> None:
+    """Write a set of inductor arcs for transformer symbol.
+
+    Args:
+        symbol_file: File to write to
+        start_x: X coordinate to start arcs from
+        offset: [x_offset, y_offset] for positioning the arcs
+        num_arcs: Number of arcs to draw (default 4)
+
+    """
+    x_offset, y_offset = offset
+    for y_start in range(num_arcs):
+        y_pos = y_start * 2.54
+        symbol_file.write(f"""
+            (arc
+                (start {start_x + x_offset} {y_offset + y_pos})
+                (mid
+                    {start_x + x_offset + (-1.27 if start_x > 0 else 1.27)}
+                    {y_offset + y_pos + 1.27})
+                (end {start_x + x_offset} {y_offset + y_pos + 2.54})
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            """)
+
+
 def write_transformer_symbol_drawing(
         symbol_file: TextIO,
         symbol_name: str,
@@ -349,45 +391,15 @@ def write_transformer_symbol_drawing(
         pin_config (dict, optional): Dictionary defining pin configuration.
 
     """
-    def get_symbol_bounds(pin_config: dict) -> tuple:
-        """Calculate symbol bounds based on pin configuration."""
-        y_positions = (
-            [pin["y_pos"] for pin in pin_config["left"]] +
-            [pin["y_pos"] for pin in pin_config["right"]]
-        )
-        max_y = max(y_positions)
-        min_y = min(y_positions)
-        return min_y, max_y
-
     # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
     # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
-    # Write left inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start -2.54 {-5.08 + (y_start * 2.54)})
-                (mid -1.27 {-3.81 + (y_start * 2.54)})
-                (end -2.54 {-2.54 + (y_start * 2.54)})
-                (stroke (width 0) (type default) )
-                (fill (type none) )
-            )
-            """)
-
-    # Write right inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    # Write left and right inductor arcs
+    write_arcs(symbol_file, -2.54, [0.0, -5.08])
+    write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
     # Write polarity dots
     for x, y in [(-2.54, 3.81), (2.54, -3.81)]:
@@ -440,42 +452,14 @@ def write_transformer_symbol_drawing_v2(
         pin_config (dict, optional): Dictionary defining pin configuration.
 
     """
-    def get_symbol_bounds(pin_config: dict) -> tuple:
-        """Calculate symbol bounds based on pin configuration."""
-        y_positions = (
-            [pin["y_pos"] for pin in pin_config["left"]] +
-            [pin["y_pos"] for pin in pin_config["right"]]
-        )
-        max_y = max(y_positions)
-        min_y = min(y_positions)
-        return min_y, max_y
-
     # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
     # Write left inductor arcs
-    for y_start in range(8):
-        symbol_file.write(f"""
-            (arc
-                (start -2.54 {-10.16 + (y_start * 2.54)})
-                (mid -1.27 {-8.89 + (y_start * 2.54)})
-                (end -2.54 {-7.62 + (y_start * 2.54)})
-                (stroke (width 0) (type default) )
-                (fill (type none) )
-            )
-            """)
+    write_arcs(symbol_file, -2.54, [0.0, -10.16], num_arcs=8)
 
     # Write right inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
     # Write polarity dots
     for x, y in [(-2.54, 8.89), (-2.54, -1.27), (2.54, 3.81)]:
@@ -528,16 +512,6 @@ def write_transformer_symbol_drawing_v3(
         pin_config (dict, optional): Dictionary defining pin configuration.
 
     """
-    def get_symbol_bounds(pin_config: dict) -> tuple:
-        """Calculate symbol bounds based on pin configuration."""
-        y_positions = (
-            [pin["y_pos"] for pin in pin_config["left"]] +
-            [pin["y_pos"] for pin in pin_config["right"]]
-        )
-        max_y = max(y_positions)
-        min_y = min(y_positions)
-        return min_y, max_y
-
     # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
@@ -545,40 +519,13 @@ def write_transformer_symbol_drawing_v3(
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
     # Write left inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start -2.54 {-5.08 + (y_start * 2.54)})
-                (mid -1.27 {-3.81 + (y_start * 2.54)})
-                (end -2.54 {-2.54 + (y_start * 2.54)})
-                (stroke (width 0) (type default) )
-                (fill (type none) )
-            )
-            """)
+    write_arcs(symbol_file, -2.54, [0.0, -5.08])
 
-    # Write right inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    # Write first right inductor arcs
+    write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
-    # Write the second right inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start 5.08 {5.08 - (y_start * 2.54)})
-                (mid 3.81 {3.81 - (y_start * 2.54)})
-                (end 5.08 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    # Write second right inductor arcs
+    write_arcs(symbol_file, 5.08, [0.0, -5.08])
 
     for symbol in ["-", ""]:
         symbol_file.write(f"""
@@ -644,16 +591,6 @@ def write_transformer_symbol_drawing_v4(
         pin_config (dict, optional): Dictionary defining pin configuration.
 
     """
-    def get_symbol_bounds(pin_config: dict) -> tuple:
-        """Calculate symbol bounds based on pin configuration."""
-        y_positions = (
-            [pin["y_pos"] for pin in pin_config["left"]] +
-            [pin["y_pos"] for pin in pin_config["right"]]
-        )
-        max_y = max(y_positions)
-        min_y = min(y_positions)
-        return min_y, max_y
-
     # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
@@ -661,40 +598,13 @@ def write_transformer_symbol_drawing_v4(
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
     # Write left inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start -2.54 {-5.08 + (y_start * 2.54)})
-                (mid -1.27 {-3.81 + (y_start * 2.54)})
-                (end -2.54 {-2.54 + (y_start * 2.54)})
-                (stroke (width 0) (type default) )
-                (fill (type none) )
-            )
-            """)
+    write_arcs(symbol_file, -2.54, [0.0, -5.08])
 
-    # Write thr first right inductor arcs
-    for y_start in range(3, 7):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    # Write top right inductor arcs
+    write_arcs(symbol_file, 2.54, [0.0, 2.54])
 
-    # Write the second right inductor arcs
-    for y_start in range(-3, 1):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    # Write bottom right inductor arcs
+    write_arcs(symbol_file, 2.54, [0.0, -12.7])
 
     # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, -3.81), (2.54, 11.43)]:
@@ -751,27 +661,10 @@ def write_coupled_inductor_symbol_drawing(
     symbol_file.write(f'        (symbol "{symbol_name}_1_1"\n')
 
     # Write left inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start -2.54 {-5.08 + (y_start * 2.54)})
-                (mid -1.27 {-3.81 + (y_start * 2.54)})
-                (end -2.54 {-2.54 + (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    write_arcs(symbol_file, -2.54, [0.0, -5.08])
 
     # Write right inductor arcs
-    for y_start in range(4):
-        symbol_file.write(f"""
-            (arc
-                (start 2.54 {5.08 - (y_start * 2.54)})
-                (mid 1.27 {3.81 - (y_start * 2.54)})
-                (end 2.54 {2.54 - (y_start * 2.54)})
-                (stroke (width 0) (type default))
-                (fill (type none) )
-            )""")
+    write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
     # Write polarity dots
     for x, y in [(-2.54, 3.81), (2.54, -3.81)]:
