@@ -111,4 +111,9 @@ def write_component(
             symbol_file, component_data, property_order, 5)
         symbol_utils.write_transformer_symbol_drawing_v2(
             symbol_file, symbol_name, pin_config)
+    if component_data.get("Series") in ("YA8779"):
+        symbol_utils.write_properties(
+            symbol_file, component_data, property_order, 4)
+        symbol_utils.write_transformer_symbol_drawing_v3(
+            symbol_file, symbol_name, pin_config)
     symbol_file.write(")")
