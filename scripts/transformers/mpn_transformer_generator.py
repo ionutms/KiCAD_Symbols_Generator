@@ -1,4 +1,37 @@
-"""Coilcraft Inductor Series Part Number Generator."""
+"""Transformer Part Number Generator and File Generator Module.
+
+This module provides functionality to generate part numbers and corresponding
+files for electronic transformers, including CSV databases, KiCad symbols,
+and footprints.
+It supports both individual series generation and unified database creation.
+The module handles:
+- Generation of part numbers based on series specifications
+- Creation of CSV files containing component specifications
+- Generation of KiCad symbol files
+- Generation of KiCad footprint files
+- Creation of unified component databases across all series
+Key Functions:
+    generate_files_for_series():
+        Generates files for a specific transformer series
+    generate_unified_files(): Creates unified component database files
+Global Variables:
+    HEADER_MAPPING (Final[dict]):
+        Maps CSV headers to PartInfo attribute getters
+Dependencies:
+    - csv: For CSV file handling
+    - os: For file path operations
+    - sys: For path manipulation
+    - footprint_transformer_generator: For footprint file generation
+    - symbol_transformer_generator: For symbol file generation
+    - symbol_transformer_specs: For component specifications
+    - utilities: For file handling and message printing
+    The module expects specific directory structure for file generation:
+    - 'data/': For CSV files
+    - 'series_kicad_sym/': For individual series symbol files
+    - 'symbols/': For unified symbol files
+    - 'footprints/transformer_footprints.pretty/': For footprint files
+
+"""
 
 import csv
 import os
