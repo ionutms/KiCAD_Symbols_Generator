@@ -153,6 +153,36 @@ dcu.save_previous_slider_state_callback(
     20)
 
 
+def get_visible_y_max(
+        figure_data: list[go.Bar],
+        x_range: tuple[int, int],
+    ) -> int:
+    """Get the maximum y value within the visible x range.
+
+    Args:
+        figure_data (list[go.Bar]): List of bar traces in the figure.
+        x_range (tuple[int, int]): The visible x-axis range.
+
+    Returns:
+        int: The maximum y value within the visible x range.
+
+    """
+    x_min, x_max = x_range
+    maximum_y_value = 0
+
+    for trace in figure_data:
+        # Get positions within range
+        positions = range(len(trace.x))
+        visible_positions = [
+            index for index in positions if x_min <= index <= x_max]
+
+        if visible_positions:
+            y_values = [trace.y[index] for index in visible_positions]
+            maximum_y_value += max(y_values)
+
+    return maximum_y_value
+
+
 @callback(
     Output(f"{module_name}_bar_graph", "figure"),
     Input("theme_switch_value_store", "data"),
@@ -244,38 +274,49 @@ def update_distribution_graph(
             ),
         ))
 
-    def get_visible_y_max(
-            figure_data: list[go.Bar],
-            x_range: tuple[int, int],
-        ) -> int:
-        """Get the maximum y value within the visible x range.
-
-        Args:
-            figure_data (list[go.Bar]): List of bar traces in the figure.
-            x_range (tuple[int, int]): The visible x-axis range.
-
-        Returns:
-            int: The maximum y value within the visible x range.
-
-        """
-        x_min, x_max = x_range
-        maximum_y_value = 0
-
-        for trace in figure_data:
-            # Get positions within range
-            positions = range(len(trace.x))
-            visible_positions = [
-                index for index in positions if x_min <= index <= x_max]
-
-            if visible_positions:
-                y_values = [trace.y[index] for index in visible_positions]
-                maximum_y_value += max(y_values)
-
-        return maximum_y_value
-
     # In update_distribution_graph function:
     x_min, x_max = rangeslider_value[0], rangeslider_value[1]
     y_max = get_visible_y_max(figure.data, (x_min, x_max))
+
+    # Add scatter traces for all tolerances
+    for tolerance in tolerances:
+        tolerance_data = dataframe[dataframe["Tolerance"] == tolerance]
+        scatter_x = []
+        scatter_y = []
+        scatter_mpn = []  # Track MPN for each point
+
+        # Track cumulative heights at each x position
+        cumulative_heights = {}
+
+        for value in tolerance_data["Value"].unique():
+            value_data = tolerance_data[tolerance_data["Value"] == value]
+            count = len(value_data)
+            base_height = 0
+
+            # Get the base height from previous tolerance bars
+            for trace in figure.data:
+                if isinstance(trace, go.Bar):
+                    value_index = list(trace.x).index(value)
+                    if trace.name == f"{tolerance} Tolerance":
+                        break
+                    base_height += trace.y[value_index]
+
+            # Add dots stacked on top of base height
+            for dot_position, mpn in enumerate(value_data["MPN"]):
+                scatter_x.append(value)
+                scatter_y.append(base_height + dot_position + 0.5)
+                scatter_mpn.append(mpn)
+
+            cumulative_heights[value] = base_height + count
+
+        figure.add_trace(go.Scatter(
+            x=scatter_x,
+            y=scatter_y,
+            mode="markers",
+            name=f"{tolerance} Values",
+            text=scatter_mpn,  # Add MPN as text
+            hovertemplate="Inductance: %{x}<br>MPN: %{text}<extra></extra>",
+        ))
 
     # Update layout with new ranges
     figure.update_layout(
