@@ -137,7 +137,7 @@ def create_figure(
             "tickmode": "array",
             "tickvals": tick_values,
             "ticktext": tick_text,
-            "tickangle": -30,
+            "tickangle": -30, "fixedrange": True,
 
             "tickfont": {"color": "#808080", "weight": "bold"},
             "titlefont": {"color": "#808080"},
@@ -148,7 +148,7 @@ def create_figure(
             "tickangle": -90, "position": 0.0,
             "title": titles[1], "showgrid": False,
             "anchor": "free",
-            "autorange": False,
+            "autorange": False, "fixedrange": True,
             "range": [y1_min - y1_padding, y1_max + y1_padding],
             "tickformat": ".0f",  # Integer formatting
         },
@@ -158,7 +158,7 @@ def create_figure(
             "tickangle": -90, "position": 1.0,
             "title": titles[2], "showgrid": False,
             "overlaying": "y", "side": "right",
-            "autorange": False,
+            "autorange": False, "fixedrange": True,
             "range": [y2_min - y2_padding, y2_max + y2_padding],
             "tickformat": ".0f",  # Integer formatting
         },
