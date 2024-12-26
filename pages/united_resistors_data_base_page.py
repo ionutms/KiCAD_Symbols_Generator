@@ -152,6 +152,37 @@ dcu.save_previous_slider_state_callback(
     f"{module_name}_rangeslider_store",
     60)
 
+
+def get_visible_y_max(
+        figure_data: list[go.Bar],
+        x_range: tuple[int, int],
+    ) -> int:
+    """Get the maximum y value within the visible x range.
+
+    Args:
+        figure_data (list[go.Bar]): List of bar traces in the figure.
+        x_range (tuple[int, int]): The visible x-axis range.
+
+    Returns:
+        int: The maximum y value within the visible x range.
+
+    """
+    x_min, x_max = x_range
+    maximum_y_value = 0
+
+    for trace in figure_data:
+        # Get positions within range
+        positions = range(len(trace.x))
+        visible_positions = [
+            index for index in positions if x_min <= index <= x_max]
+
+        if visible_positions:
+            y_values = [trace.y[index] for index in visible_positions]
+            maximum_y_value += max(y_values)
+
+    return maximum_y_value
+
+
 @callback(
     Output(f"{module_name}_bar_graph", "figure"),
     Input("theme_switch_value_store", "data"),
@@ -241,35 +272,6 @@ def update_distribution_graph(
                 "Number of Resistors: %{y}<extra></extra>"
             ),
         ))
-
-    def get_visible_y_max(
-            figure_data: list[go.Bar],
-            x_range: tuple[int, int],
-        ) -> int:
-        """Get the maximum y value within the visible x range.
-
-        Args:
-            figure_data (list[go.Bar]): List of bar traces in the figure.
-            x_range (tuple[int, int]): The visible x-axis range.
-
-        Returns:
-            int: The maximum y value within the visible x range.
-
-        """
-        x_min, x_max = x_range
-        maximum_y_value = 0
-
-        for trace in figure_data:
-            # Get positions within range
-            positions = range(len(trace.x))
-            visible_positions = [
-                index for index in positions if x_min <= index <= x_max]
-
-            if visible_positions:
-                y_values = [trace.y[index] for index in visible_positions]
-                maximum_y_value += max(y_values)
-
-        return maximum_y_value
 
     # In update_distribution_graph function:
     x_min, x_max = rangeslider_value[0], rangeslider_value[1]
