@@ -275,6 +275,46 @@ def update_distribution_graph(
     x_min, x_max = rangeslider_value[0], rangeslider_value[1]
     y_max = get_visible_y_max(figure.data, (x_min, x_max))
 
+    # Add scatter traces for all tolerances
+    for tolerance in tolerances:
+        tolerance_data = dataframe[dataframe["Tolerance"] == tolerance]
+        scatter_x = []
+        scatter_y = []
+        scatter_mpn = []  # Track MPN for each point
+
+        # Track cumulative heights at each x position
+        cumulative_heights = {}
+
+        for value in tolerance_data["Value"].unique():
+            value_data = tolerance_data[tolerance_data["Value"] == value]
+            count = len(value_data)
+            base_height = 0
+
+            # Get the base height from previous tolerance bars
+            for trace in figure.data:
+                if isinstance(trace, go.Bar):
+                    value_index = list(trace.x).index(value)
+                    if trace.name == f"{tolerance} Tolerance":
+                        break
+                    base_height += trace.y[value_index]
+
+            # Add dots stacked on top of base height
+            for dot_position, mpn in enumerate(value_data["MPN"]):
+                scatter_x.append(value)
+                scatter_y.append(base_height + dot_position + 0.5)
+                scatter_mpn.append(mpn)
+
+            cumulative_heights[value] = base_height + count
+
+        figure.add_trace(go.Scatter(
+            x=scatter_x,
+            y=scatter_y,
+            mode="markers",
+            name=f"{tolerance} Values",
+            text=scatter_mpn,  # Add MPN as text
+            hovertemplate="Resistance: %{x}<br>MPN: %{text}<extra></extra>",
+        ))
+
     # Update layout with new ranges
     figure.update_layout(
         xaxis_range=[x_min - 0.5, x_max + 0.5],
