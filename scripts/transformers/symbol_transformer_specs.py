@@ -249,7 +249,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=1.1,
         value_suffix="-ALD",
         trustedparts_link="https://www.trustedparts.com/en/search",
-        turns_ratio={"pri:sec": "1:1"},
+        turns_ratio={"pri : sec": "1 : 1"},
         pin_config=SidePinConfig(
             left=[
                 PinConfig("4", 5.08, "unspecified", 5.08),
@@ -273,7 +273,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
-        turns_ratio={"pri:sec": "1:1"},
+        turns_ratio={"pri : sec": "1 : 1"},
         inductance=470.0,
         max_dc_current=0.49,
         max_dc_resistance=1.8,
@@ -300,7 +300,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "750315836.pdf"),
-        turns_ratio={"N1+N2:N3": "1:1"},
+        turns_ratio={"N1+N2 : N3": "1 : 1"},
         inductance=40.0,
         max_dc_current=3.2,
         max_dc_resistance=0.095,
@@ -330,7 +330,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        turns_ratio={"pri:sec1": "1:0.33"},
+        turns_ratio={"pri : sec1": "1 : 0.33"},
         inductance=24.0,
         max_dc_current=1.2,
         max_dc_resistance=0.14,
@@ -357,7 +357,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        turns_ratio={"pri:sec1": "1:1", "pri:sec2": "1:0.52"},
+        turns_ratio={"pri : sec1": "1 : 1", "pri : sec2": "1 : 0.52"},
         inductance=27.0,
         max_dc_current=0.2,
         max_dc_resistance=0.36,
@@ -384,7 +384,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        turns_ratio={"pri:sec1": "1:1.5", "pri:sec2": "1:0.4"},
+        turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
         inductance=27.0,
         max_dc_current=0.2,
         max_dc_resistance=0.36,
