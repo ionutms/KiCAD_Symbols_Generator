@@ -60,6 +60,9 @@ HEADER_MAPPING: Final[dict] = {
     "Series": lambda part: part.series,
     "Maximum DC Current (A)": lambda part: f"{part.max_dc_current:.1f}",
     "Maximum DC Resistance (Ω)": lambda part: f"{part.max_dc_resistance:.3f}",
+    "Turns Ratio":
+        lambda part: "; ".join(f"{name} = {ratio}"
+        for name, ratio in part.turns_ratio.items()),
 }
 
 

@@ -13,7 +13,7 @@ The module supports:
 - Standard configurations for common transformer layouts
 """
 
-from typing import NamedTuple, Optional
+from typing import NamedTuple
 
 
 class PinConfig(NamedTuple):
@@ -62,14 +62,14 @@ class SeriesSpec(NamedTuple):
         footprint: PCB footprint identifier for the component series
         tolerance: Component value tolerance specification
         datasheet: URL to the manufacturer's datasheet
-        inductance_values: List of available inductance values in µH
+        inductance: Inductance value in µH
         trustedparts_link: URL to component listing on Trusted Parts
         value_suffix: Suffix used in part numbering for the series
-        has_aec: Boolean indicating AEC-Q200 qualification status
-        max_dc_current: List of maximum DC current ratings in Amperes (A)
-        max_dc_resistance:
-            List of maximum DC resistance values in milliohms (mΩ)
-        pin_config: Optional pin configuration specification
+        turns_ratio: Dictionary of turn ratios between transformer windings
+        pin_config: Pin configuration specification for physical layout
+        max_dc_current: Maximum DC current rating in Amperes (A)
+        max_dc_resistance: Maximum DC resistance value in milliohms (mΩ)
+        reference: Reference designator prefix (default: "T")
 
     """
 
@@ -78,13 +78,13 @@ class SeriesSpec(NamedTuple):
     footprint: str
     tolerance: str
     datasheet: str
-    inductance_values: list[float]
+    inductance: float
     trustedparts_link: str
     value_suffix: str
-    has_aec: bool = True
-    max_dc_current: list[float] = []  # noqa: RUF012
-    max_dc_resistance: list[float] = []  # noqa: RUF012
-    pin_config: Optional[SidePinConfig] = None  # noqa: FA100
+    turns_ratio: dict[dict[str, str]]
+    pin_config: SidePinConfig
+    max_dc_current: float
+    max_dc_resistance: float
     reference: str = "T"
 
 
@@ -125,6 +125,7 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
     max_dc_current: float
     max_dc_resistance: float
+    turns_ratio: dict[dict[str, str]]
 
     @staticmethod
     def format_inductance_value(inductance: float) -> str:
@@ -188,9 +189,8 @@ class PartInfo(NamedTuple):
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         try:
-            index = specs.inductance_values.index(inductance)
-            max_dc_current = float(specs.max_dc_current[index])
-            max_dc_resistance = float(specs.max_dc_resistance[index])
+            max_dc_current = specs.max_dc_current
+            max_dc_resistance = specs.max_dc_resistance
         except (ValueError, IndexError):
             msg = (
                 f"Error: Inductance value {inductance} µH "
@@ -212,6 +212,7 @@ class PartInfo(NamedTuple):
             trustedparts_link=trustedparts_link,
             max_dc_current=max_dc_current,
             max_dc_resistance=max_dc_resistance,
+            turns_ratio=specs.turns_ratio,
         )
 
     @classmethod
@@ -229,8 +230,7 @@ class PartInfo(NamedTuple):
 
         """
         return [
-            cls.create_part_info(value, specs)
-            for value in specs.inductance_values
+            cls.create_part_info(specs.inductance, specs),
         ]
 
 
@@ -244,11 +244,12 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
-        inductance_values=[470.0],
-        max_dc_current=[0.80],
-        max_dc_resistance=[1.1],
+        inductance=470.0,
+        max_dc_current=0.8,
+        max_dc_resistance=1.1,
         value_suffix="-ALD",
         trustedparts_link="https://www.trustedparts.com/en/search",
+        turns_ratio={"pri:sec": "1:1"},
         pin_config=SidePinConfig(
             left=[
                 PinConfig("4", 5.08, "unspecified", 5.08),
@@ -272,9 +273,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
-        inductance_values=[470.0],
-        max_dc_current=[0.49],
-        max_dc_resistance=[1.8],
+        turns_ratio={"pri:sec": "1:1"},
+        inductance=470.0,
+        max_dc_current=0.49,
+        max_dc_resistance=1.8,
         value_suffix="-AED",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -298,9 +300,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "750315836.pdf"),
-        inductance_values=[40.0],
-        max_dc_current=[3.2],
-        max_dc_resistance=[0.095],
+        turns_ratio={"N1+N2:N3": "1:1"},
+        inductance=40.0,
+        max_dc_current=3.2,
+        max_dc_resistance=0.095,
         value_suffix="",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -327,9 +330,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        inductance_values=[24.0],
-        max_dc_current=[1.2],
-        max_dc_resistance=[0.14],
+        turns_ratio={"pri:sec1": "1:0.33"},
+        inductance=24.0,
+        max_dc_current=1.2,
+        max_dc_resistance=0.14,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -353,9 +357,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        inductance_values=[27.0],
-        max_dc_current=[0.2],
-        max_dc_resistance=[0.36],
+        turns_ratio={"pri:sec1": "1:1", "pri:sec2": "1:0.52"},
+        inductance=27.0,
+        max_dc_current=0.2,
+        max_dc_resistance=0.36,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -379,9 +384,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
-        inductance_values=[27.0],
-        max_dc_current=[0.2],
-        max_dc_resistance=[0.36],
+        turns_ratio={"pri:sec1": "1:1.5", "pri:sec2": "1:0.4"},
+        inductance=27.0,
+        max_dc_current=0.2,
+        max_dc_resistance=0.36,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
