@@ -82,7 +82,7 @@ class SeriesSpec(NamedTuple):
     value_suffix: str
     turns_ratio: dict[dict[str, str]]
     pin_config: SidePinConfig
-    max_dc_resistance: float
+    max_dc_resistance: dict[dict[str, str]]
     reference: str = "T"
 
 
@@ -121,7 +121,7 @@ class PartInfo(NamedTuple):
     tolerance: str
     series: str
     trustedparts_link: str
-    max_dc_resistance: float
+    max_dc_resistance: dict[dict[str, str]]
     turns_ratio: dict[dict[str, str]]
 
     @staticmethod
@@ -185,15 +185,6 @@ class PartInfo(NamedTuple):
         mpn = f"{specs.base_series}{specs.value_suffix}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
-        try:
-            max_dc_resistance = specs.max_dc_resistance
-        except (ValueError, IndexError):
-            msg = (
-                f"Error: Inductance value {primary_inductance} µH "
-                f"not found in series {specs.base_series}"
-            )
-            raise ValueError(msg)  # noqa: B904
-
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
@@ -207,7 +198,7 @@ class PartInfo(NamedTuple):
             tolerance=specs.tolerance,
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
-            max_dc_resistance=max_dc_resistance,
+            max_dc_resistance=specs.max_dc_resistance,
             turns_ratio=specs.turns_ratio,
         )
 
@@ -241,7 +232,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
         primary_inductance=470,
-        max_dc_resistance=1.1,
+        max_dc_resistance={"pri": "1.1", "sec": "1.6"},
         value_suffix="-ALD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         turns_ratio={"pri : sec": "1 : 1"},
@@ -270,7 +261,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
         turns_ratio={"pri : sec": "1 : 1"},
         primary_inductance=470,
-        max_dc_resistance=1.8,
+        max_dc_resistance={"pri": "1.8", "sec": "1.8"},
         value_suffix="-AED",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -296,7 +287,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "750315836.pdf"),
         turns_ratio={"N1+N2 : N3": "1 : 1"},
         primary_inductance=40,
-        max_dc_resistance=0.095,
+        max_dc_resistance={"pri": "0.095", "sec": "0.09"},
         value_suffix="",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -325,7 +316,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 0.33"},
         primary_inductance=30,
-        max_dc_resistance=0.14,
+        max_dc_resistance={"pri": "0.14", "sec": "0.013"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -351,7 +342,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1", "pri : sec2": "1 : 0.52"},
         primary_inductance=30,
-        max_dc_resistance=0.36,
+        max_dc_resistance={"pri": "0.36", "sec1": "0.695", "sec2": "0.392"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -377,7 +368,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
         primary_inductance=30,
-        max_dc_resistance=0.36,
+        max_dc_resistance={"pri": "0.18", "sec1": "0.68", "sec2": "0.18"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
