@@ -59,7 +59,6 @@ HEADER_MAPPING: Final[dict] = {
     "Primary Inductance (µH)": lambda part: part.primary_inductance,
     "Tolerance": lambda part: part.tolerance,
     "Series": lambda part: part.series,
-    "Maximum DC Current (A)": lambda part: f"{part.max_dc_current:.1f}",
     "Maximum DC Resistance (Ω)": lambda part: f"{part.max_dc_resistance:.3f}",
     "Turns Ratio":
         lambda part: "; ".join(f"{name} = {ratio}"

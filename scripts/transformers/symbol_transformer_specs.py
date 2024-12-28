@@ -67,7 +67,6 @@ class SeriesSpec(NamedTuple):
         value_suffix: Suffix used in part numbering for the series
         turns_ratio: Dictionary of turn ratios between transformer windings
         pin_config: Pin configuration specification for physical layout
-        max_dc_current: Maximum DC current rating in Amperes (A)
         max_dc_resistance: Maximum DC resistance value in milliohms (mΩ)
         reference: Reference designator prefix (default: "T")
 
@@ -83,7 +82,6 @@ class SeriesSpec(NamedTuple):
     value_suffix: str
     turns_ratio: dict[dict[str, str]]
     pin_config: SidePinConfig
-    max_dc_current: float
     max_dc_resistance: float
     reference: str = "T"
 
@@ -107,7 +105,6 @@ class PartInfo(NamedTuple):
         tolerance: Component value tolerance specification
         series: Product series identifier
         trustedparts_link: URL to component listing on Trusted Parts
-        max_dc_current: Maximum DC current rating in Amperes (A)
         max_dc_resistance: Maximum DC resistance in milliohms (mΩ)
 
     """
@@ -124,7 +121,6 @@ class PartInfo(NamedTuple):
     tolerance: str
     series: str
     trustedparts_link: str
-    max_dc_current: float
     max_dc_resistance: float
     turns_ratio: dict[dict[str, str]]
 
@@ -190,7 +186,6 @@ class PartInfo(NamedTuple):
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         try:
-            max_dc_current = specs.max_dc_current
             max_dc_resistance = specs.max_dc_resistance
         except (ValueError, IndexError):
             msg = (
@@ -212,7 +207,6 @@ class PartInfo(NamedTuple):
             tolerance=specs.tolerance,
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
-            max_dc_current=max_dc_current,
             max_dc_resistance=max_dc_resistance,
             turns_ratio=specs.turns_ratio,
         )
@@ -247,7 +241,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
         primary_inductance=470,
-        max_dc_current=0.8,
         max_dc_resistance=1.1,
         value_suffix="-ALD",
         trustedparts_link="https://www.trustedparts.com/en/search",
@@ -277,7 +270,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
         turns_ratio={"pri : sec": "1 : 1"},
         primary_inductance=470,
-        max_dc_current=0.49,
         max_dc_resistance=1.8,
         value_suffix="-AED",
         trustedparts_link="https://www.trustedparts.com/en/search",
@@ -304,7 +296,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "750315836.pdf"),
         turns_ratio={"N1+N2 : N3": "1 : 1"},
         primary_inductance=40,
-        max_dc_current=3.2,
         max_dc_resistance=0.095,
         value_suffix="",
         trustedparts_link="https://www.trustedparts.com/en/search",
@@ -334,7 +325,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 0.33"},
         primary_inductance=30,
-        max_dc_current=1.2,
         max_dc_resistance=0.14,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
@@ -361,7 +351,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1", "pri : sec2": "1 : 0.52"},
         primary_inductance=30,
-        max_dc_current=0.2,
         max_dc_resistance=0.36,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
@@ -388,7 +377,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
         primary_inductance=30,
-        max_dc_current=0.2,
         max_dc_resistance=0.36,
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
