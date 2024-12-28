@@ -62,12 +62,11 @@ class SeriesSpec(NamedTuple):
         footprint: PCB footprint identifier for the component series
         tolerance: Component value tolerance specification
         datasheet: URL to the manufacturer's datasheet
-        inductance: Inductance value in µH
+        primary_inductance: Inductance value in µH
         trustedparts_link: URL to component listing on Trusted Parts
         value_suffix: Suffix used in part numbering for the series
         turns_ratio: Dictionary of turn ratios between transformer windings
         pin_config: Pin configuration specification for physical layout
-        max_dc_current: Maximum DC current rating in Amperes (A)
         max_dc_resistance: Maximum DC resistance value in milliohms (mΩ)
         reference: Reference designator prefix (default: "T")
 
@@ -78,13 +77,12 @@ class SeriesSpec(NamedTuple):
     footprint: str
     tolerance: str
     datasheet: str
-    inductance: float
+    primary_inductance: float
     trustedparts_link: str
     value_suffix: str
     turns_ratio: dict[dict[str, str]]
     pin_config: SidePinConfig
-    max_dc_current: float
-    max_dc_resistance: float
+    max_dc_resistance: dict[dict[str, str]]
     reference: str = "T"
 
 
@@ -107,7 +105,6 @@ class PartInfo(NamedTuple):
         tolerance: Component value tolerance specification
         series: Product series identifier
         trustedparts_link: URL to component listing on Trusted Parts
-        max_dc_current: Maximum DC current rating in Amperes (A)
         max_dc_resistance: Maximum DC resistance in milliohms (mΩ)
 
     """
@@ -119,32 +116,32 @@ class PartInfo(NamedTuple):
     datasheet: str
     description: str
     manufacturer: str
+    primary_inductance: float
     mpn: str
     tolerance: str
     series: str
     trustedparts_link: str
-    max_dc_current: float
-    max_dc_resistance: float
+    max_dc_resistance: dict[dict[str, str]]
     turns_ratio: dict[dict[str, str]]
 
     @staticmethod
-    def format_inductance_value(inductance: float) -> str:
+    def format_inductance_value(primary_inductance: float) -> str:
         """Format inductance value with appropriate unit.
 
         Shows integer values where possible (no decimal places needed).
 
         Args:
-            inductance: Value in µH
+            primary_inductance: Value in µH
 
         Returns:
             Formatted string with unit
 
         """
-        if inductance < 1:
-            return f"{int(inductance*1000)} nH"
-        if inductance.is_integer():
-            return f"{int(inductance)} µH"
-        return f"{inductance:.1f} µH"
+        if primary_inductance < 1:
+            return f"{int(primary_inductance*1000)} nH"
+        if isinstance(primary_inductance, int):
+            return f"{primary_inductance} µH"
+        return f"{primary_inductance:.1f} µH"
 
     @classmethod
     def create_description(
@@ -172,13 +169,13 @@ class PartInfo(NamedTuple):
     @classmethod
     def create_part_info(
         cls,
-        inductance: float,
+        primary_inductance: float,
         specs: SeriesSpec,
     ) -> "PartInfo":
         """Create complete part information.
 
         Args:
-            inductance: Value in µH
+            primary_inductance: Value in µH
             specs: Series specifications
 
         Returns:
@@ -188,30 +185,20 @@ class PartInfo(NamedTuple):
         mpn = f"{specs.base_series}{specs.value_suffix}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
-        try:
-            max_dc_current = specs.max_dc_current
-            max_dc_resistance = specs.max_dc_resistance
-        except (ValueError, IndexError):
-            msg = (
-                f"Error: Inductance value {inductance} µH "
-                f"not found in series {specs.base_series}"
-            )
-            raise ValueError(msg)  # noqa: B904
-
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
-            value=inductance,
+            value=primary_inductance,
             footprint=specs.footprint,
             datasheet=specs.datasheet,
-            description=cls.create_description(inductance, specs),
+            description=cls.create_description(primary_inductance, specs),
             manufacturer=specs.manufacturer,
+            primary_inductance=primary_inductance,
             mpn=mpn,
             tolerance=specs.tolerance,
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
-            max_dc_current=max_dc_current,
-            max_dc_resistance=max_dc_resistance,
+            max_dc_resistance=specs.max_dc_resistance,
             turns_ratio=specs.turns_ratio,
         )
 
@@ -230,7 +217,7 @@ class PartInfo(NamedTuple):
 
         """
         return [
-            cls.create_part_info(specs.inductance, specs),
+            cls.create_part_info(specs.primary_inductance, specs),
         ]
 
 
@@ -244,9 +231,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
-        inductance=470.0,
-        max_dc_current=0.8,
-        max_dc_resistance=1.1,
+        primary_inductance=470,
+        max_dc_resistance={"pri": "1.1", "sec": "1.6"},
         value_suffix="-ALD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         turns_ratio={"pri : sec": "1 : 1"},
@@ -274,9 +260,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
         turns_ratio={"pri : sec": "1 : 1"},
-        inductance=470.0,
-        max_dc_current=0.49,
-        max_dc_resistance=1.8,
+        primary_inductance=470,
+        max_dc_resistance={"pri": "1.8", "sec": "1.8"},
         value_suffix="-AED",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -301,9 +286,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.we-online.com/components/products/datasheet/"
             "750315836.pdf"),
         turns_ratio={"N1+N2 : N3": "1 : 1"},
-        inductance=40.0,
-        max_dc_current=3.2,
-        max_dc_resistance=0.095,
+        primary_inductance=40,
+        max_dc_resistance={"pri": "0.095", "sec": "0.09"},
         value_suffix="",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -331,9 +315,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 0.33"},
-        inductance=24.0,
-        max_dc_current=1.2,
-        max_dc_resistance=0.14,
+        primary_inductance=30,
+        max_dc_resistance={"pri": "0.14", "sec": "0.013"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -358,9 +341,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1", "pri : sec2": "1 : 0.52"},
-        inductance=27.0,
-        max_dc_current=0.2,
-        max_dc_resistance=0.36,
+        primary_inductance=30,
+        max_dc_resistance={"pri": "0.36", "sec1": "0.695", "sec2": "0.392"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
@@ -385,9 +367,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
         turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
-        inductance=27.0,
-        max_dc_current=0.2,
-        max_dc_resistance=0.36,
+        primary_inductance=30,
+        max_dc_resistance={"pri": "0.18", "sec1": "0.68", "sec2": "0.18"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
