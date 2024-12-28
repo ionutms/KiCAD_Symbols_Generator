@@ -56,6 +56,7 @@ HEADER_MAPPING: Final[dict] = {
     "Description": lambda part: part.description,
     "Manufacturer": lambda part: part.manufacturer,
     "MPN": lambda part: part.mpn,
+    "Primary Inductance (µH)": lambda part: part.primary_inductance,
     "Tolerance": lambda part: part.tolerance,
     "Series": lambda part: part.series,
     "Maximum DC Current (A)": lambda part: f"{part.max_dc_current:.1f}",
