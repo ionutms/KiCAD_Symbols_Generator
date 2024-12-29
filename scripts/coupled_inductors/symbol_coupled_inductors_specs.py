@@ -9,6 +9,8 @@ specifications and generate consistent part information.
 
 from typing import NamedTuple
 
+from utilities import print_message_utilities
+
 
 class PinConfig(NamedTuple):
     """Configuration specification for a single transformer pin.
@@ -115,6 +117,193 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
     max_dc_current: float
     max_dc_resistance: float
+
+    @staticmethod
+    def format_inductance_value(inductance: float) -> str:
+        """Format inductance value with appropriate unit.
+
+        Shows integer values where possible (no decimal places needed).
+
+        Args:
+            inductance: Value in µH
+
+        Returns:
+            Formatted string with unit
+
+        """
+        if inductance < 1:
+            return f"{int(inductance * 1000)} nH"
+        if inductance.is_integer():
+            return f"{int(inductance)} µH"
+        return f"{inductance:.1f} µH"
+
+
+    @classmethod
+    def create_description(
+        cls,
+        inductance: float,
+        specs: "SeriesSpec",
+    ) -> str:
+        """Create component description.
+
+        Args:
+            inductance: Value in µH
+            specs: Series specifications
+            is_aec: If True, add AEC-Q200 qualification
+
+        Returns:
+            Formatted description string
+
+        """
+        parts = [
+            "COUPLED INDUCTOR SMD",
+            cls.format_inductance_value(inductance), specs.tolerance]
+
+        return " ".join(parts)
+
+
+    @classmethod
+    def generate_value_code(
+        cls,
+        inductance: float,
+        value_suffix: str,
+    ) -> str:
+        """Generate Coilcraft value code for inductance values.
+
+        The value code consists of:
+        1. Two digits representing the significant
+            figures of the inductance value
+        2. A decimal position indicator (0-4)
+        3. Optional AEC qualification suffix
+
+        Decimal position indicators:
+        - 4: Multiply by 10 µH (100.0-999.99 µH)
+        - 3: Value is in µH (10.0-99.99 µH)
+        - 2: Divide by 10 µH (1.0-9.99 µH)
+        - 1: Divide by 100 µH (0.1-0.99 µH)
+        - 0: Divide by 1000 µH (0.01-0.099 µH)
+
+        Args:
+            inductance:
+                Value in µH (microhenries), must be between 0.01 and 999.99
+            value_suffix:
+                AEC qualification suffix to append when is_aec is True
+
+        Returns:
+            str: Value code string.
+
+        Raises:
+            ValueError:
+                If inductance is outside the valid range (0.01-9999.99 µH)
+
+        """
+        if not 0.01 <= inductance <= 9999.99:  # noqa: PLR2004
+            msg = f"Invalid inductance: {inductance}µH (0.01-9999.99)"
+            raise ValueError(msg)
+
+        if inductance >= 1000.0:  # noqa: PLR2004
+            value = round(inductance / 100)
+            base_code = f"{value:02d}5"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 100.0:  # noqa: PLR2004
+            value = round(inductance / 10)
+            base_code = f"{value:02d}4"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 10.0:  # noqa: PLR2004
+            value = round(inductance)
+            base_code = f"{value:02d}3"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 1.0:
+            value = round(inductance * 10)
+            base_code = f"{value:02d}2"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 0.1:  # noqa: PLR2004
+            value = round(inductance * 100)
+            base_code = f"{value:02d}1"
+            return f"{base_code}{value_suffix}"
+
+        value = round(inductance * 1000)
+        base_code = f"{value:02d}0"
+        return f"{base_code}{value_suffix}"
+
+
+    @classmethod
+    def create_part_info(
+        cls,
+        inductance: float,
+        specs: SeriesSpec,
+    ) -> "PartInfo":
+        """Create complete part information.
+
+        Args:
+            inductance: Value in µH
+            specs: Series specifications
+            is_aec: If True, create AEC-Q200 qualified part
+
+        Returns:
+            PartInfo instance with all specifications
+
+        """
+        value_code = cls.generate_value_code(inductance, specs.value_suffix)
+        mpn = f"{specs.base_series}-{value_code}"
+        trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
+
+        try:
+            index = specs.inductance_values.index(inductance)
+            max_dc_current = float(specs.max_dc_current[index])
+            max_dc_resistance = float(specs.max_dc_resistance[index])
+        except ValueError:
+            print_message_utilities.print_error(
+                f"Error: Inductance value {inductance} µH "
+                f"not found in series {specs.base_series}")
+            max_dc_current = 0.0
+            max_dc_resistance = 0.0
+        except IndexError:
+            print_message_utilities.print_error(
+                "Error: No DC specifications found for inductance "
+                f"{inductance} µH in series {specs.base_series}")
+            max_dc_current = 0.0
+            max_dc_resistance = 0.0
+
+        return cls(
+            symbol_name=f"{specs.reference}_{mpn}",
+            reference=specs.reference,
+            value=inductance,
+            footprint=specs.footprint,
+            datasheet=specs.datasheet,
+            description=cls.create_description(inductance, specs),
+            manufacturer=specs.manufacturer,
+            mpn=mpn,
+            tolerance=specs.tolerance,
+            series=specs.base_series,
+            trustedparts_link=trustedparts_link,
+            max_dc_current=max_dc_current,
+            max_dc_resistance=max_dc_resistance,
+        )
+
+
+    @classmethod
+    def generate_part_numbers(
+        cls,
+        specs: SeriesSpec,
+    ) -> list["PartInfo"]:
+        """Generate all part numbers for the series.
+
+        Args:
+            specs: Series specifications
+            is_aec: If True, generate AEC-Q200 qualified parts
+
+        Returns:
+            List of PartInfo instances
+
+        """
+        return [
+            cls.create_part_info(
+                value, specs) for value in specs.inductance_values]
 
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
