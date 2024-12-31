@@ -7,59 +7,84 @@
 
         (property "Reference" "REF**"
             (at 0 -6.096 0)
+            (unlocked yes)
             (layer "F.SilkS")
-            (uuid "b7b0f7ce-8b7b-4061-996e-3a346cd990f7")
+            (uuid "dde8c215-c74b-4124-ad8d-ca9a3c94ac6b")
             
-        (effects (font (size 0.762 0.762) (thickness 0.1524)))
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
         
         )
-        (property "Value" "TB004-508-05BE"
+        (property "Value" "TB004-508"
             (at 0 6.096 0)
+            (unlocked yes)
             (layer "F.Fab")
-            (uuid "e01b9de0-a81e-4cc4-97d4-f9f99a8854d3")
+            (uuid "9d4c05e0-88a6-4aed-b0fc-6e99b89781c5")
             
-        (effects (font (size 0.762 0.762) (thickness 0.1524)))
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
         
         )
         (property "Footprint" ""
-            (at -10.16 0 0)
+            (at 0 0 0)
             (layer "F.Fab")
             (hide yes)
-            (uuid "c8805a73-bde2-45cc-aab4-644e5d35663e")
+            (uuid "3c1c5639-a9b5-43ba-afa1-57eaa17b9fa9")
             
-        (effects (font (size 1.27 1.27) (thickness 0.15)))
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
         
         )
-        (property "Datasheet" ""
-            (at -10.16 0 0)
+        (fp_text user "${REFERENCE}"
+            (at 0 7.366 0)
+            (unlocked yes)
             (layer "F.Fab")
-            (hide yes)
-            (uuid "68254134-be43-4cab-b73a-56bb697bcf9c")
+            (uuid "9cd38dae-c2a7-470f-81ae-d05a10eae9f9")
             
-        (effects (font (size 1.27 1.27) (thickness 0.15)))
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
         
         )
-        (property "Description" ""
-            (at -10.16 0 0)
-            (layer "F.Fab")
-            (hide yes)
-            (uuid "08360f26-463b-4054-ae5d-0fd5ca10d386")
-            
-        (effects (font (size 1.27 1.27) (thickness 0.15)))
         
+
+        (fp_rect
+            (start -13.42 -5.2)
+            (end 12.82 5.2)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "ba448e74-e142-4451-98f2-97aba2e2d71a")
+        )
+        
+
+        (fp_rect
+            (start -13.42 -5.2)
+            (end 12.82 5.2)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "ee158919-9748-4d1c-aeb0-6883c2879560")
+        )
+        
+
+        (fp_rect
+            (start -13.42 -5.2)
+            (end 12.82 5.2)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "2d6942a6-b727-4fbd-84ce-8d61d5921cdb")
         )
         
     (attr through_hole)
-
-            (fp_rect
-                (start -13.420 -5.2)
-                (end 12.820 5.2)
-                (stroke (width 0.1524) (type default))
-                (fill none)
-                (layer "F.SilkS")
-                (uuid "b1631958-35b3-4d4f-a96c-cef83f9d6ab7")
-            )
-            
 
             (fp_circle
                 (center -14.334 0)
@@ -67,27 +92,7 @@
                 (stroke (width 0.1524) (type solid))
                 (fill solid)
                 (layer "F.SilkS")
-                (uuid "097eed1a-03a7-4f03-8673-427334f2b9f3")
-            )
-            
-
-            (fp_rect
-                (start -13.420 -5.2)
-                (end 12.820 5.2)
-                (stroke (width 0.00635) (type default))
-                (fill none)
-                (layer "F.CrtYd")
-                (uuid "0aaf88bd-dd06-4d60-a514-80853592470a")
-            )
-            
-
-            (fp_rect
-                (start -13.420 -5.2)
-                (end 12.820 5.2)
-                (stroke (width 0.1524) (type default))
-                (fill none)
-                (layer "F.Fab")
-                (uuid "260ee6c3-5852-4aaf-a155-49e7b31eb852")
+                (uuid "81ed91f7-d919-4798-9bb5-acae92dbfb50")
             )
             
 
@@ -97,7 +102,7 @@
                 (stroke (width 0.1524) (type solid))
                 (fill none)
                 (layer "F.Fab")
-                (uuid "c2513c7b-a64f-4c21-b935-82dbf85f6868")
+                (uuid "329d310a-6cde-4818-a7f2-07f2c9586a10")
             )
             
 
@@ -108,7 +113,7 @@
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "d4fab796-6e9c-4483-820f-40e128aab310")
+                (uuid "980735f1-3663-4b8d-b69f-2c970350e360")
             )
             
 
@@ -119,7 +124,7 @@
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "3b65f189-bd52-43eb-bc59-613d37f5bc6e")
+                (uuid "99d49c4b-bee7-42d9-8163-760d25940575")
             )
             
 
@@ -130,7 +135,7 @@
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "992b904f-ac68-4227-b8d1-d9ab2ccac6dc")
+                (uuid "48ad4323-e611-4745-bdfe-8a397fe2f15b")
             )
             
 
@@ -141,7 +146,7 @@
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "55244f26-308a-410f-8c4a-da1133fa8506")
+                (uuid "440f5c09-7dbe-4c2a-a294-035a0324370f")
             )
             
 
@@ -152,7 +157,7 @@
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "afba38d6-0890-4e29-9050-7b3f45e12208")
+                (uuid "dc50e8e3-4773-46e4-bff7-05e026be57da")
             )
             
 
