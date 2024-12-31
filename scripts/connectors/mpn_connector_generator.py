@@ -17,24 +17,6 @@ import symbol_connector_generator
 import symbol_connectors_specs
 from utilities import file_handler_utilities, print_message_utilities
 
-
-def generate_part_numbers(
-    specs: symbol_connectors_specs.SeriesSpec,
-) -> list[symbol_connectors_specs.PartInfo]:
-    """Generate all part numbers for the series.
-
-    Args:
-        specs: Series specifications
-
-    Returns:
-        List of PartInfo instances
-
-    """
-    return [
-        symbol_connectors_specs.create_part_info(pin_count, specs)
-        for pin_count in specs.pin_counts]
-
-
 # Global header to attribute mapping
 HEADER_MAPPING: Final[dict] = {
     "Symbol Name": lambda part: part.symbol_name,
@@ -98,7 +80,7 @@ def generate_files_for_series(
     symbol_filename = f"CONNECTORS_{series_code}_DATA_BASE.kicad_sym"
 
     # Generate part numbers and write to CSV
-    parts_list = generate_part_numbers(specs)
+    parts_list = symbol_connectors_specs.PartInfo.generate_part_numbers(specs)
     file_handler_utilities.write_to_csv(
         parts_list, csv_filename, HEADER_MAPPING)
     print_message_utilities.print_success(
