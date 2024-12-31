@@ -5,6 +5,7 @@ elements of KiCad footprints, including headers, 3D models, courtyards,
 silkscreen lines, and component properties.
 """
 
+from __future__ import annotations
 
 from uuid import uuid4
 
@@ -20,13 +21,12 @@ def generate_header(model_name: str) -> str:
              information.
 
     """
-    return (
-        f"""(footprint "{model_name}"
+    return f"""(footprint "{model_name}"
     (version 20240108)
     (generator "pcbnew")
     (generator_version "8.0")
     (layer "F.Cu")
-    """)
+    """
 
 
 def associate_3d_model(file_path: str, file_name: str) -> str:
@@ -41,13 +41,13 @@ def associate_3d_model(file_path: str, file_name: str) -> str:
              offset, scale, and rotation.
 
     """
-    return (f"""
+    return f"""
         (model "${{KIPRJMOD}}/{file_path}/{file_name}.step"
             (offset (xyz 0 0 0))
             (scale (xyz 1 1 1))
             (rotate (xyz 0 0 0))
         )
-        """)
+        """
 
 
 def generate_courtyard(width: float, height: float) -> str:
@@ -67,7 +67,7 @@ def generate_courtyard(width: float, height: float) -> str:
     half_width = width / 2
     half_height = height / 2
 
-    return (f"""
+    return f"""
         (fp_rect
             (start -{half_width} -{half_height})
             (end {half_width} {half_height})
@@ -76,11 +76,113 @@ def generate_courtyard(width: float, height: float) -> str:
             (layer "F.CrtYd")
             (uuid "{uuid4()}")
         )
-        """)
+        """
+
+
+def generate_courtyard_2(
+    width_left: float,
+    width_right: float,
+    height_top: float,
+    height_bottom: float,
+) -> str:
+    """Generate KiCad courtyard outline for rectangular components.
+
+    Creates a rectangular courtyard outline defining the minimum
+    clearance zone around a component.
+
+    Args:
+        width_left (float): Component body width in millimeters.
+        width_right (float): Component body width in millimeters.
+        height_top (float): Component body height in millimeters.
+        height_bottom (float): Component body height in millimeters.
+
+    Returns:
+        str: KiCad format courtyard outline specification.
+
+    """
+    return f"""
+        (fp_rect
+            (start -{width_left} -{height_bottom})
+            (end {width_right} {height_top})
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
+def generate_silkscreen_rectangle(
+    width_left: float,
+    width_right: float,
+    height_top: float,
+    height_bottom: float,
+) -> str:
+    """Generate KiCad courtyard outline for rectangular components.
+
+    Creates a rectangular courtyard outline defining the minimum
+    clearance zone around a component.
+
+    Args:
+        width_left (float): Component body width in millimeters.
+        width_right (float): Component body width in millimeters.
+        height_top (float): Component body height in millimeters.
+        height_bottom (float): Component body height in millimeters.
+
+    Returns:
+        str: KiCad format courtyard outline specification.
+
+    """
+    return f"""
+        (fp_rect
+            (start -{width_left} -{height_bottom})
+            (end {width_right} {height_top})
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
+def generate_fabrication_rectangle(
+    width_left: float,
+    width_right: float,
+    height_top: float,
+    height_bottom: float,
+) -> str:
+    """Generate KiCad courtyard outline for rectangular components.
+
+    Creates a rectangular courtyard outline defining the minimum
+    clearance zone around a component.
+
+    Args:
+        width_left (float): Component body width in millimeters.
+        width_right (float): Component body width in millimeters.
+        height_top (float): Component body height in millimeters.
+        height_bottom (float): Component body height in millimeters.
+
+    Returns:
+        str: KiCad format courtyard outline specification.
+
+    """
+    return f"""
+        (fp_rect
+            (start -{width_left} -{height_bottom})
+            (end {width_right} {height_top})
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "{uuid4()}")
+        )
+        """
 
 
 def generate_silkscreen_lines(
-        height: float, center_x: float, pad_width: float) -> str:
+    height: float,
+    center_x: float,
+    pad_width: float,
+) -> str:
     """Generate silkscreen reference lines for a component.
 
     Creates horizontal silkscreen lines to help with component
@@ -130,7 +232,7 @@ def generate_fab_rectangle(width: float, height: float) -> str:
     half_width = width / 2
     half_height = height / 2
 
-    return (f"""
+    return f"""
         (fp_rect
             (start -{half_width} -{half_height})
             (end {half_width} {half_height})
@@ -139,14 +241,15 @@ def generate_fab_rectangle(width: float, height: float) -> str:
             (layer "F.Fab")
             (uuid "{uuid4()}")
         )
-        """)
+        """
 
 
 def generate_fab_diode(
-        width: float,
-        height: float,
-        anode_center_x: float,
-        cathode_center_x: float) -> str:
+    width: float,
+    height: float,
+    anode_center_x: float,
+    cathode_center_x: float,
+) -> str:
     """Generate fabrication layer polygon for diode representation.
 
     Creates a polygon on the fabrication layer depicting a diode's
@@ -162,7 +265,7 @@ def generate_fab_diode(
         str: KiCad formatted fabrication layer diode polygon.
 
     """
-    return (f"""
+    return f"""
         (fp_poly
             (pts
             (xy {width} 0)
@@ -183,40 +286,47 @@ def generate_fab_diode(
             (layer "F.Fab")
             (uuid "{uuid4()}")
         )
-        """)
+        """
 
 
-def generate_properties(ref_offset_y: float, value: str) -> str:
+def generate_properties(
+    ref_y: float,
+    value: str,
+    mpn_y: float | None = None,
+) -> str:
     """Generate properties section for KiCad footprint.
 
     Creates text properties including reference, value, and
     footprint description with consistent formatting.
 
     Args:
-        ref_offset_y (float): Vertical offset for reference text.
+        ref_y (float): Vertical offset for reference text.
         value (str): Component value/description.
+        mpn_y (float): Vertical offset for reference text.
 
     Returns:
         str: KiCad formatted properties and text elements.
 
     """
-    font_props = ("""
+    font_props = """
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
             (justify left)
         )
-        """)
+        """
 
-    return (f"""
+    ref = ref_y if mpn_y is None else mpn_y
+
+    return f"""
         (property "Reference" "REF**"
-            (at 0 {ref_offset_y} 0)
+            (at 0 {ref_y} 0)
             (unlocked yes)
             (layer "F.SilkS")
             (uuid "{uuid4()}")
             {font_props}
         )
         (property "Value" "{value}"
-            (at 0 {-1 * ref_offset_y} 0)
+            (at 0 {ref} 0)
             (unlocked yes)
             (layer "F.Fab")
             (uuid "{uuid4()}")
@@ -230,20 +340,20 @@ def generate_properties(ref_offset_y: float, value: str) -> str:
             {font_props}
         )
         (fp_text user "${{REFERENCE}}"
-            (at 0 {-1 * ref_offset_y + 1.27} 0)
+            (at 0 {ref + 1.27} 0)
             (unlocked yes)
             (layer "F.Fab")
             (uuid "{uuid4()}")
             {font_props}
         )
-        """)
+        """
 
 
 def generate_pin_1_indicator(
-        pad_center_x: float,
-        pad_width: float,
-        pins_per_side: float = 1,
-        pitch_y: float = 0,
+    pad_center_x: float,
+    pad_width: float,
+    pins_per_side: float = 1,
+    pitch_y: float = 0,
 ) -> str:
     """Generate the shapes section of the footprint."""
     shapes = []
@@ -270,7 +380,9 @@ def generate_pin_1_indicator(
 
 
 def calculate_pad_positions(
-        pad_center_x: float, pad_pitch_y: float, pins_per_side: float,
+    pad_center_x: float,
+    pad_pitch_y: float,
+    pins_per_side: float,
 ) -> list[tuple[float, float]]:
     """Calculate positions for all pads based on pin count."""
     total_height = pad_pitch_y * (pins_per_side - 1)
@@ -279,29 +391,32 @@ def calculate_pad_positions(
 
     # Left side pads (top to bottom)
     for pin_index in range(pins_per_side):
-        y_pos = -total_height/2 + pin_index * pad_pitch_y
+        y_pos = -total_height / 2 + pin_index * pad_pitch_y
         positions.append((-pad_center_x, y_pos))
 
     # Right side pads (bottom to top)
     for pin_index in range(pins_per_side):
-        y_pos = total_height/2 - pin_index * pad_pitch_y
+        y_pos = total_height / 2 - pin_index * pad_pitch_y
         positions.append((pad_center_x, y_pos))
 
     return positions
 
 
 def generate_pads(  # noqa: PLR0913
-        pad_width: float,
-        pad_height: float,
-        pad_center_x: float,
-        pad_pitch_y: float = 0,
-        pins_per_side: float = 1,
-        pin_numbers: list = None,  # noqa: RUF013
+    pad_width: float,
+    pad_height: float,
+    pad_center_x: float,
+    pad_pitch_y: float = 0,
+    pins_per_side: float = 1,
+    pin_numbers: list = None,  # noqa: RUF013
 ) -> str:
     """Generate the pads section of the footprint."""
     pads = []
     pad_positions = calculate_pad_positions(
-        pad_center_x, pad_pitch_y, pins_per_side)
+        pad_center_x,
+        pad_pitch_y,
+        pins_per_side,
+    )
 
     # Determine pin numbering
     if pin_numbers is None:
@@ -312,7 +427,8 @@ def generate_pads(  # noqa: PLR0913
     if len(pin_numbers) != len(pad_positions):
         msg = (
             f"Number of pin numbers ({len(pin_numbers)}) "
-            f"must match number of pad positions ({len(pad_positions)})")
+            f"must match number of pad positions ({len(pad_positions)})"
+        )
         raise ValueError(msg)
 
     for (x_pos, y_pos), pad_number in zip(pad_positions, pin_numbers):
@@ -330,11 +446,11 @@ def generate_pads(  # noqa: PLR0913
 
 
 def generate_thermal_pad(
-        pad_width: float,
-        pad_heigh: float,
-        pad_x: float,
-        pad_y: list[float],
-        thermal_pad_numbers: list[int],
+    pad_width: float,
+    pad_heigh: float,
+    pad_x: float,
+    pad_y: list[float],
+    thermal_pad_numbers: list[int],
 ) -> str:
     """Generate the pads section of the footprint."""
     pads = [
@@ -346,6 +462,8 @@ def generate_thermal_pad(
             (roundrect_rratio 0.05)
             (uuid "{uuid4()}")
         )
-        """ for index, pad_number in enumerate(thermal_pad_numbers)]
+        """
+        for index, pad_number in enumerate(thermal_pad_numbers)
+    ]
 
     return "\n".join(pads)
