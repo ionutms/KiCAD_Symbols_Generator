@@ -41,7 +41,7 @@ def generate_footprint(
     dimensions = calculate_dimensions(part_info, specs)
     sections = [
         footprint_utils.generate_header(part_info.mpn),
-        generate_properties(part_info, specs, dimensions),
+        footprint_utils.generate_properties(specs.ref_y, part_info.series),
         generate_shapes(dimensions, specs),
         generate_pads(part_info, specs, dimensions),
         footprint_utils.associate_3d_model(
@@ -85,56 +85,6 @@ def calculate_dimensions(
         "total_length": total_length,
         "start_pos": start_position,
     }
-
-
-def generate_properties(
-    part_info: symbol_connectors_specs.PartInfo,
-    specs: FootprintSpecs, dimensions: dict,
-) -> str:
-    """Generate the properties section of the footprint."""
-    font_props = ("""
-        (effects (font (size 0.762 0.762) (thickness 0.1524)))
-        """)
-
-    hidden_font_props = ("""
-        (effects (font (size 1.27 1.27) (thickness 0.15)))
-        """)
-
-    return (f"""
-        (property "Reference" "REF**"
-            (at 0 {specs.ref_y} 0)
-            (layer "F.SilkS")
-            (uuid "{uuid4()}")
-            {font_props}
-        )
-        (property "Value" "{part_info.mpn}"
-            (at 0 {specs.mpn_y} 0)
-            (layer "F.Fab")
-            (uuid "{uuid4()}")
-            {font_props}
-        )
-        (property "Footprint" ""
-            (at {dimensions['start_pos']} 0 0)
-            (layer "F.Fab")
-            (hide yes)
-            (uuid "{uuid4()}")
-            {hidden_font_props}
-        )
-        (property "Datasheet" ""
-            (at {dimensions['start_pos']} 0 0)
-            (layer "F.Fab")
-            (hide yes)
-            (uuid "{uuid4()}")
-            {hidden_font_props}
-        )
-        (property "Description" ""
-            (at {dimensions['start_pos']} 0 0)
-            (layer "F.Fab")
-            (hide yes)
-            (uuid "{uuid4()}")
-            {hidden_font_props}
-        )
-        """)
 
 
 def generate_shapes(dimensions: dict, specs: FootprintSpecs) -> str:
