@@ -25,8 +25,8 @@ from utilities import file_handler_utilities, symbol_utils
 
 
 def generate_kicad_symbol(
-        input_csv_file: str,
-        output_symbol_file: str,
+    input_csv_file: str,
+    output_symbol_file: str,
 ) -> None:
     """Generate a KiCad symbol file from CSV data.
 
@@ -62,6 +62,10 @@ def write_component(
     symbol_name = component_data["Symbol Name"]
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 2)
+        symbol_file,
+        component_data,
+        property_order,
+        2,
+    )
     symbol_utils.write_capacitor_symbol_drawing(symbol_file, symbol_name)
     symbol_file.write(")")
