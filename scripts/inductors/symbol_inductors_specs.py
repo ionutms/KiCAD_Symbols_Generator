@@ -170,7 +170,7 @@ class PartInfo(NamedTuple):
         """
         parts = [
             "INDUCTOR SMD",
-            cls.format_inductance_value(inductance),
+            cls.format_value(inductance),
             specs.tolerance,
         ]
         return " ".join(parts)
