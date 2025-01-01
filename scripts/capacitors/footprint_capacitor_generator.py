@@ -41,14 +41,21 @@ def generate_footprint(
     sections: list[str] = [
         footprint_utils.generate_header(footprint_name),
         footprint_utils.generate_properties(
-            capacitor_specs.ref_offset_y, footprint_name),
+            capacitor_specs.ref_offset_y,
+            footprint_name,
+        ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_silkscreen_lines(
-            body_height, pad_center_x, pad_width),
+            body_height,
+            pad_center_x,
+            pad_width,
+        ),
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models", step_file_name),
+            "KiCAD_Symbol_Generator/3D_models",
+            step_file_name,
+        ),
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
@@ -64,16 +71,21 @@ def generate_footprint_file(
         series_name: Name of the capacitor series
         output_path: Directory to save the generated footprint file
 
+    Returns:
+        None
+
     """
     series_spec: SeriesSpec = SERIES_SPECS[series_name]
     capacitor_specs: FootprintSpecs = FOOTPRINTS_SPECS[
-        series_spec.case_code_in]
+        series_spec.case_code_in
+    ]
 
     footprint_content: str = generate_footprint(series_spec, capacitor_specs)
 
     filename: str = (
         f"C_{series_spec.case_code_in}_{series_spec.case_code_mm}"
-        "Metric.kicad_mod")
+        "Metric.kicad_mod"
+    )
     file_path: str = f"{output_path}/{filename}"
 
     with Path.open(file_path, "w", encoding="utf-8") as file_handle:
