@@ -7,6 +7,12 @@ class BodyDimensions(NamedTuple):
     """Defines rectangular dimensions for diode body outlines.
 
     All measurements are in millimeters relative to the origin point (0,0).
+    A diode body is defined by its width and height.
+
+    Attributes:
+        width: Width of the diode body
+        height: Height of the diode body
+
     """
 
     width: float
@@ -18,6 +24,15 @@ class PadDimensionsAsymmetric(NamedTuple):
 
     All measurements are in millimeters. For PowerDI-123 package,
     cathode_pad is pad 1, anode_pad is pad 2.
+
+    Attributes:
+        cathode_width: Width of the cathode pad
+        cathode_height: Height of the cathode pad
+        cathode_center_x: X-coordinate of the cathode pad center
+        anode_width: Width of the anode pad
+        anode_height: Height of the anode pad
+        anode_center_x: X-coordinate of the anode pad center
+        roundrect_ratio: Roundness ratio of the pad corners (default 0.25)
 
     """
 
@@ -35,6 +50,12 @@ class FootprintSpecs(NamedTuple):
 
     Defines all physical dimensions, pad properties, and reference designator
     positions needed to generate a complete KiCad footprint file.
+
+    Attributes:
+        body_dimensions: BodyDimensions for the diode body
+        pad_dimensions: PadDimensionsAsymmetric for the diode pads
+        ref_offset_y: Y-coordinate offset for the reference designator
+
     """
 
     body_dimensions: BodyDimensions
@@ -44,39 +65,39 @@ class FootprintSpecs(NamedTuple):
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
     "PowerDI_123": FootprintSpecs(
-        body_dimensions=BodyDimensions(
-            width=5.0,
-            height=2.6),
+        body_dimensions=BodyDimensions(width=5.0, height=2.6),
         pad_dimensions=PadDimensionsAsymmetric(
             cathode_width=2.4,
             cathode_height=1.5,
             cathode_center_x=0.85,
             anode_width=1.05,
             anode_height=1.5,
-            anode_center_x=1.525),
-        ref_offset_y=-2.5),
+            anode_center_x=1.525,
+        ),
+        ref_offset_y=-2.5,
+    ),
     "SOD_123": FootprintSpecs(
-        body_dimensions=BodyDimensions(
-            width=4.8,
-            height=2.0),
+        body_dimensions=BodyDimensions(width=4.8, height=2.0),
         pad_dimensions=PadDimensionsAsymmetric(
             cathode_width=0.91,
             cathode_height=1.22,
             cathode_center_x=1.635,
             anode_width=0.91,
             anode_height=1.22,
-            anode_center_x=1.635),
-        ref_offset_y=-1.778),
+            anode_center_x=1.635,
+        ),
+        ref_offset_y=-1.778,
+    ),
     "SOD_123F": FootprintSpecs(
-        body_dimensions=BodyDimensions(
-            width=4.6,
-            height=2.2),
+        body_dimensions=BodyDimensions(width=4.6, height=2.2),
         pad_dimensions=PadDimensionsAsymmetric(
             cathode_width=1.34,
             cathode_height=1.8,
             cathode_center_x=1.43,
             anode_width=1.34,
             anode_height=1.8,
-            anode_center_x=1.43),
-        ref_offset_y=-1.778),
+            anode_center_x=1.43,
+        ),
+        ref_offset_y=-1.778,
+    ),
 }
