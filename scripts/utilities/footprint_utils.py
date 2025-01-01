@@ -354,6 +354,7 @@ def generate_pin_1_indicator(
     pad_width: float,
     pins_per_side: float = 1,
     pitch_y: float = 0,
+    layer: str = "F.SilkS",
 ) -> str:
     """Generate the shapes section of the footprint."""
     shapes = []
@@ -371,7 +372,7 @@ def generate_pin_1_indicator(
             (end {circle_x - radius} {circle_y})
             (stroke (width 0.1524) (type solid))
             (fill solid)
-            (layer "F.SilkS")
+            (layer {layer})
             (uuid "{uuid4()}")
         )
         """)
@@ -467,3 +468,63 @@ def generate_thermal_pad(
     ]
 
     return "\n".join(pads)
+
+
+def generate_thru_hole_pads(
+    pin_count: int,
+    pitch: float,
+    pad_size: float,
+    drill_size: float,
+    start_pos: float,
+) -> str:
+    """Generate the pads section of the footprint."""
+    pads = []
+    for pin_num in range(pin_count):
+        xpos = start_pos + (pin_num * pitch)
+        pad_type = "rect" if pin_num == 0 else "circle"
+        pad = f"""
+            (pad "{pin_num + 1}" thru_hole {pad_type}
+                (at {xpos:.3f} 0)
+                (size {pad_size} {pad_size})
+                (drill {drill_size})
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
+def calculate_dimensions(
+    pin_count: int,
+    pitch: float,
+    width_left: float,
+    width_right: float,
+) -> dict:
+    """Calculate key dimensions for footprint generation.
+
+    Determines total width, length, and starting positions based on the
+    connector's pin count and physical specifications.
+
+    Args:
+        pin_count: Number of pins on the connector
+        pitch: Distance between adjacent pins
+        width_left: Initial width of the connector body on the left side
+        width_right: Initial width of the connector body on the right side
+
+    Returns:
+        Dictionary containing calculated dimensions and positions
+
+    """
+    extra_width_per_side = (pin_count - 2) * pitch / 2
+    total_length = (pin_count - 1) * pitch
+    start_position = -total_length / 2
+
+    return {
+        "width_left": width_left + extra_width_per_side,
+        "width_right": width_right + extra_width_per_side,
+        "total_length": total_length,
+        "start_pos": start_position,
+    }
