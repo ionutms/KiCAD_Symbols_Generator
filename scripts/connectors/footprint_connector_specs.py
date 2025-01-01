@@ -95,8 +95,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(
             width_left=4.445,
             width_right=4.445,
-            height_top=3.2512,
-            height_bottom=4.445,
+            height_top=4.445,
+            height_bottom=3.2512,
         ),
         pad_size=2.1,
         drill_size=1.4,
@@ -125,8 +125,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(
             width_left=5.8,
             width_right=5.8,
-            height_top=4.8,
-            height_bottom=4.0,
+            height_top=4.0,
+            height_bottom=4.8,
         ),
         pad_size=2.55,
         drill_size=1.7,
@@ -140,8 +140,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(
             width_left=5.2,
             width_right=5.2,
-            height_top=4.8,
-            height_bottom=4.0,
+            height_top=4.0,
+            height_bottom=4.8,
         ),
         pad_size=2.55,
         drill_size=1.7,
