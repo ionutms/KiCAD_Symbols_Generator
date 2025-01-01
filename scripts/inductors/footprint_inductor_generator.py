@@ -14,19 +14,17 @@ from utilities import footprint_utils
 
 
 def generate_footprint(
-        part_info: symbol_inductors_specs.PartInfo,
-        specs: FootprintSpecs,
+    part_info: symbol_inductors_specs.PartInfo,
+    specs: FootprintSpecs,
 ) -> str:
     """Generate complete KiCad footprint file content for an inductor.
 
     Args:
         part_info: Component specifications
-        specs:
-            Physical specifications for the inductor series
-            from FOOTPRINTS_SPECS
+        specs: Footprint specifications for the component series
 
     Returns:
-        Complete .kicad_mod file content as formatted string
+        str: Complete content of the .kicad_mod file for the inductor
 
     """
     body_width = specs.body_dimensions.width
@@ -39,29 +37,39 @@ def generate_footprint(
     sections = [
         footprint_utils.generate_header(part_info.series),
         footprint_utils.generate_properties(
-            specs.ref_offset_y, part_info.series),
+            specs.ref_offset_y,
+            part_info.series,
+        ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_silkscreen_lines(
-            body_height, pad_center_x, pad_width),
+            body_height,
+            pad_center_x,
+            pad_width,
+        ),
         footprint_utils.generate_pin_1_indicator(pad_center_x, pad_width),
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models", part_info.series),
+            "KiCAD_Symbol_Generator/3D_models",
+            part_info.series,
+        ),
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
 
 
 def generate_footprint_file(
-        part_info: symbol_inductors_specs.PartInfo,
-        output_path: str,
+    part_info: symbol_inductors_specs.PartInfo,
+    output_path: str,
 ) -> None:
     """Generate and save a complete .kicad_mod file for an inductor.
 
     Args:
-        part_info: Component specifications including MPN and series
-        output_path: Directory path where the footprint file will be saved
+        part_info: Component specifications
+        output_path: Directory path to save the generated file
+
+    Returns:
+        None
 
     """
     specs = FOOTPRINTS_SPECS[part_info.series]
