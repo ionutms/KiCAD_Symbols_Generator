@@ -356,7 +356,19 @@ def generate_pin_1_indicator(
     pitch_y: float = 0,
     layer: str = "F.SilkS",
 ) -> str:
-    """Generate the shapes section of the footprint."""
+    """Generate the pin 1 indicator for a component.
+
+    Args:
+        pad_center_x: X-coordinate of the pad center
+        pad_width: Width of the pad
+        pins_per_side: Number of pins on each side
+        pitch_y: Distance between adjacent pads
+        layer: Layer to draw the pin 1 indicator on
+
+    Returns:
+        str: KiCad formatted pin 1 indicator
+
+    """
     shapes = []
 
     # Pin 1 indicator position
@@ -385,7 +397,17 @@ def calculate_pad_positions(
     pad_pitch_y: float,
     pins_per_side: float,
 ) -> list[tuple[float, float]]:
-    """Calculate positions for all pads based on pin count."""
+    """Calculate the positions of the pads on the footprint.
+
+    Args:
+        pad_center_x: X-coordinate of the pad center
+        pad_pitch_y: Distance between adjacent pads
+        pins_per_side: Number of pins on each side
+
+    Returns:
+        List of pad positions as (x, y) tuples
+
+    """
     total_height = pad_pitch_y * (pins_per_side - 1)
 
     positions = []
@@ -408,10 +430,23 @@ def generate_pads(  # noqa: PLR0913
     pad_height: float,
     pad_center_x: float,
     pad_pitch_y: float = 0,
-    pins_per_side: float = 1,
+    pins_per_side: int = 1,
     pin_numbers: list = None,  # noqa: RUF013
 ) -> str:
-    """Generate the pads section of the footprint."""
+    """Generate the pads section of the footprint.
+
+    Args:
+        pad_width: Width of the pad
+        pad_height: Height of the pad
+        pad_center_x: X-coordinate of the pad center
+        pad_pitch_y: Distance between adjacent pads
+        pins_per_side: Number of pins on each side
+        pin_numbers: List of custom pin numbers
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
     pads = []
     pad_positions = calculate_pad_positions(
         pad_center_x,
@@ -453,7 +488,19 @@ def generate_thermal_pad(
     pad_y: list[float],
     thermal_pad_numbers: list[int],
 ) -> str:
-    """Generate the pads section of the footprint."""
+    """Generate the thermal pads section of the footprint.
+
+    Args:
+        pad_width: Width of the thermal pad
+        pad_heigh: Height of the thermal pad
+        pad_x: X-coordinate of the thermal pad
+        pad_y: List of Y-coordinates of the thermal pads
+        thermal_pad_numbers: List of thermal pad numbers
+
+    Returns:
+        str: KiCad formatted thermal pad definitions
+
+    """
     pads = [
         f"""
         (pad "{pad_number}" smd roundrect
@@ -477,7 +524,19 @@ def generate_thru_hole_pads(
     drill_size: float,
     start_pos: float,
 ) -> str:
-    """Generate the pads section of the footprint."""
+    """Generate the pads section of the footprint.
+
+    Args:
+        pin_count: Number of pins in the connector
+        pitch: Distance between adjacent pins
+        pad_size: Diameter of the pad
+        drill_size: Diameter of the drill hole
+        start_pos: X-coordinate of the first pad
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
     pads = []
     for pin_num in range(pin_count):
         xpos = start_pos + (pin_num * pitch)
