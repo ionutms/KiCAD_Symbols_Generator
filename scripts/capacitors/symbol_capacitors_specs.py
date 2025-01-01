@@ -286,7 +286,7 @@ class PartInfo(NamedTuple):
         """
         capacitance_code = cls.generate_capacitance_code(capacitance)
         characteristic_code = cls.get_characteristic_code(capacitance, specs)
-        formatted_value = cls.format_capacitance_value(capacitance)
+        formatted_value = cls.format_value(capacitance)
 
         if specs.manufacturer == "Murata Electronics":
             mpn = (
