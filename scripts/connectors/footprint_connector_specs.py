@@ -87,8 +87,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         drill_size=1.4,
         silk_margin=0.1524,
         mask_margin=0.102,
-        mpn_y=8.8,
-        ref_y=-2.4,
+        mpn_y=-10.2,
+        ref_y=2.4,
     ),
     "TBP02R2-381": FootprintSpecs(
         pitch=3.81,
@@ -117,8 +117,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         drill_size=1.7,
         silk_margin=0.1524,
         mask_margin=0.102,
-        mpn_y=-12.2,
-        ref_y=3.0,
+        mpn_y=10.8,
+        ref_y=-3.0,
     ),
     "TBP04R2-500": FootprintSpecs(
         pitch=5.0,
@@ -162,7 +162,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         drill_size=1.7,
         silk_margin=0.1524,
         mask_margin=0.102,
-        mpn_y=-12.2,
-        ref_y=3.0,
+        mpn_y=10.8,
+        ref_y=-3.0,
     ),
 }
