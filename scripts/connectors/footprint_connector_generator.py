@@ -106,8 +106,11 @@ def generate_footprint_file(
     corresponding series specifications.
 
     Args:
-        part_info: Component specifications including MPN and series
-        output_path: todo
+        part_info: Component specifications (MPN, pin count, pitch)
+        output_path: Directory path for saving the .kicad_mod file
+
+    Returns:
+        None
 
     """
     specs = CONNECTOR_SPECS[part_info.series]
