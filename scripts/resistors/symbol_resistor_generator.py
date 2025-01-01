@@ -30,13 +30,16 @@ def generate_kicad_symbol(
     """Generate a KiCad symbol file from CSV data.
 
     Args:
-        input_csv_file (str): Path to the input CSV file with component data.
-        output_symbol_file (str): Path for the output .kicad_sym file.
+        input_csv_file (str): Path to the input CSV file.
+        output_symbol_file (str): Path to the output symbol file.
 
     Raises:
         FileNotFoundError: If the input CSV file is not found.
-        csv.Error: If there's an error reading the CSV file.
-        IOError: If there's an error writing to the output file.
+        csv.Error: If an error occurs while processing the CSV file.
+        OSError: If an I/O error occurs while writing the symbol file.
+
+    Returns:
+        None
 
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
@@ -57,14 +60,21 @@ def write_component(
     """Write a single component to the KiCad symbol file.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
+        symbol_file: The file handle for the symbol file.
+        component_data: A dictionary of component data.
+        property_order: The order of properties to write.
+
+    Returns:
+        None
 
     """
     symbol_name = component_data["Symbol Name"]
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 1)
+        symbol_file,
+        component_data,
+        property_order,
+        1,
+    )
     symbol_utils.write_resistor_symbol_drawing(symbol_file, symbol_name)
     symbol_file.write(")")
