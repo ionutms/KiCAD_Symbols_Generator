@@ -27,18 +27,17 @@ def generate_kicad_symbol(
     input_csv_file: str,
     output_symbol_file: str,
 ) -> None:
-    """Generate a KiCad symbol file from CSV data for inductors.
+    """Generate a KiCad symbol file for diodes.
+
+    Reads diode data from a CSV file and generates a KiCad symbol file
+    with the appropriate properties and graphical representation.
 
     Args:
-        input_csv_file (str): Path to the input CSV file with component data.
-        output_symbol_file (str): Path for the output .kicad_sym file.
-        encoding (str, optional):
-            Character encoding to use. Defaults to 'utf-8'.
+        input_csv_file (str): Path to the input CSV file with diode data.
+        output_symbol_file (str): Path to the output KiCad symbol file.
 
-    Raises:
-        FileNotFoundError: If the input CSV file is not found.
-        csv.Error: If there's an error reading the CSV file.
-        IOError: If there's an error writing to the output file.
+    Returns:
+        None
 
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
@@ -56,28 +55,43 @@ def write_component(
     component_data: dict[str, str],
     property_order: list[str],
 ) -> None:
-    """Write a single component to the KiCad symbol file.
+    """Write a diode component to a KiCad symbol file.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
+        symbol_file (TextIO): The file handle for the KiCad symbol file.
+        component_data (dict): A dictionary of diode properties.
+        property_order (list): The order of properties to write.
+
+    Returns:
+        None
 
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 3)
+        symbol_file,
+        component_data,
+        property_order,
+        3,
+    )
     if component_data.get("Transistor Type") == "P-Channel":
         symbol_utils.write_p_mos_transistor_symbol_drawing(
-            symbol_file, symbol_name)
+            symbol_file,
+            symbol_name,
+        )
     if component_data.get("Transistor Type") == "N-Channel":
         symbol_utils.write_n_mos_transistor_symbol_drawing(
-            symbol_file, symbol_name)
+            symbol_file,
+            symbol_name,
+        )
     if component_data.get("Transistor Type") == "N-Channel Dual":
         symbol_utils.write_n_mos_dual_transistor_symbol_drawing(
-            symbol_file, symbol_name)
+            symbol_file,
+            symbol_name,
+        )
     if component_data.get("Transistor Type") == "P-Channel Dual":
         symbol_utils.write_p_mos_dual_transistor_symbol_drawing(
-            symbol_file, symbol_name)
+            symbol_file,
+            symbol_name,
+        )
     symbol_file.write(")")

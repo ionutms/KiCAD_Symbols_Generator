@@ -1,4 +1,16 @@
-"""Specifications for diode footprint generation."""
+"""Defines physical dimensions and pad properties for various diode packages.
+
+This module defines a dictionary of FootprintSpecs objects, each of which
+contains all the information needed to generate a complete KiCad footprint
+file for a specific diode package. The dictionary keys are the package names
+as they appear in the MPN field of the transistor symbol.
+
+The FootprintSpecs object contains the following fields:
+
+- body_dimensions:
+    A BodyDimensions object with the width and height of the
+    diode body outline in millimeters.
+"""
 
 from typing import NamedTuple
 
@@ -7,6 +19,11 @@ class BodyDimensions(NamedTuple):
     """Defines rectangular dimensions for diode body outlines.
 
     All measurements are in millimeters relative to the origin point (0,0).
+
+    Attributes:
+        width: The width of the diode body outline.
+        height: The height of the diode body outline.
+
     """
 
     width: float
@@ -14,10 +31,25 @@ class BodyDimensions(NamedTuple):
 
 
 class PadDimensionsAsymmetric(NamedTuple):
-    """Defines dimensions for asymmetric diode pads.
+    """Defines pad dimensions and positions for diode footprints.
 
-    All measurements are in millimeters. For PowerDI-123 package,
-    cathode_pad is pad 1, anode_pad is pad 2.
+    All measurements are in millimeters relative to the origin point (0,0).
+
+    Attributes:
+        width: The width of the diode pad.
+        height: The height of the diode pad.
+        pad_center_x: The x-coordinate of the center of the first pad.
+        pad_pitch_y: The distance between the centers of adjacent pads.
+        pins_per_side: The number of pads on each side of the diode.
+        thermal_width: The width of the thermal pad.
+        thermal_height: The height of the thermal pad.
+        thermal_pad_center_x:
+            The x-coordinate of the center of the thermal pad.
+        thermal_pad_center_y:
+            The y-coordinates of the centers of the thermal pads.
+        thermal_pad_numbers: The pad numbers for the thermal pads.
+        pad_numbers: The pad numbers for the regular pads.
+
 
     """
 
@@ -35,10 +67,17 @@ class PadDimensionsAsymmetric(NamedTuple):
 
 
 class FootprintSpecs(NamedTuple):
-    """Complete specifications for generating a diode footprint.
+    """Defines physical dimensions and pad properties for a diode package.
 
-    Defines all physical dimensions, pad properties, and reference designator
-    positions needed to generate a complete KiCad footprint file.
+    Attributes:
+        body_dimensions:
+            A BodyDimensions object with the width and height of the diode
+            body outline in millimeters.
+        pad_dimensions:
+            A PadDimensionsAsymmetric object with the pad dimensions and
+            positions for the diode footprint.
+        ref_offset_y: The y-coordinate of the reference designator text.
+
     """
 
     body_dimensions: BodyDimensions
@@ -50,41 +89,69 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
     "PowerPAK 1212-8": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.0, height=3.9),
         pad_dimensions=PadDimensionsAsymmetric(
-            width=0.99, height=0.405, pad_center_x=1.435,
-            pad_pitch_y=0.66, pins_per_side=4,
-            thermal_width=1.725, thermal_height=2.385,
-            thermal_pad_center_x=0.558, thermal_pad_center_y=[0],
-            thermal_pad_numbers=[5], pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5]),
+            width=0.99,
+            height=0.405,
+            pad_center_x=1.435,
+            pad_pitch_y=0.66,
+            pins_per_side=4,
+            thermal_width=1.725,
+            thermal_height=2.385,
+            thermal_pad_center_x=0.558,
+            thermal_pad_center_y=[0],
+            thermal_pad_numbers=[5],
+            pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
+        ),
         ref_offset_y=-2.5,
     ),
     "LFPAK33-8": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.1, height=3.6),
         pad_dimensions=PadDimensionsAsymmetric(
-            width=0.83, height=0.4, pad_center_x=1.535,
-            pad_pitch_y=0.65, pins_per_side=4,
-            thermal_width=1.85, thermal_height=2.35,
-            thermal_pad_center_x=0.405, thermal_pad_center_y=[0],
-            thermal_pad_numbers=[5], pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5]),
+            width=0.83,
+            height=0.4,
+            pad_center_x=1.535,
+            pad_pitch_y=0.65,
+            pins_per_side=4,
+            thermal_width=1.85,
+            thermal_height=2.35,
+            thermal_pad_center_x=0.405,
+            thermal_pad_center_y=[0],
+            thermal_pad_numbers=[5],
+            pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
+        ),
         ref_offset_y=-2.5,
     ),
     "LFPAK56D-8": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7.3, height=5.85),
         pad_dimensions=PadDimensionsAsymmetric(
-            width=1.15, height=0.7, pad_center_x=2.95,
-            pad_pitch_y=1.27, pins_per_side=4,
-            thermal_width=4.4, thermal_height=1.97,
-            thermal_pad_center_x=0.425, thermal_pad_center_y=[1.27, -1.27],
-            thermal_pad_numbers=[5, 6], pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6]),
+            width=1.15,
+            height=0.7,
+            pad_center_x=2.95,
+            pad_pitch_y=1.27,
+            pins_per_side=4,
+            thermal_width=4.4,
+            thermal_height=1.97,
+            thermal_pad_center_x=0.425,
+            thermal_pad_center_y=[1.27, -1.27],
+            thermal_pad_numbers=[5, 6],
+            pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6],
+        ),
         ref_offset_y=-3.6,
     ),
     "PowerPAK SO-8": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7.0, height=5.0),
         pad_dimensions=PadDimensionsAsymmetric(
-            width=1.27, height=0.66, pad_center_x=2.67,
-            pad_pitch_y=1.27, pins_per_side=4,
-            thermal_width=3.81, thermal_height=1.93,
-            thermal_pad_center_x=0.69, thermal_pad_center_y=[1.27, -1.27],
-            thermal_pad_numbers=[5, 6], pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6]),
+            width=1.27,
+            height=0.66,
+            pad_center_x=2.67,
+            pad_pitch_y=1.27,
+            pins_per_side=4,
+            thermal_width=3.81,
+            thermal_height=1.93,
+            thermal_pad_center_x=0.69,
+            thermal_pad_center_y=[1.27, -1.27],
+            thermal_pad_numbers=[5, 6],
+            pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6],
+        ),
         ref_offset_y=-3.2,
     ),
 }

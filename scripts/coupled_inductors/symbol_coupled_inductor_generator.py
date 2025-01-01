@@ -40,8 +40,7 @@ def generate_kicad_symbol(
         IOError: If there's an error writing to the output file.
 
     """
-    component_data_list = file_handler_utilities.read_csv_data(
-        input_csv_file)
+    component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
     all_properties = symbol_utils.get_all_properties(component_data_list)
 
     with Path.open(output_symbol_file, "w", encoding="utf-8") as symbol_file:
@@ -58,24 +57,30 @@ def convert_pin_config(spec_config: SidePinConfig) -> dict[str, list]:
         spec_config: Optional[SidePinConfig] from SYMBOLS_SPECS
 
     Returns:
-        Optional[Dict]:
-            Pin configuration in the format expected by
-            write_coupled_inductor_symbol_drawing
+        dict[str, list]: Dictionary with left and right pin configurations.
 
     """
     return {
-        "left": [{
-            "number": pin.number,
-            "y_pos": pin.y_pos,
-            "pin_type": pin.pin_type,
-            "lenght": pin.lenght,
-            "hide": pin.hide} for pin in spec_config.left],
-        "right": [{
-            "number": pin.number,
-            "y_pos": pin.y_pos,
-            "pin_type": pin.pin_type,
-            "lenght": pin.lenght,
-            "hide": pin.hide} for pin in spec_config.right],
+        "left": [
+            {
+                "number": pin.number,
+                "y_pos": pin.y_pos,
+                "pin_type": pin.pin_type,
+                "lenght": pin.lenght,
+                "hide": pin.hide,
+            }
+            for pin in spec_config.left
+        ],
+        "right": [
+            {
+                "number": pin.number,
+                "y_pos": pin.y_pos,
+                "pin_type": pin.pin_type,
+                "lenght": pin.lenght,
+                "hide": pin.hide,
+            }
+            for pin in spec_config.right
+        ],
     }
 
 
@@ -91,6 +96,9 @@ def write_component(
         component_data (Dict[str, str]): Data for a single component.
         property_order (List[str]): Ordered list of property names.
 
+    Returns:
+        None
+
     """
     symbol_name = component_data.get("Symbol Name", "")
     series = component_data.get("Series", "")
@@ -101,7 +109,14 @@ def write_component(
 
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 3)
+        symbol_file,
+        component_data,
+        property_order,
+        3,
+    )
     symbol_utils.write_coupled_inductor_symbol_drawing(
-        symbol_file, symbol_name, pin_config)
+        symbol_file,
+        symbol_name,
+        pin_config,
+    )
     symbol_file.write(")")

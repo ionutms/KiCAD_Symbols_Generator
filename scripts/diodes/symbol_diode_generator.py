@@ -40,6 +40,9 @@ def generate_kicad_symbol(
         csv.Error: If there's an error reading the CSV file.
         IOError: If there's an error writing to the output file.
 
+    Returns:
+        None
+
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
     all_properties = symbol_utils.get_all_properties(component_data_list)
@@ -59,15 +62,22 @@ def write_component(
     """Write a single component to the KiCad symbol file.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
+        symbol_file (TextIO): File handle for the output symbol file.
+        component_data (dict): Dictionary of component properties.
+        property_order (list): List of property names in desired order
+
+    Returns:
+        None
 
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 2)
+        symbol_file,
+        component_data,
+        property_order,
+        2,
+    )
     if component_data.get("Diode Type") == "Schottky":
         symbol_utils.write_schottky_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "Zener":

@@ -1,4 +1,8 @@
-"""TODO."""
+"""Utility functions for file handling.
+
+This module contains utility functions for file handling, such as writing
+to CSV files and creating directories.
+"""
 
 import csv
 from pathlib import Path
@@ -21,6 +25,9 @@ def write_to_csv(
         header_mapping: todo
         encoding: Character encoding
 
+    Returns:
+        None
+
     """
     # Prepare all rows before opening file
     headers: Final[list[str]] = list(header_mapping.keys())
@@ -32,7 +39,11 @@ def write_to_csv(
 
     # Write all rows at once
     with Path.open(
-        f"data/{output_file}", "w", newline="", encoding=encoding) as csvfile:
+        f"data/{output_file}",
+        "w",
+        newline="",
+        encoding=encoding,
+    ) as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(rows)
 
@@ -43,6 +54,9 @@ def ensure_directory_exists(directory: str) -> None:
     Args:
         directory: Path of the directory to create.
             Can be either absolute or relative path.
+
+    Returns:
+        None
 
     Note:
         If the directory already exists, this function will silently succeed.

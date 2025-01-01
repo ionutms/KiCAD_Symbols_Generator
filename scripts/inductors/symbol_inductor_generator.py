@@ -1,20 +1,23 @@
-"""KiCad Inductor Symbol Generator.
+"""Generate a KiCad symbol file from CSV data for inductors.
 
-This module provides functionality to generate KiCad symbol files from CSV
-data for inductors. It creates symbol files with proper inductor properties
-and graphical representation in horizontal layout.
+This module provides functions to generate a KiCad symbol file from CSV data
+for inductors. The CSV data should contain the following columns:
+- Symbol Name
+- Manufacturer
+- Manufacturer Part Number
+- Description
+- Value
+- Tolerance
+- Power Rating
+- Series
+- Datasheet
+- TrustedParts Link
+- Maximum DC Current
+- Maximum DC Resistance
 
-The main function, generate_kicad_symbol, reads data from a CSV file and
-produces a .kicad_sym file with the symbol definition, including properties
-and graphical representation.
-
-Usage:
-    python kicad_inductor_symbol_generator.py
-
-Or import and use the generate_kicad_symbol function in your own script.
-
-Dependencies:
-    - csv (Python standard library)
+The generated symbol file will contain a symbol for each inductor in the CSV
+data. The symbol will include the inductor's properties and a graphical
+representation of the inductor.
 """
 
 from pathlib import Path
@@ -30,8 +33,11 @@ def generate_kicad_symbol(
     """Generate a KiCad symbol file from CSV data for inductors.
 
     Args:
-        input_csv_file (str): Path to the input CSV file with component data.
-        output_symbol_file (str): Path for the output .kicad_sym file.
+        input_csv_file (str): Path to the input CSV file.
+        output_symbol_file (str): Path to the output symbol file.
+
+    Returns:
+        None
 
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
@@ -52,14 +58,21 @@ def write_component(
     """Write a single component to the KiCad symbol file.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
+        symbol_file (TextIO): File handle for the symbol file.
+        component_data (dict): Component data from the CSV file.
+        property_order (list): Order of properties to write.
+
+    Returns:
+        None
 
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 1)
+        symbol_file,
+        component_data,
+        property_order,
+        1,
+    )
     symbol_utils.write_inductor_symbol_drawing(symbol_file, symbol_name)
     symbol_file.write(")")

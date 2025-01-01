@@ -11,16 +11,17 @@ from utilities import file_handler_utilities, symbol_utils
 
 
 def generate_kicad_symbol(
-        input_csv_file: str,
-        output_symbol_file: str,
+    input_csv_file: str,
+    output_symbol_file: str,
 ) -> None:
     """Generate a KiCad symbol file from CSV data for connectors.
 
     Args:
         input_csv_file (str): Path to the input CSV file with component data.
         output_symbol_file (str): Path for the output .kicad_sym file.
-        encoding (str, optional):
-            Character encoding to use. Defaults to 'utf-8'.
+
+    Returns:
+        None
 
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
@@ -38,11 +39,26 @@ def write_component(
     component_data: dict[str, str],
     property_order: list[str],
 ) -> None:
-    """Write a complete component definition."""
+    """Write a single component to the KiCad symbol file.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        component_data (Dict[str, str]): Data for a single component.
+        property_order (List[str]): Ordered list of property names.
+
+    Returns:
+        None
+
+    """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, 1, 2)
+        symbol_file,
+        component_data,
+        property_order,
+        1,
+        2,
+    )
     write_symbol_drawing(symbol_file, symbol_name, component_data)
     symbol_file.write(")")
 
@@ -52,7 +68,17 @@ def write_symbol_drawing(
     symbol_name: str,
     component_data: dict[str, str],
 ) -> None:
-    """Write the symbol drawing with dimensions adjusted for pin count."""
+    """Write the drawing for a connector symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+        component_data (Dict[str, str]): Data for the component.
+
+    Returns:
+        None
+
+    """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 2.54
 
@@ -71,7 +97,12 @@ def write_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
     write_rectangle(
-        symbol_file, -2.54, rectangle_height / 2, 2.54, -rectangle_height / 2)
+        symbol_file,
+        -2.54,
+        rectangle_height / 2,
+        2.54,
+        -rectangle_height / 2,
+    )
     symbol_file.write("\t\t)\n")
 
 
@@ -82,7 +113,19 @@ def write_rectangle(
     end_x: float,
     end_y: float,
 ) -> None:
-    """Write a rectangle definition with specific formatting."""
+    """Write a rectangle to the KiCad symbol file.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        start_x (float): X-coordinate of the start point.
+        start_y (float): Y-coordinate of the start point.
+        end_x (float): X-coordinate of the end point.
+        end_y (float): Y-coordinate of the end point.
+
+    Returns:
+        None
+
+    """
     symbol_file.write(f"""
         (rectangle
             (start {start_x} {start_y})

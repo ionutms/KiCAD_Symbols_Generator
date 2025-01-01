@@ -11,11 +11,20 @@ from utilities import print_message_utilities
 
 
 class SeriesSpec(NamedTuple):
-    """Transistor series specifications.
+    """Transistor series specifications structure for individual transistors.
 
-    This class defines the complete specifications for a series of
-    transistors, including physical, electrical,
-    and documentation characteristics.
+    Attributes:
+        manufacturer: The manufacturer of the transistor.
+        base_series: The base series name of the transistor.
+        footprint: The KiCad footprint name for the transistor.
+        datasheet: The URL of the datasheet for the transistor.
+        drain_source_voltage: A list of drain-source voltage ratings.
+        trustedparts_link: The URL of the TrustedParts website.
+        drain_current: A list of drain current ratings.
+        package: The package type of the transistor.
+        transistor_type: The type of transistor (e.g., N-Channel, P-Channel).
+        reference: The reference designator prefix for the transistor.
+
     """
 
     manufacturer: str
@@ -31,7 +40,24 @@ class SeriesSpec(NamedTuple):
 
 
 class PartInfo(NamedTuple):
-    """Component part information structure for individual transistors."""
+    """Transistor component information structure.
+
+    Attributes:
+        symbol_name: The name of the KiCad symbol for the transistor.
+        reference: The reference designator prefix for the transistor.
+        value: The voltage rating of the transistor.
+        footprint: The KiCad footprint name for the transistor.
+        datasheet: The URL of the datasheet for the transistor.
+        description: A descriptive string for the transistor component.
+        manufacturer: The manufacturer of the transistor.
+        mpn: The manufacturer part number of the transistor.
+        series: The base series name of the transistor.
+        trustedparts_link: The URL of the TrustedParts website.
+        drain_current: The drain current rating of the transistor.
+        package: The package type of the transistor.
+        transistor_type: The type of transistor (e.g., N-Channel, P-Channel).
+
+    """
 
     symbol_name: str
     reference: str
@@ -49,15 +75,13 @@ class PartInfo(NamedTuple):
 
     @classmethod
     def create_description(cls, value: float) -> str:
-        """Create a descriptive string for the transistor component.
+        """Create a description string for a transistor component.
 
         Args:
-            value (float): The voltage rating of the transistor.
+            value: The voltage rating of the transistor.
 
         Returns:
-            str:
-                A descriptive string combining
-                'Transistor' and formatted voltage.
+            A descriptive string for the transistor component
 
         """
         parts = ["Transistor", f"{value} V"]
@@ -69,20 +93,14 @@ class PartInfo(NamedTuple):
         value: float,
         specs: SeriesSpec,
     ) -> "PartInfo":
-        """Create a PartInfo object for a specific transistor component.
+        """Create a PartInfo instance for a transistor component.
 
         Args:
-            value (float): The voltage rating of the transistor.
-            specs (SeriesSpec): Specifications for the transistor series.
+            value: The voltage rating of the transistor.
+            specs: Series specifications for the transistor.
 
         Returns:
-            PartInfo:
-                A comprehensive part information object for the transistor.
-
-        Raises:
-            ValueError: If the voltage rating is not found in the series.
-            IndexError:
-                If no DC specifications are found for the given voltage.
+            A PartInfo instance for the transistor component
 
         """
         # Construct MPN with optional suffix
@@ -96,12 +114,14 @@ class PartInfo(NamedTuple):
         except ValueError:
             print_message_utilities.print_error(
                 f"Error: value {value} V "
-                f"not found in series {specs.base_series}")
+                f"not found in series {specs.base_series}",
+            )
             drain_current = 0.0
         except IndexError:
             print_message_utilities.print_error(
                 "Error: No DC specifications found for value "
-                f"{value} V in series {specs.base_series}")
+                f"{value} V in series {specs.base_series}",
+            )
             drain_current = 0.0
 
         return cls(
@@ -125,105 +145,141 @@ class PartInfo(NamedTuple):
         cls,
         specs: SeriesSpec,
     ) -> list["PartInfo"]:
-        """Generate all part numbers for the series.
+        """Generate PartInfo instances for all transistor components.
 
         Args:
-            specs: Series specifications
+            specs: Series specifications for the transistor.
 
         Returns:
-            List of PartInfo instances
+            A list of PartInfo instances for the transistor components.
 
         """
         return [
             cls.create_part_info(value, specs)
             for value in specs.drain_source_voltage
-            if cls.create_part_info(value, specs) is not None]
+            if cls.create_part_info(value, specs) is not None
+        ]
 
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "SI7309DN-T1-GE3": SeriesSpec(
-        manufacturer="Vishay Semiconductors", base_series="SI7309DN-T1-GE3",
+        manufacturer="Vishay Semiconductors",
+        base_series="SI7309DN-T1-GE3",
         footprint="transistor_footprints:PowerPAK 1212-8",
         datasheet="https://www.vishay.com/docs/73434/si7309dn.pdf",
-        drain_source_voltage =[-60.0], drain_current=[-8.0],
-        package="PowerPAK 1212-8", transistor_type="P-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+        drain_source_voltage=[-60.0],
+        drain_current=[-8.0],
+        package="PowerPAK 1212-8",
+        transistor_type="P-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "PSMN040-100MSEX": SeriesSpec(
-        manufacturer="Nexperia", base_series="PSMN040-100MSEX",
+        manufacturer="Nexperia",
+        base_series="PSMN040-100MSEX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "PSMN040-100MSE.pdf"),
-        drain_source_voltage =[100.0], drain_current=[30],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "PSMN040-100MSE.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[30],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BUK9M34-100EX": SeriesSpec(
-        manufacturer="Nexperia", base_series="BUK9M34-100EX",
+        manufacturer="Nexperia",
+        base_series="BUK9M34-100EX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "BUK9M34-100E.pdf"),
-        drain_source_voltage =[100.0], drain_current=[29],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "BUK9M34-100E.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[29],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BUK9M43-100EX": SeriesSpec(
-        manufacturer="Nexperia", base_series="BUK9M43-100EX",
+        manufacturer="Nexperia",
+        base_series="BUK9M43-100EX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "BUK9M43-100E.pdf"),
-        drain_source_voltage =[100.0], drain_current=[25],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "BUK9M43-100E.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[25],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "PSMN075-100MSEX": SeriesSpec(
-        manufacturer="Nexperia", base_series="PSMN075-100MSEX",
+        manufacturer="Nexperia",
+        base_series="PSMN075-100MSEX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "PSMN075-100MSE.pdf"),
-        drain_source_voltage =[100.0], drain_current=[18],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "PSMN075-100MSE.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[18],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BUK9M120-100EX": SeriesSpec(
-        manufacturer="Nexperia", base_series="BUK9M120-100EX",
+        manufacturer="Nexperia",
+        base_series="BUK9M120-100EX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "BUK9M120-100E.pdf"),
-        drain_source_voltage =[100.0], drain_current=[11.5],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "BUK9M120-100E.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[11.5],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BUK9M156-100EX": SeriesSpec(
-        manufacturer="Nexperia", base_series="BUK9M156-100EX",
+        manufacturer="Nexperia",
+        base_series="BUK9M156-100EX",
         footprint="transistor_footprints:LFPAK33-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "BUK9M156-100E.pdf"),
-        drain_source_voltage =[100.0], drain_current=[9.3],
-        package="LFPAK33-8", transistor_type="N-Channel",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "BUK9M156-100E.pdf"
+        ),
+        drain_source_voltage=[100.0],
+        drain_current=[9.3],
+        package="LFPAK33-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BUK9K29-100E": SeriesSpec(
-        manufacturer="Nexperia", base_series="BUK9K29-100E",
+        manufacturer="Nexperia",
+        base_series="BUK9K29-100E",
         footprint="transistor_footprints:LFPAK56D-8",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
-            "BUK9K29-100E.pdf"),
-        drain_source_voltage =[100], drain_current=[30],
-        package="LFPAK56D-8", transistor_type="N-Channel Dual",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
-
+            "BUK9K29-100E.pdf"
+        ),
+        drain_source_voltage=[100],
+        drain_current=[30],
+        package="LFPAK56D-8",
+        transistor_type="N-Channel Dual",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "SI7997DP-T1-GE3": SeriesSpec(
-        manufacturer="Vishay Semiconductors", base_series="SI7997DP-T1-GE3",
+        manufacturer="Vishay Semiconductors",
+        base_series="SI7997DP-T1-GE3",
         footprint="transistor_footprints:PowerPAK SO-8",
         datasheet=("https://www.vishay.com/docs/66719/si7997dp.pdf"),
-        drain_source_voltage =[-30], drain_current=[-60],
-        package="PowerPAK SO-8", transistor_type="P-Channel Dual",
-        trustedparts_link="https://www.trustedparts.com/en/search"),
+        drain_source_voltage=[-30],
+        drain_current=[-60],
+        package="PowerPAK SO-8",
+        transistor_type="P-Channel Dual",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

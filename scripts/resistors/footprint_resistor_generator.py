@@ -19,11 +19,11 @@ def generate_footprint(
     """Generate complete KiCad footprint file content for a resistor.
 
     Args:
-        series_spec: Series specifications from SYMBOLS_SPECS
-        resistor_specs: Physical specifications from FOOTPRINTS_SPECS
+        series_spec: The series specifications for the resistor.
+        resistor_specs: The footprint specifications for the resistor.
 
     Returns:
-        Complete .kicad_mod file content as formatted string
+        The complete content of a KiCad footprint file as a string.
 
     """
     case_in: str = series_spec.case_code_in
@@ -41,14 +41,21 @@ def generate_footprint(
     sections: list[str] = [
         footprint_utils.generate_header(footprint_name),
         footprint_utils.generate_properties(
-            resistor_specs.ref_offset_y, footprint_name),
+            resistor_specs.ref_offset_y,
+            footprint_name,
+        ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_silkscreen_lines(
-            body_height, pad_center_x, pad_width),
+            body_height,
+            pad_center_x,
+            pad_width,
+        ),
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models", step_file_name),
+            "KiCAD_Symbol_Generator/3D_models",
+            step_file_name,
+        ),
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
@@ -61,19 +68,24 @@ def generate_footprint_file(
     """Generate and save a complete .kicad_mod file.
 
     Args:
-        series_name: Name of the series
-        output_path: Directory to save the generated footprint file
+        series_name: The name of the resistor series to generate
+        output_path: The directory to save the footprint file
+
+    Returns:
+        None
 
     """
     series_spec: SeriesSpec = SYMBOLS_SPECS[series_name]
-    resistor_specs: FootprintSpecs = \
-        FOOTPRINTS_SPECS[series_spec.case_code_in]
+    resistor_specs: FootprintSpecs = FOOTPRINTS_SPECS[
+        series_spec.case_code_in
+    ]
 
     footprint_content: str = generate_footprint(series_spec, resistor_specs)
 
     filename: str = (
         f"R_{series_spec.case_code_in}_{series_spec.case_code_mm}"
-        "Metric.kicad_mod")
+        "Metric.kicad_mod"
+    )
     file_path: str = f"{output_path}/{filename}"
 
     with Path.open(file_path, "w", encoding="utf-8") as file_handle:

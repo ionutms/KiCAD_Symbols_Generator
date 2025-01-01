@@ -9,6 +9,7 @@ from colorama import Fore, Style, init
 
 init(autoreset=True)
 
+
 def print_success(message: str) -> None:
     """Print a success message in green color.
 
@@ -18,6 +19,7 @@ def print_success(message: str) -> None:
     """
     print(f"{Fore.GREEN}{message}{Style.RESET_ALL}")
 
+
 def print_error(message: str) -> None:
     """Print an error message in red color.
 
@@ -26,6 +28,7 @@ def print_error(message: str) -> None:
 
     """
     print(f"{Fore.RED}{message}{Style.RESET_ALL}")
+
 
 def print_info(message: str) -> None:
     """Print an informational message in yellow color.

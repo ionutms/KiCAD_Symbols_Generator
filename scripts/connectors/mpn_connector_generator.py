@@ -56,6 +56,9 @@ def generate_files_for_series(
         csv.Error: If CSV processing fails or data formatting is invalid
         IOError: If file operations fail due to permissions or disk space
 
+    Returns:
+        None
+
     Note:
         Generated files are saved in 'data/', 'series_kicad_sym/', and
         'connector_footprints.pretty/' directories.
@@ -82,41 +85,56 @@ def generate_files_for_series(
     # Generate part numbers and write to CSV
     parts_list = symbol_connectors_specs.PartInfo.generate_part_numbers(specs)
     file_handler_utilities.write_to_csv(
-        parts_list, csv_filename, HEADER_MAPPING)
+        parts_list,
+        csv_filename,
+        HEADER_MAPPING,
+    )
     print_message_utilities.print_success(
-        f"Generated {len(parts_list)} part numbers in '{csv_filename}'")
+        f"Generated {len(parts_list)} part numbers in '{csv_filename}'",
+    )
 
     # Generate KiCad symbol file
     try:
         symbol_connector_generator.generate_kicad_symbol(
-            f"data/{csv_filename}", f"series_kicad_sym/{symbol_filename}")
+            f"data/{csv_filename}",
+            f"series_kicad_sym/{symbol_filename}",
+        )
         print_message_utilities.print_success(
-            f"KiCad symbol file '{symbol_filename}' generated successfully.")
+            f"KiCad symbol file '{symbol_filename}' generated successfully.",
+        )
     except FileNotFoundError as file_error:
         print_message_utilities.print_error(
-            f"CSV file not found: {file_error}")
+            f"CSV file not found: {file_error}",
+        )
     except csv.Error as csv_error:
         print_message_utilities.print_error(
-            f"CSV processing error: {csv_error}")
+            f"CSV processing error: {csv_error}",
+        )
     except OSError as io_error:
         print_message_utilities.print_error(
-            f"I/O error when generating KiCad symbol file: {io_error}")
+            f"I/O error when generating KiCad symbol file: {io_error}",
+        )
 
     # Generate KiCad footprint files
     try:
         for part in parts_list:
             footprint_connector_generator.generate_footprint_file(
-                part, footprint_dir)
+                part,
+                footprint_dir,
+            )
             footprint_name = f"{part.mpn}.kicad_mod"
             print_message_utilities.print_success(
                 "KiCad footprint file "
-                f"{footprint_name}' generated successfully.")
+                f"{footprint_name}' generated successfully.",
+            )
     except ValueError as val_error:
         print_message_utilities.print_error(
-            f"Invalid connector specification: {val_error}")
+            f"Invalid connector specification: {val_error}",
+        )
     except OSError as io_error:
         print_message_utilities.print_error(
-            f"I/O error when generating footprint file: {io_error}")
+            f"I/O error when generating footprint file: {io_error}",
+        )
 
     # Add parts to unified list
     unified_parts_list.extend(parts_list)
@@ -138,28 +156,45 @@ def generate_unified_files(
         unified_csv: Name of the unified CSV file to generate
         unified_symbol: Name of the unified KiCad symbol file to generate
 
+    Raises:
+        csv.Error: If CSV processing fails or data formatting is invalid
+        OSError: If file operations fail due to permissions or disk space
+
+    Returns:
+        None
+
     """
     # Write unified CSV file
     file_handler_utilities.write_to_csv(
-        all_parts, unified_csv, HEADER_MAPPING)
+        all_parts,
+        unified_csv,
+        HEADER_MAPPING,
+    )
     print_message_utilities.print_success(
-        f"Generated unified CSV file with {len(all_parts)} part numbers")
+        f"Generated unified CSV file with {len(all_parts)} part numbers",
+    )
 
     # Generate unified KiCad symbol file
     try:
         symbol_connector_generator.generate_kicad_symbol(
-            f"data/{unified_csv}", f"symbols/{unified_symbol}")
+            f"data/{unified_csv}",
+            f"symbols/{unified_symbol}",
+        )
         print_message_utilities.print_success(
-            "Unified KiCad symbol file generated successfully.")
+            "Unified KiCad symbol file generated successfully.",
+        )
     except FileNotFoundError as e:
         print_message_utilities.print_error(
-            f"Unified CSV file not found: {e}")
+            f"Unified CSV file not found: {e}",
+        )
     except csv.Error as e:
         print_message_utilities.print_error(
-            f"CSV processing error for unified file: {e}")
+            f"CSV processing error for unified file: {e}",
+        )
     except OSError as e:
         print_message_utilities.print_error(
-            f"I/O error when generating unified KiCad symbol file: {e}")
+            f"I/O error when generating unified KiCad symbol file: {e}",
+        )
 
 
 if __name__ == "__main__":
@@ -168,7 +203,8 @@ if __name__ == "__main__":
 
         for series in symbol_connectors_specs.SYMBOLS_SPECS:
             print_message_utilities.print_info(
-                f"\nGenerating files for {series} series:")
+                f"\nGenerating files for {series} series:",
+            )
             generate_files_for_series(series, unified_parts)
 
         # Generate unified files after all series are processed
@@ -179,4 +215,5 @@ if __name__ == "__main__":
 
     except (OSError, ValueError, csv.Error) as error:
         print_message_utilities.print_error(
-            f"Error generating files: {error}")
+            f"Error generating files: {error}",
+        )

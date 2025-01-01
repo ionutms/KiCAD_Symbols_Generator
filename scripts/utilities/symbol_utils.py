@@ -4,14 +4,10 @@ This module provides functions for creating KiCad symbol files, including
 writing headers, properties, and drawing various electronic components like
 capacitors, resistors, inductors, transformers, and transistors.
 Key features:
-- Symbol file header generation
-- Property handling and writing
-- Component drawing utilities
-- Pin configuration and placement
-- Support for various electronic components
-
-The module follows KiCad's symbol format specifications and provides a
-structured way to generate symbol files programmatically.
+- Write headers for symbol and symbol library files.
+- Write properties for a single symbol.
+- Write graphical representation of electronic components.
+- Write pins for electronic components.
 
 """
 
@@ -19,12 +15,15 @@ from typing import TextIO
 
 
 def write_header(
-        symbol_file: TextIO,
+    symbol_file: TextIO,
 ) -> None:
     """Write the header of the KiCad symbol file.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
+
+    Returns:
+        None
 
     """
     symbol_file.write("""
@@ -36,14 +35,17 @@ def write_header(
 
 
 def write_symbol_header(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the header for a single symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f"""
@@ -56,7 +58,7 @@ def write_symbol_header(
 
 
 def get_all_properties(
-        component_data_list: list[dict[str, str]],
+    component_data_list: list[dict[str, str]],
 ) -> list[str]:
     """Get all properties from the component data in a consistent order.
 
@@ -89,7 +91,8 @@ def get_all_properties(
 
     # 2. Add remaining properties in alphabetical order
     remaining_props = sorted(
-        prop for prop in all_properties if prop not in priority_properties)
+        prop for prop in all_properties if prop not in priority_properties
+    )
     result.extend(remaining_props)
 
     return result
@@ -117,15 +120,18 @@ def write_property(  # noqa: PLR0913
         show_name (bool): Whether to show the property name.
         hide (bool): Whether to hide the property.
 
+    Returns:
+        None
+
     """
     symbol_file.write(f"""
         (property "{property_name}" "{property_value}"
             (at {x_offset} {y_offset} 0)
-            {('(show_name)' if show_name else '')}
+            {("(show_name)" if show_name else "")}
             (effects
                 (font(size {font_size} {font_size}))
                 (justify left)
-                {('(hide yes)' if hide else '')}
+                {("(hide yes)" if hide else "")}
             )
         )
         """)
@@ -136,42 +142,72 @@ def write_properties(
     component_data: dict[str, str],
     property_order: list[str],
     text_y_offset: int,
-    text_x_offset: int=0,
+    text_x_offset: int = 0,
 ) -> None:
     """Write properties for a single symbol in the KiCad symbol file.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
-        component_value: todo
-        text_y_offset: todo
-        text_x_offset: todo
+        component_data (Dict[str, str]): Dictionary containing component data.
+        property_order (List[str]):
+            List of property names in the desired order.
+        text_y_offset (int): Vertical offset for text placement.
+        text_x_offset (int): Horizontal offset for text placement.
+
+    Returns:
+        None
 
     """
     property_configs = {
         "Reference": (
-            2.54*text_x_offset, 2.54*text_y_offset,
-            1.27, False, False, component_data.get("Reference", "-")),
+            2.54 * text_x_offset,
+            2.54 * text_y_offset,
+            1.27,
+            False,
+            False,
+            component_data.get("Reference", "-"),
+        ),
         "Value": (
-            2.54*text_x_offset, -2.54*text_y_offset,
-            1.27, False, False, component_data.get("Value", "-")),
+            2.54 * text_x_offset,
+            -2.54 * text_y_offset,
+            1.27,
+            False,
+            False,
+            component_data.get("Value", "-"),
+        ),
         "Footprint": (
-            2.54*text_x_offset, -2.54*(text_y_offset+1),
-            1.27, True, True, None),
+            2.54 * text_x_offset,
+            -2.54 * (text_y_offset + 1),
+            1.27,
+            True,
+            True,
+            None,
+        ),
         "Datasheet": (
-            2.54*text_x_offset, -2.54*(text_y_offset+2),
-            1.27, True, True, None),
+            2.54 * text_x_offset,
+            -2.54 * (text_y_offset + 2),
+            1.27,
+            True,
+            True,
+            None,
+        ),
         "Description": (
-            2.54*text_x_offset, -2.54*(text_y_offset+3),
-            1.27, True, True, None)}
+            2.54 * text_x_offset,
+            -2.54 * (text_y_offset + 3),
+            1.27,
+            True,
+            True,
+            None,
+        ),
+    }
 
-    y_offset = -2.54*(text_y_offset+4)
+    y_offset = -2.54 * (text_y_offset + 4)
     for prop_name in property_order:
         if prop_name in component_data:
             config = property_configs.get(
                 prop_name,
-                (2.54*text_x_offset, y_offset,1.27, True, True, None))
+                (2.54 * text_x_offset, y_offset, 1.27, True, True, None),
+            )
             value = config[5] or component_data[prop_name]
             write_property(symbol_file, prop_name, value, *config[:5])
             if prop_name not in property_configs:
@@ -179,37 +215,56 @@ def write_properties(
 
 
 def write_pin(  # noqa: PLR0913
-        symbol_file: TextIO,
-        x_pos: float,
-        y_pos: float,
-        angle: int,
-        number: str,
-        name: str = "",
-        pin_type: str = "unspecified",
-        hide: bool = False,  # noqa: FBT001, FBT002
-        length: float = 2.54,
+    symbol_file: TextIO,
+    x_pos: float,
+    y_pos: float,
+    angle: int,
+    number: str,
+    name: str = "",
+    pin_type: str = "unspecified",
+    hide: bool = False,  # noqa: FBT001, FBT002
+    length: float = 2.54,
 ) -> None:
-    """Write a single pin of the transformer symbol."""
+    """Write a single pin for a symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        x_pos (float): X-coordinate of the pin.
+        y_pos (float): Y-coordinate of the pin.
+        angle (int): Angle of the pin.
+        number (str): Number of the pin.
+        name (str): Name of the pin.
+        pin_type (str): Type of the pin.
+        hide (bool): Whether to hide the pin.
+        length (float): Length of the pin.
+
+    Returns:
+        None
+
+    """
     symbol_file.write(f"""
         (pin {pin_type} line
             (at {x_pos} {y_pos} {angle})
             (length {length})
             (name "{name}"(effects(font(size 1.27 1.27))))
             (number "{number}"(effects(font(size 1.27 1.27))))
-            {('hide' if hide else '')}
+            {("hide" if hide else "")}
         )
         """)
 
 
 def write_capacitor_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the graphical representation of a symbol in the KiCad symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f"""
@@ -233,14 +288,17 @@ def write_capacitor_symbol_drawing(
 
 
 def write_resistor_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the graphical representation of a symbol in the KiCad file.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f"""
@@ -288,14 +346,17 @@ def write_resistor_symbol_drawing(
 
 
 def write_inductor_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the horizontal graphical representation of an inductor symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
 
@@ -305,7 +366,18 @@ def write_inductor_symbol_drawing(
         mid_x: float,
         end_x: float,
     ) -> None:
-        """Write a single arc of the inductor symbol."""
+        """Write an arc to the symbol file.
+
+        Args:
+            symbol_file (TextIO): File object for writing the symbol file.
+            start_x (float): X-coordinate of the start of the arc.
+            mid_x (float): X-coordinate of the middle of the arc.
+            end_x (float): X-coordinate of the end of the arc.
+
+        Returns:
+            None
+
+        """
         symbol_file.write(f"""
             (arc
                 (start {start_x} 0.0056)
@@ -337,11 +409,18 @@ def write_inductor_symbol_drawing(
 
 
 def get_symbol_bounds(pin_config: dict) -> tuple:
-    """Calculate symbol bounds based on pin configuration."""
-    y_positions = (
-        [pin["y_pos"] for pin in pin_config["left"]] +
-        [pin["y_pos"] for pin in pin_config["right"]]
-    )
+    """Get the minimum and maximum y-coordinates of the symbol.
+
+    Args:
+        pin_config (dict): Dictionary defining pin configuration.
+
+    Returns:
+        tuple: Minimum and maximum y-coordinates of the symbol.
+
+    """
+    y_positions = [pin["y_pos"] for pin in pin_config["left"]] + [
+        pin["y_pos"] for pin in pin_config["right"]
+    ]
     max_y = max(y_positions)
     min_y = min(y_positions)
     return min_y, max_y
@@ -361,6 +440,9 @@ def write_arcs(
         offset: [x_offset, y_offset] for positioning the arcs
         num_arcs: Number of arcs to draw (default 4)
 
+    Returns:
+        None
+
     """
     x_offset, y_offset = offset
     for y_start in range(num_arcs):
@@ -379,9 +461,9 @@ def write_arcs(
 
 
 def write_transformer_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
-        pin_config: dict,
+    symbol_file: TextIO,
+    symbol_name: str,
+    pin_config: dict,
 ) -> None:
     """Write the horizontal graphical representation of a transformer symbol.
 
@@ -389,6 +471,9 @@ def write_transformer_symbol_drawing(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict, optional): Dictionary defining pin configuration.
+
+    Returns:
+        None
 
     """
     # Calculate symbol bounds
@@ -425,24 +510,36 @@ def write_transformer_symbol_drawing(
     # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=-7.62, y_pos=pin["y_pos"],
-            angle=0, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=7.62, y_pos=pin["y_pos"],
-            angle=180, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     symbol_file.write("        )\n")
 
 
 def write_transformer_symbol_drawing_v2(
-        symbol_file: TextIO,
-        symbol_name: str,
-        pin_config: dict,
+    symbol_file: TextIO,
+    symbol_name: str,
+    pin_config: dict,
 ) -> None:
     """Write the horizontal graphical representation of a transformer symbol.
 
@@ -450,6 +547,9 @@ def write_transformer_symbol_drawing_v2(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict, optional): Dictionary defining pin configuration.
+
+    Returns:
+        None
 
     """
     # Write symbol drawing section - split into two units
@@ -485,24 +585,36 @@ def write_transformer_symbol_drawing_v2(
     # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=-7.62, y_pos=pin["y_pos"],
-            angle=0, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=7.62, y_pos=pin["y_pos"],
-            angle=180, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     symbol_file.write("        )\n")
 
 
 def write_transformer_symbol_drawing_v3(
-        symbol_file: TextIO,
-        symbol_name: str,
-        pin_config: dict,
+    symbol_file: TextIO,
+    symbol_name: str,
+    pin_config: dict,
 ) -> None:
     """Write the horizontal graphical representation of a transformer symbol.
 
@@ -510,6 +622,9 @@ def write_transformer_symbol_drawing_v3(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict, optional): Dictionary defining pin configuration.
+
+    Returns:
+        None
 
     """
     # Calculate symbol bounds
@@ -564,24 +679,36 @@ def write_transformer_symbol_drawing_v3(
     # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=-7.62, y_pos=pin["y_pos"],
-            angle=0, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=7.62, y_pos=pin["y_pos"],
-            angle=180, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     symbol_file.write("        )\n")
 
 
 def write_transformer_symbol_drawing_v4(
-        symbol_file: TextIO,
-        symbol_name: str,
-        pin_config: dict,
+    symbol_file: TextIO,
+    symbol_name: str,
+    pin_config: dict,
 ) -> None:
     """Write the horizontal graphical representation of a transformer symbol.
 
@@ -589,6 +716,9 @@ def write_transformer_symbol_drawing_v4(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict, optional): Dictionary defining pin configuration.
+
+    Returns:
+        None
 
     """
     # Calculate symbol bounds
@@ -630,16 +760,28 @@ def write_transformer_symbol_drawing_v4(
     # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=-7.62, y_pos=pin["y_pos"],
-            angle=0, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=7.62, y_pos=pin["y_pos"],
-            angle=180, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     symbol_file.write("        )\n")
 
@@ -655,6 +797,9 @@ def write_coupled_inductor_symbol_drawing(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict): Pin config.
+
+    Returns:
+        None
 
     """
     # Write symbol drawing section
@@ -688,29 +833,44 @@ def write_coupled_inductor_symbol_drawing(
     # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=-7.62, y_pos=pin["y_pos"],
-            angle=0, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
-            symbol_file=symbol_file, x_pos=7.62, y_pos=pin["y_pos"],
-            angle=180, number=pin["number"], pin_type=pin["pin_type"],
-            hide=pin.get("hide", False), length=pin["lenght"])
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
 
     symbol_file.write("        )\n")
 
 
 def write_schottky_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the horizontal graphical representation of a diode symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
@@ -735,14 +895,17 @@ def write_schottky_symbol_drawing(
 
 
 def write_zener_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the horizontal graphical representation of a diode symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
@@ -767,14 +930,17 @@ def write_zener_symbol_drawing(
 
 
 def write_rectifier_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
+    symbol_file: TextIO,
+    symbol_name: str,
 ) -> None:
     """Write the horizontal graphical representation of a diode symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
@@ -802,7 +968,17 @@ def write_circle(
     x_pos: float,
     y_pos: float,
 ) -> None:
-    """Write circle."""
+    """Write a circle to the symbol file.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        x_pos (float): X-coordinate of the circle.
+        y_pos (float): Y-coordinate of the circle.
+
+    Returns:
+        None
+
+    """
     symbol_file.write(f"""
         (circle
             (center {x_pos} {y_pos})
@@ -826,6 +1002,9 @@ def write_p_mos_transistor_symbol_drawing(
         vertical_offset:
             Vertical translation in units.
             Positive moves up, negative moves down. Defaults to 0.0.
+
+    Returns:
+        None
 
     """
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
@@ -906,11 +1085,22 @@ def write_n_mos_transistor_symbol_drawing(
             Vertical translation in units.
             Positive moves up, negative moves down. Defaults to 0.0.
 
+    Returns:
+        None
+
     """
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
 
     def offset_y(y: float) -> float:
-        """Offset y-coordinate by vertical translation."""
+        """Offset y-coordinate by vertical translation.
+
+        Args:
+            y: Y-coordinate to offset.
+
+        Returns:
+            float: Offset y-coordinate.
+
+        """
         return y + vertical_offset
 
     symbol_file.write(f"""
@@ -971,9 +1161,9 @@ def write_n_mos_transistor_symbol_drawing(
 
 
 def write_n_mos_dual_transistor_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
-        vertical_offset: float = 1.27,
+    symbol_file: TextIO,
+    symbol_name: str,
+    vertical_offset: float = 1.27,
 ) -> None:
     """Write the horizontal graphical representation of a diode symbol.
 
@@ -984,18 +1174,32 @@ def write_n_mos_dual_transistor_symbol_drawing(
             Vertical translation in units.
             Positive moves up, negative moves down. Defaults to 0.0.
 
+    Returns:
+        None
+
     """
+
     def offset_y(y: float) -> float:
-        """Offset y-coordinate by vertical translation."""
+        """Offset y-coordinate by vertical translation.
+
+        Args:
+            y: Y-coordinate to offset.
+
+        Returns:
+            float: Offset y-coordinate.
+
+        """
         return y + vertical_offset
 
     pin_specs = (
-        {"1": "S1", "2": "G1", "6": "D1"}, {"3": "S2", "4": "G2", "5": "D2"})
+        {"1": "S1", "2": "G1", "6": "D1"},
+        {"3": "S2", "4": "G2", "5": "D2"},
+    )
 
     number = [list(pin_spec.keys()) for pin_spec in pin_specs]
     name = [list(pin_spec.values()) for pin_spec in pin_specs]
 
-    for index in range(1,3):
+    for index in range(1, 3):
         symbol_file.write(f"""
             (symbol "{symbol_name}_{index}_0"
                 (polyline
@@ -1072,22 +1276,37 @@ def write_n_mos_dual_transistor_symbol_drawing(
 
         # Write pins with vertical offset
         write_pin(
-            symbol_file, 10.16, offset_y(2.54), 180,
-            number[index-1][0], name[index-1][0])
+            symbol_file,
+            10.16,
+            offset_y(2.54),
+            180,
+            number[index - 1][0],
+            name[index - 1][0],
+        )
         write_pin(
-            symbol_file, 2.54, offset_y(-5.08), 180,
-            number[index-1][1], name[index-1][1])
+            symbol_file,
+            2.54,
+            offset_y(-5.08),
+            180,
+            number[index - 1][1],
+            name[index - 1][1],
+        )
         write_pin(
-            symbol_file, -10.16, offset_y(2.54), 0,
-            number[index-1][2], name[index-1][2])
+            symbol_file,
+            -10.16,
+            offset_y(2.54),
+            0,
+            number[index - 1][2],
+            name[index - 1][2],
+        )
 
         symbol_file.write(")")
 
 
 def write_p_mos_dual_transistor_symbol_drawing(
-        symbol_file: TextIO,
-        symbol_name: str,
-        vertical_offset: float = 1.27,
+    symbol_file: TextIO,
+    symbol_name: str,
+    vertical_offset: float = 1.27,
 ) -> None:
     """Write the horizontal graphical representation of a diode symbol.
 
@@ -1098,18 +1317,32 @@ def write_p_mos_dual_transistor_symbol_drawing(
             Vertical translation in units.
             Positive moves up, negative moves down. Defaults to 0.0.
 
+    Returns:
+        None
+
     """
+
     def offset_y(y: float) -> float:
-        """Offset y-coordinate by vertical translation."""
+        """Offset y-coordinate by vertical translation.
+
+        Args:
+            y (float): Y-coordinate.
+
+        Returns:
+            float: Y-coordinate with vertical offset.
+
+        """
         return y + vertical_offset
 
     pin_specs = (
-        {"1": "S1", "2": "G1", "6": "D1"}, {"3": "S2", "4": "G2", "5": "D2"})
+        {"1": "S1", "2": "G1", "6": "D1"},
+        {"3": "S2", "4": "G2", "5": "D2"},
+    )
 
     number = [list(pin_spec.keys()) for pin_spec in pin_specs]
     name = [list(pin_spec.values()) for pin_spec in pin_specs]
 
-    for index in range(1,3):
+    for index in range(1, 3):
         symbol_file.write(f"""
             (symbol "{symbol_name}_{index}_0"
                 (polyline
@@ -1189,14 +1422,29 @@ def write_p_mos_dual_transistor_symbol_drawing(
 
         # Write pins with vertical offset
         write_pin(
-            symbol_file, 10.16, offset_y(2.54), 180,
-            number[index-1][0], name[index-1][0])
+            symbol_file,
+            10.16,
+            offset_y(2.54),
+            180,
+            number[index - 1][0],
+            name[index - 1][0],
+        )
         write_pin(
-            symbol_file, 2.54, offset_y(-5.08), 180,
-            number[index-1][1], name[index-1][1])
+            symbol_file,
+            2.54,
+            offset_y(-5.08),
+            180,
+            number[index - 1][1],
+            name[index - 1][1],
+        )
         write_pin(
-            symbol_file, -10.16, offset_y(2.54), 0,
-            number[index-1][2], name[index-1][2])
+            symbol_file,
+            -10.16,
+            offset_y(2.54),
+            0,
+            number[index - 1][2],
+            name[index - 1][2],
+        )
 
         symbol_file.write(")")
 
@@ -1206,7 +1454,17 @@ def write_connector_symbol_drawing(
     symbol_name: str,
     component_data: dict[str, str],
 ) -> None:
-    """Write the symbol drawing with dimensions adjusted for pin count."""
+    """Write the horizontal graphical representation of a connector symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+        component_data (dict[str, str]): Component data.
+
+    Returns:
+        None
+
+    """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 2.54
 
@@ -1225,7 +1483,12 @@ def write_connector_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
     write_rectangle(
-        symbol_file, -2.54, rectangle_height / 2, 2.54, -rectangle_height / 2)
+        symbol_file,
+        -2.54,
+        rectangle_height / 2,
+        2.54,
+        -rectangle_height / 2,
+    )
     symbol_file.write("\t\t)\n")
 
 

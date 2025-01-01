@@ -20,10 +20,11 @@ class PinConfig(NamedTuple):
     """Configuration specification for a single transformer pin.
 
     Attributes:
-        number: Pin identifier/number as string (e.g., "1", "2")
-        y_pos: Vertical position of the pin in millimeters relative to center
-        pin_type: Pin type specification (e.g., "unspecified", "no_connect")
-        hide: Boolean flag indicating if pin should be hidden in schematic
+        number: Pin number identifier
+        y_pos: Vertical position of the pin on the component
+        pin_type: Type of pin (e.g., "unspecified", "no_connect")
+        lenght: Length of the pin in millimeters
+        hide: Flag to hide the pin in the schematic (default: False)
 
     """
 
@@ -41,8 +42,10 @@ class SidePinConfig(NamedTuple):
     on both the left and right sides of the component.
 
     Attributes:
-        left: List of PinConfig objects for the left side pins
-        right: List of PinConfig objects for the right side pins
+        left:
+            List of PinConfig instances for the left side of the transformer
+        right:
+            List of PinConfig instances for the right side of the transformer
 
     """
 
@@ -58,17 +61,17 @@ class SeriesSpec(NamedTuple):
 
     Attributes:
         manufacturer: Name of the component manufacturer
-        base_series: Base series identifier for the component family
-        footprint: PCB footprint identifier for the component series
-        tolerance: Component value tolerance specification
-        datasheet: URL to the manufacturer's datasheet
-        primary_inductance: Inductance value in µH
+        base_series: Identifier for the transformer series
+        footprint: KiCAD footprint identifier
+        tolerance: Inductance value tolerance specification
+        datasheet: URL to component datasheet
+        primary_inductance: Typical primary inductance in µH
         trustedparts_link: URL to component listing on Trusted Parts
-        value_suffix: Suffix used in part numbering for the series
-        turns_ratio: Dictionary of turn ratios between transformer windings
-        pin_config: Pin configuration specification for physical layout
-        max_dc_resistance: Maximum DC resistance value in milliohms (mΩ)
-        reference: Reference designator prefix (default: "T")
+        value_suffix: Suffix for the component value
+        turns_ratio: Transformer turns ratio specification
+        pin_config: Pin configuration for the transformer
+        max_dc_resistance: Maximum DC resistance for the transformer
+        reference: Reference designator prefix for the series (default: "T")
 
     """
 
@@ -94,18 +97,20 @@ class PartInfo(NamedTuple):
     and sourcing information.
 
     Attributes:
-        symbol_name: Schematic symbol identifier for the component
-        reference: Component reference designator used in schematics
-        value: Inductance value in microhenries (µH)
-        footprint: PCB footprint identifier
+        symbol_name: Name of the KiCAD symbol for the component
+        reference: Reference designator prefix for the series
+        value: Inductance value in µH
+        footprint: KiCAD footprint identifier
         datasheet: URL to component datasheet
-        description: Human-readable component description
-        manufacturer: Name of component manufacturer
-        mpn: Manufacturer part number
-        tolerance: Component value tolerance specification
-        series: Product series identifier
+        description: Detailed description of the component
+        manufacturer: Name of the component manufacturer
+        primary_inductance: Primary inductance in µH
+        mpn: Manufacturer part number for the component
+        tolerance: Inductance value tolerance specification
+        series: Base series identifier for the component
         trustedparts_link: URL to component listing on Trusted Parts
-        max_dc_resistance: Maximum DC resistance in milliohms (mΩ)
+        max_dc_resistance: Maximum DC resistance for the component
+        turns_ratio: Transformer turns ratio specification
 
     """
 
@@ -126,19 +131,17 @@ class PartInfo(NamedTuple):
 
     @staticmethod
     def format_inductance_value(primary_inductance: float) -> str:
-        """Format inductance value with appropriate unit.
-
-        Shows integer values where possible (no decimal places needed).
+        """Format inductance value for display.
 
         Args:
-            primary_inductance: Value in µH
+            primary_inductance: Inductance value in µH
 
         Returns:
-            Formatted string with unit
+            Formatted inductance value string
 
         """
         if primary_inductance < 1:
-            return f"{int(primary_inductance*1000)} nH"
+            return f"{int(primary_inductance * 1000)} nH"
         if isinstance(primary_inductance, int):
             return f"{primary_inductance} µH"
         return f"{primary_inductance:.1f} µH"
@@ -149,14 +152,14 @@ class PartInfo(NamedTuple):
         value: float,
         specs: "SeriesSpec",
     ) -> str:
-        """Create component description.
+        """Create a detailed description for the component.
 
         Args:
             value: Inductance value in µH
             specs: Series specifications
 
         Returns:
-            Formatted description string
+            Detailed description string for the component
 
         """
         parts = [
@@ -172,14 +175,14 @@ class PartInfo(NamedTuple):
         primary_inductance: float,
         specs: SeriesSpec,
     ) -> "PartInfo":
-        """Create complete part information.
+        """Create a PartInfo instance for a transformer component.
 
         Args:
-            primary_inductance: Value in µH
+            primary_inductance: Primary inductance value in µH
             specs: Series specifications
 
         Returns:
-            PartInfo instance with all specifications
+            PartInfo instance for the transformer component
 
         """
         mpn = f"{specs.base_series}{specs.value_suffix}"
@@ -207,13 +210,13 @@ class PartInfo(NamedTuple):
         cls,
         specs: SeriesSpec,
     ) -> list["PartInfo"]:
-        """Generate all part numbers for the series.
+        """Generate part numbers for a transformer series.
 
         Args:
             specs: Series specifications
 
         Returns:
-            List of PartInfo instances
+            List of PartInfo instances for the transformer series
 
         """
         return [
@@ -230,7 +233,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
+            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"
+        ),
         primary_inductance=470,
         max_dc_resistance={"pri": "1.1", "sec": "1.6"},
         value_suffix="-ALD",
@@ -242,13 +246,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("5", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("3", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("1", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("2", -5.08, "unspecified", 5.08)],
+                PinConfig("2", -5.08, "unspecified", 5.08),
+            ],
             right=[
                 PinConfig("6", 5.08, "unspecified", 5.08),
                 PinConfig("7", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("9", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("10", -5.08, "unspecified", 5.08)],
+                PinConfig("10", -5.08, "unspecified", 5.08),
+            ],
         ),
     ),
     "ZA9644": SeriesSpec(
@@ -258,7 +264,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"),
+            "cc4df0c9-0883-48fa-b8fb-d5dedac2b455/za9384.pdf"
+        ),
         turns_ratio={"pri : sec": "1 : 1"},
         primary_inductance=470,
         max_dc_resistance={"pri": "1.8", "sec": "1.8"},
@@ -269,12 +276,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("1", 5.08, "unspecified", 5.08),
                 PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "unspecified", 5.08)],
+                PinConfig("4", -5.08, "unspecified", 5.08),
+            ],
             right=[
                 PinConfig("5", 5.08, "unspecified", 5.08),
                 PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("7", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("8", -5.08, "unspecified", 5.08)],
+                PinConfig("8", -5.08, "unspecified", 5.08),
+            ],
         ),
     ),
     "750315836": SeriesSpec(
@@ -284,7 +293,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
-            "750315836.pdf"),
+            "750315836.pdf"
+        ),
         turns_ratio={"N1+N2 : N3": "1 : 1"},
         primary_inductance=40,
         max_dc_resistance={"pri": "0.095", "sec": "0.09"},
@@ -297,13 +307,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("4", 0.0, "unspecified", 5.08),
                 PinConfig("2", -5.08, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("5", -10.16, "unspecified", 5.08),
-                ],
+            ],
             right=[
                 PinConfig("7", 5.08, "unspecified", 5.08),
                 PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("10", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("9", -5.08, "unspecified", 5.08)],
+                PinConfig("9", -5.08, "unspecified", 5.08),
+            ],
         ),
     ),
     "YA8779": SeriesSpec(
@@ -313,7 +324,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"
+        ),
         turns_ratio={"pri : sec1": "1 : 0.33"},
         primary_inductance=30,
         max_dc_resistance={"pri": "0.14", "sec": "0.013"},
@@ -324,12 +336,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("1", 5.08, "unspecified", 5.08),
                 PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "unspecified", 5.08)],
+                PinConfig("4", -5.08, "unspecified", 5.08),
+            ],
             right=[
                 PinConfig("8", 7.62, "unspecified", 2.54),
                 PinConfig("7", 5.08, "unspecified", 2.54),
                 PinConfig("5", -5.08, "unspecified", 2.54),
-                PinConfig("6", -7.62, "unspecified", 2.54)],
+                PinConfig("6", -7.62, "unspecified", 2.54),
+            ],
         ),
     ),
     "YA8916": SeriesSpec(
@@ -339,7 +353,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"
+        ),
         turns_ratio={"pri : sec1": "1 : 1", "pri : sec2": "1 : 0.52"},
         primary_inductance=30,
         max_dc_resistance={"pri": "0.36", "sec1": "0.695", "sec2": "0.392"},
@@ -350,12 +365,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("1", 5.08, "unspecified", 5.08),
                 PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "unspecified", 5.08)],
+                PinConfig("4", -5.08, "unspecified", 5.08),
+            ],
             right=[
                 PinConfig("8", 12.7, "unspecified", 5.08),
                 PinConfig("7", 2.54, "unspecified", 5.08),
                 PinConfig("6", -2.54, "unspecified", 5.08),
-                PinConfig("5", -12.7, "unspecified", 5.08)],
+                PinConfig("5", -12.7, "unspecified", 5.08),
+            ],
         ),
     ),
     "YA8864": SeriesSpec(
@@ -365,7 +382,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         tolerance="±10%",
         datasheet=(
             "https://www.coilcraft.com/getmedia/"
-            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"),
+            "26e99d96-72df-4173-a685-a01606cc3452/ya8779.pdf"
+        ),
         turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
         primary_inductance=30,
         max_dc_resistance={"pri": "0.18", "sec1": "0.68", "sec2": "0.18"},
@@ -376,12 +394,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("1", 5.08, "unspecified", 5.08),
                 PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "unspecified", 5.08)],
+                PinConfig("4", -5.08, "unspecified", 5.08),
+            ],
             right=[
                 PinConfig("8", 12.7, "unspecified", 5.08),
                 PinConfig("7", 2.54, "unspecified", 5.08),
                 PinConfig("6", -2.54, "unspecified", 5.08),
-                PinConfig("5", -12.7, "unspecified", 5.08)],
+                PinConfig("5", -12.7, "unspecified", 5.08),
+            ],
         ),
     ),
 }

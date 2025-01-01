@@ -15,18 +15,17 @@ from utilities import footprint_utils
 
 
 def generate_footprint(
-        part_info: symbol_diode_specs.PartInfo,
-        specs: FootprintSpecs,
+    part_info: symbol_diode_specs.PartInfo,
+    specs: FootprintSpecs,
 ) -> str:
     """Generate complete KiCad footprint file content for a diode.
 
     Args:
-        part_info: Component specifications
-        specs: Physical specifications for the diode series from
-        FOOTPRINTS_SPECS
+        part_info: Component specifications including MPN and package type
+        specs: FootprintSpecs containing all dimensions for the footprint
 
     Returns:
-        Complete .kicad_mod file content as formatted string
+        String containing KiCad footprint content for a diode
 
     """
     body_width = specs.body_dimensions.width
@@ -39,16 +38,27 @@ def generate_footprint(
     sections = [
         footprint_utils.generate_header(part_info.package),
         footprint_utils.generate_properties(
-            specs.ref_offset_y, part_info.package),
+            specs.ref_offset_y,
+            part_info.package,
+        ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_fab_diode(
-            anode_width, anode_height, anode_center_x, cathode_center_x),
+            anode_width,
+            anode_height,
+            anode_center_x,
+            cathode_center_x,
+        ),
         footprint_utils.generate_silkscreen_lines(
-            body_height, anode_center_x, anode_width),
+            body_height,
+            anode_center_x,
+            anode_width,
+        ),
         generate_pads(specs),
         footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models", part_info.package),
+            "KiCAD_Symbol_Generator/3D_models",
+            part_info.package,
+        ),
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
@@ -67,7 +77,7 @@ def generate_pads(specs: FootprintSpecs) -> str:
     pad_props = specs.pad_dimensions
 
     # Cathode pad (1)
-    cathode = (f"""
+    cathode = f"""
         (pad "1" smd roundrect
             (at -{pad_props.cathode_center_x} 0)
             (size {pad_props.cathode_width} {pad_props.cathode_height})
@@ -75,10 +85,10 @@ def generate_pads(specs: FootprintSpecs) -> str:
             (roundrect_rratio {pad_props.roundrect_ratio})
             (uuid "{uuid4()}")
         )
-        """)
+        """
 
     # Anode pad (2)
-    anode = (f"""
+    anode = f"""
         (pad "2" smd roundrect
             (at {pad_props.anode_center_x} 0)
             (size {pad_props.anode_width} {pad_props.anode_height})
@@ -86,19 +96,23 @@ def generate_pads(specs: FootprintSpecs) -> str:
             (roundrect_rratio {pad_props.roundrect_ratio})
             (uuid "{uuid4()}")
         )
-        """)
+        """
 
     return f"{cathode}\n{anode}"
 
+
 def generate_footprint_file(
-        part_info: symbol_diode_specs.PartInfo,
-        output_path: str,
+    part_info: symbol_diode_specs.PartInfo,
+    output_path: str,
 ) -> None:
     """Generate and save a complete .kicad_mod file for a diode.
 
     Args:
         part_info: Component specifications including MPN and package type
-        output_path: Directory path where the footprint file will be saved
+        output_path: Directory to save the generated footprint file
+
+    Returns:
+        None
 
     """
     specs = FOOTPRINTS_SPECS[part_info.package]

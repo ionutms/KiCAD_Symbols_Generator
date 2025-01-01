@@ -6,7 +6,8 @@ dielectric types. It provides comprehensive component information including
 physical dimensions, electrical characteristics, and packaging options.
 """
 
-from typing import Final, Iterator, NamedTuple  # noqa: UP035
+from collections.abc import Iterator
+from typing import Final, NamedTuple
 
 
 class SeriesSpec(NamedTuple):
@@ -51,7 +52,30 @@ class SeriesSpec(NamedTuple):
 
 
 class PartInfo(NamedTuple):
-    """Container for detailed capacitor component information."""
+    """Complete information for a specific capacitor part number.
+
+    Contains all relevant details for a specific capacitor part number,
+    including symbol name, reference designator, value, footprint, and more.
+
+    Attributes:
+        symbol_name: Unique symbol name for the component
+        reference: Reference designator for the component
+        value: Capacitance value in farads
+        formatted_value: Human-readable capacitance value with units
+        footprint: PCB footprint ID for the component
+        datasheet: URL to component datasheet
+        description: Detailed description of the component
+        manufacturer: Name of the component manufacturer
+        mpn: Manufacturer part number for the component
+        dielectric: Dielectric material type (e.g., 'X7R')
+        tolerance: Tolerance percentage for the component
+        voltage_rating: Maximum operating voltage for the component
+        case_code_in: Package dimensions in inches (e.g., '0402')
+        case_code_mm: Package dimensions in millimeters (e.g., '1005')
+        series: Part number series identifier (e.g., 'GCM155')
+        trustedparts_link: URL to component listing on Trustedparts
+
+    """
 
     symbol_name: str
     reference: str
@@ -71,8 +95,16 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
 
     @staticmethod
-    def format_capacitance_value(capacitance: float) -> str:
-        """Convert capacitance value to human-readable format with units."""
+    def format_value(capacitance: float) -> str:
+        """Format capacitance value with appropriate units.
+
+        Args:
+            capacitance: Capacitance value in farads
+
+        Returns:
+            Formatted capacitance value with units
+
+        """
         pf_value = capacitance * 1e12
 
         # 1 µF and above
@@ -97,7 +129,15 @@ class PartInfo(NamedTuple):
 
     @staticmethod
     def generate_capacitance_code(capacitance: float) -> str:
-        """Generate the capacitance portion of Murata part number."""
+        """Generate capacitance code based on capacitance value.
+
+        Args:
+            capacitance: Capacitance value in farads
+
+        Returns:
+            Capacitance code as a string
+
+        """
         pf_value = capacitance * 1e12
 
         # Handle values under 10pF
@@ -130,7 +170,16 @@ class PartInfo(NamedTuple):
         capacitance: float,
         specs: SeriesSpec,
     ) -> str:
-        """Determine characteristic code based on series and capacitance."""
+        """Get the characteristic code for a given capacitance value.
+
+        Args:
+            capacitance: Capacitance value in farads
+            specs: Series specifications for the component
+
+        Returns:
+            Characteristic code for the given capacitance
+
+        """
         if specs.base_series.startswith("CL"):
             return "X7R"
 
@@ -138,7 +187,9 @@ class PartInfo(NamedTuple):
             return ""
 
         for threshold, code in sorted(
-                specs.characteristic_codes.items(), reverse=True):
+            specs.characteristic_codes.items(),
+            reverse=True,
+        ):
             if capacitance > threshold:
                 return code
 
@@ -151,12 +202,35 @@ class PartInfo(NamedTuple):
         max_value: float,
         excluded_values: set[float],
     ) -> Iterator[float]:
-        """Generate standard E12 series capacitance values within range."""
+        """Generate E12 standard values within a given range.
+
+        Args:
+            min_value: Minimum capacitance value in farads
+            max_value: Maximum capacitance value in farads
+            excluded_values: Set of capacitance values to exclude
+
+        Yields:
+            Standard capacitance values within the specified range
+
+        """
         e12_multipliers = [
-            1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2]
+            1.0,
+            1.2,
+            1.5,
+            1.8,
+            2.2,
+            2.7,
+            3.3,
+            3.9,
+            4.7,
+            5.6,
+            6.8,
+            8.2,
+        ]
 
         normalized_excluded = {
-            float(f"{value:.1e}") for value in excluded_values}
+            float(f"{value:.1e}") for value in excluded_values
+        }
 
         decade = 1.0e-12
         while decade <= max_value:
@@ -172,7 +246,16 @@ class PartInfo(NamedTuple):
         mpn: str,
         specs: SeriesSpec,
     ) -> str:
-        """Generate the datasheet URL for a given Murata part number."""
+        """Generate complete datasheet URL for a given part number.
+
+        Args:
+            mpn: Manufacturer part number for the component
+            specs: Series specifications for the component
+
+        Returns:
+            Complete URL to the component datasheet
+
+        """
         if specs.manufacturer == "Murata Electronics":
             return f"{specs.datasheet_url}{mpn[:-1]}-01.pdf"
         return f"{specs.datasheet_url}{mpn}"
@@ -187,7 +270,20 @@ class PartInfo(NamedTuple):
         dielectric_type: str,
         specs: SeriesSpec,
     ) -> "PartInfo":
-        """Create complete part information from component parameters."""
+        """Create a PartInfo object for a specific capacitor part number.
+
+        Args:
+            capacitance: Capacitance value in farads
+            tolerance_code: Tolerance code for the component
+            tolerance_value: Tolerance percentage for the component
+            packaging: Packaging code for the component
+            dielectric_type: Dielectric material type (e.g., 'X7R')
+            specs: Series specifications for the component
+
+        Returns:
+            PartInfo object with complete component information
+
+        """
         capacitance_code = cls.generate_capacitance_code(capacitance)
         characteristic_code = cls.get_characteristic_code(capacitance, specs)
         formatted_value = cls.format_capacitance_value(capacitance)
@@ -248,7 +344,15 @@ class PartInfo(NamedTuple):
         cls,
         specs: SeriesSpec,
     ) -> list["PartInfo"]:
-        """Generate all valid part numbers for a series specification."""
+        """Generate a list of PartInfo objects for a given series.
+
+        Args:
+            specs: Series specifications for the component
+
+        Returns:
+            List of PartInfo objects for the given series
+
+        """
         parts_list: list[PartInfo] = []
         dielectric_types = ["X7R", "X7S"]
 
@@ -257,24 +361,33 @@ class PartInfo(NamedTuple):
                 min_val, max_val = specs.value_range[dielectric_type]
 
                 for capacitance in cls.generate_standard_values(
-                        min_val, max_val, specs.excluded_values):
-                    for tolerance_code, tolerance_value in \
-                            specs.tolerance_map[dielectric_type].items():
+                    min_val,
+                    max_val,
+                    specs.excluded_values,
+                ):
+                    for (
+                        tolerance_code,
+                        tolerance_value,
+                    ) in specs.tolerance_map[dielectric_type].items():
                         for packaging in specs.packaging_options:
-                            parts_list.append(cls.create_part_info(  # noqa: PERF401
-                                capacitance=capacitance,
-                                tolerance_code=tolerance_code,
-                                tolerance_value=tolerance_value,
-                                packaging=packaging,
-                                dielectric_type=dielectric_type,
-                                specs=specs,
-                            ))
+                            parts_list.append(  # noqa: PERF401
+                                cls.create_part_info(
+                                    capacitance=capacitance,
+                                    tolerance_code=tolerance_code,
+                                    tolerance_value=tolerance_value,
+                                    packaging=packaging,
+                                    dielectric_type=dielectric_type,
+                                    specs=specs,
+                                ),
+                            )
 
         return sorted(parts_list, key=lambda x: (x.dielectric, x.value))
 
 
 # Base URLs for documentation
-MURATA_DOC_BASE = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/"
+MURATA_DOC_BASE = (
+    "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/"
+)
 
 MURATA_SYMBOLS_SPECS = {
     "GCM155R71H": SeriesSpec(
@@ -292,14 +405,17 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
-
     "GCM188R71H": SeriesSpec(
         manufacturer="Murata Electronics",
         base_series="GCM188R71H",
         value_range={"X7R": (1e-9, 220e-9)},  # 1nF to 220nF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={
-            100e-9: "A64", 47e-9: "A57", 22e-9: "A55", 0: "A37"},
+            100e-9: "A64",
+            47e-9: "A57",
+            22e-9: "A55",
+            0: "A37",
+        },
         packaging_options=["D", "J"],
         footprint="capacitor_footprints:C_0603_1608Metric",
         voltage_rating="50V",
@@ -388,7 +504,8 @@ MURATA_SYMBOLS_SPECS = {
 
 # Base URLs for documentation
 SAMSUNG_DOC_BASE = (
-    "https://weblib.samsungsem.com/mlcc/mlcc-ec-data-sheet.do?partNumber=")
+    "https://weblib.samsungsem.com/mlcc/mlcc-ec-data-sheet.do?partNumber="
+)
 
 SAMSUNG_SYMBOLS_SPECS = {
     "CL31B": SeriesSpec(
@@ -403,8 +520,19 @@ SAMSUNG_SYMBOLS_SPECS = {
         value_range={"X7R": (0.47e-6, 10e-6)},
         dielectric_code={"X7R": "B"},
         excluded_values={
-            0.56e-6, 0.68e-6, 0.82e-6, 1.2e-6, 1.5e-6, 1.8e-6, 2.7e-6, 3.3e-6,
-            3.9e-6, 5.6e-6, 6.8e-6, 8.2e-6},
+            0.56e-6,
+            0.68e-6,
+            0.82e-6,
+            1.2e-6,
+            1.5e-6,
+            1.8e-6,
+            2.7e-6,
+            3.3e-6,
+            3.9e-6,
+            5.6e-6,
+            6.8e-6,
+            8.2e-6,
+        },
         datasheet_url=f"{SAMSUNG_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search/CL31",
     ),
@@ -412,7 +540,8 @@ SAMSUNG_SYMBOLS_SPECS = {
 
 # Base URLs for documentation
 TDK_DOC_BASE = (
-    "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=")
+    "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no="
+)
 
 TDK_SYMBOLS_SPECS = {
     "C1005X7S1A": SeriesSpec(
@@ -461,4 +590,7 @@ TDK_SYMBOLS_SPECS = {
 
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
-    **MURATA_SYMBOLS_SPECS, **SAMSUNG_SYMBOLS_SPECS, **TDK_SYMBOLS_SPECS}
+    **MURATA_SYMBOLS_SPECS,
+    **SAMSUNG_SYMBOLS_SPECS,
+    **TDK_SYMBOLS_SPECS,
+}

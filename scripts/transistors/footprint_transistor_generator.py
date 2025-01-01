@@ -14,18 +14,17 @@ from utilities import footprint_utils
 
 
 def generate_footprint(
-        part_info: symbol_transistor_specs.PartInfo,
-        specs: FootprintSpecs,
+    part_info: symbol_transistor_specs.PartInfo,
+    specs: FootprintSpecs,
 ) -> str:
-    """Generate complete KiCad footprint file content for a diode.
+    """Generate a complete .kicad_mod file for a diode.
 
     Args:
-        part_info: Component specifications
-        specs: Physical specifications for the diode series from
-        FOOTPRINTS_SPECS
+        part_info: Component specifications including MPN and package type
+        specs: Footprint specifications for the diode package
 
     Returns:
-        Complete .kicad_mod file content as formatted string
+        A string with the content of the .kicad_mod file for the diode
 
     """
     body_width = specs.body_dimensions.width
@@ -45,32 +44,47 @@ def generate_footprint(
     sections = [
         footprint_utils.generate_header(part_info.package),
         footprint_utils.generate_properties(
-            specs.ref_offset_y, part_info.package),
+            specs.ref_offset_y,
+            part_info.package,
+        ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_pads(
-            pad_width, pad_height, pad_center_x, pad_pitch_y, pins_per_side,
-            pad_numbers),
+            pad_width,
+            pad_height,
+            pad_center_x,
+            pad_pitch_y,
+            pins_per_side,
+            pad_numbers,
+        ),
         footprint_utils.generate_thermal_pad(
-            thermal_pad_width, thermal_pad_height,
-            thermal_pad_center_x, thermal_pad_center_y,
-            thermal_pad_numbers),
+            thermal_pad_width,
+            thermal_pad_height,
+            thermal_pad_center_x,
+            thermal_pad_center_y,
+            thermal_pad_numbers,
+        ),
         footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models", part_info.package),
+            "KiCAD_Symbol_Generator/3D_models",
+            part_info.package,
+        ),
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
 
 
 def generate_footprint_file(
-        part_info: symbol_transistor_specs.PartInfo,
-        output_path: str,
+    part_info: symbol_transistor_specs.PartInfo,
+    output_path: str,
 ) -> None:
     """Generate and save a complete .kicad_mod file for a diode.
 
     Args:
         part_info: Component specifications including MPN and package type
-        output_path: Directory path where the footprint file will be saved
+        output_path: Directory where the .kicad_mod file will be saved
+
+    Returns:
+        None
 
     """
     specs = FOOTPRINTS_SPECS[part_info.package]
