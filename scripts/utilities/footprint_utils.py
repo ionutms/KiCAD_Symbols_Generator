@@ -102,8 +102,8 @@ def generate_courtyard_2(
     """
     return f"""
         (fp_rect
-            (start -{width_left} -{height_bottom})
-            (end {width_right} {height_top})
+            (start -{width_left} {height_bottom})
+            (end {width_right} -{height_top})
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
@@ -135,8 +135,8 @@ def generate_silkscreen_rectangle(
     """
     return f"""
         (fp_rect
-            (start -{width_left} -{height_bottom})
-            (end {width_right} {height_top})
+            (start -{width_left} {height_bottom})
+            (end {width_right} -{height_top})
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
@@ -168,8 +168,8 @@ def generate_fabrication_rectangle(
     """
     return f"""
         (fp_rect
-            (start -{width_left} -{height_bottom})
-            (end {width_right} {height_top})
+            (start -{width_left} {height_bottom})
+            (end {width_right} -{height_top})
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.Fab")
