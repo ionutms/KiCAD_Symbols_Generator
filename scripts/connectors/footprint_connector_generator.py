@@ -14,7 +14,6 @@ pitches, generating complete footprint definitions including:
 """
 
 from pathlib import Path
-from uuid import uuid4
 
 import symbol_connectors_specs
 from footprint_connector_specs import CONNECTOR_SPECS, FootprintSpecs
@@ -38,7 +37,17 @@ def generate_footprint(
         Complete .kicad_mod file content as formatted string
 
     """
-    dimensions = calculate_dimensions(part_info, specs)
+    dimensions = footprint_utils.calculate_dimensions(
+        part_info.pin_count,
+        part_info.pitch,
+        specs.body_dimensions.width_left,
+        specs.body_dimensions.width_right,
+    )
+    width_left = dimensions["width_left"]
+    width_right = dimensions["width_right"]
+    height_top = specs.body_dimensions.height_top
+    height_bottom = specs.body_dimensions.height_bottom
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
@@ -47,25 +56,36 @@ def generate_footprint(
             specs.mpn_y,
         ),
         footprint_utils.generate_courtyard_2(
-            dimensions["width_left"],
-            dimensions["width_right"],
-            specs.body_dimensions.height_top,
-            specs.body_dimensions.height_bottom,
+            width_left,
+            width_right,
+            height_top,
+            height_bottom,
         ),
         footprint_utils.generate_silkscreen_rectangle(
-            dimensions["width_left"],
-            dimensions["width_right"],
-            specs.body_dimensions.height_top,
-            specs.body_dimensions.height_bottom,
+            width_left,
+            width_right,
+            height_top,
+            height_bottom,
         ),
         footprint_utils.generate_fabrication_rectangle(
-            dimensions["width_left"],
-            dimensions["width_right"],
-            specs.body_dimensions.height_top,
-            specs.body_dimensions.height_bottom,
+            width_left,
+            width_right,
+            height_top,
+            height_bottom,
         ),
-        generate_shapes(dimensions, specs),
-        generate_pads(part_info, specs, dimensions),
+        footprint_utils.generate_pin_1_indicator(width_left, specs.pad_size),
+        footprint_utils.generate_pin_1_indicator(
+            width_left,
+            specs.pad_size,
+            layer="F.Fab",
+        ),
+        footprint_utils.generate_thru_hole_pads(
+            part_info.pin_count,
+            part_info.pitch,
+            specs.pad_size,
+            specs.drill_size,
+            dimensions["start_pos"],
+        ),
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
             f"CUI_DEVICES_{part_info.mpn}",
@@ -73,88 +93,6 @@ def generate_footprint(
         ")",  # Close the footprint
     ]
     return "\n".join(sections)
-
-
-def calculate_dimensions(
-    part_info: symbol_connectors_specs.PartInfo,
-    specs: FootprintSpecs,
-) -> dict:
-    """Calculate key dimensions for footprint generation.
-
-    Determines total width, length, and starting positions based on the
-    connector's pin count and physical specifications.
-
-    Args:
-        part_info: Component specifications (pin count, pitch)
-        specs: Physical specifications for the connector series
-
-    Returns:
-        Dictionary containing calculated dimensions and positions
-
-    """
-    extra_width_per_side = (part_info.pin_count - 2) * specs.pitch / 2
-    width_left = specs.body_dimensions.width_left + extra_width_per_side
-    width_right = specs.body_dimensions.width_right + extra_width_per_side
-    total_length = (part_info.pin_count - 1) * part_info.pitch
-    start_position = -total_length / 2
-
-    return {
-        "width_left": width_left,
-        "width_right": width_right,
-        "total_length": total_length,
-        "start_pos": start_position,
-    }
-
-
-def generate_shapes(dimensions: dict, specs: FootprintSpecs) -> str:
-    """Generate the shapes section of the footprint."""
-    circle_center = -(dimensions["width_left"] + specs.silk_margin * 6)
-    circle_end = -(dimensions["width_left"] + specs.silk_margin * 2)
-
-    def generate_circle(layer_name: str, fill_type: str) -> str:
-        return f"""
-            (fp_circle
-                (center {circle_center:.3f} 0)
-                (end {circle_end:.3f} 0)
-                (stroke (width {specs.silk_margin}) (type solid))
-                (fill {fill_type})
-                (layer "{layer_name}")
-                (uuid "{uuid4()}")
-            )
-            """
-
-    shapes = [
-        "    (attr through_hole)",
-        generate_circle("F.SilkS", "solid"),
-        generate_circle("F.Fab", "none"),
-    ]
-
-    return "\n".join(shapes)
-
-
-def generate_pads(
-    part_info: symbol_connectors_specs.PartInfo,
-    specs: FootprintSpecs,
-    dimensions: dict,
-) -> str:
-    """Generate the pads section of the footprint."""
-    pads = []
-    for pin_num in range(part_info.pin_count):
-        xpos = dimensions["start_pos"] + (pin_num * part_info.pitch)
-        pad_type = "rect" if pin_num == 0 else "circle"
-        pad = f"""
-            (pad "{pin_num + 1}" thru_hole {pad_type}
-                (at {xpos:.3f} 0)
-                (size {specs.pad_size} {specs.pad_size})
-                (drill {specs.drill_size})
-                (layers "*.Cu" "*.Mask")
-                (remove_unused_layers no)
-                (solder_mask_margin {specs.mask_margin})
-                (uuid "{uuid4()}")
-            )
-            """
-        pads.append(pad)
-    return "\n".join(pads)
 
 
 def generate_footprint_file(
