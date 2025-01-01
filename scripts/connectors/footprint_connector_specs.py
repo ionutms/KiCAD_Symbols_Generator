@@ -18,6 +18,13 @@ class BodyDimensions(NamedTuple):
 
     All measurements are in millimeters relative to the origin point (0,0).
     Positive values extend right/up, negative values extend left/down.
+
+    Attributes:
+        width_left: Distance from origin to left edge
+        width_right: Distance from origin to right edge
+        height_top: Distance from origin to top edge
+        height_bottom: Distance from origin to bottom edge
+
     """
 
     width_left: float  # Distance from origin to left edge
@@ -32,6 +39,17 @@ class FootprintSpecs(NamedTuple):
     Defines all physical dimensions, pad properties, reference designator
     positions, and 3D model alignment parameters needed to generate a complete
     KiCad footprint file.
+
+    Attributes:
+        pitch: Additional width needed per pin
+        body_dimensions: Basic rectangle dimensions
+        pad_size: Diameter/size of through-hole pads
+        drill_size: Diameter of drill holes
+        silk_margin: Clearance for silkscreen outlines
+        mask_margin: Solder mask clearance around pads
+        mpn_y: Y position for manufacturer part number
+        ref_y: Y position for reference designator
+
     """
 
     pitch: float  # Additional width needed per pin
