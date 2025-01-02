@@ -1,13 +1,22 @@
-"""Specifications and data structures for ceramic capacitors.
+"""Detailed specifications for capacitor series and part numbers.
 
-This module defines the data structures and specifications for various ceramic
-capacitors, including Murata GCM series and Samsung CL series, focusing on X7R
-dielectric types. It provides comprehensive component information including
-physical dimensions, electrical characteristics, and packaging options.
+This module contains detailed specifications for various capacitor series,
+including physical characteristics, electrical ratings, and available
+configurations. It also provides a named tuple for complete information on a
+specific capacitor part number.
+
+Attributes:
+    SeriesSpec: Detailed specifications for a capacitor series
+    PartInfo: Complete information for a specific capacitor part number
+
 """
 
-from collections.abc import Iterator
-from typing import Final, NamedTuple
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Final, NamedTuple
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 class SeriesSpec(NamedTuple):
@@ -18,19 +27,22 @@ class SeriesSpec(NamedTuple):
     and available configurations.
 
     Attributes:
-        base_series: Part number series identifier (e.g., 'GCM155', 'CL31')
-        manufacturer: Name of the component manufacturer (enum)
+        base_series: Base series identifier for the component
+        manufacturer: Name of the component manufacturer
         footprint: PCB footprint ID for the component
-        voltage_rating: Maximum operating voltage specification
+        voltage_rating: Maximum operating voltage for the component
         case_code_in: Package dimensions in inches (e.g., '0402')
         case_code_mm: Package dimensions in millimeters (e.g., '1005')
-        packaging_options: List of available packaging codes
-        tolerance_map: Maps dielectric types to tolerance codes and values
-        value_range: Valid capacitance range for each dielectric type
-        dielectric_code: Maps dielectric types to their material codes
-        excluded_values: Set of unsupported capacitance values within range
-        datasheet_url: Complete URL to component datasheet
-        trustedparts_url: Base URL for component listing on Trustedparts
+        packaging_options: List of available packaging options
+        tolerance_map: Mapping of dielectric type to tolerance codes
+        value_range: Mapping of dielectric type to capacitance value range
+        datasheet_url: Base URL for component datasheets
+        trustedparts_url: Base URL for component listings on Trustedparts
+        dielectric_code: Mapping of dielectric type to dielectric codes
+        characteristic_codes: Mapping of capacitance thresholds to codes
+        excluded_values: Set of capacitance values to exclude
+        specified_values: List of specified capacitance values
+        reference: Reference designator for the component
 
     """
 
@@ -43,11 +55,12 @@ class SeriesSpec(NamedTuple):
     packaging_options: list[str]
     tolerance_map: dict[str, dict[str, str]]
     value_range: dict[str, tuple[float, float]]
-    excluded_values: set[float]
     datasheet_url: str
     trustedparts_url: str
     dielectric_code: dict[str, str] = {}  # noqa: RUF012
     characteristic_codes: dict[float, str] = {}  # noqa: RUF012
+    excluded_values: set[float] | None = None
+    specified_values: list[float] | None = None
     reference: str = "C"
 
 
@@ -200,7 +213,8 @@ class PartInfo(NamedTuple):
         cls,
         min_value: float,
         max_value: float,
-        excluded_values: set[float],
+        excluded_values: set[float] | None = None,
+        specified_values: list[float] | None = None,
     ) -> Iterator[float]:
         """Generate E12 standard values within a given range.
 
@@ -208,6 +222,7 @@ class PartInfo(NamedTuple):
             min_value: Minimum capacitance value in farads
             max_value: Maximum capacitance value in farads
             excluded_values: Set of capacitance values to exclude
+            specified_values: List of specified capacitance values
 
         Yields:
             Standard capacitance values within the specified range
@@ -228,17 +243,25 @@ class PartInfo(NamedTuple):
             8.2,
         ]
 
-        normalized_excluded = {
-            float(f"{value:.1e}") for value in excluded_values
-        }
+        normalized_excluded = {}
+        if excluded_values is not None:
+            normalized_excluded = {
+                float(f"{value:.1e}") for value in excluded_values
+            }
 
         decade = 1.0e-12
         while decade <= max_value:
             for multiplier in e12_multipliers:
                 normalized_value = float(f"{decade * multiplier:.1e}")
-                if min_value <= normalized_value <= max_value:  # noqa: SIM102
-                    if normalized_value not in normalized_excluded:
-                        yield normalized_value
+                if (
+                    min_value <= normalized_value <= max_value
+                    and normalized_value not in normalized_excluded
+                    and (
+                        specified_values is None
+                        or normalized_value in specified_values
+                    )
+                ):
+                    yield normalized_value
             decade *= 10
 
     @staticmethod
@@ -269,7 +292,7 @@ class PartInfo(NamedTuple):
         packaging: str,
         dielectric_type: str,
         specs: SeriesSpec,
-    ) -> "PartInfo":
+    ) -> PartInfo:
         """Create a PartInfo object for a specific capacitor part number.
 
         Args:
@@ -343,7 +366,7 @@ class PartInfo(NamedTuple):
     def generate_part_numbers(
         cls,
         specs: SeriesSpec,
-    ) -> list["PartInfo"]:
+    ) -> list[PartInfo]:
         """Generate a list of PartInfo objects for a given series.
 
         Args:
@@ -364,6 +387,7 @@ class PartInfo(NamedTuple):
                     min_val,
                     max_val,
                     specs.excluded_values,
+                    specs.specified_values,
                 ):
                     for (
                         tolerance_code,
@@ -519,20 +543,7 @@ SAMSUNG_SYMBOLS_SPECS = {
         tolerance_map={"X7R": {"K": "10%"}},
         value_range={"X7R": (0.47e-6, 10e-6)},
         dielectric_code={"X7R": "B"},
-        excluded_values={
-            0.56e-6,
-            0.68e-6,
-            0.82e-6,
-            1.2e-6,
-            1.5e-6,
-            1.8e-6,
-            2.7e-6,
-            3.3e-6,
-            3.9e-6,
-            5.6e-6,
-            6.8e-6,
-            8.2e-6,
-        },
+        specified_values=[0.47e-6, 1e-6, 2.2e-6, 4.7e-6, 10e-6],
         datasheet_url=f"{SAMSUNG_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search/CL31",
     ),
@@ -568,7 +579,7 @@ TDK_SYMBOLS_SPECS = {
         voltage_rating="10V",
         case_code_in="0603",
         case_code_mm="1608",
-        excluded_values={2.7e-6, 3.3e-6, 3.9e-6},
+        specified_values=[2.2e-6, 4.7e-6],
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
