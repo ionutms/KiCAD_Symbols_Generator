@@ -6,8 +6,12 @@ It provides comprehensive component information including physical dimensions,
 electrical characteristics, and packaging options.
 """
 
-from collections.abc import Iterator
-from typing import Final, NamedTuple, Optional, Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Final, NamedTuple
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 class SeriesSpec(NamedTuple):
@@ -49,12 +53,12 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     manufacturer: str
     trustedparts_url: str
-    resistance_range: list[Union[int, float]]  # noqa: FA100
+    resistance_range: list[int | float]
     temperature_coefficient: str
     reference: str = "R"
-    excluded_values: Optional[list[float]] = None  # noqa: FA100
-    specified_values: Optional[list[float]] = None  # noqa: FA100
-    extra_values: Optional[list[float]] = None  # noqa: FA100
+    excluded_values: list[float] | None = None
+    specified_values: list[float] | None = None
+    extra_values: list[float] | None = None
 
 
 E96_BASE_VALUES: Final[list[float]] = [
@@ -412,7 +416,7 @@ class PartInfo(NamedTuple):
         tolerance_value: str,
         packaging: str,
         specs: SeriesSpec,
-    ) -> "PartInfo":
+    ) -> PartInfo:
         """Create a PartInfo instance for a specific resistor part.
 
         Generates a PartInfo instance with detailed information for a specific
@@ -465,7 +469,7 @@ class PartInfo(NamedTuple):
     def generate_part_numbers(
         cls,
         specs: SeriesSpec,
-    ) -> list["PartInfo"]:
+    ) -> list[PartInfo]:
         """Generate a list of PartInfo instances for a resistor series.
 
         Generates a list of PartInfo instances for a specific resistor series
@@ -536,9 +540,9 @@ class PartInfo(NamedTuple):
     def _filtered_resistance_values(
         cls,
         base_values: list[float],
-        resistance_range: list[Union[int, float]],  # noqa: FA100
-        excluded_values: Optional[list[float]] = None,  # noqa: FA100
-        specified_values: Optional[list[float]] = None,  # noqa: FA100
+        resistance_range: list[int | float],
+        excluded_values: list[float] | None = None,
+        specified_values: list[float] | None = None,
     ) -> Iterator[float]:
         """Generate filtered resistance values based on specified conditions.
 
