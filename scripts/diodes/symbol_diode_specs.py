@@ -5,7 +5,9 @@ series, including their specifications and individual component
 information.
 """
 
-from typing import NamedTuple, Optional, Self
+from __future__ import annotations
+
+from typing import NamedTuple, Self
 
 from utilities import print_message_utilities
 
@@ -40,7 +42,7 @@ class SeriesSpec(NamedTuple):
     current_rating: list[float]
     package: str
     diode_type: str
-    part_number_suffix: Optional[str] = None  # noqa: FA100
+    part_number_suffix: str | None = None
     reference: str = "D"
 
 
@@ -120,7 +122,7 @@ class PartInfo(NamedTuple):
         cls: type[Self],
         value: float,
         specs: SeriesSpec,
-    ) -> Optional[Self]:  # noqa: FA100
+    ) -> Self | None:
         """Create a PartInfo object for a specific diode component.
 
         Args:
