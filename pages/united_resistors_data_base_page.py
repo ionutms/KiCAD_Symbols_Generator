@@ -1,23 +1,22 @@
-"""Resistors Database Page.
+"""United Resistors Database Page.
 
-This module provides a Dash page for viewing and interacting with resistor
-specifications. It allows users to browse, search, and filter through a
-database of resistors, with features for customizing the view and accessing
-detailed information.
+This module contains the layout and interactivity for the United Resistors
+Database page of the Dash web application. It provides an interactive table
+displaying resistor specifications and a bar graph showing the distribution of
+resistor values.
 
-Key features:
-- Interactive DataTable displaying resistor specifications
-- Column visibility controls for customizing the view
-- Dynamic filtering and multi-column sorting capabilities
-- Pagination with customizable page size
-- Theme-aware styling with light/dark mode support
-- Direct links to resistor datasheets
-- Responsive design for various screen sizes
+Attributes:
+    link_name (str): The name of the page link.
+    module_name (str): The name of the module.
+    dataframe (pd.DataFrame): The resistor data.
+    total_rows (int): The total number of resistors in the database.
+    TITLE (str): The title of the page.
+    ABOUT (tuple[str, str]): Information about the page.
+    features (list[str]): Key features of the page.
+    usage_steps (list[str]): Steps for using the page.
+    hidden_columns (list[str]): Columns to hide in the table.
+    visible_columns (list[str]): Columns to display in the table.
 
-The module uses Dash components and callbacks to create an interactive
-interface for data visualization and exploration. It integrates with
-Bootstrap components for a polished user interface and includes
-comprehensive styling support for both light and dark themes.
 """
 
 from typing import Any
@@ -82,80 +81,109 @@ hidden_columns = [
 ]
 
 visible_columns = [
-    col for col in dataframe.columns if col not in hidden_columns]
+    col for col in dataframe.columns if col not in hidden_columns
+]
 
 try:
     dataframe["Datasheet"] = dataframe["Datasheet"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"),
+    )
 
     dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Search"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Search"),
+    )
 except KeyError:
     pass
 
 
-layout = dbc.Container([html.Div([
-    dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
-    dbc.Row([dbc.Col([html.H3(
-        f"{link_name.replace('_', ' ')} ({total_rows:,} items)",
-        style=styles.heading_3_style)])]),
-    dbc.Row([dcu.app_description(TITLE, ABOUT, features, usage_steps)]),
-
-    dcu.generate_range_slider(module_name, dataframe, step=45),
-
-    html.Hr(),
-
-    dbc.Row([dcc.Loading([dcc.Graph(
-        id=f"{module_name}_bar_graph",
-        config={"displaylogo": False}),
-        ], delay_show=100, delay_hide=100),
-    ]),
-
-    html.Hr(),
-
-    dcu.table_controls_row(module_name, dataframe, visible_columns),
-
-    html.Hr(),
-
-    dash_table.DataTable(
-        id=f"{module_name}_table",
-        columns=dcu.create_column_definitions(dataframe, visible_columns),
-        data=dataframe[visible_columns].to_dict("records"),
-        cell_selectable=False,
-        markdown_options={"html": True},
-        page_size=10,
-        filter_action="native",
-        sort_action="native",
-        sort_mode="multi"),
-
-    html.Hr(),
-
-], style=styles.GLOBAL_STYLE),
-], fluid=True)
+layout = dbc.Container(
+    [
+        html.Div(
+            [
+                dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
+                dbc.Row([
+                    dbc.Col([
+                        html.H3(
+                            f"{link_name.replace('_', ' ')} "
+                            f"({total_rows:,} items)",
+                            style=styles.heading_3_style,
+                        ),
+                    ]),
+                ]),
+                dbc.Row([
+                    dcu.app_description(TITLE, ABOUT, features, usage_steps),
+                ]),
+                dcu.generate_range_slider(module_name, dataframe, step=45),
+                html.Hr(),
+                dbc.Row([
+                    dcc.Loading(
+                        [
+                            dcc.Graph(
+                                id=f"{module_name}_bar_graph",
+                                config={"displaylogo": False},
+                            ),
+                        ],
+                        delay_show=100,
+                        delay_hide=100,
+                    ),
+                ]),
+                html.Hr(),
+                dcu.table_controls_row(
+                    module_name,
+                    dataframe,
+                    visible_columns,
+                ),
+                html.Hr(),
+                dash_table.DataTable(
+                    id=f"{module_name}_table",
+                    columns=dcu.create_column_definitions(
+                        dataframe,
+                        visible_columns,
+                    ),
+                    data=dataframe[visible_columns].to_dict("records"),
+                    cell_selectable=False,
+                    markdown_options={"html": True},
+                    page_size=10,
+                    filter_action="native",
+                    sort_action="native",
+                    sort_mode="multi",
+                ),
+                html.Hr(),
+            ],
+            style=styles.GLOBAL_STYLE,
+        ),
+    ],
+    fluid=True,
+)
 
 
 dcu.callback_update_visible_columns(
     f"{module_name}_table",
     f"{module_name}_column_toggle",
-    dataframe)
+    dataframe,
+)
 
 
 dcu.callback_update_table_style_and_visibility(f"{module_name}_table")
 
 dcu.callback_update_page_size(
-    f"{module_name}_table", f"{module_name}_page_size")
+    f"{module_name}_table",
+    f"{module_name}_page_size",
+)
 
 dcu.callback_update_dropdown_style(f"{module_name}_page_size")
 
 dcu.save_previous_slider_state_callback(
-    f"{module_name}_value_rangeslider", f"{module_name}_rangeslider_store",
-    step=45)
+    f"{module_name}_value_rangeslider",
+    f"{module_name}_rangeslider_store",
+    step=45,
+)
 
 
 def get_visible_y_max(
-        figure_data: list[go.Bar],
-        x_range: tuple[int, int],
-    ) -> int:
+    figure_data: list[go.Bar],
+    x_range: tuple[int, int],
+) -> int:
     """Get the maximum y value within the visible x range.
 
     Args:
@@ -173,7 +201,8 @@ def get_visible_y_max(
         # Get positions within range
         positions = range(len(trace.x))
         visible_positions = [
-            index for index in positions if x_min <= index <= x_max]
+            index for index in positions if x_min <= index <= x_max
+        ]
 
         if visible_positions:
             y_values = [trace.y[index] for index in visible_positions]
@@ -204,42 +233,61 @@ def update_distribution_graph(
     """
     # Prepare full data range
     values, _ = dcu.extract_consecutive_value_groups(
-        dataframe["Value"].to_list())
+        dataframe["Value"].to_list(),
+    )
 
     # Dynamically extract all unique tolerances
     tolerances = sorted(dataframe["Tolerance"].unique())
 
     # Create tolerance-based dataframes and configurations
-    tolerance_configs = [{
-        "dataframe": dataframe[dataframe["Tolerance"] == tolerance],
-        "name": f"{tolerance} Tolerance"} for tolerance in tolerances]
+    tolerance_configs = [
+        {
+            "dataframe": dataframe[dataframe["Tolerance"] == tolerance],
+            "name": f"{tolerance} Tolerance",
+        }
+        for tolerance in tolerances
+    ]
 
     # Existing figure layout configuration
     figure_layout = {
         "xaxis": {
-            "gridcolor": "#808080", "griddash": "dash",
-            "zerolinecolor": "lightgray", "zeroline": False,
-            "domain": (0.0, 1.0), "showgrid": True,
+            "gridcolor": "#808080",
+            "griddash": "dash",
+            "zerolinecolor": "lightgray",
+            "zeroline": False,
+            "domain": (0.0, 1.0),
+            "showgrid": True,
             "title": {"text": "Resistance Value", "standoff": 10},
-            "title_font_weight": "bold", "tickmode": "array",
-            "tickangle": -45, "fixedrange": True,
+            "title_font_weight": "bold",
+            "tickmode": "array",
+            "tickangle": -45,
+            "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
             "titlefont": {"color": "#808080"},
         },
         "yaxis": {
-            "gridcolor": "#808080", "griddash": "dash",
-            "zerolinecolor": "lightgray", "zeroline": False,
-            "tickangle": -45, "title_font_weight": "bold", "position": 0.0,
-            "title": "Number of Resistors", "fixedrange": True,
+            "gridcolor": "#808080",
+            "griddash": "dash",
+            "zerolinecolor": "lightgray",
+            "zeroline": False,
+            "tickangle": -45,
+            "title_font_weight": "bold",
+            "position": 0.0,
+            "title": "Number of Resistors",
+            "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
-            "titlefont": {"color": "#808080"}, "showgrid": True,
-            "anchor": "free", "autorange": True, "tickformat": ".0f",
-            "dtick": 2, "tickmode": "linear",
+            "titlefont": {"color": "#808080"},
+            "showgrid": True,
+            "anchor": "free",
+            "autorange": True,
+            "tickformat": ".0f",
+            "dtick": 2,
+            "tickmode": "linear",
         },
         "title": {
-            "text":
-                "Resistance Value Distribution",
-            "x": 0.5, "xanchor": "center",
+            "text": "Resistance Value Distribution",
+            "x": 0.5,
+            "xanchor": "center",
         },
         "showlegend": True,
     }
@@ -250,25 +298,32 @@ def update_distribution_graph(
     # Add traces for each tolerance group
     for config in tolerance_configs:
         # Extract values and counts
-        values_tolerance, counts_tolerance = \
+        values_tolerance, counts_tolerance = (
             dcu.extract_consecutive_value_groups(
-                config["dataframe"]["Value"].to_list())
+                config["dataframe"]["Value"].to_list(),
+            )
+        )
 
         # Pad values and counts to match full range
         values_tolerance, counts_tolerance = dcu.pad_values_and_counts(
-            values, values_tolerance, counts_tolerance)
+            values,
+            values_tolerance,
+            counts_tolerance,
+        )
 
         # Add trace for this tolerance group
-        figure.add_trace(go.Bar(
-            x=values_tolerance,
-            y=counts_tolerance,
-            name=config["name"],
-            textposition="none",
-            textangle=-30,
-            text=counts_tolerance,
-            hoverinfo="none",
-            showlegend=True,
-        ))
+        figure.add_trace(
+            go.Bar(
+                x=values_tolerance,
+                y=counts_tolerance,
+                name=config["name"],
+                textposition="none",
+                textangle=-30,
+                text=counts_tolerance,
+                hoverinfo="none",
+                showlegend=True,
+            ),
+        )
 
     # In update_distribution_graph function:
     x_min, x_max = rangeslider_value[0], rangeslider_value[1]
@@ -305,14 +360,18 @@ def update_distribution_graph(
 
             cumulative_heights[value] = base_height + count
 
-        figure.add_trace(go.Scatter(
-            x=scatter_x,
-            y=scatter_y,
-            mode="markers",
-            name=f"{tolerance} Values",
-            text=scatter_mpn,  # Add MPN as text
-            hovertemplate="Resistance: %{x}<br>MPN: %{text}<extra></extra>",
-        ))
+        figure.add_trace(
+            go.Scatter(
+                x=scatter_x,
+                y=scatter_y,
+                mode="markers",
+                name=f"{tolerance} Values",
+                text=scatter_mpn,  # Add MPN as text
+                hovertemplate=(
+                    "Resistance: %{x}<br>MPN: %{text}<extra></extra>"
+                ),
+            ),
+        )
 
     # Update layout with new ranges
     figure.update_layout(
@@ -320,8 +379,13 @@ def update_distribution_graph(
         yaxis_range=[0, y_max],
         yaxis_autorange=False,
         legend={
-            "orientation": "h", "yanchor": "bottom", "xanchor": "center",
-            "y": -0.5, "x": 0.5})
+            "orientation": "h",
+            "yanchor": "bottom",
+            "xanchor": "center",
+            "y": -0.5,
+            "x": 0.5,
+        },
+    )
 
     # Define theme settings
     theme = {
@@ -334,11 +398,24 @@ def update_distribution_graph(
 
     # Update figure layout with theme and remove unnecessary modebar options
     figure.update_layout(
-        **theme, height=500, barmode="stack", bargap=0.0, bargroupgap=0.0,
-        modebar={"remove": [
-            "zoom", "pan", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d",
-            "autoScale2d", "resetScale2d", "toImage",
-        ]},
+        **theme,
+        height=500,
+        barmode="stack",
+        bargap=0.0,
+        bargroupgap=0.0,
+        modebar={
+            "remove": [
+                "zoom",
+                "pan",
+                "select2d",
+                "lasso2d",
+                "zoomIn2d",
+                "zoomOut2d",
+                "autoScale2d",
+                "resetScale2d",
+                "toImage",
+            ],
+        },
     )
 
     return figure
