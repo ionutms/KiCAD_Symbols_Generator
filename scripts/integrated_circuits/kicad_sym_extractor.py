@@ -105,19 +105,24 @@ def write_symbols_to_csv(
 
 
 if __name__ == "__main__":
-    filename = "UNITED_IC_ADI.kicad_sym"
-    # Get the directory where the script is located
+    input_file = "UNITED_IC_ADI.kicad_sym"
+
+    # Get paths using f-strings
     script_dir = Path(__file__).parent
-    print(f"Script directory: {script_dir}")
-
-    # Get the project root directory (2 levels up from script location, not 3)
     project_root = script_dir.parent.parent
+
+    # Using f-strings for path construction
+    input_path = f"{script_dir}/{input_file}"
+    output_path = (
+        f"{project_root}/data/{input_file.replace('.kicad_sym', '.csv')}"
+    )
+
+    # Convert string paths to Path objects
+    file_path = Path(input_path)
+    output_file = Path(output_path)
+
+    print(f"Script directory: {script_dir}")
     print(f"Project root directory: {project_root}")
-
-    # Construct the full paths
-    file_path = script_dir / filename
-    output_file = project_root / "data/UNITED_IC_ADI.csv"
-
     print(f"Looking for input file at: {file_path}")
     print(f"Attempting to write output to: {output_file}")
     print(f"Output directory exists: {output_file.parent.exists()}")
