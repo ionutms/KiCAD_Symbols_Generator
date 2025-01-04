@@ -1,12 +1,13 @@
 """Extracts symbol information from a KiCad symbol library file (.kicad_sym).
 
 This script reads a KiCad symbol library file and extracts all symbol names
-and properties defined in the file. It assumes that the symbol library file
-is in the same directory as the script.
+and properties defined in the file. It writes the extracted information to a
+CSV file with headers determined from the properties found in the symbols.
 """
 
 from __future__ import annotations
 
+import csv
 import re
 import sys
 from pathlib import Path
@@ -52,33 +53,62 @@ def parse_kicad_symbol_file(content: str) -> dict[str, dict[str, str]]:
     return symbols
 
 
-def print_symbol_info(symbols: dict[str, dict[str, str]]) -> None:
-    """Print all symbols and their properties.
+def get_all_property_names(symbols: dict[str, dict[str, str]]) -> list[str]:
+    """Get a sorted list of all unique property names found in the symbols.
 
     Args:
         symbols (dict[str, dict[str, str]]):
             A dictionary of symbols and their properties
 
     Returns:
+        list[str]: A sorted list of all unique property names
+
+    """
+    property_names = set()
+    for properties in symbols.values():
+        property_names.update(properties.keys())
+    return sorted(property_names)
+
+
+def write_symbols_to_csv(
+    symbols: dict[str, dict[str, str]],
+    output_file: Path,
+) -> None:
+    """Write symbols and their properties to a CSV file.
+
+    Args:
+        symbols (dict[str, dict[str, str]]):
+            A dictionary of symbols and their properties
+        output_file (Path):
+            Path to the output CSV file
+
+    Returns:
         None
 
     """
-    for symbol_name, properties in symbols.items():
-        print("Symbol Name:", symbol_name)
-        print("\nProperties:")
-        print("-" * 50)
-        for name, value in properties.items():
-            print(f"{name}: {value}")
-        print("\n" + "=" * 50 + "\n")
+    # Get all unique property names to use as headers
+    headers = ["Symbol Name", *get_all_property_names(symbols)]
+
+    with output_file.open("w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(headers)
+
+        for symbol_name, properties in symbols.items():
+            # Create a row with empty strings for missing properties
+            row = [symbol_name] + [
+                properties.get(header, "") for header in headers[1:]
+            ]
+            writer.writerow(row)
 
 
 if __name__ == "__main__":
-    filename = "IC_ADI.kicad_sym"
+    filename = "UNITED_IC_ADI.kicad_sym"
     # Get the directory where the script is located
     script_dir = Path(__file__).parent
 
     # Construct the full path to the kicad file
     file_path = script_dir / filename
+    output_file = script_dir / "symbols.csv"
 
     print(f"Looking for file at: {file_path}")
 
@@ -91,6 +121,7 @@ if __name__ == "__main__":
     with file_path.open() as file:
         content = file.read()
 
-    # Parse and print results
+    # Parse and write results to CSV
     symbols = parse_kicad_symbol_file(content)
-    print_symbol_info(symbols)
+    write_symbols_to_csv(symbols, output_file)
+    print(f"Symbol information has been written to: {output_file}")
