@@ -107,41 +107,39 @@ def write_symbols_to_csv(
 if __name__ == "__main__":
     input_file = "UNITED_IC_ADI.kicad_sym"
 
-    # Get paths using f-strings
+    # Get script location
     script_dir = Path(__file__).parent
+
+    # Navigate to project root from script location
     project_root = script_dir.parent.parent
 
-    # Using f-strings for path construction
-    input_path = f"{script_dir}/{input_file}"
+    # Construct paths for input and output
+    input_path = project_root / "symbols" / input_file
     output_path = (
-        f"{project_root}/data/{input_file.replace('.kicad_sym', '.csv')}"
+        project_root / "data" / input_file.replace(".kicad_sym", ".csv")
     )
-
-    # Convert string paths to Path objects
-    file_path = Path(input_path)
-    output_file = Path(output_path)
 
     print(f"Script directory: {script_dir}")
     print(f"Project root directory: {project_root}")
-    print(f"Looking for input file at: {file_path}")
-    print(f"Attempting to write output to: {output_file}")
-    print(f"Output directory exists: {output_file.parent.exists()}")
+    print(f"Looking for input file at: {input_path}")
+    print(f"Attempting to write output to: {output_path}")
+    print(f"Output directory exists: {output_path.parent.exists()}")
 
     # Check if file exists
-    if not file_path.exists():
-        print(f"Error: Input file not found: {file_path}")
+    if not input_path.exists():
+        print(f"Error: Input file not found: {input_path}")
         sys.exit(1)
 
     # Read the file
-    with file_path.open() as file:
+    with input_path.open() as file:
         content = file.read()
 
     # Parse and write results to CSV
     symbols = parse_kicad_symbol_file(content)
 
     # Create data directory if it doesn't exist
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    print(f"Created/verified output directory: {output_file.parent}")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    print(f"Created/verified output directory: {output_path.parent}")
 
-    write_symbols_to_csv(symbols, output_file)
-    print(f"Symbol information has been written to: {output_file}")
+    write_symbols_to_csv(symbols, output_path)
+    print(f"Symbol information has been written to: {output_path}")
