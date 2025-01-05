@@ -48,11 +48,21 @@ def generate_footprint(
     height_top = specs.body_dimensions.height_top
     height_bottom = specs.body_dimensions.height_bottom
 
+    model_file_name = f"{part_info.mpn}"
+    footprint_value = part_info.series.replace(
+        "xx",
+        f"{part_info.pin_count:02d}",
+    )
+
+    if part_info.manufacturer == "Same Sky":
+        model_file_name = f"CUI_DEVICES_{part_info.mpn}"
+        footprint_value = part_info.series
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
             specs.ref_y,
-            part_info.series,
+            footprint_value,
             specs.mpn_y,
         ),
         footprint_utils.generate_courtyard_2(
@@ -88,7 +98,7 @@ def generate_footprint(
         ),
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
-            f"CUI_DEVICES_{part_info.mpn}",
+            model_file_name,
         ),
         ")",  # Close the footprint
     ]
