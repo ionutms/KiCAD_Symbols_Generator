@@ -183,4 +183,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=10.8,
         ref_y=-3.0,
     ),
+    "SLM-1xx-01-G-S": FootprintSpecs(
+        pitch=1.27,
+        body_dimensions=BodyDimensions(
+            width_left=1.52,
+            width_right=1.52,
+            height_top=1,
+            height_bottom=1,
+        ),
+        pad_size=1.0874,
+        drill_size=0.787,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=1.778,
+        ref_y=-1.778,
+    ),
 }

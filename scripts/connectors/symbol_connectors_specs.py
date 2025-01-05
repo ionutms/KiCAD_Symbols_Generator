@@ -107,7 +107,11 @@ class PartInfo(NamedTuple):
             PartInfo instance with all specifications
 
         """
-        mpn = cls.generate_part_code(pin_count, specs.base_series)
+        mpn = cls.generate_part_code(
+            pin_count,
+            specs.base_series,
+            specs.manufacturer,
+        )
         footprint = specs.footprint_pattern.format(pin_count)
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
@@ -137,18 +141,23 @@ class PartInfo(NamedTuple):
         cls,
         pin_count: int,
         series_code: str,
+        manufacturer: str,
     ) -> str:
         """Generate connector part code based on pin count.
 
         Args:
             pin_count: Number of pins
             series_code: Base series code
+            manufacturer: Manufacturer Name
 
         Returns:
             str: Part code string
 
         """
-        return f"{series_code}-{pin_count:02d}BE"
+        if manufacturer == "Same Sky":
+            return f"{series_code}-{pin_count:02d}BE"
+        # else if manufactures is Samtec
+        return f"{series_code.replace('xx', f'{pin_count:02d}')}"
 
     @classmethod
     def create_description(
@@ -334,6 +343,26 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         pitch=5.08,
         mounting_angle="Vertical",
         current_rating=12.0,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
+    "SLM-1xx-01-G-S": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="SLM-1xx-01-G-S",
+        footprint_pattern="connector_footprints:SLM-1{:02d}-01-G-S",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/slm_th.pdf?"
+            "_gl=1*1d4b5ri*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjA5OTE1My4xLjEuMTczNjEwMDY3My4zMC4wLjA."
+        ),
+        pin_counts=list(range(1, 3)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        mounting_angle="Vertical",
+        current_rating=5.2,
         voltage_rating=300,
         mounting_style="Through Hole",
         contact_plating="Tin",
