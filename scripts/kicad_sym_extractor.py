@@ -105,13 +105,16 @@ def write_symbols_to_csv(
 
 
 if __name__ == "__main__":
-    input_files = ["UNITED_IC_ADI.kicad_sym"]
+    input_files = [
+        "UNITED_IC_ADI.kicad_sym",
+        "UNITED_SOLDER_JUMPERS.kicad_sym",
+    ]
 
     # Get script location
     script_dir = Path(__file__).parent
 
     # Navigate to project root from script location
-    project_root = script_dir.parent.parent
+    project_root = script_dir.parent
 
     for input_file in input_files:
         # Construct paths for input and output
