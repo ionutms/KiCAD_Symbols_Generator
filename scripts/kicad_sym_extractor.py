@@ -105,7 +105,7 @@ def write_symbols_to_csv(
 
 
 if __name__ == "__main__":
-    input_file = "UNITED_IC_ADI.kicad_sym"
+    input_files = ["UNITED_IC_ADI.kicad_sym"]
 
     # Get script location
     script_dir = Path(__file__).parent
@@ -113,33 +113,34 @@ if __name__ == "__main__":
     # Navigate to project root from script location
     project_root = script_dir.parent.parent
 
-    # Construct paths for input and output
-    input_path = project_root / "symbols" / input_file
-    output_path = (
-        project_root / "data" / input_file.replace(".kicad_sym", ".csv")
-    )
+    for input_file in input_files:
+        # Construct paths for input and output
+        input_path = project_root / "symbols" / input_file
+        output_path = (
+            project_root / "data" / input_file.replace(".kicad_sym", ".csv")
+        )
 
-    print(f"Script directory: {script_dir}")
-    print(f"Project root directory: {project_root}")
-    print(f"Looking for input file at: {input_path}")
-    print(f"Attempting to write output to: {output_path}")
-    print(f"Output directory exists: {output_path.parent.exists()}")
+        print(f"Script directory: {script_dir}")
+        print(f"Project root directory: {project_root}")
+        print(f"Looking for input file at: {input_path}")
+        print(f"Attempting to write output to: {output_path}")
+        print(f"Output directory exists: {output_path.parent.exists()}")
 
-    # Check if file exists
-    if not input_path.exists():
-        print(f"Error: Input file not found: {input_path}")
-        sys.exit(1)
+        # Check if file exists
+        if not input_path.exists():
+            print(f"Error: Input file not found: {input_path}")
+            sys.exit(1)
 
-    # Read the file
-    with input_path.open() as file:
-        content = file.read()
+        # Read the file
+        with input_path.open() as file:
+            content = file.read()
 
-    # Parse and write results to CSV
-    symbols = parse_kicad_symbol_file(content)
+        # Parse and write results to CSV
+        symbols = parse_kicad_symbol_file(content)
 
-    # Create data directory if it doesn't exist
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"Created/verified output directory: {output_path.parent}")
+        # Create data directory if it doesn't exist
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        print(f"Created/verified output directory: {output_path.parent}")
 
-    write_symbols_to_csv(symbols, output_path)
-    print(f"Symbol information has been written to: {output_path}")
+        write_symbols_to_csv(symbols, output_path)
+        print(f"Symbol information has been written to: {output_path}")
