@@ -70,12 +70,7 @@ usage_steps = [
     "different environments",
 ]
 
-hidden_columns = [
-    "Reference",
-    "Series",
-    "Maximum DC Current (A)",
-    "Maximum DC Resistance (Ω)",
-]
+hidden_columns = []
 
 visible_columns = [
     col for col in dataframe.columns if col not in hidden_columns
