@@ -108,6 +108,7 @@ if __name__ == "__main__":
     input_files = [
         "UNITED_IC_ADI.kicad_sym",
         "UNITED_SOLDER_JUMPERS.kicad_sym",
+        "UNITED_TEST_POINTS.kicad_sym",
     ]
 
     # Get script location
