@@ -377,7 +377,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
             "_ga_3KFNZC07WW*MTczNjE2MDY1Mi40LjEuMTczNjE2MDc4OS41NS4wLjA."
         ),
-        pin_counts=list(range(1, 2)),
+        pin_counts=list(range(1, 11)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=1.27,
