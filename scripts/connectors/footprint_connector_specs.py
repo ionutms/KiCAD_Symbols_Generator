@@ -198,4 +198,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=2.032,
         ref_y=-2.032,
     ),
+    "TMS-1xx-02-G-S": FootprintSpecs(
+        pitch=1.27,
+        body_dimensions=BodyDimensions(
+            width_left=1.45,
+            width_right=1.45,
+            height_top=1.35,
+            height_bottom=1.35,
+        ),
+        pad_size=1.0874,
+        drill_size=0.787,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=2.032,
+        ref_y=-2.032,
+    ),
 }
