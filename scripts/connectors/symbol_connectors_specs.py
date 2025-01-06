@@ -367,4 +367,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "TMS-1xx-02-G-S": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="TMS-1xx-02-G-S",
+        footprint_pattern="connector_footprints:TMS-1{:02d}-02-G-S",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/tms_th.pdf?"
+            "_gl=1*ta0q2w*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjE2MDY1Mi40LjEuMTczNjE2MDc4OS41NS4wLjA."
+        ),
+        pin_counts=list(range(1, 2)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
