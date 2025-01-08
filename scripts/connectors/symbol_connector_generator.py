@@ -51,6 +51,7 @@ def write_component(
 
     """
     symbol_name = component_data.get("Symbol Name", "")
+    number_of_rows = int(component_data.get("Number of Rows", "1"))
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
         symbol_file,
@@ -59,7 +60,12 @@ def write_component(
         1,
         2,
     )
-    write_symbol_drawing(symbol_file, symbol_name, component_data)
+    write_symbol_drawing(
+        symbol_file,
+        symbol_name,
+        component_data,
+        number_of_rows,
+    )
     symbol_file.write(")")
 
 
@@ -67,6 +73,7 @@ def write_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
     component_data: dict[str, str],
+    number_of_rows: int,
 ) -> None:
     """Write the drawing for a connector symbol.
 
@@ -74,6 +81,7 @@ def write_symbol_drawing(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         component_data (Dict[str, str]): Data for the component.
+        number_of_rows (int): Number of rows of the symbol.
 
     Returns:
         None
@@ -89,9 +97,22 @@ def write_symbol_drawing(
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
     start_y = (pin_count - 1) * pin_spacing / 2
-    for pin_num in range(1, pin_count + 1):
-        y_pos = start_y - (pin_num - 1) * pin_spacing
-        symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+
+    if number_of_rows == 2:  # noqa: PLR2004
+        for pin_num in range(1, pin_count * 2, 2):
+            y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+            symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+            symbol_utils.write_pin(
+                symbol_file,
+                5.08,
+                y_pos,
+                180,
+                str(pin_num + 1),
+            )
+    else:
+        for pin_num in range(1, pin_count + 1):
+            y_pos = start_y - (pin_num - 1) * pin_spacing
+            symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
     symbol_file.write("\t\t)\n")
 
