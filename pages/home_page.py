@@ -119,44 +119,43 @@ layout = dbc.Container(
 )
 
 
-def create_figure(  # noqa: PLR0913
+def create_figure(
     theme_switch: bool,  # noqa: FBT001
-    data_frame1: pd.DataFrame,
-    data_frame2: pd.DataFrame,
-    trace_colors: tuple[str, str],
-    titles: tuple[str, str],
+    data_frames: list[pd.DataFrame],
+    trace_colors: list[str],
+    titles: tuple[str, str, str],
     relayout_data: dict[str, Any] | None = None,
 ) -> go.Figure:
-    """Create a figure with data from two repositories."""
-    # Determine the x-axis range across both datasets
-    min_timestamp = min(
-        data_frame1["clone_timestamp"].min(),
-        data_frame2["clone_timestamp"].min(),
-    )
-    max_timestamp = max(
-        data_frame1["clone_timestamp"].max(),
-        data_frame2["clone_timestamp"].max(),
-    )
+    """Create a figure with data from multiple repositories.
 
-    # Determine y-axis ranges across both datasets
-    y1_min = min(
-        data_frame1["total_clones"].min(),
-        data_frame2["total_clones"].min(),
-    )
-    y1_max = max(
-        data_frame1["total_clones"].max(),
-        data_frame2["total_clones"].max(),
-    )
-    y2_min = min(
-        data_frame1["unique_clones"].min(),
-        data_frame2["unique_clones"].min(),
-    )
-    y2_max = max(
-        data_frame1["unique_clones"].max(),
-        data_frame2["unique_clones"].max(),
-    )
+    Args:
+        theme_switch: Boolean indicating light/dark theme
+        data_frames: List of DataFrames containing repository data
+        trace_colors: List of colors for traces (two colors per DataFrame)
+        titles: Tuple of (main_title, y1_title, y2_title)
+        relayout_data: Optional relayout data from Plotly
 
-    # Add some padding to the y-axis range (e.g., 10%)
+    Returns:
+        Plotly Figure object
+
+    """
+    # Calculate axis ranges across all dataframes
+    all_timestamps = []
+    y1_values = []
+    y2_values = []
+
+    for df in data_frames:
+        all_timestamps.extend(df["clone_timestamp"])
+        y1_values.extend(df["total_clones"])
+        y2_values.extend(df["unique_clones"])
+
+    all_timestamps = sorted(set(all_timestamps))
+    min_timestamp, max_timestamp = min(all_timestamps), max(all_timestamps)
+
+    y1_min, y1_max = min(y1_values), max(y1_values)
+    y2_min, y2_max = min(y2_values), max(y2_values)
+
+    # Add padding to y-axis ranges
     y1_padding = max(1, int((y1_max - y1_min) * 0.1))
     y2_padding = max(1, int((y2_max - y2_min) * 0.1))
 
@@ -168,20 +167,13 @@ def create_figure(  # noqa: PLR0913
             pd.to_datetime(relayout_data["xaxis.range[1]"]),
         ]
 
-    # Combine timestamps from both datasets for ticks
-    all_timestamps = sorted(
-        set(
-            data_frame1["clone_timestamp"].tolist()
-            + data_frame2["clone_timestamp"].tolist(),
-        ),
-    )
+    # Create tick labels
     tick_text = [ts.strftime("%m/%d") for ts in all_timestamps]
 
-    # Define a maximum number of ticks to display
+    # Optimize number of ticks
     max_ticks = 8
     num_data_points = len(all_timestamps)
 
-    # Determine tick selection strategy
     if num_data_points > max_ticks:
         tick_indices = list(
             range(0, num_data_points, num_data_points // max_ticks),
@@ -192,62 +184,48 @@ def create_figure(  # noqa: PLR0913
         all_timestamps = [all_timestamps[i] for i in tick_indices]
         tick_text = [tick_text[i] for i in tick_indices]
 
-    # Create hover templates for each trace type
+    # Create hover templates
     hover_template_total = (
         "Date: %{x|%Y-%m-%d}<br>Total %{data.name}: %{y}<br>"
     )
-
     hover_template_unique = (
         "Date: %{x|%Y-%m-%d}<br>Unique %{data.name}: %{y}<br>"
     )
 
-    # Create traces for both repositories
-    traces = [
-        # Repository 1 traces
-        go.Scatter(
-            x=data_frame1["clone_timestamp"],
-            y=data_frame1["total_clones"],
-            mode="lines+markers",
-            name=f"{titles[1]}",
-            marker={"color": trace_colors[0], "size": 8},
-            line={"color": trace_colors[0], "width": 2},
-            yaxis="y1",
-            hovertemplate=hover_template_total,
-        ),
-        go.Scatter(
-            x=data_frame1["clone_timestamp"],
-            y=data_frame1["unique_clones"],
-            mode="lines+markers",
-            name=f"{titles[2]}",
-            marker={"color": trace_colors[1], "size": 8},
-            line={"color": trace_colors[1], "width": 2},
-            yaxis="y2",
-            hovertemplate=hover_template_unique,
-        ),
-        # Repository 2 traces
-        go.Scatter(
-            x=data_frame2["clone_timestamp"],
-            y=data_frame2["total_clones"],
-            mode="lines+markers",
-            name=f"{titles[1]}",
-            marker={"color": trace_colors[2], "size": 8},
-            line={"color": trace_colors[2], "width": 2},
-            yaxis="y1",
-            hovertemplate=hover_template_total,
-        ),
-        go.Scatter(
-            x=data_frame2["clone_timestamp"],
-            y=data_frame2["unique_clones"],
-            mode="lines+markers",
-            name=f"{titles[2]}",
-            marker={"color": trace_colors[3], "size": 8},
-            line={"color": trace_colors[3], "width": 2},
-            yaxis="y2",
-            hovertemplate=hover_template_unique,
-        ),
-    ]
+    # Create traces for all repositories
+    traces = []
+    for i, df in enumerate(data_frames):
+        color_idx = i * 2  # Two colors per DataFrame
 
-    # Existing figure layout configuration
+        # Total clones trace
+        traces.append(
+            go.Scatter(
+                x=df["clone_timestamp"],
+                y=df["total_clones"],
+                mode="lines+markers",
+                name=f"{titles[1]}",
+                marker={"color": trace_colors[color_idx], "size": 8},
+                line={"color": trace_colors[color_idx], "width": 2},
+                yaxis="y1",
+                hovertemplate=hover_template_total,
+            ),
+        )
+
+        # Unique clones trace
+        traces.append(
+            go.Scatter(
+                x=df["clone_timestamp"],
+                y=df["unique_clones"],
+                mode="lines+markers",
+                name=f"{titles[2]}",
+                marker={"color": trace_colors[color_idx + 1], "size": 8},
+                line={"color": trace_colors[color_idx + 1], "width": 2},
+                yaxis="y2",
+                hovertemplate=hover_template_unique,
+            ),
+        )
+
+    # Figure layout configuration
     figure_layout = {
         "xaxis": {
             "gridcolor": "#808080",
@@ -316,6 +294,7 @@ def create_figure(  # noqa: PLR0913
 
     figure = go.Figure(data=traces, layout=figure_layout)
 
+    # Update layout with primary y-axis styling
     figure.update_layout(
         height=300,
         hovermode="x unified",
@@ -355,12 +334,7 @@ def create_figure(  # noqa: PLR0913
         "paper_bgcolor": "white" if theme_switch else "#222222",
         "plot_bgcolor": "white" if theme_switch else "#222222",
         "font_color": "black" if theme_switch else "white",
-        "margin": {
-            "l": 0,
-            "r": 0,
-            "t": 50,
-            "b": 80,
-        },  # Increased bottom margin for legend
+        "margin": {"l": 0, "r": 0, "t": 50, "b": 80},
     }
 
     figure.update_layout(
@@ -592,10 +566,9 @@ def update_graph_with_uploaded_file(
     # Create figures with data from both repositories
     repo_clones_figure = create_figure(
         theme_switch,
-        data_frame_clones_1,
-        data_frame_clones_2,
-        ("#227b33", "#4187db", "#20a088", "#4668c9"),
-        ("Git Clones", "Clones", "Unique Clones"),
+        [data_frame_clones_1, data_frame_clones_2],  # List of DataFrames
+        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
+        ("Git Clones", "Clones", "Unique Clones"),  # Titles
         clones_relayout,
     )
     repo_clones_figure = adjust_y_axis_range(
@@ -607,10 +580,9 @@ def update_graph_with_uploaded_file(
 
     repo_visitors_figure = create_figure(
         theme_switch,
-        data_frame_visitors_1,
-        data_frame_visitors_2,
-        ("#227b33", "#4187db", "#20a088", "#4668c9"),
-        ("Visitors", "Views", "Unique Views"),
+        [data_frame_visitors_1, data_frame_visitors_2],  # List of DataFrames
+        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
+        ("Visitors", "Views", "Unique Views"),  # Titles
         visitors_relayout,
     )
     repo_visitors_figure = adjust_y_axis_range(
