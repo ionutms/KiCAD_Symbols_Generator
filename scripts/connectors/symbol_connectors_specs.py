@@ -45,6 +45,7 @@ class SeriesSpec(NamedTuple):
     mounting_style: str
     contact_plating: str
     reference: str = "J"
+    number_of_rows: int = 1
 
 
 class PartInfo(NamedTuple):
@@ -90,6 +91,7 @@ class PartInfo(NamedTuple):
     voltage_rating: int
     mounting_style: str
     contact_plating: str
+    number_of_rows: int
 
     @classmethod
     def create_part_info(
@@ -134,6 +136,7 @@ class PartInfo(NamedTuple):
             voltage_rating=specs.voltage_rating,
             mounting_style=specs.mounting_style,
             contact_plating=specs.contact_plating,
+            number_of_rows=specs.number_of_rows,
         )
 
     @classmethod
@@ -381,6 +384,27 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=1.27,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
+    "TMS-1xx-02-G-D": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="TMS-1xx-02-G-D",
+        footprint_pattern="connector_footprints:TMS-1{:02d}-02-G-D",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/tms_th.pdf?"
+            "_gl=1*ta0q2w*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjE2MDY1Mi40LjEuMTczNjE2MDc4OS41NS4wLjA."
+        ),
+        pin_counts=list(range(1, 5)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,

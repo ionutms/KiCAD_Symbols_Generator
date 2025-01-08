@@ -83,10 +83,17 @@ def generate_footprint(
             height_top,
             height_bottom,
         ),
-        footprint_utils.generate_pin_1_indicator(width_left, specs.pad_size),
         footprint_utils.generate_pin_1_indicator(
-            width_left,
-            specs.pad_size,
+            pad_center_x=width_left,
+            pad_width=specs.pad_size,
+            pins_per_side=specs.number_of_rows,
+            pitch_y=2.54,
+        ),
+        footprint_utils.generate_pin_1_indicator(
+            pad_center_x=width_left,
+            pad_width=specs.pad_size,
+            pins_per_side=specs.number_of_rows,
+            pitch_y=2.54,
             layer="F.Fab",
         ),
         footprint_utils.generate_thru_hole_pads(
@@ -95,6 +102,8 @@ def generate_footprint(
             specs.pad_size,
             specs.drill_size,
             dimensions["start_pos"],
+            row_pitch=specs.row_pitch,
+            row_count=specs.number_of_rows,
         ),
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
