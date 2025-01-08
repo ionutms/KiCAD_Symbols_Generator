@@ -106,7 +106,6 @@ layout = dbc.Container(
                             "KiCad Demo Project",
                             href="https://github.com/ionutms/KiCad_Demo_Project",
                             target="_blank",
-                            style={"color": "#4187db"},
                         ),
                     ]),
                 ],
