@@ -112,23 +112,42 @@ layout = dbc.Container(
 )
 
 
-def create_figure(
+def create_figure(  # noqa: PLR0913
     theme_switch: bool,  # noqa: FBT001
-    data_frame: pd.DataFrame,
+    data_frame1: pd.DataFrame,
+    data_frame2: pd.DataFrame,
     trace_colors: tuple[str, str],
     titles: tuple[str, str],
     relayout_data: dict[str, Any] | None = None,
 ) -> go.Figure:
-    """Create a figure with dynamic x-axis range handling."""
-    # Determine the x-axis range
-    min_timestamp = data_frame["clone_timestamp"].min()
-    max_timestamp = data_frame["clone_timestamp"].max()
+    """Create a figure with data from two repositories."""
+    # Determine the x-axis range across both datasets
+    min_timestamp = min(
+        data_frame1["clone_timestamp"].min(),
+        data_frame2["clone_timestamp"].min(),
+    )
+    max_timestamp = max(
+        data_frame1["clone_timestamp"].max(),
+        data_frame2["clone_timestamp"].max(),
+    )
 
-    # Determine y-axis ranges
-    y1_min = int(data_frame["total_clones"].min())
-    y1_max = int(data_frame["total_clones"].max())
-    y2_min = int(data_frame["unique_clones"].min())
-    y2_max = int(data_frame["unique_clones"].max())
+    # Determine y-axis ranges across both datasets
+    y1_min = min(
+        data_frame1["total_clones"].min(),
+        data_frame2["total_clones"].min(),
+    )
+    y1_max = max(
+        data_frame1["total_clones"].max(),
+        data_frame2["total_clones"].max(),
+    )
+    y2_min = min(
+        data_frame1["unique_clones"].min(),
+        data_frame2["unique_clones"].min(),
+    )
+    y2_max = max(
+        data_frame1["unique_clones"].max(),
+        data_frame2["unique_clones"].max(),
+    )
 
     # Add some padding to the y-axis range (e.g., 10%)
     y1_padding = max(1, int((y1_max - y1_min) * 0.1))
@@ -142,29 +161,84 @@ def create_figure(
             pd.to_datetime(relayout_data["xaxis.range[1]"]),
         ]
 
-    # Prepare tick values to match exact data points
-    tick_values = data_frame["clone_timestamp"].tolist()
-    tick_text = [tick_value.strftime("%m/%d") for tick_value in tick_values]
-
-    # Calculate the number of data points
-    num_data_points = len(data_frame)
+    # Combine timestamps from both datasets for ticks
+    all_timestamps = sorted(
+        set(
+            data_frame1["clone_timestamp"].tolist()
+            + data_frame2["clone_timestamp"].tolist(),
+        ),
+    )
+    tick_text = [ts.strftime("%m/%d") for ts in all_timestamps]
 
     # Define a maximum number of ticks to display
     max_ticks = 8
+    num_data_points = len(all_timestamps)
 
     # Determine tick selection strategy
     if num_data_points > max_ticks:
-        # Select evenly spaced tick indices
         tick_indices = list(
             range(0, num_data_points, num_data_points // max_ticks),
         )
-        # Ensure the last index is included
         if tick_indices[-1] != num_data_points - 1:
             tick_indices.append(num_data_points - 1)
 
-        # Filter tick values and text
-        tick_values = [tick_values[i] for i in tick_indices]
+        all_timestamps = [all_timestamps[i] for i in tick_indices]
         tick_text = [tick_text[i] for i in tick_indices]
+
+    # Create hover templates for each trace type
+    hover_template_total = (
+        "Date: %{x|%Y-%m-%d}<br>Total %{data.name}: %{y}<br>"
+    )
+
+    hover_template_unique = (
+        "Date: %{x|%Y-%m-%d}<br>Unique %{data.name}: %{y}<br>"
+    )
+
+    # Create traces for both repositories
+    traces = [
+        # Repository 1 traces
+        go.Scatter(
+            x=data_frame1["clone_timestamp"],
+            y=data_frame1["total_clones"],
+            mode="lines+markers",
+            name=f"{titles[1]}",
+            marker={"color": trace_colors[0], "size": 8},
+            line={"color": trace_colors[0], "width": 2},
+            yaxis="y1",
+            hovertemplate=hover_template_total,
+        ),
+        go.Scatter(
+            x=data_frame1["clone_timestamp"],
+            y=data_frame1["unique_clones"],
+            mode="lines+markers",
+            name=f"{titles[2]}",
+            marker={"color": trace_colors[1], "size": 8},
+            line={"color": trace_colors[1], "width": 2},
+            yaxis="y2",
+            hovertemplate=hover_template_unique,
+        ),
+        # Repository 2 traces
+        go.Scatter(
+            x=data_frame2["clone_timestamp"],
+            y=data_frame2["total_clones"],
+            mode="lines+markers",
+            name=f"{titles[1]}",
+            marker={"color": trace_colors[2], "size": 8},
+            line={"color": trace_colors[2], "width": 2},
+            yaxis="y1",
+            hovertemplate=hover_template_total,
+        ),
+        go.Scatter(
+            x=data_frame2["clone_timestamp"],
+            y=data_frame2["unique_clones"],
+            mode="lines+markers",
+            name=f"{titles[2]}",
+            marker={"color": trace_colors[3], "size": 8},
+            line={"color": trace_colors[3], "width": 2},
+            yaxis="y2",
+            hovertemplate=hover_template_unique,
+        ),
+    ]
 
     # Existing figure layout configuration
     figure_layout = {
@@ -180,7 +254,7 @@ def create_figure(
             "range": x_range,
             "type": "date",
             "tickmode": "array",
-            "tickvals": tick_values,
+            "tickvals": all_timestamps,
             "ticktext": tick_text,
             "tickangle": -30,
             "fixedrange": True,
@@ -200,7 +274,7 @@ def create_figure(
             "autorange": False,
             "fixedrange": True,
             "range": [y1_min - y1_padding, y1_max + y1_padding],
-            "tickformat": ".0f",  # Integer formatting
+            "tickformat": ".0f",
         },
         "yaxis2": {
             "gridcolor": "#808080",
@@ -216,7 +290,7 @@ def create_figure(
             "autorange": False,
             "fixedrange": True,
             "range": [y2_min - y2_padding, y2_max + y2_padding],
-            "tickformat": ".0f",  # Integer formatting
+            "tickformat": ".0f",
         },
         "title": {
             "text": titles[0],
@@ -224,29 +298,16 @@ def create_figure(
             "xanchor": "center",
         },
         "showlegend": False,
+        "legend": {
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": -0.7,
+            "xanchor": "center",
+            "x": 0.5,
+        },
     }
 
-    total_trace = go.Scatter(
-        x=data_frame["clone_timestamp"],
-        y=data_frame["total_clones"],
-        mode="lines+markers",
-        name=titles[1],
-        marker={"color": trace_colors[0], "size": 8},
-        line={"color": trace_colors[0], "width": 2},
-        yaxis="y1",
-    )
-
-    unique_trace = go.Scatter(
-        x=data_frame["clone_timestamp"],
-        y=data_frame["unique_clones"],
-        mode="lines+markers",
-        name=titles[2],
-        marker={"color": trace_colors[1], "size": 8},
-        line={"color": trace_colors[1], "width": 2},
-        yaxis="y2",
-    )
-
-    figure = go.Figure(data=[total_trace, unique_trace], layout=figure_layout)
+    figure = go.Figure(data=traces, layout=figure_layout)
 
     figure.update_layout(
         height=300,
@@ -287,7 +348,12 @@ def create_figure(
         "paper_bgcolor": "white" if theme_switch else "#222222",
         "plot_bgcolor": "white" if theme_switch else "#222222",
         "font_color": "black" if theme_switch else "white",
-        "margin": {"l": 0, "r": 0, "t": 50, "b": 50},
+        "margin": {
+            "l": 0,
+            "r": 0,
+            "t": 50,
+            "b": 80,
+        },  # Increased bottom margin for legend
     }
 
     figure.update_layout(
@@ -312,29 +378,59 @@ def create_figure(
 
 def adjust_y_axis_range(
     figure: go.Figure,
-    data_frame: pd.DataFrame,
+    data_frame1: pd.DataFrame,
+    data_frame2: pd.DataFrame,
     relayout_data: dict[str, Any] | None,
 ) -> go.Figure:
     """Adjust y-axis range based on the visible x-axis range."""
     if relayout_data and "xaxis.range[0]" in relayout_data:
-        # Ensure consistent datetime conversion
         x_min = pd.Timestamp(relayout_data["xaxis.range[0]"])
         x_max = pd.Timestamp(relayout_data["xaxis.range[1]"])
 
-        # Filter data within the zoomed range
-        filtered_df = data_frame[
-            (data_frame["clone_timestamp"] >= x_min)
-            & (data_frame["clone_timestamp"] <= x_max)
+        # Filter data within the zoomed range for both datasets
+        filtered_df1 = data_frame1[
+            (data_frame1["clone_timestamp"] >= x_min)
+            & (data_frame1["clone_timestamp"] <= x_max)
+        ]
+        filtered_df2 = data_frame2[
+            (data_frame2["clone_timestamp"] >= x_min)
+            & (data_frame2["clone_timestamp"] <= x_max)
         ]
 
-        # Update y-axis ranges based on filtered data
-        if not filtered_df.empty:
-            # Add a small padding (5%)
-            # to prevent data points from being exactly at axis edges
-            y1_min = filtered_df["total_clones"].min()
-            y1_max = filtered_df["total_clones"].max()
-            y2_min = filtered_df["unique_clones"].min()
-            y2_max = filtered_df["unique_clones"].max()
+        if not filtered_df1.empty or not filtered_df2.empty:
+            # Calculate ranges across both filtered datasets
+            y1_min = min(
+                filtered_df1["total_clones"].min()
+                if not filtered_df1.empty
+                else float("inf"),
+                filtered_df2["total_clones"].min()
+                if not filtered_df2.empty
+                else float("inf"),
+            )
+            y1_max = max(
+                filtered_df1["total_clones"].max()
+                if not filtered_df1.empty
+                else float("-inf"),
+                filtered_df2["total_clones"].max()
+                if not filtered_df2.empty
+                else float("-inf"),
+            )
+            y2_min = min(
+                filtered_df1["unique_clones"].min()
+                if not filtered_df1.empty
+                else float("inf"),
+                filtered_df2["unique_clones"].min()
+                if not filtered_df2.empty
+                else float("-inf"),
+            )
+            y2_max = max(
+                filtered_df1["unique_clones"].max()
+                if not filtered_df1.empty
+                else float("-inf"),
+                filtered_df2["unique_clones"].max()
+                if not filtered_df2.empty
+                else float("-inf"),
+            )
 
             y1_padding = (y1_max - y1_min) * 0.05
             y2_padding = (y2_max - y2_min) * 0.05
@@ -445,6 +541,15 @@ def update_graph_with_uploaded_file(
         "rename_columns": None,
     }
 
+    clones_sources_2 = {
+        "github_url": (
+            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
+            "main/repo_traffic_data/repo2_clones_history.csv"
+        ),
+        "local_file": "repo_traffic_data/repo2_clones_history.csv",
+        "rename_columns": None,
+    }
+
     visitors_sources = {
         "github_url": (
             "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
@@ -458,33 +563,53 @@ def update_graph_with_uploaded_file(
         },
     }
 
-    # Load data
-    data_frame_clones = load_traffic_data(**clones_sources)
-    data_frame_visitors = load_traffic_data(**visitors_sources)
+    visitors_sources_2 = {
+        "github_url": (
+            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
+            "main/repo_traffic_data/repo2_visitors_history.csv"
+        ),
+        "local_file": "repo_traffic_data/repo2_visitors_history.csv",
+        "rename_columns": {
+            "visitor_timestamp": "clone_timestamp",
+            "total_visitors": "total_clones",
+            "unique_visitors": "unique_clones",
+        },
+    }
 
+    # Load data for both repositories
+    data_frame_clones_1 = load_traffic_data(**clones_sources)
+    data_frame_clones_2 = load_traffic_data(**clones_sources_2)
+    data_frame_visitors_1 = load_traffic_data(**visitors_sources)
+    data_frame_visitors_2 = load_traffic_data(**visitors_sources_2)
+
+    # Create figures with data from both repositories
     repo_clones_figure = create_figure(
         theme_switch,
-        data_frame_clones,
-        ("#227b33", "#4187db"),
-        ("Git clones", "Clones", "Unique Clones"),
+        data_frame_clones_1,
+        data_frame_clones_2,
+        ("#227b33", "#4187db", "#20a088", "#4668c9"),
+        ("Git Clones", "Clones", "Unique Clones"),
         clones_relayout,
     )
     repo_clones_figure = adjust_y_axis_range(
         repo_clones_figure,
-        data_frame_clones,
+        data_frame_clones_1,
+        data_frame_clones_2,
         clones_relayout,
     )
 
     repo_visitors_figure = create_figure(
         theme_switch,
-        data_frame_visitors,
-        ("#227b33", "#4187db"),
+        data_frame_visitors_1,
+        data_frame_visitors_2,
+        ("#227b33", "#4187db", "#20a088", "#4668c9"),
         ("Visitors", "Views", "Unique Views"),
         visitors_relayout,
     )
     repo_visitors_figure = adjust_y_axis_range(
         repo_visitors_figure,
-        data_frame_visitors,
+        data_frame_visitors_1,
+        data_frame_visitors_2,
         visitors_relayout,
     )
 
