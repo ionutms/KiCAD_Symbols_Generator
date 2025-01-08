@@ -360,7 +360,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
             "_ga_3KFNZC07WW*MTczNjA5OTE1My4xLjEuMTczNjEwMDY3My4zMC4wLjA."
         ),
-        pin_counts=list(range(1, 21)),
+        pin_counts=list(range(1, 51)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=1.27,
@@ -380,7 +380,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
             "_ga_3KFNZC07WW*MTczNjE2MDY1Mi40LjEuMTczNjE2MDc4OS41NS4wLjA."
         ),
-        pin_counts=list(range(1, 11)),
+        pin_counts=list(range(1, 51)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=1.27,
@@ -400,7 +400,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
             "_ga_3KFNZC07WW*MTczNjE2MDY1Mi40LjEuMTczNjE2MDc4OS41NS4wLjA."
         ),
-        pin_counts=list(range(1, 5)),
+        pin_counts=list(range(1, 51)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=1.27,
