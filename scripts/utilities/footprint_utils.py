@@ -517,33 +517,46 @@ def generate_thermal_pad(
     return "\n".join(pads)
 
 
-def generate_thru_hole_pads(
+def generate_thru_hole_pads(  # noqa: PLR0913
     pin_count: int,
-    pitch: float,
+    pad_pitch: float,
     pad_size: float,
     drill_size: float,
     start_pos: float,
+    row_pitch: float,
+    row_count: int,
 ) -> str:
     """Generate the pads section of the footprint.
 
     Args:
         pin_count: Number of pins in the connector
-        pitch: Distance between adjacent pins
+        pad_pitch: Distance between adjacent pins
         pad_size: Diameter of the pad
         drill_size: Diameter of the drill hole
         start_pos: X-coordinate of the first pad
+        row_pitch: Pitch between connector rows
+        row_count: Number of connector rows
 
     Returns:
         str: KiCad formatted pad definitions
 
     """
+    xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
+    # duplicate each position
+    final_xpos = [x_position for x_position in xpos for _ in range(2)]
+
     pads = []
-    for pin_num in range(pin_count):
-        xpos = start_pos + (pin_num * pitch)
+    for pin_index, pin_num in enumerate(range(pin_count * row_count)):
+        ypos = (
+            (-1 if pin_num % 2 == 0 else 1)
+            * (row_pitch / 2)
+            * (row_count - 1)
+        )
+
         pad_type = "rect" if pin_num == 0 else "circle"
         pad = f"""
             (pad "{pin_num + 1}" thru_hole {pad_type}
-                (at {xpos:.3f} 0)
+                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
                 (layers "*.Cu" "*.Mask")
@@ -558,7 +571,7 @@ def generate_thru_hole_pads(
 
 def calculate_dimensions(
     pin_count: int,
-    pitch: float,
+    pad_pitch: float,
     width_left: float,
     width_right: float,
 ) -> dict:
@@ -569,7 +582,7 @@ def calculate_dimensions(
 
     Args:
         pin_count: Number of pins on the connector
-        pitch: Distance between adjacent pins
+        pad_pitch: Distance between adjacent pins
         width_left: Initial width of the connector body on the left side
         width_right: Initial width of the connector body on the right side
 
@@ -577,8 +590,8 @@ def calculate_dimensions(
         Dictionary containing calculated dimensions and positions
 
     """
-    extra_width_per_side = (pin_count - 2) * pitch / 2
-    total_length = (pin_count - 1) * pitch
+    extra_width_per_side = (pin_count - 2) * pad_pitch / 2
+    total_length = (pin_count - 1) * pad_pitch
     start_position = -total_length / 2
 
     return {
