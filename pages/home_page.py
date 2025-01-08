@@ -101,6 +101,14 @@ layout = dbc.Container(
                     ),
                     html.Hr(),
                     html.H4("Projects Pages"),
+                    html.Div([
+                        html.A(
+                            "KiCad Demo Project",
+                            href="https://github.com/ionutms/KiCad_Demo_Project",
+                            target="_blank",
+                            style={"color": "#4187db"},
+                        ),
+                    ]),
                 ],
                 xs=12,
                 md=4,
