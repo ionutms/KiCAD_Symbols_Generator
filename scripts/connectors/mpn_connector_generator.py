@@ -37,6 +37,7 @@ HEADER_MAPPING: Final[dict] = {
     "Voltage Rating (V)": lambda part: part.voltage_rating,
     "Mounting Style": lambda part: part.mounting_style,
     "Contact Plating": lambda part: part.contact_plating,
+    "Number of Rows": lambda part: part.number_of_rows,
 }
 
 

@@ -45,6 +45,7 @@ class SeriesSpec(NamedTuple):
     mounting_style: str
     contact_plating: str
     reference: str = "J"
+    number_of_rows: int = 1
 
 
 class PartInfo(NamedTuple):
@@ -90,6 +91,7 @@ class PartInfo(NamedTuple):
     voltage_rating: int
     mounting_style: str
     contact_plating: str
+    number_of_rows: int
 
     @classmethod
     def create_part_info(
@@ -134,6 +136,7 @@ class PartInfo(NamedTuple):
             voltage_rating=specs.voltage_rating,
             mounting_style=specs.mounting_style,
             contact_plating=specs.contact_plating,
+            number_of_rows=specs.number_of_rows,
         )
 
     @classmethod
