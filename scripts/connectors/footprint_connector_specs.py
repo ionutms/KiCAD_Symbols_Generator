@@ -41,7 +41,7 @@ class FootprintSpecs(NamedTuple):
     KiCad footprint file.
 
     Attributes:
-        pitch: Additional width needed per pin
+        pad_pitch: Additional width needed per pin
         body_dimensions: Basic rectangle dimensions
         pad_size: Diameter/size of through-hole pads
         drill_size: Diameter of drill holes
@@ -52,7 +52,7 @@ class FootprintSpecs(NamedTuple):
 
     """
 
-    pitch: float  # Additional width needed per pin
+    pad_pitch: float  # Additional width needed per pin
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
     pad_size: float  # Diameter/size of through-hole pads
     drill_size: float  # Diameter of drill holes
@@ -60,11 +60,13 @@ class FootprintSpecs(NamedTuple):
     mask_margin: float  # Solder mask clearance around pads
     mpn_y: float  # Y position for manufacturer part number
     ref_y: float  # Y position for reference designator
+    row_pitch: float = 0
+    number_of_rows: int = 1
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
     "TB004-508": FootprintSpecs(
-        pitch=5.08,
+        pad_pitch=5.08,
         body_dimensions=BodyDimensions(
             width_left=5.8,
             width_right=5.2,
@@ -79,7 +81,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-6.096,
     ),
     "TB006-508": FootprintSpecs(
-        pitch=5.08,
+        pad_pitch=5.08,
         body_dimensions=BodyDimensions(
             width_left=5.8,
             width_right=5.2,
@@ -94,7 +96,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-5.334,
     ),
     "TBP02R1-381": FootprintSpecs(
-        pitch=3.81,
+        pad_pitch=3.81,
         body_dimensions=BodyDimensions(
             width_left=4.4,
             width_right=4.4,
@@ -109,7 +111,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=2.4,
     ),
     "TBP02R2-381": FootprintSpecs(
-        pitch=3.81,
+        pad_pitch=3.81,
         body_dimensions=BodyDimensions(
             width_left=4.445,
             width_right=4.445,
@@ -124,7 +126,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=4.2,
     ),
     "TBP04R1-500": FootprintSpecs(
-        pitch=5.0,
+        pad_pitch=5.0,
         body_dimensions=BodyDimensions(
             width_left=5.2,
             width_right=5.2,
@@ -139,7 +141,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-3.0,
     ),
     "TBP04R2-500": FootprintSpecs(
-        pitch=5.0,
+        pad_pitch=5.0,
         body_dimensions=BodyDimensions(
             width_left=5.8,
             width_right=5.8,
@@ -154,7 +156,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=5.8,
     ),
     "TBP04R3-500": FootprintSpecs(
-        pitch=5.0,
+        pad_pitch=5.0,
         body_dimensions=BodyDimensions(
             width_left=5.2,
             width_right=5.2,
@@ -169,7 +171,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=5.8,
     ),
     "TBP04R12-500": FootprintSpecs(
-        pitch=5.0,
+        pad_pitch=5.0,
         body_dimensions=BodyDimensions(
             width_left=5.8,
             width_right=5.8,
@@ -184,7 +186,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-3.0,
     ),
     "SLM-1xx-01-G-S": FootprintSpecs(
-        pitch=1.27,
+        pad_pitch=1.27,
         body_dimensions=BodyDimensions(
             width_left=1.45,
             width_right=1.45,
@@ -199,7 +201,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-2.032,
     ),
     "TMS-1xx-02-G-S": FootprintSpecs(
-        pitch=1.27,
+        pad_pitch=1.27,
         body_dimensions=BodyDimensions(
             width_left=1.45,
             width_right=1.45,
@@ -212,5 +214,22 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
+    ),
+    "TMS-1xx-02-G-D": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=2.54,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.45,
+            width_right=1.45,
+            height_top=2.7,
+            height_bottom=2.6,
+        ),
+        pad_size=1.0874,
+        drill_size=0.787,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=3.302,
+        ref_y=-3.302,
     ),
 }
