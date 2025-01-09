@@ -511,99 +511,99 @@ def update_graph_with_uploaded_file(
     visitors_relayout: dict[str, Any] | None = None,
 ) -> tuple[Any, dict[str, Any]]:
     """Read CSV data and update the repository graphs."""
-    # Define data sources
-    clones_sources = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/clones_history.csv"
-        ),
-        "local_file": "repo_traffic_data/clones_history.csv",
-        "rename_columns": None,
-    }
-
-    clones_sources_2 = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/repo2_clones_history.csv"
-        ),
-        "local_file": "repo_traffic_data/repo2_clones_history.csv",
-        "rename_columns": None,
-    }
-
-    visitors_sources = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/visitors_history.csv"
-        ),
-        "local_file": "repo_traffic_data/visitors_history.csv",
-        "rename_columns": {
-            "visitor_timestamp": "clone_timestamp",
-            "total_visitors": "total_clones",
-            "unique_visitors": "unique_clones",
+    # Configure repositories with their specific CSV files
+    repos = [
+        {
+            "name": "KiCAD_Symbols_Generator",
+            "clones_csv": "clones_history.csv",
+            "visitors_csv": "visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
         },
-    }
-
-    visitors_sources_2 = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/repo2_visitors_history.csv"
-        ),
-        "local_file": "repo_traffic_data/repo2_visitors_history.csv",
-        "rename_columns": {
-            "visitor_timestamp": "clone_timestamp",
-            "total_visitors": "total_clones",
-            "unique_visitors": "unique_clones",
+        {
+            "name": "KiCad_Demo_Project",
+            "clones_csv": "repo2_clones_history.csv",
+            "visitors_csv": "repo2_visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
         },
-    }
+    ]
 
-    # Load data for both repositories
-    data_frame_clones_1 = load_traffic_data(**clones_sources)
-    data_frame_clones_2 = load_traffic_data(**clones_sources_2)
-    data_frame_visitors_1 = load_traffic_data(**visitors_sources)
-    data_frame_visitors_2 = load_traffic_data(**visitors_sources_2)
+    base_github_url = (
+        "https://raw.githubusercontent.com/ionutms/"
+        "KiCAD_Symbols_Generator/main"
+    )
+    clones_data = []
+    visitors_data = []
 
-    # Create figures with data from both repositories
+    # Load data for each repository
+    for repo in repos:
+        # Clones data
+        clones_source = {
+            "github_url": (
+                f"{base_github_url}/"
+                f"{repo['github_path']}/{repo['clones_csv']}"
+            ),
+            "local_file": f"{repo['local_path']}/{repo['clones_csv']}",
+            "rename_columns": None,
+        }
+        clones_data.append(load_traffic_data(**clones_source))
+
+        # Visitors data
+        visitors_source = {
+            "github_url": (
+                f"{base_github_url}/"
+                f"{repo['github_path']}/{repo['visitors_csv']}"
+            ),
+            "local_file": f"{repo['local_path']}/{repo['visitors_csv']}",
+            "rename_columns": {
+                "visitor_timestamp": "clone_timestamp",
+                "total_visitors": "total_clones",
+                "unique_visitors": "unique_clones",
+            },
+        }
+        visitors_data.append(load_traffic_data(**visitors_source))
+
+    # Create titles using repository names
+    trace_colors = ["#227b33", "#4187db", "#f0a088", "#f668c9"]
+    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
+    visitors_titles = ["Visitors", "Views", "Unique Views"]
+
+    # Add repository-specific titles
+    for repo in repos:
+        clones_titles.extend([
+            f"{repo['name']} Clones",
+            f"{repo['name']} Unique Clones",
+        ])
+        visitors_titles.extend([
+            f"{repo['name']} Views",
+            f"{repo['name']} Unique Views",
+        ])
+
+    # Create figures
     repo_clones_figure = create_figure(
         theme_switch=theme_switch,
-        data_frames=[data_frame_clones_1, data_frame_clones_2],
-        trace_colors=["#227b33", "#4187db", "#f0a088", "#f668c9"],
-        titles=(
-            "Git Clones",
-            "Clones",
-            "Unique Clones",
-            "KiCAD_Symbols_Generator Clones",
-            "KiCAD_Symbols_Generator Unique Clones",
-            "KiCad_Demo_Project Clones",
-            "KiCad_Demo_Project Unique Clones",
-        ),
+        data_frames=clones_data,
+        trace_colors=trace_colors,
+        titles=tuple(clones_titles),
         relayout_data=clones_relayout,
     )
     repo_clones_figure = adjust_y_axis_range(
         repo_clones_figure,
-        data_frame_clones_1,
-        data_frame_clones_2,
+        *clones_data,
         clones_relayout,
     )
 
     repo_visitors_figure = create_figure(
         theme_switch=theme_switch,
-        data_frames=[data_frame_visitors_1, data_frame_visitors_2],
-        trace_colors=["#227b33", "#4187db", "#f0a088", "#f668c9"],
-        titles=(
-            "Visitors",
-            "Views",
-            "Unique Views",
-            "KiCAD_Symbols_Generator Views",
-            "KiCAD_Symbols_Generator Unique Views",
-            "KiCad_Demo_Project Views",
-            "KiCad_Demo_Project Unique Views",
-        ),
+        data_frames=visitors_data,
+        trace_colors=trace_colors,
+        titles=tuple(visitors_titles),
         relayout_data=visitors_relayout,
     )
     repo_visitors_figure = adjust_y_axis_range(
         repo_visitors_figure,
-        data_frame_visitors_1,
-        data_frame_visitors_2,
+        *visitors_data,
         visitors_relayout,
     )
 
