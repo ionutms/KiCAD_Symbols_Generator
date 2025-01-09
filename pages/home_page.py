@@ -192,38 +192,37 @@ def create_figure(
         "Date: %{x|%Y-%m-%d}<br>Unique %{data.name}: %{y}<br>"
     )
 
-    # Create traces for all repositories
     traces = []
-    for i, df in enumerate(data_frames):
-        color_idx = i * 2  # Two colors per DataFrame
+    for data_frames_index, df in enumerate(data_frames):
+        color_idx = data_frames_index * 2
 
-        # Total clones trace
-        traces.append(
-            go.Scatter(
-                x=df["clone_timestamp"],
-                y=df["total_clones"],
-                mode="lines+markers",
-                name=f"{titles[1]}",
-                marker={"color": trace_colors[color_idx], "size": 8},
-                line={"color": trace_colors[color_idx], "width": 2},
-                yaxis="y1",
-                hovertemplate=hover_template_total,
-            ),
-        )
+        trace_configs = [
+            ("total_clones", 3, color_idx, "y1", hover_template_total),
+            ("unique_clones", 4, color_idx + 1, "y2", hover_template_unique),
+        ]
 
-        # Unique clones trace
-        traces.append(
-            go.Scatter(
-                x=df["clone_timestamp"],
-                y=df["unique_clones"],
-                mode="lines+markers",
-                name=f"{titles[2]}",
-                marker={"color": trace_colors[color_idx + 1], "size": 8},
-                line={"color": trace_colors[color_idx + 1], "width": 2},
-                yaxis="y2",
-                hovertemplate=hover_template_unique,
-            ),
-        )
+        for (
+            y_col,
+            title_offset,
+            trace_color_idx,
+            y_axis,
+            hover_template,
+        ) in trace_configs:
+            traces.append(
+                go.Scatter(
+                    x=df["clone_timestamp"],
+                    y=df[y_col],
+                    mode="lines+markers",
+                    name=f"{titles[title_offset + (data_frames_index * 2)]}",
+                    marker={
+                        "color": trace_colors[trace_color_idx],
+                        "size": 8,
+                    },
+                    line={"color": trace_colors[trace_color_idx], "width": 2},
+                    yaxis=y_axis,
+                    hovertemplate=hover_template,
+                ),
+            )
 
     # Figure layout configuration
     figure_layout = {
@@ -282,13 +281,17 @@ def create_figure(
             "x": 0.5,
             "xanchor": "center",
         },
-        "showlegend": False,
+        "showlegend": True,
         "legend": {
-            "orientation": "h",
-            "yanchor": "bottom",
-            "y": -0.7,
-            "xanchor": "center",
-            "x": 0.5,
+            "orientation": "v",
+            "yanchor": "top",
+            "y": 0.995,
+            "xanchor": "left",
+            "x": 0.005,
+            "bgcolor": "rgba(255, 255, 255, 0.5)"
+            if theme_switch
+            else "rgba(0, 0, 0, 0.5)",
+            "bordercolor": "rgba(0, 0, 0, 0)",
         },
     }
 
@@ -512,83 +515,99 @@ def update_graph_with_uploaded_file(
     visitors_relayout: dict[str, Any] | None = None,
 ) -> tuple[Any, dict[str, Any]]:
     """Read CSV data and update the repository graphs."""
-    # Define data sources
-    clones_sources = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/clones_history.csv"
-        ),
-        "local_file": "repo_traffic_data/clones_history.csv",
-        "rename_columns": None,
-    }
-
-    clones_sources_2 = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/repo2_clones_history.csv"
-        ),
-        "local_file": "repo_traffic_data/repo2_clones_history.csv",
-        "rename_columns": None,
-    }
-
-    visitors_sources = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/visitors_history.csv"
-        ),
-        "local_file": "repo_traffic_data/visitors_history.csv",
-        "rename_columns": {
-            "visitor_timestamp": "clone_timestamp",
-            "total_visitors": "total_clones",
-            "unique_visitors": "unique_clones",
+    # Configure repositories with their specific CSV files
+    repos = [
+        {
+            "name": "KiCAD_Symbols_Generator",
+            "clones_csv": "clones_history.csv",
+            "visitors_csv": "visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
         },
-    }
-
-    visitors_sources_2 = {
-        "github_url": (
-            "https://raw.githubusercontent.com/ionutms/KiCAD_Symbols_Generator/"
-            "main/repo_traffic_data/repo2_visitors_history.csv"
-        ),
-        "local_file": "repo_traffic_data/repo2_visitors_history.csv",
-        "rename_columns": {
-            "visitor_timestamp": "clone_timestamp",
-            "total_visitors": "total_clones",
-            "unique_visitors": "unique_clones",
+        {
+            "name": "KiCad_Demo_Project",
+            "clones_csv": "repo2_clones_history.csv",
+            "visitors_csv": "repo2_visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
         },
-    }
+    ]
 
-    # Load data for both repositories
-    data_frame_clones_1 = load_traffic_data(**clones_sources)
-    data_frame_clones_2 = load_traffic_data(**clones_sources_2)
-    data_frame_visitors_1 = load_traffic_data(**visitors_sources)
-    data_frame_visitors_2 = load_traffic_data(**visitors_sources_2)
+    base_github_url = (
+        "https://raw.githubusercontent.com/ionutms/"
+        "KiCAD_Symbols_Generator/main"
+    )
+    clones_data = []
+    visitors_data = []
 
-    # Create figures with data from both repositories
+    # Load data for each repository
+    for repo in repos:
+        # Clones data
+        clones_source = {
+            "github_url": (
+                f"{base_github_url}/"
+                f"{repo['github_path']}/{repo['clones_csv']}"
+            ),
+            "local_file": f"{repo['local_path']}/{repo['clones_csv']}",
+            "rename_columns": None,
+        }
+        clones_data.append(load_traffic_data(**clones_source))
+
+        # Visitors data
+        visitors_source = {
+            "github_url": (
+                f"{base_github_url}/"
+                f"{repo['github_path']}/{repo['visitors_csv']}"
+            ),
+            "local_file": f"{repo['local_path']}/{repo['visitors_csv']}",
+            "rename_columns": {
+                "visitor_timestamp": "clone_timestamp",
+                "total_visitors": "total_clones",
+                "unique_visitors": "unique_clones",
+            },
+        }
+        visitors_data.append(load_traffic_data(**visitors_source))
+
+    # Create titles using repository names
+    trace_colors = ["#227b33", "#4187db", "#f0a088", "#f668c9"]
+    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
+    visitors_titles = ["Visitors", "Views", "Unique Views"]
+
+    # Add repository-specific titles
+    for repo in repos:
+        clones_titles.extend([
+            f"{repo['name']} Clones",
+            f"{repo['name']} Unique Clones",
+        ])
+        visitors_titles.extend([
+            f"{repo['name']} Views",
+            f"{repo['name']} Unique Views",
+        ])
+
+    # Create figures
     repo_clones_figure = create_figure(
-        theme_switch,
-        [data_frame_clones_1, data_frame_clones_2],  # List of DataFrames
-        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
-        ("Git Clones", "Clones", "Unique Clones"),  # Titles
-        clones_relayout,
+        theme_switch=theme_switch,
+        data_frames=clones_data,
+        trace_colors=trace_colors,
+        titles=tuple(clones_titles),
+        relayout_data=clones_relayout,
     )
     repo_clones_figure = adjust_y_axis_range(
         repo_clones_figure,
-        data_frame_clones_1,
-        data_frame_clones_2,
+        *clones_data,
         clones_relayout,
     )
 
     repo_visitors_figure = create_figure(
-        theme_switch,
-        [data_frame_visitors_1, data_frame_visitors_2],  # List of DataFrames
-        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
-        ("Visitors", "Views", "Unique Views"),  # Titles
-        visitors_relayout,
+        theme_switch=theme_switch,
+        data_frames=visitors_data,
+        trace_colors=trace_colors,
+        titles=tuple(visitors_titles),
+        relayout_data=visitors_relayout,
     )
     repo_visitors_figure = adjust_y_axis_range(
         repo_visitors_figure,
-        data_frame_visitors_1,
-        data_frame_visitors_2,
+        *visitors_data,
         visitors_relayout,
     )
 
