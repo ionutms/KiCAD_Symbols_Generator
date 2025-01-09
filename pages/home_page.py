@@ -192,38 +192,37 @@ def create_figure(
         "Date: %{x|%Y-%m-%d}<br>Unique %{data.name}: %{y}<br>"
     )
 
-    # Create traces for all repositories
     traces = []
-    for i, df in enumerate(data_frames):
-        color_idx = i * 2  # Two colors per DataFrame
+    for data_frames_index, df in enumerate(data_frames):
+        color_idx = data_frames_index * 2
 
-        # Total clones trace
-        traces.append(
-            go.Scatter(
-                x=df["clone_timestamp"],
-                y=df["total_clones"],
-                mode="lines+markers",
-                name=f"{titles[1]}",
-                marker={"color": trace_colors[color_idx], "size": 8},
-                line={"color": trace_colors[color_idx], "width": 2},
-                yaxis="y1",
-                hovertemplate=hover_template_total,
-            ),
-        )
+        trace_configs = [
+            ("total_clones", 3, color_idx, "y1", hover_template_total),
+            ("unique_clones", 4, color_idx + 1, "y2", hover_template_unique),
+        ]
 
-        # Unique clones trace
-        traces.append(
-            go.Scatter(
-                x=df["clone_timestamp"],
-                y=df["unique_clones"],
-                mode="lines+markers",
-                name=f"{titles[2]}",
-                marker={"color": trace_colors[color_idx + 1], "size": 8},
-                line={"color": trace_colors[color_idx + 1], "width": 2},
-                yaxis="y2",
-                hovertemplate=hover_template_unique,
-            ),
-        )
+        for (
+            y_col,
+            title_offset,
+            trace_color_idx,
+            y_axis,
+            hover_template,
+        ) in trace_configs:
+            traces.append(
+                go.Scatter(
+                    x=df["clone_timestamp"],
+                    y=df[y_col],
+                    mode="lines+markers",
+                    name=f"{titles[title_offset + (data_frames_index * 2)]}",
+                    marker={
+                        "color": trace_colors[trace_color_idx],
+                        "size": 8,
+                    },
+                    line={"color": trace_colors[trace_color_idx], "width": 2},
+                    yaxis=y_axis,
+                    hovertemplate=hover_template,
+                ),
+            )
 
     # Figure layout configuration
     figure_layout = {
@@ -282,13 +281,13 @@ def create_figure(
             "x": 0.5,
             "xanchor": "center",
         },
-        "showlegend": False,
+        "showlegend": True,
         "legend": {
-            "orientation": "h",
+            "orientation": "v",
             "yanchor": "bottom",
-            "y": -0.7,
+            "y": 0.6,
             "xanchor": "center",
-            "x": 0.5,
+            "x": 0.3,
         },
     }
 
@@ -565,11 +564,19 @@ def update_graph_with_uploaded_file(
 
     # Create figures with data from both repositories
     repo_clones_figure = create_figure(
-        theme_switch,
-        [data_frame_clones_1, data_frame_clones_2],  # List of DataFrames
-        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
-        ("Git Clones", "Clones", "Unique Clones"),  # Titles
-        clones_relayout,
+        theme_switch=theme_switch,
+        data_frames=[data_frame_clones_1, data_frame_clones_2],
+        trace_colors=["#227b33", "#4187db", "#f0a088", "#f668c9"],
+        titles=(
+            "Git Clones",
+            "Clones",
+            "Unique Clones",
+            "KiCAD_Symbols_Generator Clones",
+            "KiCAD_Symbols_Generator Unique Clones",
+            "KiCad_Demo_Project Clones",
+            "KiCad_Demo_Project Unique Clones",
+        ),
+        relayout_data=clones_relayout,
     )
     repo_clones_figure = adjust_y_axis_range(
         repo_clones_figure,
@@ -579,11 +586,19 @@ def update_graph_with_uploaded_file(
     )
 
     repo_visitors_figure = create_figure(
-        theme_switch,
-        [data_frame_visitors_1, data_frame_visitors_2],  # List of DataFrames
-        ["#227b33", "#4187db", "#20a088", "#4668c9"],  # Colors for all traces
-        ("Visitors", "Views", "Unique Views"),  # Titles
-        visitors_relayout,
+        theme_switch=theme_switch,
+        data_frames=[data_frame_visitors_1, data_frame_visitors_2],
+        trace_colors=["#227b33", "#4187db", "#f0a088", "#f668c9"],
+        titles=(
+            "Visitors",
+            "Views",
+            "Unique Views",
+            "KiCAD_Symbols_Generator Views",
+            "KiCAD_Symbols_Generator Unique Views",
+            "KiCad_Demo_Project Views",
+            "KiCad_Demo_Project Unique Views",
+        ),
+        relayout_data=visitors_relayout,
     )
     repo_visitors_figure = adjust_y_axis_range(
         repo_visitors_figure,
