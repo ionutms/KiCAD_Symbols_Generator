@@ -284,10 +284,14 @@ def create_figure(
         "showlegend": True,
         "legend": {
             "orientation": "v",
-            "yanchor": "bottom",
-            "y": 0.6,
-            "xanchor": "center",
-            "x": 0.3,
+            "yanchor": "top",
+            "y": 0.995,
+            "xanchor": "left",
+            "x": 0.005,
+            "bgcolor": "rgba(255, 255, 255, 0.5)"
+            if theme_switch
+            else "rgba(0, 0, 0, 0.5)",
+            "bordercolor": "rgba(0, 0, 0, 0)",
         },
     }
 
