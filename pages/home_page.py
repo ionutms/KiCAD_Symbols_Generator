@@ -195,34 +195,36 @@ def create_figure(
     traces = []
     for data_frames_index, df in enumerate(data_frames):
         color_idx = data_frames_index * 2
+        project_name = titles[3 + (data_frames_index * 2)]
+        project_name = project_name.split(" ")[0]
 
-        trace_configs = [
-            ("total_clones", 3, color_idx, "y1", hover_template_total),
-            ("unique_clones", 4, color_idx + 1, "y2", hover_template_unique),
-        ]
-
-        for (
-            y_col,
-            title_offset,
-            trace_color_idx,
-            y_axis,
-            hover_template,
-        ) in trace_configs:
-            traces.append(
-                go.Scatter(
-                    x=df["clone_timestamp"],
-                    y=df[y_col],
-                    mode="lines+markers",
-                    name=f"{titles[title_offset + (data_frames_index * 2)]}",
-                    marker={
-                        "color": trace_colors[trace_color_idx],
-                        "size": 8,
-                    },
-                    line={"color": trace_colors[trace_color_idx], "width": 2},
-                    yaxis=y_axis,
-                    hovertemplate=hover_template,
-                ),
-            )
+        # Create a trace group for each project
+        traces.extend([
+            go.Scatter(
+                x=df["clone_timestamp"],
+                y=df["total_clones"],
+                mode="lines+markers",
+                name="Total",
+                legendgroup=project_name,
+                legendgrouptitle_text=project_name,
+                marker={"color": trace_colors[color_idx], "size": 8},
+                line={"color": trace_colors[color_idx], "width": 2},
+                yaxis="y1",
+                hovertemplate=hover_template_total,
+            ),
+            go.Scatter(
+                x=df["clone_timestamp"],
+                y=df["unique_clones"],
+                mode="lines+markers",
+                name="Unique",
+                legendgroup=project_name,
+                marker={"color": trace_colors[color_idx + 1], "size": 8},
+                line={"color": trace_colors[color_idx + 1], "width": 2},
+                yaxis="y2",
+                hovertemplate=hover_template_unique,
+                showlegend=True,
+            ),
+        ])
 
     # Figure layout configuration
     figure_layout = {
@@ -283,7 +285,7 @@ def create_figure(
         },
         "showlegend": True,
         "legend": {
-            "orientation": "v",
+            "orientation": "h",
             "yanchor": "top",
             "y": 0.995,
             "xanchor": "left",
