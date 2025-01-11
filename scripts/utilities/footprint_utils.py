@@ -541,9 +541,15 @@ def generate_thru_hole_pads(  # noqa: PLR0913
         str: KiCad formatted pad definitions
 
     """
-    xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
-    # duplicate each position
-    final_xpos = [x_position for x_position in xpos for _ in range(2)]
+    xpos = [
+        start_pos + (pin_num * pad_pitch)
+        for pin_num in range(pin_count * row_count)
+    ]
+
+    final_xpos = xpos
+    if row_count == 2:  # noqa: PLR2004
+        # duplicate each position
+        final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
     pads = []
     for pin_index, pin_num in enumerate(range(pin_count * row_count)):
