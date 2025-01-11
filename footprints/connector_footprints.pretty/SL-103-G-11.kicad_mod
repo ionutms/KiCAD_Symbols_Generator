@@ -1,0 +1,147 @@
+(footprint "SL-103-G-11"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -2.032 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "07977192-dd80-40ba-8bcc-9ce75ff5cb45")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "SL-103-G-11"
+            (at 0 2.032 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "f0c37d0c-a5a4-4d49-a622-c76eb5b057bd")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "e07450b9-0d6b-4ae3-84ca-30f2703345e7")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 3.302 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "1c4ef86d-ee76-4d34-a0f5-fc9ee6979191")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -3.92 1.35)
+            (end 3.92 -1.35)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "34d578f9-594e-404f-b02d-4a1f6163cf9c")
+        )
+        
+
+        (fp_rect
+            (start -3.92 1.35)
+            (end 3.92 -1.35)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "b983e9fc-6764-43b9-9f81-b585f7b8add0")
+        )
+        
+
+        (fp_rect
+            (start -3.92 1.35)
+            (end 3.92 -1.35)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "564cf598-5a68-404c-901d-02f6f1fec83d")
+        )
+        
+
+        (fp_circle
+            (center -5.184 -0.0)
+            (end -5.5 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "761dda83-1715-482f-9bce-33fdd76c7c44")
+        )
+        
+
+        (fp_circle
+            (center -5.184 -0.0)
+            (end -5.5 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "55e254cc-43aa-4d9e-86aa-e667c9eb6169")
+        )
+        
+
+            (pad "1" thru_hole rect
+                (at -2.540 -0.000)
+                (size 1.264 1.264)
+                (drill 0.914)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "1c826510-e4c2-4d09-9966-a72b4963f250")
+            )
+            
+
+            (pad "2" thru_hole circle
+                (at 0.000 0.000)
+                (size 1.264 1.264)
+                (drill 0.914)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "f1a23328-1673-4b3b-b09c-fda7845cf75a")
+            )
+            
+
+            (pad "3" thru_hole circle
+                (at 2.540 -0.000)
+                (size 1.264 1.264)
+                (drill 0.914)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "e4bcf559-f88c-4e1b-8d90-89aabf87d979")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/SL-103-G-11.step"
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
