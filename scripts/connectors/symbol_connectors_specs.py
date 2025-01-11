@@ -411,4 +411,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "SL-1xx-G-11": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="SL-1xx-G-11",
+        footprint_pattern="connector_footprints:SL-1{:02d}-G-11",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/sl.pdf?"
+            "_gl=1*1p6n3ck*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjU4NzcxMi4xMi4xLjE3MzY1ODg1ODguNjAuMC4w"
+        ),
+        pin_counts=list(range(1, 33)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
