@@ -58,6 +58,27 @@ def generate_footprint(
         model_file_name = f"CUI_DEVICES_{part_info.mpn}"
         footprint_value = part_info.series
 
+    pads = footprint_utils.generate_thru_hole_pads(
+        part_info.pin_count,
+        part_info.pitch,
+        specs.pad_size,
+        specs.drill_size,
+        dimensions["start_pos"],
+        row_pitch=specs.row_pitch,
+        row_count=specs.number_of_rows,
+    )
+
+    if part_info.series == "CLP-1xx-02-G-D-BE":
+        pads = footprint_utils.generate_thru_hole_pads(
+            part_info.pin_count,
+            part_info.pitch,
+            specs.pad_size,
+            specs.drill_size,
+            dimensions["start_pos"],
+            row_pitch=specs.row_pitch,
+            row_count=specs.number_of_rows,
+        )
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
@@ -96,15 +117,7 @@ def generate_footprint(
             pitch_y=2.54,
             layer="F.Fab",
         ),
-        footprint_utils.generate_thru_hole_pads(
-            part_info.pin_count,
-            part_info.pitch,
-            specs.pad_size,
-            specs.drill_size,
-            dimensions["start_pos"],
-            row_pitch=specs.row_pitch,
-            row_count=specs.number_of_rows,
-        ),
+        pads,
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
             model_file_name,
