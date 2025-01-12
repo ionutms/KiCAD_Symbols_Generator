@@ -1,0 +1,215 @@
+(footprint "CLP-103-02-G-D-BE"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -3.302 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "68ce0f5e-f643-4caa-84d2-a44b0e658390")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "CLP-103-02-G-D-BE"
+            (at 0 3.302 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "1468bea3-754e-4521-957c-cf4804848961")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "b0b309a4-8e5c-46df-9d47-aa26fa13e19d")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 4.572 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "5991385f-805a-40b7-936d-2fad4a5411ad")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -2.335 2.7)
+            (end 2.335 -2.7)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "e9753d2b-03cf-4990-b5bc-0b96979a4480")
+        )
+        
+
+        (fp_rect
+            (start -2.335 2.7)
+            (end 2.335 -2.7)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "7a40903f-e957-46ea-ae85-4cc80a1a2e3d")
+        )
+        
+
+        (fp_rect
+            (start -2.335 2.7)
+            (end 2.335 -2.7)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "dcdebd2b-8075-4972-b345-5992963c4483")
+        )
+        
+
+        (fp_circle
+            (center -3.075 -1.27)
+            (end -3.2600000000000002 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "278971a8-feac-41ff-a0c9-0274e6612fe3")
+        )
+        
+
+        (fp_circle
+            (center -3.075 -1.27)
+            (end -3.2600000000000002 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "1adf5fe6-c63d-4008-82fa-b4857f068ac6")
+        )
+        
+
+            (pad "1" smd rect
+                (at -1.270 -1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "80060a6b-df5f-4bae-b3c3-cfd5756a0775")
+            )
+            
+
+            (pad "2" smd rect
+                (at -1.270 1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "4f8a2656-feb0-4fa0-888b-9eeb571625ff")
+            )
+            
+
+            (pad "3" smd rect
+                (at 0.000 -1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "71d8672d-ad72-43e2-9ad7-cfa17346c053")
+            )
+            
+
+            (pad "4" smd rect
+                (at 0.000 1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "0b8ec89c-12ea-4397-ab3a-5859fb56439b")
+            )
+            
+
+            (pad "5" smd rect
+                (at 1.270 -1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "5ec972a2-506f-4bed-85e5-749f17b8d026")
+            )
+            
+
+            (pad "6" smd rect
+                (at 1.270 1.867)
+                (size 0.74 1.47)
+                (layers "F.Cu" "F.Paste")
+                (uuid "648d941c-849f-4a84-b4ee-86a9d692e3c9")
+            )
+            
+            (pad None np_thru_hole circle
+                (at -1.270 -0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "1016d6b3-b9b6-49fa-a83d-4a2daa76bfca")
+            )
+            
+
+            (pad None np_thru_hole circle
+                (at -1.270 0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "22746174-eaeb-4c69-a8f2-76260cbd2a49")
+            )
+            
+
+            (pad None np_thru_hole circle
+                (at 0.000 -0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "f65b1d0d-8010-42f8-840e-6683dd27f1e9")
+            )
+            
+
+            (pad None np_thru_hole circle
+                (at 0.000 0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "d02c34ce-383c-4410-8731-caa5a07d169d")
+            )
+            
+
+            (pad None np_thru_hole circle
+                (at 1.270 -0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "dcceae34-920b-4b04-8781-56bfa261741c")
+            )
+            
+
+            (pad None np_thru_hole circle
+                (at 1.270 0.635)
+                (size 0.74 0.74)
+                (drill 0.74)
+                (layers "F&B.Cu" "*.Mask")
+                (uuid "573b2077-bc1f-49a2-8416-0fed07479b97")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/CLP-103-02-G-D-BE.step"
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
