@@ -247,4 +247,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=2.032,
         ref_y=-2.032,
     ),
+    "BBS-1xx-G-A": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=2.65,
+            width_right=2.65,
+            height_top=1.35,
+            height_bottom=1.35,
+        ),
+        pad_size=1.264,
+        drill_size=0.914,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=2.032,
+        ref_y=-2.032,
+    ),
 }
