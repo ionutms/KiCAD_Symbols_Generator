@@ -90,6 +90,19 @@ def generate_footprint(
         ]
         pads = "".join(pads)
 
+    if part_info.series == "FTSH-1xx-01-L-DV":
+        pads = [
+            footprint_utils.generate_surface_mount_pads(
+                part_info.pin_count,
+                part_info.pitch,
+                specs.pad_size,
+                dimensions["start_pos"],
+                row_pitch=specs.row_pitch,
+                row_count=specs.number_of_rows,
+            ),
+        ]
+        pads = "".join(pads)
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
