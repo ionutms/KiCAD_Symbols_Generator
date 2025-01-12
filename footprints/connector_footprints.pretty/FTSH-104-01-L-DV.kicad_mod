@@ -1,0 +1,178 @@
+(footprint "FTSH-104-01-L-DV"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.318 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "cd67db38-3d67-4e45-bf5b-522d640b4b6b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "FTSH-104-01-L-DV"
+            (at 0 4.318 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "ec75ef2a-4fa5-4a09-9f3f-b31d5f26ae33")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "5f3d24cb-6f9c-49e6-a35f-505dc0cb4ad5")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.587999999999999 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "c956c832-2774-4f1e-b673-656df5c46bf1")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -2.67 3.5)
+            (end 2.67 -3.5)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "09f71144-6f77-4286-bde3-8546e3bb706b")
+        )
+        
+
+        (fp_rect
+            (start -2.67 3.5)
+            (end 2.67 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "bc8ac64f-eee9-432c-86df-1bdc953e3c97")
+        )
+        
+
+        (fp_rect
+            (start -2.67 3.5)
+            (end 2.67 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "9a7558b8-aa89-45fc-81e9-08c7a32679c4")
+        )
+        
+
+        (fp_circle
+            (center -3.41 -1.27)
+            (end -3.595 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "dcbc3bcf-d4ff-41ab-8cad-15bc62788d13")
+        )
+        
+
+        (fp_circle
+            (center -3.41 -1.27)
+            (end -3.595 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "5a15963e-dd23-48d2-9272-d1d7b7f8148f")
+        )
+        
+
+            (pad "1" smd rect
+                (at -1.905 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "4b161e2b-0f03-4210-888a-7c5ebee211ac")
+            )
+            
+
+            (pad "2" smd rect
+                (at -1.905 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "7bf286af-b435-4398-93d3-0e5e024bb449")
+            )
+            
+
+            (pad "3" smd rect
+                (at -0.635 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "bb84c5ba-2abb-47ea-9b30-a063a04a9cc4")
+            )
+            
+
+            (pad "4" smd rect
+                (at -0.635 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "9a5017e4-d6a3-466f-8703-b202b313cfbb")
+            )
+            
+
+            (pad "5" smd rect
+                (at 0.635 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "49c298cb-deac-4ab6-856b-deae2506210b")
+            )
+            
+
+            (pad "6" smd rect
+                (at 0.635 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "fec4f56d-a4ba-4d27-ba9f-1e1cd174763e")
+            )
+            
+
+            (pad "7" smd rect
+                (at 1.905 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "16888692-8210-4c4a-8a29-4bc80dda84d0")
+            )
+            
+
+            (pad "8" smd rect
+                (at 1.905 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (uuid "4b0d5fc9-ab95-4923-af98-4cd665e34e62")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/FTSH-104-01-L-DV.step"
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
