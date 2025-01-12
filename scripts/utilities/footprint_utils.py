@@ -351,7 +351,7 @@ def generate_properties(
 
 def generate_pin_1_indicator(
     pad_center_x: float,
-    pad_width: float,
+    pad_width: float | list[float],
     pins_per_side: float = 1,
     pitch_y: float = 0,
     layer: str = "F.SilkS",
@@ -360,7 +360,10 @@ def generate_pin_1_indicator(
 
     Args:
         pad_center_x: X-coordinate of the pad center
-        pad_width: Width of the pad
+        pad_width:
+            Width of the pad. Can be either a float
+            or a list of [width, height].
+            If a list is provided, the first value (width) will be used.
         pins_per_side: Number of pins on each side
         pitch_y: Distance between adjacent pads
         layer: Layer to draw the pin 1 indicator on
@@ -371,11 +374,16 @@ def generate_pin_1_indicator(
     """
     shapes = []
 
+    # Extract pad width value
+    actual_pad_width = (
+        pad_width[0] if isinstance(pad_width, list) else pad_width
+    )
+
     # Pin 1 indicator position
     total_height = pitch_y * (pins_per_side - 1)
-    circle_x = -(pad_center_x + pad_width)
+    circle_x = -(pad_center_x + actual_pad_width)
     circle_y = -total_height / 2
-    radius = pad_width / 4
+    radius = actual_pad_width / 4
 
     # Pin 1 indicator on silkscreen
     shapes.append(f"""
@@ -568,6 +576,113 @@ def generate_thru_hole_pads(  # noqa: PLR0913
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
+def generate_surface_mount_pads(  # noqa: PLR0913
+    pin_count: int,
+    pad_pitch: float,
+    pad_size: list[float],
+    start_pos: float,
+    row_pitch: float,
+    row_count: int,
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        pin_count: Number of pins in the connector
+        pad_pitch: Distance between adjacent pins
+        pad_size: Diameter of the pad
+        start_pos: X-coordinate of the first pad
+        row_pitch: Pitch between connector rows
+        row_count: Number of connector rows
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    xpos = [
+        start_pos + (pin_num * pad_pitch)
+        for pin_num in range(pin_count * row_count)
+    ]
+
+    final_xpos = xpos
+    if row_count == 2:  # noqa: PLR2004
+        # duplicate each position
+        final_xpos = [x_position for x_position in xpos for _ in range(2)]
+
+    pads = []
+    for pin_index, pin_num in enumerate(range(pin_count * row_count)):
+        ypos = (
+            (-1 if pin_num % 2 == 0 else 1)
+            * (row_pitch / 2)
+            * (row_count - 1)
+        )
+
+        pad = f"""
+            (pad "{pin_num + 1}" smd rect
+                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (size {pad_size[0]} {pad_size[1]})
+                (layers "F.Cu" "F.Paste")
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
+def generate_non_plated_through_holes(  # noqa: PLR0913
+    pin_count: int,
+    pad_pitch: float,
+    pad_size: float,
+    drill_size: float,
+    start_pos: float,
+    row_pitch: float,
+    row_count: int,
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        pin_count: Number of pins in the connector
+        pad_pitch: Distance between adjacent pins
+        pad_size: Diameter of the pad
+        drill_size: Diameter of the drill hole
+        start_pos: X-coordinate of the first pad
+        row_pitch: Pitch between connector rows
+        row_count: Number of connector rows
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    xpos = [
+        start_pos + (pin_num * pad_pitch)
+        for pin_num in range(pin_count * row_count)
+    ]
+
+    final_xpos = xpos
+    if row_count == 2:  # noqa: PLR2004
+        # duplicate each position
+        final_xpos = [x_position for x_position in xpos for _ in range(2)]
+
+    pads = []
+    for pin_index, pin_num in enumerate(range(pin_count * row_count)):
+        ypos = (
+            (-1 if pin_num % 2 == 0 else 1)
+            * (row_pitch / 2)
+            * (row_count - 1)
+        )
+
+        pad = f"""
+            (pad None np_thru_hole circle
+                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (size {pad_size} {pad_size})
+                (drill {drill_size})
+                (layers "F&B.Cu" "*.Mask")
                 (uuid "{uuid4()}")
             )
             """

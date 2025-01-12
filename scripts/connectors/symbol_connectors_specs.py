@@ -451,4 +451,25 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "CLP-1xx-02-G-D-BE": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="CLP-1xx-02-G-D-BE",
+        footprint_pattern="connector_footprints:CLP-1{:02d}-02-G-D-BE",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/clp_sm.pdf?"
+            "_gl=1*1y4jlr9*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjY4MDQ4OS4xNS4xLjE3MzY2ODEzNzcuNjAuMC4w"
+        ),
+        pin_counts=list(range(2, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }

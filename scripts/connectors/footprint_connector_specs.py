@@ -10,6 +10,8 @@ of the component. Positive coordinates extend right/up, negative coordinates
 extend left/down.
 """
 
+from __future__ import annotations
+
 from typing import NamedTuple
 
 
@@ -43,7 +45,10 @@ class FootprintSpecs(NamedTuple):
     Attributes:
         pad_pitch: Additional width needed per pin
         body_dimensions: Basic rectangle dimensions
-        pad_size: Diameter/size of through-hole pads
+        pad_size:
+            Diameter/size of through-hole pads.
+            Can be either a single float for circular pads
+            or a list of [width, height] for rectangular pads
         drill_size: Diameter of drill holes
         silk_margin: Clearance for silkscreen outlines
         mask_margin: Solder mask clearance around pads
@@ -54,7 +59,7 @@ class FootprintSpecs(NamedTuple):
 
     pad_pitch: float  # Additional width needed per pin
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
-    pad_size: float  # Diameter/size of through-hole pads
+    pad_size: float | list[float]  # Diameter/size of through-hole pads
     drill_size: float  # Diameter of drill holes
     silk_margin: float  # Clearance for silkscreen outlines
     mask_margin: float  # Solder mask clearance around pads
@@ -62,6 +67,9 @@ class FootprintSpecs(NamedTuple):
     ref_y: float  # Y position for reference designator
     row_pitch: float = 0
     number_of_rows: int = 1
+    non_plated_pad_size: None | float = None
+    non_plated_drill_size: None | float = None
+    non_plated_row_pitch: float = 0
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -261,5 +269,25 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
+    ),
+    "CLP-1xx-02-G-D-BE": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=3.734,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.7,
+            width_right=1.7,
+            height_top=2.7,
+            height_bottom=2.7,
+        ),
+        pad_size=[0.74, 1.47],
+        non_plated_drill_size=0.74,
+        non_plated_pad_size=0.74,
+        non_plated_row_pitch=1.27,
+        drill_size=0.787,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=3.302,
+        ref_y=-3.302,
     ),
 }
