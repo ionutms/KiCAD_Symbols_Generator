@@ -69,14 +69,26 @@ def generate_footprint(
     )
 
     if part_info.series == "CLP-1xx-02-G-D-BE":
-        pads = footprint_utils.generate_surface_mount_pads(
-            part_info.pin_count,
-            part_info.pitch,
-            specs.pad_size,
-            dimensions["start_pos"],
-            row_pitch=specs.row_pitch,
-            row_count=specs.number_of_rows,
-        )
+        pads = [
+            footprint_utils.generate_surface_mount_pads(
+                part_info.pin_count,
+                part_info.pitch,
+                specs.pad_size,
+                dimensions["start_pos"],
+                row_pitch=specs.row_pitch,
+                row_count=specs.number_of_rows,
+            ),
+            footprint_utils.generate_non_plated_through_holes(
+                part_info.pin_count,
+                part_info.pitch,
+                specs.non_plated_pad_size,
+                specs.non_plated_drill_size,
+                dimensions["start_pos"],
+                row_pitch=specs.non_plated_row_pitch,
+                row_count=specs.number_of_rows,
+            ),
+        ]
+        pads = "".join(pads)
 
     sections = [
         footprint_utils.generate_header(part_info.mpn),

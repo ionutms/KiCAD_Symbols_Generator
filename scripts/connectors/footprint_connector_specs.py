@@ -67,6 +67,9 @@ class FootprintSpecs(NamedTuple):
     ref_y: float  # Y position for reference designator
     row_pitch: float = 0
     number_of_rows: int = 1
+    non_plated_pad_size: None | float = None
+    non_plated_drill_size: None | float = None
+    non_plated_row_pitch: float = 0
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -278,6 +281,9 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=2.7,
         ),
         pad_size=[0.74, 1.47],
+        non_plated_drill_size=0.74,
+        non_plated_pad_size=0.74,
+        non_plated_row_pitch=1.27,
         drill_size=0.787,
         silk_margin=0.1524,
         mask_margin=0.102,
