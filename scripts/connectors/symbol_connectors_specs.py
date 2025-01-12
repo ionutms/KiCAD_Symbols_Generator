@@ -431,4 +431,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "BBS-1xx-G-A": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="BBS-1xx-G-A",
+        footprint_pattern="connector_footprints:BBS-1{:02d}-G-A",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/bbs.pdf?"
+            "_gl=1*oynpe4*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjY3MzY1Ny4xMy4xLjE3MzY2NzM4NjguNDIuMC4w"
+        ),
+        pin_counts=list(range(1, 33)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
