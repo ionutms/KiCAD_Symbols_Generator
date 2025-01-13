@@ -624,10 +624,11 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         )
 
         pad = f"""
-            (pad "{pin_num + 1}" smd rect
+            (pad "{pin_num + 1}" smd roundrect
                 (at {final_xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
                 (uuid "{uuid4()}")
             )
             """
@@ -659,11 +660,6 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     """
     xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
 
-    final_xpos = xpos
-    # if row_count == 2:  # noqa: PLR2004
-    #     # duplicate each position
-    #     final_xpos = [x_position for x_position in xpos for _ in range(2)]
-
     pads = []
     for pin_index, pin_num in enumerate(range(pin_count)):
         ypos = (
@@ -673,10 +669,11 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
         )
 
         pad = f"""
-            (pad "{pin_num + 1}" smd rect
-                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+            (pad "{pin_num + 1}" smd roundrect
+                (at {xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
                 (uuid "{uuid4()}")
             )
             """
