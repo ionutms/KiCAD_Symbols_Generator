@@ -635,6 +635,55 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     return "\n".join(pads)
 
 
+def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
+    pin_count: int,
+    pad_pitch: float,
+    pad_size: list[float],
+    start_pos: float,
+    row_pitch: float,
+    row_count: int,
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        pin_count: Number of pins in the connector
+        pad_pitch: Distance between adjacent pins
+        pad_size: Diameter of the pad
+        start_pos: X-coordinate of the first pad
+        row_pitch: Pitch between connector rows
+        row_count: Number of connector rows
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
+
+    final_xpos = xpos
+    # if row_count == 2:  # noqa: PLR2004
+    #     # duplicate each position
+    #     final_xpos = [x_position for x_position in xpos for _ in range(2)]
+
+    pads = []
+    for pin_index, pin_num in enumerate(range(pin_count)):
+        ypos = (
+            (-1 if pin_num % 2 == 0 else 1)
+            * (row_pitch / 2)
+            * (row_count - 1)
+        )
+
+        pad = f"""
+            (pad "{pin_num + 1}" smd rect
+                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (size {pad_size[0]} {pad_size[1]})
+                (layers "F.Cu" "F.Paste")
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
 def generate_non_plated_through_holes(  # noqa: PLR0913
     pin_count: int,
     pad_pitch: float,
