@@ -60,11 +60,11 @@ class FootprintSpecs(NamedTuple):
     pad_pitch: float  # Additional width needed per pin
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
     pad_size: float | list[float]  # Diameter/size of through-hole pads
-    drill_size: float  # Diameter of drill holes
     silk_margin: float  # Clearance for silkscreen outlines
     mask_margin: float  # Solder mask clearance around pads
     mpn_y: float  # Y position for manufacturer part number
     ref_y: float  # Y position for reference designator
+    drill_size: float | None = None  # Diameter of drill holes
     row_pitch: float = 0
     number_of_rows: int = 1
     non_plated_pad_size: None | float = None
@@ -302,6 +302,22 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=[0.74, 2.79],
         drill_size=0.787,
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=4.318,
+        ref_y=-4.318,
+    ),
+    "TSM-1xx-01-S-SV-P-TR": FootprintSpecs(
+        pad_pitch=2.54,
+        row_pitch=2.92,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=2.7,
+            width_right=2.7,
+            height_top=3.5,
+            height_bottom=3.5,
+        ),
+        pad_size=[1.27, 3.43],
         silk_margin=0.1524,
         mask_margin=0.102,
         mpn_y=4.318,
