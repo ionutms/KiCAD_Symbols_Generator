@@ -103,7 +103,11 @@ def generate_footprint(
         ]
         pads = "".join(pads)
 
-    if part_info.series in ("TSM-1xx-01-S-SV-P-TR", "RSM-1xx-02-STL-S"):
+    if part_info.series in (
+        "TSM-1xx-01-S-SV-P-TR",
+        "RSM-1xx-02-STL-S",
+        "FTR-1xx-03-L-S",
+    ):
         pads = [
             footprint_utils.generate_zig_zag_surface_mount_pads(
                 part_info.pin_count,
@@ -114,7 +118,7 @@ def generate_footprint(
                 row_count=specs.number_of_rows,
             ),
         ]
-        if part_info.series == "RSM-1xx-02-STL-S":
+        if part_info.series in ("RSM-1xx-02-STL-S"):
             pads = [
                 footprint_utils.generate_zig_zag_surface_mount_pads(
                     part_info.pin_count,
