@@ -323,4 +323,20 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=4.318,
         ref_y=-4.318,
     ),
+    "RSM-1xx-02-STL-S": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=2.985,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.5,
+            width_right=1.5,
+            height_top=2.6,
+            height_bottom=2.6,
+        ),
+        pad_size=[0.91, 1.715],
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=4.318,
+        ref_y=-4.318,
+    ),
 }

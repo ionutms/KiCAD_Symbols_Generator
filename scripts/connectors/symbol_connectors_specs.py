@@ -513,4 +513,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "RSM-1xx-02-STL-S": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="RSM-1xx-02-STL-S",
+        footprint_pattern="connector_footprints:RSM-1{:02d}-02-STL-S",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/rsm_sm.pdf?"
+            "_gl=1*1uxcywd*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczNjg1MTE0OS4yMi4xLjE3MzY4NTE1MTQuMTcuMC4w"
+        ),
+        pin_counts=list(range(2, 37)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
