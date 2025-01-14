@@ -50,8 +50,6 @@ class FootprintSpecs(NamedTuple):
             Can be either a single float for circular pads
             or a list of [width, height] for rectangular pads
         drill_size: Diameter of drill holes
-        silk_margin: Clearance for silkscreen outlines
-        mask_margin: Solder mask clearance around pads
         mpn_y: Y position for manufacturer part number
         ref_y: Y position for reference designator
 
@@ -60,8 +58,6 @@ class FootprintSpecs(NamedTuple):
     pad_pitch: float  # Additional width needed per pin
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
     pad_size: float | list[float]  # Diameter/size of through-hole pads
-    silk_margin: float  # Clearance for silkscreen outlines
-    mask_margin: float  # Solder mask clearance around pads
     mpn_y: float  # Y position for manufacturer part number
     ref_y: float  # Y position for reference designator
     drill_size: float | None = None  # Diameter of drill holes
@@ -70,6 +66,7 @@ class FootprintSpecs(NamedTuple):
     non_plated_pad_size: None | float = None
     non_plated_drill_size: None | float = None
     non_plated_row_pitch: float = 0
+    miror_zig_zag: None | bool = None
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -83,8 +80,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=6.096,
         ref_y=-6.096,
     ),
@@ -98,8 +93,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=5.334,
         ref_y=-5.334,
     ),
@@ -113,8 +106,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.1,
         drill_size=1.4,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=-10.2,
         ref_y=2.4,
     ),
@@ -128,8 +119,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.1,
         drill_size=1.4,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=-6.8,
         ref_y=4.2,
     ),
@@ -143,8 +132,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=10.8,
         ref_y=-3.0,
     ),
@@ -158,8 +145,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=-6.6,
         ref_y=5.8,
     ),
@@ -173,8 +158,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=-6.6,
         ref_y=5.8,
     ),
@@ -188,8 +171,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=2.55,
         drill_size=1.7,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=10.8,
         ref_y=-3.0,
     ),
@@ -203,8 +184,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=1.0874,
         drill_size=0.787,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
     ),
@@ -218,8 +197,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=1.0874,
         drill_size=0.787,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
     ),
@@ -235,8 +212,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=1.0874,
         drill_size=0.787,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=3.302,
         ref_y=-3.302,
     ),
@@ -250,8 +225,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=1.264,
         drill_size=0.914,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
     ),
@@ -265,8 +238,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=1.264,
         drill_size=0.914,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=2.032,
         ref_y=-2.032,
     ),
@@ -285,8 +256,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         non_plated_pad_size=0.74,
         non_plated_row_pitch=1.27,
         drill_size=0.787,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=3.302,
         ref_y=-3.302,
     ),
@@ -302,8 +271,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ),
         pad_size=[0.74, 2.79],
         drill_size=0.787,
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=4.318,
         ref_y=-4.318,
     ),
@@ -311,6 +278,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_pitch=2.54,
         row_pitch=2.92,
         number_of_rows=2,
+        miror_zig_zag=False,
         body_dimensions=BodyDimensions(
             width_left=2.7,
             width_right=2.7,
@@ -318,8 +286,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=3.5,
         ),
         pad_size=[1.27, 3.43],
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=4.318,
         ref_y=-4.318,
     ),
@@ -327,6 +293,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_pitch=1.27,
         row_pitch=2.985,
         number_of_rows=2,
+        miror_zig_zag=True,
         body_dimensions=BodyDimensions(
             width_left=1.5,
             width_right=1.5,
@@ -334,8 +301,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=2.6,
         ),
         pad_size=[0.91, 1.715],
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=4.318,
         ref_y=-4.318,
     ),
@@ -343,6 +308,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_pitch=1.27,
         row_pitch=2.985,
         number_of_rows=2,
+        miror_zig_zag=False,
         body_dimensions=BodyDimensions(
             width_left=1.5,
             width_right=1.5,
@@ -350,8 +316,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=3.6,
         ),
         pad_size=[0.74, 3.73],
-        silk_margin=0.1524,
-        mask_margin=0.102,
         mpn_y=4.318,
         ref_y=-4.318,
     ),
