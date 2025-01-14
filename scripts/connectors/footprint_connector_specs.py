@@ -339,4 +339,20 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=4.318,
         ref_y=-4.318,
     ),
+    "FTR-1xx-03-L-S": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=2.985,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.5,
+            width_right=1.5,
+            height_top=3.6,
+            height_bottom=3.6,
+        ),
+        pad_size=[0.74, 3.73],
+        silk_margin=0.1524,
+        mask_margin=0.102,
+        mpn_y=4.318,
+        ref_y=-4.318,
+    ),
 }
