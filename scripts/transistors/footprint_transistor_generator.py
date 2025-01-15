@@ -41,6 +41,18 @@ def generate_footprint(
     thermal_pad_numbers = specs.pad_dimensions.thermal_pad_numbers
     pad_numbers = specs.pad_dimensions.pad_numbers
 
+    thermal_pad = (
+        footprint_utils.generate_thermal_pad(
+            thermal_pad_width,
+            thermal_pad_height,
+            thermal_pad_center_x,
+            thermal_pad_center_y,
+            thermal_pad_numbers,
+        )
+        if part_info.package not in ("SOT-26")
+        else ""
+    )
+
     sections = [
         footprint_utils.generate_header(part_info.package),
         footprint_utils.generate_properties(
@@ -57,13 +69,7 @@ def generate_footprint(
             pins_per_side,
             pad_numbers,
         ),
-        footprint_utils.generate_thermal_pad(
-            thermal_pad_width,
-            thermal_pad_height,
-            thermal_pad_center_x,
-            thermal_pad_center_y,
-            thermal_pad_numbers,
-        ),
+        thermal_pad,
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
             part_info.package,
