@@ -75,10 +75,16 @@ def write_component(
         3,
     )
     if component_data.get("Transistor Type") == "P-Channel":
-        symbol_utils.write_p_mos_transistor_symbol_drawing(
-            symbol_file,
-            symbol_name,
-        )
+        if component_data.get("Series") == "ZXMP6A17E6TA":
+            symbol_utils.write_p_mos_transistor_symbol_drawing_2(
+                symbol_file,
+                symbol_name,
+            )
+        else:
+            symbol_utils.write_p_mos_transistor_symbol_drawing(
+                symbol_file,
+                symbol_name,
+            )
     if component_data.get("Transistor Type") == "N-Channel":
         symbol_utils.write_n_mos_transistor_symbol_drawing(
             symbol_file,

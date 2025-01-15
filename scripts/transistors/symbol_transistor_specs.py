@@ -282,4 +282,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="P-Channel Dual",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "ZXMP6A17E6TA": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="ZXMP6A17E6TA",
+        footprint="transistor_footprints:SOT-26",
+        datasheet=("https://www.diodes.com/assets/Datasheets/ZXMP6A17E6.pdf"),
+        drain_source_voltage=[-60],
+        drain_current=[-3],
+        package="SOT-26",
+        transistor_type="P-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

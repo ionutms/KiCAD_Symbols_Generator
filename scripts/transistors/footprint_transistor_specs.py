@@ -12,6 +12,8 @@ The FootprintSpecs object contains the following fields:
     diode body outline in millimeters.
 """
 
+from __future__ import annotations
+
 from typing import NamedTuple
 
 
@@ -58,12 +60,12 @@ class PadDimensionsAsymmetric(NamedTuple):
     pad_center_x: float
     pad_pitch_y: float
     pins_per_side: float
-    thermal_width: float
-    thermal_height: float
-    thermal_pad_center_x: float
-    thermal_pad_center_y: list[float]
-    thermal_pad_numbers: list[int]
     pad_numbers: list[int]
+    thermal_width: float | None = None
+    thermal_height: float | None = None
+    thermal_pad_center_x: float | None = None
+    thermal_pad_center_y: list[float] | None = None
+    thermal_pad_numbers: list[int] | None = None
 
 
 class FootprintSpecs(NamedTuple):
@@ -151,6 +153,18 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             thermal_pad_center_y=[1.27, -1.27],
             thermal_pad_numbers=[5, 6],
             pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6],
+        ),
+        ref_offset_y=-3.2,
+    ),
+    "SOT-26": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=3.4, height=3.2),
+        pad_dimensions=PadDimensionsAsymmetric(
+            width=0.8,
+            height=0.55,
+            pad_center_x=1.2,
+            pad_pitch_y=0.95,
+            pins_per_side=3,
+            pad_numbers=[1, 2, 3, 4, 5, 6],
         ),
         ref_offset_y=-3.2,
     ),
