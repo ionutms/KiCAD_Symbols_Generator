@@ -528,8 +528,8 @@ def update_graph_with_uploaded_file(
         },
         {
             "name": "KiCad_Demo_Project",
-            "clones_csv": "repo2_clones_history.csv",
-            "visitors_csv": "repo2_visitors_history.csv",
+            "clones_csv": "minimal_adp1032_clones_history.csv",
+            "visitors_csv": "minimal_adp1032_visitors_history.csv",
             "github_path": "repo_traffic_data",
             "local_path": "repo_traffic_data",
         },
