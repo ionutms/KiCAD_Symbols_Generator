@@ -45,6 +45,59 @@ usage_steps = [
     "to return to the Home page.",
 ]
 
+
+clones_graph = dcc.Loading(
+    [
+        dcc.Graph(
+            id=f"{module_name}_repo_clones_graph",
+            config={"displaylogo": False},
+        ),
+    ],
+    delay_show=100,
+    delay_hide=100,
+)
+
+visitors_graph = dcc.Loading(
+    [
+        dcc.Graph(
+            id=f"{module_name}_repo_visitors_graph",
+            config={"displaylogo": False},
+        ),
+    ],
+    delay_show=100,
+    delay_hide=100,
+)
+
+links_display_div = html.Div(
+    id="links_display",
+    style={"display": "flex", "flex-direction": "column", "gap": "10px"},
+)
+
+minimal_adp1032_github_repo_anchor_tag = html.A(
+    children="Minimal_ADP1032",
+    href=("https://github.com/ionutms/Minimal_ADP1032"),
+    target="_blank",
+)
+
+minimal_adp1032_interactive_bom_anchor_tag = html.A(
+    "Interactive BOM",
+    href=(
+        "https://htmlpreview.github.io/?https://github.com/ionutms/"
+        "Minimal_ADP1032/blob/main/minimal_adp1032/bom/ibom.html"
+    ),
+    target="_blank",
+)
+
+minimal_adp1032_schematics_anchor_tag = html.A(
+    children="Schematics",
+    href=(
+        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
+        "https://raw.githubusercontent.com/ionutms/"
+        "Minimal_ADP1032/main/minimal_adp1032/minimal_adp1032.pdf"
+    ),
+    target="_blank",
+)
+
 layout = dbc.Container(
     [
         dbc.Row([
@@ -62,62 +115,18 @@ layout = dbc.Container(
             ),
         ]),
         dbc.Row([
-            dbc.Col(
-                [
-                    dcc.Loading(
-                        [
-                            dcc.Graph(
-                                id=f"{module_name}_repo_clones_graph",
-                                config={"displaylogo": False},
-                            ),
-                        ],
-                        delay_show=100,
-                        delay_hide=100,
-                    ),
-                    dcc.Loading(
-                        [
-                            dcc.Graph(
-                                id=f"{module_name}_repo_visitors_graph",
-                                config={"displaylogo": False},
-                            ),
-                        ],
-                        delay_show=100,
-                        delay_hide=100,
-                    ),
-                ],
-                xs=12,
-                md=8,
-            ),
+            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=8),
             dbc.Col(
                 [
                     html.H4("Components Data Base Pages"),
-                    html.Div(
-                        id="links_display",
-                        style={
-                            "display": "flex",
-                            "flex-direction": "column",
-                            "gap": "10px",
-                        },
-                    ),
+                    links_display_div,
                     html.Hr(),
                     html.H4("Projects Pages"),
                     html.Div(
                         [
-                            html.A(
-                                "Minimal_ADP1032",
-                                href="https://github.com/ionutms/Minimal_ADP1032",
-                                target="_blank",
-                            ),
-                            html.A(
-                                "Interactive BOM",
-                                href=(
-                                    "https://htmlpreview.github.io/?"
-                                    "https://github.com/ionutms/"
-                                    "Minimal_ADP1032/blob/main/"
-                                    "minimal_adp1032/bom/ibom.html"
-                                ),
-                                target="_blank",
-                            ),
+                            minimal_adp1032_github_repo_anchor_tag,
+                            minimal_adp1032_interactive_bom_anchor_tag,
+                            minimal_adp1032_schematics_anchor_tag,
                             html.Hr(),
                         ],
                         style={"display": "flex", "gap": "10px"},
@@ -541,7 +550,7 @@ def update_graph_with_uploaded_file(
             "local_path": "repo_traffic_data",
         },
         {
-            "name": "KiCAD_Symbols_Generator",
+            "name": "Minimal_ADP1032",
             "clones_csv": "minimal_adp1032_clones_history.csv",
             "visitors_csv": "minimal_adp1032_visitors_history.csv",
             "github_path": "repo_traffic_data",
