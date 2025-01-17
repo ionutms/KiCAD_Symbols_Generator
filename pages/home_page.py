@@ -536,8 +536,7 @@ def update_graph_with_uploaded_file(
     ]
 
     base_github_url = (
-        "https://raw.githubusercontent.com/ionutms/"
-        "KiCAD_Symbols_Generator/main"
+        "https://raw.githubusercontent.com/ionutms/Minimal_ADP1032/main"
     )
     clones_data = []
     visitors_data = []
