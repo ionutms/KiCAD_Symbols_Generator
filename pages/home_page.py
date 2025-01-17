@@ -101,24 +101,27 @@ layout = dbc.Container(
                     ),
                     html.Hr(),
                     html.H4("Projects Pages"),
-                    html.Div([
-                        html.A(
-                            "Minimal_ADP1032",
-                            href="https://github.com/ionutms/Minimal_ADP1032",
-                            target="_blank",
-                        ),
-                        html.A(
-                            " - Interactive BOM",
-                            href=(
-                                "https://htmlpreview.github.io/?"
-                                "https://github.com/ionutms/"
-                                "Minimal_ADP1032/blob/main/"
-                                "minimal_adp1032/bom/ibom.html"
+                    html.Div(
+                        [
+                            html.A(
+                                "Minimal_ADP1032",
+                                href="https://github.com/ionutms/Minimal_ADP1032",
+                                target="_blank",
                             ),
-                            target="_blank",
-                        ),
-                        html.Hr(),
-                    ]),
+                            html.A(
+                                "Interactive BOM",
+                                href=(
+                                    "https://htmlpreview.github.io/?"
+                                    "https://github.com/ionutms/"
+                                    "Minimal_ADP1032/blob/main/"
+                                    "minimal_adp1032/bom/ibom.html"
+                                ),
+                                target="_blank",
+                            ),
+                            html.Hr(),
+                        ],
+                        style={"display": "flex", "gap": "10px"},
+                    ),
                 ],
                 xs=12,
                 md=4,
