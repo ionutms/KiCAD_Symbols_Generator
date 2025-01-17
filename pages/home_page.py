@@ -103,10 +103,21 @@ layout = dbc.Container(
                     html.H4("Projects Pages"),
                     html.Div([
                         html.A(
-                            "KiCad Demo Project",
-                            href="https://github.com/ionutms/KiCad_Demo_Project",
+                            "Minimal_ADP1032",
+                            href="https://github.com/ionutms/Minimal_ADP1032",
                             target="_blank",
                         ),
+                        html.A(
+                            " - Interactive BOM",
+                            href=(
+                                "https://htmlpreview.github.io/?"
+                                "https://github.com/ionutms/"
+                                "Minimal_ADP1032/blob/main/"
+                                "minimal_adp1032/bom/ibom.html"
+                            ),
+                            target="_blank",
+                        ),
+                        html.Hr(),
                     ]),
                 ],
                 xs=12,
@@ -475,7 +486,7 @@ def load_traffic_data(
         pd.errors.EmptyDataError,
         OSError,
     ) as error_message:
-        print(f"Error reading github file: {error_message}")
+        print(f"Error reading github file: {error_message} from {github_url}")
         try:
             # Fallback to local file
             data_frame = pd.read_csv(local_file)
@@ -527,7 +538,7 @@ def update_graph_with_uploaded_file(
             "local_path": "repo_traffic_data",
         },
         {
-            "name": "KiCad_Demo_Project",
+            "name": "KiCAD_Symbols_Generator",
             "clones_csv": "minimal_adp1032_clones_history.csv",
             "visitors_csv": "minimal_adp1032_visitors_history.csv",
             "github_path": "repo_traffic_data",
@@ -536,7 +547,8 @@ def update_graph_with_uploaded_file(
     ]
 
     base_github_url = (
-        "https://raw.githubusercontent.com/ionutms/Minimal_ADP1032/main"
+        "https://raw.githubusercontent.com/ionutms/"
+        "KiCAD_Symbols_Generator/main"
     )
     clones_data = []
     visitors_data = []
