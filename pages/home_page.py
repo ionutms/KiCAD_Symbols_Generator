@@ -544,8 +544,8 @@ def update_graph_with_uploaded_file(
     repos = [
         {
             "name": "KiCAD_Symbols_Generator",
-            "clones_csv": "clones_history.csv",
-            "visitors_csv": "visitors_history.csv",
+            "clones_csv": "kicad_symbols_generator_clones_history.csv",
+            "visitors_csv": "kicad_symbols_generator_visitors_history.csv",
             "github_path": "repo_traffic_data",
             "local_path": "repo_traffic_data",
         },
