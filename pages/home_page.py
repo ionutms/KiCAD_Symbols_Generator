@@ -389,6 +389,7 @@ def adjust_y_axis_range(
     figure: go.Figure,
     data_frame1: pd.DataFrame,
     data_frame2: pd.DataFrame,
+    data_frame3: pd.DataFrame,
     relayout_data: dict[str, Any] | None,
 ) -> go.Figure:
     """Adjust y-axis range based on the visible x-axis range."""
@@ -405,8 +406,16 @@ def adjust_y_axis_range(
             (data_frame2["clone_timestamp"] >= x_min)
             & (data_frame2["clone_timestamp"] <= x_max)
         ]
+        filtered_df3 = data_frame3[
+            (data_frame3["clone_timestamp"] >= x_min)
+            & (data_frame3["clone_timestamp"] <= x_max)
+        ]
 
-        if not filtered_df1.empty or not filtered_df2.empty:
+        if (
+            not filtered_df1.empty
+            or not filtered_df2.empty
+            or not filtered_df3.empty
+        ):
             # Calculate ranges across both filtered datasets
             y1_min = min(
                 filtered_df1["total_clones"].min()
@@ -414,6 +423,9 @@ def adjust_y_axis_range(
                 else float("inf"),
                 filtered_df2["total_clones"].min()
                 if not filtered_df2.empty
+                else float("inf"),
+                filtered_df3["total_clones"].min()
+                if not filtered_df3.empty
                 else float("inf"),
             )
             y1_max = max(
@@ -423,6 +435,9 @@ def adjust_y_axis_range(
                 filtered_df2["total_clones"].max()
                 if not filtered_df2.empty
                 else float("-inf"),
+                filtered_df3["total_clones"].max()
+                if not filtered_df3.empty
+                else float("-inf"),
             )
             y2_min = min(
                 filtered_df1["unique_clones"].min()
@@ -431,6 +446,9 @@ def adjust_y_axis_range(
                 filtered_df2["unique_clones"].min()
                 if not filtered_df2.empty
                 else float("-inf"),
+                filtered_df3["unique_clones"].min()
+                if not filtered_df3.empty
+                else float("-inf"),
             )
             y2_max = max(
                 filtered_df1["unique_clones"].max()
@@ -438,6 +456,9 @@ def adjust_y_axis_range(
                 else float("-inf"),
                 filtered_df2["unique_clones"].max()
                 if not filtered_df2.empty
+                else float("-inf"),
+                filtered_df3["unique_clones"].max()
+                if not filtered_df3.empty
                 else float("-inf"),
             )
 
@@ -556,6 +577,13 @@ def update_graph_with_uploaded_file(
             "github_path": "repo_traffic_data",
             "local_path": "repo_traffic_data",
         },
+        {
+            "name": "Minimal_MAX14906",
+            "clones_csv": "minimal_max14906_clones_history.csv",
+            "visitors_csv": "minimal_max14906_visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
+        },
     ]
 
     base_github_url = (
@@ -594,7 +622,14 @@ def update_graph_with_uploaded_file(
         visitors_data.append(load_traffic_data(**visitors_source))
 
     # Create titles using repository names
-    trace_colors = ["#227b33", "#4187db", "#f0a088", "#f668c9"]
+    trace_colors = [
+        "#227b33",
+        "#4187db",
+        "#f0a088",
+        "#f668c9",
+        "#f0a022",
+        "#f66822",
+    ]
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
