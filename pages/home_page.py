@@ -74,7 +74,7 @@ links_display_div = html.Div(
 )
 
 minimal_adp1032_github_repo_anchor_tag = html.A(
-    children="Minimal_ADP1032",
+    children="Minimal ADP1032",
     href=("https://github.com/ionutms/Minimal_ADP1032"),
     target="_blank",
 )
@@ -95,6 +95,12 @@ minimal_adp1032_schematics_anchor_tag = html.A(
         "https://raw.githubusercontent.com/ionutms/"
         "Minimal_ADP1032/main/minimal_adp1032/minimal_adp1032.pdf"
     ),
+    target="_blank",
+)
+
+minimal_max14906_github_repo_anchor_tag = html.A(
+    children="Minimal MAX14906",
+    href=("https://github.com/ionutms/Minimal_MAX14906"),
     target="_blank",
 )
 
@@ -127,6 +133,13 @@ layout = dbc.Container(
                             minimal_adp1032_github_repo_anchor_tag,
                             minimal_adp1032_interactive_bom_anchor_tag,
                             minimal_adp1032_schematics_anchor_tag,
+                            html.Hr(),
+                        ],
+                        style={"display": "flex", "gap": "10px"},
+                    ),
+                    html.Div(
+                        [
+                            minimal_max14906_github_repo_anchor_tag,
                             html.Hr(),
                         ],
                         style={"display": "flex", "gap": "10px"},
@@ -387,93 +400,72 @@ def create_figure(
 
 def adjust_y_axis_range(
     figure: go.Figure,
-    data_frame1: pd.DataFrame,
-    data_frame2: pd.DataFrame,
-    data_frame3: pd.DataFrame,
     relayout_data: dict[str, Any] | None,
+    *dataframes: pd.DataFrame,
 ) -> go.Figure:
-    """Adjust y-axis range based on the visible x-axis range."""
+    """Adjust y-axis range based on the visible x-axis range.
+
+    Args:
+        figure: The plotly figure to adjust
+        relayout_data: The relayout data containing x-axis range information
+        *dataframes: Variable number of pandas DataFrames to process
+
+    """
+
+    def filter_dataframe(
+        df: pd.DataFrame,
+        x_min: pd.Timestamp,
+        x_max: pd.Timestamp,
+    ) -> pd.DataFrame:
+        """Filter dataframe based on timestamp range."""
+        return df[
+            (df["clone_timestamp"] >= x_min)
+            & (df["clone_timestamp"] <= x_max)
+        ]
+
+    def get_column_range(
+        dataframes: list[pd.DataFrame],
+        column: str,
+    ) -> tuple[float, float]:
+        """Calculate min and max values for a column across all dataframes."""
+        valid_dfs = [df for df in dataframes if not df.empty]
+        if not valid_dfs:
+            return 0, 0  # Return default range if all dataframes are empty
+
+        min_val = min(df[column].min() for df in valid_dfs)
+        max_val = max(df[column].max() for df in valid_dfs)
+        return min_val, max_val
+
+    if not dataframes:
+        return figure  # Return unchanged figure if no dataframes provided
+
     if relayout_data and "xaxis.range[0]" in relayout_data:
         x_min = pd.Timestamp(relayout_data["xaxis.range[0]"])
         x_max = pd.Timestamp(relayout_data["xaxis.range[1]"])
 
-        # Filter data within the zoomed range for both datasets
-        filtered_df1 = data_frame1[
-            (data_frame1["clone_timestamp"] >= x_min)
-            & (data_frame1["clone_timestamp"] <= x_max)
-        ]
-        filtered_df2 = data_frame2[
-            (data_frame2["clone_timestamp"] >= x_min)
-            & (data_frame2["clone_timestamp"] <= x_max)
-        ]
-        filtered_df3 = data_frame3[
-            (data_frame3["clone_timestamp"] >= x_min)
-            & (data_frame3["clone_timestamp"] <= x_max)
+        # Filter all dataframes
+        filtered_dfs = [
+            filter_dataframe(df, x_min, x_max) for df in dataframes
         ]
 
-        if (
-            not filtered_df1.empty
-            or not filtered_df2.empty
-            or not filtered_df3.empty
-        ):
-            # Calculate ranges across both filtered datasets
-            y1_min = min(
-                filtered_df1["total_clones"].min()
-                if not filtered_df1.empty
-                else float("inf"),
-                filtered_df2["total_clones"].min()
-                if not filtered_df2.empty
-                else float("inf"),
-                filtered_df3["total_clones"].min()
-                if not filtered_df3.empty
-                else float("inf"),
-            )
-            y1_max = max(
-                filtered_df1["total_clones"].max()
-                if not filtered_df1.empty
-                else float("-inf"),
-                filtered_df2["total_clones"].max()
-                if not filtered_df2.empty
-                else float("-inf"),
-                filtered_df3["total_clones"].max()
-                if not filtered_df3.empty
-                else float("-inf"),
-            )
-            y2_min = min(
-                filtered_df1["unique_clones"].min()
-                if not filtered_df1.empty
-                else float("inf"),
-                filtered_df2["unique_clones"].min()
-                if not filtered_df2.empty
-                else float("-inf"),
-                filtered_df3["unique_clones"].min()
-                if not filtered_df3.empty
-                else float("-inf"),
-            )
-            y2_max = max(
-                filtered_df1["unique_clones"].max()
-                if not filtered_df1.empty
-                else float("-inf"),
-                filtered_df2["unique_clones"].max()
-                if not filtered_df2.empty
-                else float("-inf"),
-                filtered_df3["unique_clones"].max()
-                if not filtered_df3.empty
-                else float("-inf"),
-            )
+        if any(not df.empty for df in filtered_dfs):
+            # Calculate ranges for both total and unique clones
+            y1_min, y1_max = get_column_range(filtered_dfs, "total_clones")
+            y2_min, y2_max = get_column_range(filtered_dfs, "unique_clones")
 
-            y1_padding = (y1_max - y1_min) * 0.05
-            y2_padding = (y2_max - y2_min) * 0.05
+            # Calculate padding
+            y1_padding = (y1_max - y1_min) * 0.05 if y1_max > y1_min else 1
+            y2_padding = (y2_max - y2_min) * 0.05 if y2_max > y2_min else 1
 
-            figure.layout.yaxis.update({
-                "range": [y1_min - y1_padding, y1_max + y1_padding],
-                "autorange": False,
-            })
-
-            figure.layout.yaxis2.update({
-                "range": [y2_min - y2_padding, y2_max + y2_padding],
-                "autorange": False,
-            })
+            # Update both y-axes
+            for axis, y_min, y_max, padding in [
+                (figure.layout.yaxis, y1_min, y1_max, y1_padding),
+                (figure.layout.yaxis2, y2_min, y2_max, y2_padding),
+            ]:
+                axis.update({
+                    "range": [y_min - padding, y_max + padding],
+                    "autorange": False,
+                })
 
     return figure
 
@@ -623,12 +615,12 @@ def update_graph_with_uploaded_file(
 
     # Create titles using repository names
     trace_colors = [
-        "#227b33",
-        "#4187db",
-        "#f0a088",
-        "#f668c9",
-        "#f0a022",
-        "#f66822",
+        "#2E8B57",
+        "#4169E1",
+        "#FF7F50",
+        "#DA70D6",
+        "#FFB347",
+        "#E94E77",
     ]
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
@@ -654,8 +646,8 @@ def update_graph_with_uploaded_file(
     )
     repo_clones_figure = adjust_y_axis_range(
         repo_clones_figure,
-        *clones_data,
         clones_relayout,
+        *clones_data,
     )
 
     repo_visitors_figure = create_figure(
@@ -667,8 +659,8 @@ def update_graph_with_uploaded_file(
     )
     repo_visitors_figure = adjust_y_axis_range(
         repo_visitors_figure,
-        *visitors_data,
         visitors_relayout,
+        *visitors_data,
     )
 
     return repo_clones_figure, repo_visitors_figure
