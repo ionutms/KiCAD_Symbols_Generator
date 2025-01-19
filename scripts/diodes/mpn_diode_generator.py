@@ -60,7 +60,7 @@ HEADER_MAPPING: Final[dict] = {
     "MPN": lambda part: part.mpn,
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
-    "Maximum DC Current (A)": lambda part: f"{part.current_rating:.1f}",
+    "Maximum DC Current (A)": lambda part: f"{part.current_rating}",
     "Diode Type": lambda part: part.diode_type,
 }
 

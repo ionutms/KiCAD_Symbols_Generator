@@ -139,6 +139,8 @@ class PartInfo(NamedTuple):
         """
         # Construct MPN with optional suffix
         mpn = f"{specs.base_series}"
+        if specs.manufacturer == "Kingbright":
+            mpn = f"{specs.base_series.replace('-', '/', 1)}"
         if specs.part_number_suffix:
             # Find index of voltage in ratings list
             try:
@@ -175,7 +177,7 @@ class PartInfo(NamedTuple):
             current_rating = 0.0
 
         return cls(
-            symbol_name=f"{specs.reference}_{mpn}",
+            symbol_name=f"{specs.reference}_{mpn.replace('/', '-')}",
             reference=specs.reference,
             value=value,
             footprint=specs.footprint,
@@ -225,7 +227,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         package="PowerDI_123",
         diode_type="Schottky",
         trustedparts_link="https://www.trustedparts.com/en/search",
-        part_number_suffix=None,
     ),
     "MMSZ52": SeriesSpec(
         manufacturer="Onsemi",
@@ -302,6 +303,33 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         package="SOD_123F",
         diode_type="Rectifier",
         trustedparts_link="https://www.trustedparts.com/en/search",
-        part_number_suffix=None,
+    ),
+    "APHHS1005LSECK-J3-PF": SeriesSpec(
+        manufacturer="Kingbright",
+        base_series="APHHS1005LSECK-J3-PF",
+        footprint="diode_footprints:LED_RED_0402_1005Metric",
+        datasheet=(
+            "https://www.kingbrightusa.com/product.asp?catalog_name="
+            "LED&product_id=APHHS1005LSECK/J3-PF"
+        ),
+        voltage_rating=[1.8],
+        current_rating=[0.03],
+        package="LED_RED_0402_1005Metric",
+        diode_type="Red LED",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "APHHS1005CGCK": SeriesSpec(
+        manufacturer="Kingbright",
+        base_series="APHHS1005CGCK",
+        footprint="diode_footprints:LED_GREEN_0402_1005Metric",
+        datasheet=(
+            "https://www.kingbrightusa.com/product.asp?catalog_name="
+            "LED&product_id=APHHS1005CGCK"
+        ),
+        voltage_rating=[1.8],
+        current_rating=[0.03],
+        package="LED_GREEN_0402_1005Metric",
+        diode_type="Green LED",
+        trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
