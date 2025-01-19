@@ -963,6 +963,106 @@ def write_rectifier_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def write_red_led_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the horizontal graphical representation of a diode symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    symbol_file.write("""
+        (polyline
+				(pts
+					(xy 1.27 1.905) (xy 1.27 0) (xy -1.27 1.905)
+                    (xy -1.27 -1.905) (xy 1.27 0) (xy 1.27 -1.905)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type color) (color 255 0 0 1))
+			)
+        (polyline
+            (pts
+                (xy 1.778 2.54) (xy 3.302 4.064) (xy 2.54 4.064)
+                (xy 3.302 4.064) (xy 3.302 3.302)
+            )
+            (stroke (width 0.2032) (type default))
+            (fill (type none))
+        )
+        (polyline
+            (pts
+                (xy 3.048 2.54) (xy 4.572 4.064) (xy 3.81 4.064)
+                (xy 4.572 4.064) (xy 4.572 3.302)
+            )
+            (stroke (width 0.2032) (type default))
+            (fill (type none))
+        )
+        """)
+
+    # Write pins
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+
+    symbol_file.write("\t\t)\n")
+
+
+def write_green_led_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the horizontal graphical representation of a diode symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    symbol_file.write("""
+        (polyline
+				(pts
+					(xy 1.27 1.905) (xy 1.27 0) (xy -1.27 1.905)
+                    (xy -1.27 -1.905) (xy 1.27 0) (xy 1.27 -1.905)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type color) (color 204 255 0 1))
+			)
+        (polyline
+            (pts
+                (xy 1.778 2.54) (xy 3.302 4.064) (xy 2.54 4.064)
+                (xy 3.302 4.064) (xy 3.302 3.302)
+            )
+            (stroke (width 0.2032) (type default))
+            (fill (type none))
+        )
+        (polyline
+            (pts
+                (xy 3.048 2.54) (xy 4.572 4.064) (xy 3.81 4.064)
+                (xy 4.572 4.064) (xy 4.572 3.302)
+            )
+            (stroke (width 0.2032) (type default))
+            (fill (type none))
+        )
+        """)
+
+    # Write pins
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+
+    symbol_file.write("\t\t)\n")
+
+
 def write_circle(
     symbol_file: TextIO,
     x_pos: float,
