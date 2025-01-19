@@ -294,6 +294,9 @@ class PartInfo(NamedTuple):
         if specs.manufacturer == "Yageo":
             return cls._generate_yageo_resistance_code(resistance)
 
+        if specs.manufacturer == "SEI Stackpole":
+            return cls._generate_sei_stackpole_resistance_code(resistance)
+
         # Special handling for specific ERJ series
         if specs.mpn_prefix in ("ERJ-2GEJ", "ERJ-3GEYJ", "ERJ-6GEYJ"):
             return cls._generate_erj_special_series_code(resistance)
@@ -327,6 +330,48 @@ class PartInfo(NamedTuple):
 
         whole = int(resistance / 1000000)
         decimal = f"{((resistance % 1000000) / 10000):02.0f}".rstrip("0")
+        return f"{whole}M{decimal}"
+
+    @classmethod
+    def _generate_sei_stackpole_resistance_code(
+        cls,
+        resistance: float,
+    ) -> str:
+        """Generate resistance code for SEI Stackpole series.
+
+        SEI Stackpole uses a different resistance code format.
+        This method generates the resistance code for SEI Stackpole series
+        resistors.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        if resistance < 1000:  # noqa: PLR2004
+            whole = int(resistance)
+            decimal = f"{((resistance - whole) * 100):02.0f}".rstrip("0")
+            return f"{whole:01d}R{decimal}"
+
+        if resistance < 1_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:02.0f}"
+            return f"{whole}K{decimal}"
+
+        if resistance < 100_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:01.0f}"
+            return f"{whole}K{decimal}"
+
+        if resistance < 1_000_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:02.0f}".rstrip("0")
+            return f"{whole}K{decimal}"
+
+        whole = int(resistance / 1000000)
+        decimal = f"{((resistance % 1000000) / 10000):02.0f}"
         return f"{whole}M{decimal}"
 
     @classmethod
@@ -2792,8 +2837,27 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     ),
 }
 
+SEI_STACKPOLE_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
+    "RMCF0402JT": SeriesSpec(
+        manufacturer="SEI Stackpole",
+        mpn_prefix="RMCF0402JT",
+        mpn_sufix="",
+        footprint="resistor_footprints:R_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        power_rating="0.063W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[10, 1_000_000],
+        tolerance_map={"E24": "5%"},
+        datasheet=("https://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf"),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+}
+
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
     **YAGEO_SYMBOLS_SPECS,
+    **SEI_STACKPOLE_SYMBOLS_SPECS,
 }
