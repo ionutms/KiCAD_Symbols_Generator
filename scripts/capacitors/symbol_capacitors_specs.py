@@ -27,13 +27,13 @@ class SeriesSpec(NamedTuple):
     and available configurations.
 
     Attributes:
-        base_series: Base series identifier for the component
+        mpn_prefix: TODO
         manufacturer: Name of the component manufacturer
         footprint: PCB footprint ID for the component
         voltage_rating: Maximum operating voltage for the component
         case_code_in: Package dimensions in inches (e.g., '0402')
         case_code_mm: Package dimensions in millimeters (e.g., '1005')
-        packaging_options: List of available packaging options
+        mpn_sufix: TODO
         tolerance_map: Mapping of dielectric type to tolerance codes
         value_range: Mapping of dielectric type to capacitance value range
         datasheet_url: Base URL for component datasheets
@@ -46,13 +46,13 @@ class SeriesSpec(NamedTuple):
 
     """
 
-    base_series: str
+    mpn_prefix: str
     manufacturer: str
     footprint: str
     voltage_rating: str
     case_code_in: str
     case_code_mm: str
-    packaging_options: list[str]
+    mpn_sufix: list[str]
     tolerance_map: dict[str, dict[str, str]]
     value_range: dict[str, tuple[float, float]]
     datasheet_url: str
@@ -193,7 +193,7 @@ class PartInfo(NamedTuple):
             Characteristic code for the given capacitance
 
         """
-        if specs.base_series.startswith("CL"):
+        if specs.mpn_prefix.startswith("CL"):
             return "X7R"
 
         if not specs.characteristic_codes:
@@ -281,6 +281,8 @@ class PartInfo(NamedTuple):
         """
         if specs.manufacturer == "Murata Electronics":
             return f"{specs.datasheet_url}{mpn[:-1]}-01.pdf"
+        if specs.manufacturer == "Vishay":
+            return f"{specs.datasheet_url}"
         return f"{specs.datasheet_url}{mpn}"
 
     @classmethod
@@ -313,7 +315,7 @@ class PartInfo(NamedTuple):
 
         if specs.manufacturer == "Murata Electronics":
             mpn = (
-                f"{specs.base_series}"
+                f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
                 f"{characteristic_code}"
@@ -321,14 +323,14 @@ class PartInfo(NamedTuple):
             )
         elif specs.manufacturer == "TDK":
             mpn = (
-                f"{specs.base_series}"
+                f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
                 f"{packaging}"
             )
         else:
             mpn = (
-                f"{specs.base_series}"
+                f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
                 f"{packaging}"
@@ -358,7 +360,7 @@ class PartInfo(NamedTuple):
             voltage_rating=specs.voltage_rating,
             case_code_in=specs.case_code_in,
             case_code_mm=specs.case_code_mm,
-            series=specs.base_series,
+            series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
         )
 
@@ -393,7 +395,7 @@ class PartInfo(NamedTuple):
                         tolerance_code,
                         tolerance_value,
                     ) in specs.tolerance_map[dielectric_type].items():
-                        for packaging in specs.packaging_options:
+                        for packaging in specs.mpn_sufix:
                             parts_list.append(  # noqa: PERF401
                                 cls.create_part_info(
                                     capacitance=capacitance,
@@ -416,11 +418,11 @@ MURATA_DOC_BASE = (
 MURATA_SYMBOLS_SPECS = {
     "GCM155R71H": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM155R71H",
+        mpn_prefix="GCM155R71H",
         value_range={"X7R": (220e-12, 0.1e-6)},  # 220pF to 0.1µF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={22e-9: "E02", 4.7e-9: "A55", 0: "A37"},
-        packaging_options=["D", "J"],
+        mpn_sufix=["D", "J"],
         footprint="capacitor_footprints:C_0402_1005Metric",
         voltage_rating="50V",
         case_code_in="0402",
@@ -431,7 +433,7 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GCM188R71H": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM188R71H",
+        mpn_prefix="GCM188R71H",
         value_range={"X7R": (1e-9, 220e-9)},  # 1nF to 220nF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={
@@ -440,7 +442,7 @@ MURATA_SYMBOLS_SPECS = {
             22e-9: "A55",
             0: "A37",
         },
-        packaging_options=["D", "J"],
+        mpn_sufix=["D", "J"],
         footprint="capacitor_footprints:C_0603_1608Metric",
         voltage_rating="50V",
         case_code_in="0603",
@@ -451,11 +453,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GCM216R71H": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM216R71H",
+        mpn_prefix="GCM216R71H",
         value_range={"X7R": (1e-9, 22e-9)},  # 1nF to 22nF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={22e-9: "A55", 0: "A37"},
-        packaging_options=["D", "J"],
+        mpn_sufix=["D", "J"],
         footprint="capacitor_footprints:C_0805_2012Metric",
         voltage_rating="50V",
         case_code_in="0805",
@@ -466,11 +468,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GRJ21BC72A": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GRJ21BC72A",
+        mpn_prefix="GRJ21BC72A",
         value_range={"X7S": (1e-6, 1e-6)},
         tolerance_map={"X7S": {"K": "10%"}},
         characteristic_codes={1e-6: "E11"},
-        packaging_options=["L", "K"],
+        mpn_sufix=["L", "K"],
         footprint="capacitor_footprints:C_0805_2012Metric",
         voltage_rating="100V",
         case_code_in="0805",
@@ -481,11 +483,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GCM31MR71H": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM31MR71H",
+        mpn_prefix="GCM31MR71H",
         value_range={"X7R": (100e-9, 1e-6)},  # 100nF to 1µF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={560e-9: "A55", 100e-9: "A37", 0: "A37"},
-        packaging_options=["K", "L"],
+        mpn_sufix=["K", "L"],
         footprint="capacitor_footprints:C_1206_3216Metric",
         voltage_rating="50V",
         case_code_in="1206",
@@ -496,11 +498,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GCM31CR71E": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM31CR71E",
+        mpn_prefix="GCM31CR71E",
         value_range={"X7R": (4.7e-6, 4.7e-6)},  # Only 4.7µF
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={0: "A55"},
-        packaging_options=["K", "L"],
+        mpn_sufix=["K", "L"],
         footprint="capacitor_footprints:C_1206_3216Metric",
         voltage_rating="25V",
         case_code_in="1206",
@@ -511,11 +513,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GRM188C71A": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GRM188C71A",
+        mpn_prefix="GRM188C71A",
         value_range={"X7S": (4.7e-6, 4.7e-6)},  # Only 4.7µF
         tolerance_map={"X7S": {"K": "10%"}},
         characteristic_codes={0: "E11"},
-        packaging_options=["D"],
+        mpn_sufix=["D"],
         footprint="capacitor_footprints:C_0603_1608Metric",
         voltage_rating="10V",
         case_code_in="0603",
@@ -526,11 +528,11 @@ MURATA_SYMBOLS_SPECS = {
     ),
     "GCM32DC72A": SeriesSpec(
         manufacturer="Murata Electronics",
-        base_series="GCM32DC72A",
+        mpn_prefix="GCM32DC72A",
         value_range={"X7S": (4.7e-6, 4.7e-6)},  # Only 4.7µF
         tolerance_map={"X7S": {"K": "10%"}},
         characteristic_codes={0: "E02"},
-        packaging_options=["K"],
+        mpn_sufix=["K"],
         footprint="capacitor_footprints:C_1210_3225Metric",
         voltage_rating="100V",
         case_code_in="1210",
@@ -548,13 +550,13 @@ SAMSUNG_DOC_BASE = (
 
 SAMSUNG_SYMBOLS_SPECS = {
     "CL31B": SeriesSpec(
-        base_series="CL31B",
+        mpn_prefix="CL31B",
         manufacturer="Samsung Electro-Mechanics",
         footprint="capacitor_footprints:C_1206_3216Metric",
         voltage_rating="50V",
         case_code_in="1206",
         case_code_mm="3216",
-        packaging_options=["BHNNN#"],
+        mpn_sufix=["BHNNN#"],
         tolerance_map={"X7R": {"K": "10%"}},
         value_range={"X7R": (0.47e-6, 10e-6)},
         dielectric_code={"X7R": "B"},
@@ -572,10 +574,10 @@ TDK_DOC_BASE = (
 TDK_SYMBOLS_SPECS = {
     "C1005X7S1A": SeriesSpec(
         manufacturer="TDK",
-        base_series="C1005X7S1A",
+        mpn_prefix="C1005X7S1A",
         value_range={"X7S": (0.33e-6, 2.2e-6)},
         tolerance_map={"X7S": {"K": "10%"}},
-        packaging_options=["050BC"],
+        mpn_sufix=["050BC"],
         footprint="capacitor_footprints:C_0402_1005Metric",
         voltage_rating="10V",
         case_code_in="0402",
@@ -586,10 +588,10 @@ TDK_SYMBOLS_SPECS = {
     ),
     "C1608X7S1A": SeriesSpec(
         manufacturer="TDK",
-        base_series="C1608X7S1A",
+        mpn_prefix="C1608X7S1A",
         value_range={"X7S": (2.2e-6, 4.7e-6)},
         tolerance_map={"X7S": {"K": "10%"}},
-        packaging_options=["080AC"],
+        mpn_sufix=["080AC"],
         footprint="capacitor_footprints:C_0603_1608Metric",
         voltage_rating="10V",
         case_code_in="0603",
@@ -600,10 +602,10 @@ TDK_SYMBOLS_SPECS = {
     ),
     "C2012X7S1A": SeriesSpec(
         manufacturer="TDK",
-        base_series="C2012X7S1A",
+        mpn_prefix="C2012X7S1A",
         value_range={"X7S": (15e-6, 22e-6)},
         tolerance_map={"X7S": {"M": "20%"}},
-        packaging_options=["125AC"],
+        mpn_sufix=["125AC"],
         footprint="capacitor_footprints:C_0805_2012Metric",
         voltage_rating="10V",
         case_code_in="0805",
@@ -614,9 +616,30 @@ TDK_SYMBOLS_SPECS = {
     ),
 }
 
+# Base URLs for documentation
+VISHAY_DOC_BASE = "https://www.vishay.com/docs/45199/vjcommercialseries.pdf"
+
+VISHAY_SYMBOLS_SPECS = {
+    "VJ0603Y": SeriesSpec(
+        mpn_prefix="VJ0603Y",
+        manufacturer="Vishay",
+        footprint="capacitor_footprints:C_0603_1608Metric",
+        voltage_rating="100V",
+        case_code_in="0603",
+        case_code_mm="1608",
+        mpn_sufix=["XBAC"],
+        tolerance_map={"X7R": {"K": "10%"}},
+        value_range={"X7R": (0.33e-9, 39e-9)},
+        dielectric_code={"X7R": "B"},
+        datasheet_url=f"{VISHAY_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search/CL31",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
     **SAMSUNG_SYMBOLS_SPECS,
     **TDK_SYMBOLS_SPECS,
+    **VISHAY_SYMBOLS_SPECS,
 }
