@@ -379,7 +379,7 @@ class PartInfo(NamedTuple):
 
         """
         parts_list: list[PartInfo] = []
-        dielectric_types = ["X7R", "X7S"]
+        dielectric_types = ["X7R", "X7S", "C0G (NP0)"]
 
         for dielectric_type in dielectric_types:
             if dielectric_type in specs.value_range:
@@ -624,6 +624,19 @@ TDK_SYMBOLS_SPECS = {
         case_code_in="0805",
         case_code_mm="2012",
         excluded_values={18e-6},
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "CGA2B2NP02A": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="CGA2B2NP02A",
+        value_range={"C0G (NP0)": (100e-12, 470e-12)},
+        tolerance_map={"C0G (NP0)": {"J": "5%"}},
+        mpn_sufix=["050BA"],
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="100V",
+        case_code_in="0402",
+        case_code_mm="1005",
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
