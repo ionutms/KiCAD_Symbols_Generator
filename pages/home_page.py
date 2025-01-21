@@ -104,6 +104,25 @@ minimal_max14906_github_repo_anchor_tag = html.A(
     target="_blank",
 )
 
+minimal_max14906_interactive_bom_anchor_tag = html.A(
+    "Interactive BOM",
+    href=(
+        "https://htmlpreview.github.io/?https://github.com/ionutms/"
+        "Minimal_MAX14906/blob/main/minimal_max14906/bom/ibom.html"
+    ),
+    target="_blank",
+)
+
+minimal_max14906_schematics_anchor_tag = html.A(
+    children="Schematics",
+    href=(
+        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
+        "https://raw.githubusercontent.com/ionutms/"
+        "Minimal_MAX14906/main/minimal_max14906/minimal_max14906.pdf"
+    ),
+    target="_blank",
+)
+
 layout = dbc.Container(
     [
         dbc.Row([
@@ -140,6 +159,8 @@ layout = dbc.Container(
                     html.Div(
                         [
                             minimal_max14906_github_repo_anchor_tag,
+                            minimal_max14906_interactive_bom_anchor_tag,
+                            minimal_max14906_schematics_anchor_tag,
                             html.Hr(),
                         ],
                         style={"display": "flex", "gap": "10px"},
