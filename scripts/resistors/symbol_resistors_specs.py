@@ -301,6 +301,10 @@ class PartInfo(NamedTuple):
         if specs.mpn_prefix in ("ERJ-2GEJ", "ERJ-3GEYJ", "ERJ-6GEYJ"):
             return cls._generate_erj_special_series_code(resistance)
 
+        # Special handling for specific ERA series
+        if specs.mpn_prefix in ("ERA-2AEB"):
+            return cls._generate_era_special_series_code(resistance)
+
         # Standard Panasonic/generic resistance code generation
         return cls._generate_standard_resistance_code(resistance)
 
@@ -413,6 +417,61 @@ class PartInfo(NamedTuple):
         else:  # 1MΩ+
             significant = int(round(resistance / 100000))
             multiplier = "5"
+
+        return f"{significant:02d}{multiplier}"
+
+    @classmethod
+    def _generate_era_special_series_code(cls, resistance: float) -> str:  # noqa: C901
+        """Generate resistance code for special ERJ series.
+
+        Special handling for ERJ series with unique resistance code format.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        # Handle values less than 100Ω using R notation
+        if resistance < 100:  # noqa: PLR2004
+            whole = int(resistance)
+            decimal = int(round((resistance - whole) * 10))
+            if decimal == 0:
+                return f"{whole:02d}{decimal}"
+            return f"{whole:02d}R{decimal}"
+
+        # For values ≥ 100Ω, determine multiplier and significant digits
+        if resistance < 1000:  # 100-999Ω  # noqa: PLR2004
+            significant = int(round(resistance))
+            multiplier = "0"
+            if str(resistance)[2] == "0":
+                significant = int(round(resistance / 10))
+                multiplier = "1"
+        elif resistance < 10000:  # 1k-9.99kΩ  # noqa: PLR2004
+            significant = int(round(resistance / 10))
+            multiplier = "1"
+            if str(resistance)[2] == "0":
+                significant = int(round(resistance / 100))
+                multiplier = "2"
+        elif resistance < 100000:  # 10k-99.9kΩ  # noqa: PLR2004
+            significant = int(round(resistance / 100))
+            multiplier = "2"
+            if str(resistance)[2] == "0":
+                significant = int(round(resistance / 1000))
+                multiplier = "3"
+        elif resistance < 1000000:  # 100k-999kΩ  # noqa: PLR2004
+            significant = int(round(resistance / 1000))
+            multiplier = "3"
+            if str(resistance)[2] == "0":
+                significant = int(round(resistance / 10000))
+                multiplier = "4"
+        else:  # 1MΩ+
+            significant = int(round(resistance / 10000))
+            multiplier = "4"
+            if str(resistance)[2] == "0":
+                significant = int(round(resistance / 100000))
+                multiplier = "5"
 
         return f"{significant:02d}{multiplier}"
 
@@ -649,6 +708,24 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=(
             "https://industrial.panasonic.com/cdbs/www-data/pdf/"
             "RDA0000/AOA0000C304.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERA-2AEB": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERA-2AEB",
+        mpn_sufix="X",
+        footprint="resistor_footprints:R_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        power_rating="0.1W",
+        temperature_coefficient="25 ppm/°C",
+        resistance_range=[47, 100_000],
+        tolerance_map={"E96": "0.1%", "E24": "0.1%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/"
+            "RDM0000/AOA0000C307.pdf"
         ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
