@@ -421,10 +421,10 @@ class PartInfo(NamedTuple):
         return f"{significant:02d}{multiplier}"
 
     @classmethod
-    def _generate_era_special_series_code(cls, resistance: float) -> str:  # noqa: C901
-        """Generate resistance code for special ERJ series.
+    def _generate_era_special_series_code(cls, resistance: float) -> str:
+        """Generate resistance code for ERA series.
 
-        Special handling for ERJ series with unique resistance code format.
+        Special handling for ERA series with unique resistance code format.
 
         Args:
             resistance: Resistance value in ohms
@@ -433,46 +433,28 @@ class PartInfo(NamedTuple):
             The resistance code portion of the manufacturer's part number
 
         """
-        # Handle values less than 100Ω using R notation
         if resistance < 100:  # noqa: PLR2004
             whole = int(resistance)
             decimal = int(round((resistance - whole) * 10))
-            if decimal == 0:
-                return f"{whole:02d}{decimal}"
-            return f"{whole:02d}R{decimal}"
+            return f"{whole:02d}{'R' if decimal else ''}{decimal}"
 
-        # For values ≥ 100Ω, determine multiplier and significant digits
-        if resistance < 1000:  # 100-999Ω  # noqa: PLR2004
-            significant = int(round(resistance))
-            multiplier = "0"
-            if str(resistance)[2] == "0":
-                significant = int(round(resistance / 10))
-                multiplier = "1"
-        elif resistance < 10000:  # 1k-9.99kΩ  # noqa: PLR2004
-            significant = int(round(resistance / 10))
-            multiplier = "1"
-            if str(resistance)[2] == "0":
-                significant = int(round(resistance / 100))
-                multiplier = "2"
-        elif resistance < 100000:  # 10k-99.9kΩ  # noqa: PLR2004
-            significant = int(round(resistance / 100))
-            multiplier = "2"
-            if str(resistance)[2] == "0":
-                significant = int(round(resistance / 1000))
-                multiplier = "3"
-        elif resistance < 1000000:  # 100k-999kΩ  # noqa: PLR2004
-            significant = int(round(resistance / 1000))
-            multiplier = "3"
-            if str(resistance)[2] == "0":
-                significant = int(round(resistance / 10000))
-                multiplier = "4"
-        else:  # 1MΩ+
-            significant = int(round(resistance / 10000))
-            multiplier = "4"
-            if str(resistance)[2] == "0":
-                significant = int(round(resistance / 100000))
-                multiplier = "5"
+        ranges = [1e3, 1e4, 1e5, 1e6]
+        for i, upper in enumerate(ranges):
+            if resistance < upper:
+                div = 10**i
+                significant = int(round(resistance / div))
+                multiplier = str(i)
+                if str(resistance)[2] == "0":
+                    significant = int(round(resistance / (div * 10)))
+                    multiplier = str(i + 1)
+                return f"{significant:02d}{multiplier}"
 
+        # 1MΩ+ case
+        significant = int(round(resistance / 1e4))
+        multiplier = "4"
+        if str(resistance)[2] == "0":
+            significant = int(round(resistance / 1e5))
+            multiplier = "5"
         return f"{significant:02d}{multiplier}"
 
     @classmethod
