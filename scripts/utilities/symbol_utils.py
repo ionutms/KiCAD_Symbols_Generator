@@ -963,6 +963,50 @@ def write_rectifier_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def write_dual_small_signal_diodes_symbol_drawing_v1(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the horizontal graphical representation of a diode symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    symbol_file.write("""
+        (polyline
+            (pts
+                (xy 6.35 1.905) (xy 6.35 0) (xy 3.81 1.905) (xy 3.81 0)
+                (xy 0 0) (xy 0 1.27) (xy 0 0) (xy -3.81 0) (xy -3.81 1.905)
+                (xy -3.81 0) (xy -6.35 1.905) (xy -6.35 -1.905) (xy -3.81 0)
+                (xy -3.81 -1.905) (xy -3.81 0) (xy 3.81 0) (xy 3.81 -1.905)
+                (xy 6.35 0) (xy 6.35 -1.905)
+            )
+            (stroke (width 0.2032) (type default))
+            (fill (type none))
+        )
+        (circle
+            (center 0 0)
+            (radius 0.254)
+            (stroke (width 0) (type default))
+            (fill (type outline))
+        )
+        """)
+
+    # Write pins
+    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
+    write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
+    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
+
+    symbol_file.write("\t\t)\n")
+
+
 def write_red_led_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
