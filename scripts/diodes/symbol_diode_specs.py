@@ -332,4 +332,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Green LED",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SBAV99WT1G": SeriesSpec(
+        reference="CR",
+        manufacturer="Kingbright",
+        base_series="SBAV99WT1G",
+        footprint="diode_footprints:SC_70",
+        datasheet=(
+            "https://www.onsemi.com/products/discrete-power-modules/"
+            "small-signal-switching-diodes/bav99w"
+        ),
+        voltage_rating=[100],
+        current_rating=[0.215],
+        package="SC_70",
+        diode_type="Dual Small Signal Switching Diodes",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
