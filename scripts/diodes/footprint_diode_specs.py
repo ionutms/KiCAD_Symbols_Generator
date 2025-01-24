@@ -1,5 +1,7 @@
 """Specifications for diode footprint generation."""
 
+from __future__ import annotations
+
 from typing import NamedTuple
 
 
@@ -45,6 +47,28 @@ class PadDimensionsAsymmetric(NamedTuple):
     roundrect_ratio: float = 0.25
 
 
+class PadDimensions(NamedTuple):
+    """Defines dimensions for asymmetric diode pads.
+
+    All measurements are in millimeters. For PowerDI-123 package,
+    cathode_pad is pad 1, anode_pad is pad 2.
+
+    Attributes:
+        width: Width of the pad
+        height: Height of the pad
+        center_x: X-coordinate of the pad center
+        center_y: Y-coordinate of the pad center
+        roundrect_ratio: Roundness ratio of the pad corners (default 0.25)
+
+    """
+
+    width: float
+    height: float
+    center_x: float
+    center_y: float
+    roundrect_ratio: float = 0.25
+
+
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a diode footprint.
 
@@ -55,12 +79,14 @@ class FootprintSpecs(NamedTuple):
         body_dimensions: BodyDimensions for the diode body
         pad_dimensions: PadDimensionsAsymmetric for the diode pads
         ref_offset_y: Y-coordinate offset for the reference designator
+        pin_count: Number of pins on the diode (default None)
 
     """
 
     body_dimensions: BodyDimensions
-    pad_dimensions: PadDimensionsAsymmetric
+    pad_dimensions: PadDimensionsAsymmetric | PadDimensions
     ref_offset_y: float
+    pin_count: int | None = None
 
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
@@ -123,5 +149,16 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             anode_center_x=0.45,
         ),
         ref_offset_y=-1.27,
+    ),
+    "SC_70": FootprintSpecs(
+        pin_count=3,
+        body_dimensions=BodyDimensions(width=2.6, height=3.4),
+        pad_dimensions=PadDimensions(
+            width=0.7,
+            height=0.9,
+            center_x=1.3,
+            center_y=1.9,
+        ),
+        ref_offset_y=-2.54,
     ),
 }
