@@ -315,7 +315,7 @@ def generate_properties(
         )
         """
 
-    ref = ref_y if mpn_y is None else mpn_y
+    ref = -ref_y if mpn_y is None else mpn_y
 
     return f"""
         (property "Reference" "REF**"
@@ -326,7 +326,7 @@ def generate_properties(
             {font_props}
         )
         (property "Value" "{value}"
-            (at 0 {-1 * ref} 0)
+            (at 0 {ref} 0)
             (unlocked yes)
             (layer "F.Fab")
             (uuid "{uuid4()}")
@@ -340,7 +340,7 @@ def generate_properties(
             {font_props}
         )
         (fp_text user "${{REFERENCE}}"
-            (at 0 {-1 * ref + 1.27} 0)
+            (at 0 {ref + 1.27} 0)
             (unlocked yes)
             (layer "F.Fab")
             (uuid "{uuid4()}")
