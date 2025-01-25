@@ -53,11 +53,19 @@ def write_component(
     symbol_name = component_data.get("Symbol Name", "")
     number_of_rows = int(component_data.get("Number of Rows", "1"))
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
+    pin_count = int(component_data.get("Pin Count", "1"))
+    row_count = int(component_data.get("Number of Rows", "1"))
+    extra_offset = (
+        ((pin_count / row_count) / 2)
+        if row_count == 1
+        else (pin_count / row_count)
+    )
+
     symbol_utils.write_properties(
         symbol_file,
         component_data,
         property_order,
-        1,
+        1 + extra_offset,
         2,
     )
     write_symbol_drawing(
