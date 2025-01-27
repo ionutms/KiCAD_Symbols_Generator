@@ -617,37 +617,32 @@ def update_graph_with_uploaded_file(
     theme_switch: bool,  # noqa: FBT001
     clones_relayout: dict[str, Any] | None = None,
     visitors_relayout: dict[str, Any] | None = None,
-) -> tuple[Any, dict[str, Any]]:
+) -> tuple[Any, ...]:
     """Read CSV data and update the repository graphs."""
-    # Configure repositories with their specific CSV files
     repos = [
         {
             "name": "KiCAD_Symbols_Generator",
             "clones_csv": "kicad_symbols_generator_clones_history.csv",
             "visitors_csv": "kicad_symbols_generator_visitors_history.csv",
-            "github_path": "repo_traffic_data",
-            "local_path": "repo_traffic_data",
+            "colors": ["#2E8B57", "#4169E1"],
         },
         {
             "name": "Minimal_ADP1032",
             "clones_csv": "minimal_adp1032_clones_history.csv",
             "visitors_csv": "minimal_adp1032_visitors_history.csv",
-            "github_path": "repo_traffic_data",
-            "local_path": "repo_traffic_data",
+            "colors": ["#FF4500", "#9932CC"],
         },
         {
             "name": "Minimal_MAX14906",
             "clones_csv": "minimal_max14906_clones_history.csv",
             "visitors_csv": "minimal_max14906_visitors_history.csv",
-            "github_path": "repo_traffic_data",
-            "local_path": "repo_traffic_data",
+            "colors": ["#FFD700", "#C71585"],
         },
         {
             "name": "Minimal_AD74413R",
             "clones_csv": "minimal_ad74413r_clones_history.csv",
             "visitors_csv": "minimal_ad74413r_visitors_history.csv",
-            "github_path": "repo_traffic_data",
-            "local_path": "repo_traffic_data",
+            "colors": ["#20B2AA", "#8B4513"],
         },
     ]
 
@@ -655,40 +650,43 @@ def update_graph_with_uploaded_file(
         "https://raw.githubusercontent.com/ionutms/"
         "KiCAD_Symbols_Generator/main"
     )
-    clones_data = []
-    visitors_data = []
 
-    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
-    visitors_titles = ["Visitors", "Views", "Unique Views"]
-
-    # Load data for each repository
-    for repo in repos:
-        # Clones data
+    def load_repo_data(repo: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Load clones and visitors data for a repository."""
         clones_source = {
             "github_url": (
-                f"{base_github_url}/"
-                f"{repo['github_path']}/{repo['clones_csv']}"
+                f"{base_github_url}/repo_traffic_data/{repo['clones_csv']}"
             ),
-            "local_file": f"{repo['local_path']}/{repo['clones_csv']}",
+            "local_file": f"repo_traffic_data/{repo['clones_csv']}",
             "rename_columns": None,
         }
-        clones_data.append(load_traffic_data(**clones_source))
 
-        # Visitors data
         visitors_source = {
             "github_url": (
-                f"{base_github_url}/"
-                f"{repo['github_path']}/{repo['visitors_csv']}"
+                f"{base_github_url}/repo_traffic_data/{repo['visitors_csv']}"
             ),
-            "local_file": f"{repo['local_path']}/{repo['visitors_csv']}",
+            "local_file": f"repo_traffic_data/{repo['visitors_csv']}",
             "rename_columns": {
                 "visitor_timestamp": "clone_timestamp",
                 "total_visitors": "total_clones",
                 "unique_visitors": "unique_clones",
             },
         }
-        visitors_data.append(load_traffic_data(**visitors_source))
 
+        return (
+            load_traffic_data(**clones_source),
+            load_traffic_data(**visitors_source),
+        )
+
+    # Load all repository data
+    repo_data = [load_repo_data(repo) for repo in repos]
+    clones_data, visitors_data = zip(*repo_data)
+
+    # Generate titles in the original order
+    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
+    visitors_titles = ["Visitors", "Views", "Unique Views"]
+
+    for repo in repos:
         clones_titles.extend([
             f"{repo['name']} Clones",
             f"{repo['name']} Unique Clones",
@@ -698,156 +696,70 @@ def update_graph_with_uploaded_file(
             f"{repo['name']} Unique Views",
         ])
 
-    # Create titles using repository names
-    trace_colors = [
-        "#2E8B57",
-        "#4169E1",
-        "#FF4500",
-        "#9932CC",
-        "#FFD700",
-        "#C71585",
-        "#20B2AA",
-        "#8B4513",
-    ]
+    def create_and_adjust_figure(
+        data_frames: list[pd.DataFrame],
+        trace_colors: list[str],
+        titles: tuple[str, ...],
+        theme_switch: bool,  # noqa: FBT001
+        relayout_data: dict[str, Any] | None,
+    ) -> dict[str, Any]:
+        """Create and adjust a figure with the given parameters."""
+        figure = create_figure(
+            theme_switch=theme_switch,
+            data_frames=data_frames,
+            trace_colors=trace_colors,
+            titles=titles,
+            relayout_data=relayout_data,
+        )
+        return adjust_y_axis_range(figure, relayout_data, *data_frames)
 
-    # Create figures
-    repo_clones_figure = create_figure(
-        theme_switch=theme_switch,
-        data_frames=clones_data,
-        trace_colors=trace_colors,
-        titles=tuple(clones_titles),
-        relayout_data=clones_relayout,
-    )
-    repo_clones_figure = adjust_y_axis_range(
-        repo_clones_figure,
+    # Create main figures with all repositories
+    all_colors = [color for repo in repos for color in repo["colors"]]
+    repo_clones_figure = create_and_adjust_figure(
+        list(clones_data),
+        all_colors,
+        tuple(clones_titles),
+        theme_switch,
         clones_relayout,
-        *clones_data,
     )
 
-    repo_visitors_figure = create_figure(
-        theme_switch=theme_switch,
-        data_frames=visitors_data,
-        trace_colors=trace_colors,
-        titles=tuple(visitors_titles),
-        relayout_data=visitors_relayout,
-    )
-    repo_visitors_figure = adjust_y_axis_range(
-        repo_visitors_figure,
+    repo_visitors_figure = create_and_adjust_figure(
+        list(visitors_data),
+        all_colors,
+        tuple(visitors_titles),
+        theme_switch,
         visitors_relayout,
-        *visitors_data,
     )
 
-    repo_clones_figure_1 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[clones_data[1]],
-        trace_colors=["#FF4500", "#9932CC"],
-        titles=tuple([
-            x for x in clones_titles if "KiCAD_Symbols_Generator" not in x
-        ]),
-        relayout_data=clones_relayout,
-    )
-    repo_clones_figure_1 = adjust_y_axis_range(
-        repo_clones_figure_1,
-        clones_relayout,
-        *[clones_data[1]],
-    )
-
-    repo_visitors_figure_1 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[visitors_data[1]],
-        trace_colors=["#FF4500", "#9932CC"],
-        titles=tuple([
-            x for x in visitors_titles if "KiCAD_Symbols_Generator" not in x
-        ]),
-        relayout_data=visitors_relayout,
-    )
-    repo_visitors_figure_1 = adjust_y_axis_range(
-        repo_visitors_figure_1,
-        visitors_relayout,
-        *[visitors_data[1]],
-    )
-
-    repo_clones_figure_2 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[clones_data[2]],
-        trace_colors=["#FFD700", "#C71585"],
-        titles=tuple([
+    # Create individual repository figures in the original order
+    figures = []
+    for i in range(1, 4):  # Generate figures for repositories 1, 2, and 3
+        filtered_clones_titles = [
             x
             for x in clones_titles
-            if "KiCAD_Symbols_Generator" not in x
-            and "Minimal_ADP1032" not in x
-        ]),
-        relayout_data=clones_relayout,
-    )
-    repo_clones_figure_2 = adjust_y_axis_range(
-        repo_clones_figure_2,
-        clones_relayout,
-        *[clones_data[2]],
-    )
-
-    repo_visitors_figure_2 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[visitors_data[2]],
-        trace_colors=["#FFD700", "#C71585"],
-        titles=tuple([
+            if not any(repo["name"] in x for repo in repos[:i])
+        ]
+        filtered_visitors_titles = [
             x
             for x in visitors_titles
-            if "KiCAD_Symbols_Generator" not in x
-            and "Minimal_ADP1032" not in x
-        ]),
-        relayout_data=visitors_relayout,
-    )
-    repo_visitors_figure_2 = adjust_y_axis_range(
-        repo_visitors_figure_2,
-        visitors_relayout,
-        *[visitors_data[2]],
-    )
+            if not any(repo["name"] in x for repo in repos[:i])
+        ]
 
-    repo_clones_figure_3 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[clones_data[3]],
-        trace_colors=["#20B2AA", "#8B4513"],
-        titles=tuple([
-            x
-            for x in clones_titles
-            if "KiCAD_Symbols_Generator" not in x
-            and "Minimal_ADP1032" not in x
-            and "Minimal_MAX14906" not in x
-        ]),
-        relayout_data=clones_relayout,
-    )
-    repo_clones_figure_3 = adjust_y_axis_range(
-        repo_clones_figure_3,
-        clones_relayout,
-        *[clones_data[3]],
-    )
+        repo = repos[i]
+        clones_fig = create_and_adjust_figure(
+            [clones_data[i]],
+            repo["colors"],
+            tuple(filtered_clones_titles),
+            theme_switch,
+            clones_relayout,
+        )
+        visitors_fig = create_and_adjust_figure(
+            [visitors_data[i]],
+            repo["colors"],
+            tuple(filtered_visitors_titles),
+            theme_switch,
+            visitors_relayout,
+        )
+        figures.extend([clones_fig, visitors_fig])
 
-    repo_visitors_figure_3 = create_figure(
-        theme_switch=theme_switch,
-        data_frames=[visitors_data[3]],
-        trace_colors=["#20B2AA", "#8B4513"],
-        titles=tuple([
-            x
-            for x in visitors_titles
-            if "KiCAD_Symbols_Generator" not in x
-            and "Minimal_ADP1032" not in x
-            and "Minimal_MAX14906" not in x
-        ]),
-        relayout_data=visitors_relayout,
-    )
-    repo_visitors_figure_3 = adjust_y_axis_range(
-        repo_visitors_figure_3,
-        visitors_relayout,
-        *[visitors_data[3]],
-    )
-
-    return (
-        repo_clones_figure,
-        repo_visitors_figure,
-        repo_clones_figure_1,
-        repo_visitors_figure_1,
-        repo_clones_figure_2,
-        repo_visitors_figure_2,
-        repo_clones_figure_3,
-        repo_visitors_figure_3,
-    )
+    return (repo_clones_figure, repo_visitors_figure, *figures)
