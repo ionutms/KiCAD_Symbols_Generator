@@ -78,7 +78,7 @@ def create_repo_graphs(name_sufix: str) -> list[dcc.Loading]:
         delay_hide=100,
     )
 
-    return [clones_graph, visitors_graph]
+    return [clones_graph, html.Hr(), visitors_graph]
 
 
 links_display_div = html.Div(
@@ -166,7 +166,6 @@ layout = dbc.Container(
             ),
         ]),
         html.Hr(),
-        html.H4("Projects Pages"),
         html.Hr(),
         dbc.Row([
             dbc.Col(
@@ -176,12 +175,14 @@ layout = dbc.Container(
             ),
             dbc.Col(
                 [
+                    html.H4("Project Pages"),
                     create_project_links(PROJECTS[0]),
                 ],
                 xs=12,
                 md=4,
             ),
         ]),
+        html.Hr(),
         dbc.Row([
             dbc.Col(
                 children=create_repo_graphs(f"{module_name}_{PROJECTS[1]}"),
@@ -190,12 +191,14 @@ layout = dbc.Container(
             ),
             dbc.Col(
                 [
+                    html.H4("Project Pages"),
                     create_project_links(PROJECTS[1]),
                 ],
                 xs=12,
                 md=4,
             ),
         ]),
+        html.Hr(),
         dbc.Row([
             dbc.Col(
                 children=create_repo_graphs(f"{module_name}_{PROJECTS[2]}"),
@@ -204,12 +207,14 @@ layout = dbc.Container(
             ),
             dbc.Col(
                 [
+                    html.H4("Project Pages"),
                     create_project_links(PROJECTS[2]),
                 ],
                 xs=12,
                 md=4,
             ),
         ]),
+        html.Hr(),
     ],
     fluid=True,
 )
@@ -397,7 +402,7 @@ def create_figure(
 
     # Update layout with primary y-axis styling
     figure.update_layout(
-        height=300,
+        height=250,
         hovermode="x unified",
         yaxis={
             "tickcolor": trace_colors[0],
@@ -435,7 +440,7 @@ def create_figure(
         "paper_bgcolor": "white" if theme_switch else "#222222",
         "plot_bgcolor": "white" if theme_switch else "#222222",
         "font_color": "black" if theme_switch else "white",
-        "margin": {"l": 0, "r": 0, "t": 50, "b": 80},
+        "margin": {"l": 0, "r": 0, "t": 30, "b": 30},
     }
 
     figure.update_layout(
@@ -651,21 +656,25 @@ def update_graph_with_uploaded_file(
         "KiCAD_Symbols_Generator/main"
     )
 
-    def load_repo_data(repo: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    def load_repo_data(
+        repo_config: dict,
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Load clones and visitors data for a repository."""
         clones_source = {
             "github_url": (
-                f"{base_github_url}/repo_traffic_data/{repo['clones_csv']}"
+                f"{base_github_url}/repo_traffic_data/"
+                f"{repo_config['clones_csv']}"
             ),
-            "local_file": f"repo_traffic_data/{repo['clones_csv']}",
+            "local_file": f"repo_traffic_data/{repo_config['clones_csv']}",
             "rename_columns": None,
         }
 
         visitors_source = {
             "github_url": (
-                f"{base_github_url}/repo_traffic_data/{repo['visitors_csv']}"
+                f"{base_github_url}/repo_traffic_data/"
+                f"{repo_config['visitors_csv']}"
             ),
-            "local_file": f"repo_traffic_data/{repo['visitors_csv']}",
+            "local_file": f"repo_traffic_data/{repo_config['visitors_csv']}",
             "rename_columns": {
                 "visitor_timestamp": "clone_timestamp",
                 "total_visitors": "total_clones",
@@ -679,21 +688,21 @@ def update_graph_with_uploaded_file(
         )
 
     # Load all repository data
-    repo_data = [load_repo_data(repo) for repo in repos]
+    repo_data = [load_repo_data(repo_config) for repo_config in repos]
     clones_data, visitors_data = zip(*repo_data)
 
     # Generate titles in the original order
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
-    for repo in repos:
+    for repo_config in repos:
         clones_titles.extend([
-            f"{repo['name']} Clones",
-            f"{repo['name']} Unique Clones",
+            f"{repo_config['name']} Clones",
+            f"{repo_config['name']} Unique Clones",
         ])
         visitors_titles.extend([
-            f"{repo['name']} Views",
-            f"{repo['name']} Unique Views",
+            f"{repo_config['name']} Views",
+            f"{repo_config['name']} Unique Views",
         ])
 
     def create_and_adjust_figure(
@@ -715,26 +724,35 @@ def update_graph_with_uploaded_file(
 
     # Create all figures in a single loop
     figures = []
-    for i in range(len(repos)):  # Generate figures for all repositories
+    # Generate figures for all repositories
+    for repo_index in range(len(repos)):
         # Determine which repos to exclude from titles
-        repos_to_exclude = repos[1:] if i == 0 else repos[:i]
+        repos_to_exclude = (
+            repos[1:] if repo_index == 0 else repos[:repo_index]
+        )
 
         filtered_clones_titles = [
-            x
-            for x in clones_titles
-            if not any(repo["name"] in x for repo in repos_to_exclude)
+            title
+            for title in clones_titles
+            if not any(
+                repo_config["name"] in title
+                for repo_config in repos_to_exclude
+            )
         ]
         filtered_visitors_titles = [
-            x
-            for x in visitors_titles
-            if not any(repo["name"] in x for repo in repos_to_exclude)
+            title
+            for title in visitors_titles
+            if not any(
+                repo_config["name"] in title
+                for repo_config in repos_to_exclude
+            )
         ]
 
-        repo = repos[i]
+        current_repo = repos[repo_index]
         figures.append(
             create_and_adjust_figure(
-                [clones_data[i]],
-                repo["colors"],
+                [clones_data[repo_index]],
+                current_repo["colors"],
                 tuple(filtered_clones_titles),
                 theme_switch,
                 clones_relayout,
@@ -742,8 +760,8 @@ def update_graph_with_uploaded_file(
         )
         figures.append(
             create_and_adjust_figure(
-                [visitors_data[i]],
-                repo["colors"],
+                [visitors_data[repo_index]],
+                current_repo["colors"],
                 tuple(filtered_visitors_titles),
                 theme_switch,
                 visitors_relayout,
