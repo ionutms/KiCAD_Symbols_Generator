@@ -165,7 +165,15 @@ layout = dbc.Container(
             ),
         ]),
         dbc.Row([
-            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=12),
+            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=8),
+            dbc.Col(
+                [
+                    html.H4("Components Data Base Pages"),
+                    links_display_div,
+                ],
+                xs=12,
+                md=4,
+            ),
         ]),
         html.Hr(),
         dbc.Row([
