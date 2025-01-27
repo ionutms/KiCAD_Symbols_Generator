@@ -713,53 +713,41 @@ def update_graph_with_uploaded_file(
         )
         return adjust_y_axis_range(figure, relayout_data, *data_frames)
 
-    # Create main figures with all repositories
-    all_colors = [color for repo in repos for color in repo["colors"]]
-    repo_clones_figure = create_and_adjust_figure(
-        list(clones_data),
-        all_colors,
-        tuple(clones_titles),
-        theme_switch,
-        clones_relayout,
-    )
-
-    repo_visitors_figure = create_and_adjust_figure(
-        list(visitors_data),
-        all_colors,
-        tuple(visitors_titles),
-        theme_switch,
-        visitors_relayout,
-    )
-
-    # Create individual repository figures in the original order
+    # Create all figures in a single loop
     figures = []
-    for i in range(1, 4):  # Generate figures for repositories 1, 2, and 3
+    for i in range(len(repos)):  # Generate figures for all repositories
+        # Determine which repos to exclude from titles
+        repos_to_exclude = repos[1:] if i == 0 else repos[:i]
+
         filtered_clones_titles = [
             x
             for x in clones_titles
-            if not any(repo["name"] in x for repo in repos[:i])
+            if not any(repo["name"] in x for repo in repos_to_exclude)
         ]
         filtered_visitors_titles = [
             x
             for x in visitors_titles
-            if not any(repo["name"] in x for repo in repos[:i])
+            if not any(repo["name"] in x for repo in repos_to_exclude)
         ]
 
         repo = repos[i]
-        clones_fig = create_and_adjust_figure(
-            [clones_data[i]],
-            repo["colors"],
-            tuple(filtered_clones_titles),
-            theme_switch,
-            clones_relayout,
+        figures.append(
+            create_and_adjust_figure(
+                [clones_data[i]],
+                repo["colors"],
+                tuple(filtered_clones_titles),
+                theme_switch,
+                clones_relayout,
+            ),
         )
-        visitors_fig = create_and_adjust_figure(
-            [visitors_data[i]],
-            repo["colors"],
-            tuple(filtered_visitors_titles),
-            theme_switch,
-            visitors_relayout,
+        figures.append(
+            create_and_adjust_figure(
+                [visitors_data[i]],
+                repo["colors"],
+                tuple(filtered_visitors_titles),
+                theme_switch,
+                visitors_relayout,
+            ),
         )
-        figures.extend([clones_fig, visitors_fig])
 
-    return (repo_clones_figure, repo_visitors_figure, *figures)
+    return tuple(figures)
