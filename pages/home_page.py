@@ -46,107 +46,93 @@ usage_steps = [
 ]
 
 
-clones_graph = dcc.Loading(
-    [
-        dcc.Graph(
-            id=f"{module_name}_repo_clones_graph",
-            config={"displaylogo": False},
-        ),
-    ],
-    delay_show=100,
-    delay_hide=100,
-)
+def create_repo_graphs(name_sufix: str) -> list[dcc.Loading]:
+    """Create repository graphs for clones and visitors.
 
-visitors_graph = dcc.Loading(
-    [
-        dcc.Graph(
-            id=f"{module_name}_repo_visitors_graph",
-            config={"displaylogo": False},
-        ),
-    ],
-    delay_show=100,
-    delay_hide=100,
-)
+    Args:
+        name_sufix (str): Suffix to append to the graph IDs
+
+    Returns:
+        list[dcc.Loading]: List of Loading components containing the graphs
+
+    """
+    clones_graph = dcc.Loading(
+        [
+            dcc.Graph(
+                id=f"{name_sufix}_repo_clones_graph",
+                config={"displaylogo": False},
+            ),
+        ],
+        delay_show=100,
+        delay_hide=100,
+    )
+
+    visitors_graph = dcc.Loading(
+        [
+            dcc.Graph(
+                id=f"{name_sufix}_repo_visitors_graph",
+                config={"displaylogo": False},
+            ),
+        ],
+        delay_show=100,
+        delay_hide=100,
+    )
+
+    return [clones_graph, visitors_graph]
+
 
 links_display_div = html.Div(
     id="links_display",
     style={"display": "flex", "flex-direction": "column", "gap": "10px"},
 )
 
-minimal_adp1032_github_repo_anchor_tag = html.A(
-    children="Minimal ADP1032",
-    href=("https://github.com/ionutms/Minimal_ADP1032"),
-    target="_blank",
-)
 
-minimal_adp1032_interactive_bom_anchor_tag = html.A(
-    "Interactive BOM",
-    href=(
-        "https://htmlpreview.github.io/?https://github.com/ionutms/"
-        "Minimal_ADP1032/blob/main/minimal_adp1032/bom/ibom.html"
-    ),
-    target="_blank",
-)
+def create_project_links(project_name: str) -> html.Div:
+    """Generate GitHub repo, Interactive BOM, and Schematics links.
 
-minimal_adp1032_schematics_anchor_tag = html.A(
-    children="Schematics",
-    href=(
-        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
-        "https://raw.githubusercontent.com/ionutms/"
-        "Minimal_ADP1032/main/minimal_adp1032/minimal_adp1032.pdf"
-    ),
-    target="_blank",
-)
+    Args:
+        project_name (str): Name of the project (e.g., 'ADP1032')
 
-minimal_max14906_github_repo_anchor_tag = html.A(
-    children="Minimal MAX14906",
-    href=("https://github.com/ionutms/Minimal_MAX14906"),
-    target="_blank",
-)
+    Returns:
+        html.Div: Div containing all project links
 
-minimal_max14906_interactive_bom_anchor_tag = html.A(
-    "Interactive BOM",
-    href=(
-        "https://htmlpreview.github.io/?https://github.com/ionutms/"
-        "Minimal_MAX14906/blob/main/minimal_max14906/bom/ibom.html"
-    ),
-    target="_blank",
-)
+    """
+    project_name_lower = project_name.lower()
+    base_github_url = f"https://github.com/ionutms/{project_name}"
 
-minimal_max14906_schematics_anchor_tag = html.A(
-    children="Schematics",
-    href=(
-        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
-        "https://raw.githubusercontent.com/ionutms/"
-        "Minimal_MAX14906/main/minimal_max14906/minimal_max14906.pdf"
-    ),
-    target="_blank",
-)
+    links = [
+        html.A(
+            children=f"{project_name.replace('_', ' ')}",
+            href=base_github_url,
+            target="_blank",
+        ),
+        html.A(
+            "Interactive BOM",
+            href=(
+                f"https://htmlpreview.github.io/?{base_github_url}/blob/main/"
+                f"{project_name_lower}/bom/ibom.html"
+            ),
+            target="_blank",
+        ),
+        html.A(
+            children="Schematics",
+            href=(
+                f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
+                f"https://raw.githubusercontent.com/ionutms/{project_name}/"
+                f"main/{project_name_lower}/{project_name_lower}.pdf"
+            ),
+            target="_blank",
+        ),
+        html.Hr(),
+    ]
 
-minimal_ad74413r_github_repo_anchor_tag = html.A(
-    children="Minimal AD74413R",
-    href=("https://github.com/ionutms/Minimal_AD74413R"),
-    target="_blank",
-)
+    return html.Div(
+        children=[*links],
+        style={"display": "flex", "gap": "10px"},
+    )
 
-minimal_ad74413r_interactive_bom_anchor_tag = html.A(
-    "Interactive BOM",
-    href=(
-        "https://htmlpreview.github.io/?https://github.com/ionutms/"
-        "Minimal_AD74413R/blob/main/minimal_ad74413r/bom/ibom.html"
-    ),
-    target="_blank",
-)
 
-minimal_ad74413r_schematics_anchor_tag = html.A(
-    children="Schematics",
-    href=(
-        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
-        "https://raw.githubusercontent.com/ionutms/"
-        "Minimal_AD74413R/main/minimal_ad74413r/minimal_ad74413r.pdf"
-    ),
-    target="_blank",
-)
+PROJECTS = ["Minimal_ADP1032", "Minimal_MAX14906", "Minimal_AD74413R"]
 
 layout = dbc.Container(
     [
@@ -165,7 +151,11 @@ layout = dbc.Container(
             ),
         ]),
         dbc.Row([
-            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=8),
+            dbc.Col(
+                children=create_repo_graphs(f"{module_name}"),
+                xs=12,
+                md=8,
+            ),
             dbc.Col(
                 [
                     html.H4("Components Data Base Pages"),
@@ -176,37 +166,45 @@ layout = dbc.Container(
             ),
         ]),
         html.Hr(),
+        html.H4("Projects Pages"),
+        html.Hr(),
         dbc.Row([
             dbc.Col(
+                children=create_repo_graphs(f"{module_name}_{PROJECTS[0]}"),
+                xs=12,
+                md=8,
+            ),
+            dbc.Col(
                 [
-                    html.H4("Projects Pages"),
-                    html.Div(
-                        [
-                            minimal_adp1032_github_repo_anchor_tag,
-                            minimal_adp1032_interactive_bom_anchor_tag,
-                            minimal_adp1032_schematics_anchor_tag,
-                            html.Hr(),
-                        ],
-                        style={"display": "flex", "gap": "10px"},
-                    ),
-                    html.Div(
-                        [
-                            minimal_max14906_github_repo_anchor_tag,
-                            minimal_max14906_interactive_bom_anchor_tag,
-                            minimal_max14906_schematics_anchor_tag,
-                            html.Hr(),
-                        ],
-                        style={"display": "flex", "gap": "10px"},
-                    ),
-                    html.Div(
-                        [
-                            minimal_ad74413r_github_repo_anchor_tag,
-                            minimal_ad74413r_interactive_bom_anchor_tag,
-                            minimal_ad74413r_schematics_anchor_tag,
-                            html.Hr(),
-                        ],
-                        style={"display": "flex", "gap": "10px"},
-                    ),
+                    create_project_links(PROJECTS[0]),
+                ],
+                xs=12,
+                md=4,
+            ),
+        ]),
+        dbc.Row([
+            dbc.Col(
+                children=create_repo_graphs(f"{module_name}_{PROJECTS[1]}"),
+                xs=12,
+                md=8,
+            ),
+            dbc.Col(
+                [
+                    create_project_links(PROJECTS[1]),
+                ],
+                xs=12,
+                md=4,
+            ),
+        ]),
+        dbc.Row([
+            dbc.Col(
+                children=create_repo_graphs(f"{module_name}_{PROJECTS[2]}"),
+                xs=12,
+                md=8,
+            ),
+            dbc.Col(
+                [
+                    create_project_links(PROJECTS[2]),
                 ],
                 xs=12,
                 md=4,
@@ -605,6 +603,12 @@ def load_traffic_data(
 @callback(
     Output(f"{module_name}_repo_clones_graph", "figure"),
     Output(f"{module_name}_repo_visitors_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[0]}_repo_clones_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[0]}_repo_visitors_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[1]}_repo_clones_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[1]}_repo_visitors_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[2]}_repo_clones_graph", "figure"),
+    Output(f"{module_name}_{PROJECTS[2]}_repo_visitors_graph", "figure"),
     Input("theme_switch_value_store", "data"),
     Input(f"{module_name}_repo_clones_graph", "relayoutData"),
     Input(f"{module_name}_repo_visitors_graph", "relayoutData"),
@@ -654,6 +658,9 @@ def update_graph_with_uploaded_file(
     clones_data = []
     visitors_data = []
 
+    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
+    visitors_titles = ["Visitors", "Views", "Unique Views"]
+
     # Load data for each repository
     for repo in repos:
         # Clones data
@@ -682,6 +689,15 @@ def update_graph_with_uploaded_file(
         }
         visitors_data.append(load_traffic_data(**visitors_source))
 
+        clones_titles.extend([
+            f"{repo['name']} Clones",
+            f"{repo['name']} Unique Clones",
+        ])
+        visitors_titles.extend([
+            f"{repo['name']} Views",
+            f"{repo['name']} Unique Views",
+        ])
+
     # Create titles using repository names
     trace_colors = [
         "#2E8B57",
@@ -693,20 +709,6 @@ def update_graph_with_uploaded_file(
         "#20B2AA",
         "#8B4513",
     ]
-
-    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
-    visitors_titles = ["Visitors", "Views", "Unique Views"]
-
-    # Add repository-specific titles
-    for repo in repos:
-        clones_titles.extend([
-            f"{repo['name']} Clones",
-            f"{repo['name']} Unique Clones",
-        ])
-        visitors_titles.extend([
-            f"{repo['name']} Views",
-            f"{repo['name']} Unique Views",
-        ])
 
     # Create figures
     repo_clones_figure = create_figure(
@@ -735,4 +737,117 @@ def update_graph_with_uploaded_file(
         *visitors_data,
     )
 
-    return repo_clones_figure, repo_visitors_figure
+    repo_clones_figure_1 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[clones_data[1]],
+        trace_colors=["#FF4500", "#9932CC"],
+        titles=tuple([
+            x for x in clones_titles if "KiCAD_Symbols_Generator" not in x
+        ]),
+        relayout_data=clones_relayout,
+    )
+    repo_clones_figure_1 = adjust_y_axis_range(
+        repo_clones_figure_1,
+        clones_relayout,
+        *[clones_data[1]],
+    )
+
+    repo_visitors_figure_1 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[visitors_data[1]],
+        trace_colors=["#FF4500", "#9932CC"],
+        titles=tuple([
+            x for x in visitors_titles if "KiCAD_Symbols_Generator" not in x
+        ]),
+        relayout_data=visitors_relayout,
+    )
+    repo_visitors_figure_1 = adjust_y_axis_range(
+        repo_visitors_figure_1,
+        visitors_relayout,
+        *[visitors_data[1]],
+    )
+
+    repo_clones_figure_2 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[clones_data[2]],
+        trace_colors=["#FFD700", "#C71585"],
+        titles=tuple([
+            x
+            for x in clones_titles
+            if "KiCAD_Symbols_Generator" not in x
+            and "Minimal_ADP1032" not in x
+        ]),
+        relayout_data=clones_relayout,
+    )
+    repo_clones_figure_2 = adjust_y_axis_range(
+        repo_clones_figure_2,
+        clones_relayout,
+        *[clones_data[2]],
+    )
+
+    repo_visitors_figure_2 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[visitors_data[2]],
+        trace_colors=["#FFD700", "#C71585"],
+        titles=tuple([
+            x
+            for x in visitors_titles
+            if "KiCAD_Symbols_Generator" not in x
+            and "Minimal_ADP1032" not in x
+        ]),
+        relayout_data=visitors_relayout,
+    )
+    repo_visitors_figure_2 = adjust_y_axis_range(
+        repo_visitors_figure_2,
+        visitors_relayout,
+        *[visitors_data[2]],
+    )
+
+    repo_clones_figure_3 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[clones_data[3]],
+        trace_colors=["#20B2AA", "#8B4513"],
+        titles=tuple([
+            x
+            for x in clones_titles
+            if "KiCAD_Symbols_Generator" not in x
+            and "Minimal_ADP1032" not in x
+            and "Minimal_MAX14906" not in x
+        ]),
+        relayout_data=clones_relayout,
+    )
+    repo_clones_figure_3 = adjust_y_axis_range(
+        repo_clones_figure_3,
+        clones_relayout,
+        *[clones_data[3]],
+    )
+
+    repo_visitors_figure_3 = create_figure(
+        theme_switch=theme_switch,
+        data_frames=[visitors_data[3]],
+        trace_colors=["#20B2AA", "#8B4513"],
+        titles=tuple([
+            x
+            for x in visitors_titles
+            if "KiCAD_Symbols_Generator" not in x
+            and "Minimal_ADP1032" not in x
+            and "Minimal_MAX14906" not in x
+        ]),
+        relayout_data=visitors_relayout,
+    )
+    repo_visitors_figure_3 = adjust_y_axis_range(
+        repo_visitors_figure_3,
+        visitors_relayout,
+        *[visitors_data[3]],
+    )
+
+    return (
+        repo_clones_figure,
+        repo_visitors_figure,
+        repo_clones_figure_1,
+        repo_visitors_figure_1,
+        repo_clones_figure_2,
+        repo_visitors_figure_2,
+        repo_clones_figure_3,
+        repo_visitors_figure_3,
+    )
