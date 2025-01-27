@@ -638,6 +638,13 @@ def update_graph_with_uploaded_file(
             "github_path": "repo_traffic_data",
             "local_path": "repo_traffic_data",
         },
+        {
+            "name": "Minimal_AD74413R",
+            "clones_csv": "minimal_ad74413r_clones_history.csv",
+            "visitors_csv": "minimal_ad74413r_visitors_history.csv",
+            "github_path": "repo_traffic_data",
+            "local_path": "repo_traffic_data",
+        },
     ]
 
     base_github_url = (
@@ -679,11 +686,14 @@ def update_graph_with_uploaded_file(
     trace_colors = [
         "#2E8B57",
         "#4169E1",
-        "#FF7F50",
-        "#DA70D6",
-        "#FFB347",
-        "#E94E77",
+        "#FF4500",
+        "#9932CC",
+        "#FFD700",
+        "#C71585",
+        "#20B2AA",
+        "#8B4513",
     ]
+
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
