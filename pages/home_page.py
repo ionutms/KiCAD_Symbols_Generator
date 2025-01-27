@@ -123,6 +123,31 @@ minimal_max14906_schematics_anchor_tag = html.A(
     target="_blank",
 )
 
+minimal_ad74413r_github_repo_anchor_tag = html.A(
+    children="Minimal AD74413R",
+    href=("https://github.com/ionutms/Minimal_AD74413R"),
+    target="_blank",
+)
+
+minimal_ad74413r_interactive_bom_anchor_tag = html.A(
+    "Interactive BOM",
+    href=(
+        "https://htmlpreview.github.io/?https://github.com/ionutms/"
+        "Minimal_AD74413R/blob/main/minimal_ad74413r/bom/ibom.html"
+    ),
+    target="_blank",
+)
+
+minimal_ad74413r_schematics_anchor_tag = html.A(
+    children="Schematics",
+    href=(
+        "https://mozilla.github.io/pdf.js/web/viewer.html?file="
+        "https://raw.githubusercontent.com/ionutms/"
+        "Minimal_AD74413R/main/minimal_ad74413r/minimal_ad74413r.pdf"
+    ),
+    target="_blank",
+)
+
 layout = dbc.Container(
     [
         dbc.Row([
@@ -140,12 +165,12 @@ layout = dbc.Container(
             ),
         ]),
         dbc.Row([
-            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=8),
+            dbc.Col(children=[clones_graph, visitors_graph], xs=12, md=12),
+        ]),
+        html.Hr(),
+        dbc.Row([
             dbc.Col(
                 [
-                    html.H4("Components Data Base Pages"),
-                    links_display_div,
-                    html.Hr(),
                     html.H4("Projects Pages"),
                     html.Div(
                         [
@@ -165,12 +190,20 @@ layout = dbc.Container(
                         ],
                         style={"display": "flex", "gap": "10px"},
                     ),
+                    html.Div(
+                        [
+                            minimal_ad74413r_github_repo_anchor_tag,
+                            minimal_ad74413r_interactive_bom_anchor_tag,
+                            minimal_ad74413r_schematics_anchor_tag,
+                            html.Hr(),
+                        ],
+                        style={"display": "flex", "gap": "10px"},
+                    ),
                 ],
                 xs=12,
                 md=4,
             ),
         ]),
-        html.Hr(),
     ],
     fluid=True,
 )
