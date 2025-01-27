@@ -565,7 +565,7 @@ def load_traffic_data(
         rename_columns: Optional dictionary to rename columns
 
     Returns:
-        DataFrame with traffic data
+        DataFrame with traffic data, with missing dates filled with 0.
 
     """
     try:
@@ -601,6 +601,19 @@ def load_traffic_data(
     data_frame["clone_timestamp"] = pd.to_datetime(
         data_frame["clone_timestamp"],
     )
+
+    # Ensure missing dates are filled with 0
+    if not data_frame.empty:
+        date_range = pd.date_range(
+            start=data_frame["clone_timestamp"].min(),
+            end=data_frame["clone_timestamp"].max(),
+        )
+        data_frame = (
+            data_frame.set_index("clone_timestamp")
+            .reindex(date_range, fill_value=0)
+            .reset_index()
+            .rename(columns={"index": "clone_timestamp"})
+        )
 
     return data_frame
 
