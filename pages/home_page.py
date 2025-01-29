@@ -166,7 +166,6 @@ layout = dbc.Container(
             ),
         ]),
         html.Hr(),
-        html.Hr(),
         dbc.Row([
             dbc.Col(
                 children=create_repo_graphs(f"{module_name}_{PROJECTS[0]}"),
@@ -225,7 +224,6 @@ def create_figure(
     data_frames: list[pd.DataFrame],
     trace_colors: list[str],
     titles: tuple[str, str, str],
-    relayout_data: dict[str, Any] | None = None,
 ) -> go.Figure:
     """Create a figure with data from multiple repositories.
 
@@ -234,7 +232,6 @@ def create_figure(
         data_frames: List of DataFrames containing repository data
         trace_colors: List of colors for traces (two colors per DataFrame)
         titles: Tuple of (main_title, y1_title, y2_title)
-        relayout_data: Optional relayout data from Plotly
 
     Returns:
         Plotly Figure object
@@ -259,14 +256,6 @@ def create_figure(
     # Add padding to y-axis ranges
     y1_padding = max(1, int((y1_max - y1_min) * 0.1))
     y2_padding = max(1, int((y2_max - y2_min) * 0.1))
-
-    # Determine x-axis range based on relayout data
-    x_range = [min_timestamp, max_timestamp]
-    if relayout_data and "xaxis.range[0]" in relayout_data:
-        x_range = [
-            pd.to_datetime(relayout_data["xaxis.range[0]"]),
-            pd.to_datetime(relayout_data["xaxis.range[1]"]),
-        ]
 
     # Create tick labels
     tick_text = [ts.strftime("%m/%d") for ts in all_timestamps]
@@ -338,7 +327,7 @@ def create_figure(
             "showgrid": True,
             "title": {"text": "Date", "standoff": 10},
             "title_font_weight": "bold",
-            "range": x_range,
+            "range": [min_timestamp, max_timestamp],
             "type": "date",
             "tickmode": "array",
             "tickvals": all_timestamps,
@@ -463,78 +452,6 @@ def create_figure(
     return figure
 
 
-def adjust_y_axis_range(
-    figure: go.Figure,
-    relayout_data: dict[str, Any] | None,
-    *dataframes: pd.DataFrame,
-) -> go.Figure:
-    """Adjust y-axis range based on the visible x-axis range.
-
-    Args:
-        figure: The plotly figure to adjust
-        relayout_data: The relayout data containing x-axis range information
-        *dataframes: Variable number of pandas DataFrames to process
-
-    """
-
-    def filter_dataframe(
-        df: pd.DataFrame,
-        x_min: pd.Timestamp,
-        x_max: pd.Timestamp,
-    ) -> pd.DataFrame:
-        """Filter dataframe based on timestamp range."""
-        return df[
-            (df["clone_timestamp"] >= x_min)
-            & (df["clone_timestamp"] <= x_max)
-        ]
-
-    def get_column_range(
-        dataframes: list[pd.DataFrame],
-        column: str,
-    ) -> tuple[float, float]:
-        """Calculate min and max values for a column across all dataframes."""
-        valid_dfs = [df for df in dataframes if not df.empty]
-        if not valid_dfs:
-            return 0, 0  # Return default range if all dataframes are empty
-
-        min_val = min(df[column].min() for df in valid_dfs)
-        max_val = max(df[column].max() for df in valid_dfs)
-        return min_val, max_val
-
-    if not dataframes:
-        return figure  # Return unchanged figure if no dataframes provided
-
-    if relayout_data and "xaxis.range[0]" in relayout_data:
-        x_min = pd.Timestamp(relayout_data["xaxis.range[0]"])
-        x_max = pd.Timestamp(relayout_data["xaxis.range[1]"])
-
-        # Filter all dataframes
-        filtered_dfs = [
-            filter_dataframe(df, x_min, x_max) for df in dataframes
-        ]
-
-        if any(not df.empty for df in filtered_dfs):
-            # Calculate ranges for both total and unique clones
-            y1_min, y1_max = get_column_range(filtered_dfs, "total_clones")
-            y2_min, y2_max = get_column_range(filtered_dfs, "unique_clones")
-
-            # Calculate padding
-            y1_padding = (y1_max - y1_min) * 0.05 if y1_max > y1_min else 1
-            y2_padding = (y2_max - y2_min) * 0.05 if y2_max > y2_min else 1
-
-            # Update both y-axes
-            for axis, y_min, y_max, padding in [
-                (figure.layout.yaxis, y1_min, y1_max, y1_padding),
-                (figure.layout.yaxis2, y2_min, y2_max, y2_padding),
-            ]:
-                axis.update({
-                    "range": [y_min - padding, y_max + padding],
-                    "autorange": False,
-                })
-
-    return figure
-
-
 @callback(
     Output("links_display", "children"),
     Input("links_store", "data"),
@@ -621,20 +538,15 @@ def load_traffic_data(
 @callback(
     Output(f"{module_name}_repo_clones_graph", "figure"),
     Output(f"{module_name}_repo_visitors_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[0]}_repo_clones_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[0]}_repo_visitors_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[1]}_repo_clones_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[1]}_repo_visitors_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[2]}_repo_clones_graph", "figure"),
-    Output(f"{module_name}_{PROJECTS[2]}_repo_visitors_graph", "figure"),
+    *[
+        Output(f"{module_name}_{project}_repo_{graph}_graph", "figure")
+        for project in PROJECTS
+        for graph in ["clones", "visitors"]
+    ],
     Input("theme_switch_value_store", "data"),
-    Input(f"{module_name}_repo_clones_graph", "relayoutData"),
-    Input(f"{module_name}_repo_visitors_graph", "relayoutData"),
 )
 def update_graph_with_uploaded_file(
     theme_switch: bool,  # noqa: FBT001
-    clones_relayout: dict[str, Any] | None = None,
-    visitors_relayout: dict[str, Any] | None = None,
 ) -> tuple[Any, ...]:
     """Read CSV data and update the repository graphs."""
     repos = [
@@ -723,23 +635,18 @@ def update_graph_with_uploaded_file(
         trace_colors: list[str],
         titles: tuple[str, ...],
         theme_switch: bool,  # noqa: FBT001
-        relayout_data: dict[str, Any] | None,
     ) -> dict[str, Any]:
         """Create and adjust a figure with the given parameters."""
-        figure = create_figure(
+        return create_figure(
             theme_switch=theme_switch,
             data_frames=data_frames,
             trace_colors=trace_colors,
             titles=titles,
-            relayout_data=relayout_data,
         )
-        return adjust_y_axis_range(figure, relayout_data, *data_frames)
 
-    # Create all figures in a single loop
+    # Update figure creation calls to remove relayout_data parameter
     figures = []
-    # Generate figures for all repositories
     for repo_index in range(len(repos)):
-        # Determine which repos to exclude from titles
         repos_to_exclude = (
             repos[1:] if repo_index == 0 else repos[:repo_index]
         )
@@ -768,7 +675,6 @@ def update_graph_with_uploaded_file(
                 current_repo["colors"],
                 tuple(filtered_clones_titles),
                 theme_switch,
-                clones_relayout,
             ),
         )
         figures.append(
@@ -777,7 +683,6 @@ def update_graph_with_uploaded_file(
                 current_repo["colors"],
                 tuple(filtered_visitors_titles),
                 theme_switch,
-                visitors_relayout,
             ),
         )
 
