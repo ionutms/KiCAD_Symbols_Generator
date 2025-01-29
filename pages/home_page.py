@@ -264,9 +264,31 @@ def create_figure(
     y2_values = []
 
     for df in data_frames:
-        all_timestamps.extend(df["clone_timestamp"])
-        y1_values.extend(df["total_clones"])
-        y2_values.extend(df["unique_clones"])
+        if not df.empty:
+            all_timestamps.extend(df["clone_timestamp"])
+            y1_values.extend(df["total_clones"])
+            y2_values.extend(df["unique_clones"])
+
+    # If no data is available, return an empty figure with a message
+    if not all_timestamps:
+        figure = go.Figure()
+        figure.update_layout(
+            annotations=[
+                {
+                    "text": "No data available",
+                    "xref": "paper",
+                    "yref": "paper",
+                    "showarrow": False,
+                    "font": {"size": 20},
+                },
+            ],
+            height=250,
+            template="plotly" if theme_switch else "plotly_dark",
+            paper_bgcolor="white" if theme_switch else "#222222",
+            plot_bgcolor="white" if theme_switch else "#222222",
+            font_color="black" if theme_switch else "white",
+        )
+        return figure
 
     all_timestamps = sorted(set(all_timestamps))
     min_timestamp, max_timestamp = min(all_timestamps), max(all_timestamps)
@@ -305,6 +327,9 @@ def create_figure(
 
     traces = []
     for data_frames_index, df in enumerate(data_frames):
+        if df.empty:
+            continue
+
         color_idx = data_frames_index * 2
         project_name = titles[3 + (data_frames_index * 2)]
         project_name = project_name.split(" ")[0]
