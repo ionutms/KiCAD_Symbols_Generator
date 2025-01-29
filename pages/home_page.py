@@ -139,8 +139,28 @@ PROJECTS = [
     "Modular_Software_Configurable_IO_PLC",
 ]
 
-layout = dbc.Container(
-    [
+
+def create_header_section(
+    link_name: str,
+    title: str,
+    about: tuple[str, str],
+    features: list[str],
+    usage_steps: list[str],
+) -> list[Any]:
+    """Create the header section with title and description.
+
+    Args:
+        link_name (str): Name of the link
+        title (str): Title of the page
+        about (tuple[str, str]): Description of the page
+        features (list[str]): List of features
+        usage_steps (list[str]): List of usage steps
+
+    Returns:
+        List of components for the header section
+
+    """
+    return [
         dbc.Row([
             dbc.Col([
                 html.H3(
@@ -151,10 +171,28 @@ layout = dbc.Container(
         ]),
         dbc.Row([
             dbc.Col(
-                [dcu.app_description(TITLE, ABOUT, features, usage_steps)],
+                [dcu.app_description(title, about, features, usage_steps)],
                 width=12,
             ),
         ]),
+    ]
+
+
+def create_main_repo_section(
+    module_name: str,
+    links_display_div: html.Div,
+) -> list[Any]:
+    """Create repository section with graphs and component links.
+
+    Args:
+        module_name (str): Name of the module
+        links_display_div (html.Div): Div containing all project links
+
+    Returns:
+        List of components for the main repository section
+
+    """
+    return [
         dbc.Row([
             dbc.Col(
                 children=create_repo_graphs(f"{module_name}"),
@@ -171,70 +209,56 @@ layout = dbc.Container(
             ),
         ]),
         html.Hr(),
+    ]
+
+
+def create_project_section(module_name: str, project: str) -> list[Any]:
+    """Create a section for an individual project with graphs and links.
+
+    Args:
+        module_name (str): Name of the module
+        project (str): Name of the project
+
+    Returns:
+        List of components for the project section
+
+    """
+    return [
         dbc.Row([
             dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{PROJECTS[0]}"),
+                children=create_repo_graphs(f"{module_name}_{project}"),
                 xs=12,
                 md=8,
             ),
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(PROJECTS[0]),
+                    create_project_links(project),
                 ],
                 xs=12,
                 md=4,
             ),
         ]),
         html.Hr(),
-        dbc.Row([
-            dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{PROJECTS[1]}"),
-                xs=12,
-                md=8,
-            ),
-            dbc.Col(
-                [
-                    html.H4("Project Pages"),
-                    create_project_links(PROJECTS[1]),
-                ],
-                xs=12,
-                md=4,
-            ),
-        ]),
-        html.Hr(),
-        dbc.Row([
-            dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{PROJECTS[2]}"),
-                xs=12,
-                md=8,
-            ),
-            dbc.Col(
-                [
-                    html.H4("Project Pages"),
-                    create_project_links(PROJECTS[2]),
-                ],
-                xs=12,
-                md=4,
-            ),
-        ]),
-        html.Hr(),
-        dbc.Row([
-            dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{PROJECTS[3]}"),
-                xs=12,
-                md=8,
-            ),
-            dbc.Col(
-                [
-                    html.H4("Project Pages"),
-                    create_project_links(PROJECTS[3]),
-                ],
-                xs=12,
-                md=4,
-            ),
-        ]),
-        html.Hr(),
+    ]
+
+
+# Main layout construction
+layout = dbc.Container(
+    [
+        *create_header_section(
+            link_name,
+            TITLE,
+            ABOUT,
+            features,
+            usage_steps,
+        ),
+        *create_main_repo_section(module_name, links_display_div),
+        *[
+            component
+            for project in PROJECTS
+            for component in create_project_section(module_name, project)
+        ],
     ],
     fluid=True,
 )
