@@ -123,12 +123,24 @@ def create_project_links(project_name: str) -> html.Div:
             ),
             target="_blank",
         ),
+        html.A(
+            children="3D Model (WRL)",
+            href=(
+                f"https://3dviewer.net/index.html#model={base_github_url}/"
+                f"blob/main/{project_name_lower}/{project_name_lower}.wrl"
+            ),
+            target="_blank",
+        ),
         html.Hr(),
     ]
 
     return html.Div(
         children=[*links],
-        style={"display": "flex", "gap": "10px"},
+        style={
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px",
+        },
     )
 
 
