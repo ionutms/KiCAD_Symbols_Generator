@@ -117,6 +117,19 @@ def generate_footprint(
         ]
         pads = "".join(pads)
 
+    if part_info.series == "FW-xx-03-G-D-085-315":
+        pads = [
+            footprint_utils.generate_surface_mount_pads(
+                part_info.pin_count,
+                specs.pad_pitch,
+                specs.pad_size,
+                dimensions["start_pos"],
+                row_pitch=specs.row_pitch,
+                row_count=specs.number_of_rows,
+            ),
+        ]
+        pads = "".join(pads)
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
