@@ -132,7 +132,12 @@ def create_project_links(project_name: str) -> html.Div:
     )
 
 
-PROJECTS = ["Minimal_ADP1032", "Minimal_MAX14906", "Minimal_AD74413R"]
+PROJECTS = [
+    "Minimal_ADP1032",
+    "Minimal_MAX14906",
+    "Minimal_AD74413R",
+    "Modular_Software_Configurable_IO_PLC",
+]
 
 layout = dbc.Container(
     [
@@ -208,6 +213,22 @@ layout = dbc.Container(
                 [
                     html.H4("Project Pages"),
                     create_project_links(PROJECTS[2]),
+                ],
+                xs=12,
+                md=4,
+            ),
+        ]),
+        html.Hr(),
+        dbc.Row([
+            dbc.Col(
+                children=create_repo_graphs(f"{module_name}_{PROJECTS[3]}"),
+                xs=12,
+                md=8,
+            ),
+            dbc.Col(
+                [
+                    html.H4("Project Pages"),
+                    create_project_links(PROJECTS[3]),
                 ],
                 xs=12,
                 md=4,
@@ -573,6 +594,16 @@ def update_graph_with_uploaded_file(
             "clones_csv": "minimal_ad74413r_clones_history.csv",
             "visitors_csv": "minimal_ad74413r_visitors_history.csv",
             "colors": ["#20B2AA", "#8B4513"],
+        },
+        {
+            "name": "Modular_Software_Configurable_IO_PLC",
+            "clones_csv": (
+                "modular_software_configurable_io_plc_clones_history.csv"
+            ),
+            "visitors_csv": (
+                "modular_software_configurable_io_plc_visitors_history.csv"
+            ),
+            "colors": ["#09B21A", "#0B4513"],
         },
     ]
 
