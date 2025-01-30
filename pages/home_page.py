@@ -102,12 +102,12 @@ def create_project_links(project_name: str) -> html.Div:
 
     links = [
         html.A(
-            children=f"{project_name.replace('_', ' ')}",
+            children=f"View GitHub Repo -> {project_name.replace('_', ' ')}",
             href=base_github_url,
             target="_blank",
         ),
         html.A(
-            "Interactive BOM",
+            "View Interactive BOM (HTML)",
             href=(
                 f"https://htmlpreview.github.io/?{base_github_url}/blob/main/"
                 f"{project_name_lower}/bom/ibom.html"
@@ -115,7 +115,7 @@ def create_project_links(project_name: str) -> html.Div:
             target="_blank",
         ),
         html.A(
-            children="Schematics",
+            children="View Schematics (PDF)",
             href=(
                 f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
                 f"https://raw.githubusercontent.com/ionutms/{project_name}/"
@@ -124,14 +124,13 @@ def create_project_links(project_name: str) -> html.Div:
             target="_blank",
         ),
         html.A(
-            children="3D Model (WRL)",
+            children="View 3D Model (WRL)",
             href=(
                 f"https://3dviewer.net/index.html#model={base_github_url}/"
                 f"blob/main/{project_name_lower}/{project_name_lower}.wrl"
             ),
             target="_blank",
         ),
-        html.Hr(),
     ]
 
     return html.Div(
@@ -144,12 +143,45 @@ def create_project_links(project_name: str) -> html.Div:
     )
 
 
-PROJECTS = [
-    "Minimal_ADP1032",
-    "Minimal_MAX14906",
-    "Minimal_AD74413R",
-    "Modular_Software_Configurable_IO_PLC",
+REPOS = [
+    {
+        "name": "KiCAD_Symbols_Generator",
+        "clones_csv": "kicad_symbols_generator_clones_history.csv",
+        "visitors_csv": "kicad_symbols_generator_visitors_history.csv",
+        "colors": ["#2E8B57", "#4169E1"],
+    },
+    {
+        "name": "Minimal_ADP1032",
+        "clones_csv": "minimal_adp1032_clones_history.csv",
+        "visitors_csv": "minimal_adp1032_visitors_history.csv",
+        "colors": ["#FF4500", "#9932CC"],
+    },
+    {
+        "name": "Minimal_MAX14906",
+        "clones_csv": "minimal_max14906_clones_history.csv",
+        "visitors_csv": "minimal_max14906_visitors_history.csv",
+        "colors": ["#FFD700", "#C71585"],
+    },
+    {
+        "name": "Minimal_AD74413R",
+        "clones_csv": "minimal_ad74413r_clones_history.csv",
+        "visitors_csv": "minimal_ad74413r_visitors_history.csv",
+        "colors": ["#20B2AA", "#FF6B6B"],
+    },
+    {
+        "name": "Modular_Software_Configurable_IO_PLC",
+        "clones_csv": (
+            "modular_software_configurable_io_plc_clones_history.csv"
+        ),
+        "visitors_csv": (
+            "modular_software_configurable_io_plc_visitors_history.csv"
+        ),
+        "colors": ["#4DB6AC", "#7E57C2"],
+    },
 ]
+
+
+PROJECTS = [repo["name"] for repo in REPOS[1:]]
 
 
 def create_header_section(
@@ -631,43 +663,6 @@ def update_graph_with_uploaded_file(
     theme_switch: bool,  # noqa: FBT001
 ) -> tuple[Any, ...]:
     """Read CSV data and update the repository graphs."""
-    repos = [
-        {
-            "name": "KiCAD_Symbols_Generator",
-            "clones_csv": "kicad_symbols_generator_clones_history.csv",
-            "visitors_csv": "kicad_symbols_generator_visitors_history.csv",
-            "colors": ["#2E8B57", "#4169E1"],
-        },
-        {
-            "name": "Minimal_ADP1032",
-            "clones_csv": "minimal_adp1032_clones_history.csv",
-            "visitors_csv": "minimal_adp1032_visitors_history.csv",
-            "colors": ["#FF4500", "#9932CC"],
-        },
-        {
-            "name": "Minimal_MAX14906",
-            "clones_csv": "minimal_max14906_clones_history.csv",
-            "visitors_csv": "minimal_max14906_visitors_history.csv",
-            "colors": ["#FFD700", "#C71585"],
-        },
-        {
-            "name": "Minimal_AD74413R",
-            "clones_csv": "minimal_ad74413r_clones_history.csv",
-            "visitors_csv": "minimal_ad74413r_visitors_history.csv",
-            "colors": ["#20B2AA", "#8B4513"],
-        },
-        {
-            "name": "Modular_Software_Configurable_IO_PLC",
-            "clones_csv": (
-                "modular_software_configurable_io_plc_clones_history.csv"
-            ),
-            "visitors_csv": (
-                "modular_software_configurable_io_plc_visitors_history.csv"
-            ),
-            "colors": ["#09B21A", "#0B4513"],
-        },
-    ]
-
     base_github_url = (
         "https://raw.githubusercontent.com/ionutms/"
         "KiCAD_Symbols_Generator/main"
@@ -705,14 +700,14 @@ def update_graph_with_uploaded_file(
         )
 
     # Load all repository data
-    repo_data = [load_repo_data(repo_config) for repo_config in repos]
+    repo_data = [load_repo_data(repo_config) for repo_config in REPOS]
     clones_data, visitors_data = zip(*repo_data)
 
     # Generate titles in the original order
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
-    for repo_config in repos:
+    for repo_config in REPOS:
         clones_titles.extend([
             f"{repo_config['name']} Clones",
             f"{repo_config['name']} Unique Clones",
@@ -738,9 +733,9 @@ def update_graph_with_uploaded_file(
 
     # Update figure creation calls to remove relayout_data parameter
     figures = []
-    for repo_index in range(len(repos)):
+    for repo_index in range(len(REPOS)):
         repos_to_exclude = (
-            repos[1:] if repo_index == 0 else repos[:repo_index]
+            REPOS[1:] if repo_index == 0 else REPOS[:repo_index]
         )
 
         filtered_clones_titles = [
@@ -760,7 +755,7 @@ def update_graph_with_uploaded_file(
             )
         ]
 
-        current_repo = repos[repo_index]
+        current_repo = REPOS[repo_index]
         figures.append(
             create_and_adjust_figure(
                 [clones_data[repo_index]],
