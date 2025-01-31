@@ -6,8 +6,7 @@ navigation.
 
 Key Features:
 - Dynamic visualization of GitHub repository traffic metrics
-    (clones and visitors)
-- Real-time graphs showing repository activity trends over time
+- Graphs showing repository activity trends over time
 - Automated generation of navigation links to other application pages
 - Project-specific sections with direct links to GitHub, BOM, schematics,
     and 3D models
@@ -41,16 +40,16 @@ ABOUT = (
     "The Home page serves as a dynamic dashboard and analytics hub for "
     "monitoring repository activity and accessing multiple project "
     "resources.",
-    "It combines real-time GitHub traffic analytics with centralized "
+    "It combines GitHub traffic analytics with centralized "
     "navigation, providing insights into repository engagement while "
     "offering comprehensive access to project documentation, "
     "interactive tools, and hardware designs across all projects.",
 )
 
 features = [
-    "Real-time visualization of repository clones and visitor traffic using "
+    "Visualization of repository clones and visitor traffic using "
     "interactive graphs",
-    "Automated tracking of multiple repositories with color-coded metrics "
+    "Automated tracking of multiple repositories with metrics "
     "for each project",
     "Direct links to project resources including GitHub repos, "
     "Interactive BOMs, and technical documentation",
@@ -136,7 +135,7 @@ def create_project_links(project_name: str) -> html.Div:
 
     links = [
         html.A(
-            children=f"View GitHub Repo -> {project_name.replace('_', ' ')}",
+            children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
             href=base_github_url,
             target="_blank",
         ),
