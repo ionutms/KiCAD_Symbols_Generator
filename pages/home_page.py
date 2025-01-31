@@ -1,7 +1,20 @@
 """Home page module for the Dash application.
 
-This module defines the layout and callback for the home page of the Dash app.
-It displays a title and dynamically generates links to other pages in the app.
+This module defines the layout and callbacks for the main landing page of the
+Dash app, providing a centralized dashboard for repository analytics and
+navigation.
+
+Key Features:
+- Dynamic visualization of GitHub repository traffic metrics
+    (clones and visitors)
+- Real-time graphs showing repository activity trends over time
+- Automated generation of navigation links to other application pages
+- Project-specific sections with direct links to GitHub, BOM, schematics,
+    and 3D models
+- Responsive Bootstrap-based layout that adapts to different screen sizes
+
+The module uses a combination of Plotly graphs, Dash components, and Bootstrap
+styling to create an interactive and informative dashboard experience.
 """
 
 from __future__ import annotations
@@ -25,24 +38,45 @@ dash.register_page(__name__, name=link_name, path="/")
 TITLE = "Home Page"
 
 ABOUT = (
-    "The Home page serves as the main entry point and "
-    "navigation hub for the Dash application.",
-    "It provides a centralized location for users to access "
-    "all available pages within the application, "
-    "offering a simple and intuitive navigation experience.",
+    "The Home page serves as a dynamic dashboard and analytics hub for "
+    "monitoring repository activity and accessing multiple project "
+    "resources.",
+    "It combines real-time GitHub traffic analytics with centralized "
+    "navigation, providing insights into repository engagement while "
+    "offering comprehensive access to project documentation, "
+    "interactive tools, and hardware designs across all projects.",
 )
 
 features = [
-    "Dynamic generation of links to other pages in the application",
-    "Clean and simple interface for easy navigation",
-    "Responsive layout using Dash Bootstrap Components",
+    "Real-time visualization of repository clones and visitor traffic using "
+    "interactive graphs",
+    "Automated tracking of multiple repositories with color-coded metrics "
+    "for each project",
+    "Direct links to project resources including GitHub repos, "
+    "Interactive BOMs, and technical documentation",
+    "Project-specific sections with detailed analytics and navigation links",
+    "Integrated viewers for schematics (PDF), 3D models (WRL), "
+    "and interactive BOMs (HTML)",
+    "Dynamic navigation system that automatically updates as new pages are "
+    "added to the application",
+    "Responsive dashboard layout that adapts to different screen sizes and "
+    "devices",
+    "Dual-theme support with light and dark mode visualization options",
 ]
 
 usage_steps = [
-    "View the list of available pages displayed as clickable links.",
-    "Click on any link to navigate to the corresponding page.",
-    "Use the browser's back button or navigation controls "
-    "to return to the Home page.",
+    "Monitor repository engagement through the interactive clone and "
+    "visitor graphs",
+    "Use the Components Data Base section to access different parts of the "
+    "application",
+    "Navigate to specific projects through their dedicated sections",
+    "Access project resources through quick links to view GitHub "
+    "repositories for source code and documentation, "
+    "open interactive BOMs for component exploration, "
+    "review schematics in the PDF viewer, "
+    "examine 3D models in the online viewer",
+    "Toggle between light and dark themes using the theme switch",
+    "Navigate through different time periods using the graph's date axis",
 ]
 
 
