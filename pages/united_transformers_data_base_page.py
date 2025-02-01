@@ -30,10 +30,11 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=7)
+register_page(__name__, name=link_name, order=11)
 
 dataframe: pd.DataFrame = pd.read_csv(
-    "data/UNITED_TRANSFORMERS_DATA_BASE.csv")
+    "data/UNITED_TRANSFORMERS_DATA_BASE.csv",
+)
 total_rows = len(dataframe)
 
 TITLE = f"Transformers Database ({total_rows:,} items)"
@@ -81,50 +82,76 @@ hidden_columns = [
 ]
 
 visible_columns = [
-    col for col in dataframe.columns if col not in hidden_columns]
+    col for col in dataframe.columns if col not in hidden_columns
+]
 
 try:
     dataframe["Datasheet"] = dataframe["Datasheet"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"),
+    )
 
     dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Search"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Search"),
+    )
 except KeyError:
     pass
 
-layout = dbc.Container([html.Div([
-    dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
-    dbc.Row([dbc.Col([html.H3(
-        f"{link_name.replace('_', ' ')} ({total_rows:,} items)",
-        style=styles.heading_3_style)])]),
-    dbc.Row([dcu.app_description(TITLE, ABOUT, features, usage_steps)]),
-
-    dcu.table_controls_row(module_name, dataframe, visible_columns),
-
-    dash_table.DataTable(
-        id=f"{module_name}_table",
-        columns=dcu.create_column_definitions(dataframe, visible_columns),
-        data=dataframe[visible_columns].to_dict("records"),
-        cell_selectable=False,
-        markdown_options={"html": True},
-        page_size=10,
-        filter_action="native",
-        sort_action="native",
-        sort_mode="multi"),
-
-], style=styles.GLOBAL_STYLE),
-], fluid=True)
+layout = dbc.Container(
+    [
+        html.Div(
+            [
+                dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
+                dbc.Row([
+                    dbc.Col([
+                        html.H3(
+                            f"{link_name.replace('_', ' ')} "
+                            f"({total_rows:,} items)",
+                            style=styles.heading_3_style,
+                        ),
+                    ]),
+                ]),
+                dbc.Row([
+                    dcu.app_description(TITLE, ABOUT, features, usage_steps),
+                ]),
+                dcu.table_controls_row(
+                    module_name,
+                    dataframe,
+                    visible_columns,
+                ),
+                dash_table.DataTable(
+                    id=f"{module_name}_table",
+                    columns=dcu.create_column_definitions(
+                        dataframe,
+                        visible_columns,
+                    ),
+                    data=dataframe[visible_columns].to_dict("records"),
+                    cell_selectable=False,
+                    markdown_options={"html": True},
+                    page_size=10,
+                    filter_action="native",
+                    sort_action="native",
+                    sort_mode="multi",
+                ),
+            ],
+            style=styles.GLOBAL_STYLE,
+        ),
+    ],
+    fluid=True,
+)
 
 
 dcu.callback_update_visible_columns(
     f"{module_name}_table",
     f"{module_name}_column_toggle",
-    dataframe)
+    dataframe,
+)
 
 
 dcu.callback_update_table_style_and_visibility(f"{module_name}_table")
 
 dcu.callback_update_page_size(
-    f"{module_name}_table", f"{module_name}_page_size")
+    f"{module_name}_table",
+    f"{module_name}_page_size",
+)
 
 dcu.callback_update_dropdown_style(f"{module_name}_page_size")

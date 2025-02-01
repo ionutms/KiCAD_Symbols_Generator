@@ -33,7 +33,7 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=1)
+register_page(__name__, name=link_name, order=2)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
 total_rows = len(dataframe)
@@ -84,79 +84,107 @@ hidden_columns = [
 ]
 
 visible_columns = [
-    col for col in dataframe.columns if col not in hidden_columns]
+    col for col in dataframe.columns if col not in hidden_columns
+]
 
 try:
     dataframe["Datasheet"] = dataframe["Datasheet"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"),
+    )
 
     dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Search"))
+        lambda url_text: dcu.generate_centered_link(url_text, "Search"),
+    )
 except KeyError:
     pass
 
-layout = dbc.Container([html.Div([
-    dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
-    dbc.Row([dbc.Col([html.H3(
-        f"{link_name.replace('_', ' ')} ({total_rows:,} items)",
-        style=styles.heading_3_style)])]),
-    dbc.Row([dcu.app_description(TITLE, ABOUT, features, usage_steps)]),
-
-    dcu.generate_range_slider(module_name, dataframe, 25),
-
-    html.Hr(),
-
-    dbc.Row([dcc.Loading([dcc.Graph(
-        id=f"{module_name}_bar_graph",
-        config={"displaylogo": False}),
-        ], delay_show=100, delay_hide=100),
-    ]),
-
-    html.Hr(),
-
-    dcu.table_controls_row(module_name, dataframe, visible_columns),
-
-    html.Hr(),
-
-    dash_table.DataTable(
-        id=f"{module_name}_table",
-        columns=dcu.create_column_definitions(dataframe, visible_columns),
-        data=dataframe[visible_columns].to_dict("records"),
-        cell_selectable=False,
-        markdown_options={"html": True},
-        page_size=10,
-        filter_action="native",
-        sort_action="native",
-        sort_mode="multi"),
-
-    html.Hr(),
-
-], style=styles.GLOBAL_STYLE),
-], fluid=True)
+layout = dbc.Container(
+    [
+        html.Div(
+            [
+                dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
+                dbc.Row([
+                    dbc.Col([
+                        html.H3(
+                            f"{link_name.replace('_', ' ')} "
+                            f"({total_rows:,} items)",
+                            style=styles.heading_3_style,
+                        ),
+                    ]),
+                ]),
+                dbc.Row([
+                    dcu.app_description(TITLE, ABOUT, features, usage_steps),
+                ]),
+                dcu.generate_range_slider(module_name, dataframe, 25),
+                html.Hr(),
+                dbc.Row([
+                    dcc.Loading(
+                        [
+                            dcc.Graph(
+                                id=f"{module_name}_bar_graph",
+                                config={"displaylogo": False},
+                            ),
+                        ],
+                        delay_show=100,
+                        delay_hide=100,
+                    ),
+                ]),
+                html.Hr(),
+                dcu.table_controls_row(
+                    module_name,
+                    dataframe,
+                    visible_columns,
+                ),
+                html.Hr(),
+                dash_table.DataTable(
+                    id=f"{module_name}_table",
+                    columns=dcu.create_column_definitions(
+                        dataframe,
+                        visible_columns,
+                    ),
+                    data=dataframe[visible_columns].to_dict("records"),
+                    cell_selectable=False,
+                    markdown_options={"html": True},
+                    page_size=10,
+                    filter_action="native",
+                    sort_action="native",
+                    sort_mode="multi",
+                ),
+                html.Hr(),
+            ],
+            style=styles.GLOBAL_STYLE,
+        ),
+    ],
+    fluid=True,
+)
 
 
 dcu.callback_update_visible_columns(
     f"{module_name}_table",
     f"{module_name}_column_toggle",
-    dataframe)
+    dataframe,
+)
 
 dcu.callback_update_table_style_and_visibility(f"{module_name}_table")
 
 dcu.callback_update_page_size(
-    f"{module_name}_table", f"{module_name}_page_size")
+    f"{module_name}_table",
+    f"{module_name}_page_size",
+)
 
 dcu.callback_update_dropdown_style(f"{module_name}_page_size")
 
 dcu.save_previous_slider_state_callback(
     f"{module_name}_value_rangeslider",
     f"{module_name}_rangeslider_store",
-    25)
+    25,
+)
 
 
 def get_visible_y_max(
-        figure_data: list[go.Bar],
-        x_range: tuple[int, int],
-    ) -> int:
+    figure_data: list[go.Bar],
+    x_range: tuple[int, int],
+) -> int:
     """Get the maximum y value within the visible x range.
 
     Args:
@@ -174,7 +202,8 @@ def get_visible_y_max(
         # Get positions within range
         positions = range(len(trace.x))
         visible_positions = [
-            index for index in positions if x_min <= index <= x_max]
+            index for index in positions if x_min <= index <= x_max
+        ]
 
         if visible_positions:
             y_values = [trace.y[index] for index in visible_positions]
@@ -205,42 +234,61 @@ def update_distribution_graph(
     """
     # Prepare full data range
     values, _ = dcu.extract_consecutive_value_groups(
-        dataframe["Value"].to_list())
+        dataframe["Value"].to_list(),
+    )
 
     # Dynamically extract all unique tolerances
     tolerances = sorted(dataframe["Tolerance"].unique())
 
     # Create tolerance-based dataframes and configurations
-    tolerance_configs = [{
-        "dataframe": dataframe[dataframe["Tolerance"] == tolerance],
-        "name": f"{tolerance} Tolerance"} for tolerance in tolerances]
+    tolerance_configs = [
+        {
+            "dataframe": dataframe[dataframe["Tolerance"] == tolerance],
+            "name": f"{tolerance} Tolerance",
+        }
+        for tolerance in tolerances
+    ]
 
     # Existing figure layout configuration
     figure_layout = {
         "xaxis": {
-            "gridcolor": "#808080", "griddash": "dash",
-            "zerolinecolor": "lightgray", "zeroline": False,
-            "domain": (0.0, 1.0), "showgrid": True,
+            "gridcolor": "#808080",
+            "griddash": "dash",
+            "zerolinecolor": "lightgray",
+            "zeroline": False,
+            "domain": (0.0, 1.0),
+            "showgrid": True,
             "title": {"text": "Capacitance Value", "standoff": 10},
-            "title_font_weight": "bold", "tickmode": "array",
-            "tickangle": -45, "fixedrange": True,
+            "title_font_weight": "bold",
+            "tickmode": "array",
+            "tickangle": -45,
+            "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
             "titlefont": {"color": "#808080"},
         },
         "yaxis": {
-            "gridcolor": "#808080", "griddash": "dash",
-            "zerolinecolor": "lightgray", "zeroline": False,
-            "tickangle": -45, "title_font_weight": "bold", "position": 0.0,
-            "title": "Number of Capacitors", "fixedrange": True,
+            "gridcolor": "#808080",
+            "griddash": "dash",
+            "zerolinecolor": "lightgray",
+            "zeroline": False,
+            "tickangle": -45,
+            "title_font_weight": "bold",
+            "position": 0.0,
+            "title": "Number of Capacitors",
+            "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
-            "titlefont": {"color": "#808080"}, "showgrid": True,
-            "anchor": "free", "autorange": True, "tickformat": ".0f",
-            "dtick": 2, "tickmode": "linear",
+            "titlefont": {"color": "#808080"},
+            "showgrid": True,
+            "anchor": "free",
+            "autorange": True,
+            "tickformat": ".0f",
+            "dtick": 2,
+            "tickmode": "linear",
         },
         "title": {
-            "text":
-                "Capacitance Value Distribution",
-            "x": 0.5, "xanchor": "center",
+            "text": "Capacitance Value Distribution",
+            "x": 0.5,
+            "xanchor": "center",
         },
         "showlegend": True,
     }
@@ -251,27 +299,34 @@ def update_distribution_graph(
     # Add traces for each tolerance group
     for config in tolerance_configs:
         # Extract values and counts
-        values_tolerance, counts_tolerance = \
+        values_tolerance, counts_tolerance = (
             dcu.extract_consecutive_value_groups(
-                config["dataframe"]["Value"].to_list())
+                config["dataframe"]["Value"].to_list(),
+            )
+        )
 
         # Pad values and counts to match full range
         values_tolerance, counts_tolerance = dcu.pad_values_and_counts(
-            values, values_tolerance, counts_tolerance)
+            values,
+            values_tolerance,
+            counts_tolerance,
+        )
 
         # Add trace for this tolerance group
-        figure.add_trace(go.Bar(
-            x=values_tolerance,
-            y=counts_tolerance,
-            name=config["name"],
-            textposition="none",
-            textangle=-30,
-            text=counts_tolerance,
-            hovertemplate=(
-                "Capacitance: %{x}<br>"
-                "Number of Capacitors: %{y}<extra></extra>"
+        figure.add_trace(
+            go.Bar(
+                x=values_tolerance,
+                y=counts_tolerance,
+                name=config["name"],
+                textposition="none",
+                textangle=-30,
+                text=counts_tolerance,
+                hovertemplate=(
+                    "Capacitance: %{x}<br>"
+                    "Number of Capacitors: %{y}<extra></extra>"
+                ),
             ),
-        ))
+        )
 
     # In update_distribution_graph function:
     x_min, x_max = rangeslider_value[0], rangeslider_value[1]
@@ -308,14 +363,18 @@ def update_distribution_graph(
 
             cumulative_heights[value] = base_height + count
 
-        figure.add_trace(go.Scatter(
-            x=scatter_x,
-            y=scatter_y,
-            mode="markers",
-            name=f"{tolerance} Values",
-            text=scatter_mpn,  # Add MPN as text
-            hovertemplate="Capacitance: %{x}<br>MPN: %{text}<extra></extra>",
-        ))
+        figure.add_trace(
+            go.Scatter(
+                x=scatter_x,
+                y=scatter_y,
+                mode="markers",
+                name=f"{tolerance} Values",
+                text=scatter_mpn,  # Add MPN as text
+                hovertemplate=(
+                    "Capacitance: %{x}<br>MPN: %{text}<extra></extra>"
+                ),
+            ),
+        )
 
     # Update layout with new ranges
     figure.update_layout(
@@ -323,8 +382,13 @@ def update_distribution_graph(
         yaxis_range=[0, y_max],
         yaxis_autorange=False,
         legend={
-            "orientation": "h", "yanchor": "bottom", "xanchor": "center",
-            "y": -0.5, "x": 0.5})
+            "orientation": "h",
+            "yanchor": "bottom",
+            "xanchor": "center",
+            "y": -0.5,
+            "x": 0.5,
+        },
+    )
 
     # Define theme settings
     theme = {
@@ -341,10 +405,19 @@ def update_distribution_graph(
         barmode="stack",
         bargap=0.0,
         bargroupgap=0.05,
-        modebar={"remove": [
-            "zoom", "pan", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d",
-            "autoScale2d", "resetScale2d", "toImage",
-        ]},
+        modebar={
+            "remove": [
+                "zoom",
+                "pan",
+                "select2d",
+                "lasso2d",
+                "zoomIn2d",
+                "zoomOut2d",
+                "autoScale2d",
+                "resetScale2d",
+                "toImage",
+            ],
+        },
     )
 
     return figure
