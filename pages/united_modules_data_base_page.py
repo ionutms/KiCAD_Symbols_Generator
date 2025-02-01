@@ -1,17 +1,17 @@
-"""Test Points Database Page.
+"""Modules Database Page.
 
-This module provides a Dash page for viewing and interacting with test
-points specifications. It allows users to browse, search, and filter through
-a database of test points, with features for customizing the view and
+This module provides a Dash page for viewing and interacting with modules
+specifications. It allows users to browse, search, and filter through a
+database of modules, with features for customizing the view and
 accessing detailed information.
 
 Key features:
-- Interactive DataTable displaying test points specifications
+- Interactive DataTable displaying modules specifications
 - Column visibility controls for customizing the view
 - Dynamic filtering and multi-column sorting capabilities
 - Pagination with customizable page size
 - Theme-aware styling with light/dark mode support
-- Direct links to test points datasheets
+- Direct links to modules datasheets
 - Responsive design for various screen sizes
 
 The module uses Dash components and callbacks to create an interactive
@@ -30,17 +30,17 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=10)
+register_page(__name__, name=link_name, order=7)
 
-dataframe: pd.DataFrame = pd.read_csv("data/UNITED_SOLDER_JUMPERS.csv")
+dataframe: pd.DataFrame = pd.read_csv("data/UNITED_MODULES_DATA_BASE.csv")
 total_rows = len(dataframe)
 
-TITLE = f"Transistors Database ({total_rows:,} items)"
+TITLE = f"Modules Database ({total_rows:,} items)"
 ABOUT = (
-    "The test points Database is an interactive web application that "
+    "The modules Database is an interactive web application that "
     "provides a comprehensive view of inductor specifications.",
     "It allows users to easily browse, search, and filter "
-    f"through a database of {total_rows:,} test points, "
+    f"through a database of {total_rows:,} modules, "
     "providing quick access to important information and datasheets.",
 )
 
@@ -55,9 +55,8 @@ features = [
 ]
 
 usage_steps = [
-    "Navigate to the test points Database page",
-    "Use the table's built-in search functionality "
-    "to find specific test points",
+    "Navigate to the modules Database page",
+    "Use the table's built-in search functionality to find specific modules",
     "Click on column headers to sort the data",
     "Use the filter action to narrow down the displayed results",
     "Toggle column visibility using the checkboxes above the table",

@@ -109,6 +109,7 @@ if __name__ == "__main__":
         "UNITED_IC_ADI.kicad_sym",
         "UNITED_SOLDER_JUMPERS.kicad_sym",
         "UNITED_TEST_POINTS.kicad_sym",
+        "UNITED_MODULES_DATA_BASE.kicad_sym",
     ]
 
     # Get script location
