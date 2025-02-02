@@ -1,0 +1,150 @@
+(footprint "FW-02-03-G-D-085-155"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.572 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "199f5ec3-785f-49e1-b16c-1c5a2ca3076a")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "FW-02-03-G-D-085-155"
+            (at 0 4.572 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "f2b003b7-238e-490a-b3c8-9f404e826856")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "d1ec8cab-b51c-4f65-b72c-d3c217a67ea7")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.8420000000000005 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "febc34f8-9ebf-47b7-a629-b2e5d76f184f")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "8f234042-f638-4c83-95db-5f8fad16cd2a")
+        )
+        
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "38ad27db-3438-42b2-bfb6-207a9dc0052c")
+        )
+        
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "4037d58a-d76c-4fa8-bb66-68680d62b62a")
+        )
+        
+
+        (fp_circle
+            (center -2.24 -1.27)
+            (end -2.4250000000000003 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "c72d26af-c86e-4169-be76-e51a15514d6e")
+        )
+        
+
+        (fp_circle
+            (center -2.24 -1.27)
+            (end -2.4250000000000003 -1.27)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "3f2c4da5-913a-4d2f-ac0f-e45b580cd5cd")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -0.635 -2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "260ea226-2d5b-40c7-814b-fa3b705b7d3d")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -0.635 2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "5d6c5ae3-d7a4-4d95-a834-18a5f9ff6a4c")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 0.635 -2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "7166b70d-209c-427c-b244-4da8cdf9dc48")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 0.635 2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "ecc46193-5ef8-47a5-8fe2-d0990b92812a")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/FW-02-03-G-D-085-155.step"
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
