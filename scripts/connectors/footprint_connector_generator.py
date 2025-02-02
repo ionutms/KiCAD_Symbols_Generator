@@ -117,7 +117,7 @@ def generate_footprint(
         ]
         pads = "".join(pads)
 
-    if part_info.series == "FW-xx-03-G-D-085-315":
+    if part_info.series in ("FW-xx-03-G-D-085-315", "FW-xx-03-G-D-085-155"):
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
