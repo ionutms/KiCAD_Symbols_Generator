@@ -27,13 +27,13 @@ class SeriesSpec(NamedTuple):
     and available configurations.
 
     Attributes:
-        mpn_prefix: TODO
+        mpn_prefix: Manufacturer part number prefix for the series
         manufacturer: Name of the component manufacturer
         footprint: PCB footprint ID for the component
         voltage_rating: Maximum operating voltage for the component
         case_code_in: Package dimensions in inches (e.g., '0402')
         case_code_mm: Package dimensions in millimeters (e.g., '1005')
-        mpn_sufix: TODO
+        mpn_sufix: List of manufacturer part number suffixes
         tolerance_map: Mapping of dielectric type to tolerance codes
         value_range: Mapping of dielectric type to capacitance value range
         datasheet_url: Base URL for component datasheets
