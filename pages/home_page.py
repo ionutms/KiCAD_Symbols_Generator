@@ -176,45 +176,40 @@ def create_project_links(project_name: str) -> html.Div:
     )
 
 
-REPOS = [
-    {
-        "name": "KiCAD_Symbols_Generator",
-        "clones_csv": "kicad_symbols_generator_clones_history.csv",
-        "visitors_csv": "kicad_symbols_generator_visitors_history.csv",
-        "colors": ["#2E8B57", "#4169E1"],
-    },
-    {
-        "name": "Minimal_ADP1032",
-        "clones_csv": "minimal_adp1032_clones_history.csv",
-        "visitors_csv": "minimal_adp1032_visitors_history.csv",
-        "colors": ["#FF4500", "#9932CC"],
-    },
-    {
-        "name": "Minimal_MAX14906",
-        "clones_csv": "minimal_max14906_clones_history.csv",
-        "visitors_csv": "minimal_max14906_visitors_history.csv",
-        "colors": ["#FFD700", "#C71585"],
-    },
-    {
-        "name": "Minimal_AD74413R",
-        "clones_csv": "minimal_ad74413r_clones_history.csv",
-        "visitors_csv": "minimal_ad74413r_visitors_history.csv",
-        "colors": ["#20B2AA", "#FF6B6B"],
-    },
-    {
-        "name": "Modular_Software_Configurable_IO_PLC",
-        "clones_csv": (
-            "modular_software_configurable_io_plc_clones_history.csv"
-        ),
-        "visitors_csv": (
-            "modular_software_configurable_io_plc_visitors_history.csv"
-        ),
-        "colors": ["#4DB6AC", "#7E57C2"],
-    },
+REPOS_NAMES = [
+    "KiCAD_Symbols_Generator",
+    "Minimal_ADP1032",
+    "Minimal_MAX14906",
+    "Minimal_AD74413R",
+    "Modular_Software_Configurable_IO_PLC",
+    "Minimal_ADIN1110",
 ]
 
+COLORS = [
+    ["#2E8B57", "#4169E1"],
+    ["#FF4500", "#9932CC"],
+    ["#FFD700", "#C71585"],
+    ["#20B2AA", "#FF6B6B"],
+    ["#1E90FF", "#8A2BE2"],
+    ["#32CD32", "#FF69B4"],
+]
 
-PROJECTS = [repo["name"] for repo in REPOS[1:]]
+REPOS_DATA = []
+
+for repo_index, repo_name in enumerate(REPOS_NAMES):
+    REPOS_DATA.append(
+        {
+            "name": repo_name,
+            "clones_csv": f"{repo_name.lower()}_clones_history.csv",
+            "visitors_csv": f"{repo_name.lower()}_visitors_history.csv",
+            "colors": COLORS[repo_index],
+        },
+    )
+
+print(REPOS_DATA)
+
+
+PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
 
 
 def create_header_section(
@@ -733,14 +728,14 @@ def update_graph_with_uploaded_file(
         )
 
     # Load all repository data
-    repo_data = [load_repo_data(repo_config) for repo_config in REPOS]
+    repo_data = [load_repo_data(repo_config) for repo_config in REPOS_DATA]
     clones_data, visitors_data = zip(*repo_data)
 
     # Generate titles in the original order
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
-    for repo_config in REPOS:
+    for repo_config in REPOS_DATA:
         clones_titles.extend([
             f"{repo_config['name']} Clones",
             f"{repo_config['name']} Unique Clones",
@@ -766,9 +761,9 @@ def update_graph_with_uploaded_file(
 
     # Update figure creation calls to remove relayout_data parameter
     figures = []
-    for repo_index in range(len(REPOS)):
+    for repo_index in range(len(REPOS_DATA)):
         repos_to_exclude = (
-            REPOS[1:] if repo_index == 0 else REPOS[:repo_index]
+            REPOS_DATA[1:] if repo_index == 0 else REPOS_DATA[:repo_index]
         )
 
         filtered_clones_titles = [
@@ -788,7 +783,7 @@ def update_graph_with_uploaded_file(
             )
         ]
 
-        current_repo = REPOS[repo_index]
+        current_repo = REPOS_DATA[repo_index]
         figures.append(
             create_and_adjust_figure(
                 [clones_data[repo_index]],
