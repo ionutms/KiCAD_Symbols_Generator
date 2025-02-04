@@ -465,7 +465,11 @@ def create_figure(
             "zeroline": False,
             "domain": (0.0, 1.0),
             "showgrid": True,
-            "title": {"text": "Date", "standoff": 10},
+            "title": {
+                "text": "Date",
+                "standoff": 10,
+                "font": {"color": "#808080"},
+            },
             "title_font_weight": "bold",
             "range": [min_timestamp, max_timestamp],
             "type": "date",
@@ -475,7 +479,6 @@ def create_figure(
             "tickangle": -30,
             "fixedrange": True,
             "tickfont": {"color": "#808080", "weight": "bold"},
-            "titlefont": {"color": "#808080"},
         },
         "yaxis": {
             "gridcolor": "#808080",
