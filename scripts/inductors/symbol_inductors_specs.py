@@ -29,9 +29,9 @@ class SeriesSpec(NamedTuple):
         datasheet: URL to the series datasheet
         inductance_values: List of available inductance values
         trustedparts_link: URL to the TrustedParts search page
-        value_suffix: AEC qualification suffix
         max_dc_current: List of maximum DC current ratings
         max_dc_resistance: List of maximum DC resistance ratings
+        value_suffix: AEC qualification suffix
         reference: Component reference prefix (default: "L")
 
     """
@@ -43,9 +43,9 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     inductance_values: list[float]
     trustedparts_link: str
-    value_suffix: str
     max_dc_current: list[float]
     max_dc_resistance: list[float]
+    value_suffix: str = ""
     reference: str = "L"
 
 
@@ -168,6 +168,13 @@ class PartInfo(NamedTuple):
             Description string for the component
 
         """
+        if specs.manufacturer == "Wurth Elektronik":
+            parts = [
+                "Ferrite Bead",
+                cls.format_value(inductance).replace(" µH", " Ω @ 100 MHz"),
+                specs.tolerance,
+            ]
+            return " ".join(parts)
         parts = [
             "INDUCTOR SMD",
             cls.format_value(inductance),
@@ -193,6 +200,8 @@ class PartInfo(NamedTuple):
         """
         value_code = cls.generate_value_code(inductance, specs.value_suffix)
         mpn = f"{specs.base_series}-{value_code}"
+        if specs.manufacturer == "Wurth Elektronik":
+            mpn = f"{specs.base_series}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         try:
@@ -1370,6 +1379,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_current=[20.0, 17.0, 15.0, 10.5, 8.0],
         max_dc_resistance=[4.3, 6.38, 8.47, 16.0, 22.6],
         value_suffix="ME",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "742792731": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="742792731",
+        footprint="inductor_footprints:742792731",
+        tolerance="±25%",
+        datasheet=(
+            "https://www.we-online.com/components/products/datasheet/"
+            "742792731.pdf"
+        ),
+        inductance_values=[100.0],
+        max_dc_current=[1.2],
+        max_dc_resistance=[0.09],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
