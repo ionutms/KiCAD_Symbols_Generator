@@ -811,10 +811,30 @@ VISHAY_SYMBOLS_SPECS = {
     ),
 }
 
+# Base URLs for documentation
+KEMET_DOC_BASE = "https://www.kemet.com/en/us/search.html?q="
+
+KEMET_SYMBOLS_SPECS = {
+    "C0805C": SeriesSpec(
+        mpn_prefix="C0805C",
+        manufacturer="Kemet",
+        footprint="capacitor_footprints:C_0805_2012Metric",
+        voltage_rating="100V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        mpn_sufix=["1RACTU"],
+        tolerance_map={"X7R": {"J": "5%"}},
+        value_range={"X7R": (220e-9, 220e-9)},
+        datasheet_url=f"{KEMET_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
     **SAMSUNG_SYMBOLS_SPECS,
     **TDK_SYMBOLS_SPECS,
     **VISHAY_SYMBOLS_SPECS,
+    **KEMET_SYMBOLS_SPECS,
 }
