@@ -30,12 +30,12 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=9)
+register_page(__name__, name=link_name, order=10)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_SOLDER_JUMPERS.csv")
 total_rows = len(dataframe)
 
-TITLE = f"Transistors Database ({total_rows:,} items)"
+TITLE = f"Solder Jumpers Database ({total_rows:,} items)"
 ABOUT = (
     "The solder jumpers Database is an interactive web application that "
     "provides a comprehensive view of inductor specifications.",
