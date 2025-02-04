@@ -68,11 +68,23 @@ def write_component(
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
-    symbol_utils.write_properties(
-        symbol_file,
-        component_data,
-        property_order,
-        1,
-    )
-    symbol_utils.write_inductor_symbol_drawing(symbol_file, symbol_name)
+    if component_data.get("Reference") == "E":
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            text_y_offset=2,
+        )
+        symbol_utils.write_ferrite_bead_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
+    else:
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            text_y_offset=1,
+        )
+        symbol_utils.write_inductor_symbol_drawing(symbol_file, symbol_name)
     symbol_file.write(")")
