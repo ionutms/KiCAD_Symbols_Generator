@@ -206,8 +206,6 @@ for repo_index, repo_name in enumerate(REPOS_NAMES):
         },
     )
 
-print(REPOS_DATA)
-
 
 PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
 
