@@ -156,8 +156,13 @@ class PartInfo(NamedTuple):
         # Handle values under 10pF
         if pf_value < 10:  # noqa: PLR2004
             whole = int(pf_value)
-            decimal = int((pf_value - whole) * 10)
+            decimal = int(round((pf_value - whole) * 10))
             return f"{whole}R{decimal}"
+
+        # Handle values under 100pF
+        if pf_value < 100:  # noqa: PLR2004
+            value = int(round(pf_value * 10))
+            return f"{value}"
 
         # Handle values under 1000pF
         if pf_value < 1000:  # noqa: PLR2004
@@ -428,6 +433,21 @@ MURATA_SYMBOLS_SPECS = {
         case_code_in="0402",
         case_code_mm="1005",
         excluded_values={27e-9, 39e-9, 56e-9, 82e-9},
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "GCM1555C1H": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GCM1555C1H",
+        value_range={"C0G (NP0)": (5e-12, 1e-9)},
+        tolerance_map={"C0G (NP0)": {"F": "1%"}},
+        characteristic_codes={1e-9: "A16"},
+        mpn_sufix=["D", "J"],
+        excluded_values={5.6e-12},
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
