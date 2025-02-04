@@ -1383,6 +1383,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     ),
     "742792731": SeriesSpec(
         manufacturer="Wurth Elektronik",
+        reference="E",
         base_series="742792731",
         footprint="inductor_footprints:742792731",
         tolerance="±25%",

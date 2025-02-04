@@ -408,6 +408,68 @@ def write_inductor_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def write_ferrite_bead_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the horizontal graphical representation of an inductor symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f"""
+        (symbol "{symbol_name}_0_1"
+            (polyline
+				(pts
+					(xy -1.27 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 0) (xy 2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+            (polyline
+				(pts
+					(xy 0 2.54) (xy 2.54 2.54) (xy 0 -2.54)
+                    (xy -2.54 -2.54) (xy 0 2.54)
+				)
+				(stroke
+					(width 0.2032)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+        )
+        """)
+    # Write pins
+    write_pin(symbol_file, -5.08, 0, 0, "1")
+    write_pin(symbol_file, 5.08, 0, 180, "2")
+
+    symbol_file.write("\t\t)\n")
+
+
 def get_symbol_bounds(pin_config: dict) -> tuple:
     """Get the minimum and maximum y-coordinates of the symbol.
 
