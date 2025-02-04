@@ -24,7 +24,11 @@ HEADER_MAPPING: Final[dict] = {
     "Reference": lambda part: part.reference,
     "Value": lambda part: symbol_inductors_specs.PartInfo.format_value(
         part.value,
-    ),
+    )
+    if part.reference == "L"
+    else symbol_inductors_specs.PartInfo.format_value(
+        part.value,
+    ).replace(" µH", " Ω"),
     "Footprint": lambda part: part.footprint,
     "Datasheet": lambda part: part.datasheet,
     "Description": lambda part: part.description,
