@@ -42,6 +42,8 @@ class SeriesSpec(NamedTuple):
         characteristic_codes: Mapping of capacitance thresholds to codes
         excluded_values: Set of capacitance values to exclude
         specified_values: List of specified capacitance values
+        additional_values:
+            Dictionary mapping dielectric types to lists of additional values
         reference: Reference designator for the component
 
     """
@@ -61,6 +63,7 @@ class SeriesSpec(NamedTuple):
     characteristic_codes: dict[float, str] = {}  # noqa: RUF012
     excluded_values: set[float] | None = None
     specified_values: list[float] | None = None
+    additional_values: set[float] | None = None
     reference: str = "C"
 
 
@@ -269,6 +272,58 @@ class PartInfo(NamedTuple):
                     yield normalized_value
             decade *= 10
 
+    @classmethod
+    def generate_all_values(
+        cls,
+        min_value: float,
+        max_value: float,
+        excluded_values: set[float] | None = None,
+        specified_values: list[float] | None = None,
+        additional_values: list[float] | None = None,
+    ) -> Iterator[float]:
+        """Generate all valid capacitance values.
+
+        Args:
+            min_value: Minimum capacitance value in farads
+            max_value: Maximum capacitance value in farads
+            excluded_values: Set of capacitance values to exclude
+            specified_values: List of specified capacitance values
+            additional_values:
+                List of additional non-standard values to include
+
+        Yields:
+            All valid capacitance values within the specified range
+
+        """
+        # First yield all standard E12 values
+        for value in cls.generate_standard_values(
+            min_value,
+            max_value,
+            excluded_values,
+            specified_values,
+        ):
+            yield value
+
+        # Then yield additional values if provided
+        if additional_values:
+            normalized_excluded = set()
+            if excluded_values is not None:
+                normalized_excluded = {
+                    float(f"{value:.1e}") for value in excluded_values
+                }
+
+            for value in additional_values:
+                normalized_value = float(f"{value:.1e}")
+                if (
+                    min_value <= normalized_value <= max_value
+                    and normalized_value not in normalized_excluded
+                    and (
+                        specified_values is None
+                        or normalized_value in specified_values
+                    )
+                ):
+                    yield normalized_value
+
     @staticmethod
     def generate_datasheet_url(
         mpn: str,
@@ -389,12 +444,12 @@ class PartInfo(NamedTuple):
         for dielectric_type in dielectric_types:
             if dielectric_type in specs.value_range:
                 min_val, max_val = specs.value_range[dielectric_type]
-
-                for capacitance in cls.generate_standard_values(
+                for capacitance in cls.generate_all_values(
                     min_val,
                     max_val,
                     specs.excluded_values,
                     specs.specified_values,
+                    specs.additional_values,
                 ):
                     for (
                         tolerance_code,
@@ -443,7 +498,38 @@ MURATA_SYMBOLS_SPECS = {
         tolerance_map={"C0G (NP0)": {"F": "1%"}},
         characteristic_codes={1e-9: "A16"},
         mpn_sufix=["D", "J"],
-        excluded_values={5.6e-12},
+        excluded_values={5.6e-12, 8.2e-12},
+        additional_values={
+            5e-12,
+            5.1e-12,
+            6e-12,
+            7e-12,
+            8e-12,
+            11e-12,
+            13e-12,
+            16e-12,
+            20e-12,
+            24e-12,
+            30e-12,
+            36e-12,
+            43e-12,
+            51e-12,
+            62e-12,
+            75e-12,
+            91e-12,
+            110e-12,
+            130e-12,
+            160e-12,
+            200e-12,
+            240e-12,
+            300e-12,
+            360e-12,
+            430e-12,
+            510e-12,
+            620e-12,
+            750e-12,
+            910e-12,
+        },
         footprint="capacitor_footprints:C_0402_1005Metric",
         voltage_rating="50V",
         case_code_in="0402",
