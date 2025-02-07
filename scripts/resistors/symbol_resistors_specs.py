@@ -298,7 +298,12 @@ class PartInfo(NamedTuple):
             return cls._generate_sei_stackpole_resistance_code(resistance)
 
         # Special handling for specific ERJ series
-        if specs.mpn_prefix in ("ERJ-2GEJ", "ERJ-3GEYJ", "ERJ-6GEYJ"):
+        if specs.mpn_prefix in (
+            "ERJ-2GEJ",
+            "ERJ-3GEYJ",
+            "ERJ-6GEYJ",
+            "ERJ-6DQJ",
+        ):
             return cls._generate_erj_special_series_code(resistance)
 
         # Special handling for specific ERA series
@@ -391,6 +396,11 @@ class PartInfo(NamedTuple):
             The resistance code portion of the manufacturer's part number
 
         """
+        if resistance < 1:  # < 10Ω
+            whole = int(resistance)
+            decimal = int(round((resistance - whole) * 100))
+            return f"R{decimal}"
+
         if resistance < 10:  # < 10Ω  # noqa: PLR2004
             whole = int(resistance)
             decimal = int(round((resistance - whole) * 10))
@@ -647,7 +657,7 @@ class PartInfo(NamedTuple):
 
         """
         min_resistance, max_resistance = resistance_range
-        multipliers = [0.1, 1, 10, 100, 1000, 10000, 100000, 1000000]
+        multipliers = [0.01, 0.1, 1, 10, 100, 1000, 10000, 100000, 1000000]
 
         for base_value in base_values:
             for multiplier in multipliers:
@@ -852,6 +862,24 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=(
             "https://industrial.panasonic.com/cdbs/www-data/pdf/"
             "RDA0000/AOA0000C301.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERJ-6DQJ": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERJ-6DQJ",
+        mpn_sufix="V",
+        footprint="resistor_footprints:R_0805_2012Metric",
+        voltage_rating="150V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        power_rating="0.125W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.22, 9.1],
+        tolerance_map={"E24": "5%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/"
+            "RDN0000/AOA0000C313.pdf"
         ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
