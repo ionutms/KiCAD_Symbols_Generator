@@ -334,7 +334,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     ),
     "SBAV99WT1G": SeriesSpec(
         reference="CR",
-        manufacturer="Kingbright",
+        manufacturer="Onsemi",
         base_series="SBAV99WT1G",
         footprint="diode_footprints:SC_70",
         datasheet=(
