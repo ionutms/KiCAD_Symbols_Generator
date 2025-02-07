@@ -804,6 +804,33 @@ TDK_SYMBOLS_SPECS = {
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "CGA3E2X7R2A": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="CGA3E2X7R2A",
+        value_range={"X7R": (1e-9, 22e-9)},
+        excluded_values={
+            1.2e-9,
+            1.5e-9,
+            1.8e-9,
+            2.7e-9,
+            3.3e-9,
+            3.9e-9,
+            5.6e-9,
+            6.8e-9,
+            8.2e-9,
+            12e-9,
+            15e-9,
+            18e-9,
+        },
+        tolerance_map={"X7R": {"M": "20%"}},
+        mpn_sufix=["080AA"],
+        footprint="capacitor_footprints:C_0603_1608Metric",
+        voltage_rating="100V",
+        case_code_in="0603",
+        case_code_mm="1608",
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
