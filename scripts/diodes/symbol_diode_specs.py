@@ -347,4 +347,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Dual Small Signal Switching Diodes",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "PMEG10020AELR": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="PMEG10020AELR",
+        footprint="diode_footprints:SOD123W",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/"
+            "PMEG10020AELR.pdf"
+        ),
+        voltage_rating=[100.0],
+        current_rating=[2.0],
+        package="SOD123W",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
