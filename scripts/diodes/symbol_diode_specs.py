@@ -2,7 +2,13 @@
 
 This module provides data structures and definitions for various diode
 series, including their specifications and individual component
-information.
+information. It handles creation and management of diode part numbers,
+specifications, and related information, with support for different
+manufacturers and series types.
+
+The module includes two main classes:
+- SeriesSpec: For defining diode series specifications
+- PartInfo: For managing individual diode component information
 """
 
 from __future__ import annotations
@@ -39,9 +45,9 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     voltage_rating: list[float]
     trustedparts_link: str
-    current_rating: list[float]
     package: str
     diode_type: str
+    current_rating: list[float] | None = None
     part_number_suffix: str | None = None
     reference: str = "D"
 
@@ -88,11 +94,14 @@ class PartInfo(NamedTuple):
     def format_value(value: float) -> str:
         """Format the diode voltage value with a 'V' suffix.
 
+        Converts a numerical voltage value to a string with a 'V' suffix,
+        suitable for use in component descriptions and documentation.
+
         Args:
-            value (float): The voltage rating of the diode.
+            value: The voltage rating of the diode.
 
         Returns:
-            str: Formatted voltage value with 'V' appended.
+            Formatted voltage value with 'V' appended.
 
         """
         return f"{value} V"
@@ -105,13 +114,15 @@ class PartInfo(NamedTuple):
     ) -> str:
         """Create a descriptive string for the diode component.
 
+        Generates a standardized description string that includes the diode
+        type, mounting style (SMD), and voltage rating.
+
         Args:
-            value (float): The voltage rating of the diode.
-            diode_type (str, optional):
-                Type of diode component. Defaults to "DIODE".
+            value: The voltage rating of the diode.
+            diode_type: Type of diode component. Defaults to "DIODE".
 
         Returns:
-            str: Descriptive string for the diode component
+            Descriptive string for the diode component.
 
         """
         parts = [f"{diode_type} SMD", cls.format_value(value)]
@@ -125,56 +136,79 @@ class PartInfo(NamedTuple):
     ) -> Self | None:
         """Create a PartInfo object for a specific diode component.
 
+        Generates a complete PartInfo instance based on the provided voltage
+        value and series specifications. Handles different
+        manufacturer-specific part number formats and validates the voltage
+        value against the series specifications.
+
         Args:
             value: Voltage rating of the diode component
             specs: Series specifications for the diode component
 
         Returns:
-            PartInfo: Instance of PartInfo for the diode component
-
-        Raises:
-            ValueError: If the voltage value is not found in the series
-            IndexError: If no DC specifications are found for the value
+            Instance of PartInfo for the diode component, or None if the
+            voltage value is invalid or not found in the specifications.
 
         """
         # Construct MPN with optional suffix
         mpn = f"{specs.base_series}"
         if specs.manufacturer == "Kingbright":
             mpn = f"{specs.base_series.replace('-', '/', 1)}"
-        if specs.part_number_suffix:
+        if specs.manufacturer == "Onsemi" and specs.part_number_suffix:
             # Find index of voltage in ratings list
-            try:
-                index = specs.voltage_rating.index(value)
-                # Adjust index to start from 21
-                adjusted_index = index + 21
-                mpn = (
-                    f"{specs.base_series}{adjusted_index}"
-                    f"{specs.part_number_suffix}"
-                )
-            except ValueError:
-                print_message_utilities.print_error(
-                    f"Error: value {value} V "
-                    f"not found in series {specs.base_series}",
-                )
-                return None
+            index = specs.voltage_rating.index(value)
+            # Adjust index to start from 21
+            adjusted_index = index + 21
+            mpn = (
+                f"{specs.base_series}{adjusted_index}"
+                f"{specs.part_number_suffix}"
+            )
+
+        if specs.manufacturer == "Nexperia" and specs.part_number_suffix:
+            # Find index of voltage in ratings list
+            index = specs.voltage_rating.index(value)
+
+            voltage_str = f"{float(specs.voltage_rating[index]):.3f}"
+            whole, decimal = voltage_str.split(".")
+            decimal = decimal.rstrip("0")
+            if not decimal:
+                decimal = "0"
+
+            voltage_notation = (
+                f"{whole}V{decimal}" if decimal else f"{whole}V0"
+            )
+            if float(whole) >= 10:  # noqa: PLR2004
+                voltage_notation = f"{whole}V"
+
+            mpn = (
+                f"{specs.base_series}"
+                f"{voltage_notation}"
+                f"{specs.part_number_suffix}"
+            )
 
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
+        # Handle current rating
         try:
             index = specs.voltage_rating.index(value)
-            current_rating = float(specs.current_rating[index])
+            if specs.current_rating is not None:
+                try:
+                    current_rating = float(specs.current_rating[index])
+                except IndexError:
+                    print_message_utilities.print_error(
+                        "Error: Current rating index out of range "
+                        f"for value {value} V in series {specs.base_series}",
+                    )
+                    current_rating = 0.0
+            else:
+                # Set default current rating when specs.current_rating is None
+                current_rating = 0.0
         except ValueError:
             print_message_utilities.print_error(
                 f"Error: value {value} V "
                 f"not found in series {specs.base_series}",
             )
-            current_rating = 0.0
-        except IndexError:
-            print_message_utilities.print_error(
-                "Error: No DC specifications found for value "
-                f"{value} V in series {specs.base_series}",
-            )
-            current_rating = 0.0
+            return None
 
         return cls(
             symbol_name=f"{specs.reference}_{mpn.replace('/', '-')}",
@@ -199,14 +233,16 @@ class PartInfo(NamedTuple):
     ) -> list[Self]:
         """Generate all part numbers for the series.
 
-        Class method that creates a list of PartInfo instances for
-        all voltage ratings in the given series specifications.
+        Creates a list of PartInfo instances for all voltage ratings defined
+        in the given series specifications. Filters out any invalid voltage
+        ratings that fail to create valid part information.
 
         Args:
             specs: Series specifications for the diode component
 
         Returns:
-            list[PartInfo]: List of PartInfo instances for the series
+            List of PartInfo instances for all valid voltage ratings
+            in the series
 
         """
         return [
@@ -345,6 +381,70 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         current_rating=[0.215],
         package="SC_70",
         diode_type="Dual Small Signal Switching Diodes",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "PMEG10020AELR": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="PMEG10020AELR",
+        footprint="diode_footprints:SOD123W",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/"
+            "PMEG10020AELR.pdf"
+        ),
+        voltage_rating=[100.0],
+        current_rating=[2.0],
+        package="SOD123W",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "PTVS": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="PTVS",
+        part_number_suffix="P1UTP,115",
+        footprint="diode_footprints:SOD128",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/"
+            "PTVSXP1UTP_SER.pdf"
+        ),
+        voltage_rating=[
+            3.3,
+            5,
+            6,
+            6.5,
+            7,
+            7.5,
+            8,
+            8.5,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            33,
+            36,
+            40,
+            43,
+            45,
+            48,
+            51,
+            54,
+            58,
+            60,
+            64,
+        ],
+        package="SOD128",
+        diode_type="TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
