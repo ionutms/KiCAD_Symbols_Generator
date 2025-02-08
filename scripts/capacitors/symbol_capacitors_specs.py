@@ -388,6 +388,8 @@ class PartInfo(NamedTuple):
                 f"{tolerance_code}"
                 f"{packaging}"
             )
+        elif specs.manufacturer == "Wurth Elektronik":
+            mpn = f"{specs.mpn_prefix}"
         else:
             mpn = (
                 f"{specs.mpn_prefix}"
@@ -455,7 +457,10 @@ class PartInfo(NamedTuple):
                         tolerance_code,
                         tolerance_value,
                     ) in specs.tolerance_map[dielectric_type].items():
-                        for packaging in specs.mpn_sufix:
+                        suffixes = (
+                            specs.mpn_sufix if specs.mpn_sufix else [""]
+                        )
+                        for packaging in suffixes:
                             parts_list.append(  # noqa: PERF401
                                 cls.create_part_info(
                                     capacitance=capacitance,
@@ -886,6 +891,27 @@ KEMET_SYMBOLS_SPECS = {
     ),
 }
 
+# Base URLs for documentation
+WURTH_ELEKTRONIK_DOC_BASE = (
+    "https://www.we-online.com/components/products/datasheet/885012208119.pdf"
+)
+
+WURTH_ELEKTRONIK_SYMBOLS_SPECS = {
+    "885012208119": SeriesSpec(
+        mpn_prefix="885012208119",
+        mpn_sufix="",
+        manufacturer="Wurth Elektronik",
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="100V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        tolerance_map={"X7R": {"": "10%"}},
+        value_range={"X7R": (150e-9, 150e-9)},
+        datasheet_url=f"{WURTH_ELEKTRONIK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
@@ -893,4 +919,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **TDK_SYMBOLS_SPECS,
     **VISHAY_SYMBOLS_SPECS,
     **KEMET_SYMBOLS_SPECS,
+    **WURTH_ELEKTRONIK_SYMBOLS_SPECS,
 }
