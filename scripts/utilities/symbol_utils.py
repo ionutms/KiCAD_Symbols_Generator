@@ -308,11 +308,23 @@ def write_polarised_capacitor_symbol_drawing(
                 (stroke (width 0.508) (type default))
                 (fill (type none))
             )
-            (polyline
-                (pts (xy 0.762 -2.032) (xy 0.762 2.032))
-                (stroke (width 0.508) (type default))
-                (fill (type none))
-            )
+			(polyline
+				(pts (xy -2.54 -1.016) (xy -2.54 -2.032))
+				(stroke (width 0.508) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts (xy -2.032 -1.524) (xy -3.048 -1.524))
+				(stroke (width 0.508) (type default))
+				(fill (type none))
+			)
+			(arc
+				(start 1.524 2.032)
+				(mid 0.9088 0)
+				(end 1.524 -2.032)
+				(stroke (width 0.508) (type default))
+				(fill (type none))
+			)
         )
     """)
 
