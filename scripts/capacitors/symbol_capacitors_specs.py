@@ -390,6 +390,12 @@ class PartInfo(NamedTuple):
             )
         elif specs.manufacturer == "Wurth Elektronik":
             mpn = f"{specs.mpn_prefix}"
+        elif specs.manufacturer == "Panasonic":
+            mpn = (
+                f"{specs.mpn_prefix}"
+                f"{formatted_value.split(' ')[0]}"
+                f"{specs.mpn_sufix}"
+            )
         else:
             mpn = (
                 f"{specs.mpn_prefix}"
@@ -441,7 +447,7 @@ class PartInfo(NamedTuple):
 
         """
         parts_list: list[PartInfo] = []
-        dielectric_types = ["X7R", "X7S", "C0G (NP0)"]
+        dielectric_types = ["X7R", "X7S", "C0G (NP0)", "Polymer"]
 
         for dielectric_type in dielectric_types:
             if dielectric_type in specs.value_range:
@@ -912,6 +918,29 @@ WURTH_ELEKTRONIK_SYMBOLS_SPECS = {
     ),
 }
 
+# Base URLs for documentation
+PANASONIC_DOC_BASE = (
+    "https://industrial.panasonic.com/cdbs/www-data/pdf/AAB8000/"
+    "AAB8000C226.pdf"
+)
+
+PANASONIC_SYMBOLS_SPECS = {
+    "50SVPK": SeriesSpec(
+        mpn_prefix="50SVPK",
+        mpn_sufix="M",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:CP_Elec_6_6x6_6x6mm",
+        voltage_rating="50V",
+        case_code_in="026x026x0236",
+        case_code_mm="6.6x6.6x6.0",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (10e-6, 120e-6)},
+        specified_values=[10e-6, 22e-6, 33e-6, 68e-6, 120e-6],
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
@@ -920,4 +949,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **VISHAY_SYMBOLS_SPECS,
     **KEMET_SYMBOLS_SPECS,
     **WURTH_ELEKTRONIK_SYMBOLS_SPECS,
+    **PANASONIC_SYMBOLS_SPECS,
 }
