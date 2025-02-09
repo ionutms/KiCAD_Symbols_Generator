@@ -28,6 +28,8 @@ def generate_footprint(
     """
     case_in: str = series_spec.case_code_in
     case_mm: str = series_spec.case_code_mm
+    footprint_name: str = f"C_{case_in}_{case_mm}Metric"
+    step_file_name: str = f"C_{case_in}"
 
     body_width: float = capacitor_specs.body_dimensions.width
     body_height: float = capacitor_specs.body_dimensions.height
@@ -37,9 +39,6 @@ def generate_footprint(
     pad_height: float = capacitor_specs.pad_dimensions.height
 
     if series_spec.capacitor_type == "Ceramic":
-        footprint_name: str = f"C_{case_in}_{case_mm}Metric"
-        step_file_name: str = f"C_{case_in}"
-
         sections: list[str] = [
             footprint_utils.generate_header(footprint_name),
             footprint_utils.generate_properties(
@@ -65,9 +64,6 @@ def generate_footprint(
             ")",  # Close the footprint
         ]
     else:
-        footprint_name: str = f"C_{case_in}"
-        step_file_name: str = f"C_{case_in}"
-
         sections: list[str] = [
             footprint_utils.generate_header(footprint_name),
             footprint_utils.generate_properties(
