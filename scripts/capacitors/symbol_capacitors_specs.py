@@ -64,6 +64,7 @@ class SeriesSpec(NamedTuple):
     excluded_values: set[float] | None = None
     specified_values: list[float] | None = None
     additional_values: set[float] | None = None
+    capacitor_type: str = "Ceramic"
     reference: str = "C"
 
 
@@ -109,6 +110,7 @@ class PartInfo(NamedTuple):
     case_code_mm: str
     series: str
     trustedparts_link: str
+    capacitor_type: str
 
     @staticmethod
     def format_value(capacitance: float) -> str:
@@ -430,6 +432,7 @@ class PartInfo(NamedTuple):
             case_code_mm=specs.case_code_mm,
             series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
+            capacitor_type=specs.capacitor_type,
         )
 
     @classmethod
@@ -931,6 +934,7 @@ PANASONIC_SYMBOLS_SPECS = {
         manufacturer="Panasonic",
         footprint="capacitor_footprints:CP_Elec_6_6x6_6x6mm",
         voltage_rating="50V",
+        capacitor_type="Polymer",
         case_code_in="026x026x0236",
         case_code_mm="6.6x6.6x6.0",
         tolerance_map={"Polymer": {"": "20%"}},
