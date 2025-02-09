@@ -852,6 +852,7 @@ def write_coupled_inductor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
     pin_config: dict,
+    reversed_polarity_symbol: bool,  # noqa: FBT001
 ) -> None:
     """Write the horizontal graphical representation of an inductor symbol.
 
@@ -859,6 +860,7 @@ def write_coupled_inductor_symbol_drawing(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         pin_config (dict): Pin config.
+        reversed_polarity_symbol (bool): Whether the polarity is reversed.
 
     Returns:
         None
@@ -873,8 +875,9 @@ def write_coupled_inductor_symbol_drawing(
     # Write right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
+    secondary_dot_y = -1 if reversed_polarity_symbol else 1
     # Write polarity dots
-    for x, y in [(-2.54, 3.81), (2.54, -3.81)]:
+    for x, y in [(-2.54, 3.81), (2.54, secondary_dot_y * 3.81)]:
         symbol_file.write(f"""
             (circle
                 (center {x} {y})
