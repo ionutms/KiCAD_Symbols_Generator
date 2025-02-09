@@ -80,6 +80,7 @@ class SeriesSpec(NamedTuple):
     max_dc_current: list[float]
     max_dc_resistance: list[float]
     pin_config: SidePinConfig
+    reversed_polarity_symbol: bool = True
     reference: str = "L"
 
 
@@ -420,14 +421,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         ],
         value_suffix="ML",
         trustedparts_link="https://www.trustedparts.com/en/search",
+        reversed_polarity_symbol=False,
         pin_config=SidePinConfig(
             left=[
                 PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("3", -5.08, "unspecified", 5.08),
             ],
             right=[
-                PinConfig("3", 5.08, "unspecified", 5.08),
-                PinConfig("2", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "unspecified", 5.08),
+                PinConfig("4", -5.08, "unspecified", 5.08),
             ],
         ),
     ),
@@ -445,14 +447,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=[0.053, 0.098, 0.208, 0.297, 0.387],
         value_suffix="ME",
         trustedparts_link="https://www.trustedparts.com/en/search",
+        reversed_polarity_symbol=False,
         pin_config=SidePinConfig(
             left=[
                 PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("3", -5.08, "unspecified", 5.08),
             ],
             right=[
-                PinConfig("3", 5.08, "unspecified", 5.08),
-                PinConfig("2", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "unspecified", 5.08),
+                PinConfig("4", -5.08, "unspecified", 5.08),
             ],
         ),
     ),
@@ -524,14 +527,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         ],
         value_suffix="ML",
         trustedparts_link="https://www.trustedparts.com/en/search",
+        reversed_polarity_symbol=False,
         pin_config=SidePinConfig(
             left=[
                 PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("3", -5.08, "unspecified", 5.08),
             ],
             right=[
-                PinConfig("3", 5.08, "unspecified", 5.08),
-                PinConfig("2", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "unspecified", 5.08),
+                PinConfig("4", -5.08, "unspecified", 5.08),
             ],
         ),
     ),
