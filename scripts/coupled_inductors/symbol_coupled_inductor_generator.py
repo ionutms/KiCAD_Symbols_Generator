@@ -106,6 +106,7 @@ def write_component(
     # Get pin configuration from SYMBOLS_SPECS if available
     series_spec = SYMBOLS_SPECS.get(series)
     pin_config = convert_pin_config(series_spec.pin_config)
+    reversed_polarity_symbol = series_spec.reversed_polarity_symbol
 
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
@@ -118,5 +119,6 @@ def write_component(
         symbol_file,
         symbol_name,
         pin_config,
+        reversed_polarity_symbol,
     )
     symbol_file.write(")")
