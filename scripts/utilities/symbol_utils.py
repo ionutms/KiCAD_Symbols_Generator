@@ -287,6 +287,40 @@ def write_capacitor_symbol_drawing(
     write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
 
 
+def write_polarised_capacitor_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the graphical representation of a symbol in the KiCad symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f"""
+        (symbol "{symbol_name}_0_1"
+            (polyline
+                (pts (xy -0.762 -2.032) (xy -0.762 2.032))
+                (stroke (width 0.508) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 0.762 -2.032) (xy 0.762 2.032))
+                (stroke (width 0.508) (type default))
+                (fill (type none))
+            )
+        )
+    """)
+
+    # Write pins
+    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
+    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
+
+
 def write_resistor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
