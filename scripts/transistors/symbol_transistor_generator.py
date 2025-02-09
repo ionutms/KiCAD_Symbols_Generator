@@ -86,10 +86,16 @@ def write_component(
                 symbol_name,
             )
     if component_data.get("Transistor Type") == "N-Channel":
-        symbol_utils.write_n_mos_transistor_symbol_drawing(
-            symbol_file,
-            symbol_name,
-        )
+        if component_data.get("Series") == "BSS123WQ-7-F":
+            symbol_utils.write_n_mos_basic_transistor_symbol_drawing(
+                symbol_file,
+                symbol_name,
+            )
+        else:
+            symbol_utils.write_n_mos_transistor_symbol_drawing(
+                symbol_file,
+                symbol_name,
+            )
     if component_data.get("Transistor Type") == "N-Channel Dual":
         symbol_utils.write_n_mos_dual_transistor_symbol_drawing(
             symbol_file,

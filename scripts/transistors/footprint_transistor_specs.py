@@ -32,6 +32,25 @@ class BodyDimensions(NamedTuple):
     height: float
 
 
+class PadDimensions(NamedTuple):
+    """Defines dimensions for asymmetric transistor pads.
+
+    All measurements are in millimeters.
+
+    Attributes:
+        width: Width of the pad
+        height: Height of the pad
+        pad_center_x: X-coordinate of the pad center
+        pad_pitch_y: Y-coordinate of the pad center
+
+    """
+
+    width: float
+    height: float
+    pad_center_x: float
+    pad_pitch_y: float
+
+
 class PadDimensionsAsymmetric(NamedTuple):
     """Defines pad dimensions and positions for diode footprints.
 
@@ -85,6 +104,7 @@ class FootprintSpecs(NamedTuple):
     body_dimensions: BodyDimensions
     pad_dimensions: PadDimensionsAsymmetric
     ref_offset_y: float
+    pin_count: int | None = None
 
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
@@ -167,5 +187,16 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_numbers=[1, 2, 3, 4, 5, 6],
         ),
         ref_offset_y=-3.2,
+    ),
+    "SOT-323": FootprintSpecs(
+        pin_count=3,
+        body_dimensions=BodyDimensions(width=2.2, height=2.9),
+        pad_dimensions=PadDimensions(
+            width=0.47,
+            height=0.6,
+            pad_center_x=1.3,
+            pad_pitch_y=1.9,
+        ),
+        ref_offset_y=-2.286,
     ),
 }
