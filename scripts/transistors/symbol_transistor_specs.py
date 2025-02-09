@@ -293,4 +293,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="P-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSS123WQ-7-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="BSS123WQ-7-F",
+        footprint="transistor_footprints:SOT-323",
+        datasheet=("https://www.diodes.com/assets/Datasheets/BSS123WQ.pdf"),
+        drain_source_voltage=[100],
+        drain_current=[0.17],
+        package="SOT-323",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
