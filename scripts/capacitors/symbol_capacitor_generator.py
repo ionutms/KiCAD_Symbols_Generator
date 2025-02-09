@@ -67,5 +67,11 @@ def write_component(
         property_order,
         2,
     )
-    symbol_utils.write_capacitor_symbol_drawing(symbol_file, symbol_name)
+    if component_data["Capacitor Type"] == "Ceramic":
+        symbol_utils.write_capacitor_symbol_drawing(symbol_file, symbol_name)
+    else:
+        symbol_utils.write_polarised_capacitor_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
     symbol_file.write(")")

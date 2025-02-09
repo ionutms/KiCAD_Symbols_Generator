@@ -38,26 +38,66 @@ def generate_footprint(
     pad_width: float = capacitor_specs.pad_dimensions.width
     pad_height: float = capacitor_specs.pad_dimensions.height
 
-    sections: list[str] = [
-        footprint_utils.generate_header(footprint_name),
-        footprint_utils.generate_properties(
-            capacitor_specs.ref_offset_y,
-            footprint_name,
-        ),
-        footprint_utils.generate_courtyard(body_width, body_height),
-        footprint_utils.generate_fab_rectangle(body_width, body_height),
-        footprint_utils.generate_silkscreen_lines(
-            body_height,
-            pad_center_x,
-            pad_width,
-        ),
-        footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
-        footprint_utils.associate_3d_model(
-            "KiCAD_Symbol_Generator/3D_models",
-            step_file_name,
-        ),
-        ")",  # Close the footprint
-    ]
+    if series_spec.capacitor_type == "Ceramic":
+        sections: list[str] = [
+            footprint_utils.generate_header(footprint_name),
+            footprint_utils.generate_properties(
+                capacitor_specs.ref_offset_y,
+                footprint_name,
+            ),
+            footprint_utils.generate_courtyard(body_width, body_height),
+            footprint_utils.generate_fab_rectangle(body_width, body_height),
+            footprint_utils.generate_silkscreen_lines(
+                body_height,
+                pad_center_x,
+                pad_width,
+            ),
+            footprint_utils.generate_pads(
+                pad_width,
+                pad_height,
+                pad_center_x,
+            ),
+            footprint_utils.associate_3d_model(
+                "KiCAD_Symbol_Generator/3D_models",
+                step_file_name,
+            ),
+            ")",  # Close the footprint
+        ]
+    else:
+        sections: list[str] = [
+            footprint_utils.generate_header(footprint_name),
+            footprint_utils.generate_properties(
+                capacitor_specs.ref_offset_y,
+                footprint_name,
+            ),
+            footprint_utils.generate_chamfered_shape(
+                body_width,
+                body_height,
+                layer="F.SilkS",
+                stroke_width=0.1524,
+            ),
+            footprint_utils.generate_chamfered_shape(
+                body_width,
+                body_height,
+                layer="F.CrtYd",
+            ),
+            footprint_utils.generate_chamfered_shape(
+                body_width,
+                body_height,
+                layer="F.Fab",
+            ),
+            footprint_utils.generate_pads(
+                pad_width,
+                pad_height,
+                pad_center_x,
+            ),
+            footprint_utils.associate_3d_model(
+                "KiCAD_Symbol_Generator/3D_models",
+                step_file_name,
+            ),
+            ")",  # Close the footprint
+        ]
+
     return "\n".join(sections)
 
 
