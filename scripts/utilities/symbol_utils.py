@@ -1565,8 +1565,8 @@ def write_n_mos_basic_transistor_symbol_drawing(
 
     # Write pins with vertical offset
     write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "2", "D", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "3", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
