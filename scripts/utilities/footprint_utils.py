@@ -79,6 +79,46 @@ def generate_courtyard(width: float, height: float) -> str:
         """
 
 
+def generate_chamfered_shape(
+    width: float,
+    height: float,
+    layer: str,
+    stroke_width: float = 0.00635,
+) -> str:
+    """Generate a chamfered shape for a KiCad footprint.
+
+    Creates a chamfered shape to represent a component's physical body
+
+    Args:
+        width (float): Component body width in millimeters.
+        height (float): Component body height in millimeters.
+        layer (str): Layer to draw the chamfered shape on.
+        stroke_width (float): Width of the stroke line.
+
+    Returns:
+        str: KiCad formatted chamfered shape definition.
+
+    """
+    half_width = width / 2
+    half_height = height / 2
+
+    return f"""
+        (fp_poly
+            (pts
+                (xy -{width / 4} -{half_height})
+                (xy -{half_width} -{height / 5})
+                (xy -{half_width} {height / 5})
+                (xy -{width / 4} {half_height})
+                (xy {half_width} {half_height})
+                (xy {half_width} -{half_height})
+            )
+            (stroke (width {stroke_width}) (type solid))
+            (fill none)
+            (layer "{layer}")
+            (uuid "{uuid4()}"))
+        """
+
+
 def generate_courtyard_2(
     width_left: float,
     width_right: float,
