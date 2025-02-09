@@ -45,6 +45,7 @@ HEADER_MAPPING: Final[dict] = {
     "Case Code - mm": lambda part: part.case_code_mm,
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
+    "Capacitor Type": lambda part: part.capacitor_type,
 }
 
 
