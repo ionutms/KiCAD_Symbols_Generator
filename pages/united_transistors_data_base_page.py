@@ -75,6 +75,8 @@ hidden_columns = [
     "Series",
     "Maximum DC Current (A)",
     "Maximum DC Resistance (Ω)",
+    "Description",
+    "Value",
 ]
 
 visible_columns = [
@@ -88,6 +90,13 @@ try:
 
     dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
         lambda url_text: dcu.generate_centered_link(url_text, "Search"),
+    )
+
+    dataframe["3dviewer Link"] = dataframe["3dviewer Link"].apply(
+        lambda url_text: dcu.generate_centered_link(
+            url_text,
+            "View 3D model",
+        ),
     )
 except KeyError:
     pass

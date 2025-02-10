@@ -29,24 +29,32 @@ def app_description(
         html.Div: A Div component containing the formatted app description.
 
     """
-    left_column_content: dbc.Col = dbc.Col([
-        html.H4("Key Features:"),
-        html.Ul([html.Li(feature) for feature in features]),
-    ], xs=12, md=6)
+    left_column_content: dbc.Col = dbc.Col(
+        [
+            html.H4("Key Features:"),
+            html.Ul([html.Li(feature) for feature in features]),
+        ],
+        xs=12,
+        md=6,
+    )
 
-    right_column_content: dbc.Col = dbc.Col([
-        html.H4("How to Use:"),
-        html.Ol([html.Li(step) for step in usage_steps]),
-    ], xs=12, md=6)
+    right_column_content: dbc.Col = dbc.Col(
+        [
+            html.H4("How to Use:"),
+            html.Ol([html.Li(step) for step in usage_steps]),
+        ],
+        xs=12,
+        md=6,
+    )
 
     description: html.Div = html.Div([
         html.Hr(),
-        html.H3(f"About the {title}"), *[
-            html.Div(content) if len(about) > 1
-            else html.Div(content) for content in about],
+        html.H3(f"About the {title}"),
+        *[html.Div(content) for content in about],
         html.Hr(),
         dbc.Row([left_column_content, right_column_content]),
-        html.Hr()])
+        html.Hr(),
+    ])
     return description
 
 
@@ -80,6 +88,7 @@ def callback_update_table_style_and_visibility(
             doesn't return a value directly.
 
     """
+
     @callback(
         Output(table_id, "style_data"),
         Output(table_id, "style_header"),
@@ -164,6 +173,7 @@ def callback_update_visible_columns(
             a value directly.
 
     """
+
     @callback(
         Output(table_id, "columns"),
         Output(table_id, "data"),
@@ -188,8 +198,8 @@ def callback_update_visible_columns(
 
 
 def create_column_definitions(
-        dataframe: pd.DataFrame,
-        visible_columns: list[str] = None,  # noqa: RUF013
+    dataframe: pd.DataFrame,
+    visible_columns: list[str] = None,  # noqa: RUF013
 ) -> list[dict[str, Any]]:
     """Create column definitions for the Dash DataTable.
 
@@ -220,16 +230,18 @@ def create_column_definitions(
         {
             "name": "\n".join(column.split()),
             "id": column,
-            "presentation":
-                "markdown" if column in ["Datasheet", "Trustedparts Search"]
-                else "input",
-        } for column in dataframe.columns if column in visible_columns
+            "presentation": "markdown"
+            if column in ["Datasheet", "Trustedparts Search", "3dviewer Link"]
+            else "input",
+        }
+        for column in dataframe.columns
+        if column in visible_columns
     ]
 
 
 def generate_centered_link(
-        url_text: str,
-        link_text: str = "Link",
+    url_text: str,
+    link_text: str = "Link",
 ) -> str:
     """Generate a centered HTML link with consistent styling.
 
@@ -259,8 +271,8 @@ def generate_centered_link(
 
 
 def callback_update_page_size(
-        table_id: str,
-        dropdown_id: str,
+    table_id: str,
+    dropdown_id: str,
 ) -> None:
     """Create a callback function to update DataTable page size.
 
@@ -277,6 +289,7 @@ def callback_update_page_size(
             return a value directly.
 
     """
+
     @callback(
         Output(table_id, "page_size"),
         Input(dropdown_id, "value"),
@@ -301,6 +314,7 @@ def callback_update_dropdown_style(dropdown_id: str) -> None:
         dropdown_id (str): The ID of the Dropdown component to style.
 
     """
+
     @callback(
         Output(dropdown_id, "style"),
         Input("theme_switch_value_store", "data"),
@@ -326,9 +340,9 @@ def callback_update_dropdown_style(dropdown_id: str) -> None:
 
 
 def table_controls_row(
-        module_name: str,
-        dataframe: pd.DataFrame,
-        visible_columns: list[str],
+    module_name: str,
+    dataframe: pd.DataFrame,
+    visible_columns: list[str],
 ) -> dbc.Row:
     """Create a row of controls for a data table.
 
@@ -352,46 +366,59 @@ def table_controls_row(
     if visible_columns is None:
         visible_columns = list(dataframe.columns)
 
-    col_left = dbc.Col([
-        html.Div([
-            html.H6("Items per page:", className="mb-1"),
-            dcc.Dropdown(
-                id=f"{module_name}_page_size",
-                options=[
-                    {"label": str(page_size), "value": page_size}
-                    for page_size in [10, 25, 50, 100]
+    col_left = dbc.Col(
+        [
+            html.Div(
+                [
+                    html.H6("Items per page:", className="mb-1"),
+                    dcc.Dropdown(
+                        id=f"{module_name}_page_size",
+                        options=[
+                            {"label": str(page_size), "value": page_size}
+                            for page_size in [10, 25, 50, 100]
+                        ],
+                        value=10,
+                        clearable=False,
+                    ),
+                    html.Br(),
                 ],
-                value=10,
-                clearable=False,
+                className="d-flex flex-column align-items-start",
             ),
-            html.Br(),
-        ], className="d-flex flex-column align-items-start"),
-    ], xs=12, sm=3, md=2)
+        ],
+        xs=12,
+        sm=3,
+        md=2,
+    )
 
-    col_right = dbc.Col([
-        html.Div([
-            html.H6("Show/Hide Columns:", className="mb-1"),
-            dbc.Checklist(
-                id=f"{module_name}_column_toggle",
-                options=[
-                    {"label": " ".join(col.split()), "value": col}
-                    for col in dataframe.columns
-                ],
-                value=visible_columns,
-                inline=True,
-                className="flex-wrap",
-            ),
-            html.Br(),
-        ]),
-    ], xs=12, sm=9, md=10)
+    col_right = dbc.Col(
+        [
+            html.Div([
+                html.H6("Show/Hide Columns:", className="mb-1"),
+                dbc.Checklist(
+                    id=f"{module_name}_column_toggle",
+                    options=[
+                        {"label": " ".join(col.split()), "value": col}
+                        for col in dataframe.columns
+                    ],
+                    value=visible_columns,
+                    inline=True,
+                    className="flex-wrap",
+                ),
+                html.Br(),
+            ]),
+        ],
+        xs=12,
+        sm=9,
+        md=10,
+    )
 
     return dbc.Row([col_left, col_right], className="mb-1")
 
 
 def generate_range_slider(
-        module_name: str,
-        dataframe: pd.DataFrame,
-        step: int = 50,
+    module_name: str,
+    dataframe: pd.DataFrame,
+    step: int = 50,
 ) -> dbc.Row:
     """Generate a Dash RangeSlider component for exploring DataFrame values.
 
@@ -507,9 +534,9 @@ def extract_consecutive_value_groups(
 
 
 def pad_values_and_counts(
-        values: list[Any],
-        specific_values: list[Any],
-        specific_counts: list[int],
+    values: list[Any],
+    specific_values: list[Any],
+    specific_counts: list[int],
 ) -> tuple[list[Any], list[int]]:
     """Pad values with their corresponding counts.
 
@@ -548,10 +575,10 @@ def pad_values_and_counts(
 
 
 def save_previous_slider_state_callback(
-        rangeslider_id: str,
-        rangeslider_store_id: str,
-        step: int = 50,
-    ) -> None:
+    rangeslider_id: str,
+    rangeslider_store_id: str,
+    step: int = 50,
+) -> None:
     """Create a callback to manage range slider state.
 
     This callback ensures that when one end of the range slider is moved,
@@ -568,6 +595,7 @@ def save_previous_slider_state_callback(
         dash.development.base_component.Callback: A Dash callback function.
 
     """
+
     @callback(
         Output(rangeslider_store_id, "data"),
         Output(rangeslider_id, "value"),
@@ -576,9 +604,9 @@ def save_previous_slider_state_callback(
         prevent_initial_call=True,
     )
     def save_previous_slider_state(
-            current_value: list[int],
-            stored_value: list[int],
-        ) -> list[int]:
+        current_value: list[int],
+        stored_value: list[int],
+    ) -> list[int]:
         """Adjust range slider values to maintain a consistent step size.
 
         When one end of the slider is moved, this function ensures the
