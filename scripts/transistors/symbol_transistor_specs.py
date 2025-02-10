@@ -72,6 +72,7 @@ class PartInfo(NamedTuple):
     drain_current: float
     package: str
     transistor_type: str
+    step_file_viewer_link: str
 
     @classmethod
     def create_description(cls, value: float) -> str:
@@ -124,6 +125,13 @@ class PartInfo(NamedTuple):
             )
             drain_current = 0.0
 
+        viewer_3d_link = (
+            "https://3dviewer.net/index.html#model="
+            "https://github.com/ionutms/"
+            "KiCAD_Symbols_Generator/blob/main/3D_models/"
+            f"{specs.footprint.split(':')[-1]}.step"
+        )
+
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
@@ -138,6 +146,7 @@ class PartInfo(NamedTuple):
             trustedparts_link=trustedparts_link,
             drain_current=drain_current,
             transistor_type=specs.transistor_type,
+            step_file_viewer_link=viewer_3d_link,
         )
 
     @classmethod
