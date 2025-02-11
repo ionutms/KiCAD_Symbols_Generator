@@ -211,6 +211,7 @@ class PartInfo(NamedTuple):
         series: Manufacturer's series name
         trustedparts_link: URL to component listing on Trustedparts
         temperature_coefficient: Temperature coefficient specification
+        step_file_viewer_link: URL to 3D model viewer for the component model
 
     """
 
@@ -229,6 +230,7 @@ class PartInfo(NamedTuple):
     series: str
     trustedparts_link: str
     temperature_coefficient: str
+    step_file_viewer_link: str
 
     @classmethod
     def format_value(cls, resistance: float) -> str:
@@ -543,6 +545,13 @@ class PartInfo(NamedTuple):
         if specs.manufacturer == "Yageo":
             datasheet = f"{specs.datasheet}{mpn}"
 
+        viewer_3d_link = (
+            "https://3dviewer.net/index.html#model="
+            "https://github.com/ionutms/"
+            "KiCAD_Symbols_Generator/blob/main/3D_models/"
+            f"{('_'.join(specs.footprint.split(':')[-1].split('_')[:2]))}.step"
+        )
+
         return PartInfo(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
@@ -559,6 +568,7 @@ class PartInfo(NamedTuple):
             series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
             temperature_coefficient=specs.temperature_coefficient,
+            step_file_viewer_link=viewer_3d_link,
         )
 
     @classmethod
