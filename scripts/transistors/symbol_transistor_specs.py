@@ -56,6 +56,7 @@ class PartInfo(NamedTuple):
         drain_current: The drain current rating of the transistor.
         package: The package type of the transistor.
         transistor_type: The type of transistor (e.g., N-Channel, P-Channel).
+        step_file_viewer_link: URL to 3D model viewer for the component model
 
     """
 
