@@ -14,17 +14,7 @@ from pathlib import Path
 
 
 def parse_kicad_symbol_file(content: str) -> dict[str, dict[str, str]]:
-    """Parse a KiCad symbol file and extract symbol names and properties.
-
-    Args:
-        content (str): The content of the KiCad symbol file
-
-    Returns:
-        dict[str, dict[str, str]]:
-            A dictionary where keys are symbol names and values are
-            dictionaries of properties for each symbol.
-
-    """
+    """Parse a KiCad symbol file and extract symbol names and properties."""
     symbols = {}
 
     # Regular expression to find all symbols
@@ -32,38 +22,39 @@ def parse_kicad_symbol_file(content: str) -> dict[str, dict[str, str]]:
     property_pattern = r'\(property\s+"([^"]+)"\s+"([^"]+)"(?:\s+[^\)]*)?\)'
 
     # Extract symbols and their properties
+    print("\nDebug: Starting symbol extraction")
     for symbol_match in re.finditer(symbol_pattern, content, re.DOTALL):
         symbol_name = symbol_match.group(1)
+        print(f"\nFound symbol: {symbol_name}")
 
-        # Exclude symbols ending with _0_1
-        if any(symbol_name.endswith(pattern) for pattern in ("_0_1")):
+        # Only exclude if this specific symbol ends with _0_1
+        if symbol_name.endswith("_0_1"):
+            print(f"Skipping {symbol_name} as it ends with _0_1")
             continue
 
         symbol_body = symbol_match.group(2)
         properties = {}
 
         # Extract properties for the current symbol
+        print(f"Looking for properties in {symbol_name}")
         for property_match in re.finditer(property_pattern, symbol_body):
             name = property_match.group(1)
             value = property_match.group(2)
             properties[name] = value
+            print(f"  Found property: {name} = {value}")
 
-        symbols[symbol_name] = properties
+        if properties:
+            symbols[symbol_name] = properties
+            print(f"Added {symbol_name} with {len(properties)} properties")
+        else:
+            print(f"Warning: No properties found for {symbol_name}")
 
+    print(f"\nTotal symbols found: {len(symbols)}")
     return symbols
 
 
 def get_all_property_names(symbols: dict[str, dict[str, str]]) -> list[str]:
-    """Get a sorted list of all unique property names found in the symbols.
-
-    Args:
-        symbols (dict[str, dict[str, str]]):
-            A dictionary of symbols and their properties
-
-    Returns:
-        list[str]: A sorted list of all unique property names
-
-    """
+    """Get a sorted list of all unique property names found in the symbols."""
     property_names = set()
     for properties in symbols.values():
         property_names.update(properties.keys())
@@ -74,18 +65,7 @@ def write_symbols_to_csv(
     symbols: dict[str, dict[str, str]],
     output_file: Path,
 ) -> None:
-    """Write symbols and their properties to a CSV file.
-
-    Args:
-        symbols (dict[str, dict[str, str]]):
-            A dictionary of symbols and their properties
-        output_file (Path):
-            Path to the output CSV file
-
-    Returns:
-        None
-
-    """
+    """Write symbols and their properties to a CSV file."""
     # Get all unique property names to use as headers
     headers = ["Symbol Name", *get_all_property_names(symbols)]
 
@@ -97,7 +77,7 @@ def write_symbols_to_csv(
         writer.writerow(headers)
 
         for symbol_name, properties in symbols.items():
-            # Create a row with empty strings for missing properties
+            print(f"Writing symbol: {symbol_name}")
             row = [symbol_name] + [
                 properties.get(header, "") for header in headers[1:]
             ]
@@ -127,11 +107,7 @@ if __name__ == "__main__":
             project_root / "data" / input_file.replace(".kicad_sym", ".csv")
         )
 
-        print(f"Script directory: {script_dir}")
-        print(f"Project root directory: {project_root}")
-        print(f"Looking for input file at: {input_path}")
-        print(f"Attempting to write output to: {output_path}")
-        print(f"Output directory exists: {output_path.parent.exists()}")
+        print(f"\nProcessing file: {input_path}")
 
         # Check if file exists
         if not input_path.exists():
@@ -147,7 +123,9 @@ if __name__ == "__main__":
 
         # Create data directory if it doesn't exist
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        print(f"Created/verified output directory: {output_path.parent}")
 
         write_symbols_to_csv(symbols, output_path)
-        print(f"Symbol information has been written to: {output_path}")
+        print(f"\nSymbol information has been written to: {output_path}")
+        print(f"Found {len(symbols)} symbols:")
+        for symbol in symbols:
+            print(f"  - {symbol}")
