@@ -89,6 +89,11 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         pad_dimensions=PadDimensions(width=1.15, height=2.7, center_x=1.475),
         ref_offset_y=-2.286,
     ),
+    "1210_200": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=4.6, height=3.2),
+        pad_dimensions=PadDimensions(width=1.15, height=2.7, center_x=1.475),
+        ref_offset_y=-2.286,
+    ),
     "026x026x0236": FootprintSpecs(
         body_dimensions=BodyDimensions(width=8, height=7),
         pad_dimensions=PadDimensions(width=3, height=1.6, center_x=2.2),
