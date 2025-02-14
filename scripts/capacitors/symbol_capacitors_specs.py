@@ -530,6 +530,22 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    # "225KE11D"
+    "GRM155C70J": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GRM155C70J",
+        value_range={"X7S": (1e-6, 2.2e-6)},
+        tolerance_map={"X7S": {"K": "10%"}},
+        characteristic_codes={2.2e-6: "E11"},
+        mpn_sufix=["D", "J"],
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="6.3V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        excluded_values={1.2e-6, 1.5e-6, 1.8e-6},
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
     "GCM1555C1H": SeriesSpec(
         manufacturer="Murata Electronics",
         mpn_prefix="GCM1555C1H",
