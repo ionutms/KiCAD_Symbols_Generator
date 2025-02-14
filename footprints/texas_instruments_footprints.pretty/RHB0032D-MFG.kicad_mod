@@ -469,13 +469,15 @@
 		(layers "F.Cu" "F.Paste" "F.Mask")
 		(uuid "31ca6d77-f3ce-4f6e-8b1b-fa6c77a53130")
 	)
-	(pad "33" smd rect
-		(at 0 0)
-		(size 3.149999 3.149999)
-		(layers "F.Cu" "F.Mask")
-		(uuid "ca52daea-354c-4924-bd95-9131a56daa42")
+	(pad "33" thru_hole circle
+		(at -1.33 0)
+		(size 0.499999 0.499999)
+		(drill 0.2032)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8a47458e-ff7b-4dbc-8e8c-bc2ea118fe35")
 	)
-	(pad "34" thru_hole circle
+	(pad "33" thru_hole circle
 		(at 0 -1.33)
 		(size 0.499999 0.499999)
 		(drill 0.2032)
@@ -483,15 +485,13 @@
 		(remove_unused_layers no)
 		(uuid "4313a970-2781-4925-9741-a142bd04f544")
 	)
-	(pad "35" thru_hole circle
-		(at 0.0254 0)
-		(size 0.499999 0.499999)
-		(drill 0.2032)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "fc480adf-0e0a-41a1-a059-fbed6fb632c4")
+	(pad "33" smd rect
+		(at 0 0)
+		(size 3.149999 3.149999)
+		(layers "F.Cu" "F.Mask")
+		(uuid "ca52daea-354c-4924-bd95-9131a56daa42")
 	)
-	(pad "36" thru_hole circle
+	(pad "33" thru_hole circle
 		(at 0 1.33)
 		(size 0.499999 0.499999)
 		(drill 0.2032)
@@ -499,21 +499,21 @@
 		(remove_unused_layers no)
 		(uuid "bb5b4baf-f169-4b0b-87c1-804e81fc03e7")
 	)
-	(pad "37" thru_hole circle
+	(pad "33" thru_hole circle
+		(at 0.0254 0)
+		(size 0.499999 0.499999)
+		(drill 0.2032)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "fc480adf-0e0a-41a1-a059-fbed6fb632c4")
+	)
+	(pad "33" thru_hole circle
 		(at 1.33 0)
 		(size 0.499999 0.499999)
 		(drill 0.2032)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "28f4b650-d605-49a9-bd12-6648394bb0bf")
-	)
-	(pad "38" thru_hole circle
-		(at -1.33 0)
-		(size 0.499999 0.499999)
-		(drill 0.2032)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "8a47458e-ff7b-4dbc-8e8c-bc2ea118fe35")
 	)
 	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/RHB0032E.step"
 		(offset
