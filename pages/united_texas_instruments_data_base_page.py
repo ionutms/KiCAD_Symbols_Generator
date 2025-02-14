@@ -1,23 +1,12 @@
-"""Transistors Database Page.
+"""Dash page module for the IC Texas Instruments database interface.
 
-This module provides a Dash page for viewing and interacting with transistors
-specifications. It allows users to browse, search, and filter through a
-database of transistors, with features for customizing the view and
-accessing detailed information.
-
-Key features:
-- Interactive DataTable displaying transistors specifications
-- Column visibility controls for customizing the view
-- Dynamic filtering and multi-column sorting capabilities
-- Pagination with customizable page size
-- Theme-aware styling with light/dark mode support
-- Direct links to transistors datasheets
-- Responsive design for various screen sizes
-
-The module uses Dash components and callbacks to create an interactive
-interface for data visualization and exploration. It integrates with
-Bootstrap components for a polished user interface and includes
-comprehensive styling support for both light and dark themes.
+This module provides an interactive web interface for exploring and filtering
+IC Texas Instruments specifications. It includes features such as:
+- Dynamic data table with sorting and filtering
+- Customizable column visibility
+- Adjustable pagination
+- Direct links to device datasheets
+- Responsive theme support
 """
 
 import dash_bootstrap_components as dbc
@@ -30,54 +19,54 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=15)
+register_page(__name__, name=link_name, order=13)
 
-dataframe: pd.DataFrame = pd.read_csv("data/UNITED_TRANSISTORS_DATA_BASE.csv")
+dataframe: pd.DataFrame = pd.read_csv("data/UNITED_IC_TI.csv")
 total_rows = len(dataframe)
 
-TITLE = f"Transistors Database ({total_rows:,} items)"
+TITLE = (
+    f"Texas Instruments Integrated Circuits Database ({total_rows:,} items)"
+)
 ABOUT = (
-    "The transistors Database is an interactive web application that "
-    "provides a comprehensive view of inductor specifications.",
+    "The Texas Instruments IC Database is an interactive web application "
+    "that provides a comprehensive view of Texas Instruments "
+    "integrated circuits and their specifications. ",
     "It allows users to easily browse, search, and filter "
-    f"through a database of {total_rows:,} transistors, "
-    "providing quick access to important information and datasheets.",
+    f"through a database of {total_rows:,} integrated circuits, "
+    "providing quick access to detailed specifications, parameters, "
+    "and official datasheets.",
 )
 
 features = [
-    "Interactive data table displaying inductor specifications",
-    "Dynamic filtering and multi-column sorting capabilities",
+    "Interactive data table displaying comprehensive IC specifications and "
+    "parameters",
+    "Dynamic filtering and multi-column sorting for rapid device selection",
     "Customizable pagination with adjustable items per page",
-    "Direct links to inductor datasheets",
+    "Direct links to official ADI datasheets and documentation",
     "Responsive design adapting to light and dark themes",
-    "Easy-to-use interface for exploring inductor data",
-    "Customizable column visibility",
+    "Advanced search functionality for finding specific IC models and "
+    "parameters",
+    "Customizable column visibility for focused device comparison",
 ]
 
 usage_steps = [
-    "Navigate to the transistors Database page",
+    "Navigate to the Texas Instruments IC Database page",
     "Use the table's built-in search functionality "
-    "to find specific transistors",
-    "Click on column headers to sort the data",
-    "Use the filter action to narrow down the displayed results",
-    "Toggle column visibility using the checkboxes above the table",
+    "to find specific ICs by existing parameters",
+    "Click on column headers to sort devices by specifications",
+    "Use the filter action to narrow down devices based on multiple criteria",
+    "Toggle column visibility to focus on relevant "
+    "specifications for your application",
     "Adjust the number of items per page using the dropdown menu",
-    "Navigate through pages using the pagination controls at "
-    "the bottom of the table",
-    "Access inductor datasheets by clicking on the provided links in the "
-    "'Datasheet' column",
-    "Switch between light and dark themes for comfortable viewing in "
-    "different environments",
+    "Navigate through pages using the pagination "
+    "controls at the bottom of the table",
+    "Access detailed device information and specifications "
+    "through the provided datasheet",
+    "Switch between light and dark themes for comfortable "
+    "viewing in different environments",
 ]
 
-hidden_columns = [
-    "Reference",
-    "Series",
-    "Maximum DC Current (A)",
-    "Maximum DC Resistance (Ω)",
-    "Description",
-    "Value",
-]
+hidden_columns = []
 
 visible_columns = [
     col for col in dataframe.columns if col not in hidden_columns
@@ -90,13 +79,6 @@ try:
 
     dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
         lambda url_text: dcu.generate_centered_link(url_text, "Search"),
-    )
-
-    dataframe["3dviewer Link"] = dataframe["3dviewer Link"].apply(
-        lambda url_text: dcu.generate_centered_link(
-            url_text,
-            "View 3D model",
-        ),
     )
 except KeyError:
     pass
