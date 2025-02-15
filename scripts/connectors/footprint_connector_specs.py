@@ -187,6 +187,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=2.032,
         ref_y=-2.032,
     ),
+    "HMTSW-1xx-10-G-S-530-RA": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=2.7,
+            width_right=2.7,
+            height_top=18,
+            height_bottom=1.35,
+        ),
+        pad_size=1.264,
+        drill_size=0.914,
+        mpn_y=2.286,
+        ref_y=-19.05,
+    ),
     "TMS-1xx-02-G-S": FootprintSpecs(
         pad_pitch=1.27,
         body_dimensions=BodyDimensions(
