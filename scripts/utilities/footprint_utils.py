@@ -783,6 +783,35 @@ def generate_non_plated_through_holes(  # noqa: PLR0913
     return "\n".join(pads)
 
 
+def generate_non_plated_through_hole(
+    mounting_holes_specs: list[float],
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        mounting_holes_specs: List of mounting hole specifications
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    pads = []
+
+    x, y, diameter = mounting_holes_specs
+
+    pad = f"""
+        (pad None np_thru_hole circle
+            (at {x} {y})
+            (size {diameter} {diameter})
+            (drill {diameter})
+            (layers "F&B.Cu" "*.Mask")
+            (uuid "{uuid4()}")
+        )
+        """
+    pads.append(pad)
+    return "\n".join(pads)
+
+
 def calculate_dimensions(
     pin_count: int,
     pad_pitch: float,
