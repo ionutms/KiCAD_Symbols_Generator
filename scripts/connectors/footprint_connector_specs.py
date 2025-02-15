@@ -15,6 +15,22 @@ from __future__ import annotations
 from typing import NamedTuple
 
 
+class MountingHoles(NamedTuple):
+    """Defines the position and size of mounting holes for a connector.
+
+    Attributes:
+        specs:
+            List of mounting hole specifications,
+            where each spec is [x, y, diameter]:
+                - x: X position relative to the connector origin
+                - y: Y position relative to the connector origin
+                - diameter: Diameter of the mounting hole
+
+    """
+
+    specs: list[list[float]]
+
+
 class BodyDimensions(NamedTuple):
     """Defines rectangular dimensions for component footprint outlines.
 
@@ -67,6 +83,7 @@ class FootprintSpecs(NamedTuple):
     non_plated_drill_size: None | float = None
     non_plated_row_pitch: float = 0
     miror_zig_zag: None | bool = None
+    mounting_holes: None | MountingHoles = None
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -389,5 +406,23 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_size=[0.74, 3.73],
         mpn_y=4.318,
         ref_y=-4.318,
+    ),
+    "1043": FootprintSpecs(
+        pad_pitch=71.6,
+        body_dimensions=BodyDimensions(
+            width_left=39,
+            width_right=39,
+            height_top=11,
+            height_bottom=11,
+        ),
+        mounting_holes=MountingHoles([
+            [27.6, -8, 3.45],
+            [-27.6, 8, 3.45],
+            [35.8, 8, 2.39],
+        ]),
+        pad_size=2.0828,
+        drill_size=1.5748,
+        mpn_y=12.7,
+        ref_y=-12.7,
     ),
 }
