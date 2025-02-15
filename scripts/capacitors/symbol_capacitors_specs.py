@@ -460,7 +460,7 @@ class PartInfo(NamedTuple):
 
         """
         parts_list: list[PartInfo] = []
-        dielectric_types = ["X7R", "X7S", "C0G (NP0)", "Polymer"]
+        dielectric_types = ["X5R", "X7R", "X7S", "C0G (NP0)", "Polymer"]
 
         for dielectric_type in dielectric_types:
             if dielectric_type in specs.value_range:
@@ -530,7 +530,6 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
-    # "225KE11D"
     "GRM155C70J": SeriesSpec(
         manufacturer="Murata Electronics",
         mpn_prefix="GRM155C70J",
@@ -543,6 +542,21 @@ MURATA_SYMBOLS_SPECS = {
         case_code_in="0402",
         case_code_mm="1005",
         excluded_values={1.2e-6, 1.5e-6, 1.8e-6},
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "GRT155R61A": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GRT155R61A",
+        value_range={"X5R": (10e-6, 10e-6)},
+        tolerance_map={"X5R": {"M": "20%"}},
+        characteristic_codes={10e-6: "E13"},
+        mpn_sufix=["D", "J"],
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="10V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        specified_values=[10e-6],
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
