@@ -4,6 +4,8 @@ This module defines data structures and specifications for connector series,
 providing a framework for managing connector component information.
 """
 
+from __future__ import annotations
+
 from typing import NamedTuple
 
 
@@ -40,7 +42,7 @@ class SeriesSpec(NamedTuple):
     color: str
     pitch: float
     mounting_angle: str
-    current_rating: float
+    current_rating: float | str
     voltage_rating: int
     mounting_style: str
     contact_plating: str
@@ -87,7 +89,7 @@ class PartInfo(NamedTuple):
     pitch: float
     pin_count: int
     mounting_angle: str
-    current_rating: float
+    current_rating: float | str
     voltage_rating: int
     mounting_style: str
     contact_plating: str
@@ -98,7 +100,7 @@ class PartInfo(NamedTuple):
         cls,
         pin_count: int,
         specs: SeriesSpec,
-    ) -> "PartInfo":
+    ) -> PartInfo:
         """Create complete part information.
 
         Args:
@@ -197,7 +199,7 @@ class PartInfo(NamedTuple):
     def generate_part_numbers(
         cls,
         specs: SeriesSpec,
-    ) -> list["PartInfo"]:
+    ) -> list[PartInfo]:
         """Generate all part numbers for the series.
 
         Args:
@@ -665,11 +667,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         pin_counts=[2],
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
-        pitch=1.27,
+        pitch=71.6,
         number_of_rows=1,
         mounting_angle="Vertical",
-        current_rating=5.2,
-        voltage_rating=300,
+        current_rating="N/A",
+        voltage_rating="N/A",
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
