@@ -58,6 +58,10 @@ def generate_footprint(
         model_file_name = f"CUI_DEVICES_{part_info.mpn}"
         footprint_value = part_info.series
 
+    if part_info.manufacturer == "Keystone Electronics":
+        model_file_name = f"{part_info.mpn}"
+        footprint_value = part_info.series
+
     pads = footprint_utils.generate_thru_hole_pads(
         part_info.pin_count,
         specs.pad_pitch,
@@ -89,6 +93,12 @@ def generate_footprint(
             ),
         ]
         pads = "".join(pads)
+
+    if specs.mounting_holes is not None:
+        for _, mounting_holes_specs in enumerate(specs.mounting_holes.specs):
+            pads += footprint_utils.generate_non_plated_through_hole(
+                mounting_holes_specs,
+            )
 
     if part_info.series == "FTSH-1xx-01-L-DV":
         pads = [
