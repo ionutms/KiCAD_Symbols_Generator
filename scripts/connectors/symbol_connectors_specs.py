@@ -370,6 +370,26 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "HMTSW-1xx-10-G-S-530-RA": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="HMTSW-1xx-10-G-S-530-RA",
+        footprint_pattern="connector_footprints:HMTSW-1{:02d}-10-G-S-530-RA",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/hmtsw.pdf?"
+            "_gl=1*ilxh7h*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczOTYxNDU2My4zNy4xLjE3Mzk2MTUzNTkuNjAuMC4w"
+        ),
+        pin_counts=list(range(1, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
     "TMS-1xx-02-G-S": SeriesSpec(
         manufacturer="Samtec",
         base_series="TMS-1xx-02-G-S",
