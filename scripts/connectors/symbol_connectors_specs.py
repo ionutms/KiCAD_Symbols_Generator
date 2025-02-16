@@ -392,6 +392,30 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "MTSW-1xx-10-L-D-530-RA": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="MTSW-1xx-10-L-D-530-RA",
+        footprint_pattern="connector_footprints:MTSW-1{:02d}-10-L-D-530-RA",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/mtsw.pdf?"
+            "_gl=1*143vrvp*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFrOE"
+            "c5QmhBMEVpd0FPUXhtZnBxNGtid2RzbUtZdVAxNHNtU0RyMV9EYlVGX2"
+            "0zcWFYTlVYU2w2UG00UVlkbEJkTWNnblpSb0NWcXdRQXZEX0J3RQ..*"
+            "_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTczOTY4OTg1My4zOS4xLjE3Mzk2OTU3NzcuMzcuMC4w"
+        ),
+        pin_counts=list(range(1, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
     "TMS-1xx-02-G-S": SeriesSpec(
         manufacturer="Samtec",
         base_series="TMS-1xx-02-G-S",
