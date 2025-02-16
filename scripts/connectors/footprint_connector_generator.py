@@ -72,6 +72,22 @@ def generate_footprint(
         row_count=specs.number_of_rows,
     )
 
+    f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
+        pad_center_x=width_left,
+        pad_width=specs.pad_size,
+        pins_per_side=specs.number_of_rows,
+        pitch_y=2.54,
+        layer="F.SilkS",
+    )
+
+    f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
+        pad_center_x=width_left,
+        pad_width=specs.pad_size,
+        pins_per_side=specs.number_of_rows,
+        pitch_y=2.54,
+        layer="F.Fab",
+    )
+
     if part_info.series == "CLP-1xx-02-G-D-BE":
         pads = [
             footprint_utils.generate_surface_mount_pads(
@@ -100,7 +116,7 @@ def generate_footprint(
                 mounting_holes_specs,
             )
 
-    if part_info.series == "FTSH-1xx-01-L-DV":
+    if part_info.series in ("FTSH-1xx-01-L-DV", "FTSH-1xx-01-L-DV-K"):
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
@@ -109,9 +125,27 @@ def generate_footprint(
                 dimensions["start_pos"],
                 row_pitch=specs.row_pitch,
                 row_count=specs.number_of_rows,
+                mirror_x_pin_numbering=True,
             ),
         ]
         pads = "".join(pads)
+        f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
+            pad_center_x=width_left,
+            pad_width=specs.pad_size,
+            pins_per_side=specs.number_of_rows,
+            pitch_y=2.54,
+            layer="F.SilkS",
+            mirror_y_coordonate=True,
+        )
+
+        f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
+            pad_center_x=width_left,
+            pad_width=specs.pad_size,
+            pins_per_side=specs.number_of_rows,
+            pitch_y=2.54,
+            layer="F.Fab",
+            mirror_y_coordonate=True,
+        )
 
     if part_info.mounting_style == "Surface Mount":
         pads = [
@@ -165,19 +199,8 @@ def generate_footprint(
             height_top,
             height_bottom,
         ),
-        footprint_utils.generate_pin_1_indicator(
-            pad_center_x=width_left,
-            pad_width=specs.pad_size,
-            pins_per_side=specs.number_of_rows,
-            pitch_y=2.54,
-        ),
-        footprint_utils.generate_pin_1_indicator(
-            pad_center_x=width_left,
-            pad_width=specs.pad_size,
-            pins_per_side=specs.number_of_rows,
-            pitch_y=2.54,
-            layer="F.Fab",
-        ),
+        f_silk_pin_1_indicator,
+        f_fab_pin_1_indicator,
         pads,
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",

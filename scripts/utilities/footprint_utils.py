@@ -389,12 +389,13 @@ def generate_properties(
         """
 
 
-def generate_pin_1_indicator(
+def generate_pin_1_indicator(  # noqa: PLR0913
     pad_center_x: float,
     pad_width: float | list[float],
     pins_per_side: float = 1,
     pitch_y: float = 0,
     layer: str = "F.SilkS",
+    mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
@@ -407,6 +408,7 @@ def generate_pin_1_indicator(
         pins_per_side: Number of pins on each side
         pitch_y: Distance between adjacent pads
         layer: Layer to draw the pin 1 indicator on
+        mirror_y_coordonate: Mirror the Y-coordinate of the pin 1 indicator
 
     Returns:
         str: KiCad formatted pin 1 indicator
@@ -422,7 +424,9 @@ def generate_pin_1_indicator(
     # Pin 1 indicator position
     total_height = pitch_y * (pins_per_side - 1)
     circle_x = -(pad_center_x + actual_pad_width)
-    circle_y = -total_height / 2
+    circle_y = (
+        -total_height / 2 if not mirror_y_coordonate else total_height / 2
+    )
     radius = actual_pad_width / 4
 
     # Pin 1 indicator on silkscreen
@@ -630,6 +634,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     start_pos: float,
     row_pitch: float,
     row_count: int,
+    mirror_x_pin_numbering: bool = False,  # noqa: FBT001, FBT002
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -640,6 +645,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         start_pos: X-coordinate of the first pad
         row_pitch: Pitch between connector rows
         row_count: Number of connector rows
+        mirror_x_pin_numbering: change pin numbering direction
 
     Returns:
         str: KiCad formatted pad definitions
@@ -662,6 +668,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
             * (row_pitch / 2)
             * (row_count - 1)
         )
+        ypos = ypos if not mirror_x_pin_numbering else -ypos
 
         pad = f"""
             (pad "{pin_num + 1}" smd roundrect
