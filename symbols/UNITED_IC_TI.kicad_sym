@@ -389,7 +389,7 @@
 				(alternate "UART3_TX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 5.08 180)
+				(at 30.48 0 180)
 				(length 5.08)
 				(name "PA15_A1_0"
 					(effects
@@ -438,7 +438,7 @@
 				(alternate "UART0_RX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 -2.54 180)
+				(at 30.48 -5.08 180)
 				(length 5.08)
 				(name "PA16_A1_1_FCC_IN"
 					(effects
@@ -462,7 +462,7 @@
 				(alternate "TIMA1_C1N" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 0 180)
+				(at 30.48 -2.54 180)
 				(length 5.08)
 				(name "PA17_A1_2"
 					(effects
@@ -486,7 +486,7 @@
 				(alternate "UART1_TX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 -5.08 180)
+				(at 30.48 -7.62 180)
 				(length 5.08)
 				(name "PA18_A1_3"
 					(effects
@@ -621,7 +621,7 @@
 				(alternate "UART3_CTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at -30.48 5.08 0)
+				(at 30.48 5.08 180)
 				(length 5.08)
 				(name "PA24_A0_3"
 					(effects
@@ -646,7 +646,7 @@
 				(alternate "UART3_RTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 2.54 180)
+				(at 30.48 7.62 180)
 				(length 5.08)
 				(name "PA25_A0_2"
 					(effects
@@ -669,9 +669,9 @@
 				(alternate "UART3_RX" bidirectional line)
 			)
 			(pin input line
-				(at 30.48 15.24 180)
+				(at -30.48 15.24 0)
 				(length 5.08)
-				(name "RST_N"
+				(name "~{RST}"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -711,7 +711,7 @@
 				(alternate "UART3_TX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 7.62 180)
+				(at 30.48 12.7 180)
 				(length 5.08)
 				(name "PA27_RTC_OUT_A0_0"
 					(effects
