@@ -260,6 +260,8 @@ class PartInfo(NamedTuple):
             return f"{clean_number(resistance / 1_000_000)} MΩ"
         if resistance >= 1_000:  # noqa: PLR2004
             return f"{clean_number(resistance / 1_000)} kΩ"
+        if resistance >= 0.001:  # noqa: PLR2004
+            return f"{clean_number(resistance * 1_000)} mΩ"
         return f"{clean_number(resistance)} Ω"
 
     @classmethod
@@ -298,6 +300,11 @@ class PartInfo(NamedTuple):
 
         if specs.manufacturer == "SEI Stackpole":
             return cls._generate_sei_stackpole_resistance_code(resistance)
+
+        if specs.manufacturer == "ROHM Semiconductor":
+            return cls._generate_rohm_semiconductor_resistance_code(
+                resistance,
+            )
 
         # Special handling for specific ERJ series
         if specs.mpn_prefix in (
@@ -384,6 +391,32 @@ class PartInfo(NamedTuple):
         whole = int(resistance / 1000000)
         decimal = f"{((resistance % 1000000) / 10000):02.0f}"
         return f"{whole}M{decimal}"
+
+    @classmethod
+    def _generate_rohm_semiconductor_resistance_code(
+        cls,
+        resistance: float,
+    ) -> str:
+        """Generate resistance code for ROHM Semiconductor series.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        if resistance < 0.01:  # noqa: PLR2004
+            whole = int(resistance * 1_000)
+            decimal = f"{((resistance % 1000000) / 10000):02.0f}"
+            return f"{whole}L{decimal}"
+
+        if resistance < 0.1:  # noqa: PLR2004
+            whole = int(resistance * 1_000)
+            decimal = f"{((resistance % 1000000) / 10000):01.0f}"
+            return f"{whole}L{decimal}"
+
+        return f"{resistance}"
 
     @classmethod
     def _generate_erj_special_series_code(cls, resistance: float) -> str:
@@ -667,11 +700,23 @@ class PartInfo(NamedTuple):
 
         """
         min_resistance, max_resistance = resistance_range
-        multipliers = [0.01, 0.1, 1, 10, 100, 1000, 10000, 100000, 1000000]
+        multipliers = [
+            0.0001,
+            0.001,
+            0.01,
+            0.1,
+            1,
+            10,
+            100,
+            1000,
+            10000,
+            100000,
+            1000000,
+        ]
 
         for base_value in base_values:
             for multiplier in multipliers:
-                resistance = round(base_value * multiplier, 2)
+                resistance = round(base_value * multiplier, 3)
 
                 # Check if resistance is within range
                 is_within_range = (
@@ -2952,9 +2997,51 @@ SEI_STACKPOLE_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     ),
 }
 
+ROHM_SEMICONDUCTOR_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
+    "PMR18EZPFV": SeriesSpec(
+        manufacturer="ROHM Semiconductor",
+        mpn_prefix="PMR18EZPFV",
+        mpn_sufix="",
+        footprint="resistor_footprints:R_1206_3216Metric",
+        voltage_rating="200V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        power_rating="0.125W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.001, 0.004],
+        specified_values=[1e-3, 2e-3, 3e-3, 4e-3],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://fscdn.rohm.com/en/products/databook/datasheet/"
+            "passive/resistor/chip_resistor/pmr_series-e.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "PMR18EZPFU": SeriesSpec(
+        manufacturer="ROHM Semiconductor",
+        mpn_prefix="PMR18EZPFU",
+        mpn_sufix="",
+        footprint="resistor_footprints:R_1206_3216Metric",
+        voltage_rating="200V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        power_rating="0.125W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.005, 0.01],
+        specified_values=[5e-3, 6e-3, 7e-3, 8e-3, 9e-3, 10e-3],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://fscdn.rohm.com/en/products/databook/datasheet/"
+            "passive/resistor/chip_resistor/pmr_series-e.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+}
+
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
     **YAGEO_SYMBOLS_SPECS,
     **SEI_STACKPOLE_SYMBOLS_SPECS,
+    **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
 }
