@@ -314,4 +314,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "NVMFS5C460NLWFAFT1G": SeriesSpec(
+        manufacturer="Onsemi",
+        base_series="NVMFS5C460NLWFAFT1G",
+        footprint="transistor_footprints:SO-8FL",
+        datasheet=("https://www.onsemi.com/pdf/datasheet/nvmfs5c460nl-d.pdf"),
+        drain_source_voltage=[40.0],
+        drain_current=[78],
+        package="SO-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
