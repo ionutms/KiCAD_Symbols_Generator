@@ -260,8 +260,6 @@ class PartInfo(NamedTuple):
             return f"{clean_number(resistance / 1_000_000)} MΩ"
         if resistance >= 1_000:  # noqa: PLR2004
             return f"{clean_number(resistance / 1_000)} kΩ"
-        if resistance >= 0.001:  # noqa: PLR2004
-            return f"{clean_number(resistance * 1_000)} mΩ"
         return f"{clean_number(resistance)} Ω"
 
     @classmethod
