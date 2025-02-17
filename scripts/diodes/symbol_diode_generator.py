@@ -94,6 +94,11 @@ def write_component(
             symbol_file,
             symbol_name,
         )
+    if component_data.get("Diode Type") == "Small Signal Schottky Diodes":
+        symbol_utils.write_small_signal_schottky_diodes_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
     if component_data.get("Diode Type") == "Red LED":
         symbol_utils.write_red_led_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "Green LED":
