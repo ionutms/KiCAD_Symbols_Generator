@@ -31,7 +31,7 @@ def generate_footprint(
     body_width = specs.body_dimensions.width
     body_height = specs.body_dimensions.height
 
-    if part_info.package == "SC_70":
+    if part_info.package in ("SC_70", "SOT-323"):
         anode_center_x = specs.pad_dimensions.center_x
         cathode_center_x = specs.pad_dimensions.center_x
         anode_width = specs.pad_dimensions.width
