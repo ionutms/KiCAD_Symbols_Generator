@@ -899,6 +899,20 @@ TDK_SYMBOLS_SPECS = {
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "CGA4J1X7R1V": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="CGA4J1X7R1V",
+        value_range={"X7R": (1.5e-6, 4.7e-6)},
+        excluded_values=[1.8e-6, 2.7e-6, 3.9e-6],
+        tolerance_map={"X7R": {"K": "10%"}},
+        mpn_sufix=["125AC"],
+        footprint="capacitor_footprints:C_0805_2012Metric",
+        voltage_rating="35V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
