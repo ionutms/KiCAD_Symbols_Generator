@@ -383,6 +383,17 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Dual Small Signal Switching Diodes",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BAT54AWFILMY": SeriesSpec(
+        manufacturer="STMicroelectronics",
+        base_series="BAT54AWFILMY",
+        footprint="diode_footprints:SOT-323",
+        datasheet=("https://www.st.com/resource/en/datasheet/bat54-y.pdf"),
+        voltage_rating=[40],
+        current_rating=[0.3],
+        package="SOT-323",
+        diode_type="Small Signal Schottky Diodes",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "PMEG10020AELR": SeriesSpec(
         manufacturer="Nexperia",
         base_series="PMEG10020AELR",

@@ -161,6 +161,17 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-2.54,
     ),
+    "SOT-323": FootprintSpecs(
+        pin_count=3,
+        body_dimensions=BodyDimensions(width=2.6, height=3.4),
+        pad_dimensions=PadDimensions(
+            width=0.5,
+            height=0.95,
+            center_x=1.3,
+            center_y=1.95,
+        ),
+        ref_offset_y=-2.54,
+    ),
     "SOD123W": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.4, height=2.1),
         pad_dimensions=PadDimensionsAsymmetric(
