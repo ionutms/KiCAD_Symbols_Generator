@@ -30,7 +30,7 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=4)
+register_page(__name__, name=link_name, order=5)
 
 dataframe: pd.DataFrame = pd.read_csv(
     "data/UNITED_COUPLED_INDUCTORS_DATA_BASE.csv",
