@@ -200,7 +200,7 @@ class PartInfo(NamedTuple):
         """
         value_code = cls.generate_value_code(inductance, specs.value_suffix)
         mpn = f"{specs.base_series}-{value_code}"
-        if specs.manufacturer == "Wurth Elektronik":
+        if specs.manufacturer in ("Wurth Elektronik", "Taiyo Yuden"):
             mpn = f"{specs.base_series}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
