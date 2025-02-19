@@ -20,7 +20,7 @@ from footprint_connector_specs import CONNECTOR_SPECS, FootprintSpecs
 from utilities import footprint_utils
 
 
-def generate_footprint(
+def generate_footprint(  # noqa: C901
     part_info: symbol_connectors_specs.PartInfo,
     specs: FootprintSpecs,
 ) -> str:
@@ -110,13 +110,11 @@ def generate_footprint(
         ]
         pads = "".join(pads)
 
-    if specs.mounting_holes is not None:
-        for _, mounting_holes_specs in enumerate(specs.mounting_holes.specs):
-            pads += footprint_utils.generate_non_plated_through_hole(
-                mounting_holes_specs,
-            )
-
-    if part_info.series in ("FTSH-1xx-01-L-DV", "FTSH-1xx-01-L-DV-K"):
+    if part_info.series in (
+        "FTSH-1xx-01-L-DV",
+        "FTSH-1xx-01-L-DV-K",
+        "UJ32-C-V-G-TH-8-P24-TR",
+    ):
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
@@ -173,6 +171,22 @@ def generate_footprint(
             ),
         ]
         pads = "".join(pads)
+
+    if specs.non_plated_round_mounting_holes is not None:
+        for _, mounting_holes_specs in enumerate(
+            specs.non_plated_round_mounting_holes.specs,
+        ):
+            pads += footprint_utils.generate_non_plated_through_hole(
+                mounting_holes_specs,
+            )
+
+    if specs.plated_oval_mounting_holes is not None:
+        for _, mounting_holes_specs in enumerate(
+            specs.plated_oval_mounting_holes.specs,
+        ):
+            pads += footprint_utils.generate_oval_plated_through_hole(
+                mounting_holes_specs,
+            )
 
     sections = [
         footprint_utils.generate_header(part_info.mpn),

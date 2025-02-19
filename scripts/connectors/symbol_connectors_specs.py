@@ -48,6 +48,7 @@ class SeriesSpec(NamedTuple):
     contact_plating: str
     reference: str = "J"
     number_of_rows: int = 1
+    pin_names: list[str] = None
 
 
 class PartInfo(NamedTuple):
@@ -722,5 +723,50 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating="N/A",
         mounting_style="Through Hole",
         contact_plating="Tin",
+    ),
+    "UJ32-C-V-G-TH-8-P24-TR": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="UJ32-C-V-G-TH-8-P24-TR",
+        footprint_pattern="connector_footprints:UJ32-C-V-G-TH-8-P24-TR",
+        datasheet=(
+            "https://www.sameskydevices.com/product/resource/"
+            "uj32-c-v-g-th-8-p24-tr.pdf"
+        ),
+        pin_counts=[12],
+        number_of_rows=2,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+        pin_names=[
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+        ],
     ),
 }

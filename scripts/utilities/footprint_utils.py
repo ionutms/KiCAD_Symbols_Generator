@@ -819,6 +819,37 @@ def generate_non_plated_through_hole(
     return "\n".join(pads)
 
 
+def generate_oval_plated_through_hole(
+    mounting_holes_specs: list[float],
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        mounting_holes_specs: List of mounting hole specifications
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    pads = []
+
+    x, y, pad_size_x, pad_size_y, dril_size_x, dril_size_y = (
+        mounting_holes_specs
+    )
+
+    pad = f"""
+        (pad "" thru_hole oval
+            (at {x} {y})
+            (size {pad_size_x} {pad_size_y})
+            (drill oval {dril_size_x} {dril_size_y})
+            (layers "F&B.Cu" "*.Mask")
+            (uuid "{uuid4()}")
+        )
+        """
+    pads.append(pad)
+    return "\n".join(pads)
+
+
 def calculate_dimensions(
     pin_count: int,
     pad_pitch: float,
