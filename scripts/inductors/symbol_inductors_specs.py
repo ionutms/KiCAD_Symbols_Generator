@@ -200,7 +200,11 @@ class PartInfo(NamedTuple):
         """
         value_code = cls.generate_value_code(inductance, specs.value_suffix)
         mpn = f"{specs.base_series}-{value_code}"
-        if specs.manufacturer in ("Wurth Elektronik", "Taiyo Yuden"):
+        if specs.manufacturer in (
+            "Wurth Elektronik",
+            "Taiyo Yuden",
+            "Murata",
+        ):
             mpn = f"{specs.base_series}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
@@ -1408,6 +1412,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         inductance_values=[0.47],
         max_dc_current=[4.6],
         max_dc_resistance=[0.025],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "DFE21CCN1R0MELL": SeriesSpec(
+        manufacturer="Murata",
+        base_series="DFE21CCN1R0MELL",
+        footprint="inductor_footprints:DFE21CCN1R0MELL",
+        tolerance="±20%",
+        datasheet=(
+            "https://search.murata.co.jp/Ceramy/image/img/P02/"
+            "JETE243A-0052.pdf"
+        ),
+        inductance_values=[1.0],
+        max_dc_current=[3.3],
+        max_dc_resistance=[0.06],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
