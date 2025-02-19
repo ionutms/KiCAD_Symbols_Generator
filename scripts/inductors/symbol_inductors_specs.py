@@ -1399,7 +1399,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "LCENA2016MKTR47M0NK": SeriesSpec(
         manufacturer="Taiyo Yuden",
         base_series="LCENA2016MKTR47M0NK",
-        footprint="inductor_footprints:L_1806_4516Metric",
+        footprint="inductor_footprints:LCENA2016MKTR47M0NK",
         tolerance="±20%",
         datasheet=(
             "https://www.cyntec.com/upfile/products/download/"
