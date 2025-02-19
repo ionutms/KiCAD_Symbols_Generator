@@ -1396,4 +1396,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=[0.09],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "LCENA2016MKTR47M0NK": SeriesSpec(
+        manufacturer="Taiyo Yuden",
+        base_series="LCENA2016MKTR47M0NK",
+        footprint="inductor_footprints:L_1806_4516Metric",
+        tolerance="±20%",
+        datasheet=(
+            "https://www.cyntec.com/upfile/products/download/"
+            "HTEH20121T-000%20(A1).pdf"
+        ),
+        inductance_values=[0.47],
+        max_dc_current=[4.6],
+        max_dc_resistance=[0.025],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

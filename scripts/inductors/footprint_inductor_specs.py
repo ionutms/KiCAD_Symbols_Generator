@@ -411,4 +411,13 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.27,
     ),
+    "LCENA2016MKTR47M0NK": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=2.7, height=2.2),
+        pad_dimensions=PadDimensions(
+            width=0.8,
+            height=1.8,
+            center_x=0.8,
+        ),
+        ref_offset_y=-1.778,
+    ),
 }
