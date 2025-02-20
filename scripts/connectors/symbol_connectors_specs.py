@@ -560,7 +560,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=2.54,
-        number_of_rows=2,
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,
