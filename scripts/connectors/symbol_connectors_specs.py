@@ -524,10 +524,37 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TSM-1xx-03-L-DH-TR",
         footprint_pattern="connector_footprints:TSM-1{:02d}-03-L-DH-TR",
         datasheet=(
-            "https://suddendocs.samtec.com/catalog_english/clp_sm.pdf?"
-            "_gl=1*1y4jlr9*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "https://suddendocs.samtec.com/catalog_english/tsm.pdf?"
+            "_gl=1*15mav39*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFr"
+            "OEc5QmhBMEVpd0FPUXhtZnBxNGtid2RzbUtZdVAxNHNtU0RyMV9EYl"
+            "VGX20zcWFYTlVYU2w2UG00UVlkbEJkTWNnblpSb0NWcXdRQXZEX0J3RQ..*"
+            "_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
             "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
-            "_ga_3KFNZC07WW*MTczNjY4MDQ4OS4xNS4xLjE3MzY2ODEzNzcuNjAuMC4w"
+            "_ga_3KFNZC07WW*MTc0MDA3NzE4OC40NC4wLjE3NDAwNzc3ODMuNDguMC4w"
+        ),
+        pin_counts=list(range(2, 37)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Surface Mount",
+        contact_plating="Tin",
+    ),
+    "TSM-1xx-03-L-SH-TR": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="TSM-1xx-03-L-SH-TR",
+        footprint_pattern="connector_footprints:TSM-1{:02d}-03-L-SH-TR",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/tsm.pdf?"
+            "_gl=1*15mav39*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFr"
+            "OEc5QmhBMEVpd0FPUXhtZnBxNGtid2RzbUtZdVAxNHNtU0RyMV9EYl"
+            "VGX20zcWFYTlVYU2w2UG00UVlkbEJkTWNnblpSb0NWcXdRQXZEX0J3RQ..*"
+            "_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTc0MDA3NzE4OC40NC4wLjE3NDAwNzc3ODMuNDguMC4w"
         ),
         pin_counts=list(range(2, 37)),
         trustedparts_link="https://www.trustedparts.com/en/search",
