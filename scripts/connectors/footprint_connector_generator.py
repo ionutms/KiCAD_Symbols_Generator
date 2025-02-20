@@ -159,7 +159,11 @@ def generate_footprint(  # noqa: C901
         ]
         pads = "".join(pads)
 
-    if part_info.series in ("FW-xx-03-G-D-085-315", "FW-xx-03-G-D-085-155"):
+    if part_info.series in (
+        "FW-xx-03-G-D-085-315",
+        "FW-xx-03-G-D-085-155",
+        "TSM-1xx-03-L-DH-TR",
+    ):
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
