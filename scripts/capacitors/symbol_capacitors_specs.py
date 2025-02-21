@@ -1025,6 +1025,29 @@ PANASONIC_SYMBOLS_SPECS = {
     ),
 }
 
+# Base URLs for documentation
+CHEMI_CON_DOC_BASE = (
+    "https://www.chemi-con.co.jp/products/relatedfiles/"
+    "capacitor/catalog/NTFNL-e.PDF"
+)
+
+CHEMI_CON_SYMBOLS_SPECS = {
+    "KTS350B": SeriesSpec(
+        manufacturer="Chemi-Con",
+        mpn_prefix="KTS350B",
+        value_range={"X7R": (47e-6, 47e-6)},
+        tolerance_map={"X7R": {"K": "10%"}},
+        characteristic_codes={0: ""},
+        mpn_sufix=["76N0T00"],
+        footprint="capacitor_footprints:C_3025_400_7563Metric",
+        voltage_rating="35V",
+        case_code_in="3025_400",
+        case_code_mm="7563",
+        datasheet_url=f"{CHEMI_CON_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
@@ -1034,4 +1057,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **KEMET_SYMBOLS_SPECS,
     **WURTH_ELEKTRONIK_SYMBOLS_SPECS,
     **PANASONIC_SYMBOLS_SPECS,
+    **CHEMI_CON_SYMBOLS_SPECS,
 }
