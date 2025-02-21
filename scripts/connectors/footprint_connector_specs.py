@@ -499,6 +499,23 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=12.7,
         ref_y=-12.7,
     ),
+    "1042P": FootprintSpecs(
+        pad_pitch=79.34,
+        body_dimensions=BodyDimensions(
+            width_left=44,
+            width_right=44,
+            height_top=11,
+            height_bottom=11,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [27.6, -8, 3.45],
+            [-27.6, 8, 3.45],
+            [35.82, 8, 2.39],
+        ]),
+        pad_size=[7.46, 6.47],
+        mpn_y=12.7,
+        ref_y=-12.7,
+    ),
     "UJ32-C-V-G-TH-8-P24-TR": FootprintSpecs(
         pad_pitch=0.5,
         row_pitch=3.3,
