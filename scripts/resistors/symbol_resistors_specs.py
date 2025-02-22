@@ -40,6 +40,7 @@ class SeriesSpec(NamedTuple):
         excluded_values: Optional list of excluded resistance values
         specified_values: Optional list of specified resistance values
         extra_values: Optional list of additional resistance values
+        component_type: Component type (default: 'Resistor')
 
     """
 
@@ -57,6 +58,7 @@ class SeriesSpec(NamedTuple):
     resistance_range: list[int | float]
     temperature_coefficient: str
     reference: str = "R"
+    component_type: str = "Resistor"
     excluded_values: list[float] | None = None
     specified_values: list[float] | None = None
     extra_values: list[float] | None = None
@@ -213,6 +215,7 @@ class PartInfo(NamedTuple):
         trustedparts_link: URL to component listing on Trustedparts
         temperature_coefficient: Temperature coefficient specification
         step_file_viewer_link: URL to 3D model viewer for the component model
+        component_type: Component type (default: 'Resistor')
 
     """
 
@@ -232,6 +235,7 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
     temperature_coefficient: str
     step_file_viewer_link: str
+    component_type: str
 
     @classmethod
     def format_value(cls, resistance: float) -> str:
@@ -620,6 +624,7 @@ class PartInfo(NamedTuple):
             trustedparts_link=trustedparts_link,
             temperature_coefficient=specs.temperature_coefficient,
             step_file_viewer_link=viewer_3d_link,
+            component_type=specs.component_type,
         )
 
     @classmethod
@@ -3079,6 +3084,7 @@ ROHM_SEMICONDUCTOR_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
 MURATA_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     "NCP15XH": SeriesSpec(
         reference="RT",
+        component_type="Thermistor",
         manufacturer="Murata",
         mpn_prefix="NCP15XH",
         mpn_sufix="F03RC",
