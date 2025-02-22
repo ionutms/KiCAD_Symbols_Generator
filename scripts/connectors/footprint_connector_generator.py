@@ -192,6 +192,15 @@ def generate_footprint(  # noqa: C901
                 mounting_holes_specs,
             )
 
+    second_coutyard = ""
+    if specs.internal_courtyard is not None:
+        second_coutyard = footprint_utils.generate_courtyard_2(
+            specs.internal_courtyard.width_left,
+            specs.internal_courtyard.width_right,
+            specs.internal_courtyard.height_top,
+            specs.internal_courtyard.height_bottom,
+        )
+
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
@@ -205,6 +214,7 @@ def generate_footprint(  # noqa: C901
             height_top,
             height_bottom,
         ),
+        second_coutyard,
         footprint_utils.generate_silkscreen_rectangle(
             width_left,
             width_right,
