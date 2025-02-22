@@ -68,6 +68,23 @@ class BodyDimensions(NamedTuple):
     height_bottom: float  # Distance from origin to bottom edge
 
 
+class InternalCourtyard(NamedTuple):
+    """Defines the internal courtyard dimensions for a connector footprint.
+
+    Attributes:
+        width_left: Distance from origin to left edge
+        width_right: Distance from origin to right edge
+        height_top: Distance from origin to top edge
+        height_bottom: Distance from origin to bottom edge
+
+    """
+
+    width_left: float  # Distance from origin to left edge
+    width_right: float  # Distance from origin to right edge
+    height_top: float  # Distance from origin to top edge
+    height_bottom: float  # Distance from origin to bottom edge
+
+
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a connector footprint.
 
@@ -102,6 +119,7 @@ class FootprintSpecs(NamedTuple):
     miror_zig_zag: None | bool = None
     non_plated_round_mounting_holes: None | NonPlatedRoundMountingHoles = None
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
+    internal_courtyard: None | InternalCourtyard = None
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -488,6 +506,12 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             width_right=39,
             height_top=11,
             height_bottom=11,
+        ),
+        internal_courtyard=InternalCourtyard(
+            width_left=30,
+            width_right=30,
+            height_top=3.5,
+            height_bottom=3.5,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
             [27.6, -8, 3.45],
