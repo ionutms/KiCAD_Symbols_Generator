@@ -8,6 +8,7 @@ electrical characteristics, and packaging options.
 
 from __future__ import annotations
 
+import math
 from typing import TYPE_CHECKING, Final, NamedTuple
 
 if TYPE_CHECKING:
@@ -263,7 +264,7 @@ class PartInfo(NamedTuple):
         return f"{clean_number(resistance)} Ω"
 
     @classmethod
-    def generate_resistance_code(
+    def generate_resistance_code(  # noqa: PLR0911
         cls,
         resistance: float,
         specs: SeriesSpec,
@@ -295,6 +296,9 @@ class PartInfo(NamedTuple):
         # Special handling for Yageo manufacturer
         if specs.manufacturer == "Yageo":
             return cls._generate_yageo_resistance_code(resistance)
+
+        if specs.manufacturer == "Murata":
+            return cls._generate_murata_resistance_code(resistance)
 
         if specs.manufacturer == "SEI Stackpole":
             return cls._generate_sei_stackpole_resistance_code(resistance)
@@ -348,6 +352,18 @@ class PartInfo(NamedTuple):
         whole = int(resistance / 1000000)
         decimal = f"{((resistance % 1000000) / 10000):02.0f}".rstrip("0")
         return f"{whole}M{decimal}"
+
+    @classmethod
+    def _generate_murata_resistance_code(cls, resistance: float) -> str:
+        """Generate resistance code for Murata series.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        """
+        power = int(math.log10(resistance)) - 1
+        significant = int(resistance / (10**power))
+        return f"{significant}{power}"
 
     @classmethod
     def _generate_sei_stackpole_resistance_code(
@@ -3060,10 +3076,30 @@ ROHM_SEMICONDUCTOR_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     ),
 }
 
+MURATA_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
+    "NCP15XH": SeriesSpec(
+        reference="RT",
+        manufacturer="Murata",
+        mpn_prefix="NCP15XH",
+        mpn_sufix="F03RC",
+        footprint="resistor_footprints:RT_0402_RT_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402_RT",
+        case_code_mm="1005",
+        power_rating="0.1W",
+        temperature_coefficient="5 ppm/°C",
+        resistance_range=[10_000, 10_000],
+        tolerance_map={"E24": "1%"},
+        datasheet=("https://www.murata.com/products/productdetail?partno="),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+}
+
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
     **YAGEO_SYMBOLS_SPECS,
     **SEI_STACKPOLE_SYMBOLS_SPECS,
     **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
+    **MURATA_SYMBOLS_SPECS,
 }
