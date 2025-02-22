@@ -345,7 +345,7 @@ class PartInfo(NamedTuple):
         """
         if specs.manufacturer == "Murata Electronics":
             return f"{specs.datasheet_url}{mpn[:-1]}-01.pdf"
-        if specs.manufacturer == "Vishay":
+        if specs.manufacturer in ("Vishay", "Panasonic"):
             return f"{specs.datasheet_url}"
         return f"{specs.datasheet_url}{mpn}"
 
@@ -1008,18 +1008,45 @@ PANASONIC_DOC_BASE = (
 )
 
 PANASONIC_SYMBOLS_SPECS = {
-    "50SVPK": SeriesSpec(
-        mpn_prefix="50SVPK",
-        mpn_sufix="M",
+    "35SVPK330M": SeriesSpec(
+        mpn_prefix="35SVPK330M",
+        mpn_sufix="",
         manufacturer="Panasonic",
-        footprint="capacitor_footprints:C_026x026x0236_6_6x6_6x6_0Metric",
+        footprint="capacitor_footprints:C_039x0496_10_0x12_6Metric",
+        voltage_rating="35V",
+        capacitor_type="Polymer",
+        case_code_in="039x0496",
+        case_code_mm="10_0x12_6",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (330e-6, 330e-6)},
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "50SVPK68M": SeriesSpec(
+        mpn_prefix="50SVPK68M",
+        mpn_sufix="",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:C_031x0468_8_0x11_9Metric",
         voltage_rating="50V",
         capacitor_type="Polymer",
-        case_code_in="026x026x0236",
-        case_code_mm="6_6x6_6x6_0",
+        case_code_in="031x0468",
+        case_code_mm="8_0x11_9",
         tolerance_map={"Polymer": {"": "20%"}},
-        value_range={"Polymer": (10e-6, 120e-6)},
-        specified_values=[10e-6, 22e-6, 33e-6, 68e-6, 120e-6],
+        value_range={"Polymer": (68e-6, 68e-6)},
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "50SVPK120M": SeriesSpec(
+        mpn_prefix="50SVPK120M",
+        mpn_sufix="",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:C_039x0496_10_0x12_6Metric",
+        voltage_rating="50V",
+        capacitor_type="Polymer",
+        case_code_in="039x0496",
+        case_code_mm="10_0x12_6",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (120e-6, 120e-6)},
         datasheet_url=f"{PANASONIC_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
