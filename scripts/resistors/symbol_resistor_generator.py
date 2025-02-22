@@ -69,6 +69,7 @@ def write_component(
 
     """
     symbol_name = component_data["Symbol Name"]
+    symbol_type = component_data["Component Type"]
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     symbol_utils.write_properties(
         symbol_file,
@@ -76,5 +77,8 @@ def write_component(
         property_order,
         1,
     )
+    if symbol_type == "Thermistor":
+        symbol_utils.write_thermistor_symbol_drawing(symbol_file, symbol_name)
     symbol_utils.write_resistor_symbol_drawing(symbol_file, symbol_name)
+
     symbol_file.write(")")
