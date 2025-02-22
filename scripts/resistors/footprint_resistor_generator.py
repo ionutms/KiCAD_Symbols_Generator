@@ -28,8 +28,8 @@ def generate_footprint(
     """
     case_in: str = series_spec.case_code_in
     case_mm: str = series_spec.case_code_mm
-    footprint_name: str = f"R_{case_in}_{case_mm}Metric"
-    step_file_name: str = f"R_{case_in}"
+    footprint_name: str = f"{series_spec.reference}_{case_in}_{case_mm}Metric"
+    step_file_name: str = f"{series_spec.reference}_{case_in}"
 
     body_width: float = resistor_specs.body_dimensions.width
     body_height: float = resistor_specs.body_dimensions.height
@@ -83,8 +83,8 @@ def generate_footprint_file(
     footprint_content: str = generate_footprint(series_spec, resistor_specs)
 
     filename: str = (
-        f"R_{series_spec.case_code_in}_{series_spec.case_code_mm}"
-        "Metric.kicad_mod"
+        f"{series_spec.reference}_{series_spec.case_code_in}_"
+        f"{series_spec.case_code_mm}Metric.kicad_mod"
     )
     file_path: str = f"{output_path}/{filename}"
 
