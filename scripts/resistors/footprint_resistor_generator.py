@@ -83,8 +83,8 @@ def generate_footprint_file(
     footprint_content: str = generate_footprint(series_spec, resistor_specs)
 
     filename: str = (
-        f"R_{series_spec.case_code_in}_{series_spec.case_code_mm}"
-        "Metric.kicad_mod"
+        f"{series_spec.reference}_{series_spec.case_code_in}_"
+        f"{series_spec.case_code_mm}Metric.kicad_mod"
     )
     file_path: str = f"{output_path}/{filename}"
 
