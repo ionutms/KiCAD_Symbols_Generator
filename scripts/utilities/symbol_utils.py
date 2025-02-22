@@ -391,6 +391,92 @@ def write_resistor_symbol_drawing(
     write_pin(symbol_file, 5.08, 0, 180, "2")
 
 
+def write_thermistor_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the graphical representation of a symbol in the KiCad file.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f"""
+        (symbol "{symbol_name}_0_1"
+			(polyline
+				(pts
+					(xy -2.286 0) (xy -2.54 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.286 0) (xy 2.54 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 1.778) (xy 1.524 1.778)
+                    (xy -1.524 -1.778) (xy -2.54 -1.778)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.286 0) (xy -1.905 1.016) (xy -1.524 0)
+                    (xy -1.143 -1.016) (xy -0.762 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -0.762 0) (xy -0.381 1.016) (xy 0 0)
+                    (xy 0.381 -1.016) (xy 0.762 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0.762 0) (xy 1.143 1.016) (xy 1.524 0)
+                    (xy 1.905 -1.016) (xy 2.286 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -3.302 2.54) (xy -1.016 2.54) (xy -1.778 2.794)
+                    (xy -1.778 2.286) (xy -1.016 2.54) (xy -1.27 2.54)
+				)
+				(stroke (width 0) (type default))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy -1.016 1.778) (xy -3.302 1.778) (xy -2.54 2.032)
+                    (xy -2.54 1.524) (xy -3.302 1.778) (xy -3.048 1.778)
+				)
+				(stroke (width 0) (type default))
+				(fill (type outline))
+			)
+        )
+        """)
+
+    # Write pins
+    write_pin(symbol_file, -5.08, 0, 0, "1")
+    write_pin(symbol_file, 5.08, 0, 180, "2")
+
+
 def write_inductor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
