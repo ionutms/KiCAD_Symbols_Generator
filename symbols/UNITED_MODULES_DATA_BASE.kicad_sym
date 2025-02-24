@@ -25,7 +25,7 @@
 			)
 		)
 		(property "Footprint" "modules_footprints:CAM-M8C-0"
-			(at 20.32 -33.02 0)
+			(at 22.86 -33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -35,7 +35,7 @@
 			)
 		)
 		(property "Datasheet" "https://content.u-blox.com/sites/default/files/CAM-M8-FW3_DataSheet_%28UBX-15031574%29.pdf"
-			(at 20.32 -27.94 0)
+			(at 22.86 -27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -45,7 +45,7 @@
 			)
 		)
 		(property "Description" "GNSS / GPS Modules u-blox M8 GNSS antenna module XTAL, SAW, LNA LCC, 9.6x14 mm"
-			(at 20.32 -30.48 0)
+			(at 22.86 -30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66,8 +66,8 @@
 		)
 		(symbol "CAM-M8C-0_1_1"
 			(rectangle
-				(start -20.32 25.4)
-				(end 20.32 -25.4)
+				(start -22.86 25.4)
+				(end 22.86 -25.4)
 				(stroke
 					(width 0.254)
 					(type default)
@@ -95,7 +95,7 @@
 				)
 			)
 			(pin passive line
-				(at -10.16 -27.94 90)
+				(at -15.24 -27.94 90)
 				(length 2.54)
 				(name "GND_3"
 					(effects
@@ -113,7 +113,7 @@
 				)
 			)
 			(pin passive line
-				(at -7.62 -27.94 90)
+				(at -12.7 -27.94 90)
 				(length 2.54)
 				(name "GND_4"
 					(effects
@@ -131,7 +131,7 @@
 				)
 			)
 			(pin passive line
-				(at -5.08 -27.94 90)
+				(at -10.16 -27.94 90)
 				(length 2.54)
 				(name "GND_5"
 					(effects
@@ -149,7 +149,7 @@
 				)
 			)
 			(pin passive line
-				(at -2.54 -27.94 90)
+				(at -7.62 -27.94 90)
 				(length 2.54)
 				(name "GND_6"
 					(effects
@@ -167,7 +167,7 @@
 				)
 			)
 			(pin passive line
-				(at 0 -27.94 90)
+				(at -5.08 -27.94 90)
 				(length 2.54)
 				(name "GND_7"
 					(effects
@@ -185,7 +185,7 @@
 				)
 			)
 			(pin passive line
-				(at 2.54 -27.94 90)
+				(at -2.54 -27.94 90)
 				(length 2.54)
 				(name "GND_8"
 					(effects
@@ -203,7 +203,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 22.86 0)
+				(at -25.4 22.86 0)
 				(length 2.54)
 				(name "RF_OUT"
 					(effects
@@ -221,7 +221,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 20.32 0)
+				(at -25.4 20.32 0)
 				(length 2.54)
 				(name "RF_IN"
 					(effects
@@ -239,7 +239,7 @@
 				)
 			)
 			(pin passive line
-				(at 5.08 -27.94 90)
+				(at 0 -27.94 90)
 				(length 2.54)
 				(name "GND_9"
 					(effects
@@ -257,7 +257,7 @@
 				)
 			)
 			(pin passive line
-				(at 7.62 -27.94 90)
+				(at 2.54 -27.94 90)
 				(length 2.54)
 				(name "GND_10"
 					(effects
@@ -275,7 +275,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 10.16 0)
+				(at 15.24 -27.94 90)
 				(length 2.54)
 				(name "RESERVED_1"
 					(effects
@@ -293,7 +293,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -2.54 0)
+				(at -25.4 -2.54 0)
 				(length 2.54)
 				(name "D_SEL"
 					(effects
@@ -311,7 +311,7 @@
 				)
 			)
 			(pin passive line
-				(at 10.16 -27.94 90)
+				(at 5.08 -27.94 90)
 				(length 2.54)
 				(name "GND_11"
 					(effects
@@ -329,7 +329,7 @@
 				)
 			)
 			(pin passive line
-				(at 12.7 -27.94 90)
+				(at 7.62 -27.94 90)
 				(length 2.54)
 				(name "GND_12"
 					(effects
@@ -347,9 +347,9 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -5.08 0)
+				(at -25.4 -5.08 0)
 				(length 2.54)
-				(name "RESET_N"
+				(name "~{RESET}"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -365,7 +365,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -7.62 0)
+				(at 20.32 -27.94 90)
 				(length 2.54)
 				(name "SAFEBOOT_N"
 					(effects
@@ -383,9 +383,9 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -10.16 0)
+				(at -25.4 -10.16 0)
 				(length 2.54)
-				(name "TXD__/__SPI_MISO"
+				(name "TXD/SPI_MISO"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -401,9 +401,9 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -12.7 0)
+				(at -25.4 -12.7 0)
 				(length 2.54)
-				(name "RXD__/__SPI_MOSI"
+				(name "RXD/SPI_MOSI"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -419,7 +419,7 @@
 				)
 			)
 			(pin passive line
-				(at 15.24 -27.94 90)
+				(at 10.16 -27.94 90)
 				(length 2.54)
 				(name "GND_13"
 					(effects
@@ -437,7 +437,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 -15.24 0)
+				(at 17.78 -27.94 90)
 				(length 2.54)
 				(name "RESERVED_2"
 					(effects
@@ -455,7 +455,7 @@
 				)
 			)
 			(pin passive line
-				(at 22.86 0 180)
+				(at 25.4 0 180)
 				(length 2.54)
 				(name "TIMEPULSE"
 					(effects
@@ -473,9 +473,9 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 7.62 0)
+				(at -25.4 7.62 0)
 				(length 2.54)
-				(name "SDA__/__SPI_CS_N"
+				(name "SDA/~{SPI_CS}"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -491,7 +491,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 15.24 0)
+				(at -25.4 15.24 0)
 				(length 2.54)
 				(name "LNA_EN"
 					(effects
@@ -509,7 +509,7 @@
 				)
 			)
 			(pin passive line
-				(at 17.78 -27.94 90)
+				(at 12.7 -27.94 90)
 				(length 2.54)
 				(name "GND_14"
 					(effects
@@ -527,7 +527,7 @@
 				)
 			)
 			(pin passive line
-				(at -15.24 -27.94 90)
+				(at -20.32 -27.94 90)
 				(length 2.54)
 				(name "GND_1"
 					(effects
@@ -545,7 +545,7 @@
 				)
 			)
 			(pin passive line
-				(at -12.7 -27.94 90)
+				(at -17.78 -27.94 90)
 				(length 2.54)
 				(name "GND_2"
 					(effects
@@ -563,9 +563,9 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 5.08 0)
+				(at -25.4 5.08 0)
 				(length 2.54)
-				(name "SCL__/__SPI_CLK"
+				(name "SCL/SPI_CLK"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -581,7 +581,7 @@
 				)
 			)
 			(pin passive line
-				(at -22.86 2.54 0)
+				(at -25.4 2.54 0)
 				(length 2.54)
 				(name "EXTINT"
 					(effects
