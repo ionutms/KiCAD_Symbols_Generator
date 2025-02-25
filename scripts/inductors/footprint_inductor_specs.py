@@ -429,7 +429,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.778,
     ),
-    "LQG15HS82NJ02D": FootprintSpecs(
+    "LQG15HS47NJ02D": FootprintSpecs(
         body_dimensions=BodyDimensions(width=1.86, height=0.94),
         pad_dimensions=PadDimensions(width=0.54, height=0.64, center_x=0.51),
         ref_offset_y=-1.27,
