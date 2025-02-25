@@ -94,6 +94,7 @@ if __name__ == "__main__":
         "UNITED_MODULES_DATA_BASE.kicad_sym",
         "UNITED_CRYSTALS_DATA_BASE.kicad_sym",
         "UNITED_MOUSE_BITES_DATA_BASE.kicad_sym",
+        "UNITED_NO_COMPONENTS_DATA_BASE.kicad_sym",
     ]
 
     # Get script location
