@@ -1426,18 +1426,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=[0.06],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
-    "LQG15HS82NJ02D": SeriesSpec(
+    "LQG15HS47NJ02D": SeriesSpec(
         manufacturer="Murata",
-        base_series="LQG15HS82NJ02D",
-        footprint="inductor_footprints:LQG15HS82NJ02D",
-        tolerance="±20%",
+        base_series="LQG15HS47NJ02D",
+        footprint="inductor_footprints:LQG15HS47NJ02D",
+        tolerance="±5%",
         datasheet=(
             "https://www.murata.com/products/productdetail?partno="
             "LQG15HS47NJ02%23"
         ),
-        inductance_values=[82e-9],
-        max_dc_current=[0.2],
-        max_dc_resistance=[1.2],
+        inductance_values=[47e-9],
+        max_dc_current=[0.3],
+        max_dc_resistance=[0.72],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
