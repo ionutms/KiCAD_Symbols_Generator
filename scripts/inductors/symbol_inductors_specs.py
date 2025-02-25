@@ -100,6 +100,8 @@ class PartInfo(NamedTuple):
             Formatted inductance string
 
         """
+        if inductance < 1e-6:  # noqa: PLR2004
+            return f"{int(inductance * 1e9)} nH"
         if inductance < 1:
             return f"{int(inductance * 1000)} nH"
         if inductance.is_integer():
@@ -124,10 +126,6 @@ class PartInfo(NamedTuple):
             Formatted inductance value code
 
         """
-        if not 1e-9 <= inductance <= 999.99:  # noqa: PLR2004
-            msg = f"Invalid inductance: {inductance}µH (0.01-999.99)"
-            raise ValueError(msg)
-
         if inductance >= 100.0:  # noqa: PLR2004
             value = round(inductance / 10)
             base_code = f"{value:02d}4"
