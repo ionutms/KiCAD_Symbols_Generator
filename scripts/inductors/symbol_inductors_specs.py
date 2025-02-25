@@ -124,7 +124,7 @@ class PartInfo(NamedTuple):
             Formatted inductance value code
 
         """
-        if not 0.01 <= inductance <= 999.99:  # noqa: PLR2004
+        if not 1e-9 <= inductance <= 999.99:  # noqa: PLR2004
             msg = f"Invalid inductance: {inductance}µH (0.01-999.99)"
             raise ValueError(msg)
 
@@ -1426,6 +1426,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         inductance_values=[1.0],
         max_dc_current=[3.3],
         max_dc_resistance=[0.06],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "LQG15HS82NJ02D": SeriesSpec(
+        manufacturer="Murata",
+        base_series="LQG15HS82NJ02D",
+        footprint="inductor_footprints:LQG15HS82NJ02D",
+        tolerance="±20%",
+        datasheet=(
+            "https://www.murata.com/products/productdetail?partno="
+            "LQG15HS47NJ02%23"
+        ),
+        inductance_values=[82e-9],
+        max_dc_current=[0.2],
+        max_dc_resistance=[1.2],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
