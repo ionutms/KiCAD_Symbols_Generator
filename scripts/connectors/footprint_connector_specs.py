@@ -19,7 +19,7 @@ class NonPlatedRoundMountingHoles(NamedTuple):
     """Defines the position and size of mounting holes for a connector.
 
     Attributes:
-        specs:
+        footprint_specs:
             List of mounting hole specifications,
             where each spec is [x, y, diameter]:
                 - x: X position relative to the connector origin
@@ -28,14 +28,14 @@ class NonPlatedRoundMountingHoles(NamedTuple):
 
     """
 
-    specs: list[list[float]]
+    footprint_specs: list[list[float]]
 
 
 class PlatedOvalMountingHoles(NamedTuple):
     """Defines the position and size of mounting holes for a connector.
 
     Attributes:
-        specs:
+        footprint_specs:
             List of mounting hole specifications,
             where each spec is [x, y, diameter]:
                 - x: X position relative to the connector origin
@@ -45,7 +45,7 @@ class PlatedOvalMountingHoles(NamedTuple):
 
     """
 
-    specs: list[list[float]]
+    footprint_specs: list[list[float]]
 
 
 class BodyDimensions(NamedTuple):
@@ -62,10 +62,10 @@ class BodyDimensions(NamedTuple):
 
     """
 
-    width_left: float  # Distance from origin to left edge
-    width_right: float  # Distance from origin to right edge
-    height_top: float  # Distance from origin to top edge
-    height_bottom: float  # Distance from origin to bottom edge
+    width_left: float
+    width_right: float
+    height_top: float
+    height_bottom: float
 
 
 class InternalCourtyard(NamedTuple):
@@ -79,10 +79,10 @@ class InternalCourtyard(NamedTuple):
 
     """
 
-    width_left: float  # Distance from origin to left edge
-    width_right: float  # Distance from origin to right edge
-    height_top: float  # Distance from origin to top edge
-    height_bottom: float  # Distance from origin to bottom edge
+    width_left: float
+    width_right: float
+    height_top: float
+    height_bottom: float
 
 
 class FootprintSpecs(NamedTuple):

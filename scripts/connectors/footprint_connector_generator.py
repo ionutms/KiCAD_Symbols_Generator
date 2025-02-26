@@ -22,7 +22,7 @@ from utilities import footprint_utils
 
 def generate_footprint(  # noqa: C901
     part_info: symbol_connectors_specs.PartInfo,
-    specs: FootprintSpecs,
+    footprint_specs: FootprintSpecs,
 ) -> str:
     """Generate complete KiCad footprint file content for a connector.
 
@@ -31,7 +31,7 @@ def generate_footprint(  # noqa: C901
 
     Args:
         part_info: Component specifications (MPN, pin count, pitch)
-        specs: Physical specifications for the connector series
+        footprint_specs: Physical specifications for the connector series
 
     Returns:
         Complete .kicad_mod file content as formatted string
@@ -39,14 +39,14 @@ def generate_footprint(  # noqa: C901
     """
     dimensions = footprint_utils.calculate_dimensions(
         part_info.pin_count,
-        specs.pad_pitch,
-        specs.body_dimensions.width_left,
-        specs.body_dimensions.width_right,
+        footprint_specs.pad_pitch,
+        footprint_specs.body_dimensions.width_left,
+        footprint_specs.body_dimensions.width_right,
     )
     width_left = dimensions["width_left"]
     width_right = dimensions["width_right"]
-    height_top = specs.body_dimensions.height_top
-    height_bottom = specs.body_dimensions.height_bottom
+    height_top = footprint_specs.body_dimensions.height_top
+    height_bottom = footprint_specs.body_dimensions.height_bottom
 
     model_file_name = f"{part_info.mpn}"
     footprint_value = part_info.series.replace(
@@ -64,26 +64,26 @@ def generate_footprint(  # noqa: C901
 
     pads = footprint_utils.generate_thru_hole_pads(
         part_info.pin_count,
-        specs.pad_pitch,
-        specs.pad_size,
-        specs.drill_size,
+        footprint_specs.pad_pitch,
+        footprint_specs.pad_size,
+        footprint_specs.drill_size,
         dimensions["start_pos"],
-        row_pitch=specs.row_pitch,
-        row_count=specs.number_of_rows,
+        row_pitch=footprint_specs.row_pitch,
+        row_count=footprint_specs.number_of_rows,
     )
 
     f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
         pad_center_x=width_left,
-        pad_width=specs.pad_size,
-        pins_per_side=specs.number_of_rows,
+        pad_width=footprint_specs.pad_size,
+        pins_per_side=footprint_specs.number_of_rows,
         pitch_y=2.54,
         layer="F.SilkS",
     )
 
     f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
         pad_center_x=width_left,
-        pad_width=specs.pad_size,
-        pins_per_side=specs.number_of_rows,
+        pad_width=footprint_specs.pad_size,
+        pins_per_side=footprint_specs.number_of_rows,
         pitch_y=2.54,
         layer="F.Fab",
     )
@@ -92,20 +92,20 @@ def generate_footprint(  # noqa: C901
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
-                specs.pad_pitch,
-                specs.pad_size,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
                 dimensions["start_pos"],
-                row_pitch=specs.row_pitch,
-                row_count=specs.number_of_rows,
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
             ),
             footprint_utils.generate_non_plated_through_holes(
                 part_info.pin_count,
-                specs.pad_pitch,
-                specs.non_plated_pad_size,
-                specs.non_plated_drill_size,
+                footprint_specs.pad_pitch,
+                footprint_specs.non_plated_pad_size,
+                footprint_specs.non_plated_drill_size,
                 dimensions["start_pos"],
-                row_pitch=specs.non_plated_row_pitch,
-                row_count=specs.number_of_rows,
+                row_pitch=footprint_specs.non_plated_row_pitch,
+                row_count=footprint_specs.number_of_rows,
             ),
         ]
         pads = "".join(pads)
@@ -118,19 +118,19 @@ def generate_footprint(  # noqa: C901
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
-                specs.pad_pitch,
-                specs.pad_size,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
                 dimensions["start_pos"],
-                row_pitch=specs.row_pitch,
-                row_count=specs.number_of_rows,
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
                 mirror_x_pin_numbering=True,
             ),
         ]
         pads = "".join(pads)
         f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
             pad_center_x=width_left,
-            pad_width=specs.pad_size,
-            pins_per_side=specs.number_of_rows,
+            pad_width=footprint_specs.pad_size,
+            pins_per_side=footprint_specs.number_of_rows,
             pitch_y=2.54,
             layer="F.SilkS",
             mirror_y_coordonate=True,
@@ -138,8 +138,8 @@ def generate_footprint(  # noqa: C901
 
         f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
             pad_center_x=width_left,
-            pad_width=specs.pad_size,
-            pins_per_side=specs.number_of_rows,
+            pad_width=footprint_specs.pad_size,
+            pins_per_side=footprint_specs.number_of_rows,
             pitch_y=2.54,
             layer="F.Fab",
             mirror_y_coordonate=True,
@@ -149,12 +149,12 @@ def generate_footprint(  # noqa: C901
         pads = [
             footprint_utils.generate_zig_zag_surface_mount_pads(
                 part_info.pin_count,
-                specs.pad_pitch,
-                specs.pad_size,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
                 dimensions["start_pos"],
-                row_pitch=specs.row_pitch,
-                row_count=specs.number_of_rows,
-                mirror_y_position=specs.miror_zig_zag,
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
+                mirror_y_position=footprint_specs.miror_zig_zag,
             ),
         ]
         pads = "".join(pads)
@@ -167,46 +167,46 @@ def generate_footprint(  # noqa: C901
         pads = [
             footprint_utils.generate_surface_mount_pads(
                 part_info.pin_count,
-                specs.pad_pitch,
-                specs.pad_size,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
                 dimensions["start_pos"],
-                row_pitch=specs.row_pitch,
-                row_count=specs.number_of_rows,
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
             ),
         ]
         pads = "".join(pads)
 
-    if specs.non_plated_round_mounting_holes is not None:
+    if footprint_specs.non_plated_round_mounting_holes is not None:
         for _, mounting_holes_specs in enumerate(
-            specs.non_plated_round_mounting_holes.specs,
+            footprint_specs.non_plated_round_mounting_holes.footprint_specs,
         ):
             pads += footprint_utils.generate_non_plated_through_hole(
                 mounting_holes_specs,
             )
 
-    if specs.plated_oval_mounting_holes is not None:
+    if footprint_specs.plated_oval_mounting_holes is not None:
         for _, mounting_holes_specs in enumerate(
-            specs.plated_oval_mounting_holes.specs,
+            footprint_specs.plated_oval_mounting_holes.footprint_specs,
         ):
             pads += footprint_utils.generate_oval_plated_through_hole(
                 mounting_holes_specs,
             )
 
     second_coutyard = ""
-    if specs.internal_courtyard is not None:
+    if footprint_specs.internal_courtyard is not None:
         second_coutyard = footprint_utils.generate_courtyard_2(
-            specs.internal_courtyard.width_left,
-            specs.internal_courtyard.width_right,
-            specs.internal_courtyard.height_top,
-            specs.internal_courtyard.height_bottom,
+            footprint_specs.internal_courtyard.width_left,
+            footprint_specs.internal_courtyard.width_right,
+            footprint_specs.internal_courtyard.height_top,
+            footprint_specs.internal_courtyard.height_bottom,
         )
 
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
-            specs.ref_y,
+            footprint_specs.ref_y,
             footprint_value,
-            specs.mpn_y,
+            footprint_specs.mpn_y,
         ),
         footprint_utils.generate_courtyard_2(
             width_left,
@@ -257,8 +257,8 @@ def generate_footprint_file(
         None
 
     """
-    specs = CONNECTOR_SPECS[part_info.series]
-    footprint_content = generate_footprint(part_info, specs)
+    footprint_specs = CONNECTOR_SPECS[part_info.series]
+    footprint_content = generate_footprint(part_info, footprint_specs)
     filename = f"{part_info.mpn}.kicad_mod"
     file_path = f"{output_path}/{filename}"
 
