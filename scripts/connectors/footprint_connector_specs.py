@@ -102,15 +102,24 @@ class FootprintSpecs(NamedTuple):
         drill_size: Diameter of drill holes
         mpn_y: Y position for manufacturer part number
         ref_y: Y position for reference designator
+        row_pitch: Additional height needed per row
+        number_of_rows: Number of rows of pins
+        non_plated_pad_size: Diameter of non-plated pads
+        non_plated_drill_size: Diameter of non-plated drill holes
+        non_plated_row_pitch: Additional height per row of non-plated pads
+        miror_zig_zag: Mirror the zig-zag pattern
+        non_plated_round_mounting_holes: Non-plated mounting holes
+        plated_oval_mounting_holes: Plated oval mounting holes
+        internal_courtyard: Internal courtyard dimensions
 
     """
 
-    pad_pitch: float  # Additional width needed per pin
-    body_dimensions: BodyDimensions  # Basic rectangle dimensions
-    pad_size: float | list[float]  # Diameter/size of through-hole pads
-    mpn_y: float  # Y position for manufacturer part number
-    ref_y: float  # Y position for reference designator
-    drill_size: float | None = None  # Diameter of drill holes
+    pad_pitch: float
+    body_dimensions: BodyDimensions
+    pad_size: float | list[float]
+    mpn_y: float
+    ref_y: float
+    drill_size: float | None = None
     row_pitch: float = 0
     number_of_rows: int = 1
     non_plated_pad_size: None | float = None
