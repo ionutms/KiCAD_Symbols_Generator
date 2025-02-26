@@ -48,7 +48,6 @@ class SeriesSpec(NamedTuple):
     contact_plating: str
     reference: str = "J"
     number_of_rows: int = 1
-    pin_names: list[str] = None
 
 
 class PartInfo(NamedTuple):
@@ -805,31 +804,5 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=300,
         mounting_style="Through Hole",
         contact_plating="Tin",
-        pin_names=[
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-        ],
     ),
 }
