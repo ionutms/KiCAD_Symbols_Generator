@@ -54,7 +54,6 @@ class SeriesSpec(NamedTuple):
     voltage_rating: str
     case_code_in: str
     case_code_mm: str
-    mpn_sufix: list[str]
     tolerance_map: dict[str, dict[str, str]]
     value_range: dict[str, tuple[float, float]]
     datasheet_url: str
@@ -66,6 +65,7 @@ class SeriesSpec(NamedTuple):
     additional_values: set[float] | None = None
     capacitor_type: str = "Ceramic"
     reference: str = "C"
+    mpn_sufix: list[str] | str = ""
 
 
 class PartInfo(NamedTuple):
@@ -1010,7 +1010,6 @@ PANASONIC_DOC_BASE = (
 PANASONIC_SYMBOLS_SPECS = {
     "35SVPK330M": SeriesSpec(
         mpn_prefix="35SVPK330M",
-        mpn_sufix="",
         manufacturer="Panasonic",
         footprint="capacitor_footprints:C_039x0496_10_0x12_6Metric",
         voltage_rating="35V",
@@ -1022,9 +1021,49 @@ PANASONIC_SYMBOLS_SPECS = {
         datasheet_url=f"{PANASONIC_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "50SVPK10M": SeriesSpec(
+        mpn_prefix="50SVPK10M",
+        mpn_sufix="",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:C_023x0196_5_9x5_0Metric",
+        voltage_rating="50V",
+        capacitor_type="Polymer",
+        case_code_in="023x0196",
+        case_code_mm="5_9x5_0",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (10e-6, 10e-6)},
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "50SVPK22M": SeriesSpec(
+        mpn_prefix="50SVPK22M",
+        mpn_sufix="",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:C_023x0248_5_9x6_3Metric",
+        voltage_rating="50V",
+        capacitor_type="Polymer",
+        case_code_in="023x0248",
+        case_code_mm="5_9x6_3",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (22e-6, 22e-6)},
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "50SVPK33M": SeriesSpec(
+        mpn_prefix="50SVPK33M",
+        manufacturer="Panasonic",
+        footprint="capacitor_footprints:C_027x0314_6_9x8_0Metric",
+        voltage_rating="50V",
+        capacitor_type="Polymer",
+        case_code_in="027x0314",
+        case_code_mm="6_9x8_0",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (33e-6, 33e-6)},
+        datasheet_url=f"{PANASONIC_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
     "50SVPK68M": SeriesSpec(
         mpn_prefix="50SVPK68M",
-        mpn_sufix="",
         manufacturer="Panasonic",
         footprint="capacitor_footprints:C_031x0468_8_0x11_9Metric",
         voltage_rating="50V",
@@ -1038,7 +1077,6 @@ PANASONIC_SYMBOLS_SPECS = {
     ),
     "50SVPK120M": SeriesSpec(
         mpn_prefix="50SVPK120M",
-        mpn_sufix="",
         manufacturer="Panasonic",
         footprint="capacitor_footprints:C_039x0496_10_0x12_6Metric",
         voltage_rating="50V",
