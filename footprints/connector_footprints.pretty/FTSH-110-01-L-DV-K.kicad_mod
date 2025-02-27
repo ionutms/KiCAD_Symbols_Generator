@@ -9,7 +9,7 @@
             (at 0 -4.318 0)
             (unlocked yes)
             (layer "F.SilkS")
-            (uuid "94f78f8a-4ced-4d6c-ba0d-e2754d174b31")
+            (uuid "77e78513-0167-4970-889c-ba3dd0315065")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -21,7 +21,7 @@
             (at 0 4.318 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "5a979ae1-b305-48d8-a28c-57ff6750577f")
+            (uuid "792a5195-149f-4ddc-94d6-2fce62cfb5a3")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -33,7 +33,7 @@
             (at 0 0 0)
             (layer "F.Fab")
             (hide yes)
-            (uuid "447ac1de-f7ec-4e37-8533-66e9be2228b7")
+            (uuid "27147e25-5883-492d-9f4d-262c44570e2c")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -45,7 +45,7 @@
             (at 0 5.587999999999999 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "54d3221e-3c42-4dc5-9d8a-0b5d0ff454f4")
+            (uuid "fad6d717-741b-4c8d-a36e-71183f79dcd3")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -61,7 +61,7 @@
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "f9f49853-8484-4a47-8ad7-a5c5daf58581")
+            (uuid "a294938e-0d9c-42f9-b1ab-abc8b3a7da56")
         )
         
 
@@ -72,7 +72,7 @@
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
-            (uuid "37ee0f23-d30d-4411-8894-1fd66a883088")
+            (uuid "09a580c6-ec9c-475a-81d9-b1e7a7659318")
         )
         
 
@@ -82,207 +82,247 @@
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.Fab")
-            (uuid "15850a03-01dd-444f-8c11-46ebe15a8610")
+            (uuid "333cb12e-8400-411a-9156-e95d1d96beb3")
         )
         
 
         (fp_circle
-            (center -7.220000000000001 1.27)
-            (end -7.405 1.27)
+            (center -7.220000000000001 -1.867)
+            (end -7.405 -1.867)
             (stroke (width 0.1524) (type solid))
             (fill solid)
             (layer F.SilkS)
-            (uuid "158f81b1-9cfc-44d6-91af-13c11d4b6fc0")
+            (uuid "8822b28a-de35-4773-a659-97b9e1fdbf61")
         )
         
 
         (fp_circle
-            (center -7.220000000000001 1.27)
-            (end -7.405 1.27)
+            (center -7.220000000000001 -1.867)
+            (end -7.405 -1.867)
             (stroke (width 0.1524) (type solid))
             (fill solid)
             (layer F.Fab)
-            (uuid "d472b238-dfd4-4a60-af5d-c2352c400686")
+            (uuid "df33b08e-c022-4efb-a846-1b07e2eea3ce")
         )
         
 
-            (pad "1" smd roundrect
-                (at -5.715 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "894969ff-0f14-49f3-b275-1408b7d3ae21")
-            )
-            
-
-            (pad "2" smd roundrect
+            (pad "1" thru_hole rect
                 (at -5.715 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "b6234804-c9d8-4926-bdc1-7cae4aaac2dc")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "5b7718dd-5dcc-446a-9aa9-a8b3a63d4e27")
             )
             
 
-            (pad "3" smd roundrect
-                (at -4.445 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "9c48bfd0-1a6c-4f5a-a02f-2cc07907f294")
+            (pad "2" thru_hole circle
+                (at -5.715 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "7579e9e0-d453-4e07-8639-ba14d69044e9")
             )
             
 
-            (pad "4" smd roundrect
+            (pad "3" thru_hole circle
                 (at -4.445 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "140a4623-2f50-4206-a7b4-fd45579185ca")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "08b5a71c-8659-49ca-b187-574ce7f890d9")
             )
             
 
-            (pad "5" smd roundrect
-                (at -3.175 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "5da397fb-78ae-4122-b8cd-fe277e4aa723")
+            (pad "4" thru_hole circle
+                (at -4.445 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "e888a299-9a18-4960-861c-e0fcd528b1a3")
             )
             
 
-            (pad "6" smd roundrect
+            (pad "5" thru_hole circle
                 (at -3.175 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "c2fd4858-2bc0-4b6b-b627-4cc6db357186")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "28e34ba1-edb1-45f2-bd98-ae03de38f191")
             )
             
 
-            (pad "7" smd roundrect
-                (at -1.905 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "5988a96d-7430-4beb-a8cf-d933fff963cb")
+            (pad "6" thru_hole circle
+                (at -3.175 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "28487e1a-9d78-4c48-ba81-a7c2a3d6affb")
             )
             
 
-            (pad "8" smd roundrect
+            (pad "7" thru_hole circle
                 (at -1.905 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "68e28917-ac51-4d8d-893a-1e3c6135c758")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "07609bb6-6fc9-4001-b91d-075c3e387d2d")
             )
             
 
-            (pad "9" smd roundrect
-                (at -0.635 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "08ddeebe-73a9-41e8-8ba5-36169a24bb38")
+            (pad "8" thru_hole circle
+                (at -1.905 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "0cc3e5f8-2ba6-420b-9518-bcfb68e6698a")
             )
             
 
-            (pad "10" smd roundrect
+            (pad "9" thru_hole circle
                 (at -0.635 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "93f94b6f-e4c7-4612-90cf-d302c5dc5fe4")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "9ddb9291-f5cc-4a6b-8c7a-99fe15ef6593")
             )
             
 
-            (pad "11" smd roundrect
-                (at 0.635 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "a6374187-4548-4bd6-9382-a5551ee7075d")
+            (pad "10" thru_hole circle
+                (at -0.635 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "7037cbeb-e2e8-4232-aef5-5393771d33b1")
             )
             
 
-            (pad "12" smd roundrect
+            (pad "11" thru_hole circle
                 (at 0.635 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "0e8554e5-c3a2-469d-9c07-a4117eb4adb6")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "21d86e68-2e35-409e-ac99-4eee08bb7f89")
             )
             
 
-            (pad "13" smd roundrect
-                (at 1.905 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "b8f144d6-9f41-4767-955a-12cc342be42c")
+            (pad "12" thru_hole circle
+                (at 0.635 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "1ff0316c-4607-493c-8650-0429adbeac50")
             )
             
 
-            (pad "14" smd roundrect
+            (pad "13" thru_hole circle
                 (at 1.905 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "ac08551b-88f3-422a-bbbd-60e92dbe3450")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "1f3afb77-0b2a-453b-b7b3-c28d19aa54fc")
             )
             
 
-            (pad "15" smd roundrect
-                (at 3.175 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "2c6cd610-913e-4a84-9e35-845d811655a8")
+            (pad "14" thru_hole circle
+                (at 1.905 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "a2f6e346-4bf9-4907-ad18-01b66451867d")
             )
             
 
-            (pad "16" smd roundrect
+            (pad "15" thru_hole circle
                 (at 3.175 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "9fa1da21-b47d-41d7-990e-068e7432eb86")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "0fe3a524-0e7e-47b0-8b2d-1ce817e64737")
             )
             
 
-            (pad "17" smd roundrect
-                (at 4.445 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "6f70a9f2-2b98-4ee8-a0d2-32c5ec15e2ed")
+            (pad "16" thru_hole circle
+                (at 3.175 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "abe88fb4-c84e-4abb-b98e-1bd36e2d3b04")
             )
             
 
-            (pad "18" smd roundrect
+            (pad "17" thru_hole circle
                 (at 4.445 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "9dd2676f-ea65-4bc3-b635-e6c8e6089835")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "9fc7c4c4-39b8-42e5-ae51-ae514d0620c2")
             )
             
 
-            (pad "19" smd roundrect
-                (at 5.715 1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "6cdc5735-2724-4cc4-a542-c4183ef7f1e1")
+            (pad "18" thru_hole circle
+                (at 4.445 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "1da6bd36-97e1-4fab-921a-3f988c28f369")
             )
             
 
-            (pad "20" smd roundrect
+            (pad "19" thru_hole circle
                 (at 5.715 -1.867)
-                (size 0.74 2.79)
-                (layers "F.Cu" "F.Paste")
-                (roundrect_rratio 0.25)
-                (uuid "f539ec75-2e91-456d-a29d-f2e82db3c858")
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "2a8b5c53-3125-42dc-8678-ba4af6c2e50d")
+            )
+            
+
+            (pad "20" thru_hole circle
+                (at 5.715 1.867)
+                (size [0.74, 2.79] [0.74, 2.79])
+                (drill 0.787)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "d1d7afa5-f473-4efe-8abd-7f970b763c3d")
             )
             
 
