@@ -86,17 +86,6 @@ def generate_footprint(  # noqa: C901
     f_silk_pin_1_indicator = pin_1_indicators["F.SilkS"]
     f_fab_pin_1_indicator = pin_1_indicators["F.Fab"]
 
-    if footprint_specs.non_plated_drill_size is not None:
-        pads += footprint_utils.generate_non_plated_through_holes(
-            part_info.pin_count,
-            footprint_specs.pad_pitch,
-            footprint_specs.non_plated_pad_size,
-            footprint_specs.non_plated_drill_size,
-            dimensions["start_pos"],
-            row_pitch=footprint_specs.non_plated_row_pitch,
-            row_count=footprint_specs.number_of_rows,
-        )
-
     if (
         part_info.mounting_style == "Surface Mount"
         and footprint_specs.number_of_rows == 1
@@ -154,6 +143,17 @@ def generate_footprint(  # noqa: C901
             footprint_specs.internal_courtyard.width_right,
             footprint_specs.internal_courtyard.height_top,
             footprint_specs.internal_courtyard.height_bottom,
+        )
+
+    if footprint_specs.non_plated_drill_size is not None:
+        pads += footprint_utils.generate_non_plated_through_holes(
+            part_info.pin_count,
+            footprint_specs.pad_pitch,
+            footprint_specs.non_plated_pad_size,
+            footprint_specs.non_plated_drill_size,
+            dimensions["start_pos"],
+            row_pitch=footprint_specs.non_plated_row_pitch,
+            row_count=footprint_specs.number_of_rows,
         )
 
     sections = [
