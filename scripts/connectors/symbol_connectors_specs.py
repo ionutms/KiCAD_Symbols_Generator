@@ -515,7 +515,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,
-        mounting_style="Through Hole",
+        mounting_style="Surface Mount",
         contact_plating="Tin",
     ),
     "TSM-1xx-03-L-DH-TR": SeriesSpec(
@@ -646,7 +646,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,
-        mounting_style="Through Hole",
+        mounting_style="Surface Mount",
         contact_plating="Tin",
     ),
     "FTSH-1xx-01-L-DV-K": SeriesSpec(
@@ -670,7 +670,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,
-        mounting_style="Through Hole",
+        mounting_style="Surface Mount",
         contact_plating="Tin",
     ),
     "FTSH-1xx-04-L-D": SeriesSpec(
@@ -802,7 +802,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         current_rating=5.2,
         voltage_rating=300,
-        mounting_style="Through Hole",
+        mounting_style="Surface Mount",
         contact_plating="Tin",
     ),
 }
