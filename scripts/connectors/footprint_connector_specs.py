@@ -126,6 +126,7 @@ class FootprintSpecs(NamedTuple):
     non_plated_drill_size: None | float = None
     non_plated_row_pitch: float = 0
     miror_zig_zag: None | bool = None
+    mirror_x_pin_numbering: bool = False
     non_plated_round_mounting_holes: None | NonPlatedRoundMountingHoles = None
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
     internal_courtyard: None | InternalCourtyard = None
@@ -353,6 +354,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_pitch=2.54,
         row_pitch=4.19,
         number_of_rows=2,
+        mirror_x_pin_numbering=True,
         body_dimensions=BodyDimensions(
             width_left=2.7,
             width_right=2.7,
