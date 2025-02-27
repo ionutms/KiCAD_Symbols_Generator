@@ -62,90 +62,45 @@ def generate_footprint(  # noqa: C901
         model_file_name = f"{part_info.mpn}"
         footprint_value = part_info.series
 
-    pads = footprint_utils.generate_thru_hole_pads(
-        part_info.pin_count,
-        footprint_specs.pad_pitch,
-        footprint_specs.pad_size,
-        footprint_specs.drill_size,
-        dimensions["start_pos"],
-        row_pitch=footprint_specs.row_pitch,
-        row_count=footprint_specs.number_of_rows,
-    )
+    if part_info.mounting_style == "Through Hole":
+        pads = footprint_utils.generate_thru_hole_pads(
+            part_info.pin_count,
+            footprint_specs.pad_pitch,
+            footprint_specs.pad_size,
+            footprint_specs.drill_size,
+            dimensions["start_pos"],
+            row_pitch=footprint_specs.row_pitch,
+            row_count=footprint_specs.number_of_rows,
+        )
 
-    f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
-        pad_center_x=width_left,
-        pad_width=footprint_specs.pad_size,
-        pins_per_side=footprint_specs.number_of_rows,
-        pitch_y=2.54,
-        layer="F.SilkS",
-    )
+    pin_1_indicators = {}
+    for layer in ["F.SilkS", "F.Fab"]:
+        pin_1_indicators[layer] = footprint_utils.generate_pin_1_indicator(
+            pad_center_x=width_left,
+            pad_width=footprint_specs.pad_size,
+            pins_per_side=footprint_specs.number_of_rows,
+            pitch_y=footprint_specs.row_pitch,
+            layer=layer,
+        )
 
-    f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
-        pad_center_x=width_left,
-        pad_width=footprint_specs.pad_size,
-        pins_per_side=footprint_specs.number_of_rows,
-        pitch_y=2.54,
-        layer="F.Fab",
-    )
+    f_silk_pin_1_indicator = pin_1_indicators["F.SilkS"]
+    f_fab_pin_1_indicator = pin_1_indicators["F.Fab"]
 
-    if part_info.series == "CLP-1xx-02-G-D-BE":
-        pads = [
-            footprint_utils.generate_surface_mount_pads(
-                part_info.pin_count,
-                footprint_specs.pad_pitch,
-                footprint_specs.pad_size,
-                dimensions["start_pos"],
-                row_pitch=footprint_specs.row_pitch,
-                row_count=footprint_specs.number_of_rows,
-            ),
-            footprint_utils.generate_non_plated_through_holes(
-                part_info.pin_count,
-                footprint_specs.pad_pitch,
-                footprint_specs.non_plated_pad_size,
-                footprint_specs.non_plated_drill_size,
-                dimensions["start_pos"],
-                row_pitch=footprint_specs.non_plated_row_pitch,
-                row_count=footprint_specs.number_of_rows,
-            ),
-        ]
-        pads = "".join(pads)
+    if footprint_specs.non_plated_drill_size is not None:
+        pads += footprint_utils.generate_non_plated_through_holes(
+            part_info.pin_count,
+            footprint_specs.pad_pitch,
+            footprint_specs.non_plated_pad_size,
+            footprint_specs.non_plated_drill_size,
+            dimensions["start_pos"],
+            row_pitch=footprint_specs.non_plated_row_pitch,
+            row_count=footprint_specs.number_of_rows,
+        )
 
-    if part_info.series in (
-        "FTSH-1xx-01-L-DV",
-        "FTSH-1xx-01-L-DV-K",
-        "UJ32-C-V-G-TH-8-P24-TR",
+    if (
+        part_info.mounting_style == "Surface Mount"
+        and footprint_specs.number_of_rows == 1
     ):
-        pads = [
-            footprint_utils.generate_surface_mount_pads(
-                part_info.pin_count,
-                footprint_specs.pad_pitch,
-                footprint_specs.pad_size,
-                dimensions["start_pos"],
-                row_pitch=footprint_specs.row_pitch,
-                row_count=footprint_specs.number_of_rows,
-                mirror_x_pin_numbering=True,
-            ),
-        ]
-        pads = "".join(pads)
-        f_silk_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
-            pad_center_x=width_left,
-            pad_width=footprint_specs.pad_size,
-            pins_per_side=footprint_specs.number_of_rows,
-            pitch_y=2.54,
-            layer="F.SilkS",
-            mirror_y_coordonate=True,
-        )
-
-        f_fab_pin_1_indicator = footprint_utils.generate_pin_1_indicator(
-            pad_center_x=width_left,
-            pad_width=footprint_specs.pad_size,
-            pins_per_side=footprint_specs.number_of_rows,
-            pitch_y=2.54,
-            layer="F.Fab",
-            mirror_y_coordonate=True,
-        )
-
-    if part_info.mounting_style == "Surface Mount":
         pads = [
             footprint_utils.generate_zig_zag_surface_mount_pads(
                 part_info.pin_count,
@@ -159,10 +114,9 @@ def generate_footprint(  # noqa: C901
         ]
         pads = "".join(pads)
 
-    if part_info.series in (
-        "FW-xx-03-G-D-085-315",
-        "FW-xx-03-G-D-085-155",
-        "TSM-1xx-03-L-DH-TR",
+    if (
+        part_info.mounting_style == "Surface Mount"
+        and footprint_specs.number_of_rows == 2  # noqa: PLR2004
     ):
         pads = [
             footprint_utils.generate_surface_mount_pads(
@@ -172,6 +126,7 @@ def generate_footprint(  # noqa: C901
                 dimensions["start_pos"],
                 row_pitch=footprint_specs.row_pitch,
                 row_count=footprint_specs.number_of_rows,
+                mirror_x_pin_numbering=footprint_specs.mirror_x_pin_numbering,
             ),
         ]
         pads = "".join(pads)

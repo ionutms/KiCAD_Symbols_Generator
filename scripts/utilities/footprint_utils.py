@@ -634,7 +634,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     start_pos: float,
     row_pitch: float,
     row_count: int,
-    mirror_x_pin_numbering: bool = False,  # noqa: FBT001, FBT002
+    mirror_x_pin_numbering: bool,  # noqa: FBT001
 ) -> str:
     """Generate the pads section of the footprint.
 
