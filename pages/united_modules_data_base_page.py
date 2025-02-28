@@ -84,12 +84,6 @@ try:
         lambda url_text: dcu.generate_centered_link(url_text, "Search"),
     )
 
-    dataframe["3dviewer Link"] = dataframe["3dviewer Link"].apply(
-        lambda url_text: dcu.generate_centered_link(
-            url_text,
-            "View 3D model",
-        ),
-    )
 except KeyError:
     pass
 
