@@ -86,4 +86,14 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-7.112,
     ),
+    "SRF0905A": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=10, height=6.3),
+        pad_dimensions=PadDimensions(
+            width=2.0,
+            height=1.2,
+            center_x=3.75,
+            pitch_y=2.54,
+        ),
+        ref_offset_y=-3.81,
+    ),
 }

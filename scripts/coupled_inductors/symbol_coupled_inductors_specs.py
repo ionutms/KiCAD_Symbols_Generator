@@ -168,6 +168,7 @@ class PartInfo(NamedTuple):
         cls,
         inductance: float,
         value_suffix: str,
+        manufacturer: str,
     ) -> str:
         """Generate Coilcraft value code for inductance values.
 
@@ -189,6 +190,8 @@ class PartInfo(NamedTuple):
                 Value in µH (microhenries), must be between 0.01 and 999.99
             value_suffix:
                 AEC qualification suffix to append when is_aec is True
+            manufacturer:
+                Manufacturer name for value code generation
 
         Returns:
             str: Value code string.
@@ -198,23 +201,31 @@ class PartInfo(NamedTuple):
                 If inductance is outside the valid range (0.01-9999.99 µH)
 
         """
-        if not 0.01 <= inductance <= 9999.99:  # noqa: PLR2004
-            msg = f"Invalid inductance: {inductance}µH (0.01-9999.99)"
-            raise ValueError(msg)
-
         if inductance >= 1000.0:  # noqa: PLR2004
             value = round(inductance / 100)
-            base_code = f"{value:02d}5"
+            base_code = (
+                f"{value:02d}5"
+                if manufacturer == "Coilcraft"
+                else f"{value:02d}2"
+            )
             return f"{base_code}{value_suffix}"
 
         if inductance >= 100.0:  # noqa: PLR2004
             value = round(inductance / 10)
-            base_code = f"{value:02d}4"
+            base_code = (
+                f"{value:02d}4"
+                if manufacturer == "Coilcraft"
+                else f"{value:02d}1"
+            )
             return f"{base_code}{value_suffix}"
 
         if inductance >= 10.0:  # noqa: PLR2004
             value = round(inductance)
-            base_code = f"{value:02d}3"
+            base_code = (
+                f"{value:02d}3"
+                if manufacturer == "Coilcraft"
+                else f"{value:02d}0"
+            )
             return f"{base_code}{value_suffix}"
 
         if inductance >= 1.0:
@@ -248,7 +259,11 @@ class PartInfo(NamedTuple):
             PartInfo instance with all specifications
 
         """
-        value_code = cls.generate_value_code(inductance, specs.value_suffix)
+        value_code = cls.generate_value_code(
+            inductance,
+            specs.value_suffix,
+            specs.manufacturer,
+        )
         mpn = f"{specs.base_series}-{value_code}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
@@ -417,6 +432,41 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             right_alternative=[
                 PinConfig("2", -5.08, "unspecified", 5.08),
                 PinConfig("4", 5.08, "unspecified", 5.08),
+            ],
+        ),
+    ),
+    "SRF0905A": SeriesSpec(
+        manufacturer="Bourns",
+        base_series="SRF0905A",
+        footprint="coupled_inductor_footprints:SRF0905A",
+        tolerance="±20%",
+        datasheet=("https://bourns.com/docs/product-datasheets/srf0905a.pdf"),
+        inductance_values=[
+            *[10, 25, 40, 50, 250, 470, 500],
+            *[1000, 2000, 4700, 6500],
+        ],
+        max_dc_current=[
+            *[1.6, 1, 0.9, 0.8, 1.2, 1.1, 1],
+            *[0.8, 0.6, 0.4, 0.3],
+        ],
+        max_dc_resistance=[
+            *[0.08, 0.16, 0.25, 0.32, 0.13, 0.14, 0.15],
+            *[0.31, 0.42, 0.9, 1.05],
+        ],
+        value_suffix="Y",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig("1", 5.08, "unspecified", 5.08),
+                PinConfig("4", -5.08, "unspecified", 5.08),
+            ],
+            right=[
+                PinConfig("2", -5.08, "unspecified", 5.08),
+                PinConfig("3", 5.08, "unspecified", 5.08),
+            ],
+            right_alternative=[
+                PinConfig("2", 5.08, "unspecified", 5.08),
+                PinConfig("3", -5.08, "unspecified", 5.08),
             ],
         ),
     ),
