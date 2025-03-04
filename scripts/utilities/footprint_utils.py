@@ -776,6 +776,8 @@ def generate_non_plated_through_holes(  # noqa: PLR0913
             * (row_pitch / 2)
             * (row_count - 1)
         )
+        if row_count == 1:
+            ypos = row_pitch
 
         pad = f"""
             (pad None np_thru_hole circle
