@@ -332,6 +332,22 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=2.032,
         ref_y=-2.032,
     ),
+    "BSW-1xx-04-G-S": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=2.9,
+            width_right=2.9,
+            height_top=1.4,
+            height_bottom=3.9,
+        ),
+        pad_size=1.264,
+        non_plated_drill_size=0.74,
+        non_plated_pad_size=0.74,
+        non_plated_row_pitch=2.54,
+        drill_size=0.914,
+        mpn_y=4.572,
+        ref_y=-2.032,
+    ),
     "CLP-1xx-02-G-D-BE": FootprintSpecs(
         pad_pitch=1.27,
         row_pitch=3.734,
