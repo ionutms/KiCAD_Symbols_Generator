@@ -192,6 +192,7 @@ REPOS_NAMES = [
     "Modular_Software_Configurable_IO_PLC",
     "Minimal_ADIN1110",
     "Minimal_LTC9111",
+    "Minimal_SPoE_Hybrid",
 ]
 
 COLORS = [
@@ -202,6 +203,7 @@ COLORS = [
     ["#1E90FF", "#8A2BE2"],
     ["#32CD32", "#FF69B4"],
     ["#40E0D0", "#FF7F50"],
+    ["#A0522D", "#00FA9A"],
 ]
 
 REPOS_DATA = []
