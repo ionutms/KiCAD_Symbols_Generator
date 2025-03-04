@@ -497,6 +497,29 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "BSW-1xx-04-G-S": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="BSW-1xx-04-G-S",
+        footprint_pattern="connector_footprints:BSW-1{:02d}-04-G-S",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/bsw.pdf?"
+            "_gl=1*kyaku3*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFrO"
+            "Ec5QmhBMEVpd0FPUXhtZnBxNGtid2RzbUtZdVAxNHNtU0RyMV9EYlV"
+            "GX20zcWFYTlVYU2w2UG00UVlkbEJkTWNnblpSb0NWcXdRQXZEX0J3RQ..*"
+            "_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTc0MTExMjA4Ni40Ni4xLjE3NDExMTMwODkuNjAuMC4w"
+        ),
+        pin_counts=list(range(2, 37)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
     "CLP-1xx-02-G-D-BE": SeriesSpec(
         manufacturer="Samtec",
         base_series="CLP-1xx-02-G-D-BE",
