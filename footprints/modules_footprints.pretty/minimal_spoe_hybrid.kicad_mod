@@ -1,0 +1,193 @@
+(footprint "minimal_spoe_hybrid"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0.00254 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "82a41278-e8f9-4033-9656-65737de50048")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+		)
+	)
+	(property "Value" "minimal_spoe_hybrid"
+		(at 0.00254 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cae1553f-a583-45cd-8821-088cb5e7720d")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0.00254 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "97541071-368e-4e03-9f84-a2310fb9c4d1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0.00254 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8b556d7e-5a37-4e17-88cc-c9a878f5b68e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0.00254 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "9069f6a1-ef64-4fc8-9e23-9770a8406524")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_line
+		(start -15.87624 8.12754)
+		(end -15.87624 -8.12846)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "9fe52162-d1d1-45e1-8c1d-1c37d6d0a95e")
+	)
+	(fp_line
+		(start -14.86024 -9.14446)
+		(end 14.85776 -9.14446)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "cc4bf7b6-bd67-4e34-8503-814cd799f45b")
+	)
+	(fp_line
+		(start 14.85776 9.14354)
+		(end -14.86024 9.14354)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "f98a8857-344a-4e6c-a50d-9a1371b08a28")
+	)
+	(fp_line
+		(start 15.87376 -8.12846)
+		(end 15.87376 8.12754)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "530129b8-9d3f-4e1c-a3c8-94fb544bc00f")
+	)
+	(fp_arc
+		(start -15.87624 -8.12846)
+		(mid -15.57866 -8.84688)
+		(end -14.86024 -9.14446)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "3796fc46-32b9-4a02-99ce-e3663b95dd21")
+	)
+	(fp_arc
+		(start -14.86024 9.14354)
+		(mid -15.57866 8.84596)
+		(end -15.87624 8.12754)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "f0517e13-73d4-4443-b36e-5f64ad9b30a1")
+	)
+	(fp_arc
+		(start 14.85776 -9.14446)
+		(mid 15.57618 -8.84688)
+		(end 15.87376 -8.12846)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "36a9ec84-40d4-4740-8020-a2e290c967ef")
+	)
+	(fp_arc
+		(start 15.87376 8.12754)
+		(mid 15.57618 8.84596)
+		(end 14.85776 9.14354)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "13fe2eef-4ac7-46c1-aa20-a794f16ac21d")
+	)
+	(fp_circle
+		(center 13.30582 0)
+		(end 13.81382 0)
+		(stroke
+			(width 0.0254)
+			(type default)
+		)
+		(fill none)
+		(layer "Cmts.User")
+		(uuid "1c52f9ee-d043-4d59-87c8-cab85471c5fe")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0.00254 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "96a2a958-d7c0-401b-81c7-ed47fecd5053")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+		)
+	)
+	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/minimal_spoe_hybrid.wrl"
+		(offset
+			(xyz 0 0 -3.556)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
