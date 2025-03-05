@@ -978,6 +978,20 @@ KEMET_SYMBOLS_SPECS = {
         datasheet_url=f"{KEMET_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "C1812C": SeriesSpec(
+        mpn_prefix="C1812C",
+        manufacturer="Kemet",
+        footprint="capacitor_footprints:C_1812_4532Metric",
+        voltage_rating="3kV",
+        case_code_in="1812",
+        case_code_mm="4532",
+        mpn_sufix=["HGACTU"],
+        tolerance_map={"C0G (NP0)": {"J": "5%"}},
+        value_range={"C0G (NP0)": (10e-12, 330e-12)},
+        specified_values=[10e-12, 100e-12, 120e-12, 150e-12, 330e-12],
+        datasheet_url=f"{KEMET_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
