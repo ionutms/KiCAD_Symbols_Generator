@@ -484,7 +484,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
     "TSM-1xx-01-S-SV-P-TR": FootprintSpecs(
         pad_pitch=2.54,
         row_pitch=2.92,
-        number_of_rows=2,
         miror_zig_zag=False,
         body_dimensions=BodyDimensions(
             width_left=2.7,
@@ -499,7 +498,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
     "RSM-1xx-02-STL-S": FootprintSpecs(
         pad_pitch=1.27,
         row_pitch=2.985,
-        number_of_rows=2,
         miror_zig_zag=True,
         body_dimensions=BodyDimensions(
             width_left=1.5,
@@ -514,7 +512,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
     "FTR-1xx-03-L-S": FootprintSpecs(
         pad_pitch=1.27,
         row_pitch=2.985,
-        number_of_rows=2,
         miror_zig_zag=False,
         body_dimensions=BodyDimensions(
             width_left=1.5,

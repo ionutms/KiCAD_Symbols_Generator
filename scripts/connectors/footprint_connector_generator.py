@@ -97,7 +97,6 @@ def generate_footprint(  # noqa: C901
                 footprint_specs.pad_size,
                 dimensions["start_pos"],
                 row_pitch=footprint_specs.row_pitch,
-                row_count=footprint_specs.number_of_rows,
                 mirror_y_position=footprint_specs.miror_zig_zag,
             ),
         ]
