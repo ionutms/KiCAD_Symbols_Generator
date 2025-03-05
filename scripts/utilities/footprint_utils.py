@@ -689,7 +689,6 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     pad_size: list[float],
     start_pos: float,
     row_pitch: float,
-    row_count: int,
     mirror_y_position: bool = False,  # noqa: FBT001, FBT002
 ) -> str:
     """Generate the pads section of the footprint.
@@ -700,8 +699,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
         pad_size: Diameter of the pad
         start_pos: X-coordinate of the first pad
         row_pitch: Pitch between connector rows
-        row_count: Number of connector rows
-        mirror_y_position: TODO
+        mirror_y_position: Mirror the Y-coordinate of the pads
 
     Returns:
         str: KiCad formatted pad definitions
@@ -713,14 +711,11 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     for pin_index, pin_num in enumerate(range(pin_count)):
         mirror_coefficient = -1 if mirror_y_position else 1
         ypos = (
-            (
-                -1 * mirror_coefficient
-                if pin_num % 2 == 0
-                else 1 * mirror_coefficient
-            )
-            * (row_pitch / 2)
-            * (row_count - 1)
-        )
+            -1 * mirror_coefficient
+            if pin_num % 2 == 0
+            else 1 * mirror_coefficient
+        ) * (row_pitch / 2)
+        print(ypos)
 
         pad = f"""
             (pad "{pin_num + 1}" smd roundrect
