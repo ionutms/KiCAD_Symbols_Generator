@@ -715,7 +715,6 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
             if pin_num % 2 == 0
             else 1 * mirror_coefficient
         ) * (row_pitch / 2)
-        print(ypos)
 
         pad = f"""
             (pad "{pin_num + 1}" smd roundrect
