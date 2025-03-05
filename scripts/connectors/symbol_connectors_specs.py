@@ -588,6 +588,29 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Surface Mount",
         contact_plating="Tin",
     ),
+    "TSW-1xx-14-G-S": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="TSW-1xx-14-G-S",
+        footprint_pattern="connector_footprints:TSM-1{:02d}-14-G-S",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/tsw_th.pdf?"
+            "_gl=1*jw1r0n*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFrOEc5"
+            "QmhBMEVpd0FPUXhtZnBxNGtid2RzbUtZdVAxNHNtU0RyMV9EYlVGX20zc"
+            "WFYTlVYU2w2UG00UVlkbEJkTWNnblpSb0NWcXdRQXZEX0J3RQ..*"
+            "_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*"
+            "_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*"
+            "_ga_3KFNZC07WW*MTc0MTE5MzI3NC40OC4xLjE3NDExOTMzODUuMjUuMC4w"
+        ),
+        pin_counts=list(range(1, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
+    ),
     "FW-xx-04-G-D-070-315": SeriesSpec(
         manufacturer="Samtec",
         base_series="FW-xx-04-G-D-070-315",
