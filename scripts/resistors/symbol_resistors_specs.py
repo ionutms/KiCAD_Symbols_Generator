@@ -304,6 +304,9 @@ class PartInfo(NamedTuple):
         if specs.manufacturer == "Murata":
             return cls._generate_murata_resistance_code(resistance)
 
+        if specs.manufacturer == "Bourns":
+            return cls._generate_bourns_resistance_code(resistance)
+
         if specs.manufacturer == "SEI Stackpole":
             return cls._generate_sei_stackpole_resistance_code(resistance)
 
@@ -359,6 +362,18 @@ class PartInfo(NamedTuple):
 
     @classmethod
     def _generate_murata_resistance_code(cls, resistance: float) -> str:
+        """Generate resistance code for Murata series.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        """
+        power = int(math.log10(resistance)) - 1
+        significant = int(resistance / (10**power))
+        return f"{significant}{power}"
+
+    @classmethod
+    def _generate_bourns_resistance_code(cls, resistance: float) -> str:
         """Generate resistance code for Murata series.
 
         Args:
@@ -3101,6 +3116,25 @@ MURATA_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     ),
 }
 
+BOURNS_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
+    "CHV2010-JW-": SeriesSpec(
+        manufacturer="Bourns",
+        mpn_prefix="CHV2010-JW-",
+        mpn_sufix="ELF",
+        footprint="resistor_footprints:RT_0402_1005Metric",
+        voltage_rating="2kV",
+        case_code_in="2010",
+        case_code_mm="5025",
+        power_rating="0.5W",
+        temperature_coefficient="200 ppm/°C",
+        resistance_range=[100_000, 51_000_000],
+        specified_values=[100_000, 4_700_000, 51_000_000],
+        tolerance_map={"E24": "1%"},
+        datasheet=("https://www.murata.com/products/productdetail?partno="),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+}
+
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
@@ -3108,4 +3142,5 @@ SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **SEI_STACKPOLE_SYMBOLS_SPECS,
     **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
     **MURATA_SYMBOLS_SPECS,
+    **BOURNS_SYMBOLS_SPECS,
 }
