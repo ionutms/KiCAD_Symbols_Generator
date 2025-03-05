@@ -591,7 +591,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TSW-1xx-14-G-S": SeriesSpec(
         manufacturer="Samtec",
         base_series="TSW-1xx-14-G-S",
-        footprint_pattern="connector_footprints:TSM-1{:02d}-14-G-S",
+        footprint_pattern="connector_footprints:TSW-1{:02d}-14-G-S",
         datasheet=(
             "https://suddendocs.samtec.com/catalog_english/tsw_th.pdf?"
             "_gl=1*jw1r0n*_gcl_aw*R0NMLjE3Mzk2ODk4NTMuQ2p3S0NBaUFrOEc5"
