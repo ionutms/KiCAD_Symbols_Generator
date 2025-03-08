@@ -57,6 +57,32 @@ def generate_footprint(
             ),
             ")",  # Close the footprint
         ]
+    elif part_info.package == "DO-214AA":
+        anode_center_x = specs.pad_dimensions.anode_center_x
+        cathode_center_x = specs.pad_dimensions.cathode_center_x
+        anode_width = specs.pad_dimensions.anode_width
+        anode_height = specs.pad_dimensions.anode_height
+
+        sections = [
+            footprint_utils.generate_header(part_info.package),
+            footprint_utils.generate_properties(
+                specs.ref_offset_y,
+                part_info.package,
+            ),
+            footprint_utils.generate_courtyard(body_width, body_height),
+            footprint_utils.generate_fab_rectangle(body_width, body_height),
+            footprint_utils.generate_silkscreen_lines(
+                body_height,
+                anode_center_x,
+                anode_width,
+            ),
+            generate_pads(specs),
+            footprint_utils.associate_3d_model(
+                "KiCAD_Symbol_Generator/3D_models",
+                part_info.package,
+            ),
+            ")",  # Close the footprint
+        ]
     else:
         anode_center_x = specs.pad_dimensions.anode_center_x
         cathode_center_x = specs.pad_dimensions.cathode_center_x
