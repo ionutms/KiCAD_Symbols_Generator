@@ -70,6 +70,17 @@
 	)
 	(zone_connect 2)
 	(attr smd exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
+	(fp_rect
+		(start -0.8915 -0.254)
+		(end -0.3835 0.254)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(fill solid)
+		(layer "F.Cu")
+		(uuid "97d9ba41-a9e9-423a-81a8-4a235e74ade1")
+	)
 	(fp_line
 		(start -1.9812 0.3048)
 		(end -1.9812 -0.3048)
@@ -223,12 +234,6 @@
 			(prefer_zone_connections yes)
 		)
 		(uuid "72bbd0f2-a43f-4cc2-8355-cb030cae8bf0")
-	)
-	(pad "2" smd rect
-		(at -0.6375 0)
-		(size 0.508 0.508)
-		(layers "F.Cu" "F.Mask")
-		(uuid "686487ba-230d-4ddb-8b8f-c2842e7245a5")
 	)
 	(pad "2" smd rect
 		(at 0 0)
