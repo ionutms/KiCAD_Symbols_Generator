@@ -1231,8 +1231,8 @@ def write_bidirectional_tvs_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 7.62, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -7.62, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27)
 
     symbol_file.write("\t\t)\n")
 
