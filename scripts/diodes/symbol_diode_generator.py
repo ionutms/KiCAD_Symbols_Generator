@@ -54,7 +54,7 @@ def generate_kicad_symbol(
         symbol_file.write(")")
 
 
-def write_component(
+def write_component(  # noqa: C901, PLR0912
     symbol_file: TextIO,
     component_data: dict[str, str],
     property_order: list[str],
@@ -72,12 +72,22 @@ def write_component(
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
-    symbol_utils.write_properties(
-        symbol_file,
-        component_data,
-        property_order,
-        2,
-    )
+
+    if symbol_name == "D_SP4020-01FTG-C":
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            text_y_offset=3,
+        )
+    else:
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            text_y_offset=2,
+        )
+
     if component_data.get("Diode Type") == "Schottky":
         symbol_utils.write_schottky_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "Zener":
@@ -87,10 +97,16 @@ def write_component(
     if component_data.get("Diode Type") == "TVS":
         symbol_utils.write_tvs_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "Bidirectional TVS":
-        symbol_utils.write_bidirectional_tvs_symbol_drawing(
-            symbol_file,
-            symbol_name,
-        )
+        if symbol_name == "D_SP4020-01FTG-C":
+            symbol_utils.write_bidirectional_tvs_symbol_drawing_v2(
+                symbol_file,
+                symbol_name,
+            )
+        else:
+            symbol_utils.write_bidirectional_tvs_symbol_drawing(
+                symbol_file,
+                symbol_name,
+            )
     if (
         component_data.get("Diode Type")
         == "Dual Small Signal Switching Diodes"
