@@ -86,6 +86,11 @@ def write_component(
         symbol_utils.write_rectifier_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "TVS":
         symbol_utils.write_tvs_symbol_drawing(symbol_file, symbol_name)
+    if component_data.get("Diode Type") == "Bidirectional TVS":
+        symbol_utils.write_bidirectional_tvs_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
     if (
         component_data.get("Diode Type")
         == "Dual Small Signal Switching Diodes"

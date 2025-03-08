@@ -129,7 +129,7 @@ class PartInfo(NamedTuple):
         return " ".join(parts)
 
     @classmethod
-    def create_part_info(
+    def create_part_info(  # noqa: C901
         cls: type[Self],
         value: float,
         specs: SeriesSpec,
@@ -179,6 +179,26 @@ class PartInfo(NamedTuple):
             )
             if float(whole) >= 10:  # noqa: PLR2004
                 voltage_notation = f"{whole}V"
+
+            mpn = (
+                f"{specs.base_series}"
+                f"{voltage_notation}"
+                f"{specs.part_number_suffix}"
+            )
+
+        if specs.manufacturer == "Littelfuse" and specs.part_number_suffix:
+            # Find index of voltage in ratings list
+            index = specs.voltage_rating.index(value)
+
+            voltage_str = f"{float(specs.voltage_rating[index]):.3f}"
+            whole, decimal = voltage_str.split(".")
+            decimal = decimal.rstrip("0")
+            if not decimal:
+                decimal = "0"
+
+            voltage_notation = f"{whole}.{decimal}" if decimal else f"{whole}"
+            if float(whole) >= 10:  # noqa: PLR2004
+                voltage_notation = f"{whole}"
 
             mpn = (
                 f"{specs.base_series}"
@@ -272,56 +292,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.onsemi.com/download/data-sheet/pdf/mmsz5221bt1-d.pdf"
         ),
         voltage_rating=[
-            2.4,
-            2.5,
-            2.7,
-            2.8,
-            3.0,
-            3.3,
-            3.6,
-            3.9,
-            4.3,
-            4.7,
-            5.1,
-            5.6,
-            6.0,
-            6.2,
-            6.8,
-            7.5,
-            8.2,
-            8.7,
-            9.1,
-            10.0,
-            11.0,
-            12.0,
-            13.0,
-            14.0,
-            15.0,
-            16.0,
-            17.0,
-            18.0,
-            19.0,
-            20.0,
-            22.0,
-            24.0,
-            25.0,
-            27.0,
-            28.0,
-            30.0,
-            33.0,
-            36.0,
-            39.0,
-            43.0,
-            47.0,
-            51.0,
-            56.0,
-            60.0,
-            62.0,
-            68.0,
-            75.0,
-            82.0,
-            87.0,
-            91.0,
+            *[2.4, 2.5, 2.7, 2.8, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6],
+            *[6.0, 6.2, 6.8, 7.5, 8.2, 8.7, 9.1, 10.0, 11.0, 12.0, 13.0],
+            *[14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0, 25.0],
+            *[27.0, 28.0, 30.0, 33.0, 36.0, 39.0, 43.0, 47.0, 51.0, 56.0],
+            *[60.0, 62.0, 68.0, 75.0, 82.0, 87.0, 91.0],
         ],
         current_rating=[0.5] * 51,
         package="SOD_123",
@@ -418,44 +393,31 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "PTVSXP1UTP_SER.pdf"
         ),
         voltage_rating=[
-            3.3,
-            5,
-            6,
-            6.5,
-            7,
-            7.5,
-            8,
-            8.5,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            20,
-            22,
-            24,
-            26,
-            28,
-            30,
-            33,
-            36,
-            40,
-            43,
-            45,
-            48,
-            51,
-            54,
-            58,
-            60,
-            64,
+            *[3.3, 5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 10, 11, 12, 13, 14, 15, 16],
+            *[17, 18, 20, 22, 24, 26, 28, 30, 33, 36, 40, 43, 45, 48, 51, 54],
+            *[58, 60, 64],
         ],
         package="SOD128",
         diode_type="TVS",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "SMBJ": SeriesSpec(
+        manufacturer="Littelfuse",
+        base_series="SMBJ",
+        part_number_suffix="CA",
+        footprint="diode_footprints:DO-214AA",
+        datasheet=(
+            "https://www.littelfuse.com/assetdocs/tvs-diodes-smbj-series-"
+            "datasheet?assetguid=09a6ae9a-73cb-4ac4-acac-e6dab92ab953"
+        ),
+        voltage_rating=[
+            *[5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+            *[18, 20, 22, 24, 26, 28, 30, 33, 36, 40, 43, 45, 48, 51, 54, 58],
+            *[60, 64, 70, 75, 78, 85, 90, 100, 110, 120, 130, 150, 170, 180],
+            *[188, 200, 220, 250, 300, 350, 400, 440],
+        ],
+        package="DO-214AA",
+        diode_type="Bidirectional TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
