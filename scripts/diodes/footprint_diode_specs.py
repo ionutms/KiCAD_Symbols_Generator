@@ -218,6 +218,6 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             anode_height=0.45,
             anode_center_x=1.14,
         ),
-        ref_offset_y=-2.794,
+        ref_offset_y=-1.524,
     ),
 }
