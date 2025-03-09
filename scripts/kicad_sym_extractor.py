@@ -92,6 +92,7 @@ if __name__ == "__main__":
         "UNITED_SOLDER_JUMPERS.kicad_sym",
         "UNITED_TEST_POINTS.kicad_sym",
         "UNITED_MODULES_DATA_BASE.kicad_sym",
+        "UNITED_MECHANICAL_DATA_BASE.kicad_sym",
         "UNITED_CRYSTALS_DATA_BASE.kicad_sym",
         "UNITED_MOUSE_BITES_DATA_BASE.kicad_sym",
         "UNITED_NO_COMPONENTS_DATA_BASE.kicad_sym",

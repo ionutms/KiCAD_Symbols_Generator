@@ -30,7 +30,7 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=10)
+register_page(__name__, name=link_name, order=11)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_MOUSE_BITES_DATA_BASE.csv")
 total_rows = len(dataframe)
