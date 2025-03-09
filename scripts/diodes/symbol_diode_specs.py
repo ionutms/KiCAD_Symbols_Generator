@@ -129,7 +129,7 @@ class PartInfo(NamedTuple):
         return " ".join(parts)
 
     @classmethod
-    def create_part_info(  # noqa: C901
+    def create_part_info(  # noqa: C901, PLR0912, PLR0915
         cls: type[Self],
         value: float,
         specs: SeriesSpec,
@@ -187,6 +187,29 @@ class PartInfo(NamedTuple):
             )
 
         if specs.manufacturer == "Littelfuse" and specs.part_number_suffix:
+            # Find index of voltage in ratings list
+            index = specs.voltage_rating.index(value)
+
+            voltage_str = f"{float(specs.voltage_rating[index]):.3f}"
+            whole, decimal = voltage_str.split(".")
+            decimal = decimal.rstrip("0")
+            if not decimal:
+                decimal = "0"
+
+            voltage_notation = f"{whole}.{decimal}" if decimal else f"{whole}"
+            if float(whole) >= 10:  # noqa: PLR2004
+                voltage_notation = f"{whole}"
+
+            mpn = (
+                f"{specs.base_series}"
+                f"{voltage_notation}"
+                f"{specs.part_number_suffix}"
+            )
+
+        if (
+            specs.manufacturer == "STMicroelectronics"
+            and specs.part_number_suffix
+        ):
             # Find index of voltage in ratings list
             index = specs.voltage_rating.index(value)
 
@@ -446,6 +469,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=[3.3],
         package="SOD323",
         diode_type="Unidirectional TVS",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "SMCJ": SeriesSpec(
+        manufacturer="STMicroelectronics",
+        base_series="SMCJ",
+        part_number_suffix="A/CA",
+        footprint="diode_footprints:DO-214AB-2",
+        datasheet=("https://www.st.com/resource/en/datasheet/smcj26a.pdf"),
+        voltage_rating=[
+            *[5, 6, 6.5, 8.5, 10, 12, 13, 15, 18, 20, 22, 24, 26, 28, 30],
+            *[33, 36, 40, 48, 58, 70, 85, 100, 130, 154, 170, 188],
+        ],
+        package="DO-214AB-2",
+        diode_type="Bidirectional TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
