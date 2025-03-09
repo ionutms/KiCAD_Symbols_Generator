@@ -398,7 +398,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             *[58, 60, 64],
         ],
         package="SOD128",
-        diode_type="TVS",
+        diode_type="Unidirectional TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
     "SMBJ": SeriesSpec(
@@ -432,6 +432,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=[3.3],
         package="SOD323",
         diode_type="Bidirectional TVS",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "SP4020-01FTG": SeriesSpec(
+        manufacturer="Littelfuse",
+        base_series="SP4020-01FTG",
+        part_number_suffix="",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://www.littelfuse.com/assetdocs/tvs-diode-array-"
+            "sp4020-datasheet?assetguid=b6e2c598-7d86-4fa2-a063-fb053ce07713"
+        ),
+        voltage_rating=[3.3],
+        package="SOD323",
+        diode_type="Unidirectional TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }

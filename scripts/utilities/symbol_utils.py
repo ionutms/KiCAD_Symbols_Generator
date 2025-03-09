@@ -1165,7 +1165,7 @@ def write_rectifier_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
-def write_tvs_symbol_drawing(
+def write_unidirectional_tvs_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
 ) -> None:
@@ -1196,6 +1196,80 @@ def write_tvs_symbol_drawing(
     # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+
+    symbol_file.write("\t\t)\n")
+
+
+def write_unidirectional_tvs_symbol_drawing_v2(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write the horizontal graphical representation of a diode symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    symbol_file.write("""
+        (polyline
+            (pts
+                (xy 6.35 0) (xy 6.35 -3.81) (xy 1.27 -3.81) (xy 1.27 -5.715)
+                (xy 1.27 -3.81) (xy -1.27 -5.715) (xy -1.27 -3.81)
+                (xy -6.35 -3.81) (xy -6.35 0) (xy -6.35 0) (xy -6.35 -3.81)
+                (xy -1.27 -3.81) (xy -1.27 -1.905) (xy 1.27 -3.81)
+                (xy 1.27 -1.905) (xy 1.27 -3.81) (xy 6.35 -3.81)
+            )
+            (stroke
+                (width 0.2032)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy -6.35 0) (xy -6.35 3.81) (xy -3.81 3.81) (xy -3.81 5.715)
+                (xy -3.81 3.81) (xy -1.27 5.715) (xy -1.27 3.81)
+                (xy 1.27 3.81) (xy 1.27 5.715) (xy 3.81 3.81) (xy 3.81 5.08)
+                (xy 3.175 5.715) (xy 3.81 5.08) (xy 3.81 3.81) (xy 6.35 3.81)
+                (xy 6.35 0) (xy 6.35 0) (xy 6.35 3.81) (xy 3.81 3.81)
+                (xy 3.81 2.54) (xy 4.445 1.905) (xy 3.81 2.54) (xy 3.81 3.81)
+                (xy 1.27 1.905) (xy 1.27 3.81) (xy -1.27 3.81)
+                (xy -1.27 1.905) (xy -3.81 3.81) (xy -3.81 1.905)
+                (xy -3.81 3.81) (xy -6.35 3.81)
+            )
+            (stroke
+                (width 0.2032)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (circle
+            (center -6.35 0)
+            (radius 0.284)
+            (stroke (width 0) (type default))
+            (fill (type outline))
+        )
+        (circle
+            (center 6.35 0)
+            (radius 0.284)
+            (stroke (width 0) (type default))
+            (fill (type outline))
+        )
+        """)
+
+    # Write pins
+    write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 

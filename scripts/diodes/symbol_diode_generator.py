@@ -73,7 +73,7 @@ def write_component(  # noqa: C901, PLR0912
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
 
-    if symbol_name == "D_SP4020-01FTG-C":
+    if symbol_name in ("D_SP4020-01FTG-C", "D_SP4020-01FTG"):
         symbol_utils.write_properties(
             symbol_file,
             component_data,
@@ -94,8 +94,17 @@ def write_component(  # noqa: C901, PLR0912
         symbol_utils.write_zener_symbol_drawing(symbol_file, symbol_name)
     if component_data.get("Diode Type") == "Rectifier":
         symbol_utils.write_rectifier_symbol_drawing(symbol_file, symbol_name)
-    if component_data.get("Diode Type") == "TVS":
-        symbol_utils.write_tvs_symbol_drawing(symbol_file, symbol_name)
+    if component_data.get("Diode Type") == "Unidirectional TVS":
+        if symbol_name == "D_SP4020-01FTG":
+            symbol_utils.write_unidirectional_tvs_symbol_drawing_v2(
+                symbol_file,
+                symbol_name,
+            )
+        else:
+            symbol_utils.write_unidirectional_tvs_symbol_drawing(
+                symbol_file,
+                symbol_name,
+            )
     if component_data.get("Diode Type") == "Bidirectional TVS":
         if symbol_name == "D_SP4020-01FTG-C":
             symbol_utils.write_bidirectional_tvs_symbol_drawing_v2(
