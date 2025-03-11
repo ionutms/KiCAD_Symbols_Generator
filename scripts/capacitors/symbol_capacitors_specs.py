@@ -1020,6 +1020,26 @@ KYOCERA_AVX_SYMBOLS_SPECS = {
         datasheet_url=f"{KYOCERA_AVX_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "KGM31HR71H": SeriesSpec(
+        mpn_prefix="KGM31HR71H",
+        mpn_sufix=["KU"],
+        manufacturer="KYOCERA AVX",
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="50V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        tolerance_map={"X7R": {"K": "10%"}},
+        value_range={"X7R": (220e-12, 10e-6)},
+        specified_values=[
+            *[220e-12, 330e-12, 470e-12, 680e-12, 1e-9, 1.5e-9, 2.2e-9],
+            *[3.3e-9, 3.9e-9, 4.7e-9, 5.6e-9, 6.8e-9, 10e-9, 12e-9, 15e-9],
+            *[18e-9, 22e-9, 27e-9, 33e-9, 39e-9, 47e-9, 68e-9, 82e-9, 100e-9],
+            *[120e-9, 150e-9, 220e-9, 330e-9, 470e-9, 680e-9, 1e-6, 2.2e-6],
+            *[4.7e-6, 10e-6],
+        ],
+        datasheet_url=f"{KYOCERA_AVX_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
