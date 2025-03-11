@@ -392,6 +392,8 @@ class PartInfo(NamedTuple):
                 f"{tolerance_code}"
                 f"{packaging}"
             )
+        elif specs.manufacturer == "KYOCERA AVX":
+            mpn = f"{specs.mpn_prefix}{capacitance_code}{packaging}"
         elif specs.manufacturer == "Wurth Elektronik":
             mpn = f"{specs.mpn_prefix}"
         elif specs.manufacturer == "Panasonic":
@@ -995,6 +997,32 @@ KEMET_SYMBOLS_SPECS = {
 }
 
 # Base URLs for documentation
+KYOCERA_AVX_DOC_BASE = "https://datasheets.kyocera-avx.com/KGM_X7R.pdf"
+
+KYOCERA_AVX_SYMBOLS_SPECS = {
+    "KGM31BR71H": SeriesSpec(
+        mpn_prefix="KGM31BR71H",
+        mpn_sufix=["KT"],
+        manufacturer="KYOCERA AVX",
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="50V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        tolerance_map={"X7R": {"K": "10%"}},
+        value_range={"X7R": (220e-12, 10e-6)},
+        specified_values=[
+            *[220e-12, 330e-12, 470e-12, 680e-12, 1e-9, 1.5e-9, 2.2e-9],
+            *[3.3e-9, 3.9e-9, 4.7e-9, 5.6e-9, 6.8e-9, 10e-9, 12e-9, 15e-9],
+            *[18e-9, 22e-9, 27e-9, 33e-9, 39e-9, 47e-9, 68e-9, 82e-9, 100e-9],
+            *[120e-9, 150e-9, 220e-9, 330e-9, 470e-9, 680e-9, 1e-6, 2.2e-6],
+            *[4.7e-6, 10e-6],
+        ],
+        datasheet_url=f"{KYOCERA_AVX_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
+# Base URLs for documentation
 WURTH_ELEKTRONIK_DOC_BASE = (
     "https://www.we-online.com/components/products/datasheet/885012208119.pdf"
 )
@@ -1137,4 +1165,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **WURTH_ELEKTRONIK_SYMBOLS_SPECS,
     **PANASONIC_SYMBOLS_SPECS,
     **CHEMI_CON_SYMBOLS_SPECS,
+    **KYOCERA_AVX_SYMBOLS_SPECS,
 }
