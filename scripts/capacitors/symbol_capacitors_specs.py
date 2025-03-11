@@ -747,6 +747,21 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "GRM32ER71A": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GRM32ER71A",
+        value_range={"X7R": (47e-6, 47e-6)},
+        tolerance_map={"X7R": {"K": "10%"}},
+        characteristic_codes={0: "E15"},
+        mpn_sufix=["L"],
+        footprint="capacitor_footprints:C_1210_200_3225Metric",
+        voltage_rating="10V",
+        case_code_in="1210_200",
+        case_code_mm="3225",
+        excluded_values=set(),
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
