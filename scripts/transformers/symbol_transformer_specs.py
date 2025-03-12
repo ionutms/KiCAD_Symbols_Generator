@@ -13,6 +13,8 @@ The module supports:
 - Standard configurations for common transformer layouts
 """
 
+from __future__ import annotations
+
 from typing import NamedTuple
 
 
@@ -51,6 +53,7 @@ class SidePinConfig(NamedTuple):
 
     left: list[PinConfig]
     right: list[PinConfig]
+    right_alternative: list[PinConfig] | None = None
 
 
 class SeriesSpec(NamedTuple):
@@ -152,7 +155,7 @@ class PartInfo(NamedTuple):
     def create_description(
         cls,
         value: float,
-        specs: "SeriesSpec",
+        specs: SeriesSpec,
     ) -> str:
         """Create a detailed description for the component.
 
@@ -176,7 +179,7 @@ class PartInfo(NamedTuple):
         cls,
         primary_inductance: float,
         specs: SeriesSpec,
-    ) -> "PartInfo":
+    ) -> PartInfo:
         """Create a PartInfo instance for a transformer component.
 
         Args:
@@ -219,7 +222,7 @@ class PartInfo(NamedTuple):
     def generate_part_numbers(
         cls,
         specs: SeriesSpec,
-    ) -> list["PartInfo"]:
+    ) -> list[PartInfo]:
         """Generate part numbers for a transformer series.
 
         Args:
@@ -319,11 +322,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("5", -10.16, "unspecified", 5.08),
             ],
             right=[
-                PinConfig("7", 5.08, "unspecified", 5.08),
+                PinConfig("9", 5.08, "unspecified", 5.08),
                 PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
                 PinConfig("10", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("7", -5.08, "unspecified", 5.08),
+            ],
+            right_alternative=[
                 PinConfig("9", -5.08, "unspecified", 5.08),
+                PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("10", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
+                PinConfig("7", 5.08, "unspecified", 5.08),
             ],
         ),
     ),
