@@ -194,6 +194,7 @@ REPOS_NAMES = [
     "Minimal_LTC9111",
     "Minimal_SPoE_Hybrid",
     "Minimal_MAX17761",
+    "Minimal_LT8304",
 ]
 
 COLORS = [
@@ -206,6 +207,7 @@ COLORS = [
     ["#40E0D0", "#FF7F50"],
     ["#A0522D", "#00FA9A"],
     ["#228B22", "#FF1493"],
+    ["#00CED1", "#FF8C00"],
 ]
 
 REPOS_DATA = []
