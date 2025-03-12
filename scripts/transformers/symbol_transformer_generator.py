@@ -65,7 +65,7 @@ def convert_pin_config(
         dict[str, list[dict[str, float | bool]]]: Pin configuration data
 
     """
-    return {
+    config = {
         "left": [
             {
                 "number": pin.number,
@@ -87,6 +87,23 @@ def convert_pin_config(
             for pin in spec_config.right
         ],
     }
+
+    # Only add right_alternative if it exists and is not None
+    if spec_config.right_alternative is not None:
+        config["right_alternative"] = [
+            {
+                "number": pin.number,
+                "y_pos": pin.y_pos,
+                "pin_type": pin.pin_type,
+                "lenght": pin.lenght,
+                "hide": pin.hide,
+            }
+            for pin in spec_config.right_alternative
+        ]
+    else:
+        config["right_alternative"] = []
+
+    return config
 
 
 def write_component(
