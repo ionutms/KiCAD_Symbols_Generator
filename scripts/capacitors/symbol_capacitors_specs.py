@@ -394,6 +394,8 @@ class PartInfo(NamedTuple):
             )
         elif specs.manufacturer == "KYOCERA AVX":
             mpn = f"{specs.mpn_prefix}{capacitance_code}{packaging}"
+        elif specs.manufacturer == "YAGEO":
+            mpn = f"{specs.mpn_prefix}{capacitance_code}"
         elif specs.manufacturer == "Wurth Elektronik":
             mpn = f"{specs.mpn_prefix}"
         elif specs.manufacturer == "Panasonic":
@@ -760,6 +762,26 @@ MURATA_SYMBOLS_SPECS = {
         case_code_mm="3225",
         excluded_values=set(),
         datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
+YAGEO_DOC_BASE = "https://www.yageo.com/en/Chart/Download/pdf/"
+
+YAGEO_SYMBOLS_SPECS = {
+    "AC0402KRX7R9BB": SeriesSpec(
+        manufacturer="YAGEO",
+        mpn_prefix="AC0402KRX7R9BB",
+        value_range={"X7R": (220e-12, 100e-9)},
+        excluded_values={
+            *[390e-12, 27e-9, 39e-9, 56e-9, 82e-9],
+        },
+        tolerance_map={"X7R": {"": "10%"}},
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        datasheet_url=f"{YAGEO_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
 }
@@ -1194,4 +1216,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
     **CHEMI_CON_SYMBOLS_SPECS,
     **KYOCERA_AVX_SYMBOLS_SPECS,
+    **YAGEO_SYMBOLS_SPECS,
 }
