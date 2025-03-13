@@ -1031,6 +1031,19 @@ KEMET_SYMBOLS_SPECS = {
         datasheet_url=f"{KEMET_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "C1206R": SeriesSpec(
+        mpn_prefix="C1206R",
+        manufacturer="Kemet",
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="25V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        mpn_sufix=["3RAC7800"],
+        tolerance_map={"X7R": {"K": "10%"}},
+        value_range={"X7R": (1e-6, 1e-6)},
+        datasheet_url=f"{KEMET_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
