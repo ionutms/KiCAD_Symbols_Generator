@@ -523,4 +523,36 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Zener",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BZX384-B": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="BZX384-B",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/BZX384_SER.pdf"
+        ),
+        voltage_rating=[
+            *[2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8],
+            *[7.5, 8.2, 9.1, 10, 11, 12, 13, 15, 16, 18, 20, 22, 24, 27, 30],
+            *[33, 36, 39, 43, 47, 51, 56, 62, 68, 75],
+        ],
+        package="SOD323",
+        diode_type="Zener",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BZX384-C": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="BZX384-C",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/BZX384_SER.pdf"
+        ),
+        voltage_rating=[
+            *[2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8],
+            *[7.5, 8.2, 9.1, 10, 11, 12, 13, 15, 16, 18, 20, 22, 24, 27, 30],
+            *[33, 36, 39, 43, 47, 51, 56, 62, 68, 75],
+        ],
+        package="SOD323",
+        diode_type="Zener",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
