@@ -396,6 +396,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     pitch_y: float = 0,
     layer: str = "F.SilkS",
     mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
+    mirror_x_coordonate: bool = False,  # noqa: FBT001, FBT002
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
@@ -409,6 +410,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
         pitch_y: Distance between adjacent pads
         layer: Layer to draw the pin 1 indicator on
         mirror_y_coordonate: Mirror the Y-coordinate of the pin 1 indicator
+        mirror_x_coordonate: Mirror the X-coordinate of the pin 1 indicator
 
     Returns:
         str: KiCad formatted pin 1 indicator
@@ -423,7 +425,11 @@ def generate_pin_1_indicator(  # noqa: PLR0913
 
     # Pin 1 indicator position
     total_height = pitch_y * (pins_per_side - 1)
-    circle_x = -(pad_center_x + actual_pad_width)
+    circle_x = (
+        -(pad_center_x + actual_pad_width)
+        if not mirror_x_coordonate
+        else pad_center_x + actual_pad_width
+    )
     circle_y = (
         -total_height / 2 if not mirror_y_coordonate else total_height / 2
     )
@@ -477,13 +483,14 @@ def calculate_pad_positions(
     return positions
 
 
-def generate_pads(  # noqa: PLR0913
+def generate_pads(  # noqa: D417, PLR0913
     pad_width: float,
     pad_height: float,
     pad_center_x: float,
     pad_pitch_y: float = 0,
     pins_per_side: int = 1,
     pin_numbers: list = None,  # noqa: RUF013
+    reverse_pin_numbering: bool = False,  # noqa: FBT001, FBT002
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -510,6 +517,8 @@ def generate_pads(  # noqa: PLR0913
     if pin_numbers is None:
         # Default: use sequential numbering from 1
         pin_numbers = list(range(1, len(pad_positions) + 1))
+        if reverse_pin_numbering:
+            pin_numbers = list(reversed(pin_numbers))
 
     # Validate that we have enough custom pin numbers
     if len(pin_numbers) != len(pad_positions):
