@@ -1063,6 +1063,19 @@ KEMET_SYMBOLS_SPECS = {
         datasheet_url=f"{KEMET_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "A768KE336M1HLAE042": SeriesSpec(
+        mpn_prefix="A768KE336M1HLAE042",
+        manufacturer="Kemet",
+        footprint="capacitor_footprints:C_039x0496_8_0x6_7Metric",
+        voltage_rating="50V",
+        capacitor_type="Polymer",
+        case_code_in="034x0263",
+        case_code_mm="8_0x6_7",
+        tolerance_map={"Polymer": {"": "20%"}},
+        value_range={"Polymer": (33e-6, 33e-6)},
+        datasheet_url=f"{KEMET_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
