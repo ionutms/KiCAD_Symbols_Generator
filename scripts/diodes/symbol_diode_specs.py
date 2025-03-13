@@ -186,6 +186,27 @@ class PartInfo(NamedTuple):
                 f"{specs.part_number_suffix}"
             )
 
+        if (
+            specs.manufacturer == "Nexperia"
+            and specs.part_number_suffix is None
+        ):
+            # Find index of voltage in ratings list
+            index = specs.voltage_rating.index(value)
+
+            voltage_str = f"{float(specs.voltage_rating[index]):.3f}"
+            whole, decimal = voltage_str.split(".")
+            decimal = decimal.rstrip("0")
+            if not decimal:
+                decimal = "0"
+
+            voltage_notation = (
+                f"{whole}V{decimal}" if decimal else f"{whole}V0"
+            )
+            if float(whole) >= 10:  # noqa: PLR2004
+                voltage_notation = f"{whole}"
+
+            mpn = f"{specs.base_series}{voltage_notation}"
+
         if specs.manufacturer == "Littelfuse" and specs.part_number_suffix:
             # Find index of voltage in ratings list
             index = specs.voltage_rating.index(value)
@@ -396,6 +417,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         manufacturer="Nexperia",
         base_series="PMEG10020AELR",
         footprint="diode_footprints:SOD123W",
+        part_number_suffix="",
         datasheet=(
             "https://assets.nexperia.com/documents/data-sheet/"
             "PMEG10020AELR.pdf"
@@ -483,6 +505,22 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         ],
         package="DO-214AB-2",
         diode_type="Bidirectional TVS",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BZX384-A": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="BZX384-A",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/BZX384_SER.pdf"
+        ),
+        voltage_rating=[
+            *[2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8],
+            *[7.5, 8.2, 9.1, 10, 11, 12, 13, 15, 16, 18, 20, 22, 24, 27, 30],
+            *[33, 36, 39, 43, 47, 51, 56, 62, 68, 75],
+        ],
+        package="SOD323",
+        diode_type="Zener",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }
