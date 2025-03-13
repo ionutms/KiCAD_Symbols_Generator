@@ -1066,7 +1066,7 @@ KEMET_SYMBOLS_SPECS = {
     "A768KE336M1HLAE042": SeriesSpec(
         mpn_prefix="A768KE336M1HLAE042",
         manufacturer="Kemet",
-        footprint="capacitor_footprints:C_039x0496_8_0x6_7Metric",
+        footprint="capacitor_footprints:C_034x0263_8_0x6_7Metric",
         voltage_rating="50V",
         capacitor_type="Polymer",
         case_code_in="034x0263",
