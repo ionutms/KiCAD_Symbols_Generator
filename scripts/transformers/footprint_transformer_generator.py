@@ -35,6 +35,7 @@ def generate_footprint(
     pad_height = specs.pad_dimensions.height
     pad_pitch_y = specs.pad_dimensions.pitch_y
     pins_per_side = specs.pad_dimensions.pin_count // 2
+    reverse_pin_numbering = specs.pad_dimensions.reverse_pin_numbering
 
     sections = [
         footprint_utils.generate_header(part_info.series),
@@ -54,6 +55,7 @@ def generate_footprint(
             pad_width,
             pins_per_side,
             pad_pitch_y,
+            mirror_x_coordonate=reverse_pin_numbering,
         ),
         footprint_utils.generate_pads(
             pad_width,
@@ -61,6 +63,7 @@ def generate_footprint(
             pad_center_x,
             pad_pitch_y,
             pins_per_side,
+            reverse_pin_numbering=reverse_pin_numbering,
         ),
         footprint_utils.associate_3d_model(
             "KiCAD_Symbol_Generator/3D_models",
