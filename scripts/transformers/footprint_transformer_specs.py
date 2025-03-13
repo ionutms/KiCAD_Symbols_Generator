@@ -44,6 +44,7 @@ class PadDimensions(NamedTuple):
         center_x: Distance from origin to pad center on X axis
         pitch_y: Vertical distance between adjacent pads
         pin_count: Total number of pins (must be even)
+        reverse_pin_numbering: Flag to reverse pin numbering
 
     """
 
@@ -52,6 +53,7 @@ class PadDimensions(NamedTuple):
     center_x: float  # Distance from origin to pad center on X axis
     pitch_y: float  # Vertical distance between adjacent pads
     pin_count: int  # Total number of pins (must be even)
+    reverse_pin_numbering: bool = False  # Reverse pin numbering direction
 
 
 class FootprintSpecs(NamedTuple):
@@ -93,6 +95,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=8.18,
             pitch_y=2.5,
             pin_count=10,
+            reverse_pin_numbering=True,
         ),
         ref_offset_y=-7.62,
     ),
