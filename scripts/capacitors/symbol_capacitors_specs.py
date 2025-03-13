@@ -784,6 +784,25 @@ YAGEO_SYMBOLS_SPECS = {
         datasheet_url=f"{YAGEO_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "CC0603JRNPO9BN": SeriesSpec(
+        manufacturer="YAGEO",
+        mpn_prefix="CC0603JRNPO9BN",
+        value_range={"C0G (NP0)": (8e-12, 10e-9)},
+        additional_values=[
+            *[8e-12, 11e-12, 13e-12, 16e-12, 20e-12, 24e-12, 25e-12, 30e-12],
+            *[36e-12, 43e-12, 51e-12, 62e-12, 75e-12, 91e-12, 110e-12],
+            *[130e-12, 160e-12, 200e-12, 240e-12, 300e-12, 360e-12, 430e-12],
+            *[500e-12, 510e-12, 620e-12, 750e-12],
+        ],
+        excluded_values=[3.9e-9, 5.6e-9, 6.8e-9, 8.2e-9],
+        tolerance_map={"C0G (NP0)": {"": "5%"}},
+        footprint="capacitor_footprints:C_0603_1608Metric",
+        voltage_rating="50V",
+        case_code_in="0603",
+        case_code_mm="1608",
+        datasheet_url=f"{YAGEO_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
