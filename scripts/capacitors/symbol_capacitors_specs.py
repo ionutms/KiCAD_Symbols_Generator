@@ -1066,9 +1066,9 @@ KEMET_SYMBOLS_SPECS = {
     "C1210C": SeriesSpec(
         mpn_prefix="C1210C",
         manufacturer="Kemet",
-        footprint="capacitor_footprints:C_1210_3225Metric",
+        footprint="capacitor_footprints:C_1210_140_3225Metric",
         voltage_rating="1.5kV",
-        case_code_in="1210",
+        case_code_in="1210_140",
         case_code_mm="3225",
         mpn_sufix=["FRACAUTO"],
         tolerance_map={"X7R": {"K": "10%"}},
