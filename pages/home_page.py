@@ -195,6 +195,7 @@ REPOS_NAMES = [
     "Minimal_SPoE_Hybrid",
     "Minimal_MAX17761",
     "Minimal_LT8304",
+    "3D_Models_Vault",
 ]
 
 COLORS = [
@@ -208,6 +209,7 @@ COLORS = [
     ["#A0522D", "#00FA9A"],
     ["#228B22", "#FF1493"],
     ["#00CED1", "#FF8C00"],
+    ["#66CED1", "#668C00"],
 ]
 
 REPOS_DATA = []
