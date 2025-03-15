@@ -58,8 +58,12 @@ def generate_footprint(
                 pad_center_x,
             ),
             footprint_utils.associate_3d_model(
-                "KiCAD_Symbol_Generator/3D_models",
-                step_file_name,
+                "${{KIPRJMOD}}/KiCAD_Symbol_Generator/3D_models",
+                f"{step_file_name}.step",
+            ),
+            footprint_utils.associate_3d_model(
+                "${{3D_MODELS_VAULT}}/3D_models",
+                f"{step_file_name}.step",
             ),
             ")",  # Close the footprint
         ]
