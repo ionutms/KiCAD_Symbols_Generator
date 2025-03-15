@@ -42,7 +42,7 @@ def associate_3d_model(file_path: str, file_name: str) -> str:
 
     """
     return f"""
-        (model "${{KIPRJMOD}}/{file_path}/{file_name}.step"
+        (model "{file_path}/{file_name}"
             (offset (xyz 0 0 0))
             (scale (xyz 1 1 1))
             (rotate (xyz 0 0 0))
