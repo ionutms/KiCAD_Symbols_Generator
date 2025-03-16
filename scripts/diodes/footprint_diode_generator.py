@@ -57,7 +57,7 @@ def generate_footprint(
                 hide=True,
             ),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/connectors",
+                "${3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
             ")",  # Close the footprint
@@ -88,7 +88,7 @@ def generate_footprint(
                 hide=True,
             ),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/connectors",
+                "${3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
             ")",  # Close the footprint
