@@ -1,0 +1,156 @@
+(footprint "MSD1048"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -6.096 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "c0856100-1491-4a7a-93f4-57dcf0c61dfe")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "MSD1048"
+            (at 0 6.096 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "2107d7b4-7036-46f3-894d-453372abe0b8")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "2820cef0-1457-4a2d-ba1e-2480a812c4ed")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 7.366 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "ec23241f-a5e6-4e27-9565-b10ad1406b57")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -5.25 -5.25)
+            (end 5.25 5.25)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "8322c21d-d446-4dbe-a29f-d2bca9d16a33")
+        )
+        
+
+        (fp_rect
+            (start -5.25 -5.25)
+            (end 5.25 5.25)
+            (stroke (width 0.0254) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "dadae0a8-2fa3-4f77-b1ed-ce67b1e2d571")
+        )
+        
+
+            (fp_line
+                (start 2.7 -5.25)
+                (end -2.7 -5.25)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "a3e29444-2d73-4ca7-884a-e7af0cee9320")
+            )
+            
+            (fp_line
+                (start 2.7 5.25)
+                (end -2.7 5.25)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "218311e2-15d2-4aa0-89d4-8533224cabb5")
+            )
+            
+
+        (fp_circle
+            (center -6.3 -1.025)
+            (end -6.8999999999999995 -1.025)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "4951dc2e-dc38-4bae-a024-67aac16450f9")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -3.9 -1.025)
+                (size 2.4 1.25)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "3b43e6eb-f924-4b31-af88-29343b481052")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -3.9 1.025)
+                (size 2.4 1.25)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "ed6bd1ea-a176-4077-b29d-3ce922dbb17b")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 3.9 1.025)
+                (size 2.4 1.25)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "cf2b9e6e-08dc-4a36-ab13-87310ff1f932")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 3.9 -1.025)
+                (size 2.4 1.25)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "ebe0aab8-5e5d-45e2-8b94-2ae07431c9db")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/MSD1048.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/coupled_inductors/MSD1048.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

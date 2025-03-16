@@ -1,0 +1,187 @@
+(footprint "RSM-107-02-STL-S"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.318 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "28ba2956-815f-478f-9a4e-2777a5ba52db")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "RSM-107-02-STL-S"
+            (at 0 4.318 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "bfb99202-687f-4b52-a304-103b45dec3e4")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "23ace3e0-a530-435d-a05f-a2b67e2da0e5")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.587999999999999 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "fb31fd0c-1384-4680-b617-bf19ba0d6102")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -4.675 2.6)
+            (end 4.675 -2.6)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "d689d59f-82fa-47b1-bb49-a05a8c10b784")
+        )
+        
+
+
+        (fp_rect
+            (start -4.675 2.6)
+            (end 4.675 -2.6)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "df9547a4-8362-46d7-8fe1-8d90d3e3d341")
+        )
+        
+
+        (fp_rect
+            (start -4.675 2.6)
+            (end 4.675 -2.6)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "a82808ba-30fd-4e14-aee1-172b39d4e0dc")
+        )
+        
+
+        (fp_circle
+            (center -5.585 -0.0)
+            (end -5.8125 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "589019eb-418e-4981-acec-fdcbec6c6ce3")
+        )
+        
+
+        (fp_circle
+            (center -5.585 -0.0)
+            (end -5.8125 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "3124579d-a3db-4ffb-ab17-9e1378032939")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -3.810 1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "a17b2332-6f9e-43c5-8154-3b48f769ff4e")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -2.540 -1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "4b2252e7-2486-4dbf-bd6a-96ebd65ea730")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at -1.270 1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "1bc9f15c-c9e1-4fac-9816-e366af5714c7")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 0.000 -1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "0b7b39de-b982-4927-b6e6-8b3bd79aeb27")
+            )
+            
+
+            (pad "5" smd roundrect
+                (at 1.270 1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "015ad368-d0f0-4195-bdcd-560be7364e54")
+            )
+            
+
+            (pad "6" smd roundrect
+                (at 2.540 -1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "63277ea1-bfef-4dff-90b1-2b0957a646e5")
+            )
+            
+
+            (pad "7" smd roundrect
+                (at 3.810 1.492)
+                (size 0.91 1.715)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "32657035-3b21-439a-8d6f-54ebf1432da1")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/RSM-107-02-STL-S.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/RSM-107-02-STL-S.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

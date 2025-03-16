@@ -1,0 +1,112 @@
+(footprint "SOT-323"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -2.54 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "638697ac-f4b5-4910-9b87-9d36a84bbbb7")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "SOT-323"
+            (at 0 2.54 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "e52166ae-899b-4b3a-8fe2-53bfc23390b6")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "386a641e-22ca-4487-bb6c-0a7a97d5baf1")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 3.81 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "fc2944b0-e0ff-4c65-9469-0473cfccae19")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -1.3 -1.7)
+            (end 1.3 1.7)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "15cf3894-7cf0-4dfb-a863-6a0c053a231d")
+        )
+        
+
+        (fp_rect
+            (start -1.3 1.7)
+            (end 1.3 -1.7)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "ef1adce0-c13c-424d-ab7f-d22e2bd6f8df")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -0.65 0.975)
+                (size 0.5 0.95)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "272f3375-15cd-417a-9e2f-e4d025f94528")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 0 -0.975)
+                (size 0.5 0.95)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "1a0bda56-58f5-40b4-99c6-bcf899cc4261")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at 0.65 0.975)
+                (size 0.5 0.95)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "cf5ec5d7-6879-4f84-9b9f-dff6240077e1")
+            )
+            
+
+        (model "KiCAD_Symbol_Generator/3D_models/SOT-323.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

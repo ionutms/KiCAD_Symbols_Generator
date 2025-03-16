@@ -1,0 +1,160 @@
+(footprint "FTSH-102-01-L-DV"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.318 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "fd79e454-20b5-405a-aa2a-f6767a55ca3b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "FTSH-102-01-L-DV"
+            (at 0 4.318 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "257b0698-cfad-4cc0-a424-8f183528cd6c")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "afa7488c-c7ef-4442-9217-4b6e1f5a9025")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.587999999999999 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "9b3abc16-5aff-4141-9f8b-922e1986ac7f")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -1.4 3.5)
+            (end 1.4 -3.5)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "56b0d25d-a43c-4f76-b982-6b4dab77e57e")
+        )
+        
+
+
+        (fp_rect
+            (start -1.4 3.5)
+            (end 1.4 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "d5924581-8ef9-48ad-a316-93a3a84cdc9e")
+        )
+        
+
+        (fp_rect
+            (start -1.4 3.5)
+            (end 1.4 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "f00aa7fe-9f1c-4941-8d03-da6d106fb6ae")
+        )
+        
+
+        (fp_circle
+            (center -2.1399999999999997 -1.867)
+            (end -2.3249999999999997 -1.867)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "1c3b89f1-3ad4-427f-919e-96cb289296fd")
+        )
+        
+
+        (fp_circle
+            (center -2.1399999999999997 -1.867)
+            (end -2.3249999999999997 -1.867)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "5ec05fb3-fe5e-4de4-975c-e11d41902e8b")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -0.635 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "cdeea137-abb3-4a0d-acd5-03d7105105ae")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -0.635 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "8d28f6a0-397c-4e6a-8ce0-b0cc47c74db0")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 0.635 -1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "cda458c2-56b6-4eec-ac4f-e46b728c5b8d")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 0.635 1.867)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "32c0e63c-b96e-44c5-8b63-69689c0bec2e")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/FTSH-102-01-L-DV.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/FTSH-102-01-L-DV.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

@@ -1,0 +1,236 @@
+(footprint "SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "SMD Solder Jumper, 1x1.5mm, rounded Pads, 0.3mm gap, bridged with 1 copper strip")
+	(tags "net tie solder jumper bridged")
+	(property "Reference" "REF**"
+		(at 0 -1.778 0)
+		(layer "F.SilkS")
+		(uuid "7e665f20-2274-46c5-b843-429dec3d10e8")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+		)
+	)
+	(property "Value" "SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
+		(at 0 1.778 0)
+		(layer "F.Fab")
+		(uuid "47090aa3-9309-4fe1-8b8d-3a99dfbe88f2")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "45cbd6b9-69ca-4e4e-885b-4dccb33c5fe2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "09f04004-e42d-4901-8654-2017adc86ec5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "174271f2-71a3-44be-a2d2-154173802b94")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(zone_connect 1)
+	(attr exclude_from_pos_files exclude_from_bom)
+	(net_tie_pad_groups "1, 2")
+	(fp_poly
+		(pts
+			(xy 0.25 -0.3) (xy -0.25 -0.3) (xy -0.25 0.3) (xy 0.25 0.3)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill solid)
+		(layer "F.Cu")
+		(uuid "8bc6f947-f49a-4bdd-98e2-b20e557e0211")
+	)
+	(fp_line
+		(start -1.3462 0.3048)
+		(end -1.3462 -0.3048)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "d921e3f8-9ee0-4ac3-971b-12b304bc9c2c")
+	)
+	(fp_line
+		(start -0.7112 -0.9398)
+		(end 0.7112 -0.9398)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ae38ae91-2cf9-430e-a9c5-96a07b9c3d2d")
+	)
+	(fp_line
+		(start 0.7112 0.9398)
+		(end -0.7112 0.9398)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ca5b651d-abc8-4b56-b036-91461e2c79f5")
+	)
+	(fp_line
+		(start 1.3462 -0.3048)
+		(end 1.3462 0.3048)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "97b32b3a-a883-489d-8a69-efa48782fbf2")
+	)
+	(fp_arc
+		(start -1.3462 -0.3048)
+		(mid -1.160213 -0.753813)
+		(end -0.7112 -0.9398)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "5a186242-c1a3-444b-988f-fa200cdf9800")
+	)
+	(fp_arc
+		(start -0.7112 0.9398)
+		(mid -1.160213 0.753813)
+		(end -1.3462 0.3048)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "300d8469-764f-47dc-9609-e0add6f621e0")
+	)
+	(fp_arc
+		(start 0.7112 -0.9398)
+		(mid 1.160213 -0.753813)
+		(end 1.3462 -0.3048)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "3731d69b-028d-47ae-a91f-e81093dfd801")
+	)
+	(fp_arc
+		(start 1.3462 0.3048)
+		(mid 1.160213 0.753813)
+		(end 0.7112 0.9398)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "c4ef245a-515a-44d7-a7e9-bbdcbdfd9aaa")
+	)
+	(pad "1" smd custom
+		(at -0.65 0)
+		(size 1 0.5)
+		(layers "F.Cu" "F.Mask")
+		(zone_connect 2)
+		(thermal_bridge_angle 45)
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_circle
+				(center 0 0.25)
+				(end 0.5 0.25)
+				(width 0)
+				(fill yes)
+			)
+			(gr_circle
+				(center 0 -0.25)
+				(end 0.5 -0.25)
+				(width 0)
+				(fill yes)
+			)
+			(gr_poly
+				(pts
+					(xy 0.5 0.75) (xy 0 0.75) (xy 0 -0.75) (xy 0.5 -0.75)
+				)
+				(width 0)
+				(fill yes)
+			)
+		)
+		(uuid "9003f6f7-52c6-46a0-bdfb-49f7aa2ac367")
+	)
+	(pad "2" smd custom
+		(at 0.65 0)
+		(size 1 0.5)
+		(layers "F.Cu" "F.Mask")
+		(zone_connect 2)
+		(thermal_bridge_angle 45)
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_circle
+				(center 0 0.25)
+				(end 0.5 0.25)
+				(width 0)
+				(fill yes)
+			)
+			(gr_circle
+				(center 0 -0.25)
+				(end 0.5 -0.25)
+				(width 0)
+				(fill yes)
+			)
+			(gr_poly
+				(pts
+					(xy 0 0.75) (xy -0.5 0.75) (xy -0.5 -0.75) (xy 0 -0.75)
+				)
+				(width 0)
+				(fill yes)
+			)
+		)
+		(uuid "cb34049a-1987-4949-ab7a-f4fb6fbc034c")
+	)
+)

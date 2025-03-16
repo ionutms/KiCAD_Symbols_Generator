@@ -1,0 +1,138 @@
+(footprint "XAL6030"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.572 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "ca3a94cd-d96e-4ee1-9bc7-d3c241c29828")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "XAL6030"
+            (at 0 4.572 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "4c4cbc5e-e589-4070-a3ae-e33934eb19b8")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "20945b98-1261-4dc1-8be7-d05cf3fc2ef9")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.8420000000000005 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "2ea304de-beb5-4a22-a666-e48918911a7f")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -3.429 -3.556)
+            (end 3.429 3.556)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "f3728d4d-63af-4a23-875c-73ad2dc098dc")
+        )
+        
+
+        (fp_rect
+            (start -3.429 -3.556)
+            (end 3.429 3.556)
+            (stroke (width 0.0254) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "56c025ae-e45a-4bd6-a230-8df0fc06afbb")
+        )
+        
+
+            (fp_line
+                (start 1.3080999999999998 -3.556)
+                (end -1.3080999999999998 -3.556)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "01c5c5f4-8c61-4bbb-8142-1eeabdda2c3c")
+            )
+            
+            (fp_line
+                (start 1.3080999999999998 3.556)
+                (end -1.3080999999999998 3.556)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "d7ed48ce-5001-458b-b610-7d005e55c5bd")
+            )
+            
+
+        (fp_circle
+            (center -3.4417 0.0)
+            (end -3.7973 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "40e43a39-1998-43fe-951e-a593f4129fe6")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -2.0193 0.0)
+                (size 1.4224 5.4864)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "b9034c66-208a-4ad9-9726-d74536d18b0e")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at 2.0193 0.0)
+                (size 1.4224 5.4864)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "1ca4edab-2dcf-413b-b1f2-44bb91726342")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/XAL6030.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/inductors/XAL6030.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

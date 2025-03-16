@@ -1,0 +1,212 @@
+(footprint "TBP02R1-381-08BE"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 2.4 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "eeffd270-b805-43b1-b467-5b93edad0807")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "TBP02R1-381"
+            (at 0 -10.2 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "746011fe-d1a8-4587-adc3-0c8d9f674102")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "c73106b6-270a-45f8-9add-4db5f6a4d064")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 -8.93 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "ebf102e1-3aa6-482e-a67c-f91d1785c5b2")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -15.83 1.4)
+            (end 15.83 -7.9)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "83cb3800-91dd-4cf5-93ac-0865fb2407db")
+        )
+        
+
+
+        (fp_rect
+            (start -15.83 1.4)
+            (end 15.83 -7.9)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "5255b969-0b15-40cb-bf40-53a1c872433b")
+        )
+        
+
+        (fp_rect
+            (start -15.83 1.4)
+            (end 15.83 -7.9)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "518bc17a-4419-4ad5-92b8-8062eb7e535f")
+        )
+        
+
+        (fp_circle
+            (center -17.93 0.0)
+            (end -18.455 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "85146bfe-2942-476d-8f7e-005429fb7586")
+        )
+        
+
+        (fp_circle
+            (center -17.93 0.0)
+            (end -18.455 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "57efb9c7-d52c-49bf-9613-713cef2300c1")
+        )
+        
+
+            (pad "1" thru_hole rect
+                (at -13.335 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "312eddd7-c782-4222-a45c-8ab3d2a801ff")
+            )
+            
+
+            (pad "2" thru_hole circle
+                (at -9.525 0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "3d87ad2f-efca-47ef-8087-48c0c15e9415")
+            )
+            
+
+            (pad "3" thru_hole circle
+                (at -5.715 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "a5dcbffc-6a78-430a-b478-e7d4ca29b2bd")
+            )
+            
+
+            (pad "4" thru_hole circle
+                (at -1.905 0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "4f95099e-31e2-427d-8865-a584b6630b32")
+            )
+            
+
+            (pad "5" thru_hole circle
+                (at 1.905 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "759d43a5-b12d-49f7-aa78-59b0b3473255")
+            )
+            
+
+            (pad "6" thru_hole circle
+                (at 5.715 0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "10e7842d-2b70-4553-8ade-7e96d030ad3b")
+            )
+            
+
+            (pad "7" thru_hole circle
+                (at 9.525 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "26e66f46-12e0-4482-abce-86f8db587e50")
+            )
+            
+
+            (pad "8" thru_hole circle
+                (at 13.335 0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "08cc6bed-a5d2-4a1b-ba1e-284e0dd1c13d")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/CUI_DEVICES_TBP02R1-381-08BE.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/CUI_DEVICES_TBP02R1-381-08BE.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

@@ -1,0 +1,157 @@
+(footprint "HMTSW-103-10-G-S-530-RA"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -19.05 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "230aa5c2-4531-401d-b77b-ab33b7fd0d80")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "HMTSW-103-10-G-S-530-RA"
+            (at 0 2.286 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "e01ec760-7576-4f7a-b562-90659c01712f")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "9abf60a6-c84a-4dea-a18a-56d6c202fe16")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 3.556 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "cb4fa7f3-4ad2-4326-8993-fa2ea906e81c")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -3.97 1.35)
+            (end 3.97 -18)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "cb59455c-b336-45cf-8439-18e26e089725")
+        )
+        
+
+
+        (fp_rect
+            (start -3.97 1.35)
+            (end 3.97 -18)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "c775ad52-dd0e-42c7-bd13-39b571e97bd4")
+        )
+        
+
+        (fp_rect
+            (start -3.97 1.35)
+            (end 3.97 -18)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "ce4c62fc-db5f-4edc-ba98-f150a40a7f05")
+        )
+        
+
+        (fp_circle
+            (center -5.67 0.0)
+            (end -6.095 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "3ac90ef2-243f-452a-a2d5-543505d80f1d")
+        )
+        
+
+        (fp_circle
+            (center -5.67 0.0)
+            (end -6.095 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "531408cc-d43c-4bc4-8137-fd8878ae8af7")
+        )
+        
+
+            (pad "1" thru_hole rect
+                (at -2.540 -0.000)
+                (size 1.7 1.7)
+                (drill 1)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "57aa13eb-697d-4c89-868c-f7981ed7e52f")
+            )
+            
+
+            (pad "2" thru_hole circle
+                (at 0.000 0.000)
+                (size 1.7 1.7)
+                (drill 1)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "1978c25f-4452-4956-ace4-7e5a61090149")
+            )
+            
+
+            (pad "3" thru_hole circle
+                (at 2.540 -0.000)
+                (size 1.7 1.7)
+                (drill 1)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "72db1dfa-a1eb-41d7-879d-c82251cbcc37")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/HMTSW-103-10-G-S-530-RA.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/HMTSW-103-10-G-S-530-RA.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

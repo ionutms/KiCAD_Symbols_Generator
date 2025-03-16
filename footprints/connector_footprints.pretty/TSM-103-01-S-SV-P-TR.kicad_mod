@@ -1,0 +1,151 @@
+(footprint "TSM-103-01-S-SV-P-TR"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.318 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "5787d693-d394-44ae-bee2-8905b6a23086")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "TSM-103-01-S-SV-P-TR"
+            (at 0 4.318 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "171b1f7c-deae-4778-b56a-db0aad841462")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "3121eaf9-42b2-4c61-9683-750efc7d896c")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.587999999999999 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "682c496f-a701-4832-a301-513a29525b8e")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -3.97 3.5)
+            (end 3.97 -3.5)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "95ee21fb-c0d1-4757-b73c-be872a618238")
+        )
+        
+
+
+        (fp_rect
+            (start -3.97 3.5)
+            (end 3.97 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "9477e60d-5d16-421d-a458-6407655c6984")
+        )
+        
+
+        (fp_rect
+            (start -3.97 3.5)
+            (end 3.97 -3.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "da1a6b44-920e-447e-9139-ec0579bbe825")
+        )
+        
+
+        (fp_circle
+            (center -5.24 -0.0)
+            (end -5.5575 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "55154f6d-13a8-4fba-a522-3a544ddc379f")
+        )
+        
+
+        (fp_circle
+            (center -5.24 -0.0)
+            (end -5.5575 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "a18a3bbe-d2a9-4850-b6ed-35c120682c83")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -2.540 -1.460)
+                (size 1.27 3.43)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "0d5f1faf-dabc-4620-b5d4-ec4013330a17")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at 0.000 1.460)
+                (size 1.27 3.43)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "82a643e0-910c-425f-a947-7103fb33ef39")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 2.540 -1.460)
+                (size 1.27 3.43)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "941689e6-1fbf-4742-86ee-98315646a22c")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/TSM-103-01-S-SV-P-TR.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/TSM-103-01-S-SV-P-TR.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

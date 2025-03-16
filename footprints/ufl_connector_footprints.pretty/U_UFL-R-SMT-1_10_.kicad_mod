@@ -1,0 +1,164 @@
+(footprint "U_UFL-R-SMT-1_10_"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -3.048 0)
+		(layer "F.SilkS")
+		(uuid "7a73eb52-1a07-4331-922d-ddd4b59cc49b")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Value" "U.FL-R-SMT-1(10)"
+		(at 0 3.048 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "756cab41-c846-43f8-b5a7-976f7473dc4a")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c22de1fd-c114-49f1-99bd-5966ba84a661")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d8fff95a-9126-4e5a-84b0-033581ffdcf7")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "45aef622-5c9c-4dc8-a50e-69d2c9f577de")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -1.3 1.397)
+		(end -0.788 1.397)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "294c5373-3fae-40d6-8fbd-c5d38e351aa1")
+	)
+	(fp_line
+		(start 1.3 -1.397)
+		(end -1.3 -1.397)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "fe42a8d5-7724-4975-b0f9-2556e7683bb2")
+	)
+	(fp_line
+		(start 1.3 1.397)
+		(end 0.76967 1.397)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "efab98a3-1613-4e7d-8efc-44f4c9824ff3")
+	)
+	(fp_rect
+		(start -2.159 -1.6002)
+		(end 2.159 2.2098)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "96735bab-ffa6-411f-9f72-2ebc30290268")
+	)
+	(fp_rect
+		(start -1.3208 -1.397)
+		(end 1.3208 1.397)
+		(stroke
+			(width 0.0508)
+			(type default)
+		)
+		(fill none)
+		(layer "F.Fab")
+		(uuid "626c032c-9ff2-4e0f-b246-d7a436ed9f6d")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 4.318 0)
+		(layer "F.Fab")
+		(uuid "06f2061a-403b-4f8a-8a8d-5415169ad0c7")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(pad "1" smd rect
+		(at -1.475 0 180)
+		(size 1.05 2.2)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "536b4c9f-a61f-4118-b5a8-4920d32a91f5")
+	)
+	(pad "2" smd rect
+		(at 1.475 0 180)
+		(size 1.05 2.2)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "a7d37a92-94d1-40f2-960c-5953abc30bb3")
+	)
+	(pad "3" smd rect
+		(at 0 1.525 270)
+		(size 1.05 1.05)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "748ba350-e2d7-4234-8a18-10e3fe495a10")
+	)
+	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/UFL-R-SMT-1_10_.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

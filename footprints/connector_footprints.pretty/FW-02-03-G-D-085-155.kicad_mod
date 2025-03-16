@@ -1,0 +1,160 @@
+(footprint "FW-02-03-G-D-085-155"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -4.572 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "bacf7dc1-9387-4da3-8595-eb94b33391d4")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "FW-02-03-G-D-085-155"
+            (at 0 4.572 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "b594ccae-0e7b-4701-ace9-14ddb4357e1d")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "af88a660-a660-4a10-bc17-748ab1d77aba")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 5.8420000000000005 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "d187661b-af5f-457a-8fb1-59172c718f4c")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "00eb8432-313a-4b2e-94a2-766789114e64")
+        )
+        
+
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "9d3be9fc-eb14-4062-9e64-cc8a4f6ca26e")
+        )
+        
+
+        (fp_rect
+            (start -1.5 3.8)
+            (end 1.5 -3.8)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "57c5348b-18a0-4264-aeb7-bfbbb16449ed")
+        )
+        
+
+        (fp_circle
+            (center -2.24 -2.035)
+            (end -2.4250000000000003 -2.035)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "a82f0bec-2eb7-4f86-b67a-20adc0cb6d8d")
+        )
+        
+
+        (fp_circle
+            (center -2.24 -2.035)
+            (end -2.4250000000000003 -2.035)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "8efa54e0-606d-4c97-8336-7312dda7fafc")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -0.635 -2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "0caa9e77-981a-42b3-a11b-ac629e6816c4")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -0.635 2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "80552d4b-a55c-4147-82ab-4db5a3d2d09c")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 0.635 -2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "df170820-e77f-4929-abe2-e14f52bec596")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 0.635 2.035)
+                (size 0.74 2.79)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "2741d3be-268d-4a8a-b22a-60d9d14c5a4d")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/FW-02-03-G-D-085-155.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/FW-02-03-G-D-085-155.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

@@ -1,0 +1,160 @@
+(footprint "TSM-104-03-L-SH-TR"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -18.542 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "c6436f02-ff86-4633-8b78-9e574b065cd4")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "TSM-104-03-L-SH-TR"
+            (at 0 3.556 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "7bcad031-1239-4b72-9864-7b7c3f0e4212")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "f7f4be7b-0870-46fc-9ab0-c6608fead065")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 4.8260000000000005 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "efa7cb53-5a3e-4272-af11-0385fc81e3cb")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -5.24 2.5)
+            (end 5.24 -17.5)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "cad63297-eee5-42f4-b7c2-482a28dc5760")
+        )
+        
+
+
+        (fp_rect
+            (start -5.24 2.5)
+            (end 5.24 -17.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "42beee67-0ce9-4eda-af3b-ec3f20a5bc50")
+        )
+        
+
+        (fp_rect
+            (start -5.24 2.5)
+            (end 5.24 -17.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "15774339-c8ef-45c7-8701-39b4283a640c")
+        )
+        
+
+        (fp_circle
+            (center -6.51 0.0)
+            (end -6.8275 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "cdcbb871-b447-4074-b63b-d8558b3559d9")
+        )
+        
+
+        (fp_circle
+            (center -6.51 0.0)
+            (end -6.8275 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.Fab)
+            (uuid "5dfbb42b-f592-4fb7-9e19-b9d0be24281c")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -3.810 -0.000)
+                (size 1.27 3.18)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "1281a2c2-d3b7-4881-9237-2890a5b937d5")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -1.270 0.000)
+                (size 1.27 3.18)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "049510f8-8c95-4725-b4b1-0d71785fe71c")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 1.270 -0.000)
+                (size 1.27 3.18)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "5e954407-e176-4cac-9dee-209b632ce318")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 3.810 0.000)
+                (size 1.27 3.18)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "5f57fbdf-59de-43dc-8450-ccbd83419851")
+            )
+            
+
+        (model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/TSM-104-03-L-SH-TR.step"
+            (hide yes)
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+
+        (model "${3D_MODELS_VAULT}/3D_models/TSM-104-03-L-SH-TR.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)

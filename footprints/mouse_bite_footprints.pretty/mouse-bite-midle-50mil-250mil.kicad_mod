@@ -1,0 +1,148 @@
+(footprint "mouse-bite-midle-50mil-250mil"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2.54 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "426bcb7c-c8aa-43a0-ab32-dded2e59325e")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Value" "mouse-bite-midle-50mil-250mil"
+		(at 0 2.54 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1ad32b86-efb1-426e-818a-ec2c9441f34c")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at -1.4605 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6fb41919-035f-438b-8522-3f34c61f963c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at -1.4605 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1bb64908-20a3-47e1-93c3-2a92c887b7e4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at -1.4605 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "458749b1-4076-4772-be20-2028e93ef942")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_arc
+		(start -3.175 -0.635)
+		(mid -2.54 0)
+		(end -3.175 0.635)
+		(stroke
+			(width 0.0254)
+			(type default)
+		)
+		(layer "Dwgs.User")
+		(uuid "1034998c-641b-4fa5-a783-3f102690dc79")
+	)
+	(fp_arc
+		(start 3.175 0.635)
+		(mid 2.54 0)
+		(end 3.175 -0.635)
+		(stroke
+			(width 0.0254)
+			(type default)
+		)
+		(layer "Dwgs.User")
+		(uuid "6c9cb069-03ce-4e28-9e86-76dd98bede72")
+	)
+	(fp_circle
+		(center -3.175 0)
+		(end -3.1496 0)
+		(stroke
+			(width 0.0254)
+			(type default)
+		)
+		(fill none)
+		(layer "Dwgs.User")
+		(uuid "5c9e19c8-779c-4389-9559-256c31f0cd5c")
+	)
+	(fp_circle
+		(center 3.175 0)
+		(end 3.2004 0)
+		(stroke
+			(width 0.0254)
+			(type default)
+		)
+		(fill none)
+		(layer "Dwgs.User")
+		(uuid "7c10a440-7dda-4676-b0dc-e72f4f2645de")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 3.81 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "529b3c5b-217f-4601-9088-322d0179cc04")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -2.286 -0.381)
+		(size 0.5 0.5)
+		(drill 0.5)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "f2fdd976-09f4-4443-9a2e-4964c6c7db38")
+	)
+	(pad "" np_thru_hole circle
+		(at 2.286 -0.381)
+		(size 0.5 0.5)
+		(drill 0.5)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "693ad739-1845-45c4-8677-200d9e52e5ad")
+	)
+)

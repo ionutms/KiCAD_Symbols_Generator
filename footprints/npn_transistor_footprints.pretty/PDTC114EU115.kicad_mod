@@ -1,0 +1,218 @@
+(footprint "PDTC114EU115"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "PDTC114EU,115-3")
+	(tags "Transistor BJT NPN")
+	(property "Reference" "REF**"
+		(at 0 -3.048 0)
+		(layer "F.SilkS")
+		(uuid "639a19dd-822d-4ddc-9b91-bf790121a070")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Value" "PDTC114EU115"
+		(at 0 3.048 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "3281a6e6-45d0-49cc-adb2-cc65ea43596a")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "19601c7a-84b3-4399-804f-300a7e8567c3")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6d571ac8-82e4-4481-bba8-80f397b168f2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ec2d37d9-3e7d-4f32-84b7-42cf72cc90ba")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -1 -0.625)
+		(end -1 0.2)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "88d3b630-ad52-4557-af4f-297a52f854e0")
+	)
+	(fp_line
+		(start -0.65 -0.625)
+		(end -1 -0.625)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "fc8b7290-bbf4-4816-b4d2-5d0a00ef947c")
+	)
+	(fp_line
+		(start -0.65 1.6)
+		(end -0.65 1.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d1988001-96db-4cc0-ac8a-c27119a1fcb2")
+	)
+	(fp_line
+		(start -0.65 1.7)
+		(end -0.65 1.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "934d7903-1e04-45de-a16e-f5458dd5978b")
+	)
+	(fp_line
+		(start 0.6 -0.625)
+		(end 1 -0.625)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "178cc920-0b03-4a08-ae43-f02b5559dcb0")
+	)
+	(fp_line
+		(start 1 -0.625)
+		(end 1 0.2)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9f413797-deb7-4d59-86c1-3e6e71f23c1b")
+	)
+	(fp_arc
+		(start -0.65 1.6)
+		(mid -0.6 1.65)
+		(end -0.65 1.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5ee8be2b-7190-431b-a578-8b22fe43424e")
+	)
+	(fp_arc
+		(start -0.65 1.7)
+		(mid -0.7 1.65)
+		(end -0.65 1.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c1cc5775-4d21-4ecf-bab5-08771dd01ade")
+	)
+	(fp_rect
+		(start -1.143 -1.397)
+		(end 1.143 1.397)
+		(stroke
+			(width 0.00635)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "9d39504d-0bb0-4a2f-9708-32642cc4b4e4")
+	)
+	(fp_rect
+		(start -1.016 -1.2954)
+		(end 1.016 1.2954)
+		(stroke
+			(width 0.0508)
+			(type default)
+		)
+		(fill none)
+		(layer "F.Fab")
+		(uuid "bd204424-4b0d-44d3-8887-4a5c153a2876")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 4.318 0)
+		(layer "F.Fab")
+		(uuid "481c569b-562c-4535-a8f2-3eabdceb061d")
+		(effects
+			(font
+				(size 0.762 0.762)
+				(thickness 0.1524)
+				(bold yes)
+			)
+			(justify left)
+		)
+	)
+	(pad "1" smd rect
+		(at -0.65 0.925 90)
+		(size 0.55 0.6)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "d3e06e97-bcc0-4f3f-b4cd-a62033c95b8e")
+	)
+	(pad "2" smd rect
+		(at 0.65 0.925 90)
+		(size 0.55 0.6)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "cdce2284-bd05-4c52-b8c9-5f578a5183f4")
+	)
+	(pad "3" smd rect
+		(at 0 -0.925 90)
+		(size 0.55 0.6)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "2ac8456d-a813-441d-b129-cb8b88e5f038")
+	)
+	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/SOT323.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
