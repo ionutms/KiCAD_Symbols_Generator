@@ -186,6 +186,7 @@ def create_project_links(project_name: str) -> html.Div:
 
 REPOS_NAMES = [
     "KiCAD_Symbols_Generator",
+    "3D_Models_Vault",
     "Minimal_ADP1032",
     "Minimal_MAX14906",
     "Minimal_AD74413R",
@@ -195,11 +196,11 @@ REPOS_NAMES = [
     "Minimal_SPoE_Hybrid",
     "Minimal_MAX17761",
     "Minimal_LT8304",
-    "3D_Models_Vault",
 ]
 
 COLORS = [
     ["#2E8B57", "#4169E1"],
+    ["#66CED1", "#668C00"],
     ["#FF4500", "#9932CC"],
     ["#FFD700", "#C71585"],
     ["#20B2AA", "#FF6B6B"],
@@ -209,7 +210,6 @@ COLORS = [
     ["#A0522D", "#00FA9A"],
     ["#228B22", "#FF1493"],
     ["#00CED1", "#FF8C00"],
-    ["#66CED1", "#668C00"],
 ]
 
 REPOS_DATA = []
@@ -311,6 +311,18 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
         List of components for the project section
 
     """
+    # For 3D_Models_Vault, don't create the project links
+    if project == "3D_Models_Vault":
+        return [
+            dbc.Row([
+                dbc.Col(
+                    children=create_repo_graphs(f"{module_name}_{project}"),
+                    xs=12,
+                    md=8,
+                ),
+            ]),
+            html.Hr(),
+        ]
     return [
         dbc.Row([
             dbc.Col(
