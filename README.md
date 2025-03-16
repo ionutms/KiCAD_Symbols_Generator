@@ -45,7 +45,7 @@ This Python script generates KiCad symbol files (.kicad_sym) for electronic comp
 2. Run the script:
 
    ```
-   python kicad_symbol_generator.py
+   python KiCAD_Symbols_Generator.py
    ```
 
 3. The script will generate a `.kicad_sym` file in the same directory.
@@ -135,7 +135,7 @@ To add this repository as a submodule to your existing project, follow these ste
 2. Run the following command to add the KiCAD Symbol Generator as a submodule:
 
    ```
-   git submodule add https://github.com/ionutms/KiCAD_Symbol_Generator.git
+   git submodule add https://github.com/ionutms/KiCAD_Symbols_Generator.git
    ```
 
 3. Commit the changes to your project:
@@ -153,7 +153,7 @@ To add this repository as a submodule to your existing project, follow these ste
 To update the submodule in the future, use:
 
 ```
-git submodule update --remote KiCAD_Symbol_Generator
+git submodule update --remote KiCAD_Symbols_Generator
 ```
 
 To clone a project that includes this submodule, use:
@@ -176,19 +176,19 @@ If you need to remove the KiCAD Symbol Generator submodule from your project, fo
 1. Run the `deinit` command to unregister the submodule:
 
    ```
-   git submodule deinit -f KiCAD_Symbol_Generator
+   git submodule deinit -f KiCAD_Symbols_Generator
    ```
 
 2. Remove the submodule from the Git cache:
 
    ```
-   rm -rf .git/modules/KiCAD_Symbol_Generator
+   rm -rf .git/modules/KiCAD_Symbols_Generator
    ```
 
 3. Remove the submodule from the working tree:
 
    ```
-   git rm -f KiCAD_Symbol_Generator
+   git rm -f KiCAD_Symbols_Generator
    ```
 
 4. Commit the changes:
