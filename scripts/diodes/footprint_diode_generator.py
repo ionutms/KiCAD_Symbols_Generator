@@ -54,6 +54,11 @@ def generate_footprint(
             footprint_utils.associate_3d_model(
                 "KiCAD_Symbol_Generator/3D_models",
                 part_info.package,
+                hide=True,
+            ),
+            footprint_utils.associate_3d_model(
+                "${3D_MODELS_VAULT}/3D_models/connectors",
+                part_info.package,
             ),
             ")",  # Close the footprint
         ]
@@ -79,6 +84,11 @@ def generate_footprint(
             generate_pads(specs),
             footprint_utils.associate_3d_model(
                 "KiCAD_Symbol_Generator/3D_models",
+                part_info.package,
+                hide=True,
+            ),
+            footprint_utils.associate_3d_model(
+                "${3D_MODELS_VAULT}/3D_models/connectors",
                 part_info.package,
             ),
             ")",  # Close the footprint
