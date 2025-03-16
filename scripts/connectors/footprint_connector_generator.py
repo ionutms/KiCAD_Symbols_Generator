@@ -190,7 +190,7 @@ def generate_footprint(  # noqa: C901
             hide=True,
         ),
         footprint_utils.associate_3d_model(
-            "${3D_MODELS_VAULT}/3D_models",
+            "${3D_MODELS_VAULT}/3D_models/connectors",
             model_file_name,
         ),
         ")",  # Close the footprint
