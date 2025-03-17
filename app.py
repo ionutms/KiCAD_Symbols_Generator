@@ -16,7 +16,6 @@ Environment Variables:
 """
 
 import importlib
-import os
 from typing import Optional
 
 import dash
@@ -54,26 +53,34 @@ app = Dash(__name__, use_pages=True)
 server = app.server
 
 # Define application layout
-app.layout = dbc.Container([
-    html.Div([
-        dbc.Row([
-            ThemeSwitchAIO(
-                aio_id="theme",
-                themes=[dbc.themes.CERULEAN, dbc.themes.DARKLY],
-                switch_props={"persistence": False, "value": 0}),
-        ]),
-    ], id="theme_switch", style={"display": ""}),
-
-    dcc.Store(id="theme_switch_value_store", data=[]),
-
-    # Interval component for initial load
-    dcc.Interval(id="interval_component", interval=1*100, max_intervals=1),
-
-    # Store component for navigation links
-    dcc.Store(id="links_store"),
-
-    dash.page_container,
-], fluid=True)
+app.layout = dbc.Container(
+    [
+        html.Div(
+            [
+                dbc.Row([
+                    ThemeSwitchAIO(
+                        aio_id="theme",
+                        themes=[dbc.themes.CERULEAN, dbc.themes.DARKLY],
+                        switch_props={"persistence": False, "value": 0},
+                    ),
+                ]),
+            ],
+            id="theme_switch",
+            style={"display": ""},
+        ),
+        dcc.Store(id="theme_switch_value_store", data=[]),
+        # Interval component for initial load
+        dcc.Interval(
+            id="interval_component",
+            interval=1 * 100,
+            max_intervals=1,
+        ),
+        # Store component for navigation links
+        dcc.Store(id="links_store"),
+        dash.page_container,
+    ],
+    fluid=True,
+)
 
 
 @app.callback(
@@ -144,9 +151,7 @@ def update_links_store(
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8050))
-    app.run_server(
-        port=port,
+    app.run(
         debug=True,
         dev_tools_ui=True,
         dev_tools_props_check=True,

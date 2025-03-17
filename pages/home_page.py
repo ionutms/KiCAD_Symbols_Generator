@@ -172,14 +172,6 @@ def create_project_links(project_name: str) -> html.Div:
             ),
             target="_blank",
         ),
-        html.A(
-            children="View 3D Model (STEP)",
-            href=(
-                f"https://3dviewer.net/index.html#model={base_github_url}/"
-                f"blob/main/{project_name_lower}/{project_name_lower}.step"
-            ),
-            target="_blank",
-        ),
     ]
 
     return html.Div(
