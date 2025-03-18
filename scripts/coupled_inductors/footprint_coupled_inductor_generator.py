@@ -64,11 +64,6 @@ def generate_footprint(
             2,
         ),
         footprint_utils.associate_3d_model(
-            "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-            part_info.series,
-            hide=True,
-        ),
-        footprint_utils.associate_3d_model(
             "${3D_MODELS_VAULT}/3D_models/coupled_inductors",
             part_info.series,
         ),
