@@ -52,11 +52,6 @@ def generate_footprint(
             ),
             generate_zig_zag_pads(specs),
             footprint_utils.associate_3d_model(
-                "KiCAD_Symbol_Generator/3D_models",
-                part_info.package,
-                hide=True,
-            ),
-            footprint_utils.associate_3d_model(
                 "${3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
@@ -82,11 +77,6 @@ def generate_footprint(
                 anode_width,
             ),
             generate_pads(specs),
-            footprint_utils.associate_3d_model(
-                "KiCAD_Symbol_Generator/3D_models",
-                part_info.package,
-                hide=True,
-            ),
             footprint_utils.associate_3d_model(
                 "${3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
@@ -119,11 +109,6 @@ def generate_footprint(
                 anode_width,
             ),
             generate_pads(specs),
-            footprint_utils.associate_3d_model(
-                "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-                part_info.package,
-                hide=True,
-            ),
             footprint_utils.associate_3d_model(
                 "${3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
