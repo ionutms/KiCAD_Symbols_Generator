@@ -52,7 +52,7 @@ def generate_footprint(
             ),
             generate_zig_zag_pads(specs),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/diodes",
+                "${KICAD9_3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
             ")",  # Close the footprint
@@ -78,7 +78,7 @@ def generate_footprint(
             ),
             generate_pads(specs),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/diodes",
+                "${KICAD9_3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
             ")",  # Close the footprint
@@ -110,7 +110,7 @@ def generate_footprint(
             ),
             generate_pads(specs),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/diodes",
+                "${KICAD9_3D_MODELS_VAULT}/3D_models/diodes",
                 part_info.package,
             ),
             ")",  # Close the footprint
