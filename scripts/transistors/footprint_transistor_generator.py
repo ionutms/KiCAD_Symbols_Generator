@@ -46,11 +46,6 @@ def generate_footprint(
             footprint_utils.generate_fab_rectangle(body_width, body_height),
             generate_zig_zag_pads(specs),
             footprint_utils.associate_3d_model(
-                "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-                part_info.package,
-                hide=True,
-            ),
-            footprint_utils.associate_3d_model(
                 "${3D_MODELS_VAULT}/3D_models/transistors",
                 part_info.package,
             ),
@@ -93,11 +88,6 @@ def generate_footprint(
                 pad_numbers,
             ),
             thermal_pad,
-            footprint_utils.associate_3d_model(
-                "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-                part_info.package,
-                hide=True,
-            ),
             footprint_utils.associate_3d_model(
                 "${3D_MODELS_VAULT}/3D_models/transistors",
                 part_info.package,
