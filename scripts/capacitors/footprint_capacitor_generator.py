@@ -58,7 +58,7 @@ def generate_footprint(
                 pad_center_x,
             ),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/capacitors",
+                "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
                 step_file_name,
             ),
             ")",  # Close the footprint
@@ -92,7 +92,7 @@ def generate_footprint(
                 pad_center_x,
             ),
             footprint_utils.associate_3d_model(
-                "${3D_MODELS_VAULT}/3D_models/capacitors",
+                "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
                 step_file_name,
             ),
             ")",  # Close the footprint

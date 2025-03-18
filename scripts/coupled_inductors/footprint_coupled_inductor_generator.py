@@ -64,7 +64,7 @@ def generate_footprint(
             2,
         ),
         footprint_utils.associate_3d_model(
-            "${3D_MODELS_VAULT}/3D_models/coupled_inductors",
+            "${KICAD9_3D_MODELS_VAULT}/3D_models/coupled_inductors",
             part_info.series,
         ),
         ")",  # Close the footprint

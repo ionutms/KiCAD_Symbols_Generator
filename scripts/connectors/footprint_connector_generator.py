@@ -185,7 +185,7 @@ def generate_footprint(  # noqa: C901
         f_fab_pin_1_indicator,
         pads,
         footprint_utils.associate_3d_model(
-            "${3D_MODELS_VAULT}/3D_models/connectors",
+            "${KICAD9_3D_MODELS_VAULT}/3D_models/connectors",
             model_file_name,
         ),
         ")",  # Close the footprint
