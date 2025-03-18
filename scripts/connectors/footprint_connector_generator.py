@@ -185,11 +185,6 @@ def generate_footprint(  # noqa: C901
         f_fab_pin_1_indicator,
         pads,
         footprint_utils.associate_3d_model(
-            "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-            model_file_name,
-            hide=True,
-        ),
-        footprint_utils.associate_3d_model(
             "${3D_MODELS_VAULT}/3D_models/connectors",
             model_file_name,
         ),
