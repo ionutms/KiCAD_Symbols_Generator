@@ -1,7 +1,7 @@
 (footprint "minimal_adp1032"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
 		(at 17.7927 -14.986 0)
@@ -29,19 +29,6 @@
 				(bold yes)
 			)
 			(justify left top)
-		)
-	)
-	(property "Footprint" ""
-		(at 5.0927 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "fc74cd6f-d558-48a5-933f-edd494485862")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -822,7 +809,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "8ba64223-481f-4778-a27c-22d1fff64df1")
 	)
@@ -833,7 +820,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "11fa1fc0-8e66-4316-a814-c7960786bbeb")
 	)
@@ -844,7 +831,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "cb612c7f-3aa0-4604-a5b9-9aa4a4069c17")
 	)
@@ -855,7 +842,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "2ccd249e-09e5-44e7-a700-3d2ceafce4df")
 	)
@@ -866,7 +853,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "a7af070f-5afd-4a28-87b4-648e351eafaa")
 	)
@@ -877,7 +864,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "00cde1a4-6e1e-42e0-b826-3a2b183a7fdb")
 	)
@@ -1231,18 +1218,7 @@
 			(justify left top)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/minimal_adp1032.wrl"
-		(hide yes)
-		(offset
-			(xyz 0 0 -4.699)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
+	(embedded_fonts no)
 	(model "${3D_MODELS_VAULT}/3D_models/modules/minimal_adp1032.wrl"
 		(offset
 			(xyz 0 0 -4.699)

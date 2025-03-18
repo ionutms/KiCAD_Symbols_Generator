@@ -1,7 +1,7 @@
 (footprint "minimal_adin1110"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
 		(at 0 -0.5 0)
@@ -28,19 +28,6 @@
 				(size 0.762 0.762)
 				(thickness 0.1524)
 				(bold yes)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at -3.4925 3.175 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "27c3c826-cf6e-44ab-badd-835db3cc0473")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
 			)
 		)
 	)
@@ -735,7 +722,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "f2d136e4-1973-420d-b5e9-268992eafcf7")
 	)
@@ -746,7 +733,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "27b33d40-7a9f-4858-9ca1-55ed4a6fa33a")
 	)
@@ -757,7 +744,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "6a131a13-3b60-45e1-ba1c-ff04625af55c")
 	)
@@ -768,7 +755,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "62bca91a-28b7-48dc-826e-298220d0f852")
 	)
@@ -779,7 +766,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "7ab3c16f-1690-4d9a-a580-dc0eb97d2843")
 	)
@@ -797,18 +784,7 @@
 			)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/minimal_adin1110.wrl"
-		(hide yes)
-		(offset
-			(xyz 0 0 3.048)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
+	(embedded_fonts no)
 	(model "${3D_MODELS_VAULT}/3D_models/modules/minimal_adin1110.wrl"
 		(offset
 			(xyz 0 0 3.048)

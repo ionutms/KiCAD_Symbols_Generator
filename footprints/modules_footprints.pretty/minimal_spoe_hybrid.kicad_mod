@@ -1,7 +1,7 @@
 (footprint "minimal_spoe_hybrid"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
 		(at 0.00254 -0.5 0)
@@ -28,19 +28,6 @@
 				(size 0.762 0.762)
 				(thickness 0.1524)
 				(bold yes)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at -3.80746 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "97541071-368e-4e03-9f84-a2310fb9c4d1")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
 			)
 		)
 	)
@@ -385,7 +372,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "2a0688e8-b66c-46b4-abc6-6102674de895")
 	)
@@ -396,7 +383,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "282bc8ec-1d91-4734-b1d6-4ae4f51f5908")
 	)
@@ -407,7 +394,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "1c52f9ee-d043-4d59-87c8-cab85471c5fe")
 	)
@@ -425,18 +412,7 @@
 			)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/minimal_spoe_hybrid.wrl"
-		(hide yes)
-		(offset
-			(xyz 0 0 3.048)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
+	(embedded_fonts no)
 	(model "${3D_MODELS_VAULT}/3D_models/modules/minimal_spoe_hybrid.wrl"
 		(offset
 			(xyz 0 0 3.048)

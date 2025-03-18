@@ -1,10 +1,10 @@
 (footprint "minimal_max17761"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0.00254 -0.5 0)
+		(at 0.63754 -1.135 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(hide yes)
@@ -31,21 +31,8 @@
 			)
 		)
 	)
-	(property "Footprint" ""
-		(at 0.00254 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "97541071-368e-4e03-9f84-a2310fb9c4d1")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
-		)
-	)
 	(property "Datasheet" ""
-		(at 0.00254 0 0)
+		(at 0.63754 -0.635 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
@@ -58,7 +45,7 @@
 		)
 	)
 	(property "Description" ""
-		(at 0.00254 0 0)
+		(at 0.63754 -0.635 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
@@ -451,30 +438,30 @@
 		(uuid "9f92c9dc-2d38-44e6-8456-37656af95ae2")
 	)
 	(fp_circle
-		(center -13.843 0)
-		(end -13.335 0)
+		(center -13.208 -0.635)
+		(end -12.7 -0.635)
 		(stroke
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "684ec330-0bc6-408a-ba8d-887365d8245c")
 	)
 	(fp_circle
-		(center 13.843 0)
-		(end 14.351 0)
+		(center 13.208 -0.635)
+		(end 13.716 -0.635)
 		(stroke
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Cmts.User")
 		(uuid "1c52f9ee-d043-4d59-87c8-cab85471c5fe")
 	)
 	(fp_line
-		(start 0.1524 1.778)
-		(end 0.1524 -3.302)
+		(start 0.7874 1.143)
+		(end 0.7874 -3.937)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -483,8 +470,8 @@
 		(uuid "4911abfc-3c20-44ee-9214-a52bc3d2f437")
 	)
 	(fp_line
-		(start 0.7874 -3.937)
-		(end 6.1214 -3.937)
+		(start 1.4224 -4.572)
+		(end 6.7564 -4.572)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -493,8 +480,8 @@
 		(uuid "1c2289d3-8145-4840-a9df-1b5f3ed9a8c7")
 	)
 	(fp_line
-		(start 6.1214 2.413)
-		(end 0.7874 2.413)
+		(start 6.7564 1.778)
+		(end 1.4224 1.778)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -503,8 +490,8 @@
 		(uuid "25c0a816-bc65-40df-a432-18324d5faabe")
 	)
 	(fp_line
-		(start 6.7564 -3.302)
-		(end 6.7564 1.778)
+		(start 7.3914 -3.937)
+		(end 7.3914 1.143)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -513,9 +500,9 @@
 		(uuid "e96bf136-9706-40c0-9979-ef2ef5b0d49f")
 	)
 	(fp_arc
-		(start 0.1524 -3.302)
-		(mid 0.338387 -3.751013)
-		(end 0.7874 -3.937)
+		(start 0.7874 -3.937)
+		(mid 0.973387 -4.386013)
+		(end 1.4224 -4.572)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -524,9 +511,9 @@
 		(uuid "f88b7436-d2d6-49b0-b571-94cae8705e25")
 	)
 	(fp_arc
-		(start 0.7874 2.413)
-		(mid 0.338387 2.227013)
-		(end 0.1524 1.778)
+		(start 1.4224 1.778)
+		(mid 0.973387 1.592013)
+		(end 0.7874 1.143)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -535,9 +522,9 @@
 		(uuid "23f751d3-7a37-4e6a-9d3b-579ffa9de4c1")
 	)
 	(fp_arc
-		(start 6.1214 -3.937)
-		(mid 6.570413 -3.751013)
-		(end 6.7564 -3.302)
+		(start 6.7564 -4.572)
+		(mid 7.205413 -4.386013)
+		(end 7.3914 -3.937)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -546,9 +533,9 @@
 		(uuid "b2d264f9-aa96-4535-9572-4a595986d17b")
 	)
 	(fp_arc
-		(start 6.7564 1.778)
-		(mid 6.570413 2.227013)
-		(end 6.1214 2.413)
+		(start 7.3914 1.143)
+		(mid 7.205413 1.592013)
+		(end 6.7564 1.778)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -570,18 +557,7 @@
 			)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/minimal_max17761.wrl"
-		(hide yes)
-		(offset
-			(xyz 0 0 -4.699)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
+	(embedded_fonts no)
 	(model "${3D_MODELS_VAULT}/3D_models/modules/minimal_max17761.wrl"
 		(offset
 			(xyz 0 0 -4.699)
