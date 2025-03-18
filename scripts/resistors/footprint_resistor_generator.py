@@ -53,11 +53,6 @@ def generate_footprint(
         ),
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
-            "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-            step_file_name,
-            hide=True,
-        ),
-        footprint_utils.associate_3d_model(
             "${3D_MODELS_VAULT}/3D_models/resistors",
             step_file_name,
         ),
