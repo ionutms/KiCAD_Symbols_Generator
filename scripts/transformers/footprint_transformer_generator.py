@@ -66,11 +66,6 @@ def generate_footprint(
             reverse_pin_numbering=reverse_pin_numbering,
         ),
         footprint_utils.associate_3d_model(
-            "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models",
-            part_info.series,
-            hide=True,
-        ),
-        footprint_utils.associate_3d_model(
             "${3D_MODELS_VAULT}/3D_models/transformers",
             part_info.series,
         ),
