@@ -178,7 +178,7 @@ def create_project_links(project_name: str) -> html.Div:
     # Create image carousel
     image_paths = [
         f"https://raw.githubusercontent.com/ionutms/{project_name}/"
-        f"main/{project_name_lower}/{project_name_lower}_{prefix}.jpg"
+        f"main/{project_name_lower}/{project_name_lower}_{prefix}.png"
         for prefix in ["side"]
     ]
 
