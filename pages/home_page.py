@@ -121,18 +121,19 @@ links_display_div = html.Div(
 
 
 def create_project_links(project_name: str) -> html.Div:
-    """Generate GitHub repo, Interactive BOM, and Schematics links.
+    """Create links for a specific project with image carousel.
 
     Args:
         project_name (str): Name of the project (e.g., 'ADP1032')
 
     Returns:
-        html.Div: Div containing all project links
+        html.Div: Div containing all project links and image carousel
 
     """
     project_name_lower = project_name.lower()
     base_github_url = f"https://github.com/ionutms/{project_name}"
 
+    # Create basic links
     links = [
         html.A(
             children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
@@ -174,8 +175,34 @@ def create_project_links(project_name: str) -> html.Div:
         ),
     ]
 
+    # Create image carousel
+    image_paths = [
+        f"https://raw.githubusercontent.com/ionutms/{project_name}/"
+        f"main/{project_name_lower}/{project_name_lower}_{prefix}.jpg"
+        for prefix in ["side"]
+    ]
+
+    carousel = dbc.Carousel(
+        items=[{"src": img_path} for img_path in image_paths],
+        controls=True,
+        indicators=True,
+        ride="carousel",
+        id=f"{project_name_lower}_carousel",
+    )
+
+    # Add carousel to a div with appropriate styling
+    carousel_div = html.Div(
+        children=[carousel],
+        style={
+            "marginTop": "1px",
+            "marginBottom": "1px",
+            "borderRadius": "10px",
+            "overflow": "hidden",
+        },
+    )
+
     return html.Div(
-        children=[*links],
+        children=[*links, carousel_div],
         style={
             "display": "flex",
             "flex-direction": "column",
