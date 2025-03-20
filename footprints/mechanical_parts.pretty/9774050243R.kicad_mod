@@ -1,7 +1,7 @@
 (footprint "9774050243R"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
 		(at 0 -3.81 0)
@@ -29,19 +29,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 11.5062 -6.9704 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "06ece818-d786-4a1b-bca6-03cfe95f2c44")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -92,19 +79,8 @@
 		(layers "F&B.Cu" "*.Mask")
 		(uuid "5c8f4c27-8364-402d-bae1-55fcec684995")
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/9774050243R.step"
-		(hide yes)
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/mechanical/9774050243R.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/mechanical/9774050243R.step"
 		(offset
 			(xyz 0 0 0)
 		)

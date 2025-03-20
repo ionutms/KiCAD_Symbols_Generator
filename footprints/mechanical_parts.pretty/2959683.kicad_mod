@@ -1,7 +1,7 @@
 (footprint "2959683"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "UM108_SEFE_R")
 	(property "Reference" "REF**"
@@ -31,19 +31,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 10 2.7 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "c58e80e9-64c4-443a-9171-e792f4c45c67")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -81,7 +68,7 @@
 			(width 0.1)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Dwgs.User")
 		(uuid "13ac8778-75b5-457a-84c7-114c953a6a40")
 	)
@@ -99,19 +86,8 @@
 			(justify left)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/2959683__UM108_SEFE_R.step"
-		(hide yes)
-		(offset
-			(xyz -73 0 -19.5)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/mechanical/2959683__UM108_SEFE_R.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/mechanical/2959683__UM108_SEFE_R.step"
 		(offset
 			(xyz -73 0 -19.49999999)
 		)

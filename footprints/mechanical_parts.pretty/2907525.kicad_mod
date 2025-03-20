@@ -1,7 +1,7 @@
 (footprint "2907525"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "UM108_Profil")
 	(property "Reference" "REF**"
@@ -31,19 +31,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "c58e80e9-64c4-443a-9171-e792f4c45c67")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -81,7 +68,7 @@
 			(width 0.1)
 			(type dash)
 		)
-		(fill none)
+		(fill no)
 		(layer "Dwgs.User")
 		(uuid "ee947cff-5361-4ebd-9e53-7b67c7d34cc4")
 	)
@@ -92,7 +79,7 @@
 			(width 0.1)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "Dwgs.User")
 		(uuid "57a9c8b0-3556-475b-b598-a2f8e7dfa5d7")
 	)
@@ -110,19 +97,8 @@
 			(justify left)
 		)
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/2907525__UM108_Profil.step"
-		(hide yes)
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/mechanical/2907525__UM108_Profil.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/mechanical/2907525__UM108_Profil.step"
 		(offset
 			(xyz 0 0 0)
 		)
