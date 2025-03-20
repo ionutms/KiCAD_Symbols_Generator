@@ -1,7 +1,7 @@
 (footprint "21-0057F_MXM"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(tags "MAX40200AUK+ ")
 	(property "Reference" "REF**"
@@ -30,18 +30,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "517a1106-96e3-46cf-93fe-4f25d9c683a6")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -106,7 +94,7 @@
 			(width 0.00635)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "16d92644-182c-48c3-a815-968546035057")
 	)
@@ -378,46 +366,35 @@
 	(pad "1" smd rect
 		(at -1.36525 -0.950001)
 		(size 0.9779 0.508)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "379056b5-db24-4932-85a2-b90532f09b2e")
 	)
 	(pad "2" smd rect
 		(at -1.36525 0)
 		(size 0.9779 0.508)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "5e01184e-fa24-4451-a063-8d1de2467288")
 	)
 	(pad "3" smd rect
 		(at -1.36525 0.950001)
 		(size 0.9779 0.508)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "a08582af-d42c-48bf-b282-41f05bd87c5b")
 	)
 	(pad "4" smd rect
 		(at 1.36525 0.950001)
 		(size 0.9779 0.508)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "aedb3893-5755-406a-ad90-75409c17c5f6")
 	)
 	(pad "5" smd rect
 		(at 1.36525 -0.950001)
 		(size 0.9779 0.508)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "8093e0e5-76de-417b-97ae-686e5d03c7a9")
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/21-0057F_MXM.step"
-		(hide yes)
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/analog_devices/21-0057F_MXM.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/analog_devices/21-0057F_MXM.step"
 		(offset
 			(xyz 0 0 0)
 		)

@@ -1,7 +1,7 @@
 (footprint "S_8E_ADI"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(tags "LT8304IS8E-PBF ")
 	(property "Reference" "REF**"
@@ -32,18 +32,6 @@
 			(justify left)
 		)
 	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "585b1d44-48b0-45fd-b332-44ec92e80126")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
-			)
-		)
-	)
 	(property "Datasheet" ""
 		(at 0 0 0)
 		(layer "F.Fab")
@@ -69,30 +57,6 @@
 		)
 	)
 	(attr smd)
-	(fp_poly
-		(pts
-			(xy -1.043 -1.5383) (xy -1.043 -0.1) (xy 1.043 -0.1) (xy 1.043 -1.5383)
-		)
-		(stroke
-			(width 0)
-			(type solid)
-		)
-		(fill solid)
-		(layer "F.Paste")
-		(uuid "db0d0d05-0f7a-4cc6-af4b-7b4adbaf8bc4")
-	)
-	(fp_poly
-		(pts
-			(xy -1.043 0.1) (xy -1.043 1.5383) (xy 1.043 1.5383) (xy 1.043 0.1)
-		)
-		(stroke
-			(width 0)
-			(type solid)
-		)
-		(fill solid)
-		(layer "F.Paste")
-		(uuid "cc80163b-7ef2-406c-a5f8-c9a2b5498865")
-	)
 	(fp_line
 		(start -1.775103 2.4511)
 		(end 1.775103 2.4511)
@@ -120,9 +84,33 @@
 			(width 0.1)
 			(type solid)
 		)
-		(fill solid)
+		(fill yes)
 		(layer "F.SilkS")
 		(uuid "08034e81-e603-412c-8c6e-eb7597b92f49")
+	)
+	(fp_poly
+		(pts
+			(xy -1.043 -1.5383) (xy -1.043 -0.1) (xy 1.043 -0.1) (xy 1.043 -1.5383)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "db0d0d05-0f7a-4cc6-af4b-7b4adbaf8bc4")
+	)
+	(fp_poly
+		(pts
+			(xy -1.043 0.1) (xy -1.043 1.5383) (xy 1.043 1.5383) (xy 1.043 0.1)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "cc80163b-7ef2-406c-a5f8-c9a2b5498865")
 	)
 	(fp_rect
 		(start -3.7084 -2.54)
@@ -131,7 +119,7 @@
 			(width 0.00635)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "47882b64-0a83-4e43-b11a-dd38e1ab02e0")
 	)
@@ -513,7 +501,7 @@
 			(width 0.1)
 			(type solid)
 		)
-		(fill solid)
+		(fill yes)
 		(layer "F.Fab")
 		(uuid "0839ec57-3c71-464a-84f9-591324ef0f96")
 	)
@@ -534,49 +522,49 @@
 	(pad "1" smd rect
 		(at -2.7051 -1.905)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "ef442c00-cae7-4224-a9eb-b858bb467620")
 	)
 	(pad "2" smd rect
 		(at -2.7051 -0.635)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "d1bd7838-e850-469f-9064-5e80112d18d1")
 	)
 	(pad "3" smd rect
 		(at -2.7051 0.635)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "23c08dcd-fd8a-4369-921c-65d7408713e8")
 	)
 	(pad "4" smd rect
 		(at -2.7051 1.905)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "b4a9f730-243e-47f2-b70c-3d37432d17ae")
 	)
 	(pad "5" smd rect
 		(at 2.7051 1.905)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "7ed38b3e-2083-403c-af13-16bbae067a39")
 	)
 	(pad "6" smd rect
 		(at 2.7051 0.635)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "284e5649-f75d-4f0a-a159-8bb35cb08740")
 	)
 	(pad "7" smd rect
 		(at 2.7051 -0.635)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "1f5d2259-85a7-4b65-810d-71237974ef07")
 	)
 	(pad "8" smd rect
 		(at 2.7051 -1.905)
 		(size 1.4986 0.5334)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "ab920d91-3cab-4dce-8f0f-ab2d7d9c9f29")
 	)
 	(pad "EPAD" smd rect
@@ -585,19 +573,8 @@
 		(layers "F.Cu" "F.Mask")
 		(uuid "13346ea8-54f8-44c4-b8c1-bacbadf9f66a")
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/S_8E_ADI.step"
-		(hide yes)
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/analog_devices/S_8E_ADI.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/analog_devices/S_8E_ADI.step"
 		(offset
 			(xyz 0 0 0)
 		)
