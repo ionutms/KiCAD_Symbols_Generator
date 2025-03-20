@@ -179,13 +179,13 @@ def create_project_links(project_name: str) -> html.Div:
     image_paths = [
         f"https://raw.githubusercontent.com/ionutms/{project_name}/"
         f"main/{project_name_lower}/{project_name_lower}_{prefix}.png"
-        for prefix in ["side"]
+        for prefix in ["side", "top"]
     ]
 
     carousel = dbc.Carousel(
         items=[{"src": img_path} for img_path in image_paths],
         controls=True,
-        indicators=True,
+        indicators=False,
         ride="carousel",
         id=f"{project_name_lower}_carousel",
     )
