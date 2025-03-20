@@ -1,7 +1,7 @@
 (footprint "SO4_FA-128_2p0x1p6_SEC"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(tags "FA-128 25.0000MF10Z-AC3 ")
 	(property "Reference" "REF**"
@@ -30,18 +30,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "0a54b4fc-bb3c-40ea-b142-acb20de4c1b5")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -76,7 +64,7 @@
 			(width 0.1524)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 		(uuid "53207f78-f3ba-451d-ab86-6024dae9ffa2")
 	)
@@ -87,7 +75,7 @@
 			(width 0.1524)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 		(uuid "a9224696-8297-41a8-ae67-b193b5594820")
 	)
@@ -98,7 +86,7 @@
 			(width 0.00635)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "755bcdd6-0397-4557-96f5-1f48f8407891")
 	)
@@ -109,7 +97,7 @@
 			(width 0.0254)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.Fab")
 		(uuid "5a58878b-09f4-4ddf-955d-2bcdc9c18b30")
 	)
@@ -120,7 +108,7 @@
 			(width 0.0254)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.Fab")
 		(uuid "cc432189-7206-4d68-9a62-10032e9c1ca0")
 	)
@@ -141,40 +129,29 @@
 	(pad "1" smd rect
 		(at -0.575 -0.725)
 		(size 0.85 0.95)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "084c1df4-f979-4c51-837c-2f65bf5b411c")
 	)
 	(pad "2" smd rect
 		(at -0.575 0.725)
 		(size 0.85 0.95)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "7043d81a-2278-4a29-a55c-c5332c2969cd")
 	)
 	(pad "3" smd rect
 		(at 0.575 0.725)
 		(size 0.85 0.95)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "c5a42c1d-ea65-4b85-9807-57dd169fe669")
 	)
 	(pad "4" smd rect
 		(at 0.575 -0.725)
 		(size 0.85 0.95)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "990e1856-0e76-4827-b8f2-0879274c6199")
 	)
-	(model "${KIPRJMOD}/KiCAD_Symbol_Generator/3D_models/FA-128.step"
-		(hide yes)
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
-	(model "${3D_MODELS_VAULT}/3D_models/crystals/FA-128.step"
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/crystals/FA-128.step"
 		(offset
 			(xyz 0 0 0)
 		)
