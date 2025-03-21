@@ -161,7 +161,8 @@ def create_project_links(project_name: str) -> html.Div:
             children="View 3D Model (WRL)",
             href=(
                 f"https://3dviewer.net/index.html#model={base_github_url}/"
-                f"blob/main/{project_name_lower}/{project_name_lower}.wrl"
+                f"blob/main/{project_name_lower}/docs/3d_models/"
+                f"{project_name_lower}.wrl"
             ),
             target="_blank",
         ),
@@ -169,7 +170,8 @@ def create_project_links(project_name: str) -> html.Div:
             children="View 3D Model (GLB)",
             href=(
                 f"https://3dviewer.net/index.html#model={base_github_url}/"
-                f"blob/main/{project_name_lower}/{project_name_lower}.glb"
+                f"blob/main/{project_name_lower}/docs/3d_models/"
+                f"{project_name_lower}.glb"
             ),
             target="_blank",
         ),
@@ -178,8 +180,9 @@ def create_project_links(project_name: str) -> html.Div:
     # Create image carousel
     image_paths = [
         f"https://raw.githubusercontent.com/ionutms/{project_name}/"
-        f"main/{project_name_lower}/{project_name_lower}_{prefix}.png"
-        for prefix in ["side", "top"]
+        f"main/{project_name_lower}/docs/pictures/"
+        f"{project_name_lower}_{prefix}.png"
+        for prefix in ["side", "top", "front", "right"]
     ]
 
     carousel = dbc.Carousel(
