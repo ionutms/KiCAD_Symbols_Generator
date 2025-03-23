@@ -24,7 +24,7 @@ import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
-from dash import Input, Output, callback, dcc, html
+from dash import Input, Output, State, callback, dcc, html
 
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
@@ -119,12 +119,18 @@ links_display_div = html.Div(
     style={"display": "flex", "flex-direction": "column", "gap": "10px"},
 )
 
+image_prefixes = ["side", "top", "front", "right"]
 
-def create_project_links(project_name: str) -> html.Div:
+
+def create_project_links(
+    project_name: str,
+    image_prefixes: list[str],
+) -> html.Div:
     """Create links for a specific project with image carousel.
 
     Args:
         project_name (str): Name of the project (e.g., 'ADP1032')
+        image_prefixes (list[str]): List of image prefixes
 
     Returns:
         html.Div: Div containing all project links and image carousel
@@ -133,7 +139,6 @@ def create_project_links(project_name: str) -> html.Div:
     project_name_lower = project_name.lower()
     base_github_url = f"https://github.com/ionutms/{project_name}"
 
-    # Create basic links
     links = [
         html.A(
             children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
@@ -177,22 +182,17 @@ def create_project_links(project_name: str) -> html.Div:
         ),
     ]
 
-    # Create image carousel
     image_paths = [
         f"https://raw.githubusercontent.com/ionutms/{project_name}/"
         f"main/{project_name_lower}/docs/pictures/"
         f"{project_name_lower}_{prefix}.png"
-        for prefix in ["side", "top", "front", "right"]
+        for prefix in image_prefixes
     ]
 
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
 
-    # Create the modal with fullscreen carousel
     modal = dbc.Modal(
         [
-            dbc.ModalHeader(
-                dbc.ModalTitle(f"{project_name} - Detailed Views"),
-            ),
             dbc.ModalBody(
                 dbc.Carousel(
                     items=modal_carousel_items,
@@ -208,17 +208,15 @@ def create_project_links(project_name: str) -> html.Div:
         is_open=False,
     )
 
-    # Keep original carousel settings
     carousel = dbc.Carousel(
         items=[{"src": img_path} for img_path in image_paths],
         controls=False,
         indicators=False,
-        ride=None,  # Changed from "carousel" to None to prevent auto-cycling
+        ride=None,
         id=f"{project_name_lower}_carousel",
         style={"cursor": "pointer"},
     )
 
-    # Add custom next/prev buttons
     carousel_controls = html.Div(
         [
             dbc.Button(
@@ -252,7 +250,6 @@ def create_project_links(project_name: str) -> html.Div:
         className="d-flex justify-content-center mt-2",
     )
 
-    # Add carousel and buttons to a div with appropriate styling
     carousel_div = html.Div(
         children=[carousel, carousel_controls],
         style={
@@ -327,10 +324,8 @@ def register_modal_callbacks() -> None:
 
         @callback(
             Output(f"{project_lower}_modal", "is_open"),
-            [
-                Input(f"{project_lower}_view_details", "n_clicks"),
-            ],
-            [dash.State(f"{project_lower}_modal", "is_open")],
+            Input(f"{project_lower}_view_details", "n_clicks"),
+            State(f"{project_lower}_modal", "is_open"),
         )
         def toggle_modal(
             view_details_clicks: int | None,
@@ -351,7 +346,7 @@ def register_modal_callbacks() -> None:
             return is_open
 
 
-def register_carousel_callbacks() -> None:
+def register_carousel_callbacks(num_items: int) -> None:
     """Register callbacks for carousel control buttons."""
     for project in PROJECTS:
         if project == "3D_Models_Vault":
@@ -361,11 +356,9 @@ def register_carousel_callbacks() -> None:
 
         @callback(
             Output(f"{project_lower}_carousel", "active_index"),
-            [
-                Input(f"{project_lower}_carousel_prev", "n_clicks"),
-                Input(f"{project_lower}_carousel_next", "n_clicks"),
-            ],
-            [dash.State(f"{project_lower}_carousel", "active_index")],
+            Input(f"{project_lower}_carousel_prev", "n_clicks"),
+            Input(f"{project_lower}_carousel_next", "n_clicks"),
+            State(f"{project_lower}_carousel", "active_index"),
         )
         def control_carousel(
             _prev_clicks: int | None,
@@ -390,14 +383,9 @@ def register_carousel_callbacks() -> None:
 
             button_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
-            # Number of items (images) in the carousel
-            num_items = 4  # side, top, front, right
-
-            # Handle prev button
             if button_id.endswith("_carousel_prev"):
                 return (current_index - 1) % num_items
 
-            # Handle next button
             if button_id.endswith("_carousel_next"):
                 return (current_index + 1) % num_items
 
@@ -405,7 +393,7 @@ def register_carousel_callbacks() -> None:
 
 
 register_modal_callbacks()
-register_carousel_callbacks()
+register_carousel_callbacks(len(image_prefixes))
 
 
 def create_header_section(
@@ -513,7 +501,7 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(project),
+                    create_project_links(project, image_prefixes),
                 ],
                 xs=12,
                 md=4,
