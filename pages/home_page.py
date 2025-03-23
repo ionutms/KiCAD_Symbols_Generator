@@ -119,12 +119,18 @@ links_display_div = html.Div(
     style={"display": "flex", "flex-direction": "column", "gap": "10px"},
 )
 
+image_prefixes = ["side", "top", "front", "right"]
 
-def create_project_links(project_name: str) -> html.Div:
+
+def create_project_links(
+    project_name: str,
+    image_prefixes: list[str],
+) -> html.Div:
     """Create links for a specific project with image carousel.
 
     Args:
         project_name (str): Name of the project (e.g., 'ADP1032')
+        image_prefixes (list[str]): List of image prefixes
 
     Returns:
         html.Div: Div containing all project links and image carousel
@@ -133,7 +139,6 @@ def create_project_links(project_name: str) -> html.Div:
     project_name_lower = project_name.lower()
     base_github_url = f"https://github.com/ionutms/{project_name}"
 
-    # Create basic links
     links = [
         html.A(
             children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
@@ -177,17 +182,15 @@ def create_project_links(project_name: str) -> html.Div:
         ),
     ]
 
-    # Create image carousel
     image_paths = [
         f"https://raw.githubusercontent.com/ionutms/{project_name}/"
         f"main/{project_name_lower}/docs/pictures/"
         f"{project_name_lower}_{prefix}.png"
-        for prefix in ["side", "top", "front", "right"]
+        for prefix in image_prefixes
     ]
 
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
 
-    # Create the modal with fullscreen carousel
     modal = dbc.Modal(
         [
             dbc.ModalBody(
@@ -247,7 +250,6 @@ def create_project_links(project_name: str) -> html.Div:
         className="d-flex justify-content-center mt-2",
     )
 
-    # Add carousel and buttons to a div with appropriate styling
     carousel_div = html.Div(
         children=[carousel, carousel_controls],
         style={
@@ -344,7 +346,7 @@ def register_modal_callbacks() -> None:
             return is_open
 
 
-def register_carousel_callbacks() -> None:
+def register_carousel_callbacks(num_items: int) -> None:
     """Register callbacks for carousel control buttons."""
     for project in PROJECTS:
         if project == "3D_Models_Vault":
@@ -381,14 +383,9 @@ def register_carousel_callbacks() -> None:
 
             button_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
-            # Number of items (images) in the carousel
-            num_items = 4  # side, top, front, right
-
-            # Handle prev button
             if button_id.endswith("_carousel_prev"):
                 return (current_index - 1) % num_items
 
-            # Handle next button
             if button_id.endswith("_carousel_next"):
                 return (current_index + 1) % num_items
 
@@ -396,7 +393,7 @@ def register_carousel_callbacks() -> None:
 
 
 register_modal_callbacks()
-register_carousel_callbacks()
+register_carousel_callbacks(len(image_prefixes))
 
 
 def create_header_section(
@@ -504,7 +501,7 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(project),
+                    create_project_links(project, image_prefixes),
                 ],
                 xs=12,
                 md=4,
