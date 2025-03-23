@@ -185,12 +185,44 @@ def create_project_links(project_name: str) -> html.Div:
         for prefix in ["side", "top", "front", "right"]
     ]
 
+    modal_carousel_items = [{"src": img_path} for img_path in image_paths]
+
+    # Create the modal with fullscreen carousel
+    modal = dbc.Modal(
+        [
+            dbc.ModalHeader(
+                dbc.ModalTitle(f"{project_name} - Detailed Views"),
+            ),
+            dbc.ModalBody(
+                dbc.Carousel(
+                    items=modal_carousel_items,
+                    controls=True,
+                    indicators=False,
+                    interval=None,
+                    id=f"{project_name_lower}_modal_carousel",
+                ),
+            ),
+            dbc.ModalFooter(
+                dbc.Button(
+                    "Close",
+                    id=f"{project_name_lower}_modal_close",
+                    className="ms-auto",
+                    n_clicks=0,
+                ),
+            ),
+        ],
+        id=f"{project_name_lower}_modal",
+        size="lg",
+        is_open=False,
+    )
+
     carousel = dbc.Carousel(
         items=[{"src": img_path} for img_path in image_paths],
         controls=True,
         indicators=False,
         ride="carousel",
         id=f"{project_name_lower}_carousel",
+        style={"cursor": "pointer"},
     )
 
     # Add carousel to a div with appropriate styling
@@ -202,10 +234,11 @@ def create_project_links(project_name: str) -> html.Div:
             "borderRadius": "10px",
             "overflow": "hidden",
         },
+        id=f"{project_name_lower}_carousel_container",
     )
 
     return html.Div(
-        children=[*links, carousel_div],
+        children=[*links, carousel_div, modal],
         style={
             "display": "flex",
             "flex-direction": "column",
@@ -256,6 +289,46 @@ for repo_index, repo_name in enumerate(REPOS_NAMES):
 
 
 PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
+
+
+def register_modal_callbacks() -> None:
+    """Register callbacks for project modals."""
+    for project in PROJECTS:
+        if project == "3D_Models_Vault":
+            continue
+
+        project_lower = project.lower()
+
+        @callback(
+            Output(f"{project_lower}_modal", "is_open"),
+            [
+                Input(f"{project_lower}_carousel_container", "n_clicks"),
+                Input(f"{project_lower}_modal_close", "n_clicks"),
+            ],
+            [dash.State(f"{project_lower}_modal", "is_open")],
+        )
+        def toggle_modal(
+            carousel_clicks: int | None,
+            close_clicks: int | None,
+            is_open: bool,  # noqa: FBT001
+        ) -> bool:
+            """Toggle modal visibility.
+
+            Args:
+                carousel_clicks: Click count for the carousel container
+                close_clicks: Click count for the modal close button
+                is_open: Current state of the modal
+
+            Returns:
+                bool: Updated modal visibility state
+
+            """
+            if carousel_clicks or close_clicks:
+                return not is_open
+            return is_open
+
+
+register_modal_callbacks()
 
 
 def create_header_section(
