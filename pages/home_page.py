@@ -24,7 +24,7 @@ import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
-from dash import Input, Output, callback, dcc, html
+from dash import Input, Output, State, callback, dcc, html
 
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
@@ -190,9 +190,6 @@ def create_project_links(project_name: str) -> html.Div:
     # Create the modal with fullscreen carousel
     modal = dbc.Modal(
         [
-            dbc.ModalHeader(
-                dbc.ModalTitle(f"{project_name} - Detailed Views"),
-            ),
             dbc.ModalBody(
                 dbc.Carousel(
                     items=modal_carousel_items,
@@ -208,17 +205,15 @@ def create_project_links(project_name: str) -> html.Div:
         is_open=False,
     )
 
-    # Keep original carousel settings
     carousel = dbc.Carousel(
         items=[{"src": img_path} for img_path in image_paths],
         controls=False,
         indicators=False,
-        ride=None,  # Changed from "carousel" to None to prevent auto-cycling
+        ride=None,
         id=f"{project_name_lower}_carousel",
         style={"cursor": "pointer"},
     )
 
-    # Add custom next/prev buttons
     carousel_controls = html.Div(
         [
             dbc.Button(
@@ -327,10 +322,8 @@ def register_modal_callbacks() -> None:
 
         @callback(
             Output(f"{project_lower}_modal", "is_open"),
-            [
-                Input(f"{project_lower}_view_details", "n_clicks"),
-            ],
-            [dash.State(f"{project_lower}_modal", "is_open")],
+            Input(f"{project_lower}_view_details", "n_clicks"),
+            State(f"{project_lower}_modal", "is_open"),
         )
         def toggle_modal(
             view_details_clicks: int | None,
@@ -361,11 +354,9 @@ def register_carousel_callbacks() -> None:
 
         @callback(
             Output(f"{project_lower}_carousel", "active_index"),
-            [
-                Input(f"{project_lower}_carousel_prev", "n_clicks"),
-                Input(f"{project_lower}_carousel_next", "n_clicks"),
-            ],
-            [dash.State(f"{project_lower}_carousel", "active_index")],
+            Input(f"{project_lower}_carousel_prev", "n_clicks"),
+            Input(f"{project_lower}_carousel_next", "n_clicks"),
+            State(f"{project_lower}_carousel", "active_index"),
         )
         def control_carousel(
             _prev_clicks: int | None,
