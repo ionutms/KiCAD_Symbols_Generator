@@ -163,12 +163,12 @@ class PartInfo(NamedTuple):
         # Handle values under 10pF
         if pf_value < 10:  # noqa: PLR2004
             whole = int(pf_value)
-            decimal = int(round((pf_value - whole) * 10))
+            decimal = round((pf_value - whole) * 10)
             return f"{whole}R{decimal}"
 
         # Handle values under 100pF
         if pf_value < 100:  # noqa: PLR2004
-            value = int(round(pf_value * 10))
+            value = round(pf_value * 10)
             return f"{value}"
 
         # Handle values under 1000pF
@@ -184,7 +184,7 @@ class PartInfo(NamedTuple):
         significand = float(parts[0])
         power = int(parts[1])
 
-        first_two = int(round(significand * 10))
+        first_two = round(significand * 10)
         zero_count = power - 1
 
         return f"{first_two}{zero_count}"
@@ -241,18 +241,8 @@ class PartInfo(NamedTuple):
 
         """
         e12_multipliers = [
-            1.0,
-            1.2,
-            1.5,
-            1.8,
-            2.2,
-            2.7,
-            3.3,
-            3.9,
-            4.7,
-            5.6,
-            6.8,
-            8.2,
+            *[1.0, 1.2, 1.5, 1.8, 2.2, 2.7],
+            *[3.3, 3.9, 4.7, 5.6, 6.8, 8.2],
         ]
 
         normalized_excluded = {}
@@ -573,35 +563,10 @@ MURATA_SYMBOLS_SPECS = {
         mpn_sufix=["D", "J"],
         excluded_values={5.6e-12, 8.2e-12},
         additional_values={
-            5e-12,
-            5.1e-12,
-            6e-12,
-            7e-12,
-            8e-12,
-            11e-12,
-            13e-12,
-            16e-12,
-            20e-12,
-            24e-12,
-            30e-12,
-            36e-12,
-            43e-12,
-            51e-12,
-            62e-12,
-            75e-12,
-            91e-12,
-            110e-12,
-            130e-12,
-            160e-12,
-            200e-12,
-            240e-12,
-            300e-12,
-            360e-12,
-            430e-12,
-            510e-12,
-            620e-12,
-            750e-12,
-            910e-12,
+            *[5e-12, 5.1e-12, 6e-12, 7e-12, 8e-12, 11e-12, 13e-12, 16e-12],
+            *[20e-12, 24e-12, 30e-12, 36e-12, 43e-12, 51e-12, 62e-12, 75e-12],
+            *[91e-12, 110e-12, 130e-12, 160e-12, 200e-12, 240e-12, 300e-12],
+            *[360e-12, 430e-12, 510e-12, 620e-12, 750e-12, 910e-12],
         },
         footprint="capacitor_footprints:C_0402_1005Metric",
         voltage_rating="50V",
@@ -961,18 +926,8 @@ TDK_SYMBOLS_SPECS = {
         mpn_prefix="CGA3E2X7R2A",
         value_range={"X7R": (1e-9, 22e-9)},
         excluded_values={
-            1.2e-9,
-            1.5e-9,
-            1.8e-9,
-            2.7e-9,
-            3.3e-9,
-            3.9e-9,
-            5.6e-9,
-            6.8e-9,
-            8.2e-9,
-            12e-9,
-            15e-9,
-            18e-9,
+            *[1.2e-9, 1.5e-9, 1.8e-9, 2.7e-9, 3.3e-9, 3.9e-9],
+            *[5.6e-9, 6.8e-9, 8.2e-9, 12e-9, 15e-9, 18e-9],
         },
         tolerance_map={"X7R": {"M": "20%"}},
         mpn_sufix=["080AA"],
