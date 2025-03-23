@@ -202,39 +202,65 @@ def create_project_links(project_name: str) -> html.Div:
                     id=f"{project_name_lower}_modal_carousel",
                 ),
             ),
-            dbc.ModalFooter(
-                dbc.Button(
-                    "Close",
-                    id=f"{project_name_lower}_modal_close",
-                    className="ms-auto",
-                    n_clicks=0,
-                ),
-            ),
         ],
         id=f"{project_name_lower}_modal",
         size="lg",
         is_open=False,
     )
 
+    # Keep original carousel settings
     carousel = dbc.Carousel(
         items=[{"src": img_path} for img_path in image_paths],
-        controls=True,
+        controls=False,
         indicators=False,
-        ride="carousel",
+        ride=None,  # Changed from "carousel" to None to prevent auto-cycling
         id=f"{project_name_lower}_carousel",
         style={"cursor": "pointer"},
     )
 
-    # Add carousel to a div with appropriate styling
+    # Add custom next/prev buttons
+    carousel_controls = html.Div(
+        [
+            dbc.Button(
+                "Previous",
+                id=f"{project_name_lower}_carousel_prev",
+                color="primary",
+                outline=True,
+                size="sm",
+                className="me-2",
+                n_clicks=0,
+            ),
+            dbc.Button(
+                "View Full Size",
+                id=f"{project_name_lower}_view_details",
+                color="primary",
+                outline=True,
+                size="sm",
+                className="me-2",
+                n_clicks=0,
+            ),
+            dbc.Button(
+                "Next",
+                id=f"{project_name_lower}_carousel_next",
+                color="primary",
+                outline=True,
+                size="sm",
+                className="me-2",
+                n_clicks=0,
+            ),
+        ],
+        className="d-flex justify-content-center mt-2",
+    )
+
+    # Add carousel and buttons to a div with appropriate styling
     carousel_div = html.Div(
-        children=[carousel],
+        children=[carousel, carousel_controls],
         style={
             "marginTop": "1px",
             "marginBottom": "1px",
             "borderRadius": "10px",
             "overflow": "hidden",
         },
-        id=f"{project_name_lower}_carousel_container",
     )
 
     return html.Div(
@@ -302,33 +328,84 @@ def register_modal_callbacks() -> None:
         @callback(
             Output(f"{project_lower}_modal", "is_open"),
             [
-                Input(f"{project_lower}_carousel_container", "n_clicks"),
-                Input(f"{project_lower}_modal_close", "n_clicks"),
+                Input(f"{project_lower}_view_details", "n_clicks"),
             ],
             [dash.State(f"{project_lower}_modal", "is_open")],
         )
         def toggle_modal(
-            carousel_clicks: int | None,
-            close_clicks: int | None,
+            view_details_clicks: int | None,
             is_open: bool,  # noqa: FBT001
         ) -> bool:
             """Toggle modal visibility.
 
             Args:
-                carousel_clicks: Click count for the carousel container
-                close_clicks: Click count for the modal close button
+                view_details_clicks: Click count for the view details button
                 is_open: Current state of the modal
 
             Returns:
                 bool: Updated modal visibility state
 
             """
-            if carousel_clicks or close_clicks:
+            if view_details_clicks:
                 return not is_open
             return is_open
 
 
+def register_carousel_callbacks() -> None:
+    """Register callbacks for carousel control buttons."""
+    for project in PROJECTS:
+        if project == "3D_Models_Vault":
+            continue
+
+        project_lower = project.lower()
+
+        @callback(
+            Output(f"{project_lower}_carousel", "active_index"),
+            [
+                Input(f"{project_lower}_carousel_prev", "n_clicks"),
+                Input(f"{project_lower}_carousel_next", "n_clicks"),
+            ],
+            [dash.State(f"{project_lower}_carousel", "active_index")],
+        )
+        def control_carousel(
+            _prev_clicks: int | None,
+            _next_clicks: int | None,
+            current_index: int,
+        ) -> int:
+            """Control carousel with next/prev buttons.
+
+            Args:
+                prev_clicks: Click count for the prev button
+                next_clicks: Click count for the next button
+                current_index: Current active slide index
+
+            Returns:
+                int: Updated active slide index
+
+            """
+            # Determine which button was clicked
+            ctx = dash.callback_context
+            if not ctx.triggered:
+                return current_index or 0
+
+            button_id = ctx.triggered[0]["prop_id"].split(".")[0]
+
+            # Number of items (images) in the carousel
+            num_items = 4  # side, top, front, right
+
+            # Handle prev button
+            if button_id.endswith("_carousel_prev"):
+                return (current_index - 1) % num_items
+
+            # Handle next button
+            if button_id.endswith("_carousel_next"):
+                return (current_index + 1) % num_items
+
+            return current_index or 0
+
+
 register_modal_callbacks()
+register_carousel_callbacks()
 
 
 def create_header_section(
