@@ -19,7 +19,7 @@ import pages.utils.style_utils as styles
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=15)
+register_page(__name__, name=link_name, order=16)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_IC_TI.csv")
 total_rows = len(dataframe)
