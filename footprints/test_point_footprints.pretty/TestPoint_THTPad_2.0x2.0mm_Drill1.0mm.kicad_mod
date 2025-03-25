@@ -1,7 +1,7 @@
 (footprint "TestPoint_THTPad_2.0x2.0mm_Drill1.0mm"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "THT rectangular pad as test Point, square 2.0mm_Drill1.0mm  side length, hole diameter 1.0mm")
 	(tags "test point THT pad rectangle square")
@@ -30,19 +30,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "4dad946c-f40c-4cc3-b505-2fea18c60aba")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -79,7 +66,7 @@
 			(width 0.1524)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 		(uuid "1ea83911-3a1a-49ef-88c5-b4ee22696a1c")
 	)
@@ -87,10 +74,10 @@
 		(start -1.27 1.27)
 		(end 1.27 -1.27)
 		(stroke
-			(width 0.0254)
-			(type default)
+			(width 0.00635)
+			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "9b36392c-cdc1-4b43-a72d-5501356402f0")
 	)
@@ -117,4 +104,5 @@
 		(zone_connect 2)
 		(uuid "4c0db315-c5e6-4b9a-8e7e-fcc8fc5d5da2")
 	)
+	(embedded_fonts no)
 )
