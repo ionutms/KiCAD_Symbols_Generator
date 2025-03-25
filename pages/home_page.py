@@ -212,7 +212,6 @@ def create_project_links(
         items=[{"src": img_path} for img_path in image_paths],
         controls=False,
         indicators=False,
-        ride=None,
         id=f"{project_name_lower}_carousel",
         style={"cursor": "pointer"},
     )
