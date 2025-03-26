@@ -86,7 +86,7 @@ def write_component(
                 symbol_name,
             )
     if component_data.get("Transistor Type") == "N-Channel":
-        if component_data.get("Series") == "BSS123WQ-7-F":
+        if component_data.get("Series") in ("BSS123WQ-7-F", "BSS138-7-F"):
             symbol_utils.write_n_mos_basic_transistor_symbol_drawing(
                 symbol_file,
                 symbol_name,
