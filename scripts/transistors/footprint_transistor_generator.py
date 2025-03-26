@@ -35,7 +35,7 @@ def generate_footprint(
     pad_center_x = specs.pad_dimensions.pad_center_x
     pad_pitch_y = specs.pad_dimensions.pad_pitch_y
 
-    if part_info.package in ("SOT-323"):
+    if part_info.package in ("SOT-323", "SOT23-3"):
         sections = [
             footprint_utils.generate_header(part_info.package),
             footprint_utils.generate_properties(
