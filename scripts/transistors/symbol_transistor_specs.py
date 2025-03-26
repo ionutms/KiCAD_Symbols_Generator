@@ -325,4 +325,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSS138-7-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="BSS138-7-F",
+        footprint="transistor_footprints:SOT23-3",
+        datasheet=("https://www.diodes.com/datasheet/download/BSS138.pdf"),
+        drain_source_voltage=[50],
+        drain_current=[0.2],
+        package="SOT23-3",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
