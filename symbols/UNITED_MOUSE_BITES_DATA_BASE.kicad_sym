@@ -1,7 +1,170 @@
 (kicad_symbol_lib
-	(version 20231120)
+	(version 20241209)
 	(generator "kicad_symbol_editor")
-	(generator_version "8.0")
+	(generator_version "9.0")
+	(symbol "mouse-bite-50mil-2138mil"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "MB"
+			(at 0 7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Value" "mouse-bite-midle-50mil-200mil"
+			(at 0 -7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "mouse_bite_footprints:mouse-bite-50mil-2138mil"
+			(at 0 -5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "mouse-bite-50mil-2138mil_1_1"
+			(arc
+				(start -15.2437 2.54)
+				(mid -12.9417 0)
+				(end -15.2437 -2.54)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center -15.2437 0)
+				(radius 0.3592)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center -11.43 1.27)
+				(radius 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy -5.08 3.81) (xy -13.716 3.81) (xy -13.716 4.572) (xy -15.24 3.81) (xy -13.716 3.048) (xy -13.716 3.81)
+					(xy -12.7 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 5.08 3.81) (xy 13.716 3.81) (xy 13.716 3.048) (xy 15.24 3.81) (xy 13.716 4.572) (xy 13.716 3.81)
+					(xy 12.7 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 11.43 1.27)
+				(radius 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 15.24 0)
+				(radius 0.3592)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 15.24 -2.54)
+				(mid 12.9377 0)
+				(end 15.24 2.54)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(text "2138 mill"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(thickness 0.254)
+						(bold yes)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	(symbol "mouse-bite-50mil-305mil"
 		(pin_names
 			(offset 1.016)
@@ -59,9 +222,9 @@
 		)
 		(symbol "mouse-bite-50mil-305mil_1_1"
 			(arc
-				(start -15.2437 -2.54)
+				(start -15.2437 2.54)
 				(mid -12.9417 0)
-				(end -15.2437 2.54)
+				(end -15.2437 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -148,9 +311,9 @@
 				)
 			)
 			(arc
-				(start 15.24 2.54)
-				(mid 12.938 0)
-				(end 15.24 -2.54)
+				(start 15.24 -2.54)
+				(mid 12.9377 0)
+				(end 15.24 2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -160,6 +323,7 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "mouse-bite-50mil-500mil"
 		(pin_names
@@ -218,9 +382,9 @@
 		)
 		(symbol "mouse-bite-50mil-500mil_1_1"
 			(arc
-				(start -22.8637 -2.54)
+				(start -22.8637 2.54)
 				(mid -20.5617 0)
-				(end -22.8637 2.54)
+				(end -22.8637 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -373,9 +537,9 @@
 				)
 			)
 			(arc
-				(start 22.86 2.54)
-				(mid 20.558 0)
-				(end 22.86 -2.54)
+				(start 22.86 -2.54)
+				(mid 20.5577 0)
+				(end 22.86 2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -385,6 +549,7 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "mouse-bite-50mil-790mil"
 		(pin_names
@@ -394,7 +559,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "MB"
-			(at 0 5.08 0)
+			(at 0 6.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -443,9 +608,9 @@
 		)
 		(symbol "mouse-bite-50mil-790mil_1_1"
 			(arc
-				(start -30.4837 -2.54)
-				(mid -28.1817 0)
-				(end -30.4837 2.54)
+				(start -15.2437 2.54)
+				(mid -12.9417 0)
+				(end -15.2437 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -455,7 +620,7 @@
 				)
 			)
 			(circle
-				(center -30.4837 0)
+				(center -15.2437 0)
 				(radius 0.3592)
 				(stroke
 					(width 0)
@@ -466,7 +631,44 @@
 				)
 			)
 			(circle
-				(center -26.67 1.27)
+				(center -11.43 1.27)
+				(radius 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy -5.08 3.81) (xy -13.716 3.81) (xy -13.716 4.572) (xy -15.24 3.81) (xy -13.716 3.048) (xy -13.716 3.81)
+					(xy -12.7 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 5.08 3.81) (xy 13.716 3.81) (xy 13.716 3.048) (xy 15.24 3.81) (xy 13.716 4.572) (xy 13.716 3.81)
+					(xy 12.7 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 11.43 1.27)
 				(radius 1.27)
 				(stroke
 					(width 0)
@@ -477,18 +679,7 @@
 				)
 			)
 			(circle
-				(center 26.67 1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 30.48 0)
+				(center 15.24 0)
 				(radius 0.3592)
 				(stroke
 					(width 0)
@@ -499,9 +690,9 @@
 				)
 			)
 			(arc
-				(start 30.48 2.54)
-				(mid 28.178 0)
-				(end 30.48 -2.54)
+				(start 15.24 -2.54)
+				(mid 12.9377 0)
+				(end 15.24 2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -510,7 +701,18 @@
 					(type none)
 				)
 			)
+			(text "790 mill"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(thickness 0.254)
+						(bold yes)
+					)
+				)
+			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "mouse-bite-midle-50mil-200mil"
 		(pin_names
@@ -569,9 +771,9 @@
 		)
 		(symbol "mouse-bite-midle-50mil-200mil_1_1"
 			(arc
-				(start -7.6237 -2.54)
+				(start -7.6237 2.54)
 				(mid -5.3217 0)
-				(end -7.6237 2.54)
+				(end -7.6237 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -625,9 +827,9 @@
 				)
 			)
 			(arc
-				(start 7.62 2.54)
+				(start 7.62 -2.54)
 				(mid 5.318 0)
-				(end 7.62 -2.54)
+				(end 7.62 2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -637,6 +839,7 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "mouse-bite-midle-50mil-250mil"
 		(pin_names
@@ -695,9 +898,9 @@
 		)
 		(symbol "mouse-bite-midle-50mil-250mil_1_1"
 			(arc
-				(start -12.7037 -2.54)
+				(start -12.7037 2.54)
 				(mid -10.4017 0)
-				(end -12.7037 2.54)
+				(end -12.7037 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -751,9 +954,9 @@
 				)
 			)
 			(arc
-				(start 12.7 2.54)
-				(mid 10.398 0)
-				(end 12.7 -2.54)
+				(start 12.7 -2.54)
+				(mid 10.3977 0)
+				(end 12.7 2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -763,5 +966,6 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 )
