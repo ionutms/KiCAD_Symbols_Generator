@@ -822,7 +822,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "MB"
-			(at 0 5.08 0)
+			(at 0 7.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -831,7 +831,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "mouse-bite-midle-50mil-200mil"
+		(property "Value" "mouse-bite-50mil-450mil"
 			(at 0 -7.62 0)
 			(effects
 				(font
@@ -871,9 +871,9 @@
 		)
 		(symbol "mouse-bite-50mil-500mil_1_1"
 			(arc
-				(start -22.8637 2.54)
-				(mid -20.5617 0)
-				(end -22.8637 -2.54)
+				(start -9.9097 2.54)
+				(mid -7.6077 0)
+				(end -9.9097 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -883,7 +883,7 @@
 				)
 			)
 			(circle
-				(center -22.8637 0)
+				(center -9.9097 0)
 				(radius 0.3592)
 				(stroke
 					(width 0)
@@ -894,7 +894,44 @@
 				)
 			)
 			(circle
-				(center -19.05 1.27)
+				(center -6.096 1.27)
+				(radius 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy -4.826 3.81) (xy -8.382 3.81) (xy -8.382 4.572) (xy -9.906 3.81) (xy -8.382 3.048) (xy -8.382 3.81)
+					(xy -7.366 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 5.334 3.81) (xy 8.89 3.81) (xy 8.89 3.048) (xy 10.414 3.81) (xy 8.89 4.572) (xy 8.89 3.81)
+					(xy 7.874 3.81)
+				)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 6.604 1.27)
 				(radius 1.27)
 				(stroke
 					(width 0)
@@ -905,117 +942,7 @@
 				)
 			)
 			(circle
-				(center -15.24 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center -11.43 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center -7.62 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center -3.81 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 0 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 3.81 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 7.62 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 11.43 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 15.24 -1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 19.05 1.27)
-				(radius 1.27)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center 22.86 0)
+				(center 10.414 0)
 				(radius 0.3592)
 				(stroke
 					(width 0)
@@ -1026,15 +953,25 @@
 				)
 			)
 			(arc
-				(start 22.86 -2.54)
-				(mid 20.5577 0)
-				(end 22.86 2.54)
+				(start 10.414 -2.54)
+				(mid 8.1117 0)
+				(end 10.414 2.54)
 				(stroke
 					(width 0)
 					(type default)
 				)
 				(fill
 					(type none)
+				)
+			)
+			(text "500 mill"
+				(at 0.254 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(thickness 0.254)
+						(bold yes)
+					)
 				)
 			)
 		)
