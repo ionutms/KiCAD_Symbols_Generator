@@ -77,7 +77,6 @@ def generate_footprint(  # noqa: C901
     for layer in ["F.SilkS", "F.Fab"]:
         pin_1_indicators[layer] = footprint_utils.generate_pin_1_indicator(
             pad_center_x=width_left,
-            pad_width=footprint_specs.pad_size,
             pins_per_side=footprint_specs.number_of_rows,
             pitch_y=footprint_specs.row_pitch,
             layer=layer,
