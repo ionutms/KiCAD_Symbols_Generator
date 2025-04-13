@@ -398,24 +398,24 @@ def generate_properties(
 
 
 def generate_pin_1_indicator(  # noqa: PLR0913
-    pad_center_x: float,
+    body_width: float,  # Width of the component body
     pins_per_side: float = 1,
     pitch_y: float = 0,
     layer: str = "F.SilkS",
     mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
     mirror_x_coordonate: bool = False,  # noqa: FBT001, FBT002
-    margin_offset: float = 0.6,
+    margin_offset: float = 0.6,  # Distance from body edge
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
     Args:
-        pad_center_x: X-coordinate of the pad center
+        body_width: Width of the component body
         pins_per_side: Number of pins on each side
         pitch_y: Distance between adjacent pads
         layer: Layer to draw the pin 1 indicator on
         mirror_y_coordonate: Mirror the Y-coordinate of the pin 1 indicator
         mirror_x_coordonate: Mirror the X-coordinate of the pin 1 indicator
-        margin_offset: Additional offset from the body margin
+        margin_offset: Distance from body edge to place the indicator
 
     Returns:
         str: KiCad formatted pin 1 indicator
@@ -426,16 +426,15 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     total_height = pitch_y * (pins_per_side - 1)
 
     circle_x = (
-        -(pad_center_x + margin_offset)
+        -(body_width / 2 + margin_offset)
         if not mirror_x_coordonate
-        else pad_center_x + margin_offset
+        else (body_width / 2 + margin_offset)
     )
 
     circle_y = (
         -total_height / 2 if not mirror_y_coordonate else total_height / 2
     )
 
-    # Size of the indicator circle
     radius = 0.3
 
     shapes.append(f"""
