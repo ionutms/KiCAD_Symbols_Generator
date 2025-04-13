@@ -47,7 +47,7 @@ def generate_footprint(
             pad_center_x,
             pad_width,
         ),
-        footprint_utils.generate_pin_1_indicator(pad_center_x, pad_width),
+        footprint_utils.generate_pin_1_indicator(body_width, pad_width),
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/inductors",

@@ -51,10 +51,9 @@ def generate_footprint(
             pad_width,
         ),
         footprint_utils.generate_pin_1_indicator(
-            pad_center_x,
-            pad_width,
-            pins_per_side,
-            pad_pitch_y,
+            body_width=body_width,
+            pins_per_side=pins_per_side,
+            pitch_y=pad_pitch_y,
             mirror_x_coordonate=reverse_pin_numbering,
         ),
         footprint_utils.generate_pads(
