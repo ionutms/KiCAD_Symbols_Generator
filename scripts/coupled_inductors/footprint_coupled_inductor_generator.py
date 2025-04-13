@@ -51,7 +51,7 @@ def generate_footprint(
             pad_width,
         ),
         footprint_utils.generate_pin_1_indicator(
-            body_width=body_width,  # Pass the body width here
+            body_width=body_width,
             pins_per_side=2,
             pitch_y=pad_pitch_y,
         ),
