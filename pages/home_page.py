@@ -272,6 +272,7 @@ def create_project_links(
 REPOS_NAMES = [
     "KiCAD_Symbols_Generator",
     "3D_Models_Vault",
+    "docker_kicad_learning",
     "Minimal_ADP1032",
     "Minimal_MAX14906",
     "Minimal_AD74413R",
@@ -287,6 +288,7 @@ REPOS_NAMES = [
 COLORS = [
     ["#2E8B57", "#4169E1"],
     ["#66CED1", "#668C00"],
+    ["#aaCED1", "#aa8C00"],
     ["#FF4500", "#9932CC"],
     ["#FFD700", "#C71585"],
     ["#20B2AA", "#FF6B6B"],
@@ -481,7 +483,7 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
 
     """
     # For 3D_Models_Vault, don't create the project links
-    if project == "3D_Models_Vault":
+    if project in ("3D_Models_Vault", "docker_kicad_learning"):
         return [
             dbc.Row([
                 dbc.Col(
