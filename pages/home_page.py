@@ -119,7 +119,7 @@ links_display_div = html.Div(
     style={"display": "flex", "flex-direction": "column", "gap": "10px"},
 )
 
-image_prefixes = ["side", "top", "front", "right"]
+image_prefixes = ["side", "top"]
 
 
 def create_project_links(
