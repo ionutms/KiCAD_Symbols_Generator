@@ -51,12 +51,14 @@ class FootprintSpecs(NamedTuple):
         body_dimensions: BodyDimensions object with inductor body dimensions
         pad_dimensions: PadDimensions object with pad dimensions and positions
         ref_offset_y: Y offset for reference designator
+        enable_pin_1_indicator: Flag to enable pin 1 indicator (default: True)
 
     """
 
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
     pad_dimensions: PadDimensions  # Pad size and positioning
     ref_offset_y: float  # Y offset for reference designator
+    enable_pin_1_indicator: bool = True  # Enable pin 1 indicator
 
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
@@ -410,6 +412,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=0.5,
         ),
         ref_offset_y=-1.27,
+        enable_pin_1_indicator=False,
     ),
     "LCENA2016MKTR47M0NK": FootprintSpecs(
         body_dimensions=BodyDimensions(width=2.7, height=2.2),

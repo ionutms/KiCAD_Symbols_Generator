@@ -34,6 +34,15 @@ def generate_footprint(
     pad_width = specs.pad_dimensions.width
     pad_height = specs.pad_dimensions.height
 
+    add_pin_1_indicator = (
+        footprint_utils.generate_pin_1_indicator(
+            body_width,
+            pad_width,
+        )
+        if specs.enable_pin_1_indicator
+        else ""
+    )
+
     sections = [
         footprint_utils.generate_header(part_info.series),
         footprint_utils.generate_properties(
@@ -47,7 +56,7 @@ def generate_footprint(
             pad_center_x,
             pad_width,
         ),
-        footprint_utils.generate_pin_1_indicator(body_width, pad_width),
+        add_pin_1_indicator,
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/inductors",
