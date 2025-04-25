@@ -279,7 +279,6 @@ REPOS_NAMES = [
     "Modular_Software_Configurable_IO_PLC",
     "Minimal_ADIN1110",
     "Minimal_LTC9111",
-    "Minimal_SPoE_Hybrid",
     "Minimal_MAX17761",
     "Minimal_LT8304",
     "Minimal_MAX32650",
@@ -295,7 +294,6 @@ COLORS = [
     ["#1E90FF", "#8A2BE2"],
     ["#32CD32", "#FF69B4"],
     ["#40E0D0", "#FF7F50"],
-    ["#A0522D", "#00FA9A"],
     ["#228B22", "#FF1493"],
     ["#00CED1", "#FF8C00"],
     ["#3390FF", "#332BE2"],
@@ -320,7 +318,7 @@ PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
 def register_modal_callbacks() -> None:
     """Register callbacks for project modals."""
     for project in PROJECTS:
-        if project == "3D_Models_Vault":
+        if project in ("3D_Models_Vault", "docker_kicad_learning"):
             continue
 
         project_lower = project.lower()
@@ -352,7 +350,7 @@ def register_modal_callbacks() -> None:
 def register_carousel_callbacks(num_items: int) -> None:
     """Register callbacks for carousel control buttons."""
     for project in PROJECTS:
-        if project == "3D_Models_Vault":
+        if project in ("3D_Models_Vault", "docker_kicad_learning"):
             continue
 
         project_lower = project.lower()
