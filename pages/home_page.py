@@ -480,7 +480,6 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
         List of components for the project section
 
     """
-    # For 3D_Models_Vault, don't create the project links
     if project in ("3D_Models_Vault", "docker_kicad_learning"):
         return [
             dbc.Row([
