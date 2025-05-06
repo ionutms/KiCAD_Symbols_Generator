@@ -404,7 +404,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     layer: str = "F.SilkS",
     mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
     mirror_x_coordonate: bool = False,  # noqa: FBT001, FBT002
-    margin_offset: float = 0.6,  # Distance from body edge
+    margin_offset: float = 0.4,  # Distance from body edge
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
@@ -435,7 +435,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
         -total_height / 2 if not mirror_y_coordonate else total_height / 2
     )
 
-    radius = 0.3
+    radius = 0.2
 
     shapes.append(f"""
         (fp_circle
