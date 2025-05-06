@@ -1,7 +1,7 @@
 (footprint "Fiducial_0.5mm_Mask1mm"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "Circular Fiducial, 0.5mm bare copper, 1mm soldermask opening (Level C)")
 	(tags "fiducial")
@@ -29,19 +29,6 @@
 				(bold yes)
 			)
 			(justify left)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "40d6debd-5f8c-440f-8401-1b28dc53e1b4")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
-			)
 		)
 	)
 	(property "Datasheet" ""
@@ -75,10 +62,10 @@
 		(center 0 0)
 		(end 0.75 0)
 		(stroke
-			(width 0.05)
+			(width 0.00635)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "4c78e013-71f1-4909-a070-4cd089eaf3dd")
 	)
@@ -89,7 +76,7 @@
 			(width 0.1)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.Fab")
 		(uuid "bef66854-39df-4aca-8c72-c7bef9ecd307")
 	)
@@ -114,4 +101,5 @@
 		(clearance 0.25)
 		(uuid "d9c4ce61-8eb7-423a-b180-a4997020369c")
 	)
+	(embedded_fonts no)
 )
