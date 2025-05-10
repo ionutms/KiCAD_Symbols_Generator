@@ -44,7 +44,6 @@ def generate_files_for_series(
 
     Args:
         series_name: Series identifier (must exist in SYMBOLS_SPECS)
-        is_aec: If True, generate AEC-Q200 qualified parts
         unified_parts_list: List to append generated parts to
 
     Raises:
@@ -57,7 +56,7 @@ def generate_files_for_series(
         None
 
     Note:
-        Generated files are saved in 'data/', 'series_kicad_sym/', and
+        Generated files are saved in 'app/data/', 'series_kicad_sym/', and
         'coupled_inductor_footprints.pretty/' directories.
 
     """
@@ -68,7 +67,7 @@ def generate_files_for_series(
     specs = symbol_coupled_inductors_specs.SYMBOLS_SPECS[series_name]
 
     # Ensure required directories exist
-    file_handler_utilities.ensure_directory_exists("data")
+    file_handler_utilities.ensure_directory_exists("app/data")
     file_handler_utilities.ensure_directory_exists("series_kicad_sym")
     file_handler_utilities.ensure_directory_exists("symbols")
     file_handler_utilities.ensure_directory_exists("footprints")
@@ -76,6 +75,7 @@ def generate_files_for_series(
     file_handler_utilities.ensure_directory_exists(footprint_dir)
 
     csv_filename = f"{specs.base_series}_part_numbers.csv"
+    csv_path = f"app/data/{csv_filename}"
     symbol_filename = (
         f"COUPLED_INDUCTORS_{specs.base_series}_DATA_BASE.kicad_sym"
     )
@@ -89,16 +89,16 @@ def generate_files_for_series(
         )
         file_handler_utilities.write_to_csv(
             parts_list,
-            csv_filename,
+            csv_path,
             HEADER_MAPPING,
         )
         print_message_utilities.print_success(
-            f"Generated {len(parts_list)} part numbers in '{csv_filename}'",
+            f"Generated {len(parts_list)} part numbers in '{csv_path}'",
         )
 
         # Generate KiCad symbol file
         symbol_coupled_inductor_generator.generate_kicad_symbol(
-            f"data/{csv_filename}",
+            csv_path,
             f"series_kicad_sym/{symbol_filename}",
         )
         print_message_utilities.print_success(
@@ -168,10 +168,11 @@ def generate_unified_files(
         None
 
     """
-    # Write unified CSV file
+    # Write unified CSV file with full path
+    unified_csv_path = f"app/data/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
-        unified_csv,
+        unified_csv_path,
         HEADER_MAPPING,
     )
     print_message_utilities.print_success(
@@ -181,7 +182,7 @@ def generate_unified_files(
     # Generate unified KiCad symbol file
     try:
         symbol_coupled_inductor_generator.generate_kicad_symbol(
-            f"data/{unified_csv}",
+            unified_csv_path,
             f"symbols/{unified_symbol}",
         )
         print_message_utilities.print_success(
