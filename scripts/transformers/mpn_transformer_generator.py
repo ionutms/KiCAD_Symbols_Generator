@@ -26,7 +26,7 @@ Dependencies:
     - symbol_transformer_specs: For component specifications
     - utilities: For file handling and message printing
     The module expects specific directory structure for file generation:
-    - 'data/': For CSV files
+    - 'app/data/': For CSV files
     - 'series_kicad_sym/': For individual series symbol files
     - 'symbols/': For unified symbol files
     - 'footprints/transformer_footprints.pretty/': For footprint files
@@ -86,7 +86,7 @@ def generate_files_for_series(
         None
 
     Note:
-        Generated files are saved in 'data/', 'series_kicad_sym/', and
+        Generated files are saved in 'app/data/', 'series_kicad_sym/', and
         'transformer_footprints.pretty/' directories.
 
     """
@@ -97,7 +97,7 @@ def generate_files_for_series(
     specs = symbol_transformer_specs.SYMBOLS_SPECS[series_name]
 
     # Ensure required directories exist
-    file_handler_utilities.ensure_directory_exists("data")
+    file_handler_utilities.ensure_directory_exists("app/data")
     file_handler_utilities.ensure_directory_exists("series_kicad_sym")
     file_handler_utilities.ensure_directory_exists("symbols")
     file_handler_utilities.ensure_directory_exists("footprints")
@@ -114,16 +114,17 @@ def generate_files_for_series(
         )
         file_handler_utilities.write_to_csv(
             parts_list,
-            csv_filename,
+            f"app/data/{csv_filename}",
             HEADER_MAPPING,
         )
         print_message_utilities.print_success(
-            f"Generated {len(parts_list)} part numbers in '{csv_filename}'",
+            f"Generated {len(parts_list)} part numbers in "
+            f"'app/data/{csv_filename}'",
         )
 
         # Generate KiCad symbol file
         symbol_transformer_generator.generate_kicad_symbol(
-            f"data/{csv_filename}",
+            f"app/data/{csv_filename}",
             f"series_kicad_sym/{symbol_filename}",
         )
         print_message_utilities.print_success(
@@ -197,7 +198,7 @@ def generate_unified_files(
     # Write unified CSV file
     file_handler_utilities.write_to_csv(
         all_parts,
-        unified_csv,
+        f"app/data/{unified_csv}",
         HEADER_MAPPING,
     )
     print_message_utilities.print_success(
@@ -207,7 +208,7 @@ def generate_unified_files(
     # Generate unified KiCad symbol file
     try:
         symbol_transformer_generator.generate_kicad_symbol(
-            f"data/{unified_csv}",
+            f"app/data/{unified_csv}",
             f"symbols/{unified_symbol}",
         )
         print_message_utilities.print_success(
