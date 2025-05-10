@@ -3,11 +3,10 @@
 from typing import Any
 
 import dash_bootstrap_components as dbc
+import pages.utils.style_utils as styles
 import pandas as pd
 from dash import callback, dcc, html
 from dash.dependencies import Input, Output, State
-
-import pages.utils.style_utils as styles
 
 
 def app_description(
