@@ -10,11 +10,10 @@ IC Texas Instruments specifications. It includes features such as:
 """
 
 import dash_bootstrap_components as dbc
-import pandas as pd
-from dash import dash_table, dcc, html, register_page
-
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
+import pandas as pd
+from dash import dash_table, dcc, html, register_page
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
