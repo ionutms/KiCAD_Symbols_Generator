@@ -64,6 +64,9 @@ HEADER_MAPPING: Final[dict] = {
     "Diode Type": lambda part: part.diode_type,
 }
 
+# Define the data directory
+DATA_DIR = "app/data"
+
 
 def generate_files_for_series(
     series_name: str,
@@ -85,7 +88,7 @@ def generate_files_for_series(
         None
 
     Note:
-        Generated files are saved in 'data/', 'series_kicad_sym/', and
+        Generated files are saved in 'app/data/', 'series_kicad_sym/', and
         'diode_footprints.pretty/' directories.
 
     """
@@ -96,7 +99,7 @@ def generate_files_for_series(
     specs = symbol_diode_specs.SYMBOLS_SPECS[series_name]
 
     # Ensure required directories exist
-    file_handler_utilities.ensure_directory_exists("data")
+    file_handler_utilities.ensure_directory_exists(DATA_DIR)
     file_handler_utilities.ensure_directory_exists("series_kicad_sym")
     file_handler_utilities.ensure_directory_exists("symbols")
     file_handler_utilities.ensure_directory_exists("footprints")
@@ -105,22 +108,23 @@ def generate_files_for_series(
 
     csv_filename = f"{specs.base_series}_part_numbers.csv"
     symbol_filename = f"DIODES_{specs.base_series}_DATA_BASE.kicad_sym"
+    csv_file_path = f"{DATA_DIR}/{csv_filename}"
 
     # Generate part numbers and write to CSV
     try:
         parts_list = symbol_diode_specs.PartInfo.generate_part_numbers(specs)
         file_handler_utilities.write_to_csv(
             parts_list,
-            csv_filename,
+            csv_file_path,
             HEADER_MAPPING,
         )
         print_message_utilities.print_success(
-            f"Generated {len(parts_list)} part numbers in '{csv_filename}'",
+            f"Generated {len(parts_list)} part numbers in '{csv_file_path}'",
         )
 
         # Generate KiCad symbol file
         symbol_diode_generator.generate_kicad_symbol(
-            f"data/{csv_filename}",
+            csv_file_path,
             f"series_kicad_sym/{symbol_filename}",
         )
         print_message_utilities.print_success(
@@ -193,19 +197,21 @@ def generate_unified_files(
 
     """
     # Write unified CSV file
+    unified_csv_path = f"{DATA_DIR}/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
-        unified_csv,
+        unified_csv_path,
         HEADER_MAPPING,
     )
     print_message_utilities.print_success(
-        f"Generated unified CSV file with {len(all_parts)} part numbers",
+        f"Generated unified CSV file with {len(all_parts)} "
+        f"part numbers at {unified_csv_path}",
     )
 
     # Generate unified KiCad symbol file
     try:
         symbol_diode_generator.generate_kicad_symbol(
-            f"data/{unified_csv}",
+            unified_csv_path,
             f"symbols/{unified_symbol}",
         )
         print_message_utilities.print_success(
