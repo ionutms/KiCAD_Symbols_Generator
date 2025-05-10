@@ -53,6 +53,9 @@ HEADER_MAPPING: Final[dict] = {
     "Component Type": lambda part: part.component_type,
 }
 
+# Define the data directory
+DATA_DIR = "app/data"
+
 
 def generate_files_for_series(
     series_name: str,
@@ -87,7 +90,7 @@ def generate_files_for_series(
     specs = symbol_resistors_specs.SYMBOLS_SPECS[series_name]
 
     # Ensure required directories exist
-    file_handler_utilities.ensure_directory_exists("data")
+    file_handler_utilities.ensure_directory_exists(DATA_DIR)
     file_handler_utilities.ensure_directory_exists("series_kicad_sym")
     file_handler_utilities.ensure_directory_exists("symbols")
     file_handler_utilities.ensure_directory_exists("footprints")
@@ -96,6 +99,7 @@ def generate_files_for_series(
 
     csv_filename = f"{series_name}_part_numbers.csv"
     symbol_filename = f"RESISTORS_{series_name}_DATA_BASE.kicad_sym"
+    csv_file_path = f"{DATA_DIR}/{csv_filename}"
 
     # Generate part numbers and sort by value
     parts_list = symbol_resistors_specs.PartInfo.generate_part_numbers(specs)
@@ -106,17 +110,17 @@ def generate_files_for_series(
 
     file_handler_utilities.write_to_csv(
         parts_list,
-        csv_filename,
+        csv_file_path,
         HEADER_MAPPING,
     )
     print_message_utilities.print_success(
-        f"Generated {len(parts_list)} part numbers in '{csv_filename}'",
+        f"Generated {len(parts_list)} part numbers in '{csv_file_path}'",
     )
 
     # Generate KiCad symbol file
     try:
         symbol_resistor_generator.generate_kicad_symbol(
-            f"data/{csv_filename}",
+            csv_file_path,
             f"series_kicad_sym/{symbol_filename}",
         )
         print_message_utilities.print_success(
@@ -188,19 +192,21 @@ def generate_unified_files(
     all_parts.sort(key=lambda part: part.value)
 
     # Write unified CSV file
+    unified_csv_path = f"{DATA_DIR}/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
-        unified_csv,
+        unified_csv_path,
         HEADER_MAPPING,
     )
     print_message_utilities.print_success(
-        f"Generated unified CSV file with {len(all_parts)} part numbers",
+        f"Generated unified CSV file with {len(all_parts)} "
+        f"part numbers at {unified_csv_path}",
     )
 
     # Generate unified KiCad symbol file
     try:
         symbol_resistor_generator.generate_kicad_symbol(
-            f"data/{unified_csv}",
+            unified_csv_path,
             f"symbols/{unified_symbol}",
         )
         print_message_utilities.print_success(
