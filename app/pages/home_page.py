@@ -22,12 +22,11 @@ from typing import Any
 
 import dash
 import dash_bootstrap_components as dbc
+import pages.utils.dash_component_utils as dcu
+import pages.utils.style_utils as styles
 import pandas as pd
 import plotly.graph_objects as go
 from dash import Input, Output, State, callback, dcc, html
-
-import pages.utils.dash_component_utils as dcu
-import pages.utils.style_utils as styles
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
