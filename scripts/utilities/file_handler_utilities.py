@@ -39,7 +39,7 @@ def write_to_csv(
 
     # Write all rows at once
     with Path.open(
-        f"data/{output_file}",
+        f"{output_file}",
         "w",
         newline="",
         encoding=encoding,
