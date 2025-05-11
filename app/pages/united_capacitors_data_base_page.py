@@ -23,6 +23,7 @@ comprehensive styling support for both light and dark themes.
 from typing import Any
 
 import dash_bootstrap_components as dbc
+import dash_ag_grid as dag
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
@@ -36,6 +37,8 @@ register_page(__name__, name=link_name, order=3)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
 total_rows = len(dataframe)
+
+ag_grid_data = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
 
 TITLE = "Capacitors Database"
 ABOUT = (
@@ -106,6 +109,46 @@ try:
 except KeyError:
     pass
 
+
+# Convert URL columns to markdown format links for AG Grid
+for col in ag_grid_data.columns:
+    if any(
+        url_indicator in col.lower()
+        for url_indicator in [
+            "datasheet",
+            "link",
+            "search",
+            "url",
+            "3dviewer",
+        ]
+    ):
+        ag_grid_data[col] = ag_grid_data[col].apply(
+            lambda url: f"[{col}]({url})" if pd.notna(url) and url else ""
+        )
+
+# Define column definitions for AG Grid
+columnDefs = []
+for col in dataframe.columns:
+    col_def = {"field": col, "headerName": col.replace("_", " ")}
+
+    # For URL columns, use markdown renderer
+    if any(
+        url_indicator in col.lower()
+        for url_indicator in [
+            "datasheet",
+            "link",
+            "search",
+            "url",
+            "3dviewer",
+        ]
+    ):
+        col_def.update({
+            "cellRenderer": "markdown",
+            "cellStyle": {"textAlign": "center"},
+        })
+
+    columnDefs.append(col_def)
+
 layout = dbc.Container(
     [
         html.Div(
@@ -157,6 +200,26 @@ layout = dbc.Container(
                     filter_action="native",
                     sort_action="native",
                     sort_mode="multi",
+                ),
+                html.Hr(),
+                dag.AgGrid(
+                    id="csv-pagination-grid",
+                    columnDefs=columnDefs,
+                    rowData=ag_grid_data.to_dict("records"),
+                    dashGridOptions={
+                        "pagination": True,
+                        "paginationPageSize": 10,
+                        "paginationAutoPageSize": False,
+                        "paginationPageSizeSelector": [5, 10, 25, 50, 100],
+                        "domLayout": "autoHeight",
+                        "enableCellTextSelection": True,
+                        "columnSize": "autoSize",
+                        "autoSizeStrategy": {
+                            "type": "fitCellContents",
+                        },
+                        "resizable": True,
+                        "suppressColumnVirtualisation": True,
+                    },
                 ),
                 html.Hr(),
             ],
