@@ -111,7 +111,9 @@ if __name__ == "__main__":
         # Construct paths for input and output
         input_path = project_root / "symbols" / input_file
         output_path = (
-            project_root / "data" / input_file.replace(".kicad_sym", ".csv")
+            project_root
+            / "app/data"
+            / input_file.replace(".kicad_sym", ".csv")
         )
 
         print(f"\nProcessing file: {input_path}")
