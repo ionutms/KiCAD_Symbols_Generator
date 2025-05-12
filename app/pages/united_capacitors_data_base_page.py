@@ -23,6 +23,7 @@ comprehensive styling support for both light and dark themes.
 from typing import Any
 
 import dash_bootstrap_components as dbc
+import dash_ag_grid as dag
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
@@ -36,6 +37,8 @@ register_page(__name__, name=link_name, order=3)
 
 dataframe: pd.DataFrame = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
 total_rows = len(dataframe)
+
+ag_grid_data = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
 
 TITLE = "Capacitors Database"
 ABOUT = (
@@ -82,29 +85,22 @@ hidden_columns = [
     "Voltage Rating",
     "Capacitor Type",
     "MPN",
+    "Description",
 ]
 
 visible_columns = [
     col for col in dataframe.columns if col not in hidden_columns
 ]
 
-try:
-    dataframe["Datasheet"] = dataframe["Datasheet"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Datasheet"),
-    )
 
-    dataframe["Trustedparts Search"] = dataframe["Trustedparts Search"].apply(
-        lambda url_text: dcu.generate_centered_link(url_text, "Search"),
-    )
+# Convert specific columns to markdown format links for AG Grid
+url_columns = ["Datasheet", "Trustedparts Search", "3dviewer Link"]
 
-    dataframe["3dviewer Link"] = dataframe["3dviewer Link"].apply(
-        lambda url_text: dcu.generate_centered_link(
-            url_text,
-            "View 3D model",
-        ),
-    )
-except KeyError:
-    pass
+for col in url_columns:
+    if col in ag_grid_data.columns:
+        ag_grid_data[col] = ag_grid_data[col].apply(
+            lambda url: f"[{col}]({url})" if pd.notna(url) and url else ""
+        )
 
 layout = dbc.Container(
     [
@@ -138,25 +134,29 @@ layout = dbc.Container(
                     ),
                 ]),
                 html.Hr(),
-                dcu.table_controls_row(
+                dcu.ag_grid_table_controls_row(
                     module_name,
                     dataframe,
                     visible_columns,
                 ),
                 html.Hr(),
-                dash_table.DataTable(
-                    id=f"{module_name}_table",
-                    columns=dcu.create_column_definitions(
-                        dataframe,
-                        visible_columns,
-                    ),
-                    data=dataframe[visible_columns].to_dict("records"),
-                    cell_selectable=False,
-                    markdown_options={"html": True},
-                    page_size=10,
-                    filter_action="native",
-                    sort_action="native",
-                    sort_mode="multi",
+                dag.AgGrid(
+                    id=f"{module_name}_ag_grid_table",
+                    rowData=ag_grid_data.to_dict("records"),
+                    dashGridOptions={
+                        "pagination": True,
+                        "paginationPageSize": 10,
+                        "paginationAutoPageSize": False,
+                        "paginationPageSizeSelector": [5, 10, 25, 50, 100],
+                        "domLayout": "autoHeight",
+                        "enableCellTextSelection": True,
+                        "columnSize": "autoSize",
+                        "autoSizeStrategy": {
+                            "type": "fitCellContents",
+                        },
+                        "resizable": True,
+                        "suppressColumnVirtualisation": True,
+                    },
                 ),
                 html.Hr(),
             ],
@@ -166,26 +166,19 @@ layout = dbc.Container(
     fluid=True,
 )
 
-
-dcu.callback_update_visible_columns(
-    f"{module_name}_table",
+dcu.callback_update_ag_grid_visible_table_columns(
+    f"{module_name}_ag_grid_table",
     f"{module_name}_column_toggle",
-    dataframe,
+    ag_grid_data,
+    url_columns,
 )
 
-dcu.callback_update_table_style_and_visibility(f"{module_name}_table")
-
-dcu.callback_update_page_size(
-    f"{module_name}_table",
-    f"{module_name}_page_size",
-)
-
-dcu.callback_update_dropdown_style(f"{module_name}_page_size")
+dcu.callback_update_ag_grid_table_theme(f"{module_name}_ag_grid_table")
 
 dcu.save_previous_slider_state_callback(
     f"{module_name}_value_rangeslider",
     f"{module_name}_rangeslider_store",
-    25,
+    step=25,
 )
 
 
