@@ -28,7 +28,7 @@ import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
 import plotly.graph_objects as go
-from dash import Input, Output, callback, dash_table, dcc, html, register_page
+from dash import Input, Output, callback, dcc, html, register_page
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
@@ -143,20 +143,6 @@ layout = dbc.Container(
                 dag.AgGrid(
                     id=f"{module_name}_ag_grid_table",
                     rowData=ag_grid_data.to_dict("records"),
-                    dashGridOptions={
-                        "pagination": True,
-                        "paginationPageSize": 10,
-                        "paginationAutoPageSize": False,
-                        "paginationPageSizeSelector": [5, 10, 25, 50, 100],
-                        "domLayout": "autoHeight",
-                        "enableCellTextSelection": True,
-                        "columnSize": "autoSize",
-                        "autoSizeStrategy": {
-                            "type": "fitCellContents",
-                        },
-                        "resizable": True,
-                        "suppressColumnVirtualisation": True,
-                    },
                 ),
                 html.Hr(),
             ],
