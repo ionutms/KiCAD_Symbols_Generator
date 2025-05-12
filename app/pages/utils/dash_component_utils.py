@@ -138,6 +138,51 @@ def callback_update_table_style_and_visibility(
         )
 
 
+def callback_update_ag_grid_table_theme(
+    table_id: str,
+) -> None:
+    """Create a callback function to update AG Grid table theme.
+
+    This is a factory function that generates a callback for updating the
+    visual theme of an AG Grid table component in response to theme changes.
+
+    Args:
+        table_id (str):
+            The ID of the AG Grid table component for which to create
+            the callback. This ID will be used to target the specific table's
+            style properties.
+
+    Returns:
+        None:
+            This function registers a callback with Dash and
+            doesn't return a value directly.
+
+    """
+
+    @callback(
+        Output(table_id, "className"),
+        Input("theme_switch_value_store", "data"),
+    )
+    def update_table_style_and_visibility(
+        switch: bool,  # noqa: FBT001
+    ) -> str:
+        """Update the styles of the AG Grid table based on the theme switch.
+
+        Args:
+            switch: The state of the theme switch. True for light theme, False
+                for dark theme.
+
+        Returns:
+            A string representing the class name for the AG Grid table theme.
+            This will be either "ag-theme-quartz" or "ag-theme-quartz-dark"
+            depending on the value of the switch.
+
+        """
+        if switch:
+            return "ag-theme-quartz"
+        return "ag-theme-quartz-dark"
+
+
 def callback_update_visible_columns(
     table_id: str,
     checklist_id: str,
@@ -194,6 +239,75 @@ def callback_update_visible_columns(
         columns = create_column_definitions(dataframe, visible_columns)
         filtered_data = dataframe[visible_columns].to_dict("records")
         return columns, filtered_data
+
+
+def callback_update_ag_grid_visible_table_columns(
+    table_id: str,
+    checklist_id: str,
+    dataframe: pd.DataFrame,
+    url_columns: list[str],
+) -> None:
+    """Create a callback function to update AG Grid table columns visibility.
+
+    This is a factory function that generates a callback for managing visible
+    columns in a Dash AG Grid component. The callback responds to changes in
+    a checklist component that controls column visibility.
+
+    The generated callback will:
+    - Filter column definitions based on selected visibility options
+    - Update the table data to include only visible columns
+
+    Args:
+        table_id (str):
+            The ID of the AG Grid table component to update.
+            This ID will be used to target the table's columns and
+            data properties.
+        checklist_id (str):
+            The ID of the Checklist component that controls column visibility.
+            This component should have column names as its options.
+        dataframe (pd.DataFrame):
+            The source DataFrame containing all possible columns and data.
+            Used to filter and format data based on selected columns.
+
+    Returns:
+        None:
+            This function registers a callback with Dash and doesn't return
+
+    """
+
+    @callback(
+        Output(table_id, "columnDefs"),
+        Input(checklist_id, "value"),
+    )
+    def update_visible_columns(visible_columns: list) -> list:
+        """Update the visible columns based on the checklist selection.
+
+        Args:
+            visible_columns:
+                list of column names that should be displayed in the table.
+
+        Returns:
+            A list of dictionaries containing the column definitions for
+            the visible columns.
+
+        """
+
+        columnDefs = []
+        for col in dataframe.columns:
+            col_def = {"field": col, "headerName": col.replace("_", " ")}
+            if col in url_columns:
+                col_def.update({
+                    "cellRenderer": "markdown",
+                    "cellStyle": {"textAlign": "center"},
+                })
+            columnDefs.append(col_def)
+
+        filtered_list = [
+            item
+            for item in columnDefs
+            if item.get("field") in visible_columns
+        ]
+        return filtered_list
 
 
 def create_column_definitions(
@@ -412,6 +526,55 @@ def table_controls_row(
     )
 
     return dbc.Row([col_left, col_right], className="mb-1")
+
+
+def ag_grid_table_controls_row(
+    module_name: str,
+    dataframe: pd.DataFrame,
+    visible_columns: list[str],
+) -> dbc.Row:
+    """Create a row of controls for a data table.
+
+    This function generates a responsive row with two columns:
+    1. A dropdown to select the number of items per page
+    2. A checklist to show/hide columns in the table
+
+    Args:
+        module_name (str): A unique identifier prefix for component IDs.
+        dataframe (pd.DataFrame):
+            The source DataFrame to derive column options.
+        visible_columns (Optional[List[str]], optional):
+            Initial list of visible columns.
+            Defaults to all columns if not provided.
+
+    Returns:
+        dbc.Row: A Dash Bootstrap Components row with table control elements.
+
+    """
+    # Use all columns if no visible columns are specified
+    if visible_columns is None:
+        visible_columns = list(dataframe.columns)
+
+    col_right = dbc.Col(
+        [
+            html.Div([
+                html.H6("Show/Hide Columns:", className="mb-1"),
+                dbc.Checklist(
+                    id=f"{module_name}_column_toggle",
+                    options=[
+                        {"label": " ".join(col.split()), "value": col}
+                        for col in dataframe.columns
+                    ],
+                    value=visible_columns,
+                    inline=True,
+                    className="flex-wrap",
+                ),
+                html.Br(),
+            ]),
+        ],
+    )
+
+    return dbc.Row([col_right], className="mb-1")
 
 
 def generate_range_slider(
