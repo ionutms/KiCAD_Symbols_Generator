@@ -277,6 +277,7 @@ def callback_update_ag_grid_visible_table_columns(
 
     @callback(
         Output(table_id, "columnDefs"),
+        Output(table_id, "dashGridOptions"),
         Input(checklist_id, "value"),
     )
     def update_visible_columns(visible_columns: list) -> list:
@@ -291,6 +292,18 @@ def callback_update_ag_grid_visible_table_columns(
             the visible columns.
 
         """
+        dashGridOptions = {
+            "pagination": True,
+            "paginationPageSize": 10,
+            "paginationAutoPageSize": False,
+            "paginationPageSizeSelector": [5, 10, 25, 50, 100],
+            "domLayout": "autoHeight",
+            "enableCellTextSelection": True,
+            "columnSize": "autoSize",
+            "autoSizeStrategy": {"type": "fitCellContents"},
+            "resizable": True,
+            "suppressColumnVirtualisation": True,
+        }
 
         columnDefs = []
         for col in dataframe.columns:
@@ -307,7 +320,7 @@ def callback_update_ag_grid_visible_table_columns(
             for item in columnDefs
             if item.get("field") in visible_columns
         ]
-        return filtered_list
+        return filtered_list, dashGridOptions
 
 
 def create_column_definitions(
