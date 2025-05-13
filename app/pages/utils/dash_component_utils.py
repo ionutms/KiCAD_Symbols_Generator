@@ -1,4 +1,8 @@
-"""TODO."""
+"""Dash Component Utilities
+
+This module contains utility functions for creating and managing
+Dash components, particularly for tables and their styling.
+"""
 
 from typing import Any
 
@@ -277,6 +281,7 @@ def callback_update_ag_grid_visible_table_columns(
 
     @callback(
         Output(table_id, "columnDefs"),
+        Output(table_id, "dashGridOptions"),
         Input(checklist_id, "value"),
     )
     def update_visible_columns(visible_columns: list) -> list:
@@ -291,10 +296,23 @@ def callback_update_ag_grid_visible_table_columns(
             the visible columns.
 
         """
+        dashGridOptions = {
+            "pagination": True,
+            "paginationPageSize": 10,
+            "paginationAutoPageSize": False,
+            "paginationPageSizeSelector": [5, 10, 25, 50, 100],
+            "domLayout": "autoHeight",
+            "enableCellTextSelection": True,
+            "columnSize": "autoSize",
+            "autoSizeStrategy": {"type": "fitCellContents"},
+            "resizable": True,
+            "suppressColumnVirtualisation": True,
+            "animateRows": False,
+        }
 
         columnDefs = []
         for col in dataframe.columns:
-            col_def = {"field": col, "headerName": col.replace("_", " ")}
+            col_def = {"field": col, "headerName": col}
             if col in url_columns:
                 col_def.update({
                     "cellRenderer": "markdown",
@@ -307,7 +325,25 @@ def callback_update_ag_grid_visible_table_columns(
             for item in columnDefs
             if item.get("field") in visible_columns
         ]
-        return filtered_list
+        return (filtered_list, dashGridOptions)
+
+    @callback(
+        Output(table_id, "columnSize"),
+        Input(table_id, "columnDefs"),
+    )
+    def update_column_size(_column_defs: list) -> str:
+        """Update the column size of the AG Grid table.
+
+        Args:
+            _column_defs:
+                The column definitions of the AG Grid table.
+                This is used to trigger the callback.
+
+        Returns:
+            A string representing the column size of the AG Grid table.
+
+        """
+        return "autoSize"
 
 
 def create_column_definitions(
