@@ -1,4 +1,8 @@
-"""TODO."""
+"""Dash Component Utilities
+
+This module contains utility functions for creating and managing
+Dash components, particularly for tables and their styling.
+"""
 
 from typing import Any
 
