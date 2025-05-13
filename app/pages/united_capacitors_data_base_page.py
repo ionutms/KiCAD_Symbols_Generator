@@ -143,6 +143,8 @@ layout = dbc.Container(
                 dag.AgGrid(
                     id=f"{module_name}_ag_grid_table",
                     rowData=ag_grid_data.to_dict("records"),
+                    defaultColDef={"filter": True},
+                    style={"height": 200},
                 ),
                 html.Hr(),
             ],
