@@ -64,7 +64,7 @@ usage_steps = [
     "viewing in different environments",
 ]
 
-hidden_columns = []
+hidden_columns = ["Reference"]
 
 visible_columns = [
     col for col in ag_grid_data.columns if col not in hidden_columns

@@ -312,11 +312,28 @@ def callback_update_ag_grid_visible_table_columns(
 
         columnDefs = []
         for col in dataframe.columns:
-            col_def = {"field": col, "headerName": col}
+            col_def = {
+                "field": col,
+                "headerName": col,
+                "wrapText": True,
+                "autoHeight": True,
+                "maxWidth": 300,
+                "cellClass": "centered-cell",
+                "cellStyle": {
+                    "white-space": "normal",
+                    "line-height": "1.2em",
+                    "padding": "15px",
+                },
+            }
             if col in url_columns:
                 col_def.update({
                     "cellRenderer": "markdown",
-                    "cellStyle": {"textAlign": "center"},
+                    "cellStyle": {
+                        "textAlign": "center",
+                        "white-space": "normal",
+                        "line-height": "1.2em",
+                        "padding": "15px",
+                    },
                 })
             columnDefs.append(col_def)
 
