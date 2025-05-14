@@ -35,10 +35,10 @@ module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
 register_page(__name__, name=link_name, order=3)
 
-dataframe: pd.DataFrame = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
-total_rows = len(dataframe)
-
-ag_grid_data = pd.read_csv("data/UNITED_CAPACITORS_DATA_BASE.csv")
+ag_grid_data: pd.DataFrame = pd.read_csv(
+    "data/UNITED_CAPACITORS_DATA_BASE.csv"
+)
+total_rows = len(ag_grid_data)
 
 TITLE = "Capacitors Database"
 ABOUT = (
@@ -89,7 +89,7 @@ hidden_columns = [
 ]
 
 visible_columns = [
-    col for col in dataframe.columns if col not in hidden_columns
+    col for col in ag_grid_data.columns if col not in hidden_columns
 ]
 
 
@@ -119,7 +119,7 @@ layout = dbc.Container(
                 dbc.Row([
                     dcu.app_description(TITLE, ABOUT, features, usage_steps),
                 ]),
-                dcu.generate_range_slider(module_name, dataframe, 25),
+                dcu.generate_range_slider(module_name, ag_grid_data, 25),
                 html.Hr(),
                 dbc.Row([
                     dcc.Loading(
@@ -136,7 +136,7 @@ layout = dbc.Container(
                 html.Hr(),
                 dcu.ag_grid_table_controls_row(
                     module_name,
-                    dataframe,
+                    ag_grid_data,
                     visible_columns,
                 ),
                 html.Hr(),
@@ -223,16 +223,16 @@ def update_distribution_graph(
     """
     # Prepare full data range
     values, _ = dcu.extract_consecutive_value_groups(
-        dataframe["Value"].to_list(),
+        ag_grid_data["Value"].to_list(),
     )
 
     # Dynamically extract all unique tolerances
-    tolerances = sorted(dataframe["Tolerance"].unique())
+    tolerances = sorted(ag_grid_data["Tolerance"].unique())
 
     # Create tolerance-based dataframes and configurations
     tolerance_configs = [
         {
-            "dataframe": dataframe[dataframe["Tolerance"] == tolerance],
+            "dataframe": ag_grid_data[ag_grid_data["Tolerance"] == tolerance],
             "name": f"{tolerance} Tolerance",
         }
         for tolerance in tolerances
@@ -328,7 +328,7 @@ def update_distribution_graph(
 
     # Add scatter traces for all tolerances
     for tolerance in tolerances:
-        tolerance_data = dataframe[dataframe["Tolerance"] == tolerance]
+        tolerance_data = ag_grid_data[ag_grid_data["Tolerance"] == tolerance]
         scatter_x = []
         scatter_y = []
         scatter_mpn = []  # Track MPN for each point
