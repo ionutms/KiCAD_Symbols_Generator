@@ -65,7 +65,6 @@ HEADER_MAPPING: Final[dict] = {
     "Turns Ratio": lambda part: "; ".join(
         f"{name} = {value}" for name, value in part.turns_ratio.items()
     ),
-    "3dviewer Link": lambda part: part.step_file_viewer_link,
 }
 
 
