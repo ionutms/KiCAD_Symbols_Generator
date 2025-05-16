@@ -114,7 +114,6 @@ class PartInfo(NamedTuple):
         trustedparts_link: URL to component listing on Trusted Parts
         max_dc_resistance: Maximum DC resistance for the component
         turns_ratio: Transformer turns ratio specification
-        step_file_viewer_link: URL to 3D model viewer for the component model
 
     """
 
@@ -132,7 +131,6 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
     max_dc_resistance: dict[dict[str, str]]
     turns_ratio: dict[dict[str, str]]
-    step_file_viewer_link: str
 
     @staticmethod
     def format_inductance_value(primary_inductance: float) -> str:
@@ -193,13 +191,6 @@ class PartInfo(NamedTuple):
         mpn = f"{specs.base_series}{specs.value_suffix}"
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
-        viewer_3d_link = (
-            "https://3dviewer.net/index.html#model="
-            "https://github.com/ionutms/"
-            "KiCAD_Symbols_Generator/blob/main/3D_models/"
-            f"{specs.footprint.split(':')[-1]}.step"
-        )
-
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
@@ -215,7 +206,6 @@ class PartInfo(NamedTuple):
             trustedparts_link=trustedparts_link,
             max_dc_resistance=specs.max_dc_resistance,
             turns_ratio=specs.turns_ratio,
-            step_file_viewer_link=viewer_3d_link,
         )
 
     @classmethod

@@ -91,7 +91,6 @@ class PartInfo(NamedTuple):
         case_code_mm: Package dimensions in millimeters (e.g., '1005')
         series: Part number series identifier (e.g., 'GCM155')
         trustedparts_link: URL to component listing on Trustedparts
-        step_file_viewer_link: URL to 3D model viewer for the component model
 
     """
 
@@ -112,7 +111,6 @@ class PartInfo(NamedTuple):
     series: str
     trustedparts_link: str
     capacitor_type: str
-    step_file_viewer_link: str
 
     @staticmethod
     def format_value(capacitance: float) -> str:
@@ -411,13 +409,6 @@ class PartInfo(NamedTuple):
         trustedparts_link = f"{specs.trustedparts_url}/{mpn}"
         datasheet_url = cls.generate_datasheet_url(mpn, specs)
 
-        viewer_3d_link = (
-            "https://3dviewer.net/index.html#model="
-            "https://github.com/ionutms/"
-            "KiCAD_Symbols_Generator/blob/main/3D_models/"
-            f"{('_'.join(specs.footprint.split(':')[-1].split('_')[:2]))}.step"
-        )
-
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference="C",
@@ -436,7 +427,6 @@ class PartInfo(NamedTuple):
             series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
             capacitor_type=specs.capacitor_type,
-            step_file_viewer_link=viewer_3d_link,
         )
 
     @classmethod

@@ -46,7 +46,6 @@ HEADER_MAPPING: Final[dict] = {
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
     "Capacitor Type": lambda part: part.capacitor_type,
-    "3dviewer Link": lambda part: part.step_file_viewer_link,
 }
 
 
