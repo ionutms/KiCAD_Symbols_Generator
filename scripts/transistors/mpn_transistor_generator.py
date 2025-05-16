@@ -60,7 +60,6 @@ HEADER_MAPPING: Final[dict] = {
     "Trustedparts Search": lambda part: part.trustedparts_link,
     "Drain Current (A)": lambda part: f"{part.drain_current:.1f}",
     "Transistor Type": lambda part: part.transistor_type,
-    "3dviewer Link": lambda part: part.step_file_viewer_link,
 }
 
 
