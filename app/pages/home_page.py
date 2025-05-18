@@ -271,6 +271,7 @@ def create_project_links(
 REPOS_NAMES = [
     "KiCAD_Symbols_Generator",
     "3D_Models_Vault",
+    "Docker_3D_Models_Hosting",
     "docker_kicad_learning",
     "Minimal_ADP1032",
     "Minimal_MAX14906",
@@ -296,6 +297,7 @@ COLORS = [
     ["#9933FF", "#99FF33"],
     ["#FF19FF", "#19FFAA"],
     ["#FF3385", "#66FF1A"],
+    ["#D319FF", "#19FFD3"],
 ]
 
 REPOS_DATA = []
@@ -349,7 +351,11 @@ def register_modal_callbacks() -> None:
 def register_carousel_callbacks(num_items: int) -> None:
     """Register callbacks for carousel control buttons."""
     for project in PROJECTS:
-        if project in ("3D_Models_Vault", "docker_kicad_learning"):
+        if project in (
+            "3D_Models_Vault",
+            "docker_kicad_learning",
+            "Docker_3D_Models_Hosting",
+        ):
             continue
 
         project_lower = project.lower()
@@ -479,7 +485,11 @@ def create_project_section(module_name: str, project: str) -> list[Any]:
         List of components for the project section
 
     """
-    if project in ("3D_Models_Vault", "docker_kicad_learning"):
+    if project in (
+        "3D_Models_Vault",
+        "docker_kicad_learning",
+        "Docker_3D_Models_Hosting",
+    ):
         return [
             dbc.Row([
                 dbc.Col(
