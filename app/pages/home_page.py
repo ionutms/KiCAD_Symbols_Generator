@@ -164,8 +164,8 @@ def create_project_links(
         html.A(
             children="View 3D Model (WRL)",
             href=(
-                f"https://3dviewer.net/index.html#model={base_github_url}/"
-                f"blob/main/{project_name_lower}/docs/3d_models/"
+                "https://3dviewer.net/#model="
+                "https://threed-model-server-latest.onrender.com/models/"
                 f"{project_name_lower}.wrl"
             ),
             target="_blank",
@@ -173,8 +173,8 @@ def create_project_links(
         html.A(
             children="View 3D Model (GLB)",
             href=(
-                f"https://3dviewer.net/index.html#model={base_github_url}/"
-                f"blob/main/{project_name_lower}/docs/3d_models/"
+                "https://3dviewer.net/#model="
+                "https://threed-model-server-latest.onrender.com/models/"
                 f"{project_name_lower}.glb"
             ),
             target="_blank",
@@ -271,8 +271,8 @@ def create_project_links(
 REPOS_NAMES = [
     "KiCAD_Symbols_Generator",
     "3D_Models_Vault",
-    "Docker_3D_Models_Hosting",
     "docker_kicad_learning",
+    "Docker_3D_Models_Hosting",
     "Minimal_ADP1032",
     "Minimal_MAX14906",
     "Minimal_AD74413R",
@@ -319,7 +319,11 @@ PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
 def register_modal_callbacks() -> None:
     """Register callbacks for project modals."""
     for project in PROJECTS:
-        if project in ("3D_Models_Vault", "docker_kicad_learning"):
+        if project in (
+            "3D_Models_Vault",
+            "docker_kicad_learning",
+            "Docker_3D_Models_Hosting",
+        ):
             continue
 
         project_lower = project.lower()
