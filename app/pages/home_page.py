@@ -496,7 +496,7 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
                         f"{module_name}_{project_name}"
                     ),
                     xs=12,
-                    md=8,
+                    md=12,
                 ),
             ]),
             html.Hr(),
@@ -532,12 +532,89 @@ layout = dbc.Container(
             features,
             usage_steps,
         ),
-        *create_main_repo_section(module_name, links_display_div),
-        *[
-            component
-            for repo in PROJECT_REPOS
-            for component in create_project_section(module_name, repo)
-        ],
+        dbc.Tabs(
+            [
+                dbc.Tab(
+                    label=MAIN_REPO["name"].replace("_", " ").title(),
+                    tab_id="main-repo-tab",
+                    children=[
+                        html.Div(
+                            [
+                                *create_main_repo_section(
+                                    module_name, links_display_div
+                                ),
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
+                dbc.Tab(
+                    label=PROJECT_REPOS[0]["name"].replace("_", " ").title(),
+                    tab_id="project-0-tab",
+                    children=[
+                        html.Div(
+                            [
+                                *create_project_section(
+                                    module_name, PROJECT_REPOS[0]
+                                ),
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
+                dbc.Tab(
+                    label=PROJECT_REPOS[1]["name"].replace("_", " ").title(),
+                    tab_id="project-1-tab",
+                    children=[
+                        html.Div(
+                            [
+                                *create_project_section(
+                                    module_name, PROJECT_REPOS[1]
+                                ),
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
+                dbc.Tab(
+                    label=PROJECT_REPOS[2]["name"].replace("_", " ").title(),
+                    tab_id="project-2-tab",
+                    children=[
+                        html.Div(
+                            [
+                                *create_project_section(
+                                    module_name, PROJECT_REPOS[2]
+                                ),
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
+                dbc.Tab(
+                    label="Concepts Projects",
+                    tab_id="additional-tab",
+                    children=[
+                        html.Div(
+                            [
+                                # Remaining project repos in the additional tab
+                                *[
+                                    component
+                                    for repo in PROJECT_REPOS[
+                                        3:
+                                    ]  # Remaining projects
+                                    for component in create_project_section(
+                                        module_name, repo
+                                    )
+                                ],
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
+            ],
+            id="main-tabs",
+            active_tab="main-repo-tab",
+        ),
     ],
     fluid=True,
 )
