@@ -268,65 +268,98 @@ def create_project_links(
     )
 
 
-REPOS_NAMES = [
-    "KiCAD_Symbols_Generator",
-    "3D_Models_Vault",
-    "docker_kicad_learning",
-    "Docker_3D_Models_Hosting",
-    "Minimal_ADP1032",
-    "Minimal_MAX14906",
-    "Minimal_AD74413R",
-    "Modular_Software_Configurable_IO_PLC",
-    "Minimal_ADIN1110",
-    "Minimal_LTC9111",
-    "Minimal_MAX17761",
-    "Minimal_LT8304",
-    "Minimal_MAX32650",
+REPO_CONFIGS = [
+    {
+        "name": "KiCAD_Symbols_Generator",
+        "colors": ["#FF3D3D", "#00E0E0"],
+        "is_main": True,
+        "has_project_links": False,
+    },
+    {
+        "name": "3D_Models_Vault",
+        "colors": ["#FF8C1A", "#1A8CFF"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
+        "name": "docker_kicad_learning",
+        "colors": ["#FFDD1A", "#9E1AFF"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
+        "name": "Docker_3D_Models_Hosting",
+        "colors": ["#8CE01A", "#FF1AE0"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
+        "name": "Minimal_ADP1032",
+        "colors": ["#1AE65C", "#FF2D5C"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_MAX14906",
+        "colors": ["#1AEBC9", "#FF5219"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_AD74413R",
+        "colors": ["#1ACDED", "#FFA319"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Modular_Software_Configurable_IO_PLC",
+        "colors": ["#2D8AFF", "#FFB81A"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_ADIN1110",
+        "colors": ["#3333FF", "#FFE61A"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_LTC9111",
+        "colors": ["#9933FF", "#99FF33"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_MAX17761",
+        "colors": ["#FF19FF", "#19FFAA"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_LT8304",
+        "colors": ["#FF3385", "#66FF1A"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_MAX32650",
+        "colors": ["#D319FF", "#19FFD3"],
+        "is_main": False,
+        "has_project_links": True,
+    },
 ]
 
-COLORS = [
-    ["#FF3D3D", "#00E0E0"],
-    ["#FF8C1A", "#1A8CFF"],
-    ["#FFDD1A", "#9E1AFF"],
-    ["#8CE01A", "#FF1AE0"],
-    ["#1AE65C", "#FF2D5C"],
-    ["#1AEBC9", "#FF5219"],
-    ["#1ACDED", "#FFA319"],
-    ["#2D8AFF", "#FFB81A"],
-    ["#3333FF", "#FFE61A"],
-    ["#9933FF", "#99FF33"],
-    ["#FF19FF", "#19FFAA"],
-    ["#FF3385", "#66FF1A"],
-    ["#D319FF", "#19FFD3"],
-]
-
-REPOS_DATA = []
-
-for repo_index, repo_name in enumerate(REPOS_NAMES):
-    REPOS_DATA.append(
-        {
-            "name": repo_name,
-            "clones_csv": f"{repo_name.lower()}_clones_history.csv",
-            "visitors_csv": f"{repo_name.lower()}_visitors_history.csv",
-            "colors": COLORS[repo_index],
-        },
-    )
-
-
-PROJECTS = [repo["name"] for repo in REPOS_DATA[1:]]
+MAIN_REPO = next(repo for repo in REPO_CONFIGS if repo["is_main"])
+PROJECT_REPOS = [repo for repo in REPO_CONFIGS if not repo["is_main"]]
 
 
 def register_modal_callbacks() -> None:
     """Register callbacks for project modals."""
-    for project in PROJECTS:
-        if project in (
-            "3D_Models_Vault",
-            "docker_kicad_learning",
-            "Docker_3D_Models_Hosting",
-        ):
+    for repo in PROJECT_REPOS:
+        if not repo["has_project_links"]:
             continue
 
-        project_lower = project.lower()
+        project_lower = repo["name"].lower()
 
         @callback(
             Output(f"{project_lower}_modal", "is_open"),
@@ -335,18 +368,8 @@ def register_modal_callbacks() -> None:
         )
         def toggle_modal(
             view_details_clicks: int | None,
-            is_open: bool,  # noqa: FBT001
+            is_open: bool,
         ) -> bool:
-            """Toggle modal visibility.
-
-            Args:
-                view_details_clicks: Click count for the view details button
-                is_open: Current state of the modal
-
-            Returns:
-                bool: Updated modal visibility state
-
-            """
             if view_details_clicks:
                 return not is_open
             return is_open
@@ -354,15 +377,11 @@ def register_modal_callbacks() -> None:
 
 def register_carousel_callbacks(num_items: int) -> None:
     """Register callbacks for carousel control buttons."""
-    for project in PROJECTS:
-        if project in (
-            "3D_Models_Vault",
-            "docker_kicad_learning",
-            "Docker_3D_Models_Hosting",
-        ):
+    for repo in PROJECT_REPOS:
+        if not repo["has_project_links"]:
             continue
 
-        project_lower = project.lower()
+        project_lower = repo["name"].lower()
 
         @callback(
             Output(f"{project_lower}_carousel", "active_index"),
@@ -375,18 +394,6 @@ def register_carousel_callbacks(num_items: int) -> None:
             _next_clicks: int | None,
             current_index: int,
         ) -> int:
-            """Control carousel with next/prev buttons.
-
-            Args:
-                prev_clicks: Click count for the prev button
-                next_clicks: Click count for the next button
-                current_index: Current active slide index
-
-            Returns:
-                int: Updated active slide index
-
-            """
-            # Determine which button was clicked
             ctx = dash.callback_context
             if not ctx.triggered:
                 return current_index or 0
@@ -395,7 +402,6 @@ def register_carousel_callbacks(num_items: int) -> None:
 
             if button_id.endswith("_carousel_prev"):
                 return (current_index - 1) % num_items
-
             if button_id.endswith("_carousel_next"):
                 return (current_index + 1) % num_items
 
@@ -478,43 +484,35 @@ def create_main_repo_section(
     ]
 
 
-def create_project_section(module_name: str, project: str) -> list[Any]:
-    """Create a section for an individual project with graphs and links.
+def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
+    """Create a section for an individual project with graphs and links."""
+    project_name = repo_config["name"]
 
-    Args:
-        module_name (str): Name of the module
-        project (str): Name of the project
-
-    Returns:
-        List of components for the project section
-
-    """
-    if project in (
-        "3D_Models_Vault",
-        "docker_kicad_learning",
-        "Docker_3D_Models_Hosting",
-    ):
+    if not repo_config["has_project_links"]:
         return [
             dbc.Row([
                 dbc.Col(
-                    children=create_repo_graphs(f"{module_name}_{project}"),
+                    children=create_repo_graphs(
+                        f"{module_name}_{project_name}"
+                    ),
                     xs=12,
                     md=8,
                 ),
             ]),
             html.Hr(),
         ]
+
     return [
         dbc.Row([
             dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{project}"),
+                children=create_repo_graphs(f"{module_name}_{project_name}"),
                 xs=12,
                 md=8,
             ),
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(project, image_prefixes),
+                    create_project_links(project_name, image_prefixes),
                 ],
                 xs=12,
                 md=4,
@@ -537,8 +535,8 @@ layout = dbc.Container(
         *create_main_repo_section(module_name, links_display_div),
         *[
             component
-            for project in PROJECTS
-            for component in create_project_section(module_name, project)
+            for repo in PROJECT_REPOS
+            for component in create_project_section(module_name, repo)
         ],
     ],
     fluid=True,
@@ -893,15 +891,13 @@ def load_traffic_data(
     Output(f"{module_name}_repo_clones_graph", "figure"),
     Output(f"{module_name}_repo_visitors_graph", "figure"),
     *[
-        Output(f"{module_name}_{project}_repo_{graph}_graph", "figure")
-        for project in PROJECTS
+        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
+        for repo in PROJECT_REPOS
         for graph in ["clones", "visitors"]
     ],
     Input("theme_switch_value_store", "data"),
 )
-def update_graph_with_uploaded_file(
-    theme_switch: bool,  # noqa: FBT001
-) -> tuple[Any, ...]:
+def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
     """Read CSV data and update the repository graphs."""
     base_github_url = (
         "https://raw.githubusercontent.com/ionutms/"
@@ -912,21 +908,19 @@ def update_graph_with_uploaded_file(
         repo_config: dict,
     ) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Load clones and visitors data for a repository."""
+        repo_name = repo_config["name"]
+        clones_csv = f"{repo_name.lower()}_clones_history.csv"
+        visitors_csv = f"{repo_name.lower()}_visitors_history.csv"
+
         clones_source = {
-            "github_url": (
-                f"{base_github_url}/repo_traffic_data/"
-                f"{repo_config['clones_csv']}"
-            ),
-            "local_file": f"repo_traffic_data/{repo_config['clones_csv']}",
+            "github_url": f"{base_github_url}/repo_traffic_data/{clones_csv}",
+            "local_file": f"repo_traffic_data/{clones_csv}",
             "rename_columns": None,
         }
 
         visitors_source = {
-            "github_url": (
-                f"{base_github_url}/repo_traffic_data/"
-                f"{repo_config['visitors_csv']}"
-            ),
-            "local_file": f"repo_traffic_data/{repo_config['visitors_csv']}",
+            "github_url": f"{base_github_url}/repo_traffic_data/{visitors_csv}",
+            "local_file": f"repo_traffic_data/{visitors_csv}",
             "rename_columns": {
                 "visitor_timestamp": "clone_timestamp",
                 "total_visitors": "total_clones",
@@ -940,28 +934,29 @@ def update_graph_with_uploaded_file(
         )
 
     # Load all repository data
-    repo_data = [load_repo_data(repo_config) for repo_config in REPOS_DATA]
+    repo_data = [load_repo_data(repo_config) for repo_config in REPO_CONFIGS]
     clones_data, visitors_data = zip(*repo_data)
 
-    # Generate titles in the original order
+    # Generate titles
     clones_titles = ["Git Clones", "Clones", "Unique Clones"]
     visitors_titles = ["Visitors", "Views", "Unique Views"]
 
-    for repo_config in REPOS_DATA:
+    for repo_config in REPO_CONFIGS:
+        repo_name = repo_config["name"]
         clones_titles.extend([
-            f"{repo_config['name']} Clones",
-            f"{repo_config['name']} Unique Clones",
+            f"{repo_name} Clones",
+            f"{repo_name} Unique Clones",
         ])
         visitors_titles.extend([
-            f"{repo_config['name']} Views",
-            f"{repo_config['name']} Unique Views",
+            f"{repo_name} Views",
+            f"{repo_name} Unique Views",
         ])
 
     def create_and_adjust_figure(
         data_frames: list[pd.DataFrame],
         trace_colors: list[str],
         titles: tuple[str, ...],
-        theme_switch: bool,  # noqa: FBT001
+        theme_switch: bool,
     ) -> dict[str, Any]:
         """Create and adjust a figure with the given parameters."""
         return create_figure(
@@ -971,35 +966,34 @@ def update_graph_with_uploaded_file(
             titles=titles,
         )
 
-    # Update figure creation calls to remove relayout_data parameter
+    # Create figures for each repository
     figures = []
-    for repo_index in range(len(REPOS_DATA)):
+    for repo_index, repo_config in enumerate(REPO_CONFIGS):
         repos_to_exclude = (
-            REPOS_DATA[1:] if repo_index == 0 else REPOS_DATA[:repo_index]
+            REPO_CONFIGS[1:] if repo_index == 0 else REPO_CONFIGS[:repo_index]
         )
 
         filtered_clones_titles = [
             title
             for title in clones_titles
             if not any(
-                repo_config["name"] in title
-                for repo_config in repos_to_exclude
+                excluded_repo["name"] in title
+                for excluded_repo in repos_to_exclude
             )
         ]
         filtered_visitors_titles = [
             title
             for title in visitors_titles
             if not any(
-                repo_config["name"] in title
-                for repo_config in repos_to_exclude
+                excluded_repo["name"] in title
+                for excluded_repo in repos_to_exclude
             )
         ]
 
-        current_repo = REPOS_DATA[repo_index]
         figures.append(
             create_and_adjust_figure(
                 [clones_data[repo_index]],
-                current_repo["colors"],
+                repo_config["colors"],
                 tuple(filtered_clones_titles),
                 theme_switch,
             ),
@@ -1007,7 +1001,7 @@ def update_graph_with_uploaded_file(
         figures.append(
             create_and_adjust_figure(
                 [visitors_data[repo_index]],
-                current_repo["colors"],
+                repo_config["colors"],
                 tuple(filtered_visitors_titles),
                 theme_switch,
             ),
