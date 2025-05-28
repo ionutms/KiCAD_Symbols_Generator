@@ -157,7 +157,8 @@ def create_project_links(
             href=(
                 f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
                 f"https://raw.githubusercontent.com/ionutms/{project_name}/"
-                f"main/{project_name_lower}/{project_name_lower}.pdf"
+                f"main/{project_name_lower}/docs/schematics/"
+                f"{project_name_lower}_schematics.pdf"
             ),
             target="_blank",
         ),
