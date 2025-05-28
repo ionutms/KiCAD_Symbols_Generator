@@ -294,6 +294,12 @@ REPO_CONFIGS = [
         "has_project_links": False,
     },
     {
+        "name": "clones_monitor",
+        "colors": ["#AFE01A", "#AA1AE0"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
         "name": "Minimal_ADP1032",
         "colors": ["#1AE65C", "#FF2D5C"],
         "is_main": False,
