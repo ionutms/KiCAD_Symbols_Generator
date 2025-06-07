@@ -289,6 +289,12 @@ REPO_CONFIGS = [
         "has_project_links": False,
     },
     {
+        "name": "SystemVerilog_Learning",
+        "colors": ["#FFDD1A", "#9E1AFF"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
         "name": "Docker_3D_Models_Hosting",
         "colors": ["#8CE01A", "#FF1AE0"],
         "is_main": False,
