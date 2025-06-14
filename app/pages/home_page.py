@@ -393,6 +393,43 @@ PROJECT_REPOS_WITHOUT_LINKS = [
 ]
 
 
+def check_github_pages_simple(username: str, repo_name: str) -> bool:
+    """Check if GitHub Pages is available by testing the standard URL."""
+    import requests
+    
+    pages_url = f"https://{username}.github.io/{repo_name}/"
+    
+    try:
+        response = requests.head(pages_url, timeout=5, allow_redirects=True)
+        return response.status_code == 200
+    except requests.RequestException:
+        return False
+
+
+LEARNING_PROJECTS_WITH_PAGES = []
+
+# Initialize with pages detection (call this once during app startup)
+def initialize_learning_projects():
+    global LEARNING_PROJECTS_WITH_PAGES
+    
+    for repo in LEARNING_PROJECTS:
+        project_config = repo.copy()
+        project_name = repo["name"]
+        
+        # Check for GitHub Pages
+        has_pages = check_github_pages_simple("ionutms", project_name)
+        project_config["has_github_pages"] = has_pages
+        
+        if has_pages:
+            project_config["pages_url"] = \
+                f"https://ionutms.github.io/{project_name}/"
+        
+        LEARNING_PROJECTS_WITH_PAGES.append(project_config)
+
+# Call this during app initialization
+initialize_learning_projects()
+
+
 def register_modal_callbacks() -> None:
     """Register callbacks for project modals."""
     for repo in PROJECT_REPOS_WITH_LINKS:
@@ -556,6 +593,67 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
     ]
 
 
+def create_learning_project_section(module_name: str, repo_config: dict) -> list[Any]:
+    """Create a section for learning projects with GitHub Pages links if available."""
+    project_name = repo_config["name"]
+    
+    # Create the standard graphs
+    graphs_col = dbc.Col(
+        children=create_repo_graphs(f"{module_name}_{project_name}"),
+        xs=12,
+        md=9 if repo_config.get("has_github_pages") else 12,
+    )
+    
+    cols = [graphs_col]
+    
+    # Add links column if GitHub Pages is available
+    if repo_config.get("has_github_pages"):
+        links = [
+            html.A(
+                children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
+                href=f"https://github.com/ionutms/{project_name}",
+                target="_blank",
+            ),
+            html.A(
+                children="🌐 View GitHub Pages Site",
+                href=repo_config["pages_url"],
+                target="_blank",
+                style={
+                    "color": "#28a745", 
+                    "font-weight": "bold",
+                    "text-decoration": "none",
+                    "padding": "8px",
+                    "border": "2px solid #28a745",
+                    "border-radius": "4px",
+                    "display": "inline-block",
+                    "margin-top": "5px"
+                }
+            ),
+        ]
+        
+        links_col = dbc.Col(
+            [
+                html.H4("Project Links"),
+                html.Div(
+                    children=links,
+                    style={
+                        "display": "flex",
+                        "flex-direction": "column",
+                        "gap": "10px",
+                    },
+                ),
+            ],
+            xs=12,
+            md=3,
+        )
+        cols.append(links_col)
+    
+    return [
+        dbc.Row(cols),
+        html.Hr(),
+    ]
+
+
 # Main layout construction
 layout = dbc.Container(
     [
@@ -605,9 +703,10 @@ layout = dbc.Container(
                             [
                                 *[
                                     component
-                                    for repo in LEARNING_PROJECTS
-                                    for component in create_project_section(
-                                        module_name, repo
+                                    for repo in LEARNING_PROJECTS_WITH_PAGES
+                                    for component in \
+                                        create_learning_project_section(
+                                            module_name, repo
                                     )
                                 ],
                             ],
