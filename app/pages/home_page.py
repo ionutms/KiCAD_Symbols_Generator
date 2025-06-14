@@ -369,15 +369,27 @@ REPO_CONFIGS = [
 ]
 
 MAIN_REPO = next(repo for repo in REPO_CONFIGS if repo["is_main"])
+
+LEARNING_PROJECTS = [
+    repo
+    for repo in REPO_CONFIGS
+    if not repo["is_main"] and "learning" in repo["name"].lower()
+]
+
 PROJECT_REPOS_WITH_LINKS = [
     repo
     for repo in REPO_CONFIGS
-    if not repo["is_main"] and repo["has_project_links"]
+    if not repo["is_main"] 
+    and repo["has_project_links"] 
+    and "learning" not in repo["name"].lower()
 ]
+
 PROJECT_REPOS_WITHOUT_LINKS = [
     repo
     for repo in REPO_CONFIGS
-    if not repo["is_main"] and not repo["has_project_links"]
+    if not repo["is_main"] 
+    and not repo["has_project_links"]
+    and "learning" not in repo["name"].lower()
 ]
 
 
@@ -585,6 +597,24 @@ layout = dbc.Container(
                     )
                     for repo in PROJECT_REPOS_WITHOUT_LINKS
                 ],
+                dbc.Tab(
+                    label="Learning Projects",
+                    tab_id="learning-tab",
+                    children=[
+                        html.Div(
+                            [
+                                *[
+                                    component
+                                    for repo in LEARNING_PROJECTS
+                                    for component in create_project_section(
+                                        module_name, repo
+                                    )
+                                ],
+                            ],
+                            style={"padding": "20px"},
+                        )
+                    ],
+                ),
                 dbc.Tab(
                     label="Concepts Projects",
                     tab_id="additional-tab",
@@ -955,11 +985,25 @@ def load_traffic_data(
 
 
 @callback(
+    # Main repo graphs
     Output(f"{module_name}_repo_clones_graph", "figure"),
     Output(f"{module_name}_repo_visitors_graph", "figure"),
+    # Project repos without links graphs (in order they appear in tabs)
     *[
         Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
-        for repo in PROJECT_REPOS_WITHOUT_LINKS + PROJECT_REPOS_WITH_LINKS
+        for repo in PROJECT_REPOS_WITHOUT_LINKS
+        for graph in ["clones", "visitors"]
+    ],
+    # Learning projects graphs
+    *[
+        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
+        for repo in LEARNING_PROJECTS
+        for graph in ["clones", "visitors"]
+    ],
+    # Project repos with links graphs (Concepts Projects tab)
+    *[
+        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
+        for repo in PROJECT_REPOS_WITH_LINKS
         for graph in ["clones", "visitors"]
     ],
     Input("theme_switch_value_store", "data"),
@@ -1000,78 +1044,67 @@ def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
             load_traffic_data(**visitors_source),
         )
 
-    # Load all repository data
-    repo_data = [load_repo_data(repo_config) for repo_config in REPO_CONFIGS]
-    clones_data, visitors_data = zip(*repo_data)
-
-    # Generate titles
-    clones_titles = ["Git Clones", "Clones", "Unique Clones"]
-    visitors_titles = ["Visitors", "Views", "Unique Views"]
-
+    # Create a mapping of repo names to their data
+    repo_data_map = {}
     for repo_config in REPO_CONFIGS:
-        repo_name = repo_config["name"]
-        clones_titles.extend([
-            f"{repo_name} Clones",
-            f"{repo_name} Unique Clones",
-        ])
-        visitors_titles.extend([
-            f"{repo_name} Views",
-            f"{repo_name} Unique Views",
-        ])
+        clones_df, visitors_df = load_repo_data(repo_config)
+        repo_data_map[repo_config["name"]] = {
+            "clones": clones_df,
+            "visitors": visitors_df,
+            "colors": repo_config["colors"]
+        }
 
-    def create_and_adjust_figure(
-        data_frames: list[pd.DataFrame],
-        trace_colors: list[str],
-        titles: tuple[str, ...],
-        theme_switch: bool,
-    ) -> dict[str, Any]:
-        """Create and adjust a figure with the given parameters."""
+    def create_figure_for_repo(repo_name: str, data_type: str) -> Any:
+        """Create a figure for a specific repository and data type."""
+        repo_data = repo_data_map[repo_name]
+        data_frame = repo_data[data_type]
+        colors = repo_data["colors"]
+        
+        if data_type == "clones":
+            titles = (
+                f"{repo_name} Git Clones", "Clones", "Unique Clones", 
+                repo_name, repo_name)
+        else:
+            titles = (
+                f"{repo_name} Visitors", "Views", "Unique Views", 
+                repo_name, repo_name)
+        
         return create_figure(
             theme_switch=theme_switch,
-            data_frames=data_frames,
-            trace_colors=trace_colors,
+            data_frames=[data_frame],
+            trace_colors=colors,
             titles=titles,
         )
 
-    # Create figures for each repository
+    # Generate figures in the exact order expected by the callback outputs
     figures = []
-    for repo_index, repo_config in enumerate(REPO_CONFIGS):
-        repos_to_exclude = (
-            REPO_CONFIGS[1:] if repo_index == 0 else REPO_CONFIGS[:repo_index]
-        )
-
-        filtered_clones_titles = [
-            title
-            for title in clones_titles
-            if not any(
-                excluded_repo["name"] in title
-                for excluded_repo in repos_to_exclude
-            )
-        ]
-        filtered_visitors_titles = [
-            title
-            for title in visitors_titles
-            if not any(
-                excluded_repo["name"] in title
-                for excluded_repo in repos_to_exclude
-            )
-        ]
-
-        figures.append(
-            create_and_adjust_figure(
-                [clones_data[repo_index]],
-                repo_config["colors"],
-                tuple(filtered_clones_titles),
-                theme_switch,
-            ),
-        )
-        figures.append(
-            create_and_adjust_figure(
-                [visitors_data[repo_index]],
-                repo_config["colors"],
-                tuple(filtered_visitors_titles),
-                theme_switch,
-            ),
-        )
+    
+    # Main repo figures (first in callback outputs)
+    main_repo_name = MAIN_REPO["name"]
+    figures.extend([
+        create_figure_for_repo(main_repo_name, "clones"),
+        create_figure_for_repo(main_repo_name, "visitors"),
+    ])
+    
+    # Project repos without links (second group in callback outputs)
+    for repo in PROJECT_REPOS_WITHOUT_LINKS:
+        figures.extend([
+            create_figure_for_repo(repo["name"], "clones"),
+            create_figure_for_repo(repo["name"], "visitors"),
+        ])
+    
+    # Learning projects (third group in callback outputs)
+    for repo in LEARNING_PROJECTS:
+        figures.extend([
+            create_figure_for_repo(repo["name"], "clones"),
+            create_figure_for_repo(repo["name"], "visitors"),
+        ])
+    
+    # Project repos with links (fourth group in callback outputs)
+    for repo in PROJECT_REPOS_WITH_LINKS:
+        figures.extend([
+            create_figure_for_repo(repo["name"], "clones"),
+            create_figure_for_repo(repo["name"], "visitors"),
+        ])
 
     return tuple(figures)
