@@ -1,17 +1,17 @@
-"""Transistors Database Page.
+"""Switches Database Page.
 
-This module provides a Dash page for viewing and interacting with transistors
-specifications. It allows users to browse, search, and filter through a
-database of transistors, with features for customizing the view and
+This module provides a Dash page for viewing and interacting with solder
+jumpers specifications. It allows users to browse, search, and filter through
+a database of switches, with features for customizing the view and
 accessing detailed information.
 
 Key features:
-- Interactive DataTable displaying transistors specifications
+- Interactive DataTable displaying switches specifications
 - Column visibility controls for customizing the view
 - Dynamic filtering and multi-column sorting capabilities
 - Pagination with customizable page size
 - Theme-aware styling with light/dark mode support
-- Direct links to transistors datasheets
+- Direct links to switches datasheets
 - Responsive design for various screen sizes
 
 The module uses Dash components and callbacks to create an interactive
@@ -30,19 +30,19 @@ from dash import dcc, html, register_page
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=19)
+register_page(__name__, name=link_name, order=15)
 
 ag_grid_data: pd.DataFrame = pd.read_csv(
-    "data/UNITED_TRANSISTORS_DATA_BASE.csv"
+    "data/UNITED_TACTILE_SWITCHES_DATA_BASE.csv"
 )
 total_rows = len(ag_grid_data)
 
-TITLE = f"Transistors Database ({total_rows:,} items)"
+TITLE = f"Switches Database ({total_rows:,} items)"
 ABOUT = (
-    "The transistors Database is an interactive web application that "
+    "The switches Database is an interactive web application that "
     "provides a comprehensive view of inductor specifications.",
     "It allows users to easily browse, search, and filter "
-    f"through a database of {total_rows:,} transistors, "
+    f"through a database of {total_rows:,} switches, "
     "providing quick access to important information and datasheets.",
 )
 
@@ -57,9 +57,8 @@ features = [
 ]
 
 usage_steps = [
-    "Navigate to the transistors Database page",
-    "Use the table's built-in search functionality "
-    "to find specific transistors",
+    "Navigate to the switches Database page",
+    "Use the table's built-in search functionality to find specific switches",
     "Click on column headers to sort the data",
     "Use the filter action to narrow down the displayed results",
     "Toggle column visibility using the checkboxes above the table",
@@ -72,17 +71,7 @@ usage_steps = [
     "different environments",
 ]
 
-hidden_columns = [
-    "Reference",
-    "Series",
-    "Maximum DC Current (A)",
-    "Maximum DC Resistance (Ω)",
-    "Description",
-    "Value",
-    "Transistor Type",
-    "Drain Current (A)",
-    "3dviewer Link",
-]
+hidden_columns = []
 
 visible_columns = [
     col for col in ag_grid_data.columns if col not in hidden_columns
