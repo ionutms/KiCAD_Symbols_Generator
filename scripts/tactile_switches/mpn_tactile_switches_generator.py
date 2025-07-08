@@ -38,12 +38,14 @@ HEADER_MAPPING: Final[dict] = {
 def generate_files_for_series(
     series_name: str,
     unified_parts_list: list[symbol_tactile_switches_specs.PartInfo],
+    generated_footprints: set[str],
 ) -> None:
     """Generate CSV, KiCad symbol, and footprint files for a specific series.
 
     Args:
         series_name: Series identifier (must exist in SYMBOLS_SPECS)
         unified_parts_list: List to append generated parts to
+        generated_footprints: Set of already generated footprint keys
 
     Raises:
         ValueError: If series_name is not found in SYMBOLS_SPECS
@@ -113,18 +115,51 @@ def generate_files_for_series(
             f"I/O error when generating KiCad symbol file: {io_error}",
         )
 
-    # Generate KiCad footprint files
+    # Get the footprint key once for this series to avoid duplicates
+    series_spec = symbol_tactile_switches_specs.SYMBOLS_SPECS[series_name]
+    footprint_key = (
+        getattr(series_spec, "footprint_series", None) or series_name
+    )
+
+    # Generate KiCad footprint files - only generate unique footprints
     try:
-        for part in parts_list:
-            footprint_tactile_switches_generator.generate_footprint_file(
-                part,
-                footprint_dir,
+        # Only generate footprint if we haven't already generated this footprint type
+        if footprint_key not in generated_footprints:
+            # Use the first part from the series to generate the footprint
+            # since all parts in the series share the same footprint
+            first_part = parts_list[0]
+
+            # Try to generate the footprint file
+            was_generated = (
+                footprint_tactile_switches_generator.generate_footprint_file(
+                    first_part,
+                    footprint_dir,
+                    force_overwrite=False,
+                )
             )
-            footprint_name = f"{part.mpn}.kicad_mod"
-            print_message_utilities.print_success(
-                "KiCad footprint file "
-                f"{footprint_name}' generated successfully.",
+
+            if was_generated:
+                generated_footprints.add(footprint_key)
+                footprint_name = f"{footprint_key}.kicad_mod"
+                print_message_utilities.print_success(
+                    "KiCad footprint file "
+                    f"'{footprint_name}' generated successfully.",
+                )
+            else:
+                # File already exists, mark as generated to avoid future attempts
+                generated_footprints.add(footprint_key)
+                footprint_name = f"{footprint_key}.kicad_mod"
+                print_message_utilities.print_info(
+                    f"KiCad footprint file '{footprint_name}' already exists, skipping.",
+                )
+
+        else:
+            # Already generated this footprint type
+            footprint_name = f"{footprint_key}.kicad_mod"
+            print_message_utilities.print_info(
+                f"KiCad footprint file '{footprint_name}' already generated for this session, skipping.",
             )
+
     except ValueError as val_error:
         print_message_utilities.print_error(
             f"Invalid connector specification: {val_error}",
@@ -202,12 +237,15 @@ def generate_unified_files(
 if __name__ == "__main__":
     try:
         unified_parts: list[symbol_tactile_switches_specs.PartInfo] = []
+        generated_footprints: set[str] = set()
 
         for series in symbol_tactile_switches_specs.SYMBOLS_SPECS:
             print_message_utilities.print_info(
                 f"\nGenerating files for {series} series:",
             )
-            generate_files_for_series(series, unified_parts)
+            generate_files_for_series(
+                series, unified_parts, generated_footprints
+            )
 
         # Generate unified files after all series are processed
         UNIFIED_CSV = "UNITED_TACTILE_SWITCHES_DATA_BASE.csv"

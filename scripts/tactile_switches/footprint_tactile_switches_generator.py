@@ -51,7 +51,13 @@ def generate_footprint(  # noqa: C901
     height_top = footprint_specs.body_dimensions.height_top
     height_bottom = footprint_specs.body_dimensions.height_bottom
 
-    model_file_name = f"{part_info.mpn}"
+    series_spec = symbol_tactile_switches_specs.SYMBOLS_SPECS[
+        part_info.series
+    ]
+    footprint_key = (
+        getattr(series_spec, "footprint_series", None) or part_info.series
+    )
+
     footprint_value = part_info.series
 
     if part_info.mounting_style == "Through Hole":
@@ -135,7 +141,7 @@ def generate_footprint(  # noqa: C901
         )
 
     sections = [
-        footprint_utils.generate_header(part_info.mpn),
+        footprint_utils.generate_header(footprint_key),
         footprint_utils.generate_properties(
             footprint_specs.ref_y,
             footprint_value,
@@ -163,7 +169,7 @@ def generate_footprint(  # noqa: C901
         pads,
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/tactile_switches",
-            model_file_name,
+            footprint_key,
         ),
         ")",  # Close the footprint
     ]
@@ -173,7 +179,8 @@ def generate_footprint(  # noqa: C901
 def generate_footprint_file(
     part_info: symbol_tactile_switches_specs.PartInfo,
     output_path: str,
-) -> None:
+    force_overwrite: bool = True,
+) -> bool:
     """Generate and save a complete .kicad_mod file for a tactile switches.
 
     Creates a KiCad footprint file in the connector_footprints.pretty
@@ -183,15 +190,36 @@ def generate_footprint_file(
     Args:
         part_info: Component specifications (MPN, pin count, pitch)
         output_path: Directory path for saving the .kicad_mod file
+        force_overwrite: If True, overwrite existing files
 
     Returns:
-        None
+        bool: True if file was generated, False if file already exists
 
     """
-    footprint_specs = CONNECTOR_SPECS[part_info.series]
-    footprint_content = generate_footprint(part_info, footprint_specs)
-    filename = f"{part_info.mpn}.kicad_mod"
+    # Get the series spec to determine which footprint spec to use
+    series_spec = symbol_tactile_switches_specs.SYMBOLS_SPECS[
+        part_info.series
+    ]
+
+    # Use footprint_series if available, otherwise fall back to series
+    footprint_key = (
+        getattr(series_spec, "footprint_series", None) or part_info.series
+    )
+
+    footprint_specs = CONNECTOR_SPECS[footprint_key]
+
+    # Use the footprint_key (footprint series name) for the filename
+    filename = f"{footprint_key}.kicad_mod"
     file_path = f"{output_path}/{filename}"
+
+    # Check if file already exists and we're not forcing overwrite
+    if not force_overwrite and Path(file_path).exists():
+        return False
+
+    # Generate and write the footprint content
+    footprint_content = generate_footprint(part_info, footprint_specs)
 
     with Path.open(file_path, "w", encoding="utf-8") as file_handle:
         file_handle.write(footprint_content)
+
+    return True

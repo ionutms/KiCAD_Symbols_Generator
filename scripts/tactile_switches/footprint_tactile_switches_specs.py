@@ -133,7 +133,7 @@ class FootprintSpecs(NamedTuple):
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
-    "TS21-34-035-BK-260-SMT-TR": FootprintSpecs(
+    "TS21": FootprintSpecs(
         pad_pitch=2,
         row_pitch=3.25,
         number_of_rows=2,
