@@ -164,7 +164,7 @@ def generate_unified_files(
 
     """
     # Write unified CSV file with full path
-    unified_csv_path = f"app/data/{unified_csv}"
+    unified_csv_path = f"data/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
         unified_csv_path,
