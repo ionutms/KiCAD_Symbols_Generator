@@ -162,8 +162,11 @@ def generate_unified_files(
         None
 
     """
-    # Write unified CSV file with full path
-    unified_csv_path = f"data/{unified_csv}"
+    # Ensure the app/data directory exists for unified files
+    file_handler_utilities.ensure_directory_exists("app/data")
+
+    # Write unified CSV file with correct path (app/data instead of data)
+    unified_csv_path = f"app/data/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
         unified_csv_path,
