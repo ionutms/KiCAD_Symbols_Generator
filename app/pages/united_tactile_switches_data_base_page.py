@@ -71,7 +71,17 @@ usage_steps = [
     "different environments",
 ]
 
-hidden_columns = []
+hidden_columns = [
+    "Reference",
+    "Value",
+    "Footprint",
+    "Number of Rows",
+    "MPN",
+    "Pin Count",
+    "Mounting Angle",
+    "Mounting Style",
+    "Series",
+]
 
 visible_columns = [
     col for col in ag_grid_data.columns if col not in hidden_columns
