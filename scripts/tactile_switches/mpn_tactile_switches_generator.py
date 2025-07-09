@@ -28,6 +28,7 @@ HEADER_MAPPING: Final[dict] = {
     "MPN": lambda part: part.mpn,
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
+    "Color": lambda part: part.color,
     "Pin Count": lambda part: part.pin_count,
     "Mounting Angle": lambda part: part.mounting_angle,
     "Mounting Style": lambda part: part.mounting_style,
@@ -38,14 +39,12 @@ HEADER_MAPPING: Final[dict] = {
 def generate_files_for_series(
     series_name: str,
     unified_parts_list: list[symbol_tactile_switches_specs.PartInfo],
-    generated_footprints: set[str],
 ) -> None:
     """Generate CSV, KiCad symbol, and footprint files for a specific series.
 
     Args:
         series_name: Series identifier (must exist in SYMBOLS_SPECS)
         unified_parts_list: List to append generated parts to
-        generated_footprints: Set of already generated footprint keys
 
     Raises:
         ValueError: If series_name is not found in SYMBOLS_SPECS
@@ -115,51 +114,18 @@ def generate_files_for_series(
             f"I/O error when generating KiCad symbol file: {io_error}",
         )
 
-    # Get the footprint key once for this series to avoid duplicates
-    series_spec = symbol_tactile_switches_specs.SYMBOLS_SPECS[series_name]
-    footprint_key = (
-        getattr(series_spec, "footprint_series", None) or series_name
-    )
-
-    # Generate KiCad footprint files - only generate unique footprints
+    # Generate KiCad footprint files
     try:
-        # Only generate footprint if we haven't already generated this footprint type
-        if footprint_key not in generated_footprints:
-            # Use the first part from the series to generate the footprint
-            # since all parts in the series share the same footprint
-            first_part = parts_list[0]
-
-            # Try to generate the footprint file
-            was_generated = (
-                footprint_tactile_switches_generator.generate_footprint_file(
-                    first_part,
-                    footprint_dir,
-                    force_overwrite=False,
-                )
+        for part in parts_list:
+            footprint_tactile_switches_generator.generate_footprint_file(
+                part,
+                footprint_dir,
             )
-
-            if was_generated:
-                generated_footprints.add(footprint_key)
-                footprint_name = f"{footprint_key}.kicad_mod"
-                print_message_utilities.print_success(
-                    "KiCad footprint file "
-                    f"'{footprint_name}' generated successfully.",
-                )
-            else:
-                # File already exists, mark as generated to avoid future attempts
-                generated_footprints.add(footprint_key)
-                footprint_name = f"{footprint_key}.kicad_mod"
-                print_message_utilities.print_info(
-                    f"KiCad footprint file '{footprint_name}' already exists, skipping.",
-                )
-
-        else:
-            # Already generated this footprint type
-            footprint_name = f"{footprint_key}.kicad_mod"
-            print_message_utilities.print_info(
-                f"KiCad footprint file '{footprint_name}' already generated for this session, skipping.",
+            footprint_name = f"{part.mpn}.kicad_mod"
+            print_message_utilities.print_success(
+                "KiCad footprint file "
+                f"{footprint_name}' generated successfully.",
             )
-
     except ValueError as val_error:
         print_message_utilities.print_error(
             f"Invalid connector specification: {val_error}",
@@ -197,10 +163,7 @@ def generate_unified_files(
         None
 
     """
-    # Ensure the app/data directory exists for unified files
-    file_handler_utilities.ensure_directory_exists("app/data")
-
-    # Write unified CSV file with correct path (app/data instead of data)
+    # Write unified CSV file with full path
     unified_csv_path = f"app/data/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
@@ -237,15 +200,12 @@ def generate_unified_files(
 if __name__ == "__main__":
     try:
         unified_parts: list[symbol_tactile_switches_specs.PartInfo] = []
-        generated_footprints: set[str] = set()
 
         for series in symbol_tactile_switches_specs.SYMBOLS_SPECS:
             print_message_utilities.print_info(
                 f"\nGenerating files for {series} series:",
             )
-            generate_files_for_series(
-                series, unified_parts, generated_footprints
-            )
+            generate_files_for_series(series, unified_parts)
 
         # Generate unified files after all series are processed
         UNIFIED_CSV = "UNITED_TACTILE_SWITCHES_DATA_BASE.csv"

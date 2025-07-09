@@ -37,11 +37,11 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     pin_counts: list[int]
     trustedparts_link: str
+    color: str
     mounting_angle: str
     mounting_style: str
     reference: str = "S"
     number_of_rows: int = 1
-    footprint_series: str = ""
 
 
 class PartInfo(NamedTuple):
@@ -76,6 +76,7 @@ class PartInfo(NamedTuple):
     mpn: str
     series: str
     trustedparts_link: str
+    color: str
     pin_count: int
     mounting_angle: str
     mounting_style: str
@@ -116,6 +117,7 @@ class PartInfo(NamedTuple):
             mpn=mpn,
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
+            color=specs.color,
             pin_count=pin_count,
             mounting_angle=specs.mounting_angle,
             mounting_style=specs.mounting_style,
@@ -162,6 +164,7 @@ class PartInfo(NamedTuple):
             f"{specs.manufacturer}",
             f"{specs.base_series} series, ",
             f"{pin_count} positions tactile switch, ",
+            f"{specs.color}, ",
             f"{specs.mounting_angle} mounting, ",
             f"{specs.mounting_style}, ",
         ]
@@ -192,29 +195,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TS21-34-035-BK-260-SMT-TR": SeriesSpec(
         manufacturer="Same Sky",
         base_series="TS21-34-035-BK-260-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21",
+        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-260-SMT-TR",
         datasheet=(
             "https://www.sameskydevices.com/product/resource/ts21.pdf"
         ),
         pin_counts=[2],
         trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
         number_of_rows=2,
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
-        footprint_series="TS21",
-    ),
-    "TS21-34-035-BK-160-SMT-TR": SeriesSpec(
-        manufacturer="Same Sky",
-        base_series="TS21-34-035-BK-160-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21",
-        datasheet=(
-            "https://www.sameskydevices.com/product/resource/ts21.pdf"
-        ),
-        pin_counts=[2],
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-        footprint_series="TS21",
     ),
 }
