@@ -194,8 +194,8 @@ class PartInfo(NamedTuple):
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TS21-34-035-BK-260-SMT-TR": SeriesSpec(
         manufacturer="Same Sky",
-        base_series="TS21-34-035-BK-260-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-260-SMT-TR",
+        base_series="TS21",
+        footprint_pattern="tactile_switches_footprints:TS21",
         datasheet=(
             "https://www.sameskydevices.com/product/resource/ts21.pdf"
         ),
