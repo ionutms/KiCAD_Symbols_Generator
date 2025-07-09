@@ -103,14 +103,13 @@ class PartInfo(NamedTuple):
             specs.base_series,
             specs.manufacturer,
         )
-        footprint = specs.footprint_pattern.format(pin_count)
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         return PartInfo(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
             value=mpn,
-            footprint=footprint,
+            footprint=specs.footprint_pattern,
             datasheet=specs.datasheet,
             description=cls.create_description(pin_count, specs),
             manufacturer=specs.manufacturer,
