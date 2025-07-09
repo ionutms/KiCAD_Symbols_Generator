@@ -25,7 +25,6 @@ class NonPlatedRoundMountingHoles(NamedTuple):
                 - x: X position relative to the connector origin
                 - y: Y position relative to the connector origin
                 - diameter: Diameter of the mounting hole
-
     """
 
     footprint_specs: list[list[float]]
@@ -42,7 +41,6 @@ class PlatedOvalMountingHoles(NamedTuple):
                 - y: Y position relative to the connector origin
                 - pad_oval_size: Size of the oval pad
                 - drill_oval_size: Size of the oval drill hole
-
     """
 
     footprint_specs: list[list[float]]
@@ -59,7 +57,6 @@ class BodyDimensions(NamedTuple):
         width_right: Distance from origin to right edge
         height_top: Distance from origin to top edge
         height_bottom: Distance from origin to bottom edge
-
     """
 
     width_left: float
@@ -76,7 +73,6 @@ class InternalCourtyard(NamedTuple):
         width_right: Distance from origin to right edge
         height_top: Distance from origin to top edge
         height_bottom: Distance from origin to bottom edge
-
     """
 
     width_left: float
@@ -93,27 +89,26 @@ class FootprintSpecs(NamedTuple):
     KiCad footprint file.
 
     Attributes:
+        model_name: Name of the 3D model file (without extension)
         pad_pitch: Additional width needed per pin
         body_dimensions: Basic rectangle dimensions
-        pad_size:
-            Diameter/size of through-hole pads.
-            Can be either a single float for circular pads
-            or a list of [width, height] for rectangular pads
-        drill_size: Diameter of drill holes
+        pad_size: Diameter/size of through-hole pads
         mpn_y: Y position for manufacturer part number
         ref_y: Y position for reference designator
+        drill_size: Diameter of drill holes
         row_pitch: Additional height needed per row
         number_of_rows: Number of rows of pins
         non_plated_pad_size: Diameter of non-plated pads
         non_plated_drill_size: Diameter of non-plated drill holes
         non_plated_row_pitch: Additional height per row of non-plated pads
         miror_zig_zag: Mirror the zig-zag pattern
+        mirror_x_pin_numbering: Mirror pin numbering along X-axis
         non_plated_round_mounting_holes: Non-plated mounting holes
         plated_oval_mounting_holes: Plated oval mounting holes
         internal_courtyard: Internal courtyard dimensions
-
     """
 
+    model_name: str
     pad_pitch: float
     body_dimensions: BodyDimensions
     pad_size: float | list[float]
@@ -133,23 +128,8 @@ class FootprintSpecs(NamedTuple):
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
-    "TS21-34-035-BK-260-SMT-TR": FootprintSpecs(
-        pad_pitch=2,
-        row_pitch=3.25,
-        number_of_rows=2,
-        body_dimensions=BodyDimensions(
-            width_left=1.8,
-            width_right=1.8,
-            height_top=2.5,
-            height_bottom=2.5,
-        ),
-        pad_size=[0.6, 1.25],
-        drill_size=0.787,
-        mpn_y=3.556,
-        ref_y=-3.556,
-        mirror_x_pin_numbering=True,
-    ),
-    "TS21-34-035-BK-160-SMT-TR": FootprintSpecs(
+    "TS21": FootprintSpecs(
+        model_name="TS21",
         pad_pitch=2,
         row_pitch=3.25,
         number_of_rows=2,

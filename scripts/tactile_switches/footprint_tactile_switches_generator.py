@@ -27,7 +27,7 @@ def generate_footprint(  # noqa: C901
     part_info: symbol_tactile_switches_specs.PartInfo,
     footprint_specs: FootprintSpecs,
 ) -> str:
-    """Generate complete KiCad footprint file content for a tactile switches.
+    """Generate complete KiCad footprint file content for a tactile switch.
 
     Creates all required sections of a .kicad_mod file including component
     outline, pad definitions, text elements, and 3D model references.
@@ -38,7 +38,6 @@ def generate_footprint(  # noqa: C901
 
     Returns:
         Complete .kicad_mod file content as formatted string
-
     """
     dimensions = footprint_utils.calculate_dimensions(
         part_info.pin_count,
@@ -51,7 +50,7 @@ def generate_footprint(  # noqa: C901
     height_top = footprint_specs.body_dimensions.height_top
     height_bottom = footprint_specs.body_dimensions.height_bottom
 
-    model_file_name = f"{part_info.mpn}"
+    model_file_name = footprint_specs.model_name
     footprint_value = part_info.series
 
     if part_info.mounting_style == "Through Hole":
@@ -83,7 +82,7 @@ def generate_footprint(  # noqa: C901
 
     if (
         part_info.mounting_style == "Surface Mount"
-        and footprint_specs.number_of_rows == 2  # noqa: PLR2004
+        and footprint_specs.number_of_rows == 2
     ):
         pads = [
             footprint_utils.generate_surface_mount_pads(
@@ -114,9 +113,9 @@ def generate_footprint(  # noqa: C901
                 mounting_holes_specs,
             )
 
-    second_coutyard = ""
+    second_courtyard = ""
     if footprint_specs.internal_courtyard is not None:
-        second_coutyard = footprint_utils.generate_courtyard_2(
+        second_courtyard = footprint_utils.generate_courtyard_2(
             footprint_specs.internal_courtyard.width_left,
             footprint_specs.internal_courtyard.width_right,
             footprint_specs.internal_courtyard.height_top,
@@ -135,7 +134,7 @@ def generate_footprint(  # noqa: C901
         )
 
     sections = [
-        footprint_utils.generate_header(part_info.mpn),
+        footprint_utils.generate_header(part_info.footprint.split(":")[-1]),
         footprint_utils.generate_properties(
             footprint_specs.ref_y,
             footprint_value,
@@ -147,7 +146,7 @@ def generate_footprint(  # noqa: C901
             height_top,
             height_bottom,
         ),
-        second_coutyard,
+        second_courtyard,
         footprint_utils.generate_silkscreen_rectangle(
             width_left,
             width_right,
@@ -174,7 +173,7 @@ def generate_footprint_file(
     part_info: symbol_tactile_switches_specs.PartInfo,
     output_path: str,
 ) -> None:
-    """Generate and save a complete .kicad_mod file for a tactile switches.
+    """Generate and save a complete .kicad_mod file for a tactile switch.
 
     Creates a KiCad footprint file in the connector_footprints.pretty
     directory using the specified part information and
@@ -186,11 +185,14 @@ def generate_footprint_file(
 
     Returns:
         None
-
     """
-    footprint_specs = CONNECTOR_SPECS[part_info.series]
+    footprint_name = part_info.footprint.split(":")[-1]
+    footprint_specs = CONNECTOR_SPECS.get(footprint_name)
+    if not footprint_specs:
+        raise ValueError(f"No footprint specs found for {footprint_name}")
+
     footprint_content = generate_footprint(part_info, footprint_specs)
-    filename = f"{part_info.mpn}.kicad_mod"
+    filename = f"{footprint_name}.kicad_mod"
     file_path = f"{output_path}/{filename}"
 
     with Path.open(file_path, "w", encoding="utf-8") as file_handle:

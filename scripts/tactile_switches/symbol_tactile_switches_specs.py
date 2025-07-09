@@ -12,28 +12,26 @@ from typing import NamedTuple
 class SeriesSpec(NamedTuple):
     """Connector series specifications.
 
-    This class defines the complete specifications for a series of tactile switchess,
+    This class defines the complete specifications for a series of tactile switches,
     including physical characteristics and documentation.
 
     Attributes:
         manufacturer: Manufacturer name
         base_series: Base series identifier
-        footprint_pattern: KiCad footprint pattern string
+        footprint_name: Name of the shared footprint (e.g., TS21)
         datasheet: URL to the manufacturer's datasheet
         pin_counts: List of available pin counts
         trustedparts_link: URL to the Trusted Parts tactile switches listing
         color: Color of the tactile switches housing
-        pitch: Pin-to-pin spacing in millimeters
         mounting_angle: Mounting orientation of the tactile switches
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
-        contact_plating: Material used for contact plating
-        reference: Reference designator prefix (default: "J")
-
+        reference: Reference designator prefix (default: "S")
+        number_of_rows: Number of rows of pins
     """
 
     manufacturer: str
     base_series: str
-    footprint_pattern: str
+    footprint_name: str
     datasheet: str
     pin_counts: list[int]
     trustedparts_link: str
@@ -42,6 +40,11 @@ class SeriesSpec(NamedTuple):
     mounting_style: str
     reference: str = "S"
     number_of_rows: int = 1
+
+    @property
+    def footprint_pattern(self) -> str:
+        """Generate footprint pattern using the footprint_name."""
+        return f"tactile_switches_footprints:{self.footprint_name}"
 
 
 class PartInfo(NamedTuple):
@@ -59,11 +62,10 @@ class PartInfo(NamedTuple):
         series: Base series identifier
         trustedparts_link: URL to the Trusted Parts tactile switches listing
         color: Color of the tactile switches housing
-        pitch: Pin-to-pin spacing in millimeters
         pin_count: Number of pins
         mounting_angle: Mounting orientation of the tactile switches
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
-
+        number_of_rows: Number of rows of pins
     """
 
     symbol_name: str
@@ -96,7 +98,6 @@ class PartInfo(NamedTuple):
 
         Returns:
             PartInfo instance with all specifications
-
         """
         mpn = cls.generate_part_code(
             pin_count,
@@ -139,7 +140,6 @@ class PartInfo(NamedTuple):
 
         Returns:
             str: Part code string
-
         """
         return f"{series_code}"
 
@@ -157,7 +157,6 @@ class PartInfo(NamedTuple):
 
         Returns:
             Formatted description string including all relevant specifications
-
         """
         parts = [
             f"{specs.manufacturer}",
@@ -182,7 +181,6 @@ class PartInfo(NamedTuple):
 
         Returns:
             List of PartInfo instances
-
         """
         return [
             cls.create_part_info(pin_count, specs)
@@ -194,10 +192,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TS21-34-035-BK-260-SMT-TR": SeriesSpec(
         manufacturer="Same Sky",
         base_series="TS21-34-035-BK-260-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-260-SMT-TR",
-        datasheet=(
-            "https://www.sameskydevices.com/product/resource/ts21.pdf"
-        ),
+        footprint_name="TS21",
+        datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
         pin_counts=[2],
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
@@ -208,10 +204,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TS21-34-035-BK-160-SMT-TR": SeriesSpec(
         manufacturer="Same Sky",
         base_series="TS21-34-035-BK-160-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-160-SMT-TR",
-        datasheet=(
-            "https://www.sameskydevices.com/product/resource/ts21.pdf"
-        ),
+        footprint_name="TS21",
+        datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
         pin_counts=[2],
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
