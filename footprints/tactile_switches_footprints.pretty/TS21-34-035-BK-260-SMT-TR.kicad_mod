@@ -1,0 +1,132 @@
+(footprint "TS21-34-035-BK-260-SMT-TR"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -3.556 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "1c5a7513-13fa-454c-acb1-69ff65e6922b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "TS21-34-035-BK-260-SMT-TR"
+            (at 0 3.556 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "49733931-f6fb-4fb1-9ee0-10c7f41233da")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "54cd2134-a488-4534-a013-04924c233651")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 4.8260000000000005 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "610dee96-8f4d-4483-8d32-2f7ff89fa580")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -1.8 2.5)
+            (end 1.8 -2.5)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "ab2bfae9-1f90-4143-bc76-7a226bc3e61a")
+        )
+        
+
+
+        (fp_rect
+            (start -1.8 2.5)
+            (end 1.8 -2.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "6a5defec-d395-41e0-bf53-d8094abe5734")
+        )
+        
+
+        (fp_rect
+            (start -1.8 2.5)
+            (end 1.8 -2.5)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "34292b87-b506-4bc4-9bf8-7aee29d30492")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -1.000 1.625)
+                (size 0.6 1.25)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "29fa2597-a2fd-4735-a5fc-73532c023948")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at -1.000 -1.625)
+                (size 0.6 1.25)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "676095bd-25bb-4454-a7d0-021902af2f74")
+            )
+            
+
+            (pad "3" smd roundrect
+                (at 1.000 1.625)
+                (size 0.6 1.25)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "3124e4a7-81a2-470b-b593-864f728028a6")
+            )
+            
+
+            (pad "4" smd roundrect
+                (at 1.000 -1.625)
+                (size 0.6 1.25)
+                (layers "F.Cu" "F.Paste")
+                (roundrect_rratio 0.25)
+                (uuid "4e67f698-effc-4510-97dd-46804d443015")
+            )
+            
+
+        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/tactile_switches/TS21-34-035-BK-260-SMT-TR.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
