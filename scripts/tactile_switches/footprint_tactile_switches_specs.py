@@ -149,4 +149,20 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-3.556,
         mirror_x_pin_numbering=True,
     ),
+    "TS21-34-035-BK-160-SMT-TR": FootprintSpecs(
+        pad_pitch=2,
+        row_pitch=3.25,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.8,
+            width_right=1.8,
+            height_top=2.5,
+            height_bottom=2.5,
+        ),
+        pad_size=[0.6, 1.25],
+        drill_size=0.787,
+        mpn_y=3.556,
+        ref_y=-3.556,
+        mirror_x_pin_numbering=True,
+    ),
 }

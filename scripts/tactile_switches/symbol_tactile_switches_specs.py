@@ -195,7 +195,21 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TS21-34-035-BK-260-SMT-TR": SeriesSpec(
         manufacturer="Same Sky",
         base_series="TS21-34-035-BK-260-SMT-TR",
-        footprint_pattern="tactile_switches_footprints:TS21",
+        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-260-SMT-TR",
+        datasheet=(
+            "https://www.sameskydevices.com/product/resource/ts21.pdf"
+        ),
+        pin_counts=[2],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        mounting_style="Surface Mount",
+    ),
+    "TS21-34-035-BK-160-SMT-TR": SeriesSpec(
+        manufacturer="Same Sky",
+        base_series="TS21-34-035-BK-160-SMT-TR",
+        footprint_pattern="tactile_switches_footprints:TS21-34-035-BK-160-SMT-TR",
         datasheet=(
             "https://www.sameskydevices.com/product/resource/ts21.pdf"
         ),
