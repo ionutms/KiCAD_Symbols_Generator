@@ -197,12 +197,12 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
     ),
     "TS29-R": FootprintSpecs(
         model_name="TS29-R",
-        pad_pitch=12.4,
+        pad_pitch=6.2,
         row_pitch=5,
         number_of_rows=2,
         body_dimensions=BodyDimensions(
-            width_left=8.5,
-            width_right=8.5,
+            width_left=5,
+            width_right=5,
             height_top=8.2,
             height_bottom=8.2,
         ),
