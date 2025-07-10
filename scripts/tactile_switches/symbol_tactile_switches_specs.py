@@ -249,4 +249,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
     ),
+    "TS29-1212-1-R-300-D": SeriesSpec(
+        manufacturer="Same Sky",
+        base_series="TS29-1212-1-R-300-D",
+        footprint_name="TS29-R",
+        datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
+        pin_counts=[2],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        mounting_style="Through Hole",
+    ),
 }

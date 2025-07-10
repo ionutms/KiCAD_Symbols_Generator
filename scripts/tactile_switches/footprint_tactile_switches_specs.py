@@ -52,6 +52,12 @@ class MountingPads(NamedTuple):
     dimensions: list[list[float]]
 
 
+class NonPlatedMountingHoles(NamedTuple):
+    """TODO"""
+
+    dimensions: list[list[float]]
+
+
 class BodyDimensions(NamedTuple):
     """Defines rectangular dimensions for component footprint outlines.
 
@@ -133,6 +139,7 @@ class FootprintSpecs(NamedTuple):
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
     internal_courtyard: None | InternalCourtyard = None
     mounting_pads: None | MountingPads = None
+    non_plated_mounting_holes: None | NonPlatedMountingHoles = None
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -187,5 +194,23 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=6.096,
         ref_y=-6.096,
         mirror_x_pin_numbering=True,
+    ),
+    "TS29-R": FootprintSpecs(
+        model_name="TS29-R",
+        pad_pitch=12.4,
+        row_pitch=5,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=8.5,
+            width_right=8.5,
+            height_top=8.2,
+            height_bottom=8.2,
+        ),
+        pad_size=2.8,
+        drill_size=1.4,
+        mpn_y=9.144,
+        ref_y=-9.144,
+        mirror_x_pin_numbering=True,
+        non_plated_mounting_holes=[[0, 4.4, 1.8], [0, -4.4, 1.8]],
     ),
 }
