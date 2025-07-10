@@ -6,7 +6,7 @@ providing a framework for managing tactile switches component information.
 
 from __future__ import annotations
 
-from typing import NamedTuple
+from typing import NamedTuple, Optional, List, Tuple
 
 
 class SeriesSpec(NamedTuple):
@@ -26,6 +26,9 @@ class SeriesSpec(NamedTuple):
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         reference: Reference designator prefix (default: "S")
         number_of_rows: Number of rows of pins
+        override_pins_specs:
+            Optional list of tuples specifying custom pin configurations
+            (pin_number, x, y, angle)
     """
 
     manufacturer: str
@@ -38,6 +41,7 @@ class SeriesSpec(NamedTuple):
     mounting_style: str
     reference: str = "S"
     number_of_rows: int = 1
+    override_pins_specs: Optional[List[Tuple[str, float, float, int]]] = None
 
     @property
     def footprint_pattern(self) -> str:
@@ -247,10 +251,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS29-1212-1-R-300-D",
         footprint_name="TS29-R",
         datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_count=3,
         number_of_rows=2,
+        trustedparts_link="https://www.trustedparts.com/en/search",
         mounting_angle="Vertical",
         mounting_style="Through Hole",
+        override_pins_specs=[
+            ("1", -1.27, 5.08, 270),
+            ("2", 1.27, 5.08, 270),
+            ("5", 3.81, 5.08, 270),
+            ("3", -1.27, -5.08, 90),
+            ("4", 1.27, -5.08, 90),
+            ("5", 3.81, -5.08, 90),
+        ],
     ),
 }

@@ -5,9 +5,10 @@ Modified to match specific pin and field positioning requirements.
 """
 
 from pathlib import Path
-from typing import TextIO
+from typing import TextIO, List, Tuple
 
 from utilities import file_handler_utilities, symbol_utils
+from symbol_tactile_switches_specs import SeriesSpec
 
 
 def generate_kicad_symbol(
@@ -100,30 +101,39 @@ def write_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    start_y = (pin_count - 1) * pin_spacing / 2
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(component_data.get("Series", ""))
 
-    def toggle_angle(current):
-        return 90 if current == 270 else 270
-
-    if number_of_rows == 2:  # noqa: PLR2004
-        angle = 270  # Start with 270
-        for pin_num in range(1, pin_count * 2, 2):
-            y_pos = start_y - (pin_num - 1) * pin_spacing / 2
-
-            # Both pins in this row use the same angle
-            symbol_utils.write_pin(
-                symbol_file, -2.54 / 2, y_pos, angle, str(pin_num)
-            )
-            symbol_utils.write_pin(
-                symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
-            )
-
-            # Toggle angle for next row
-            angle = toggle_angle(angle)
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            symbol_utils.write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
-        for pin_num in range(1, pin_count + 1):
-            y_pos = start_y - (pin_num - 1) * pin_spacing
-            symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                symbol_utils.write_pin(
+                    symbol_file, -2.54 / 2, y_pos, angle, str(pin_num)
+                )
+                symbol_utils.write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                symbol_utils.write_pin(
+                    symbol_file, -5.08, y_pos, 0, str(pin_num)
+                )
 
     symbol_file.write(f"""
 			(circle
@@ -160,3 +170,23 @@ def write_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
     symbol_file.write("\t\t)\n")
+
+
+def get_override_pins_specs(
+    series: str,
+) -> List[Tuple[str, float, float, int]]:
+    """Retrieve override pin specifications for a given series.
+
+    Args:
+        series (str): The series identifier for the tactile switch.
+
+    Returns:
+        List[Tuple[str, float, float, int]]: List of tuples containing pin number, x, y, and angle.
+        Returns empty list if no override specs are found.
+    """
+    from symbol_tactile_switches_specs import SYMBOLS_SPECS
+
+    specs = SYMBOLS_SPECS.get(series)
+    if specs and specs.override_pins_specs:
+        return specs.override_pins_specs
+    return []
