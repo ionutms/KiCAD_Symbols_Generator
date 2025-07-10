@@ -856,6 +856,35 @@ def generate_oval_plated_through_hole(
     return "\n".join(pads)
 
 
+def generate_mounting_pads(
+    mounting_pads_specs: list[float],
+) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        mounting_pads_specs: List of mounting hole specifications
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    pads = []
+
+    x, y, pad_size_x, pad_size_y = mounting_pads_specs
+
+    pad = f"""
+        (pad "" smd roundrect
+            (at {x} {y})
+            (size {pad_size_x} {pad_size_y})
+            (layers "F.Cu" "F.Paste")
+            (roundrect_rratio 0.25)
+            (uuid "{uuid4()}")
+        )
+        """
+    pads.append(pad)
+    return "\n".join(pads)
+
+
 def calculate_dimensions(
     pin_count: int,
     pad_pitch: float,

@@ -113,6 +113,11 @@ def generate_footprint(  # noqa: C901
                 mounting_holes_specs,
             )
 
+    if footprint_specs.mounting_pads is not None:
+        for _, mounting_pads in enumerate(footprint_specs.mounting_pads):
+            print(mounting_pads)
+            pads += footprint_utils.generate_mounting_pads(mounting_pads)
+
     second_courtyard = ""
     if footprint_specs.internal_courtyard is not None:
         second_courtyard = footprint_utils.generate_courtyard_2(
