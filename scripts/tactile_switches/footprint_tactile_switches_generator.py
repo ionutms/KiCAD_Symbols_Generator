@@ -54,15 +54,20 @@ def generate_footprint(  # noqa: C901
     footprint_value = part_info.series
 
     if part_info.mounting_style == "Through Hole":
-        pads = footprint_utils.generate_thru_hole_pads(
-            part_info.pin_count,
-            footprint_specs.pad_pitch,
-            footprint_specs.pad_size,
-            footprint_specs.drill_size,
-            dimensions["start_pos"],
-            row_pitch=footprint_specs.row_pitch,
-            row_count=footprint_specs.number_of_rows,
-        )
+        if footprint_specs.pad_properties is not None:
+            pads = footprint_utils.generate_custom_thru_hole_pads(
+                footprint_specs.pad_properties,
+            )
+        else:
+            pads = footprint_utils.generate_thru_hole_pads(
+                part_info.pin_count,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
+                footprint_specs.drill_size,
+                dimensions["start_pos"],
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
+            )
 
     if (
         part_info.mounting_style == "Surface Mount"

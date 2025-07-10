@@ -7,6 +7,7 @@ silkscreen lines, and component properties.
 
 from __future__ import annotations
 
+from typing import NamedTuple
 from uuid import uuid4
 
 
@@ -627,6 +628,35 @@ def generate_thru_hole_pads(  # noqa: PLR0913
                 (at {final_xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
+def generate_custom_thru_hole_pads(pad_properties: list[NamedTuple]) -> str:
+    """Generate the pads section of the footprint.
+
+    Args:
+        pad_properties: TODO
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+
+    pads = []
+    for pad_property in pad_properties:
+        pad_type = "rect" if pad_property.name == "1" else "circle"
+        pad = f"""
+            (pad "{pad_property.name}" thru_hole {pad_type}
+                (at {pad_property.x} {pad_property.y})
+                (size {pad_property.pad_size} {pad_property.pad_size})
+                (drill {pad_property.drill_size})
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)

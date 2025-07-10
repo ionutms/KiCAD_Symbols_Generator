@@ -12,7 +12,7 @@ extend left/down.
 
 from __future__ import annotations
 
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 
 class NonPlatedRoundMountingHoles(NamedTuple):
@@ -93,6 +93,24 @@ class InternalCourtyard(NamedTuple):
     height_bottom: float
 
 
+class PadProperties(NamedTuple):
+    """Defines properties for individual pads in a connector footprint.
+
+    Attributes:
+        name: Identifier for the pad (e.g., '1', '2', 'A1', etc.)
+        x: X coordinate of the pad center relative to the origin
+        y: Y coordinate of the pad center relative to the origin
+        diameter: TODO
+        drill_size: TODO
+    """
+
+    name: str
+    x: float
+    y: float
+    pad_size: float
+    drill_size: float
+
+
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a connector footprint.
 
@@ -119,6 +137,8 @@ class FootprintSpecs(NamedTuple):
         plated_oval_mounting_holes: Plated oval mounting holes
         internal_courtyard: Internal courtyard dimensions
         mounting_pads: TODO
+        non_plated_mounting_holes: TODO
+        pad_properties: List of pad properties including name and coordinates
     """
 
     model_name: str
@@ -140,6 +160,7 @@ class FootprintSpecs(NamedTuple):
     internal_courtyard: None | InternalCourtyard = None
     mounting_pads: None | MountingPads = None
     non_plated_mounting_holes: None | NonPlatedMountingHoles = None
+    pad_properties: Optional[list[PadProperties]] = None
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -212,5 +233,23 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-9.144,
         mirror_x_pin_numbering=True,
         non_plated_mounting_holes=[[0, 4.4, 1.8], [0, -4.4, 1.8]],
+        pad_properties=[
+            PadProperties(
+                name="1", x=6.2, y=2.5, pad_size=2.4, drill_size=1.4
+            ),
+            PadProperties(
+                name="2", x=-6.2, y=2.5, pad_size=2.4, drill_size=1.4
+            ),
+            PadProperties(
+                name="3", x=6.2, y=-2.5, pad_size=2.4, drill_size=1.4
+            ),
+            PadProperties(
+                name="4", x=-6.2, y=-2.5, pad_size=2.4, drill_size=1.4
+            ),
+            PadProperties(name="5", x=0, y=6.6, pad_size=2.3, drill_size=1.3),
+            PadProperties(
+                name="6", x=0, y=-6.6, pad_size=2.3, drill_size=1.3
+            ),
+        ],
     ),
 }
