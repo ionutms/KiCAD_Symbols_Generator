@@ -20,7 +20,7 @@ class SeriesSpec(NamedTuple):
         base_series: Base series identifier
         footprint_name: Name of the shared footprint (e.g., TS21)
         datasheet: URL to the manufacturer's datasheet
-        pin_counts: List of available pin counts
+        pin_count: Number of pins
         trustedparts_link: URL to the Trusted Parts tactile switches listing
         mounting_angle: Mounting orientation of the tactile switches
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
@@ -32,7 +32,7 @@ class SeriesSpec(NamedTuple):
     base_series: str
     footprint_name: str
     datasheet: str
-    pin_counts: list[int]
+    pin_count: int
     trustedparts_link: str
     mounting_angle: str
     mounting_style: str
@@ -83,20 +83,18 @@ class PartInfo(NamedTuple):
     @classmethod
     def create_part_info(
         cls,
-        pin_count: int,
         specs: SeriesSpec,
     ) -> PartInfo:
         """Create complete part information.
 
         Args:
-            pin_count: Number of pins
             specs: Series specifications
 
         Returns:
             PartInfo instance with all specifications
         """
         mpn = cls.generate_part_code(
-            pin_count,
+            specs.pin_count,
             specs.base_series,
             specs.manufacturer,
         )
@@ -108,12 +106,12 @@ class PartInfo(NamedTuple):
             value=mpn,
             footprint=specs.footprint_pattern,
             datasheet=specs.datasheet,
-            description=cls.create_description(pin_count, specs),
+            description=cls.create_description(specs),
             manufacturer=specs.manufacturer,
             mpn=mpn,
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
-            pin_count=pin_count,
+            pin_count=specs.pin_count,
             mounting_angle=specs.mounting_angle,
             mounting_style=specs.mounting_style,
             number_of_rows=specs.number_of_rows,
@@ -141,13 +139,11 @@ class PartInfo(NamedTuple):
     @classmethod
     def create_description(
         cls,
-        pin_count: int,
         specs: SeriesSpec,
     ) -> str:
         """Create component description with comprehensive specifications.
 
         Args:
-            pin_count: Number of pins
             specs: Series specifications
 
         Returns:
@@ -156,7 +152,7 @@ class PartInfo(NamedTuple):
         parts = [
             f"{specs.manufacturer}",
             f"{specs.base_series} series, ",
-            f"{pin_count} positions tactile switch, ",
+            f"{specs.pin_count} positions tactile switch, ",
             f"{specs.mounting_angle} mounting, ",
             f"{specs.mounting_style}, ",
         ]
@@ -168,18 +164,15 @@ class PartInfo(NamedTuple):
         cls,
         specs: SeriesSpec,
     ) -> list[PartInfo]:
-        """Generate all part numbers for the series.
+        """Generate part number for the series.
 
         Args:
             specs: Series specifications
 
         Returns:
-            List of PartInfo instances
+            List containing a single PartInfo instance
         """
-        return [
-            cls.create_part_info(pin_count, specs)
-            for pin_count in specs.pin_counts
-        ]
+        return [cls.create_part_info(specs)]
 
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
@@ -188,7 +181,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS21-34-035-BK-260-SMT-TR",
         footprint_name="TS21",
         datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -199,7 +192,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS21-34-035-BK-160-SMT-TR",
         footprint_name="TS21",
         datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -210,7 +203,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS24-62-14-BL-200-SMT-TR-67",
         footprint_name="TS24-BL",
         datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -221,7 +214,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS24-62-14-BL-250-SMT-TR-67",
         footprint_name="TS24-BL",
         datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -232,7 +225,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS24-62-14-CL-250-SMT-TR-67",
         footprint_name="TS24-CL",
         datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -243,7 +236,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS24-62-14-CL-200-SMT-TR-67",
         footprint_name="TS24-CL",
         datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
@@ -254,7 +247,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="TS29-1212-1-R-300-D",
         footprint_name="TS29-R",
         datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
-        pin_counts=[2],
+        pin_count=2,
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=2,
         mounting_angle="Vertical",
