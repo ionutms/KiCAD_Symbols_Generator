@@ -28,7 +28,6 @@ HEADER_MAPPING: Final[dict] = {
     "MPN": lambda part: part.mpn,
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
-    "Color": lambda part: part.color,
     "Pin Count": lambda part: part.pin_count,
     "Mounting Angle": lambda part: part.mounting_angle,
     "Mounting Style": lambda part: part.mounting_style,
