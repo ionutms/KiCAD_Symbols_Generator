@@ -4,217 +4,6 @@
             (generator kicad_symbol_editor)
             (generator_version 8.0)
         
-        (symbol "S_TS21-34-035-BK-260-SMT-TR"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
-        (property "Reference" "S"
-            (at 5.08 5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Value" "TS21-34-035-BK-260-SMT-TR"
-            (at 5.08 -5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Footprint" "tactile_switches_footprints:TS21"
-            (at 5.08 -7.62 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts21.pdf"
-            (at 5.08 -10.16 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Description" "Same Sky TS21-34-035-BK-260-SMT-TR series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
-            (at 5.08 -12.7 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "MPN" "TS21-34-035-BK-260-SMT-TR"
-            (at 5.08 -15.24 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Manufacturer" "Same Sky"
-            (at 5.08 -17.78 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Angle" "Vertical"
-            (at 5.08 -20.32 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Style" "Surface Mount"
-            (at 5.08 -22.86 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Number of Rows" "2"
-            (at 5.08 -25.4 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Pin Count" "2"
-            (at 5.08 -27.939999999999998 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Series" "TS21-34-035-BK-260-SMT-TR"
-            (at 5.08 -30.479999999999997 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Symbol Name" "S_TS21-34-035-BK-260-SMT-TR"
-            (at 5.08 -33.019999999999996 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS21-34-035-BK-260-SMT-TR"
-            (at 5.08 -35.559999999999995 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        		(symbol "S_TS21-34-035-BK-260-SMT-TR_0_0"
-
-        (pin unspecified line
-            (at -1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "2"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at -1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "3"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-			(circle
-				(center 0 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 0 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts
-					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
-                    (xy 0 1.27) (xy 1.27 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy 1.27 -2.54) (xy -1.27 -2.54)
-                    (xy 0 -2.54) (xy 0 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-    		)
-		(symbol "S_TS21-34-035-BK-260-SMT-TR_1_0"
-		)
-)
         (symbol "S_TS21-34-035-BK-160-SMT-TR"
             (pin_names(offset 0.254))
             (exclude_from_sim no)
@@ -261,7 +50,7 @@
             )
         )
         
-        (property "Description" "Same Sky TS21-34-035-BK-160-SMT-TR series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
+        (property "Description" "Same Sky Vertical mounting,  Surface Mount, "
             (at 5.08 -12.7 0)
             (show_name)
             (effects
@@ -426,6 +215,217 @@
 		(symbol "S_TS21-34-035-BK-160-SMT-TR_1_0"
 		)
 )
+        (symbol "S_TS21-34-035-BK-260-SMT-TR"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        
+        (property "Reference" "S"
+            (at 5.08 5.08 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "TS21-34-035-BK-260-SMT-TR"
+            (at 5.08 -5.08 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "tactile_switches_footprints:TS21"
+            (at 5.08 -7.62 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts21.pdf"
+            (at 5.08 -10.16 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Same Sky Vertical mounting,  Surface Mount, "
+            (at 5.08 -12.7 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "TS21-34-035-BK-260-SMT-TR"
+            (at 5.08 -15.24 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Same Sky"
+            (at 5.08 -17.78 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 5.08 -20.32 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Surface Mount"
+            (at 5.08 -22.86 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 5.08 -25.4 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "2"
+            (at 5.08 -27.939999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "TS21-34-035-BK-260-SMT-TR"
+            (at 5.08 -30.479999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_TS21-34-035-BK-260-SMT-TR"
+            (at 5.08 -33.019999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS21-34-035-BK-260-SMT-TR"
+            (at 5.08 -35.559999999999995 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        		(symbol "S_TS21-34-035-BK-260-SMT-TR_0_0"
+
+        (pin unspecified line
+            (at -1.27 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 1.27 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at -1.27 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 1.27 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(circle
+				(center 0 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 0 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
+                    (xy 0 1.27) (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.27 -2.54) (xy -1.27 -2.54)
+                    (xy 0 -2.54) (xy 0 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+    		)
+		(symbol "S_TS21-34-035-BK-260-SMT-TR_1_0"
+		)
+)
         (symbol "S_TS24-62-14-BL-200-SMT-TR-67"
             (pin_names(offset 0.254))
             (exclude_from_sim no)
@@ -472,7 +472,7 @@
             )
         )
         
-        (property "Description" "Same Sky TS24-62-14-BL-200-SMT-TR-67 series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
+        (property "Description" "Same Sky Vertical mounting,  Surface Mount, "
             (at 5.08 -12.7 0)
             (show_name)
             (effects
@@ -683,7 +683,7 @@
             )
         )
         
-        (property "Description" "Same Sky TS24-62-14-BL-250-SMT-TR-67 series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
+        (property "Description" "Same Sky Vertical mounting,  Surface Mount, "
             (at 5.08 -12.7 0)
             (show_name)
             (effects
@@ -848,428 +848,6 @@
 		(symbol "S_TS24-62-14-BL-250-SMT-TR-67_1_0"
 		)
 )
-        (symbol "S_TS24-62-14-CL-250-SMT-TR-67"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
-        (property "Reference" "S"
-            (at 5.08 5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Value" "TS24-62-14-CL-250-SMT-TR-67"
-            (at 5.08 -5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Footprint" "tactile_switches_footprints:TS24-CL"
-            (at 5.08 -7.62 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts24.pdf"
-            (at 5.08 -10.16 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Description" "Same Sky TS24-62-14-CL-250-SMT-TR-67 series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
-            (at 5.08 -12.7 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "MPN" "TS24-62-14-CL-250-SMT-TR-67"
-            (at 5.08 -15.24 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Manufacturer" "Same Sky"
-            (at 5.08 -17.78 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Angle" "Vertical"
-            (at 5.08 -20.32 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Style" "Surface Mount"
-            (at 5.08 -22.86 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Number of Rows" "2"
-            (at 5.08 -25.4 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Pin Count" "2"
-            (at 5.08 -27.939999999999998 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Series" "TS24-62-14-CL-250-SMT-TR-67"
-            (at 5.08 -30.479999999999997 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Symbol Name" "S_TS24-62-14-CL-250-SMT-TR-67"
-            (at 5.08 -33.019999999999996 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS24-62-14-CL-250-SMT-TR-67"
-            (at 5.08 -35.559999999999995 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        		(symbol "S_TS24-62-14-CL-250-SMT-TR-67_0_0"
-
-        (pin unspecified line
-            (at -1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "2"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at -1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "3"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-			(circle
-				(center 0 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 0 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts
-					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
-                    (xy 0 1.27) (xy 1.27 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy 1.27 -2.54) (xy -1.27 -2.54)
-                    (xy 0 -2.54) (xy 0 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-    		)
-		(symbol "S_TS24-62-14-CL-250-SMT-TR-67_1_0"
-		)
-)
-        (symbol "S_TS24-62-14-CL-200-SMT-TR-67"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
-        (property "Reference" "S"
-            (at 5.08 5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Value" "TS24-62-14-CL-200-SMT-TR-67"
-            (at 5.08 -5.08 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Footprint" "tactile_switches_footprints:TS24-CL"
-            (at 5.08 -7.62 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts24.pdf"
-            (at 5.08 -10.16 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Description" "Same Sky TS24-62-14-CL-200-SMT-TR-67 series,  2 positions tactile switch,  Vertical mounting,  Surface Mount, "
-            (at 5.08 -12.7 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "MPN" "TS24-62-14-CL-200-SMT-TR-67"
-            (at 5.08 -15.24 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Manufacturer" "Same Sky"
-            (at 5.08 -17.78 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Angle" "Vertical"
-            (at 5.08 -20.32 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Style" "Surface Mount"
-            (at 5.08 -22.86 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Number of Rows" "2"
-            (at 5.08 -25.4 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Pin Count" "2"
-            (at 5.08 -27.939999999999998 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Series" "TS24-62-14-CL-200-SMT-TR-67"
-            (at 5.08 -30.479999999999997 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Symbol Name" "S_TS24-62-14-CL-200-SMT-TR-67"
-            (at 5.08 -33.019999999999996 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS24-62-14-CL-200-SMT-TR-67"
-            (at 5.08 -35.559999999999995 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        		(symbol "S_TS24-62-14-CL-200-SMT-TR-67_0_0"
-
-        (pin unspecified line
-            (at -1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 5.08 270)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "2"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at -1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "3"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin unspecified line
-            (at 1.27 -5.08 90)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-			(circle
-				(center 0 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 0 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts
-					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
-                    (xy 0 1.27) (xy 1.27 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy 1.27 -2.54) (xy -1.27 -2.54)
-                    (xy 0 -2.54) (xy 0 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-    		)
-		(symbol "S_TS24-62-14-CL-200-SMT-TR-67_1_0"
-		)
-)
         (symbol "S_TS29-1212-1-R-300-D"
             (pin_names(offset 0.254))
             (exclude_from_sim no)
@@ -1316,7 +894,7 @@
             )
         )
         
-        (property "Description" "Same Sky TS29-1212-1-R-300-D series,  3 positions tactile switch,  Vertical mounting,  Through Hole, "
+        (property "Description" "Same Sky Vertical mounting,  Through Hole, "
             (at 5.08 -13.97 0)
             (show_name)
             (effects
@@ -1418,7 +996,7 @@
         		(symbol "S_TS29-1212-1-R-300-D_0_0"
 
         (pin unspecified line
-            (at -1.27 5.08 270)
+            (at -2.54 5.08 270)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "1"(effects(font(size 1.27 1.27))))
@@ -1426,7 +1004,7 @@
         )
         
         (pin unspecified line
-            (at 1.27 5.08 270)
+            (at 0 5.08 270)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "2"(effects(font(size 1.27 1.27))))
@@ -1434,7 +1012,7 @@
         )
         
         (pin unspecified line
-            (at 3.81 5.08 270)
+            (at 2.54 5.08 270)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "5"(effects(font(size 1.27 1.27))))
@@ -1442,7 +1020,7 @@
         )
         
         (pin unspecified line
-            (at -1.27 -5.08 90)
+            (at -2.54 -5.08 90)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "3"(effects(font(size 1.27 1.27))))
@@ -1450,7 +1028,7 @@
         )
         
         (pin unspecified line
-            (at 1.27 -5.08 90)
+            (at 0 -5.08 90)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "4"(effects(font(size 1.27 1.27))))
@@ -1458,42 +1036,1145 @@
         )
         
         (pin unspecified line
-            (at 3.81 -5.08 90)
+            (at 2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        255 0 0 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    		)
+		(symbol "S_TS29-1212-1-R-300-D_1_0"
+		)
+)
+        (symbol "S_TS29-1212-1-G-300-D"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        
+        (property "Reference" "S"
+            (at 5.08 6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "TS29-1212-1-G-300-D"
+            (at 5.08 -6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "tactile_switches_footprints:TS29-G"
+            (at 5.08 -8.89 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts29.pdf"
+            (at 5.08 -11.43 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Same Sky Vertical mounting,  Through Hole, "
+            (at 5.08 -13.97 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "TS29-1212-1-G-300-D"
+            (at 5.08 -16.51 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Same Sky"
+            (at 5.08 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 5.08 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Through Hole"
+            (at 5.08 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 5.08 -26.669999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "3"
+            (at 5.08 -29.209999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "TS29-1212-1-G-300-D"
+            (at 5.08 -31.749999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_TS29-1212-1-G-300-D"
+            (at 5.08 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS29-1212-1-G-300-D"
+            (at 5.08 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        		(symbol "S_TS29-1212-1-G-300-D_0_0"
+
+        (pin unspecified line
+            (at -2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 5.08 270)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "5"(effects(font(size 1.27 1.27))))
             
         )
         
+        (pin unspecified line
+            (at -2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
 			(circle
-				(center 0 1.27)
+				(center -1.27 1.27)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(circle
-				(center 0 -1.27)
+				(center -1.27 -1.27)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(polyline
 				(pts
-					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
-                    (xy 0 1.27) (xy 1.27 -1.27)
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
 				)
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 1.27 -2.54) (xy -1.27 -2.54)
-                    (xy 0 -2.54) (xy 0 -1.27)
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
 				)
 				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        0 255 0 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
 				(fill (type none))
 			)
     		)
-		(symbol "S_TS29-1212-1-R-300-D_1_0"
+		(symbol "S_TS29-1212-1-G-300-D_1_0"
+		)
+)
+        (symbol "S_TS29-1212-1-BL-300-D"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        
+        (property "Reference" "S"
+            (at 5.08 6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "TS29-1212-1-BL-300-D"
+            (at 5.08 -6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "tactile_switches_footprints:TS29-BL"
+            (at 5.08 -8.89 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts29.pdf"
+            (at 5.08 -11.43 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Same Sky Vertical mounting,  Through Hole, "
+            (at 5.08 -13.97 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "TS29-1212-1-BL-300-D"
+            (at 5.08 -16.51 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Same Sky"
+            (at 5.08 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 5.08 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Through Hole"
+            (at 5.08 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 5.08 -26.669999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "3"
+            (at 5.08 -29.209999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "TS29-1212-1-BL-300-D"
+            (at 5.08 -31.749999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_TS29-1212-1-BL-300-D"
+            (at 5.08 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS29-1212-1-BL-300-D"
+            (at 5.08 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        		(symbol "S_TS29-1212-1-BL-300-D_0_0"
+
+        (pin unspecified line
+            (at -2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at -2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        0 0 255 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    		)
+		(symbol "S_TS29-1212-1-BL-300-D_1_0"
+		)
+)
+        (symbol "S_TS29-1212-1-WT-300-D"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        
+        (property "Reference" "S"
+            (at 5.08 6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "TS29-1212-1-WT-300-D"
+            (at 5.08 -6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "tactile_switches_footprints:TS29-WT"
+            (at 5.08 -8.89 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts29.pdf"
+            (at 5.08 -11.43 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Same Sky Vertical mounting,  Through Hole, "
+            (at 5.08 -13.97 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "TS29-1212-1-WT-300-D"
+            (at 5.08 -16.51 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Same Sky"
+            (at 5.08 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 5.08 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Through Hole"
+            (at 5.08 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 5.08 -26.669999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "3"
+            (at 5.08 -29.209999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "TS29-1212-1-WT-300-D"
+            (at 5.08 -31.749999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_TS29-1212-1-WT-300-D"
+            (at 5.08 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS29-1212-1-WT-300-D"
+            (at 5.08 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        		(symbol "S_TS29-1212-1-WT-300-D_0_0"
+
+        (pin unspecified line
+            (at -2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at -2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        255 255 255 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    		)
+		(symbol "S_TS29-1212-1-WT-300-D_1_0"
+		)
+)
+        (symbol "S_TS29-1212-1-Y-300-D"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        
+        (property "Reference" "S"
+            (at 5.08 6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "TS29-1212-1-Y-300-D"
+            (at 5.08 -6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "tactile_switches_footprints:TS29-Y"
+            (at 5.08 -8.89 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.sameskydevices.com/product/resource/ts29.pdf"
+            (at 5.08 -11.43 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Same Sky Vertical mounting,  Through Hole, "
+            (at 5.08 -13.97 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "TS29-1212-1-Y-300-D"
+            (at 5.08 -16.51 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Same Sky"
+            (at 5.08 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 5.08 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Through Hole"
+            (at 5.08 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 5.08 -26.669999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "3"
+            (at 5.08 -29.209999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "TS29-1212-1-Y-300-D"
+            (at 5.08 -31.749999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_TS29-1212-1-Y-300-D"
+            (at 5.08 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/TS29-1212-1-Y-300-D"
+            (at 5.08 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        		(symbol "S_TS29-1212-1-Y-300-D_0_0"
+
+        (pin unspecified line
+            (at -2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 5.08 270)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at -2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 0 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin unspecified line
+            (at 2.54 -5.08 90)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        255 255 0 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    		)
+		(symbol "S_TS29-1212-1-Y-300-D_1_0"
 		)
 ))
