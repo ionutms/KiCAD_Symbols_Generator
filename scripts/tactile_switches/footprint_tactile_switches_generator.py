@@ -17,7 +17,7 @@ from pathlib import Path
 
 import symbol_tactile_switches_specs as symbol_tactile_switches_specs
 from footprint_tactile_switches_specs import (
-    CONNECTOR_SPECS,
+    TACTILE_SWITCHES_SPECS,
     FootprintSpecs,
 )
 from utilities import footprint_utils
@@ -204,7 +204,7 @@ def generate_footprint_file(
         None
     """
     footprint_name = part_info.footprint.split(":")[-1]
-    footprint_specs = CONNECTOR_SPECS.get(footprint_name)
+    footprint_specs = TACTILE_SWITCHES_SPECS.get(footprint_name)
     if not footprint_specs:
         raise ValueError(f"No footprint specs found for {footprint_name}")
 

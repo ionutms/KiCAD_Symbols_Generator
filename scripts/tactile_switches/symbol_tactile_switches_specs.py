@@ -155,8 +155,6 @@ class PartInfo(NamedTuple):
         """
         parts = [
             f"{specs.manufacturer}",
-            f"{specs.base_series} series, ",
-            f"{specs.pin_count} positions tactile switch, ",
             f"{specs.mounting_angle} mounting, ",
             f"{specs.mounting_style}, ",
         ]
@@ -179,10 +177,19 @@ class PartInfo(NamedTuple):
         return [cls.create_part_info(specs)]
 
 
-SYMBOLS_SPECS: dict[str, SeriesSpec] = {
-    "TS21-34-035-BK-260-SMT-TR": SeriesSpec(
+# Series variants and their configurations
+_TS29_VARIANTS = {"R": "R", "G": "G", "BL": "BL", "WT": "WT", "Y": "Y"}
+
+_TS21_FORCE_RATINGS = ["160", "260"]
+_TS24_BL_FORCE_RATINGS = ["200", "250"]
+
+
+# Helper functions for each series
+def _create_ts21_series(force_rating):
+    series_name = f"TS21-34-035-BK-{force_rating}-SMT-TR"
+    return SeriesSpec(
         manufacturer="Same Sky",
-        base_series="TS21-34-035-BK-260-SMT-TR",
+        base_series=series_name,
         footprint_name="TS21",
         datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
         pin_count=2,
@@ -190,21 +197,14 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         number_of_rows=2,
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
-    ),
-    "TS21-34-035-BK-160-SMT-TR": SeriesSpec(
+    )
+
+
+def _create_ts24_bl_series(force_rating):
+    series_name = f"TS24-62-14-BL-{force_rating}-SMT-TR-67"
+    return SeriesSpec(
         manufacturer="Same Sky",
-        base_series="TS21-34-035-BK-160-SMT-TR",
-        footprint_name="TS21",
-        datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    ),
-    "TS24-62-14-BL-200-SMT-TR-67": SeriesSpec(
-        manufacturer="Same Sky",
-        base_series="TS24-62-14-BL-200-SMT-TR-67",
+        base_series=series_name,
         footprint_name="TS24-BL",
         datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
         pin_count=2,
@@ -212,44 +212,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         number_of_rows=2,
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
-    ),
-    "TS24-62-14-BL-250-SMT-TR-67": SeriesSpec(
+    )
+
+
+def _create_ts29_series(color, footprint):
+    series_name = f"TS29-1212-1-{color}-300-D"
+    return SeriesSpec(
         manufacturer="Same Sky",
-        base_series="TS24-62-14-BL-250-SMT-TR-67",
-        footprint_name="TS24-BL",
-        datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    ),
-    "TS24-62-14-CL-250-SMT-TR-67": SeriesSpec(
-        manufacturer="Same Sky",
-        base_series="TS24-62-14-CL-250-SMT-TR-67",
-        footprint_name="TS24-CL",
-        datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    ),
-    "TS24-62-14-CL-200-SMT-TR-67": SeriesSpec(
-        manufacturer="Same Sky",
-        base_series="TS24-62-14-CL-200-SMT-TR-67",
-        footprint_name="TS24-CL",
-        datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    ),
-    "TS29-1212-1-R-300-D": SeriesSpec(
-        manufacturer="Same Sky",
-        base_series="TS29-1212-1-R-300-D",
-        footprint_name="TS29-R",
+        base_series=series_name,
+        footprint_name=f"TS29-{footprint}",
         datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
         pin_count=3,
         number_of_rows=2,
@@ -257,12 +228,30 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Through Hole",
         override_pins_specs=[
-            ("1", -1.27, 5.08, 270),
-            ("2", 1.27, 5.08, 270),
-            ("5", 3.81, 5.08, 270),
-            ("3", -1.27, -5.08, 90),
-            ("4", 1.27, -5.08, 90),
-            ("5", 3.81, -5.08, 90),
+            ("1", -2.54, 5.08, 270),
+            ("2", 0, 5.08, 270),
+            ("5", 2.54, 5.08, 270),
+            ("3", -2.54, -5.08, 90),
+            ("4", 0, -5.08, 90),
+            ("6", 2.54, -5.08, 90),
         ],
-    ),
+    )
+
+
+SYMBOLS_SPECS: dict[str, SeriesSpec] = {
+    # TS21 series variants
+    **{
+        f"TS21-34-035-BK-{force}-SMT-TR": _create_ts21_series(force)
+        for force in _TS21_FORCE_RATINGS
+    },
+    # TS24-BL series variants
+    **{
+        f"TS24-62-14-BL-{force}-SMT-TR-67": _create_ts24_bl_series(force)
+        for force in _TS24_BL_FORCE_RATINGS
+    },
+    # TS29 series variants
+    **{
+        f"TS29-1212-1-{color}-300-D": _create_ts29_series(color, footprint)
+        for color, footprint in _TS29_VARIANTS.items()
+    },
 }

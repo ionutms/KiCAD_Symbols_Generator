@@ -93,7 +93,7 @@ class InternalCourtyard(NamedTuple):
     height_bottom: float
 
 
-class PadProperties(NamedTuple):
+class Pad(NamedTuple):
     """Defines properties for individual pads in a connector footprint.
 
     Attributes:
@@ -160,10 +160,13 @@ class FootprintSpecs(NamedTuple):
     internal_courtyard: None | InternalCourtyard = None
     mounting_pads: None | MountingPads = None
     non_plated_mounting_holes: None | NonPlatedMountingHoles = None
-    pad_properties: Optional[list[PadProperties]] = None
+    pad_properties: Optional[list[Pad]] = None
 
 
-CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
+# Define the TS29 color variants
+_TS29_COLORS = ["R", "G", "BL", "WT", "Y"]
+
+TACTILE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
     "TS21": FootprintSpecs(
         model_name="TS21",
         pad_pitch=2,
@@ -216,40 +219,33 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-6.096,
         mirror_x_pin_numbering=True,
     ),
-    "TS29-R": FootprintSpecs(
-        model_name="TS29-R",
-        pad_pitch=6.2,
-        row_pitch=5,
-        number_of_rows=2,
-        body_dimensions=BodyDimensions(
-            width_left=5,
-            width_right=5,
-            height_top=8.2,
-            height_bottom=8.2,
-        ),
-        pad_size=2.8,
-        drill_size=1.4,
-        mpn_y=9.144,
-        ref_y=-9.144,
-        mirror_x_pin_numbering=True,
-        non_plated_mounting_holes=[[0, 4.4, 1.8], [0, -4.4, 1.8]],
-        pad_properties=[
-            PadProperties(
-                name="1", x=6.2, y=2.5, pad_size=2.4, drill_size=1.4
+    **{
+        f"TS29-{color}": FootprintSpecs(
+            model_name=f"TS29-{color}",
+            pad_pitch=6.2,
+            row_pitch=5,
+            number_of_rows=2,
+            body_dimensions=BodyDimensions(
+                width_left=5,
+                width_right=5,
+                height_top=8.2,
+                height_bottom=8.2,
             ),
-            PadProperties(
-                name="2", x=-6.2, y=2.5, pad_size=2.4, drill_size=1.4
-            ),
-            PadProperties(
-                name="3", x=6.2, y=-2.5, pad_size=2.4, drill_size=1.4
-            ),
-            PadProperties(
-                name="4", x=-6.2, y=-2.5, pad_size=2.4, drill_size=1.4
-            ),
-            PadProperties(name="5", x=0, y=6.6, pad_size=2.3, drill_size=1.3),
-            PadProperties(
-                name="6", x=0, y=-6.6, pad_size=2.3, drill_size=1.3
-            ),
-        ],
-    ),
+            pad_size=2.8,
+            drill_size=1.4,
+            mpn_y=9.144,
+            ref_y=-9.144,
+            mirror_x_pin_numbering=True,
+            non_plated_mounting_holes=[[0, 4.4, 1.8], [0, -4.4, 1.8]],
+            pad_properties=[
+                Pad(name="1", x=6.2, y=2.5, pad_size=2.4, drill_size=1.4),
+                Pad(name="2", x=-6.2, y=2.5, pad_size=2.4, drill_size=1.4),
+                Pad(name="3", x=6.2, y=-2.5, pad_size=2.4, drill_size=1.4),
+                Pad(name="4", x=-6.2, y=-2.5, pad_size=2.4, drill_size=1.4),
+                Pad(name="5", x=0, y=6.6, pad_size=2.3, drill_size=1.3),
+                Pad(name="6", x=0, y=-6.6, pad_size=2.3, drill_size=1.3),
+            ],
+        )
+        for color in _TS29_COLORS
+    },
 }

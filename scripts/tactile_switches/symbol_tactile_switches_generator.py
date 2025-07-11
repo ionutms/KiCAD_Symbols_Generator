@@ -69,22 +69,43 @@ def write_component(
         1 + extra_offset,
         2,
     )
-    write_symbol_drawing(
-        symbol_file,
-        symbol_name,
-        component_data,
-        number_of_rows,
-    )
+    # Define the LED color mapping
+    led_colors = {
+        "TS29-1212-1-R-300-D": {"R": 255, "G": 0, "B": 0},
+        "TS29-1212-1-G-300-D": {"R": 0, "G": 255, "B": 0},
+        "TS29-1212-1-BL-300-D": {"R": 0, "G": 0, "B": 255},
+        "TS29-1212-1-WT-300-D": {"R": 255, "G": 255, "B": 255},
+        "TS29-1212-1-Y-300-D": {"R": 255, "G": 255, "B": 0},
+    }
+
+    series = component_data.get("Series", "")
+    led_color = led_colors.get(series)
+
+    if led_color:
+        write_tactile_switch_with_led_symbol_drawing(
+            symbol_file,
+            symbol_name,
+            component_data,
+            number_of_rows,
+            led_color=led_color,
+        )
+    else:
+        write_tactile_switch_symbol_drawing(
+            symbol_file,
+            symbol_name,
+            component_data,
+            number_of_rows,
+        )
     symbol_file.write(")")
 
 
-def write_symbol_drawing(
+def write_tactile_switch_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
     component_data: dict[str, str],
     number_of_rows: int,
 ) -> None:
-    """Write the drawing for a connector symbol.
+    """Write the drawing for a tactile switch symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
@@ -172,6 +193,140 @@ def write_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def write_tactile_switch_with_led_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    led_color: dict[str, int],
+) -> None:
+    """Write the drawing for a tactile switch symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+        component_data (Dict[str, str]): Data for the component.
+        number_of_rows (int): Number of rows of the symbol.
+
+    Returns:
+        None
+
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(component_data.get("Series", ""))
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            symbol_utils.write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                symbol_utils.write_pin(
+                    symbol_file, -2.54 / 2, y_pos, angle, str(pin_num)
+                )
+                symbol_utils.write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                symbol_utils.write_pin(
+                    symbol_file, -5.08, y_pos, 0, str(pin_num)
+                )
+
+    symbol_file.write(f"""
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        {led_color["R"]} {led_color["G"]} {led_color["B"]} 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
 def get_override_pins_specs(
     series: str,
 ) -> List[Tuple[str, float, float, int]]:
@@ -181,7 +336,8 @@ def get_override_pins_specs(
         series (str): The series identifier for the tactile switch.
 
     Returns:
-        List[Tuple[str, float, float, int]]: List of tuples containing pin number, x, y, and angle.
+        List[Tuple[str, float, float, int]]:
+            List of tuples containing pin number, x, y, and angle.
         Returns empty list if no override specs are found.
     """
     from symbol_tactile_switches_specs import SYMBOLS_SPECS
