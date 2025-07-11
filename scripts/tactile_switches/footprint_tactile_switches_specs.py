@@ -163,6 +163,9 @@ class FootprintSpecs(NamedTuple):
     pad_properties: Optional[list[Pad]] = None
 
 
+# Define the TS28 color variants
+_TS28_COLORS = ["BL", "R", "G", "Y"]
+
 # Define the TS29 color variants
 _TS29_COLORS = ["R", "G", "BL", "WT", "Y"]
 
@@ -219,6 +222,36 @@ TACTILE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-6.096,
         mirror_x_pin_numbering=True,
     ),
+    **{
+        f"TS28-{color}": FootprintSpecs(
+            model_name=f"TS28-{color}",
+            pad_pitch=6.2,
+            row_pitch=5,
+            number_of_rows=2,
+            body_dimensions=BodyDimensions(
+                width_left=-2.2,
+                width_right=1.2,
+                height_top=4.6,
+                height_bottom=4.6,
+            ),
+            pad_size=2.8,
+            drill_size=1.4,
+            mpn_y=5.588,
+            ref_y=-5.588,
+            mirror_x_pin_numbering=True,
+            pad_properties=[
+                Pad(name="1", x=2.54, y=2.25, pad_size=2, drill_size=1.2),
+                Pad(name="2", x=-2.54, y=2.25, pad_size=2, drill_size=1.2),
+                Pad(name="3", x=2.54, y=-2.25, pad_size=2, drill_size=1.2),
+                Pad(name="4", x=-2.54, y=-2.25, pad_size=2, drill_size=1.2),
+                Pad(name="5", x=0, y=3.15, pad_size=2, drill_size=1.2),
+                Pad(name="6", x=0, y=-3.15, pad_size=2, drill_size=1.2),
+                Pad(name="7", x=5.84, y=2.54, pad_size=2, drill_size=1.2),
+                Pad(name="8", x=5.84, y=-2.54, pad_size=2, drill_size=1.2),
+            ],
+        )
+        for color in _TS28_COLORS
+    },
     **{
         f"TS29-{color}": FootprintSpecs(
             model_name=f"TS29-{color}",

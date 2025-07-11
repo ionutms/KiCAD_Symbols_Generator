@@ -70,7 +70,13 @@ def write_component(
         2,
     )
     # Define the LED color mapping
-    led_colors = {
+    ts28_series_led_colors = {
+        "TS28-63-63-BL-260-RA-D": {"R": 0, "G": 0, "B": 255},
+        "TS28-63-63-R-260-RA-D": {"R": 255, "G": 0, "B": 0},
+        "TS28-63-63-G-260-RA-D": {"R": 0, "G": 255, "B": 0},
+        "TS28-63-63-Y-260-RA-D": {"R": 255, "G": 255, "B": 0},
+    }
+    ts29_series_led_colors = {
         "TS29-1212-1-R-300-D": {"R": 255, "G": 0, "B": 0},
         "TS29-1212-1-G-300-D": {"R": 0, "G": 255, "B": 0},
         "TS29-1212-1-BL-300-D": {"R": 0, "G": 0, "B": 255},
@@ -79,16 +85,25 @@ def write_component(
     }
 
     series = component_data.get("Series", "")
-    led_color = led_colors.get(series)
 
-    if led_color:
+    if ts29_series_led_colors.get(series):
         write_tactile_switch_with_led_symbol_drawing(
             symbol_file,
             symbol_name,
             component_data,
             number_of_rows,
-            led_color=led_color,
+            led_color=ts29_series_led_colors.get(series),
         )
+
+    elif ts28_series_led_colors.get(series):
+        write_tactile_switch_with_led_symbol_drawing_v2(
+            symbol_file,
+            symbol_name,
+            component_data,
+            number_of_rows,
+            led_color=ts28_series_led_colors.get(series),
+        )
+
     else:
         write_tactile_switch_symbol_drawing(
             symbol_file,
@@ -317,6 +332,162 @@ def write_tactile_switch_with_led_symbol_drawing(
                     (xy 5.969 -3.302) (xy 5.207 -3.302)
 				)
 				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
+def write_tactile_switch_with_led_symbol_drawing_v2(
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    led_color: dict[str, int],
+) -> None:
+    """Write the drawing for a tactile switch symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+        component_data (Dict[str, str]): Data for the component.
+        number_of_rows (int): Number of rows of the symbol.
+
+    Returns:
+        None
+
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(component_data.get("Series", ""))
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            symbol_utils.write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                symbol_utils.write_pin(
+                    symbol_file, -2.54 / 2, y_pos, angle, str(pin_num)
+                )
+                symbol_utils.write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                symbol_utils.write_pin(
+                    symbol_file, -5.08, y_pos, 0, str(pin_num)
+                )
+
+    symbol_file.write(f"""
+			(polyline
+				(pts
+					(xy -4.826 1.27) (xy -4.826 -1.27)
+                    (xy -4.826 0) (xy -6.35 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -3.81 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -3.81 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy -2.54 2.54) (xy -5.08 2.54)
+                    (xy -3.81 2.54) (xy -3.81 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.54 -2.54) (xy -5.08 -2.54)
+                    (xy -3.81 -2.54) (xy -3.81 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 5.08 -2.54) (xy 5.08 -1.27) (xy 6.35 -1.27)
+                    (xy 5.08 -1.27) (xy 6.35 1.27) (xy 5.08 1.27)
+                    (xy 5.08 2.54) (xy 5.08 1.27) (xy 3.81 1.27)
+                    (xy 5.08 -1.27) (xy 3.81 -1.27) (xy 5.08 -1.27)
+                    (xy 5.08 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+					(type color)
+                    (color
+                        {led_color["R"]} {led_color["G"]} {led_color["B"]} 1)
+				)
+			)
+			(polyline
+				(pts
+					(xy 6.985 -0.508) (xy 8.509 -2.032) (xy 8.509 -1.27)
+                    (xy 8.509 -2.032) (xy 7.747 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 6.985 -1.778) (xy 8.509 -3.302) (xy 8.509 -2.54)
+                    (xy 8.509 -3.302) (xy 7.747 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)			
+            (polyline
+				(pts
+					(xy 0 2.54) (xy 0 -2.54) (xy 0 0) (xy 1.27 0)
+                    (xy 1.27 1.27) (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.778 -0.762) (xy 1.778 0.762)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.286 -0.254) (xy 2.286 0.254)
+				)
+				(stroke (width 0) (type default))
 				(fill (type none))
 			)
     """)

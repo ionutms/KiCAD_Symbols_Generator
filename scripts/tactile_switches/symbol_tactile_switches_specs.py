@@ -178,10 +178,10 @@ class PartInfo(NamedTuple):
 
 
 # Series variants and their configurations
-_TS29_VARIANTS = {"R": "R", "G": "G", "BL": "BL", "WT": "WT", "Y": "Y"}
-
 _TS21_FORCE_RATINGS = ["160", "260"]
 _TS24_BL_FORCE_RATINGS = ["200", "250"]
+_TS29_VARIANTS = {"R": "R", "G": "G", "BL": "BL", "WT": "WT", "Y": "Y"}
+_TS28_VARIANTS = {"BL": "BL", "R": "R", "G": "G", "Y": "Y"}
 
 
 # Helper functions for each series
@@ -212,6 +212,31 @@ def _create_ts24_bl_series(force_rating):
         number_of_rows=2,
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
+    )
+
+
+def _create_ts28_series(color, footprint):
+    series_name = f"TS28-63-63-{color}-260-RA-D"
+    return SeriesSpec(
+        manufacturer="Same Sky",
+        base_series=series_name,
+        footprint_name=f"TS28-{footprint}",
+        datasheet="https://www.sameskydevices.com/product/resource/ts28.pdf",
+        pin_count=4,
+        number_of_rows=2,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        mounting_angle="Right Angle",
+        mounting_style="Through Hole",
+        override_pins_specs=[
+            ("3", -5.08, 5.08, 270),
+            ("4", -2.54, 5.08, 270),
+            ("8", 0, 5.08, 270),
+            ("6", 5.08, 5.08, 270),
+            ("1", -5.08, -5.08, 90),
+            ("2", -2.54, -5.08, 90),
+            ("7", 0, -5.08, 90),
+            ("5", 5.08, -5.08, 90),
+        ],
     )
 
 
@@ -248,6 +273,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     **{
         f"TS24-62-14-BL-{force}-SMT-TR-67": _create_ts24_bl_series(force)
         for force in _TS24_BL_FORCE_RATINGS
+    },
+    # TS28 series variants
+    **{
+        f"TS28-63-63-{color}-260-RA-D": _create_ts28_series(color, footprint)
+        for color, footprint in _TS28_VARIANTS.items()
     },
     # TS29 series variants
     **{
