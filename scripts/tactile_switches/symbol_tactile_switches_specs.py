@@ -1,7 +1,8 @@
-"""Connector Series Specifications Module.
+"""Tactile Switches Specifications Module.
 
-This module defines data structures and specifications for tactile switches series,
-providing a framework for managing tactile switches component information.
+This module defines data structures and specifications for tactile switches
+series, providing a framework for managing tactile switch component
+information.
 """
 
 from __future__ import annotations
@@ -10,10 +11,10 @@ from typing import NamedTuple, Optional, List, Tuple
 
 
 class SeriesSpec(NamedTuple):
-    """Connector series specifications.
+    """Tactile switch series specifications.
 
-    This class defines the complete specifications for a series of tactile switches,
-    including physical characteristics and documentation.
+    This class defines the complete specifications for a series of tactile
+    switches, including physical characteristics and documentation.
 
     Attributes:
         manufacturer: Manufacturer name
@@ -21,8 +22,8 @@ class SeriesSpec(NamedTuple):
         footprint_name: Name of the shared footprint (e.g., TS21)
         datasheet: URL to the manufacturer's datasheet
         pin_count: Number of pins
-        trustedparts_link: URL to the Trusted Parts tactile switches listing
-        mounting_angle: Mounting orientation of the tactile switches
+        trustedparts_link: URL to the Trusted Parts tactile switch listing
+        mounting_angle: Mounting orientation of the tactile switch
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         reference: Reference designator prefix (default: "S")
         number_of_rows: Number of rows of pins
@@ -50,7 +51,7 @@ class SeriesSpec(NamedTuple):
 
 
 class PartInfo(NamedTuple):
-    """Component part information structure for individual connectors.
+    """Component part information structure for individual tactile switches.
 
     Attributes:
         symbol_name: KiCad symbol name
@@ -62,9 +63,9 @@ class PartInfo(NamedTuple):
         manufacturer: Manufacturer name
         mpn: Manufacturer part number
         series: Base series identifier
-        trustedparts_link: URL to the Trusted Parts tactile switches listing
+        trustedparts_link: URL to the Trusted Parts tactile switch listing
         pin_count: Number of pins
-        mounting_angle: Mounting orientation of the tactile switches
+        mounting_angle: Mounting orientation of the tactile switch
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         number_of_rows: Number of rows of pins
     """
@@ -89,7 +90,7 @@ class PartInfo(NamedTuple):
         cls,
         specs: SeriesSpec,
     ) -> PartInfo:
-        """Create complete part information.
+        """Create complete part information from series specifications.
 
         Args:
             specs: Series specifications
@@ -97,11 +98,7 @@ class PartInfo(NamedTuple):
         Returns:
             PartInfo instance with all specifications
         """
-        mpn = cls.generate_part_code(
-            specs.pin_count,
-            specs.base_series,
-            specs.manufacturer,
-        )
+        mpn = cls.generate_part_code(specs.base_series)
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         return PartInfo(
@@ -124,19 +121,15 @@ class PartInfo(NamedTuple):
     @classmethod
     def generate_part_code(
         cls,
-        pin_count: int,
         series_code: str,
-        manufacturer: str,
     ) -> str:
-        """Generate tactile switches part code based on pin count.
+        """Generate tactile switch part code.
 
         Args:
-            pin_count: Number of pins
             series_code: Base series code
-            manufacturer: Manufacturer Name
 
         Returns:
-            str: Part code string
+            Part code string
         """
         return f"{series_code}"
 
@@ -177,111 +170,91 @@ class PartInfo(NamedTuple):
         return [cls.create_part_info(specs)]
 
 
-# Series variants and their configurations
+# Define the force rating variants
 _TS21_FORCE_RATINGS = ["160", "260"]
 _TS24_BL_FORCE_RATINGS = ["200", "250"]
-_TS29_VARIANTS = {"R": "R", "G": "G", "BL": "BL", "WT": "WT", "Y": "Y"}
-_TS28_VARIANTS = {"BL": "BL", "R": "R", "G": "G", "Y": "Y"}
 
-
-# Helper functions for each series
-def _create_ts21_series(force_rating):
-    series_name = f"TS21-34-035-BK-{force_rating}-SMT-TR"
-    return SeriesSpec(
-        manufacturer="Same Sky",
-        base_series=series_name,
-        footprint_name="TS21",
-        datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    )
-
-
-def _create_ts24_bl_series(force_rating):
-    series_name = f"TS24-62-14-BL-{force_rating}-SMT-TR-67"
-    return SeriesSpec(
-        manufacturer="Same Sky",
-        base_series=series_name,
-        footprint_name="TS24-BL",
-        datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
-        pin_count=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        number_of_rows=2,
-        mounting_angle="Vertical",
-        mounting_style="Surface Mount",
-    )
-
-
-def _create_ts28_series(color, footprint):
-    series_name = f"TS28-63-63-{color}-260-RA-D"
-    return SeriesSpec(
-        manufacturer="Same Sky",
-        base_series=series_name,
-        footprint_name=f"TS28-{footprint}",
-        datasheet="https://www.sameskydevices.com/product/resource/ts28.pdf",
-        pin_count=4,
-        number_of_rows=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        mounting_angle="Right Angle",
-        mounting_style="Through Hole",
-        override_pins_specs=[
-            ("3", -5.08, 5.08, 270),
-            ("4", -2.54, 5.08, 270),
-            ("8", 0, 5.08, 270),
-            ("6", 5.08, 5.08, 270),
-            ("1", -5.08, -5.08, 90),
-            ("2", -2.54, -5.08, 90),
-            ("7", 0, -5.08, 90),
-            ("5", 5.08, -5.08, 90),
-        ],
-    )
-
-
-def _create_ts29_series(color, footprint):
-    series_name = f"TS29-1212-1-{color}-300-D"
-    return SeriesSpec(
-        manufacturer="Same Sky",
-        base_series=series_name,
-        footprint_name=f"TS29-{footprint}",
-        datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
-        pin_count=3,
-        number_of_rows=2,
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        mounting_angle="Vertical",
-        mounting_style="Through Hole",
-        override_pins_specs=[
-            ("1", -2.54, 5.08, 270),
-            ("2", 0, 5.08, 270),
-            ("5", 2.54, 5.08, 270),
-            ("3", -2.54, -5.08, 90),
-            ("4", 0, -5.08, 90),
-            ("6", 2.54, -5.08, 90),
-        ],
-    )
-
+# Define the color variants
+_TS28_COLORS = ["BL", "R", "G", "Y"]
+_TS29_COLORS = ["R", "G", "BL", "WT", "Y"]
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     # TS21 series variants
     **{
-        f"TS21-34-035-BK-{force}-SMT-TR": _create_ts21_series(force)
+        f"TS21-34-035-BK-{force}-SMT-TR": SeriesSpec(
+            manufacturer="Same Sky",
+            base_series=f"TS21-34-035-BK-{force}-SMT-TR",
+            footprint_name="TS21",
+            datasheet="https://www.sameskydevices.com/product/resource/ts21.pdf",
+            pin_count=2,
+            trustedparts_link="https://www.trustedparts.com/en/search",
+            number_of_rows=2,
+            mounting_angle="Vertical",
+            mounting_style="Surface Mount",
+        )
         for force in _TS21_FORCE_RATINGS
     },
     # TS24-BL series variants
     **{
-        f"TS24-62-14-BL-{force}-SMT-TR-67": _create_ts24_bl_series(force)
+        f"TS24-62-14-BL-{force}-SMT-TR-67": SeriesSpec(
+            manufacturer="Same Sky",
+            base_series=f"TS24-62-14-BL-{force}-SMT-TR-67",
+            footprint_name="TS24-BL",
+            datasheet="https://www.sameskydevices.com/product/resource/ts24.pdf",
+            pin_count=2,
+            trustedparts_link="https://www.trustedparts.com/en/search",
+            number_of_rows=2,
+            mounting_angle="Vertical",
+            mounting_style="Surface Mount",
+        )
         for force in _TS24_BL_FORCE_RATINGS
     },
     # TS28 series variants
     **{
-        f"TS28-63-63-{color}-260-RA-D": _create_ts28_series(color, footprint)
-        for color, footprint in _TS28_VARIANTS.items()
+        f"TS28-63-63-{color}-260-RA-D": SeriesSpec(
+            manufacturer="Same Sky",
+            base_series=f"TS28-63-63-{color}-260-RA-D",
+            footprint_name=f"TS28-{color}",
+            datasheet="https://www.sameskydevices.com/product/resource/ts28.pdf",
+            pin_count=4,
+            number_of_rows=2,
+            trustedparts_link="https://www.trustedparts.com/en/search",
+            mounting_angle="Right Angle",
+            mounting_style="Through Hole",
+            override_pins_specs=[
+                ("3", -5.08, 5.08, 270),
+                ("4", -2.54, 5.08, 270),
+                ("8", 0, 5.08, 270),
+                ("6", 5.08, 5.08, 270),
+                ("1", -5.08, -5.08, 90),
+                ("2", -2.54, -5.08, 90),
+                ("7", 0, -5.08, 90),
+                ("5", 5.08, -5.08, 90),
+            ],
+        )
+        for color in _TS28_COLORS
     },
     # TS29 series variants
     **{
-        f"TS29-1212-1-{color}-300-D": _create_ts29_series(color, footprint)
-        for color, footprint in _TS29_VARIANTS.items()
+        f"TS29-1212-1-{color}-300-D": SeriesSpec(
+            manufacturer="Same Sky",
+            base_series=f"TS29-1212-1-{color}-300-D",
+            footprint_name=f"TS29-{color}",
+            datasheet="https://www.sameskydevices.com/product/resource/ts29.pdf",
+            pin_count=3,
+            number_of_rows=2,
+            trustedparts_link="https://www.trustedparts.com/en/search",
+            mounting_angle="Vertical",
+            mounting_style="Through Hole",
+            override_pins_specs=[
+                ("1", -2.54, 5.08, 270),
+                ("2", 0, 5.08, 270),
+                ("5", 2.54, 5.08, 270),
+                ("3", -2.54, -5.08, 90),
+                ("4", 0, -5.08, 90),
+                ("6", 2.54, -5.08, 90),
+            ],
+        )
+        for color in _TS29_COLORS
     },
 }

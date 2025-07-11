@@ -42,10 +42,15 @@ def generate_files_for_series(
 ) -> None:
     """Generate CSV, KiCad symbol, and footprint files for a specific series.
 
+    Generates all required files for a single tactile switch series including
+    part number CSV, KiCad symbol library, and footprint files. Appends
+    generated parts to the unified parts list for later processing.
+
     Args:
-        series_name: Series identifier (must exist in SYMBOLS_SPECS)
+        series_name: Series identifier that must exist in SYMBOLS_SPECS
         unified_parts_list: List to append generated parts to
-        generated_footprints: Set of footprint names that have already been generated
+        generated_footprints: Set of footprint names already generated to
+            avoid duplicates
 
     Raises:
         ValueError: If series_name is not found in SYMBOLS_SPECS
@@ -57,7 +62,7 @@ def generate_files_for_series(
         None
 
     Note:
-        Generated files are saved in 'app/data/', 'series_kicad_sym/', and …
+        Generated files are saved in 'app/data/', 'series_kicad_sym/', and
         'tactile_switches_footprints.pretty/' directories.
     """
     if series_name not in symbol_tactile_switches_specs.SYMBOLS_SPECS:
@@ -147,9 +152,9 @@ def generate_unified_files(
 ) -> None:
     """Generate unified component database files containing all series.
 
-    Creates:
-    1. A unified CSV file containing all component specifications
-    2. A unified KiCad symbol file containing all components
+    Creates a unified CSV file and KiCad symbol file containing all component
+    specifications from all processed series. These files serve as a complete
+    database for all tactile switch components.
 
     Args:
         all_parts: List of all PartInfo instances across all series

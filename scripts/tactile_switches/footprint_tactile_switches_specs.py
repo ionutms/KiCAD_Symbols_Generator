@@ -1,9 +1,9 @@
 """Specifications for tactile switches footprints.
 
 This module defines the physical dimensions and parameters needed to generate
-KiCad footprints for various terminal block tactile switches.
-It provides structured data types to represent connector specifications
-and a dictionary of pre-defined specifications for common connector models.
+KiCad footprints for various tactile switches. It provides structured data
+types to represent switch specifications and a dictionary of pre-defined
+specifications for common switch models.
 
 The coordinate system uses millimeters with the origin (0,0) at the center
 of the component. Positive coordinates extend right/up, negative coordinates
@@ -16,14 +16,14 @@ from typing import NamedTuple, Optional
 
 
 class NonPlatedRoundMountingHoles(NamedTuple):
-    """Defines the position and size of mounting holes for a connector.
+    """Defines the position and size of non-plated round mounting holes.
 
     Attributes:
         footprint_specs:
             List of mounting hole specifications,
             where each spec is [x, y, diameter]:
-                - x: X position relative to the connector origin
-                - y: Y position relative to the connector origin
+                - x: X position relative to the component origin
+                - y: Y position relative to the component origin
                 - diameter: Diameter of the mounting hole
     """
 
@@ -31,14 +31,14 @@ class NonPlatedRoundMountingHoles(NamedTuple):
 
 
 class PlatedOvalMountingHoles(NamedTuple):
-    """Defines the position and size of mounting holes for a connector.
+    """Defines the position and size of plated oval mounting holes.
 
     Attributes:
         footprint_specs:
             List of mounting hole specifications,
-            where each spec is [x, y, diameter]:
-                - x: X position relative to the connector origin
-                - y: Y position relative to the connector origin
+            where each spec is [x, y, pad_oval_size, drill_oval_size]:
+                - x: X position relative to the component origin
+                - y: Y position relative to the component origin
                 - pad_oval_size: Size of the oval pad
                 - drill_oval_size: Size of the oval drill hole
     """
@@ -47,13 +47,32 @@ class PlatedOvalMountingHoles(NamedTuple):
 
 
 class MountingPads(NamedTuple):
-    """TODO"""
+    """Defines mounting pad specifications for mechanical attachment.
+
+    Attributes:
+        dimensions:
+            List of mounting pad specifications,
+            where each spec is [x, y, width, height]:
+                - x: X position relative to the component origin
+                - y: Y position relative to the component origin
+                - width: Width of the mounting pad
+                - height: Height of the mounting pad
+    """
 
     dimensions: list[list[float]]
 
 
 class NonPlatedMountingHoles(NamedTuple):
-    """TODO"""
+    """Defines non-plated mounting holes for mechanical attachment.
+
+    Attributes:
+        dimensions:
+            List of mounting hole specifications,
+            where each spec is [x, y, diameter]:
+                - x: X position relative to the component origin
+                - y: Y position relative to the component origin
+                - diameter: Diameter of the mounting hole
+    """
 
     dimensions: list[list[float]]
 
@@ -65,10 +84,10 @@ class BodyDimensions(NamedTuple):
     Positive values extend right/up, negative values extend left/down.
 
     Attributes:
-        width_left: Distance from origin to left edge
-        width_right: Distance from origin to right edge
-        height_top: Distance from origin to top edge
-        height_bottom: Distance from origin to bottom edge
+        width_left: Distance from origin to left edge (negative value)
+        width_right: Distance from origin to right edge (positive value)
+        height_top: Distance from origin to top edge (positive value)
+        height_bottom: Distance from origin to bottom edge (negative value)
     """
 
     width_left: float
@@ -78,13 +97,16 @@ class BodyDimensions(NamedTuple):
 
 
 class InternalCourtyard(NamedTuple):
-    """Defines the internal courtyard dimensions for a connector footprint.
+    """Defines the internal courtyard dimensions for a component footprint.
+
+    The courtyard defines the minimum space required around the component
+    to prevent interference with adjacent components.
 
     Attributes:
-        width_left: Distance from origin to left edge
-        width_right: Distance from origin to right edge
-        height_top: Distance from origin to top edge
-        height_bottom: Distance from origin to bottom edge
+        width_left: Distance from origin to left courtyard edge
+        width_right: Distance from origin to right courtyard edge
+        height_top: Distance from origin to top courtyard edge
+        height_bottom: Distance from origin to bottom courtyard edge
     """
 
     width_left: float
@@ -94,14 +116,14 @@ class InternalCourtyard(NamedTuple):
 
 
 class Pad(NamedTuple):
-    """Defines properties for individual pads in a connector footprint.
+    """Defines properties for individual pads in a component footprint.
 
     Attributes:
         name: Identifier for the pad (e.g., '1', '2', 'A1', etc.)
         x: X coordinate of the pad center relative to the origin
         y: Y coordinate of the pad center relative to the origin
-        diameter: TODO
-        drill_size: TODO
+        pad_size: Diameter or size of the pad
+        drill_size: Diameter of the drill hole for through-hole pads
     """
 
     name: str
@@ -112,7 +134,7 @@ class Pad(NamedTuple):
 
 
 class FootprintSpecs(NamedTuple):
-    """Complete specifications for generating a connector footprint.
+    """Complete specifications for generating a tactile switch footprint.
 
     Defines all physical dimensions, pad properties, reference designator
     positions, and 3D model alignment parameters needed to generate a complete
@@ -120,25 +142,25 @@ class FootprintSpecs(NamedTuple):
 
     Attributes:
         model_name: Name of the 3D model file (without extension)
-        pad_pitch: Additional width needed per pin
-        body_dimensions: Basic rectangle dimensions
-        pad_size: Diameter/size of through-hole pads
-        mpn_y: Y position for manufacturer part number
-        ref_y: Y position for reference designator
-        drill_size: Diameter of drill holes
-        row_pitch: Additional height needed per row
-        number_of_rows: Number of rows of pins
+        pad_pitch: Spacing between pads in the same row
+        body_dimensions: Physical outline dimensions of the component
+        pad_size: Diameter/size of through-hole pads (single value or list)
+        mpn_y: Y position for manufacturer part number text
+        ref_y: Y position for reference designator text
+        drill_size: Diameter of drill holes for through-hole pads
+        row_pitch: Spacing between rows of pads
+        number_of_rows: Number of rows of pads
         non_plated_pad_size: Diameter of non-plated pads
         non_plated_drill_size: Diameter of non-plated drill holes
-        non_plated_row_pitch: Additional height per row of non-plated pads
-        miror_zig_zag: Mirror the zig-zag pattern
+        non_plated_row_pitch: Spacing between rows of non-plated pads
+        miror_zig_zag: Mirror the zig-zag pattern for pin numbering
         mirror_x_pin_numbering: Mirror pin numbering along X-axis
         non_plated_round_mounting_holes: Non-plated mounting holes
         plated_oval_mounting_holes: Plated oval mounting holes
         internal_courtyard: Internal courtyard dimensions
-        mounting_pads: TODO
-        non_plated_mounting_holes: TODO
-        pad_properties: List of pad properties including name and coordinates
+        mounting_pads: Mounting pad specifications
+        non_plated_mounting_holes: Non-plated mounting hole specifications
+        pad_properties: List of individual pad properties and positions
     """
 
     model_name: str
