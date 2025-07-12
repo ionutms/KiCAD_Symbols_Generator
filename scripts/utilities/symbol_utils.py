@@ -11,7 +11,7 @@ Key features:
 
 """
 
-from typing import TextIO
+from typing import List, TextIO, Tuple
 
 
 def write_header(
@@ -2306,3 +2306,418 @@ def write_rectangle(
             (fill (type none))
         )
         """)
+
+
+def write_tactile_switch_symbol_drawing(
+    *,
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    specs_dict: dict,
+) -> None:
+    """Write the drawing for a standard tactile switch symbol.
+
+    Creates KiCad symbol definition with appropriate pin layout and
+    standard tactile switch graphical representation including switch
+    contacts and actuator mechanism.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(
+        component_data.get("Series", ""),
+        specs_dict,
+    )
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
+                write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+
+    symbol_file.write(f"""
+			(circle
+				(center 0 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 0 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
+                    (xy 0 1.27) (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.27 -2.54) (xy -1.27 -2.54)
+                    (xy 0 -2.54) (xy 0 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
+def write_tactile_switch_with_led_symbol_drawing(
+    *,
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    led_color: dict[str, int],
+    specs_dict: dict,
+) -> None:
+    """Write the drawing for a tactile switch symbol with LED indicator.
+
+    Creates KiCad symbol definition for TS29 series tactile switches that
+    include integrated LED indicators. Renders both switch mechanism and
+    LED with appropriate color coding.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        led_color: Dictionary with RGB color values for LED representation.
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(
+        component_data.get("Series", ""),
+        specs_dict,
+    )
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
+                write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+
+    symbol_file.write(f"""
+			(polyline
+				(pts
+					(xy -2.286 1.27) (xy -2.286 -1.27)
+                    (xy -2.286 0) (xy -3.81 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy -2.54 2.54)
+                    (xy -1.27 2.54) (xy -1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 0 -2.54) (xy -2.54 -2.54)
+                    (xy -1.27 -2.54) (xy -1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 -1.27) (xy 3.81 -1.27)
+                    (xy 2.54 -1.27) (xy 3.81 1.27) (xy 2.54 1.27)
+                    (xy 2.54 2.54) (xy 2.54 1.27) (xy 1.27 1.27)
+                    (xy 2.54 -1.27) (xy 1.27 -1.27) (xy 2.54 -1.27)
+                    (xy 2.54 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+                    (type color)
+                    (color
+                        {led_color["R"]} {led_color["G"]} {led_color["B"]} 1)
+                )
+			)
+			(polyline
+				(pts
+					(xy 4.445 -0.508) (xy 5.969 -2.032) (xy 5.969 -1.27)
+                    (xy 5.969 -2.032) (xy 5.207 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 4.445 -1.778) (xy 5.969 -3.302) (xy 5.969 -2.54)
+                    (xy 5.969 -3.302) (xy 5.207 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
+def write_tactile_switch_with_led_symbol_drawing_v2(
+    *,
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    led_color: dict[str, int],
+    specs_dict: dict,
+) -> None:
+    """Write the drawing for a tactile switch symbol with LED indicator v2.
+
+    Creates KiCad symbol definition for TS28 series tactile switches that
+    include integrated LED indicators. Uses alternative layout with
+    modified positioning for different component geometry.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        led_color: Dictionary with RGB color values for LED representation.
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(
+        component_data.get("Series", ""),
+        specs_dict,
+    )
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
+                write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+
+    symbol_file.write(f"""
+			(polyline
+				(pts
+					(xy -4.826 1.27) (xy -4.826 -1.27)
+                    (xy -4.826 0) (xy -6.35 0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -3.81 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center -3.81 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy -2.54 2.54) (xy -5.08 2.54)
+                    (xy -3.81 2.54) (xy -3.81 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.54 -2.54) (xy -5.08 -2.54)
+                    (xy -3.81 -2.54) (xy -3.81 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 5.08 -2.54) (xy 5.08 -1.27) (xy 6.35 -1.27)
+                    (xy 5.08 -1.27) (xy 6.35 1.27) (xy 5.08 1.27)
+                    (xy 5.08 2.54) (xy 5.08 1.27) (xy 3.81 1.27)
+                    (xy 5.08 -1.27) (xy 3.81 -1.27) (xy 5.08 -1.27)
+                    (xy 5.08 -2.54)
+				)
+				(stroke (width 0.2032) (type solid))
+				(fill
+					(type color)
+                    (color
+                        {led_color["R"]} {led_color["G"]} {led_color["B"]} 1)
+				)
+			)
+			(polyline
+				(pts
+					(xy 6.985 -0.508) (xy 8.509 -2.032) (xy 8.509 -1.27)
+                    (xy 8.509 -2.032) (xy 7.747 -2.032)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 6.985 -1.778) (xy 8.509 -3.302) (xy 8.509 -2.54)
+                    (xy 8.509 -3.302) (xy 7.747 -3.302)
+				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
+			)			
+            (polyline
+				(pts
+					(xy 0 2.54) (xy 0 -2.54) (xy 0 0) (xy 1.27 0)
+                    (xy 1.27 1.27) (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.778 -0.762) (xy 1.778 0.762)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 2.286 -0.254) (xy 2.286 0.254)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
+def get_override_pins_specs(
+    series: str,
+    specs_dict: dict,
+) -> List[Tuple[str, float, float, int]]:
+    """Retrieve override pin specifications for a given component series.
+
+    Args:
+        series: The series identifier for the tactile switch component.
+        specs_dict: Dictionary containing SYMBOLS_SPECS.
+
+    Returns:
+        List of tuples containing pin specifications in format
+        (pin_number, x_position, y_position, angle). Returns empty list
+        if no override specifications are found.
+    """
+    specs = specs_dict.get(series)
+    if (
+        specs
+        and hasattr(specs, "override_pins_specs")
+        and specs.override_pins_specs
+    ):
+        return specs.override_pins_specs
+
+    return []
