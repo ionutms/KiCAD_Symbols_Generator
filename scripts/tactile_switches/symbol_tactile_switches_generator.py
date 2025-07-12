@@ -1,7 +1,8 @@
-"""KiCad Connector Symbol Generator.
+"""KiCad Tactile Switch Symbol Generator.
 
 Generates KiCad symbol files for tactile switches from CSV data.
-Modified to match specific pin and field positioning requirements.
+Creates symbols with standard switch graphics and optional LED indicators
+for specific series with color-coded LED support.
 """
 
 from pathlib import Path
@@ -17,13 +18,13 @@ def generate_kicad_symbol(
 ) -> None:
     """Generate a KiCad symbol file from CSV data for tactile switches.
 
+    Reads component data from CSV file and generates corresponding KiCad
+    symbol definitions with appropriate pin configurations and graphical
+    representations.
+
     Args:
-        input_csv_file (str): Path to the input CSV file with component data.
-        output_symbol_file (str): Path for the output .kicad_sym file.
-
-    Returns:
-        None
-
+        input_csv_file: Path to the input CSV file containing component data.
+        output_symbol_file: Path for the output .kicad_sym file to be created.
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
     all_properties = symbol_utils.get_all_properties(component_data_list)
@@ -40,16 +41,17 @@ def write_component(
     component_data: dict[str, str],
     property_order: list[str],
 ) -> None:
-    """Write a single component to the KiCad symbol file.
+    """Write a single component symbol to the KiCad symbol file.
+
+    Determines the appropriate symbol type based on component series and
+    generates the corresponding symbol definition with pins, properties,
+    and graphical elements.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        component_data (Dict[str, str]): Data for a single component.
-        property_order (List[str]): Ordered list of property names.
-
-    Returns:
-        None
-
+        symbol_file: File object for writing the symbol file.
+        component_data: Dictionary containing component specifications.
+        property_order: Ordered list of property names for consistent
+            output formatting.
     """
     symbol_name = component_data.get("Symbol Name", "")
     number_of_rows = int(component_data.get("Number of Rows", "1"))
@@ -120,17 +122,17 @@ def write_tactile_switch_symbol_drawing(
     component_data: dict[str, str],
     number_of_rows: int,
 ) -> None:
-    """Write the drawing for a tactile switch symbol.
+    """Write the drawing for a standard tactile switch symbol.
+
+    Creates KiCad symbol definition with appropriate pin layout and
+    standard tactile switch graphical representation including switch
+    contacts and actuator mechanism.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        symbol_name (str): Name of the symbol.
-        component_data (Dict[str, str]): Data for the component.
-        number_of_rows (int): Number of rows of the symbol.
-
-    Returns:
-        None
-
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -215,17 +217,18 @@ def write_tactile_switch_with_led_symbol_drawing(
     number_of_rows: int,
     led_color: dict[str, int],
 ) -> None:
-    """Write the drawing for a tactile switch symbol.
+    """Write the drawing for a tactile switch symbol with LED indicator.
+
+    Creates KiCad symbol definition for TS29 series tactile switches that
+    include integrated LED indicators. Renders both switch mechanism and
+    LED with appropriate color coding.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        symbol_name (str): Name of the symbol.
-        component_data (Dict[str, str]): Data for the component.
-        number_of_rows (int): Number of rows of the symbol.
-
-    Returns:
-        None
-
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        led_color: Dictionary with RGB color values for LED representation.
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -349,17 +352,18 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
     number_of_rows: int,
     led_color: dict[str, int],
 ) -> None:
-    """Write the drawing for a tactile switch symbol.
+    """Write the drawing for a tactile switch symbol with LED indicator v2.
+
+    Creates KiCad symbol definition for TS28 series tactile switches that
+    include integrated LED indicators. Uses alternative layout with
+    modified positioning for different component geometry.
 
     Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        symbol_name (str): Name of the symbol.
-        component_data (Dict[str, str]): Data for the component.
-        number_of_rows (int): Number of rows of the symbol.
-
-    Returns:
-        None
-
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        led_color: Dictionary with RGB color values for LED representation.
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -501,15 +505,19 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
 def get_override_pins_specs(
     series: str,
 ) -> List[Tuple[str, float, float, int]]:
-    """Retrieve override pin specifications for a given series.
+    """Retrieve override pin specifications for a given component series.
+
+    Checks for custom pin positioning specifications that override the
+    default pin layout algorithm. Used for components with non-standard
+    pin arrangements.
 
     Args:
-        series (str): The series identifier for the tactile switch.
+        series: The series identifier for the tactile switch component.
 
     Returns:
-        List[Tuple[str, float, float, int]]:
-            List of tuples containing pin number, x, y, and angle.
-        Returns empty list if no override specs are found.
+        List of tuples containing pin specifications in format
+        (pin_number, x_position, y_position, angle). Returns empty list
+        if no override specifications are found for the series.
     """
     from symbol_tactile_switches_specs import SYMBOLS_SPECS
 

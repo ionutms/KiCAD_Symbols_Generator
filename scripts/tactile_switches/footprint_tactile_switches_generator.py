@@ -1,16 +1,16 @@
 """KiCad Footprint Generator Module.
 
 Generates standardized KiCad footprint files (.kicad_mod) for various
-tactile switches series.
-It handles pad placement, silkscreen generation, and 3D model alignment
-based on manufacturer specifications.
+tactile switch series. Handles pad placement, silkscreen generation, and 3D
+model alignment based on manufacturer specifications.
 
-The module supports multiple tactile switches series with different pin counts and
-pitches, generating complete footprint definitions including:
-- Through-hole pad layouts
-- Silkscreen outlines
-- Component identifiers
-- 3D model references
+The module supports multiple tactile switch series with different pin counts
+and pitches, generating complete footprint definitions including:
+- Through-hole and surface mount pad layouts
+- Silkscreen and fabrication outlines
+- Component identifiers and references
+- 3D model associations
+- Mounting holes and pads
 """
 
 from pathlib import Path
@@ -30,14 +30,18 @@ def generate_footprint(  # noqa: C901
     """Generate complete KiCad footprint file content for a tactile switch.
 
     Creates all required sections of a .kicad_mod file including component
-    outline, pad definitions, text elements, and 3D model references.
+    outline, pad definitions, text elements, mounting features, and 3D model
+    references based on the provided specifications.
 
     Args:
-        part_info: Component specifications (MPN, pin count, pitch)
-        footprint_specs: Physical specifications for the tactile switches series
+        part_info: Component specifications including MPN, pin count, pitch,
+            and mounting style
+        footprint_specs: Physical specifications for the tactile switch series
+            including dimensions, pad properties, and mounting features
 
     Returns:
-        Complete .kicad_mod file content as formatted string
+        Complete .kicad_mod file content as formatted string ready for
+        writing to file
     """
     dimensions = footprint_utils.calculate_dimensions(
         part_info.pin_count,
@@ -192,16 +196,20 @@ def generate_footprint_file(
 ) -> None:
     """Generate and save a complete .kicad_mod file for a tactile switch.
 
-    Creates a KiCad footprint file in the connector_footprints.pretty
-    directory using the specified part information and
-    corresponding series specifications.
+    Creates a KiCad footprint file using the specified part information and
+    corresponding series specifications. The file is saved with the
+    appropriate naming convention in the specified output directory.
 
     Args:
-        part_info: Component specifications (MPN, pin count, pitch)
-        output_path: Directory path for saving the .kicad_mod file
+        part_info: Component specifications including MPN, pin count, pitch,
+            and footprint identifier
+        output_path: Directory path where the .kicad_mod file will be saved
 
-    Returns:
-        None
+    Raises:
+        ValueError: If no footprint specifications are found for the given
+            footprint name
+        OSError: If the output directory is not writable or file cannot be
+            created
     """
     footprint_name = part_info.footprint.split(":")[-1]
     footprint_specs = TACTILE_SWITCHES_SPECS.get(footprint_name)
