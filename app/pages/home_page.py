@@ -301,6 +301,12 @@ REPO_CONFIGS = [
         "has_project_links": False,
     },
     {
+        "name": "Model_Context_Protocol_Learning",
+        "colors": ["#FFDD1A", "#9E1AFF"],
+        "is_main": False,
+        "has_project_links": False,
+    },
+    {
         "name": "uvm_learning",
         "colors": ["#FFDD1A", "#9E1AFF"],
         "is_main": False,
