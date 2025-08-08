@@ -12,3 +12,24 @@ dependencies = [
     "gunicorn>=23.0.0",
     "pandas>=2.3.1",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.5",
+]
+
+[tool.ruff]
+line-length = 79
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "D"]
+ignore = []
+fixable = ["I001"]
+unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
