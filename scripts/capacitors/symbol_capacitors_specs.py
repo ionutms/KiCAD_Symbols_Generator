@@ -719,6 +719,22 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    # "GRM32EC72A106KE05L"
+    "GRM32EC72A": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GRM32EC72A",
+        value_range={"X7S": (10e-6, 10e-6)},
+        tolerance_map={"X7S": {"K": "10%"}},
+        characteristic_codes={0: "E05"},
+        mpn_sufix=["L"],
+        footprint="capacitor_footprints:C_1210_200_3225Metric",
+        voltage_rating="100V",
+        case_code_in="1210_200",
+        case_code_mm="3225",
+        excluded_values=set(),
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 YAGEO_DOC_BASE = "https://www.yageo.com/en/Chart/Download/pdf/"
