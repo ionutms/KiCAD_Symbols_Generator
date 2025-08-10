@@ -199,6 +199,10 @@ class PartInfo(NamedTuple):
             return cls._generate_vishay_resistance_code(resistance)
 
         if specs.manufacturer == "SEI Stackpole":
+            if specs.mpn_prefix == "RNCF0603TKY":
+                return cls._generate_sei_stackpole_rncf_resistance_code(
+                    resistance
+                )
             return cls._generate_sei_stackpole_resistance_code(resistance)
 
         if specs.manufacturer == "ROHM Semiconductor":
@@ -351,6 +355,59 @@ class PartInfo(NamedTuple):
             whole = int(resistance / 1000)
             decimal = f"{(resistance % 1000) / 10:02.0f}"
             return f"{whole}K{decimal}"
+
+        if resistance < 100_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:01.0f}"
+            return f"{whole}K{decimal}"
+
+        if resistance < 1_000_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:02.0f}".rstrip("0")
+            return f"{whole}K{decimal}"
+
+        whole = int(resistance / 1000000)
+        decimal = f"{((resistance % 1000000) / 10000):02.0f}"
+        return f"{whole}M{decimal}"
+
+    @classmethod
+    def _generate_sei_stackpole_rncf_resistance_code(
+        cls,
+        resistance: float,
+    ) -> str:
+        """Generate resistance code for SEI Stackpole series.
+
+        SEI Stackpole uses a different resistance code format.
+        This method generates the resistance code for SEI Stackpole series
+        resistors.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        if resistance < 100:
+            whole = int(resistance)
+            decimal = int(round((resistance - whole) * 10))
+            return f"{whole:01d}R{decimal}"
+
+        if resistance < 1000:  # noqa: PLR2004
+            whole = int(resistance)
+            decimal = f"{((resistance - whole) * 100):02.0f}".rstrip("0")
+            return f"{whole:01d}R{decimal}"
+
+        if resistance < 1_000:  # noqa: PLR2004
+            whole = int(resistance / 1000)
+            decimal = f"{(resistance % 1000) / 10:02.0f}"
+            return f"{whole}K{decimal}"
+
+        if resistance < 10_000:
+            whole = int(resistance / 1000)
+            decimal = int((resistance % 1000) / 10)
+            print(f"{whole}K{decimal:02d}")
+            return f"{whole}K{decimal:02d}"
 
         if resistance < 100_000:  # noqa: PLR2004
             whole = int(resistance / 1000)
@@ -1786,11 +1843,11 @@ VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
 
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
-    **PANASONIC_SYMBOLS_SPECS,
-    **YAGEO_SYMBOLS_SPECS,
+    # **PANASONIC_SYMBOLS_SPECS,
+    # **YAGEO_SYMBOLS_SPECS,
     **SEI_STACKPOLE_SYMBOLS_SPECS,
-    **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
-    **MURATA_SYMBOLS_SPECS,
-    **BOURNS_SYMBOLS_SPECS,
-    **VISHAY_SYMBOLS_SPECS,
+    # **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
+    # **MURATA_SYMBOLS_SPECS,
+    # **BOURNS_SYMBOLS_SPECS,
+    # **VISHAY_SYMBOLS_SPECS,
 }
