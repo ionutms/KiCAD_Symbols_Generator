@@ -1571,7 +1571,7 @@ SEI_STACKPOLE_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         ],
         extra_values=[24.9, 49.9, 499, 1540, 3320, 4990],
         tolerance_map={"E24": "0.01%"},
-        datasheet=("https://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf"),
+        datasheet=("https://www.seielect.com/catalog/sei-rncf.pdf"),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
 }
