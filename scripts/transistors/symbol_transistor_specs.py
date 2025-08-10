@@ -173,6 +173,17 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="P-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SI7113ADN-T1-GE3": SeriesSpec(
+        manufacturer="Vishay Semiconductors",
+        base_series="SI7113ADN-T1-GE3",
+        footprint="transistor_footprints:PowerPAK 1212-8",
+        datasheet="https://www.vishay.com/docs/77678/si7113adn.pdf",
+        drain_source_voltage=[-100.0],
+        drain_current=[-10.8],
+        package="PowerPAK 1212-8",
+        transistor_type="P-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "PSMN040-100MSEX": SeriesSpec(
         manufacturer="Nexperia",
         base_series="PSMN040-100MSEX",
