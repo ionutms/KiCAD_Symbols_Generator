@@ -1554,6 +1554,26 @@ SEI_STACKPOLE_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=("https://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf"),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
+    "RNCF0603TKY": SeriesSpec(
+        manufacturer="SEI Stackpole",
+        mpn_prefix="RNCF0603TKY",
+        mpn_sufix="",
+        footprint="resistor_footprints:R_0603_1608Metric",
+        voltage_rating="75V",
+        case_code_in="0603",
+        case_code_mm="1608",
+        power_rating="0.1W",
+        temperature_coefficient="5 ppm/°C",
+        resistance_range=[24.9, 59_000],
+        specified_values=[
+            *[75, 100, 150, 200, 250, 1000, 1200, 1500],
+            *[2000, 3900, 4700, 10000, 20000],
+        ],
+        extra_values=[24.9, 49.9, 499, 1540, 3320, 4990],
+        tolerance_map={"E24": "0.01%"},
+        datasheet=("https://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf"),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
 }
 
 ROHM_SEMICONDUCTOR_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
