@@ -193,6 +193,8 @@ class PartInfo(NamedTuple):
             return cls._generate_murata_resistance_code(resistance)
 
         if specs.manufacturer == "Bourns":
+            if specs.mpn_prefix.startswith("CRM"):
+                return cls._generate_bourns_crm_resistance_code(resistance)
             return cls._generate_bourns_resistance_code(resistance)
 
         if specs.manufacturer == "Vishay":
@@ -278,6 +280,28 @@ class PartInfo(NamedTuple):
         power = int(math.log10(resistance)) - 1
         significant = int(resistance / (10**power))
         return f"{significant}{power}"
+
+    @classmethod
+    def _generate_bourns_crm_resistance_code(cls, resistance: float) -> str:
+        """Generate resistance code for Bourns CRM series."""
+        if resistance < 1:
+            decimal_str = f"{resistance:.3f}".split(".")[1]
+            return f"R{decimal_str}"
+        elif resistance < 10:
+            integer_part = int(resistance)
+            decimal_fraction = resistance - integer_part
+            decimal_str = f"{int(round(decimal_fraction * 100)):02d}"
+            return f"{integer_part}R{decimal_str}"
+        elif resistance < 100:
+            integer_part = int(resistance)
+            decimal_fraction = resistance - integer_part
+            decimal_str = f"{int(round(decimal_fraction * 10))}"
+            return f"{integer_part}R{decimal_str}"
+        else:
+            if resistance.is_integer():
+                return f"{int(resistance)}0"
+            else:
+                return f"{str(resistance).replace('.', '')}"
 
     @classmethod
     def _generate_vishay_resistance_code(cls, resistance: float) -> str:  # noqa: PLR0911
@@ -1711,6 +1735,29 @@ BOURNS_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=("https://www.murata.com/products/productdetail?partno="),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
+    "CRM1206-FX-": SeriesSpec(
+        manufacturer="Bourns",
+        mpn_prefix="CRM1206-FX-",
+        mpn_sufix="ELF",
+        footprint="resistor_footprints:R_1206_3216Metric",
+        voltage_rating="200",
+        case_code_in="1206",
+        case_code_mm="3216",
+        power_rating="0.5W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.047, 1_000_000],
+        specified_values=[
+            *[0.15, 0.68, 0.75, 1.5, 2, 2.2, 5.6],
+            *[15, 22, 33, 47, 75, 120, 270],
+        ],
+        extra_values=[0.05, 4.75, 49.9],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://bourns.com/docs/product-datasheets/"
+            "crm0805_1206_2010.pdf?sfvrsn=a50d66f6_11"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
 }
 
 VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
@@ -1843,11 +1890,11 @@ VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
 
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
-    **PANASONIC_SYMBOLS_SPECS,
-    **YAGEO_SYMBOLS_SPECS,
-    **SEI_STACKPOLE_SYMBOLS_SPECS,
-    **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
-    **MURATA_SYMBOLS_SPECS,
+    # **PANASONIC_SYMBOLS_SPECS,
+    # **YAGEO_SYMBOLS_SPECS,
+    # **SEI_STACKPOLE_SYMBOLS_SPECS,
+    # **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
+    # **MURATA_SYMBOLS_SPECS,
     **BOURNS_SYMBOLS_SPECS,
-    **VISHAY_SYMBOLS_SPECS,
+    # **VISHAY_SYMBOLS_SPECS,
 }
