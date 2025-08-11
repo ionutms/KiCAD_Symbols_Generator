@@ -416,6 +416,28 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "MTMM-1xx-04-L-D-196": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="MTMM-1xx-04-L-D-196",
+        footprint_pattern="connector_footprints:MTMM-1{:02d}-04-L-D-196",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/mtmm_th.pdf?"
+            "_gl=1*10xs2wh*_gcl_au*OTQ3NjE2MTIwLjE3NTQ5MDMyODE.*"
+            "_ga*NzIxODQzNjU3LjE3NTQ5MDMyODI.*"
+            "_ga_3KFNZC07WW*"
+            "czE3NTQ5MDMyODEkbzEkZzEkdDE3NTQ5MDYwODAkajYwJGwwJGgw"
+        ),
+        pin_counts=list(range(1, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.00,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
     "TMS-1xx-02-G-S": SeriesSpec(
         manufacturer="Samtec",
         base_series="TMS-1xx-02-G-S",
