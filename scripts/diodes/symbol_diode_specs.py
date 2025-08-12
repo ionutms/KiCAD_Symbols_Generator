@@ -568,4 +568,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Zener",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "MSE1PB-M3/89A": SeriesSpec(
+        manufacturer="Vishay",
+        base_series="MSE1PB-M3/89A",
+        footprint="diode_footprints:DO-219AD",
+        datasheet="https://www.vishay.com/docs/89067/mse1pj.pdf",
+        voltage_rating=[100.0],
+        current_rating=[1.0],
+        package="DO-219AD",
+        diode_type="Rectifier",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

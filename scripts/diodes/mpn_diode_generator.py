@@ -106,8 +106,10 @@ def generate_files_for_series(
     footprint_dir = "footprints/diode_footprints.pretty"
     file_handler_utilities.ensure_directory_exists(footprint_dir)
 
-    csv_filename = f"{specs.base_series}_part_numbers.csv"
-    symbol_filename = f"DIODES_{specs.base_series}_DATA_BASE.kicad_sym"
+    series_filtered_name = specs.base_series.replace("/", "-")
+
+    csv_filename = f"{series_filtered_name}_part_numbers.csv"
+    symbol_filename = f"DIODES_{series_filtered_name}_DATA_BASE.kicad_sym"
     csv_file_path = f"{DATA_DIR}/{csv_filename}"
 
     # Generate part numbers and write to CSV

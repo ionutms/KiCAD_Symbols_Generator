@@ -244,4 +244,16 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.016,
     ),
+    "DO-219AD": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=3.8, height=1.7),
+        pad_dimensions=PadDimensionsAsymmetric(
+            cathode_width=2,
+            cathode_height=1.1,
+            cathode_center_x=0.65,
+            anode_width=0.8,
+            anode_height=0.8,
+            anode_center_x=1.25,
+        ),
+        ref_offset_y=-1.524,
+    ),
 }
