@@ -719,7 +719,6 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
-    # "GRM32EC72A106KE05L"
     "GRM32EC72A": SeriesSpec(
         manufacturer="Murata Electronics",
         mpn_prefix="GRM32EC72A",
@@ -1087,6 +1086,24 @@ KYOCERA_AVX_SYMBOLS_SPECS = {
         tolerance_map={"X7R": {"K": "10%"}},
         value_range={"X7R": (220e-12, 10e-6)},
         specified_values=[470e-9, 680e-9, 1e-6, 2.2e-6, 4.7e-6, 10e-6],
+        datasheet_url=f"{KYOCERA_AVX_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "KGM05AR71C": SeriesSpec(
+        mpn_prefix="KGM05AR71C",
+        mpn_sufix=["KH"],
+        manufacturer="KYOCERA AVX",
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="16V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        tolerance_map={"X7R": {"K": "10%"}},
+        value_range={"X7R": (100e-12, 220e-9)},
+        excluded_values=[
+            *[120e-12, 180e-12, 270e-12, 390e-12, 560e-12, 820e-12],
+            *[1.2e-9, 1.8e-9, 2.7e-9, 3.3e-9, 8.2e-9],
+            *[56e-9, 68e-9, 120e-9, 150e-9, 180e-9],
+        ],
         datasheet_url=f"{KYOCERA_AVX_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
