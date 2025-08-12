@@ -493,6 +493,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Unidirectional TVS",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "ESD9M5.0ST5G": SeriesSpec(
+        manufacturer="Onsemi",
+        base_series="ESD9M5.0ST5G",
+        part_number_suffix="",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://www.onsemi.com/download/data-sheet/pdf/esd9m5.0s-d.pdf"
+        ),
+        voltage_rating=[5.0],
+        package="SOD_923",
+        diode_type="Unidirectional TVS",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "SMCJ": SeriesSpec(
         manufacturer="STMicroelectronics",
         base_series="SMCJ",

@@ -57,7 +57,7 @@ def generate_footprint(
             ),
             ")",  # Close the footprint
         ]
-    elif part_info.package in ("DO-214AA", "SOD323"):
+    elif part_info.package in ("DO-214AA", "SOD323", "SOD_923"):
         anode_center_x = specs.pad_dimensions.anode_center_x
         cathode_center_x = specs.pad_dimensions.cathode_center_x
         anode_width = specs.pad_dimensions.anode_width
