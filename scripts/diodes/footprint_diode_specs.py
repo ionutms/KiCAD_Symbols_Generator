@@ -114,6 +114,18 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.778,
     ),
+    "SOD_523": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=2.2, height=1),
+        pad_dimensions=PadDimensionsAsymmetric(
+            cathode_width=0.65,
+            cathode_height=0.3,
+            cathode_center_x=0.675,
+            anode_width=0.65,
+            anode_height=0.3,
+            anode_center_x=0.675,
+        ),
+        ref_offset_y=-1.27,
+    ),
     "SOD_123F": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.6, height=2.2),
         pad_dimensions=PadDimensionsAsymmetric(

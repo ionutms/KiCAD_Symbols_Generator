@@ -579,4 +579,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Rectifier",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BAT41KFILM": SeriesSpec(
+        manufacturer="STMicroelectronics",
+        base_series="BAT41KFILM",
+        footprint="diode_footprints:SOD_523",
+        datasheet="https://www.st.com/resource/en/datasheet/bat41.pdf",
+        voltage_rating=[100.0],
+        current_rating=[1.0],
+        package="SOD_523",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
