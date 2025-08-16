@@ -2336,7 +2336,6 @@ def write_dip_switch_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # Check for override pin specs
     override_pins = get_override_pins_specs(
         component_data.get("Series", ""),
         specs_dict,
@@ -2346,110 +2345,73 @@ def write_dip_switch_symbol_drawing(
         for pin_num, x_pos, y_pos, angle in override_pins:
             write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
-        # Calculate total pins (pin_count is switches, total pins = pin_count * 2)
         total_pins = pin_count * 2
         pins_per_side = total_pins // 2
 
-        # Calculate starting Y position for proper centering
         start_y = (pins_per_side - 1) * pin_spacing / 2
 
-        if number_of_rows == 2:  # Standard dual-row IC layout
+        if number_of_rows == 2:
             if anti_clockwise_numbering:
-                # Anti-clockwise: Left side odd (1,3,5...) top-to-bottom, Right side even (2,4,6...) top-to-bottom
-                # Left side pins (1, 3, 5, ...) - top to bottom
                 for i in range(pins_per_side):
-                    pin_num = (i * 2) + 1  # 1, 3, 5, 7, ...
+                    pin_num = (i * 2) + 1
                     y_pos = start_y - i * pin_spacing
                     write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
-                # Right side pins (2, 4, 6, ...) - top to bottom
                 for i in range(pins_per_side):
-                    pin_num = (i * 2) + 2  # 2, 4, 6, 8, ...
+                    pin_num = (i * 2) + 2
                     y_pos = start_y - i * pin_spacing
                     write_pin(symbol_file, 5.08, y_pos, 180, str(pin_num))
             else:
-                # Original standard IC numbering (1,2,3 left top-to-bottom, 6,5,4 right top-to-bottom)
-                # Left side pins (1, 2, 3, ...) - top to bottom
                 for i in range(pins_per_side):
                     pin_num = i + 1
                     y_pos = start_y - i * pin_spacing
                     write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
-                # Right side pins (total_pins, total_pins-1, ...) - top to bottom
                 for i in range(pins_per_side):
                     pin_num = total_pins - i
-                    y_pos = (
-                        start_y - i * pin_spacing
-                    )  # Same Y as left side pins
+                    y_pos = start_y - i * pin_spacing
                     write_pin(symbol_file, 5.08, y_pos, 180, str(pin_num))
 
-        else:  # Single row layout
+        else:
             for pin_num in range(1, pin_count + 1):
                 if anti_clockwise_numbering:
-                    # Reverse order for single row anti-clockwise
                     actual_pin_num = pin_count - pin_num + 1
                 else:
                     actual_pin_num = pin_num
                 y_pos = start_y - (pin_num - 1) * pin_spacing
                 write_pin(symbol_file, -5.08, y_pos, 0, str(actual_pin_num))
 
-    # Generate switch symbols - one for each switch (pin_count switches)
     for switch_idx in range(pin_count):
         if number_of_rows == 2:
-            # For dual-row layout, each switch is between corresponding pins on left and right
-            # Y position is based on the left pin position
             y_offset = start_y - switch_idx * pin_spacing
         else:
-            # For single row layout, switches are vertically distributed
             y_offset = start_y - switch_idx * pin_spacing
 
-        # Write the switch symbol at the calculated offset
         symbol_file.write(f"""
 			(polyline
 				(pts
-					(xy -2.54 {y_offset}) (xy -1.27 {y_offset}) (xy 1.27 {y_offset + 1.27})
+					(xy -2.54 {y_offset}) (xy -1.27 {y_offset})
+                    (xy 1.27 {y_offset + 1.27})
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 {y_offset})
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 {y_offset})
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 {y_offset}) (xy 1.27 {y_offset})
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 {y_offset}) (xy 1.27 {y_offset}))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)""")
 
     symbol_file.write("\t\t)\n")
