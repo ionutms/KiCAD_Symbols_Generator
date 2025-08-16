@@ -47,7 +47,7 @@ class SeriesSpec(NamedTuple):
     @property
     def footprint_pattern(self) -> str:
         """Generate footprint pattern using the footprint_name."""
-        return f"tactile_switches_footprints:{self.footprint_name}"
+        return f"dip_switches_footprints:{self.footprint_name}"
 
 
 class PartInfo(NamedTuple):
