@@ -675,6 +675,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     row_pitch: float,
     row_count: int,
     mirror_x_pin_numbering: bool,  # noqa: FBT001
+    anti_clockwise_numbering: bool = False,  # noqa: FBT001
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -686,6 +687,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         row_pitch: Pitch between connector rows
         row_count: Number of connector rows
         mirror_x_pin_numbering: change pin numbering direction
+        anti_clockwise_numbering: use anti-clockwise pin numbering
 
     Returns:
         str: KiCad formatted pad definitions
@@ -702,6 +704,8 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
     pads = []
+    total_pins = pin_count * row_count
+
     for pin_index, pin_num in enumerate(range(pin_count * row_count)):
         ypos = (
             (-1 if pin_num % 2 == 0 else 1)
@@ -710,8 +714,25 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         )
         ypos = ypos if not mirror_x_pin_numbering else -ypos
 
+        # Calculate pin number based on numbering scheme
+        if anti_clockwise_numbering and row_count == 2:
+            # Anti-clockwise numbering for dual row
+            pins_per_row = total_pins // 2
+            if pin_index % 2 == 0:
+                # Bottom row: 1, 2, 3, ... (left to right)
+                pin_number = (pin_index // 2) + 1
+            else:
+                # Top row: ..., 6, 5, 4 (right to left)
+                pin_number = total_pins - (pin_index // 2)
+        elif anti_clockwise_numbering and row_count == 1:
+            # Single row anti-clockwise: reverse order
+            pin_number = total_pins - pin_index
+        else:
+            # Default sequential numbering
+            pin_number = pin_num + 1
+
         pad = f"""
-            (pad "{pin_num + 1}" smd roundrect
+            (pad "{pin_number}" smd roundrect
                 (at {final_xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
