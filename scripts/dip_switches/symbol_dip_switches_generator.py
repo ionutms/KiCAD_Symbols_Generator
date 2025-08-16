@@ -8,8 +8,8 @@ for specific series with color-coded LED support.
 from pathlib import Path
 from typing import TextIO
 
-from utilities import file_handler_utilities, symbol_utils
 from symbol_dip_switches_specs import SYMBOLS_SPECS
+from utilities import file_handler_utilities, symbol_utils
 
 
 def generate_kicad_symbol(
@@ -25,6 +25,7 @@ def generate_kicad_symbol(
     Args:
         input_csv_file: Path to the input CSV file containing component data.
         output_symbol_file: Path for the output .kicad_sym file to be created.
+
     """
     component_data_list = file_handler_utilities.read_csv_data(input_csv_file)
     all_properties = symbol_utils.get_all_properties(component_data_list)
@@ -50,8 +51,9 @@ def write_component(
     Args:
         symbol_file: File object for writing the symbol file.
         component_data: Dictionary containing component specifications.
-        property_order: Ordered list of property names for consistent
-            output formatting.
+        property_order:
+            Ordered list of property names for consistent output formatting.
+
     """
     symbol_name = component_data.get("Symbol Name", "")
     number_of_rows = int(component_data.get("Number of Rows", "1"))

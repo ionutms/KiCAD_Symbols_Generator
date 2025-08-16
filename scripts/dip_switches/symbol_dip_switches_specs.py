@@ -7,7 +7,7 @@ information.
 
 from __future__ import annotations
 
-from typing import NamedTuple, Optional, List, Tuple
+from typing import List, NamedTuple, Optional, Tuple
 
 
 class SeriesSpec(NamedTuple):
@@ -30,6 +30,7 @@ class SeriesSpec(NamedTuple):
         override_pins_specs:
             Optional list of tuples specifying custom pin configurations
             (pin_number, x, y, angle)
+
     """
 
     manufacturer: str
@@ -68,6 +69,7 @@ class PartInfo(NamedTuple):
         mounting_angle: Mounting orientation of the tactile switch
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         number_of_rows: Number of rows of pins
+
     """
 
     symbol_name: str
@@ -97,6 +99,7 @@ class PartInfo(NamedTuple):
 
         Returns:
             PartInfo instance with all specifications
+
         """
         mpn = cls.generate_part_code(specs.base_series)
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
@@ -130,6 +133,7 @@ class PartInfo(NamedTuple):
 
         Returns:
             Part code string
+
         """
         return f"{series_code}"
 
@@ -145,6 +149,7 @@ class PartInfo(NamedTuple):
 
         Returns:
             Formatted description string including all relevant specifications
+
         """
         parts = [
             f"{specs.manufacturer}",
@@ -166,6 +171,7 @@ class PartInfo(NamedTuple):
 
         Returns:
             List containing a single PartInfo instance
+
         """
         return [cls.create_part_info(specs)]
 
