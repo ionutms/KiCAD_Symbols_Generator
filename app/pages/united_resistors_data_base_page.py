@@ -32,7 +32,7 @@ from dash import Input, Output, callback, dcc, html, register_page
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=12)
+register_page(__name__, name=link_name, order=13)
 
 ag_grid_data: pd.DataFrame = pd.read_csv(
     "data/UNITED_RESISTORS_DATA_BASE.csv"

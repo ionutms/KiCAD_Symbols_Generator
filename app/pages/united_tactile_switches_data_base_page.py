@@ -30,7 +30,7 @@ from dash import dcc, html, register_page
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=15)
+register_page(__name__, name=link_name, order=16)
 
 ag_grid_data: pd.DataFrame = pd.read_csv(
     "data/UNITED_TACTILE_SWITCHES_DATA_BASE.csv"
