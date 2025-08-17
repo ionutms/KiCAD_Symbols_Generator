@@ -198,6 +198,8 @@ class PartInfo(NamedTuple):
             return cls._generate_bourns_resistance_code(resistance)
 
         if specs.manufacturer == "Vishay":
+            if specs.mpn_prefix == "NTCS0805E3":
+                return cls._generate_vishay_thermistor_code(resistance)
             return cls._generate_vishay_resistance_code(resistance)
 
         if specs.manufacturer == "SEI Stackpole":
@@ -304,7 +306,7 @@ class PartInfo(NamedTuple):
                 return f"{str(resistance).replace('.', '')}"
 
     @classmethod
-    def _generate_vishay_resistance_code(cls, resistance: float) -> str:  # noqa: PLR0911
+    def _generate_vishay_resistance_code(cls, resistance: float) -> str:
         """Generate resistance code for Murata series.
 
         Args:
@@ -351,6 +353,27 @@ class PartInfo(NamedTuple):
         whole = int(m_value)
         decimal = round((m_value - whole) * 100)
         return f"{whole}M{decimal}"
+
+    @classmethod
+    def _generate_vishay_thermistor_code(cls, resistance: float) -> str:
+        """Generate resistance code for Vishay thermistor series.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        """
+        resistance_int = int(resistance)
+
+        multiplier = 0
+        temp_value = resistance_int
+
+        while temp_value % 10 == 0 and temp_value // 10 >= 10:
+            temp_value //= 10
+            multiplier += 1
+
+        significant_digits = temp_value
+
+        return f"{significant_digits}{multiplier}"
 
     @classmethod
     def _generate_sei_stackpole_resistance_code(
@@ -1884,6 +1907,24 @@ VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         ],
         tolerance_map={"E24": "1%", "96": "1%"},
         datasheet=("https://www.vishay.com/docs/20043/crcwhpe3.pdf"),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "NTCS0805E3": SeriesSpec(
+        reference="RT",
+        component_type="Thermistor",
+        manufacturer="Vishay",
+        mpn_prefix="NTCS0805E3",
+        mpn_sufix="JHT",
+        footprint="resistor_footprints:RT_0805_RT_2012Metric",
+        voltage_rating="50V",
+        case_code_in="0805_RT",
+        case_code_mm="2012",
+        power_rating="0.21W",
+        temperature_coefficient="5 ppm/°C",
+        resistance_range=[10_000, 330_000],
+        specified_values=[10_000, 22_000, 33_000, 47_000, 330_000],
+        tolerance_map={"E24": "5%"},
+        datasheet=("https://www.vishay.com/docs/29044/ntcs0805e3t.pdf"),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
 }

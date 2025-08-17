@@ -14,8 +14,8 @@ class BodyDimensions(NamedTuple):
 
     """
 
-    width: float  # Total width of the component body
-    height: float  # Total height of the component body
+    width: float
+    height: float
 
 
 class PadDimensions(NamedTuple):
@@ -30,9 +30,9 @@ class PadDimensions(NamedTuple):
 
     """
 
-    width: float  # Width of each pad
-    height: float  # Height of each pad
-    center_x: float  # Distance from origin to pad center
+    width: float
+    height: float
+    center_x: float
 
 
 class FootprintSpecs(NamedTuple):
@@ -74,39 +74,36 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         pad_dimensions=PadDimensions(width=1.025, height=1.4, center_x=0.912),
         ref_offset_y=-1.778,
     ),
+    "0805_RT": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=3.36, height=1.9),
+        pad_dimensions=PadDimensions(width=1.025, height=1.4, center_x=0.912),
+        ref_offset_y=-1.778,
+    ),
     "1206": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.56, height=2.24),
         pad_dimensions=PadDimensions(
-            width=1.125,
-            height=1.75,
-            center_x=1.462,
+            width=1.125, height=1.75, center_x=1.462
         ),
         ref_offset_y=-2.032,
     ),
     "1210": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.56, height=3.16),
         pad_dimensions=PadDimensions(
-            width=1.125,
-            height=2.65,
-            center_x=1.462,
+            width=1.125, height=2.65, center_x=1.462
         ),
         ref_offset_y=-2.286,
     ),
     "2010": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.36, height=3.16),
         pad_dimensions=PadDimensions(
-            width=1.225,
-            height=2.65,
-            center_x=2.312,
+            width=1.225, height=2.65, center_x=2.312
         ),
         ref_offset_y=-2.286,
     ),
     "2512": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7.64, height=3.84),
         pad_dimensions=PadDimensions(
-            width=1.225,
-            height=3.35,
-            center_x=2.962,
+            width=1.225, height=3.35, center_x=2.962
         ),
         ref_offset_y=-2.794,
     ),
