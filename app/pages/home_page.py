@@ -118,18 +118,56 @@ links_display_div = html.Div(
     style={"display": "flex", "flex-direction": "column", "gap": "10px"},
 )
 
-image_prefixes = ["side", "top"]
+
+def get_project_images_from_github(project_name: str) -> list[str]:
+    """Get a list of image URLs from the project's docs/pictures directory.
+
+    This function uses the GitHub API to list all PNG files in the
+    docs/pictures directory of a project repository.
+
+    Args:
+        project_name (str): Name of the GitHub repository
+
+    Returns:
+        list[str]:
+            List of image URLs, empty list if no images found or error occurs
+
+    """
+    import requests
+
+    project_name_lower = project_name.lower()
+    api_url = (
+        f"https://api.github.com/repos/ionutms/{project_name}"
+        f"/contents/{project_name_lower}/docs/pictures"
+    )
+
+    try:
+        response = requests.get(api_url, timeout=10)
+        if response.status_code == 200:
+            contents = response.json()
+            # Filter for PNG files
+            image_paths = [
+                f"https://raw.githubusercontent.com/ionutms/{project_name}"
+                f"/main/{item['path']}"
+                for item in contents
+                if item["name"].endswith(".png")
+            ]
+            return image_paths
+    except requests.RequestException:
+        # If API request fails, return empty list
+        pass
+
+    # Return empty list if no images found or API request fails
+    return []
 
 
 def create_project_links(
     project_name: str,
-    image_prefixes: list[str],
 ) -> html.Div:
     """Create links for a specific project with image carousel.
 
     Args:
         project_name (str): Name of the project (e.g., 'ADP1032')
-        image_prefixes (list[str]): List of image prefixes
 
     Returns:
         html.Div: Div containing all project links and image carousel
@@ -182,13 +220,9 @@ def create_project_links(
         ),
     ]
 
-    image_paths = [
-        f"https://raw.githubusercontent.com/ionutms/{project_name}/"
-        f"main/{project_name_lower}/docs/pictures/"
-        f"{project_name_lower}_{prefix}.png"
-        for prefix in image_prefixes
-    ]
+    image_paths = get_project_images_from_github(project_name)
 
+    # Create carousel components with visibility based on image availability
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
 
     modal = dbc.Modal(
@@ -213,7 +247,10 @@ def create_project_links(
         controls=False,
         indicators=False,
         id=f"{project_name_lower}_carousel",
-        style={"cursor": "pointer"},
+        style={
+            "cursor": "pointer",
+            "display": "block" if image_paths else "none",
+        },
     )
 
     carousel_controls = html.Div(
@@ -247,6 +284,7 @@ def create_project_links(
             ),
         ],
         className="d-flex justify-content-center mt-2",
+        style={"display": "flex" if image_paths else "none"},
     )
 
     carousel_div = html.Div(
@@ -256,6 +294,7 @@ def create_project_links(
             "marginBottom": "1px",
             "borderRadius": "10px",
             "overflow": "hidden",
+            "display": "block" if image_paths else "none",
         },
     )
 
@@ -517,7 +556,7 @@ def register_carousel_callbacks(num_items: int) -> None:
 
 
 register_modal_callbacks()
-register_carousel_callbacks(len(image_prefixes))
+register_carousel_callbacks(10)  # Default value for carousel items
 
 
 def create_header_section(
@@ -620,7 +659,7 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(project_name, image_prefixes),
+                    create_project_links(project_name),
                 ],
                 xs=12,
                 md=4,
