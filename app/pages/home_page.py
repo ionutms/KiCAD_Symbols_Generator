@@ -119,64 +119,6 @@ links_display_div = html.Div(
 )
 
 
-def get_project_images_from_github(
-    project_name: str,
-) -> tuple[list[str], str]:
-    """Get a list of image URLs from the project's docs/pictures directory.
-
-    This function uses the GitHub API to list all PNG files in the
-    docs/pictures directory of a project repository.
-
-    Args:
-        project_name (str): Name of the GitHub repository
-
-    Returns:
-        tuple[list[str], str]:
-            Tuple containing list of image URLs and status message.
-            Empty list if no images found or error occurs,
-            with appropriate message.
-
-    """
-    import requests
-
-    project_name_lower = project_name.lower()
-    api_url = (
-        f"https://api.github.com/repos/ionutms/{project_name}"
-        f"/contents/{project_name_lower}/docs/pictures"
-    )
-
-    try:
-        response = requests.get(api_url, timeout=10)
-        if response.status_code == 200:
-            contents = response.json()
-            # Filter for PNG files
-            image_paths = [
-                f"https://raw.githubusercontent.com/ionutms/{project_name}"
-                f"/main/{item['path']}"
-                for item in contents
-                if item["name"].endswith(".png")
-            ]
-            return image_paths, "success"
-        elif (
-            response.status_code == 403
-            and "rate limit" in response.text.lower()
-        ):
-            # Rate limit exceeded
-            return [], "rate_limit_exceeded"
-        elif response.status_code == 404:
-            # Directory not found
-            return [], "directory_not_found"
-        else:
-            # Other error
-            return [], f"error_{response.status_code}"
-    except requests.RequestException:
-        # If API request fails, return empty list
-        pass
-
-    # Return empty list if no images found or API request fails
-    return [], "connection_error"
-
-
 def create_project_links(
     project_name: str,
 ) -> html.Div:
@@ -236,44 +178,15 @@ def create_project_links(
         ),
     ]
 
-    image_paths, status = get_project_images_from_github(project_name)
+    image_prefixes = ["side", "top", "bottom"]
 
-    # Handle different status cases
-    if status == "rate_limit_exceeded":
-        # Show rate limit message
-        rate_limit_message = html.Div(
-            children=[
-                html.P(
-                    "GitHub API rate limit exceeded. "
-                    "Images cannot be displayed at this time.",
-                    style={
-                        "color": "#ff6b6b",
-                        "font-weight": "bold",
-                        "margin": "10px 0",
-                        "padding": "10px",
-                        "border": "1px solid #ff6b6b",
-                        "border-radius": "5px",
-                        "background-color": "rgba(255, 107, 107, 0.1)",
-                    },
-                )
-            ]
-        )
-        return html.Div(
-            children=[*links, rate_limit_message],
-            style={
-                "display": "flex",
-                "flex-direction": "column",
-                "gap": "10px",
-            },
-        )
-    elif status == "directory_not_found":
-        # Directory not found, but we still want to show links
-        pass
-    elif status.startswith("error_") or status == "connection_error":
-        # Other errors, but we still want to show links
-        pass
+    image_paths = [
+        f"https://raw.githubusercontent.com/ionutms/{project_name}/"
+        f"main/{project_name_lower}/docs/pictures/"
+        f"{index}_{project_name_lower}_{prefix}.png"
+        for index, prefix in enumerate(image_prefixes, 1)
+    ]
 
-    # Create carousel components with visibility based on image availability
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
 
     modal = dbc.Modal(
@@ -298,10 +211,7 @@ def create_project_links(
         controls=False,
         indicators=False,
         id=f"{project_name_lower}_carousel",
-        style={
-            "cursor": "pointer",
-            "display": "block" if image_paths else "none",
-        },
+        style={"cursor": "pointer"},
     )
 
     carousel_controls = html.Div(
@@ -335,7 +245,6 @@ def create_project_links(
             ),
         ],
         className="d-flex justify-content-center mt-2",
-        style={"display": "flex" if image_paths else "none"},
     )
 
     carousel_div = html.Div(
@@ -345,7 +254,6 @@ def create_project_links(
             "marginBottom": "1px",
             "borderRadius": "10px",
             "overflow": "hidden",
-            "display": "block" if image_paths else "none",
         },
     )
 
