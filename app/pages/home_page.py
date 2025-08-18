@@ -433,8 +433,18 @@ def check_github_pages_simple(username: str, repo_name: str) -> bool:
 LEARNING_PROJECTS_WITH_PAGES = []
 
 
-# Initialize with pages detection (call this once during app startup)
 def initialize_learning_projects():
+    """Initialize learning projects with GitHub Pages detection.
+
+    This function populates the LEARNING_PROJECTS_WITH_PAGES global list by
+    checking which learning projects have GitHub Pages available. For each
+    learning project, it copies the configuration, checks if GitHub Pages
+    is enabled, and adds the pages URL if available.
+
+    The function modifies the global LEARNING_PROJECTS_WITH_PAGES list,
+    appending a dictionary for each learning project with its configuration
+    and GitHub Pages status.
+    """
     global LEARNING_PROJECTS_WITH_PAGES
 
     for repo in LEARNING_PROJECTS:
@@ -623,7 +633,19 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
 def create_learning_project_section(
     module_name: str, repo_config: dict
 ) -> list[Any]:
-    """Create a section for learning projects with GitHub Pages links if available."""
+    """Create a section for learning projects with GitHub Pages links.
+
+    Args:
+        module_name (str): Name of the module used for creating graph IDs
+        repo_config (dict):
+            Repository configuration dictionary containing project info
+
+    Returns:
+        list[Any]:
+            List containing Dash Bootstrap components for the project section,
+            including graphs and optional GitHub Pages links
+
+    """
     project_name = repo_config["name"]
 
     # Create the standard graphs
@@ -683,6 +705,74 @@ def create_learning_project_section(
     ]
 
 
+tabs = dbc.Tabs(
+    [
+        dbc.Tab(
+            label=MAIN_REPO["name"].replace("_", " ").title(),
+            children=[
+                html.Div(
+                    [
+                        *create_main_repo_section(
+                            module_name, links_display_div
+                        ),
+                    ],
+                    style={"padding": "20px"},
+                )
+            ],
+        ),
+        *[
+            dbc.Tab(
+                label=repo["name"].replace("_", " ").title(),
+                children=[
+                    html.Div(
+                        [
+                            *create_project_section(module_name, repo),
+                        ],
+                        style={"padding": "20px"},
+                    )
+                ],
+            )
+            for repo in PROJECT_REPOS_WITHOUT_LINKS
+        ],
+        dbc.Tab(
+            label="Learning Projects",
+            tab_id="learning-tab",
+            children=[
+                html.Div(
+                    [
+                        *[
+                            component
+                            for repo in LEARNING_PROJECTS_WITH_PAGES
+                            for component in create_learning_project_section(
+                                module_name, repo
+                            )
+                        ],
+                    ],
+                    style={"padding": "20px"},
+                )
+            ],
+        ),
+        dbc.Tab(
+            label="Concepts Projects",
+            tab_id="additional-tab",
+            children=[
+                html.Div(
+                    [
+                        *[
+                            component
+                            for repo in PROJECT_REPOS_WITH_LINKS
+                            for component in create_project_section(
+                                module_name, repo
+                            )
+                        ],
+                    ],
+                    style={"padding": "20px"},
+                )
+            ],
+        ),
+    ],
+)
+
 # Main layout construction
 layout = dbc.Container(
     [
@@ -693,75 +783,7 @@ layout = dbc.Container(
             features,
             usage_steps,
         ),
-        dbc.Tabs(
-            [
-                dbc.Tab(
-                    label=MAIN_REPO["name"].replace("_", " ").title(),
-                    children=[
-                        html.Div(
-                            [
-                                *create_main_repo_section(
-                                    module_name, links_display_div
-                                ),
-                            ],
-                            style={"padding": "20px"},
-                        )
-                    ],
-                ),
-                *[
-                    dbc.Tab(
-                        label=repo["name"].replace("_", " ").title(),
-                        children=[
-                            html.Div(
-                                [
-                                    *create_project_section(
-                                        module_name, repo
-                                    ),
-                                ],
-                                style={"padding": "20px"},
-                            )
-                        ],
-                    )
-                    for repo in PROJECT_REPOS_WITHOUT_LINKS
-                ],
-                dbc.Tab(
-                    label="Learning Projects",
-                    tab_id="learning-tab",
-                    children=[
-                        html.Div(
-                            [
-                                *[
-                                    component
-                                    for repo in LEARNING_PROJECTS_WITH_PAGES
-                                    for component in create_learning_project_section(
-                                        module_name, repo
-                                    )
-                                ],
-                            ],
-                            style={"padding": "20px"},
-                        )
-                    ],
-                ),
-                dbc.Tab(
-                    label="Concepts Projects",
-                    tab_id="additional-tab",
-                    children=[
-                        html.Div(
-                            [
-                                *[
-                                    component
-                                    for repo in PROJECT_REPOS_WITH_LINKS
-                                    for component in create_project_section(
-                                        module_name, repo
-                                    )
-                                ],
-                            ],
-                            style={"padding": "20px"},
-                        )
-                    ],
-                ),
-            ],
-        ),
+        tabs,
     ],
     fluid=True,
 )
@@ -1157,7 +1179,9 @@ def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
         }
 
         visitors_source = {
-            "github_url": f"{base_github_url}/repo_traffic_data/{visitors_csv}",
+            "github_url": (
+                f"{base_github_url}/repo_traffic_data/{visitors_csv}"
+            ),
             "local_file": f"repo_traffic_data/{visitors_csv}",
             "rename_columns": {
                 "visitor_timestamp": "clone_timestamp",
