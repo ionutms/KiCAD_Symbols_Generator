@@ -119,7 +119,9 @@ links_display_div = html.Div(
 )
 
 
-def get_project_images_from_github(project_name: str) -> list[str]:
+def get_project_images_from_github(
+    project_name: str,
+) -> tuple[list[str], str]:
     """Get a list of image URLs from the project's docs/pictures directory.
 
     This function uses the GitHub API to list all PNG files in the
@@ -129,8 +131,10 @@ def get_project_images_from_github(project_name: str) -> list[str]:
         project_name (str): Name of the GitHub repository
 
     Returns:
-        list[str]:
-            List of image URLs, empty list if no images found or error occurs
+        tuple[list[str], str]:
+            Tuple containing list of image URLs and status message.
+            Empty list if no images found or error occurs,
+            with appropriate message.
 
     """
     import requests
@@ -152,13 +156,25 @@ def get_project_images_from_github(project_name: str) -> list[str]:
                 for item in contents
                 if item["name"].endswith(".png")
             ]
-            return image_paths
+            return image_paths, "success"
+        elif (
+            response.status_code == 403
+            and "rate limit" in response.text.lower()
+        ):
+            # Rate limit exceeded
+            return [], "rate_limit_exceeded"
+        elif response.status_code == 404:
+            # Directory not found
+            return [], "directory_not_found"
+        else:
+            # Other error
+            return [], f"error_{response.status_code}"
     except requests.RequestException:
         # If API request fails, return empty list
         pass
 
     # Return empty list if no images found or API request fails
-    return []
+    return [], "connection_error"
 
 
 def create_project_links(
@@ -220,7 +236,42 @@ def create_project_links(
         ),
     ]
 
-    image_paths = get_project_images_from_github(project_name)
+    image_paths, status = get_project_images_from_github(project_name)
+
+    # Handle different status cases
+    if status == "rate_limit_exceeded":
+        # Show rate limit message
+        rate_limit_message = html.Div(
+            children=[
+                html.P(
+                    "GitHub API rate limit exceeded. "
+                    "Images cannot be displayed at this time.",
+                    style={
+                        "color": "#ff6b6b",
+                        "font-weight": "bold",
+                        "margin": "10px 0",
+                        "padding": "10px",
+                        "border": "1px solid #ff6b6b",
+                        "border-radius": "5px",
+                        "background-color": "rgba(255, 107, 107, 0.1)",
+                    },
+                )
+            ]
+        )
+        return html.Div(
+            children=[*links, rate_limit_message],
+            style={
+                "display": "flex",
+                "flex-direction": "column",
+                "gap": "10px",
+            },
+        )
+    elif status == "directory_not_found":
+        # Directory not found, but we still want to show links
+        pass
+    elif status.startswith("error_") or status == "connection_error":
+        # Other errors, but we still want to show links
+        pass
 
     # Create carousel components with visibility based on image availability
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
@@ -525,7 +576,7 @@ def register_modal_callbacks() -> None:
             return is_open
 
 
-def register_carousel_callbacks(num_items: int) -> None:
+def register_carousel_callbacks() -> None:
     """Register callbacks for carousel control buttons."""
     for repo in PROJECT_REPOS_WITH_LINKS:
         project_lower = repo["name"].lower()
@@ -535,15 +586,23 @@ def register_carousel_callbacks(num_items: int) -> None:
             Input(f"{project_lower}_carousel_prev", "n_clicks"),
             Input(f"{project_lower}_carousel_next", "n_clicks"),
             State(f"{project_lower}_carousel", "active_index"),
+            State(f"{project_lower}_carousel", "items"),
         )
         def control_carousel(
             _prev_clicks: int | None,
             _next_clicks: int | None,
             current_index: int,
+            items: list,
         ) -> int:
             ctx = dash.callback_context
             if not ctx.triggered:
                 return current_index or 0
+
+            # Get the actual number of items in the carousel
+            num_items = len(items) if items else 1
+            # Ensure we don't divide by zero
+            if num_items == 0:
+                num_items = 1
 
             button_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
@@ -556,7 +615,7 @@ def register_carousel_callbacks(num_items: int) -> None:
 
 
 register_modal_callbacks()
-register_carousel_callbacks(10)  # Default value for carousel items
+register_carousel_callbacks()
 
 
 def create_header_section(
