@@ -121,18 +121,20 @@ links_display_div = html.Div(
 
 def create_project_links(
     project_name: str,
+    username: str,
 ) -> html.Div:
     """Create links for a specific project with image carousel.
 
     Args:
         project_name (str): Name of the project (e.g., 'ADP1032')
+        username (str): GitHub username.
 
     Returns:
         html.Div: Div containing all project links and image carousel
 
     """
     project_name_lower = project_name.lower()
-    base_github_url = f"https://github.com/ionutms/{project_name}"
+    base_github_url = f"https://github.com/{username}/{project_name}"
 
     links = [
         html.A(
@@ -152,7 +154,7 @@ def create_project_links(
             children="View Schematics (PDF)",
             href=(
                 f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
-                f"https://raw.githubusercontent.com/ionutms/{project_name}/"
+                f"https://raw.githubusercontent.com/{username}/{project_name}/"
                 f"main/{project_name_lower}/docs/schematics/"
                 f"{project_name_lower}_schematics.pdf"
             ),
@@ -176,12 +178,21 @@ def create_project_links(
             ),
             target="_blank",
         ),
+        html.A(
+            children="View in KiCanvas",
+            href=(
+                f"https://kicanvas.org/?"
+                f"github=https%3A%2F%2Fgithub.com%2F{username}%2F"
+                f"{project_name}%2Ftree%2Fmain%2F{project_name_lower}"
+            ),
+            target="_blank",
+        ),
     ]
 
     image_prefixes = ["side", "top", "bottom"]
 
     image_paths = [
-        f"https://raw.githubusercontent.com/ionutms/{project_name}/"
+        f"https://raw.githubusercontent.com/{username}/{project_name}/"
         f"main/{project_name_lower}/docs/pictures/"
         f"{index}_{project_name_lower}_{prefix}.png"
         for index, prefix in enumerate(image_prefixes, 1)
@@ -265,6 +276,9 @@ def create_project_links(
             "gap": "10px",
         },
     )
+
+
+GITHUB_USERNAME = "ionutms"
 
 
 REPO_CONFIGS = [
@@ -450,12 +464,12 @@ def initialize_learning_projects():
         project_name = repo["name"]
 
         # Check for GitHub Pages
-        has_pages = check_github_pages_simple("ionutms", project_name)
+        has_pages = check_github_pages_simple(GITHUB_USERNAME, project_name)
         project_config["has_github_pages"] = has_pages
 
         if has_pages:
             project_config["pages_url"] = (
-                f"https://ionutms.github.io/{project_name}/"
+                f"https://{GITHUB_USERNAME}.github.io/{project_name}/"
             )
 
         LEARNING_PROJECTS_WITH_PAGES.append(project_config)
@@ -626,7 +640,7 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
             dbc.Col(
                 [
                     html.H4("Project Pages"),
-                    create_project_links(project_name),
+                    create_project_links(project_name, GITHUB_USERNAME),
                 ],
                 xs=12,
                 md=4,
@@ -668,7 +682,7 @@ def create_learning_project_section(
         links = [
             html.A(
                 children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
-                href=f"https://github.com/ionutms/{project_name}",
+                href=f"https://github.com/{GITHUB_USERNAME}/{project_name}",
                 target="_blank",
             ),
             html.A(
@@ -1166,7 +1180,7 @@ def load_traffic_data(
 def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
     """Read CSV data and update the repository graphs."""
     base_github_url = (
-        "https://raw.githubusercontent.com/ionutms/"
+        f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
         "KiCAD_Symbols_Generator/main"
     )
 
