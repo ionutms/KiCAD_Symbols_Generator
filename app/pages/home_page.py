@@ -442,22 +442,19 @@ def check_github_pages_simple(username: str, repo_name: str) -> bool:
         return False
 
 
-LEARNING_PROJECTS_WITH_PAGES = []
-
-
 def initialize_learning_projects():
     """Initialize learning projects with GitHub Pages detection.
 
-    This function populates the LEARNING_PROJECTS_WITH_PAGES global list by
+    This function populates the learning_projects_with_pages global list by
     checking which learning projects have GitHub Pages available. For each
     learning project, it copies the configuration, checks if GitHub Pages
     is enabled, and adds the pages URL if available.
 
-    The function modifies the global LEARNING_PROJECTS_WITH_PAGES list,
+    The function modifies the global learning_projects_with_pages list,
     appending a dictionary for each learning project with its configuration
     and GitHub Pages status.
     """
-    global LEARNING_PROJECTS_WITH_PAGES
+    learning_projects_with_pages = []
 
     for repo in LEARNING_PROJECTS:
         project_config = repo.copy()
@@ -472,11 +469,9 @@ def initialize_learning_projects():
                 f"https://{GITHUB_USERNAME}.github.io/{project_name}/"
             )
 
-        LEARNING_PROJECTS_WITH_PAGES.append(project_config)
+        learning_projects_with_pages.append(project_config)
 
-
-# Call this during app initialization
-initialize_learning_projects()
+    return learning_projects_with_pages
 
 
 def register_modal_callbacks() -> None:
@@ -762,7 +757,7 @@ tabs = dbc.Tabs(
                     [
                         *[
                             component
-                            for repo in LEARNING_PROJECTS_WITH_PAGES
+                            for repo in initialize_learning_projects()
                             for component in create_learning_project_section(
                                 module_name, repo
                             )
