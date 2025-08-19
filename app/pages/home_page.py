@@ -38,37 +38,41 @@ TITLE = "Home Page"
 
 ABOUT = (
     "The Home page serves as a dynamic dashboard and analytics hub for "
-    "monitoring repository activity and accessing multiple project "
-    "resources.",
+    "monitoring repository activity and accessing KiCAD Symbols Generator "
+    "project resources.",
     "It combines GitHub traffic analytics with centralized "
     "navigation, providing insights into repository engagement while "
-    "offering comprehensive access to project documentation, "
-    "interactive tools, and hardware designs across all projects.",
+    "offering comprehensive access to KiCAD symbol generation tools, "
+    "component databases, and hardware design resources.",
 )
 
 features = [
+    "Automated generation of KiCAD symbols for various electronic components",
+    "Comprehensive component databases organized by manufacturer and type",
     "Visualization of repository clones and visitor traffic using "
     "interactive graphs",
-    "Automated tracking of multiple repositories with metrics "
-    "for each project",
     "Direct links to project resources including GitHub repos, "
-    "Interactive BOMs, and technical documentation",
+    "KiCAD symbol libraries, and technical documentation",
     "Project-specific sections with detailed analytics and navigation links",
     "Integrated viewers for schematics (PDF), 3D models (WRL), "
     "and interactive BOMs (HTML)",
-    "Dynamic navigation system that automatically updates as new pages are "
-    "added to the application",
+    "Dynamic navigation system that automatically updates as new component "
+    "databases are added to the application",
     "Responsive dashboard layout that adapts to different screen sizes and "
     "devices",
     "Dual-theme support with light and dark mode visualization options",
+    "Support for multiple component types including resistors, capacitors, "
+    "connectors, ICs, and more",
 ]
 
 usage_steps = [
+    "Navigate to specific component databases through the "
+    "Components Data Base section",
+    "Select manufacturer-specific pages to access pre-built KiCAD symbols",
+    "Use the automated symbol generation tools for creating custom "
+    "components",
     "Monitor repository engagement through the interactive clone and "
     "visitor graphs",
-    "Use the Components Data Base section to access different parts of the "
-    "application",
-    "Navigate to specific projects through their dedicated sections",
     "Access project resources through quick links to view GitHub "
     "repositories for source code and documentation, "
     "open interactive BOMs for component exploration, "
