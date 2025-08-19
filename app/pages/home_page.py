@@ -9,7 +9,8 @@ Key Features:
 - Graphs showing repository activity trends over time
 - Automated generation of navigation links to other application pages
 - Project-specific sections with direct links to GitHub, BOM, schematics,
-    and 3D models
+    3D models, and KiCanvas viewer
+- Configurable GitHub username for all project links
 - Responsive Bootstrap-based layout that adapts to different screen sizes
 
 The module uses a combination of Plotly graphs, Dash components, and Bootstrap
