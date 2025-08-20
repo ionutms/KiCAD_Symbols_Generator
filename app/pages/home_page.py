@@ -403,7 +403,13 @@ REPO_CONFIGS = [
     },
     {
         "name": "Minimal_AD74416H",
-        "colors": ["#4682B4", "#F0E68C"],
+        "colors": ["#3A0CA3", "#7209B7"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Minimal_ADP1031",
+        "colors": ["#4361EE", "#4CC9F0"],
         "is_main": False,
         "has_project_links": True,
     },
