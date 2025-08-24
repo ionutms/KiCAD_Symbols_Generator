@@ -148,6 +148,24 @@ class PartInfo(NamedTuple):
         base_code = f"{value:02d}0"
         return f"{base_code}{value_suffix}"
 
+    @staticmethod
+    def generate_wurth_value_code(inductance: float) -> str:
+        """Generate Wurth Elektronik inductance value codes.
+
+        Args:
+            inductance: Inductance value in µH
+            value_suffix: AEC qualification suffix (unused for Wurth)
+
+        Returns:
+            Formatted inductance value code
+
+        """
+        if inductance < 1:
+            return f"00{int(inductance * 100)}"
+        if inductance < 10:
+            return f"0{int(inductance * 10)}"
+        return f"{inductance * 10}"
+
     @classmethod
     def create_description(
         cls,
@@ -164,7 +182,7 @@ class PartInfo(NamedTuple):
             Description string for the component
 
         """
-        if specs.manufacturer == "Wurth Elektronik":
+        if specs.reference == "E":
             parts = [
                 "Ferrite Bead",
                 cls.format_value(inductance).replace(" µH", " Ω @ 100 MHz"),
@@ -196,12 +214,20 @@ class PartInfo(NamedTuple):
         """
         value_code = cls.generate_value_code(inductance, specs.value_suffix)
         mpn = f"{specs.base_series}-{value_code}"
-        if specs.manufacturer in (
-            "Wurth Elektronik",
-            "Taiyo Yuden",
-            "Murata",
-        ):
+        datasheet = specs.datasheet
+
+        if specs.manufacturer in ("Taiyo Yuden", "Murata"):
             mpn = f"{specs.base_series}"
+
+        if specs.manufacturer == "Wurth Elektronik":
+            value_code = cls.generate_wurth_value_code(inductance)
+            mpn = f"{specs.base_series}{value_code}"
+            datasheet = f"{specs.datasheet}{value_code}.pdf"
+
+        if specs.reference == "E":
+            mpn = f"{specs.base_series}"
+            datasheet = specs.datasheet
+
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
         try:
@@ -228,7 +254,7 @@ class PartInfo(NamedTuple):
             reference=specs.reference,
             value=inductance,
             footprint=specs.footprint,
-            datasheet=specs.datasheet,
+            datasheet=datasheet,
             description=cls.create_description(inductance, specs),
             manufacturer=specs.manufacturer,
             mpn=mpn,
@@ -1005,6 +1031,26 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         inductance_values=[47e-9],
         max_dc_current=[0.3],
         max_dc_resistance=[0.72],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "74404020": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="74404020",
+        footprint="inductor_footprints:74404020",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[
+            *[0.16, 0.33, 0.47, 0.68, 1, 1.5],
+            *[2.2, 3.3, 4.7, 6.8, 10],
+        ],
+        max_dc_current=[
+            *[3, 2.5, 2.1, 1.8, 1.5, 1.2],
+            *[0.96, 0.87, 0.72, 0.55, 0.5],
+        ],
+        max_dc_resistance=[
+            *[0.025, 0.034, 0.047, 0.064, 0.094, 0.147],
+            *[0.225, 0.275, 0.41, 0.7, 0.86],
+        ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }

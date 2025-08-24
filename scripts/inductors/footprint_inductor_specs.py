@@ -437,4 +437,13 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         pad_dimensions=PadDimensions(width=0.54, height=0.64, center_x=0.51),
         ref_offset_y=-1.27,
     ),
+    "74404020": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=2.8, height=1.8),
+        pad_dimensions=PadDimensions(
+            width=0.85,
+            height=1.2,
+            center_x=0.775,
+        ),
+        ref_offset_y=-1.778,
+    ),
 }
