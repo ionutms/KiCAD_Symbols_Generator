@@ -164,7 +164,11 @@ class PartInfo(NamedTuple):
             return f"00{int(inductance * 100)}"
         if inductance < 10:
             return f"0{int(inductance * 10)}"
-        return f"{inductance * 10}"
+        if inductance < 100:
+            return f"{inductance * 10}"
+        if inductance < 1000:
+            return f"{int(inductance / 10)}1"
+        return f"{inductance}"
 
     @classmethod
     def create_description(
@@ -1073,6 +1077,29 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             *[16, 32, 35, 36, 65, 80],
             *[120, 173, 300, 430, 820, 830],
             *[910, 1530, 1650, 2400],
+        ],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "74404032": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="74404032",
+        footprint="inductor_footprints:74404032",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[
+            *[0.47, 1.0, 1.5, 2.2, 3.3, 4.7],
+            *[6.8, 10, 15, 22, 33, 47],
+            *[68, 100],
+        ],
+        max_dc_current=[
+            *[3.0, 2.2, 2.0, 1.8, 1.5, 1.3],
+            *[1.16, 0.84, 0.73, 0.6, 0.5, 0.4],
+            *[0.34, 0.3],
+        ],
+        max_dc_resistance=[
+            *[18, 33, 40, 50, 70, 96],
+            *[120, 230, 300, 450, 911, 1050],
+            *[1600, 1900],
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
