@@ -225,7 +225,7 @@ class PartInfo(NamedTuple):
 
         if specs.manufacturer == "Wurth Elektronik":
             value_code = cls.generate_wurth_value_code(inductance)
-            mpn = f"{specs.base_series}{value_code}"
+            mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
             datasheet = f"{specs.datasheet}{value_code}.pdf"
 
         if specs.reference == "E":
@@ -1143,6 +1143,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "74404043": SeriesSpec(
         manufacturer="Wurth Elektronik",
         base_series="74404043",
+        value_suffix="A",
         footprint="inductor_footprints:74404043",
         tolerance="±20%",
         datasheet="https://www.we-online.com/components/products/datasheet/",
