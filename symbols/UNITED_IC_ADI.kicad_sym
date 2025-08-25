@@ -18614,7 +18614,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 12.7 22.86 0)
+			(at 12.7 25.4 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18623,7 +18623,7 @@
 			)
 		)
 		(property "Value" "MAX17570FATA+"
-			(at 12.7 20.32 0)
+			(at 12.7 22.86 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18632,7 +18632,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:21-100514_T822C&plus_6C_ADI"
-			(at 12.7 -25.4 0)
+			(at 12.7 -27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18642,16 +18642,6 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/max17570.pdf"
-			(at 12.7 -20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "4.5V to 60V, 300mA, Ultra Small, High-Efficiency Synchronous Step-Down DC-DC Converters"
 			(at 12.7 -22.86 0)
 			(effects
 				(font
@@ -18661,8 +18651,18 @@
 				(hide yes)
 			)
 		)
+		(property "Description" "4.5V to 60V, 300mA, Ultra Small, High-Efficiency Synchronous Step-Down DC-DC Converters"
+			(at 12.7 -25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
 		(property "MPN" "MAX17570FATA+"
-			(at 12.7 -27.94 0)
+			(at 12.7 -30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18673,8 +18673,8 @@
 		)
 		(symbol "U_MAX17570FATA+_0_1"
 			(rectangle
-				(start -12.7 17.78)
-				(end 12.7 -17.78)
+				(start -12.7 20.32)
+				(end 12.7 -20.32)
 				(stroke
 					(width 0)
 					(type default)
@@ -18684,7 +18684,7 @@
 				)
 			)
 			(pin power_in line
-				(at -15.24 15.24 0)
+				(at -15.24 17.78 0)
 				(length 2.54)
 				(name "VIN"
 					(effects
@@ -18702,7 +18702,7 @@
 				)
 			)
 			(pin input line
-				(at -15.24 2.54 0)
+				(at -15.24 0 0)
 				(length 2.54)
 				(name "EN/UVLO"
 					(effects
@@ -18720,7 +18720,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -15.24 0)
+				(at -15.24 -17.78 0)
 				(length 2.54)
 				(name "RT/SYNC"
 					(effects
@@ -18738,7 +18738,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 20.32 270)
+				(at 0 22.86 270)
 				(length 2.54)
 				(name "VCC"
 					(effects
@@ -18756,7 +18756,7 @@
 				)
 			)
 			(pin power_out line
-				(at 0 -20.32 90)
+				(at 0 -22.86 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -18774,7 +18774,7 @@
 				)
 			)
 			(pin power_in line
-				(at 15.24 15.24 180)
+				(at 15.24 17.78 180)
 				(length 2.54)
 				(name "LX"
 					(effects
@@ -18792,7 +18792,7 @@
 				)
 			)
 			(pin output line
-				(at 15.24 2.54 180)
+				(at 15.24 0 180)
 				(length 2.54)
 				(name "VOUT/FB"
 					(effects
@@ -18812,7 +18812,7 @@
 		)
 		(symbol "U_MAX17570FATA+_1_1"
 			(pin input line
-				(at 15.24 -15.24 180)
+				(at 15.24 -17.78 180)
 				(length 2.54)
 				(name "~{RESET}"
 					(effects
