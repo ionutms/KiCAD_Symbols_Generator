@@ -168,7 +168,9 @@ class PartInfo(NamedTuple):
             return f"{inductance * 10}"
         if inductance < 1000:
             return f"{int(inductance / 10)}1"
-        return f"{inductance}"
+        if inductance < 10000:
+            return f"{int(inductance / 100)}2"
+        return f"{int(inductance / 1000)}3"
 
     @classmethod
     def create_description(
