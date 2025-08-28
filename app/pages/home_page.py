@@ -151,7 +151,7 @@ def create_project_links(
             "View Interactive BOM (HTML)",
             href=(
                 f"https://htmlpreview.github.io/?{base_github_url}/blob/main/"
-                f"{project_name_lower}/bom/ibom.html"
+                f"{project_name_lower}/docs/bom/{project_name_lower}_ibom.html"
             ),
             target="_blank",
         ),
