@@ -1,17 +1,17 @@
-"""Switches Database Page.
+"""Slide Switches Database Page.
 
-This module provides a Dash page for viewing and interacting with solder
-jumpers specifications. It allows users to browse, search, and filter through
-a database of switches, with features for customizing the view and
+This module provides a Dash page for viewing and interacting with slide
+switches specifications. It allows users to browse, search, and filter through
+a database of slide switches, with features for customizing the view and
 accessing detailed information.
 
 Key features:
-- Interactive DataTable displaying switches specifications
+- Interactive DataTable displaying slide switches specifications
 - Column visibility controls for customizing the view
 - Dynamic filtering and multi-column sorting capabilities
 - Pagination with customizable page size
 - Theme-aware styling with light/dark mode support
-- Direct links to switches datasheets
+- Direct links to slide switches datasheets
 - Responsive design for various screen sizes
 
 The module uses Dash components and callbacks to create an interactive
@@ -20,8 +20,8 @@ Bootstrap components for a polished user interface and includes
 comprehensive styling support for both light and dark themes.
 """
 
-import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
+import dash_bootstrap_components as dbc
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
@@ -30,53 +30,63 @@ from dash import dcc, html, register_page
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
 
-register_page(__name__, name=link_name, order=15)
+register_page(__name__, name=link_name, order=16)
 
-ag_grid_data: pd.DataFrame = pd.read_csv("data/UNITED_SWITCHES_DATA_BASE.csv")
+ag_grid_data: pd.DataFrame = pd.read_csv(
+    "data/UNITED_SLIDE_SWITCHES_DATA_BASE.csv"
+)
 total_rows = len(ag_grid_data)
 
-TITLE = f"Switches Database ({total_rows:,} items)"
+TITLE = f"Slide Switches Database ({total_rows:,} items)"
 ABOUT = (
-    "The switches Database is an interactive web application that "
-    "provides a comprehensive view of inductor specifications.",
+    "The Slide Switches Database is an interactive web application that "
+    "provides a comprehensive view of slide switch specifications.",
     "It allows users to easily browse, search, and filter "
-    f"through a database of {total_rows:,} switches, "
+    f"through a database of {total_rows:,} slide switches, "
     "providing quick access to important information and datasheets.",
 )
 
 features = [
-    "Interactive data table displaying inductor specifications",
+    "Interactive data table displaying slide switch specifications",
     "Dynamic filtering and multi-column sorting capabilities",
     "Customizable pagination with adjustable items per page",
-    "Direct links to inductor datasheets",
+    "Direct links to slide switch datasheets",
     "Responsive design adapting to light and dark themes",
-    "Easy-to-use interface for exploring inductor data",
+    "Easy-to-use interface for exploring slide switch data",
     "Customizable column visibility",
 ]
 
 usage_steps = [
-    "Navigate to the switches Database page",
-    "Use the table's built-in search functionality to find specific switches",
+    "Navigate to the Slide Switches Database page",
+    "Use the table's built-in search functionality "
+    "to find specific slide switches",
     "Click on column headers to sort the data",
     "Use the filter action to narrow down the displayed results",
     "Toggle column visibility using the checkboxes above the table",
     "Adjust the number of items per page using the dropdown menu",
     "Navigate through pages using the pagination controls at "
     "the bottom of the table",
-    "Access inductor datasheets by clicking on the provided links in the "
+    "Access slide switch datasheets by clicking on the provided links in the "
     "'Datasheet' column",
     "Switch between light and dark themes for comfortable viewing in "
     "different environments",
 ]
 
-hidden_columns = []
+hidden_columns = [
+    "Value",
+    "Manufacturer",
+    "Number of Rows",
+    "Mounting Style",
+    "Mounting Angle",
+    "Footprint",
+]
 
 visible_columns = [
     col for col in ag_grid_data.columns if col not in hidden_columns
 ]
 
 # Convert specific columns to markdown format links for AG Grid
-url_columns = ["Datasheet", "Trustedparts Search", "3dviewer Link"]
+url_columns = ["Datasheet", "Trustedparts Search"]
 
 for col in url_columns:
     if col in ag_grid_data.columns:
