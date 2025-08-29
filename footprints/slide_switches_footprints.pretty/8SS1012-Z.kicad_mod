@@ -1,0 +1,129 @@
+(footprint "8SS1012-Z"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -5.08 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "b7583b30-5f87-4041-bab4-29d5a84d235e")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "8SS1012-Z"
+            (at 0 5.08 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "5105893b-d803-4b78-a2ea-efe7bbe497cb")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "7dff1912-2faf-4f1f-a379-16ec70e0e2a0")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 6.35 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "c4728ea4-39b9-4d58-8144-3f0fbd5199b9")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -6.7 4.2)
+            (end 6.7 -4.2)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "e5aa105a-efab-451e-af4b-ec501dacba69")
+        )
+        
+
+
+        (fp_rect
+            (start -6.7 4.2)
+            (end 6.7 -4.2)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "40c26c09-484a-4807-94a9-aff1510671cc")
+        )
+        
+
+        (fp_rect
+            (start -6.7 4.2)
+            (end 6.7 -4.2)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "3fe18294-d218-4ed0-9219-9e6e961d68b2")
+        )
+        
+
+            (pad "1" thru_hole rect
+                (at -4.400 -0.000)
+                (size 3.2 3.2)
+                (drill 1.6)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "7158cdcd-1568-488d-9592-65a8e9612ba0")
+            )
+            
+
+            (pad "2" thru_hole circle
+                (at 0.000 0.000)
+                (size 3.2 3.2)
+                (drill 1.6)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "973a1b4a-1b07-4ff7-9c35-2568fabc028f")
+            )
+            
+
+            (pad "3" thru_hole circle
+                (at 4.400 -0.000)
+                (size 3.2 3.2)
+                (drill 1.6)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "f488d0e0-f755-4255-a97e-f55cbeec9d04")
+            )
+            
+
+        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/slide_switches/8SS1012-Z.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
