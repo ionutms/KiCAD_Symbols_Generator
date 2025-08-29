@@ -25,6 +25,7 @@ class NonPlatedRoundMountingHoles(NamedTuple):
                 - x: X position relative to the component origin
                 - y: Y position relative to the component origin
                 - diameter: Diameter of the mounting hole
+
     """
 
     footprint_specs: list[list[float]]
@@ -41,6 +42,7 @@ class PlatedOvalMountingHoles(NamedTuple):
                 - y: Y position relative to the component origin
                 - pad_oval_size: Size of the oval pad
                 - drill_oval_size: Size of the oval drill hole
+
     """
 
     footprint_specs: list[list[float]]
@@ -57,6 +59,7 @@ class MountingPads(NamedTuple):
                 - y: Y position relative to the component origin
                 - width: Width of the mounting pad
                 - height: Height of the mounting pad
+
     """
 
     dimensions: list[list[float]]
@@ -72,6 +75,7 @@ class NonPlatedMountingHoles(NamedTuple):
                 - x: X position relative to the component origin
                 - y: Y position relative to the component origin
                 - diameter: Diameter of the mounting hole
+
     """
 
     dimensions: list[list[float]]
@@ -88,6 +92,7 @@ class BodyDimensions(NamedTuple):
         width_right: Distance from origin to right edge (positive value)
         height_top: Distance from origin to top edge (positive value)
         height_bottom: Distance from origin to bottom edge (negative value)
+
     """
 
     width_left: float
@@ -107,6 +112,7 @@ class InternalCourtyard(NamedTuple):
         width_right: Distance from origin to right courtyard edge
         height_top: Distance from origin to top courtyard edge
         height_bottom: Distance from origin to bottom courtyard edge
+
     """
 
     width_left: float
@@ -124,6 +130,7 @@ class Pad(NamedTuple):
         y: Y coordinate of the pad center relative to the origin
         pad_size: Diameter or size of the pad
         drill_size: Diameter of the drill hole for through-hole pads
+
     """
 
     name: str
@@ -161,6 +168,7 @@ class FootprintSpecs(NamedTuple):
         mounting_pads: Mounting pad specifications
         non_plated_mounting_holes: Non-plated mounting hole specifications
         pad_properties: List of individual pad properties and positions
+
     """
 
     model_name: str

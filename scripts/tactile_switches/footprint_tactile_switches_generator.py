@@ -42,6 +42,7 @@ def generate_footprint(  # noqa: C901
     Returns:
         Complete .kicad_mod file content as formatted string ready for
         writing to file
+
     """
     dimensions = footprint_utils.calculate_dimensions(
         part_info.pin_count,
@@ -208,8 +209,9 @@ def generate_footprint_file(
     Raises:
         ValueError: If no footprint specifications are found for the given
             footprint name
-        OSError: If the output directory is not writable or file cannot be
-            created
+        OSError:
+            If the output directory is not writable or file cannot be created
+
     """
     footprint_name = part_info.footprint.split(":")[-1]
     footprint_specs = TACTILE_SWITCHES_SPECS.get(footprint_name)

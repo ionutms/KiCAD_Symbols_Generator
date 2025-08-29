@@ -64,6 +64,7 @@ def generate_files_for_series(
     Note:
         Generated files are saved in 'app/data/', 'series_kicad_sym/', and
         'tactile_switches_footprints.pretty/' directories.
+
     """
     if series_name not in symbol_tactile_switches_specs.SYMBOLS_SPECS:
         msg = f"Unknown series: {series_name}"
@@ -130,7 +131,8 @@ def generate_files_for_series(
                 )
                 generated_footprints.add(footprint_name)
                 print_message_utilities.print_success(
-                    f"KiCad footprint file '{footprint_name}.kicad_mod' generated successfully.",
+                    f"KiCad footprint file '{footprint_name}.kicad_mod' "
+                    "generated successfully.",
                 )
     except ValueError as val_error:
         print_message_utilities.print_error(
@@ -167,6 +169,7 @@ def generate_unified_files(
 
     Returns:
         None
+
     """
     # Write unified CSV file with full path
     unified_csv_path = f"app/data/{unified_csv}"
