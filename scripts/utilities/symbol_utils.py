@@ -2482,33 +2482,39 @@ def write_slide_switch_symbol_drawing(
                 write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
     symbol_file.write("""
-			(circle
-				(center 0 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 0 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
 			(polyline
 				(pts
-					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
-                    (xy 0 1.27) (xy 1.27 -1.27)
+					(xy -2.54 0) (xy 0 0) (xy 2.032 2.286)
 				)
-				(stroke (width 0) (type default))
-				(fill (type none))
+				(stroke
+					(width 0.2032)
+					(type solid)
+				)
+				(fill
+					(type none)
+				)
 			)
-			(polyline
-				(pts
-					(xy 1.27 -2.54) (xy -1.27 -2.54)
-                    (xy 0 -2.54) (xy 0 -1.27)
+			(circle
+				(center 2.286 2.54)
+				(radius 0.254)
+				(stroke
+					(width 0.2032)
+					(type solid)
 				)
-				(stroke (width 0) (type default))
-				(fill (type none))
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.286 -2.54)
+				(radius 0.254)
+				(stroke
+					(width 0.2032)
+					(type solid)
+				)
+				(fill
+					(type none)
+				)
 			)
     """)
 

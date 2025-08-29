@@ -186,6 +186,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         number_of_rows=1,
         mounting_angle="Vertical",
-        mounting_style="Surface Mount",
+        mounting_style="Through Hole",
+        override_pins_specs=[
+            ("1", 5.08, -2.54, 180),
+            ("2", -5.08, 0, 0),
+            ("3", 5.08, 2.54, 180),
+        ],
     )
 }

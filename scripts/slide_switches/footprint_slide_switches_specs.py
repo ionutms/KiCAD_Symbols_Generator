@@ -196,19 +196,17 @@ class FootprintSpecs(NamedTuple):
 SLIDE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
     "8SS1012-Z": FootprintSpecs(
         model_name="8SS1012-Z",
-        pad_pitch=2,
-        row_pitch=3.25,
-        number_of_rows=2,
+        pad_pitch=4.4,
         body_dimensions=BodyDimensions(
-            width_left=2.1,
-            width_right=2.1,
-            height_top=2.5,
-            height_bottom=2.5,
+            width_left=4.5,
+            width_right=4.5,
+            height_top=4.2,
+            height_bottom=4.2,
         ),
-        pad_size=[0.6, 1.25],
-        drill_size=0.787,
-        mpn_y=3.556,
-        ref_y=-3.556,
-        mirror_x_pin_numbering=True,
+        pad_size=3.2,
+        drill_size=1.6,
+        mpn_y=5.08,
+        ref_y=-5.08,
+        # mirror_x_pin_numbering=True,
     )
 }
