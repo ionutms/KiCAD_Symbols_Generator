@@ -2330,6 +2330,7 @@ def write_dip_switch_symbol_drawing(
         number_of_rows: Number of pin rows in the component layout.
         specs_dict: Dictionary containing component specifications.
         anti_clockwise_numbering: Use anti-clockwise pin numbering scheme.
+
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 2.54
@@ -2420,7 +2421,7 @@ def write_dip_switch_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
-def write_tactile_switch_symbol_drawing(
+def write_slide_switch_symbol_drawing(
     *,
     symbol_file: TextIO,
     symbol_name: str,
@@ -2439,6 +2440,8 @@ def write_tactile_switch_symbol_drawing(
         symbol_name: Name identifier for the symbol.
         component_data: Dictionary containing component specifications.
         number_of_rows: Number of pin rows in the component layout.
+        specs_dict: Dictionary containing component specifications.
+
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -2478,7 +2481,104 @@ def write_tactile_switch_symbol_drawing(
                 y_pos = start_y - (pin_num - 1) * pin_spacing
                 write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
-    symbol_file.write(f"""
+    symbol_file.write("""
+			(circle
+				(center 0 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 0 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts
+					(xy 1.27 2.54) (xy -1.27 2.54) (xy 0 2.54)
+                    (xy 0 1.27) (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.27 -2.54) (xy -1.27 -2.54)
+                    (xy 0 -2.54) (xy 0 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+    """)
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
+def write_tactile_switch_symbol_drawing(
+    *,
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    specs_dict: dict,
+) -> None:
+    """Write the drawing for a standard tactile switch symbol.
+
+    Creates KiCad symbol definition with appropriate pin layout and
+    standard tactile switch graphical representation including switch
+    contacts and actuator mechanism.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        specs_dict: Dictionary containing component specifications.
+
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    pin_spacing = 5.08 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    # Check for override pin specs
+    override_pins = get_override_pins_specs(
+        component_data.get("Series", ""),
+        specs_dict,
+    )
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (pin_count - 1) * pin_spacing / 2
+
+        def toggle_angle(current):
+            return 90 if current == 270 else 270
+
+        if number_of_rows == 2:  # noqa: PLR2004
+            angle = 270  # Start with 270
+            for pin_num in range(1, pin_count * 2, 2):
+                y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+
+                # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
+                write_pin(
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                )
+
+                # Toggle angle for next row
+                angle = toggle_angle(angle)
+        else:
+            for pin_num in range(1, pin_count + 1):
+                y_pos = start_y - (pin_num - 1) * pin_spacing
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+
+    symbol_file.write("""
 			(circle
 				(center 0 1.27)
 				(radius 0.254)
@@ -2536,6 +2636,8 @@ def write_tactile_switch_with_led_symbol_drawing(
         component_data: Dictionary containing component specifications.
         number_of_rows: Number of pin rows in the component layout.
         led_color: Dictionary with RGB color values for LED representation.
+        specs_dict: Dictionary containing component specifications.
+
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -2672,6 +2774,8 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
         component_data: Dictionary containing component specifications.
         number_of_rows: Number of pin rows in the component layout.
         led_color: Dictionary with RGB color values for LED representation.
+        specs_dict: Dictionary containing component specifications.
+
     """
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 5.08 * 2
@@ -2778,7 +2882,7 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
 				)
 				(stroke (width 0.2032) (type default))
 				(fill (type none))
-			)			
+			)
             (polyline
 				(pts
 					(xy 0 2.54) (xy 0 -2.54) (xy 0 0) (xy 1.27 0)
@@ -2823,6 +2927,7 @@ def get_override_pins_specs(
         List of tuples containing pin specifications in format
         (pin_number, x_position, y_position, angle). Returns empty list
         if no override specifications are found.
+
     """
     specs = specs_dict.get(series)
     if (
