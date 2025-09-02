@@ -4,9 +4,13 @@ Generates KiCad symbol files for connectors from CSV data.
 Modified to match specific pin and field positioning requirements.
 """
 
+# import sys
 from pathlib import Path
 from typing import TextIO
 
+# Add the parent directory to sys.path to import symbol_connectors_specs
+# sys.path.append(str(Path(__file__).parent))
+import symbol_connectors_specs
 from utilities import file_handler_utilities, symbol_utils
 
 
@@ -55,6 +59,14 @@ def write_component(
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     pin_count = int(component_data.get("Pin Count", "1"))
     row_count = int(component_data.get("Number of Rows", "1"))
+
+    series_name = component_data.get("Series", "")
+    rectangle_width = symbol_connectors_specs.SYMBOLS_SPECS[
+        series_name
+    ].rectangle_width
+
+    rect_half_width = rectangle_width / 2
+
     extra_offset = (
         ((pin_count / row_count) / 2)
         if row_count == 1
@@ -66,8 +78,9 @@ def write_component(
         component_data,
         property_order,
         1 + extra_offset,
-        2,
+        rect_half_width + 2.54,
     )
+
     write_symbol_drawing(
         symbol_file,
         symbol_name,
@@ -98,6 +111,12 @@ def write_symbol_drawing(
     pin_count = int(component_data.get("Pin Count", "2"))
     pin_spacing = 2.54
 
+    series_name = component_data.get("Series", "")
+    rectangle_width = symbol_connectors_specs.SYMBOLS_SPECS[
+        series_name
+    ].rectangle_width
+    rect_half_width = rectangle_width / 2
+
     min_height = 7.62
     calculated_height = (pin_count * pin_spacing) + 2.54
     rectangle_height = max(min_height, calculated_height)
@@ -109,10 +128,12 @@ def write_symbol_drawing(
     if number_of_rows == 2:  # noqa: PLR2004
         for pin_num in range(1, pin_count * 2, 2):
             y_pos = start_y - (pin_num - 1) * pin_spacing / 2
-            symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+            symbol_utils.write_pin(
+                symbol_file, -rect_half_width - 2.54, y_pos, 0, str(pin_num)
+            )
             symbol_utils.write_pin(
                 symbol_file,
-                5.08,
+                rect_half_width + 2.54,
                 y_pos,
                 180,
                 str(pin_num + 1),
@@ -127,9 +148,9 @@ def write_symbol_drawing(
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
     write_rectangle(
         symbol_file,
-        -2.54,
+        -rect_half_width,
         rectangle_height / 2,
-        2.54,
+        rect_half_width,
         -rectangle_height / 2,
     )
     symbol_file.write("\t\t)\n")

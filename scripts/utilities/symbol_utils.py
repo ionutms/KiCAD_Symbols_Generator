@@ -160,7 +160,7 @@ def write_properties(
     """
     property_configs = {
         "Reference": (
-            2.54 * text_x_offset,
+            text_x_offset,
             2.54 * text_y_offset,
             1.27,
             False,
@@ -168,7 +168,7 @@ def write_properties(
             component_data.get("Reference", "-"),
         ),
         "Value": (
-            2.54 * text_x_offset,
+            text_x_offset,
             -2.54 * text_y_offset,
             1.27,
             False,
@@ -176,7 +176,7 @@ def write_properties(
             component_data.get("Value", "-"),
         ),
         "Footprint": (
-            2.54 * text_x_offset,
+            text_x_offset,
             -2.54 * (text_y_offset + 1),
             1.27,
             True,
@@ -184,7 +184,7 @@ def write_properties(
             None,
         ),
         "Datasheet": (
-            2.54 * text_x_offset,
+            text_x_offset,
             -2.54 * (text_y_offset + 2),
             1.27,
             True,
@@ -192,7 +192,7 @@ def write_properties(
             None,
         ),
         "Description": (
-            2.54 * text_x_offset,
+            text_x_offset,
             -2.54 * (text_y_offset + 3),
             1.27,
             True,
@@ -206,7 +206,7 @@ def write_properties(
         if prop_name in component_data:
             config = property_configs.get(
                 prop_name,
-                (2.54 * text_x_offset, y_offset, 1.27, True, True, None),
+                (text_x_offset, y_offset, 1.27, True, True, None),
             )
             value = config[5] or component_data[prop_name]
             write_property(symbol_file, prop_name, value, *config[:5])

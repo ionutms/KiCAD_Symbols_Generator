@@ -30,6 +30,8 @@ class SeriesSpec(NamedTuple):
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         contact_plating: Material used for contact plating
         reference: Reference designator prefix (default: "J")
+        rectangle_width:
+            Width of the connector symbol rectangle (default: 5.08mm)
 
     """
 
@@ -48,6 +50,7 @@ class SeriesSpec(NamedTuple):
     contact_plating: str
     reference: str = "J"
     number_of_rows: int = 1
+    rectangle_width: float = 5.08
 
 
 class PartInfo(NamedTuple):
@@ -72,6 +75,7 @@ class PartInfo(NamedTuple):
         voltage_rating: Maximum voltage rating in volts
         mounting_style: Method of mounting (e.g., Through Hole, SMD)
         contact_plating: Material used for contact plating
+        rectangle_width: Width of the connector symbol rectangle
 
     """
 
@@ -94,6 +98,7 @@ class PartInfo(NamedTuple):
     mounting_style: str
     contact_plating: str
     number_of_rows: int
+    rectangle_width: float = 5.08
 
     @classmethod
     def create_part_info(
@@ -139,6 +144,7 @@ class PartInfo(NamedTuple):
             mounting_style=specs.mounting_style,
             contact_plating=specs.contact_plating,
             number_of_rows=specs.number_of_rows,
+            rectangle_width=specs.rectangle_width,
         )
 
     @classmethod
@@ -872,5 +878,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=300,
         mounting_style="Surface Mount",
         contact_plating="Tin",
+        rectangle_width=10.16,
     ),
 }
