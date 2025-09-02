@@ -32,6 +32,9 @@ class SeriesSpec(NamedTuple):
         reference: Reference designator prefix (default: "J")
         rectangle_width:
             Width of the connector symbol rectangle (default: 5.08mm)
+        pin_names:
+            Optional dictionary mapping pin numbers to pin names
+            (default: None)
 
     """
 
@@ -51,6 +54,7 @@ class SeriesSpec(NamedTuple):
     reference: str = "J"
     number_of_rows: int = 1
     rectangle_width: float = 5.08
+    pin_names: dict[int, str] | None = None
 
 
 class PartInfo(NamedTuple):
@@ -878,6 +882,32 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=300,
         mounting_style="Surface Mount",
         contact_plating="Tin",
-        rectangle_width=10.16,
+        rectangle_width=15.24,
+        pin_names={
+            1: "GND",
+            3: "TXp1",
+            5: "TXn1",
+            7: "VBUS",
+            9: "CC1",
+            11: "Dp1",
+            13: "Dn1",
+            15: "SBU1",
+            17: "VBUS",
+            19: "RXn2",
+            21: "RXp2",
+            23: "GND",
+            2: "GND",
+            4: "RXp1",
+            6: "RXn1",
+            8: "VBUS",
+            10: "SBU2",
+            12: "Dn2",
+            14: "Dp2",
+            16: "CC2",
+            18: "VBUS",
+            20: "TXn2",
+            22: "TXp2",
+            24: "GND",
+        },
     ),
 }

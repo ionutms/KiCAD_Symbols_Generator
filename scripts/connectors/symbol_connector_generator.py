@@ -112,9 +112,8 @@ def write_symbol_drawing(
     pin_spacing = 2.54
 
     series_name = component_data.get("Series", "")
-    rectangle_width = symbol_connectors_specs.SYMBOLS_SPECS[
-        series_name
-    ].rectangle_width
+    series_spec = symbol_connectors_specs.SYMBOLS_SPECS[series_name]
+    rectangle_width = series_spec.rectangle_width
     rect_half_width = rectangle_width / 2
 
     min_height = 7.62
@@ -128,8 +127,23 @@ def write_symbol_drawing(
     if number_of_rows == 2:  # noqa: PLR2004
         for pin_num in range(1, pin_count * 2, 2):
             y_pos = start_y - (pin_num - 1) * pin_spacing / 2
+            pin_name = (
+                series_spec.pin_names.get(pin_num, "")
+                if series_spec.pin_names
+                else ""
+            )
             symbol_utils.write_pin(
-                symbol_file, -rect_half_width - 2.54, y_pos, 0, str(pin_num)
+                symbol_file,
+                -rect_half_width - 2.54,
+                y_pos,
+                0,
+                str(pin_num),
+                pin_name,
+            )
+            pin_name = (
+                series_spec.pin_names.get(pin_num + 1, "")
+                if series_spec.pin_names
+                else ""
             )
             symbol_utils.write_pin(
                 symbol_file,
@@ -137,11 +151,19 @@ def write_symbol_drawing(
                 y_pos,
                 180,
                 str(pin_num + 1),
+                pin_name,
             )
     else:
         for pin_num in range(1, pin_count + 1):
             y_pos = start_y - (pin_num - 1) * pin_spacing
-            symbol_utils.write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+            pin_name = (
+                series_spec.pin_names.get(pin_num, "")
+                if series_spec.pin_names
+                else ""
+            )
+            symbol_utils.write_pin(
+                symbol_file, -5.08, y_pos, 0, str(pin_num), pin_name
+            )
 
     symbol_file.write("\t\t)\n")
 
