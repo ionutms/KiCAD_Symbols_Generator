@@ -130,6 +130,7 @@ class FootprintSpecs(NamedTuple):
     non_plated_round_mounting_holes: None | NonPlatedRoundMountingHoles = None
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
     internal_courtyard: None | InternalCourtyard = None
+    show_pin1_indicator: bool = True
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -615,5 +616,7 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_size=[0.27, 1.3],
         mpn_y=3.302,
         ref_y=-3.302,
+        show_pin1_indicator=False,
+        mirror_x_pin_numbering=True,
     ),
 }

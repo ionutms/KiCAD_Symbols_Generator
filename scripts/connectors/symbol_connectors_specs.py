@@ -33,8 +33,10 @@ class SeriesSpec(NamedTuple):
         rectangle_width:
             Width of the connector symbol rectangle (default: 5.08mm)
         pin_names:
-            Optional dictionary mapping pin numbers to pin names
+            Optional dictionary mapping pin identifiers to pin names
             (default: None)
+        symbol_pin_length:
+            Optional override for symbol pin length in mm (default: 2.54)
 
     """
 
@@ -54,7 +56,8 @@ class SeriesSpec(NamedTuple):
     reference: str = "J"
     number_of_rows: int = 1
     rectangle_width: float = 5.08
-    pin_names: dict[int, str] | None = None
+    pin_names: dict[str, str] | None = None
+    symbol_pin_length: float = 2.54
 
 
 class PartInfo(NamedTuple):
@@ -883,31 +886,36 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Surface Mount",
         contact_plating="Tin",
         rectangle_width=15.24,
+        symbol_pin_length=5.08,
         pin_names={
-            1: "GND",
-            3: "TXp1",
-            5: "TXn1",
-            7: "VBUS",
-            9: "CC1",
-            11: "Dp1",
-            13: "Dn1",
-            15: "SBU1",
-            17: "VBUS",
-            19: "RXn2",
-            21: "RXp2",
-            23: "GND",
-            2: "GND",
-            4: "RXp1",
-            6: "RXn1",
-            8: "VBUS",
-            10: "SBU2",
-            12: "Dn2",
-            14: "Dp2",
-            16: "CC2",
-            18: "VBUS",
-            20: "TXn2",
-            22: "TXp2",
-            24: "GND",
+            **{
+                "A12": "GND",
+                "A11": "RXp2",
+                "A10": "RXn2",
+                "A9": "VBUS",
+                "A8": "SBU1",
+                "A7": "Dn1",
+                "A6": "Dp1",
+                "A5": "CC1",
+                "A4": "VBUS",
+                "A3": "TXn1",
+                "A2": "TXp1",
+                "A1": "GND",
+            },
+            **{
+                "B12": "GND",
+                "B11": "RXp1",
+                "B10": "RXn1",
+                "B9": "VBUS",
+                "B8": "SBU2",
+                "B7": "Dn2",
+                "B6": "Dp2",
+                "B5": "CC2",
+                "B4": "VBUS",
+                "B3": "TXn2",
+                "B2": "TXp2",
+                "B1": "GND",
+            },
         },
     ),
 }

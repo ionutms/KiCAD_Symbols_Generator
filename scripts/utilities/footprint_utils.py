@@ -588,6 +588,7 @@ def generate_thru_hole_pads(  # noqa: PLR0913
     start_pos: float,
     row_pitch: float,
     row_count: int,
+    pin_numbers: list[str] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -614,8 +615,19 @@ def generate_thru_hole_pads(  # noqa: PLR0913
         # duplicate each position
         final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
+    total_pins = pin_count * row_count
+
+    # Prepare custom numbering if provided
+    if pin_numbers is not None:
+        if len(pin_numbers) != total_pins:
+            msg = (
+                f"Number of pin numbers ({len(pin_numbers)}) "
+                f"must match number of pads ({total_pins})"
+            )
+            raise ValueError(msg)
+
     pads = []
-    for pin_index, pin_num in enumerate(range(pin_count * row_count)):
+    for pin_index, pin_num in enumerate(range(total_pins)):
         ypos = (
             (-1 if pin_num % 2 == 0 else 1)
             * (row_pitch / 2)
@@ -623,8 +635,11 @@ def generate_thru_hole_pads(  # noqa: PLR0913
         )
 
         pad_type = "rect" if pin_num == 0 else "circle"
+        pad_label = (
+            str(pin_numbers[pin_index]) if pin_numbers is not None else str(pin_num + 1)
+        )
         pad = f"""
-            (pad "{pin_num + 1}" thru_hole {pad_type}
+            (pad "{pad_label}" thru_hole {pad_type}
                 (at {final_xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
@@ -676,6 +691,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     row_count: int,
     mirror_x_pin_numbering: bool,  # noqa: FBT001
     anti_clockwise_numbering: bool = False,  # noqa: FBT001
+    pin_numbers: list[str] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -706,6 +722,14 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     pads = []
     total_pins = pin_count * row_count
 
+    # Validate custom numbering if provided
+    if pin_numbers is not None and len(pin_numbers) != total_pins:
+        msg = (
+            f"Number of pin numbers ({len(pin_numbers)}) "
+            f"must match number of pads ({total_pins})"
+        )
+        raise ValueError(msg)
+
     for pin_index, pin_num in enumerate(range(pin_count * row_count)):
         ypos = (
             (-1 if pin_num % 2 == 0 else 1)
@@ -714,8 +738,10 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         )
         ypos = ypos if not mirror_x_pin_numbering else -ypos
 
-        # Calculate pin number based on numbering scheme
-        if anti_clockwise_numbering and row_count == 2:
+        # Calculate pin number based on numbering scheme unless custom provided
+        if pin_numbers is not None:
+            pin_number = pin_numbers[pin_index]
+        elif anti_clockwise_numbering and row_count == 2:
             # Anti-clockwise numbering for dual row
             pins_per_row = total_pins // 2
             if pin_index % 2 == 0:
@@ -751,6 +777,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     start_pos: float,
     row_pitch: float,
     mirror_y_position: bool = False,  # noqa: FBT001, FBT002
+    pin_numbers: list[str] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -769,6 +796,13 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
 
     pads = []
+    # Validate custom numbering if provided
+    if pin_numbers is not None and len(pin_numbers) != pin_count:
+        msg = (
+            f"Number of pin numbers ({len(pin_numbers)}) must match pin_count ({pin_count})"
+        )
+        raise ValueError(msg)
+
     for pin_index, pin_num in enumerate(range(pin_count)):
         mirror_coefficient = -1 if mirror_y_position else 1
         ypos = (
@@ -778,7 +812,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
         ) * (row_pitch / 2)
 
         pad = f"""
-            (pad "{pin_num + 1}" smd roundrect
+            (pad "{(pin_numbers[pin_index] if pin_numbers is not None else (pin_num + 1))}" smd roundrect
                 (at {xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")

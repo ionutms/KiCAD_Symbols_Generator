@@ -62,6 +62,29 @@ def generate_footprint(  # noqa: C901
         model_file_name = f"{part_info.mpn}"
         footprint_value = part_info.series
 
+    # Prepare custom pin numbering from pin_names if provided
+    series_spec = symbol_connectors_specs.SYMBOLS_SPECS[part_info.series]
+    custom_pin_numbers: list[int] | None = None
+    if series_spec.pin_names:
+        keys = list(series_spec.pin_names.keys())
+        total_pins = part_info.pin_count * footprint_specs.number_of_rows
+        # Use provided order whenever possible
+        if len(keys) == total_pins:
+            if footprint_specs.number_of_rows == 1:
+                custom_pin_numbers = keys
+            else:
+                # Map first half to left (top->bottom), second half to right (bottom->top)
+                pins_per_side = part_info.pin_count
+                left_group = keys[:pins_per_side]
+                right_group = keys[pins_per_side:]
+                custom_pin_numbers = []
+                for index in range(pins_per_side):
+                    custom_pin_numbers.append(left_group[index])
+                    custom_pin_numbers.append(right_group[-1 - index])
+        else:
+            # Fallback to sequential numbering logic if counts don't align
+            custom_pin_numbers = None
+
     if part_info.mounting_style == "Through Hole":
         pads = footprint_utils.generate_thru_hole_pads(
             part_info.pin_count,
@@ -71,18 +94,22 @@ def generate_footprint(  # noqa: C901
             dimensions["start_pos"],
             row_pitch=footprint_specs.row_pitch,
             row_count=footprint_specs.number_of_rows,
+            pin_numbers=custom_pin_numbers,
         )
 
-    pin_1_indicators = {}
-    for layer in ["F.SilkS", "F.Fab"]:
-        pin_1_indicators[layer] = footprint_utils.generate_pin_1_indicator(
-            body_width=dimensions["width_left"] * 2,
-            pins_per_side=footprint_specs.number_of_rows,
-            pitch_y=footprint_specs.row_pitch,
-        )
+    f_silk_pin_1_indicator = ""
+    f_fab_pin_1_indicator = ""
+    if getattr(footprint_specs, "show_pin1_indicator", True):
+        pin_1_indicators = {}
+        for layer in ["F.SilkS", "F.Fab"]:
+            pin_1_indicators[layer] = footprint_utils.generate_pin_1_indicator(
+                body_width=dimensions["width_left"] * 2,
+                pins_per_side=footprint_specs.number_of_rows,
+                pitch_y=footprint_specs.row_pitch,
+            )
 
-    f_silk_pin_1_indicator = pin_1_indicators["F.SilkS"]
-    f_fab_pin_1_indicator = pin_1_indicators["F.Fab"]
+        f_silk_pin_1_indicator = pin_1_indicators["F.SilkS"]
+        f_fab_pin_1_indicator = pin_1_indicators["F.Fab"]
 
     if (
         part_info.mounting_style == "Surface Mount"
@@ -96,6 +123,7 @@ def generate_footprint(  # noqa: C901
                 dimensions["start_pos"],
                 row_pitch=footprint_specs.row_pitch,
                 mirror_y_position=footprint_specs.miror_zig_zag,
+                pin_numbers=custom_pin_numbers,
             ),
         ]
         pads = "".join(pads)
@@ -113,6 +141,7 @@ def generate_footprint(  # noqa: C901
                 row_pitch=footprint_specs.row_pitch,
                 row_count=footprint_specs.number_of_rows,
                 mirror_x_pin_numbering=footprint_specs.mirror_x_pin_numbering,
+                pin_numbers=custom_pin_numbers,
             ),
         ]
         pads = "".join(pads)
