@@ -86,6 +86,7 @@ def write_symbols_to_csv(
 
 if __name__ == "__main__":
     input_files = [
+        "UNITED_IC_NXP.kicad_sym",
         "UNITED_IC_ADI.kicad_sym",
         "UNITED_IC_TI.kicad_sym",
         "UNITED_IC_BOSCH.kicad_sym",
