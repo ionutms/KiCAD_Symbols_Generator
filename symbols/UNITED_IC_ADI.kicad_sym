@@ -18614,15 +18614,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 10.16 15.24 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MAX17227JATA+"
 			(at 10.16 12.7 0)
 			(effects
 				(font
@@ -18631,8 +18622,17 @@
 				(justify left)
 			)
 		)
+		(property "Value" "MAX17227JATA+"
+			(at 10.16 10.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+			)
+		)
 		(property "Footprint" "analog_devices_footprints:21-0168_T822&plus_3C_ADI"
-			(at 10.16 -17.78 0)
+			(at 10.16 -15.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18643,7 +18643,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/MAX17227J.pdf"
-			(at 10.16 -12.7 0)
+			(at 10.16 -10.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18654,7 +18654,7 @@
 			)
 		)
 		(property "Description" "400mV to 5.5V Input, 500mA nanoPower Boost Converter with Short-Circuit Protection and Automatic Pass-Through Mode"
-			(at 10.16 -15.24 0)
+			(at 10.16 -12.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18664,7 +18664,7 @@
 			)
 		)
 		(property "MPN" "MAX17227JATA+"
-			(at 10.16 -20.32 0)
+			(at 10.16 -17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18675,8 +18675,8 @@
 		)
 		(symbol "U_MAX17227JATA+_0_1"
 			(rectangle
-				(start -10.16 10.16)
-				(end 10.16 -10.16)
+				(start -10.16 7.62)
+				(end 10.16 -7.62)
 				(stroke
 					(width 0)
 					(type default)
@@ -18686,7 +18686,7 @@
 				)
 			)
 			(pin input line
-				(at -12.7 7.62 0)
+				(at -12.7 5.08 0)
 				(length 2.54)
 				(name "IN"
 					(effects
@@ -18704,7 +18704,7 @@
 				)
 			)
 			(pin input line
-				(at -12.7 5.08 0)
+				(at -12.7 2.54 0)
 				(length 2.54)
 				(name "EN"
 					(effects
@@ -18722,7 +18722,7 @@
 				)
 			)
 			(pin power_out line
-				(at -2.54 -12.7 90)
+				(at -2.54 -10.16 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -18740,7 +18740,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 12.7 270)
+				(at 0 10.16 270)
 				(length 2.54)
 				(name "LX"
 					(effects
@@ -18758,7 +18758,7 @@
 				)
 			)
 			(pin power_out line
-				(at 0 -12.7 90)
+				(at 0 -10.16 90)
 				(length 2.54)
 				(name "AGND"
 					(effects
@@ -18776,7 +18776,7 @@
 				)
 			)
 			(pin power_out line
-				(at 2.54 -12.7 90)
+				(at 2.54 -10.16 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -18794,7 +18794,7 @@
 				)
 			)
 			(pin output line
-				(at 12.7 7.62 180)
+				(at 12.7 5.08 180)
 				(length 2.54)
 				(name "OUT"
 					(effects
@@ -18812,7 +18812,7 @@
 				)
 			)
 			(pin output line
-				(at 12.7 5.08 180)
+				(at 12.7 2.54 180)
 				(length 2.54)
 				(name "OUT"
 					(effects
@@ -18830,7 +18830,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 12.7 -7.62 180)
+				(at 12.7 -2.54 180)
 				(length 2.54)
 				(name "RSEL"
 					(effects
