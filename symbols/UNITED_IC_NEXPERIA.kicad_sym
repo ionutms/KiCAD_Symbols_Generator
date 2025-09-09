@@ -10,7 +10,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 10.16 20.32 0)
+			(at 10.16 25.4 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -19,7 +19,7 @@
 			)
 		)
 		(property "Value" "U_74CBTLV3253BQ_115"
-			(at 10.16 17.78 0)
+			(at 10.16 22.86 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -28,7 +28,7 @@
 			)
 		)
 		(property "Footprint" "nexperia_footprints:DHVQFN16_SOT763-1_NEX"
-			(at 10.16 -22.86 0)
+			(at 10.16 -27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -39,7 +39,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74CBTLV3253.pdf"
-			(at 10.16 -17.78 0)
+			(at 10.16 -22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50,7 +50,7 @@
 			)
 		)
 		(property "Description" "Dual 1-of-4 multiplexer/demultiplexer"
-			(at 10.16 -20.32 0)
+			(at 10.16 -25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60,7 +60,7 @@
 			)
 		)
 		(property "MPN" "74CBTLV3253BQ,115"
-			(at 10.16 -25.4 0)
+			(at 10.16 -30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -71,8 +71,8 @@
 		)
 		(symbol "U_74CBTLV3253BQ_115_0_1"
 			(rectangle
-				(start -10.16 15.24)
-				(end 10.16 -15.24)
+				(start -10.16 20.32)
+				(end 10.16 -20.32)
 				(stroke
 					(width 0)
 					(type default)
@@ -82,7 +82,7 @@
 				)
 			)
 			(pin power_out line
-				(at 2.54 -17.78 90)
+				(at 2.54 -22.86 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -102,7 +102,7 @@
 		)
 		(symbol "U_74CBTLV3253BQ_115_1_1"
 			(pin bidirectional line
-				(at -12.7 12.7 0)
+				(at -12.7 17.78 0)
 				(length 2.54)
 				(name "1A"
 					(effects
@@ -120,7 +120,7 @@
 				)
 			)
 			(pin input line
-				(at -12.7 10.16 0)
+				(at -12.7 15.24 0)
 				(length 2.54)
 				(name "1~{OE}"
 					(effects
@@ -138,7 +138,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 0 0)
+				(at -12.7 2.54 0)
 				(length 2.54)
 				(name "2A"
 					(effects
@@ -156,7 +156,7 @@
 				)
 			)
 			(pin input line
-				(at -12.7 -2.54 0)
+				(at -12.7 0 0)
 				(length 2.54)
 				(name "2~{OE}"
 					(effects
@@ -174,7 +174,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 -10.16 0)
+				(at -12.7 -15.24 0)
 				(length 2.54)
 				(name "S0"
 					(effects
@@ -192,7 +192,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 -12.7 0)
+				(at -12.7 -17.78 0)
 				(length 2.54)
 				(name "S1"
 					(effects
@@ -210,7 +210,7 @@
 				)
 			)
 			(pin power_out line
-				(at -2.54 -17.78 90)
+				(at -2.54 -22.86 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -228,7 +228,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 17.78 270)
+				(at 0 22.86 270)
 				(length 2.54)
 				(name "VCC"
 					(effects
@@ -246,7 +246,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 12.7 180)
+				(at 12.7 17.78 180)
 				(length 2.54)
 				(name "1B1"
 					(effects
@@ -264,7 +264,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 10.16 180)
+				(at 12.7 15.24 180)
 				(length 2.54)
 				(name "1B2"
 					(effects
@@ -282,7 +282,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 7.62 180)
+				(at 12.7 12.7 180)
 				(length 2.54)
 				(name "1B3"
 					(effects
@@ -300,7 +300,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 5.08 180)
+				(at 12.7 10.16 180)
 				(length 2.54)
 				(name "1B4"
 					(effects
@@ -318,7 +318,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 0 180)
+				(at 12.7 2.54 180)
 				(length 2.54)
 				(name "2B1"
 					(effects
@@ -336,7 +336,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 -2.54 180)
+				(at 12.7 0 180)
 				(length 2.54)
 				(name "2B2"
 					(effects
@@ -354,7 +354,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 -5.08 180)
+				(at 12.7 -2.54 180)
 				(length 2.54)
 				(name "2B3"
 					(effects
@@ -372,7 +372,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 -7.62 180)
+				(at 12.7 -5.08 180)
 				(length 2.54)
 				(name "2B4"
 					(effects
