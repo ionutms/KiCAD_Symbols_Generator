@@ -918,4 +918,26 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             },
         },
     ),
+    "FW-xx-04-G-D-370-160": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="FW-xx-04-G-D-370-160",
+        footprint_pattern="connector_footprints:FW-{:02d}-04-G-D-370-160",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/fw_th.pdf?"
+            "_gl=1*13f8b1s*_gcl_au*OTQ3NjE2MTIwLjE3NTQ5MDMyODE.*"
+            "_ga*NzIxODQzNjU3LjE3NTQ5MDMyODI.*"
+            "_ga_3KFNZC07WW*"
+            "czE3NTc1MTM2MzIkbzUkZzEkdDE3NTc1MTczNTEkajE2JGwwJGgw"
+        ),
+        pin_counts=list(range(2, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
+    ),
 }

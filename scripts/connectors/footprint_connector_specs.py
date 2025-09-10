@@ -619,4 +619,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         show_pin1_indicator=False,
         mirror_x_pin_numbering=True,
     ),
+    "FW-xx-04-G-D-370-160": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=1.27,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.5,
+            width_right=1.5,
+            height_top=2.0,
+            height_bottom=2.0,
+        ),
+        pad_size=1.0874,
+        drill_size=0.787,
+        mpn_y=3.302,
+        ref_y=-3.302,
+    ),
 }
