@@ -408,6 +408,12 @@ REPO_CONFIGS = [
         "has_project_links": True,
     },
     {
+        "name": "AD74416H_Power_Interface_Module",
+        "colors": ["#6A0CA3", "#A209B7"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
         "name": "Minimal_ADP1031",
         "colors": ["#4361EE", "#4CC9F0"],
         "is_main": False,
