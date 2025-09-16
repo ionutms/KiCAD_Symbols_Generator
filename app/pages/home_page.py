@@ -348,6 +348,24 @@ REPO_CONFIGS = [
         "has_project_links": False,
     },
     {
+        "name": "Minimal_AD74416H",
+        "colors": ["#3A0CA3", "#7209B7"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "AD74416H_Power_Interface_Module",
+        "colors": ["#6A0CA3", "#A209B7"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
+        "name": "Modular_AD74416H_PLC",
+        "colors": ["#9A0CA3", "#F209B7"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
         "name": "Minimal_ADP1032",
         "colors": ["#1AE65C", "#FF2D5C"],
         "is_main": False,
@@ -398,18 +416,6 @@ REPO_CONFIGS = [
     {
         "name": "Minimal_MAX32650",
         "colors": ["#D2691E", "#40E0D0"],
-        "is_main": False,
-        "has_project_links": True,
-    },
-    {
-        "name": "Minimal_AD74416H",
-        "colors": ["#3A0CA3", "#7209B7"],
-        "is_main": False,
-        "has_project_links": True,
-    },
-    {
-        "name": "AD74416H_Power_Interface_Module",
-        "colors": ["#6A0CA3", "#A209B7"],
         "is_main": False,
         "has_project_links": True,
     },
