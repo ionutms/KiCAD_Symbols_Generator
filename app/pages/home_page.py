@@ -298,6 +298,7 @@ REPO_CONFIGS = [
         "colors": ["#FF8C1A", "#1A8CFF"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "docker_kicad_learning",
@@ -340,12 +341,14 @@ REPO_CONFIGS = [
         "colors": ["#8CE01A", "#FF1AE0"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "clones_monitor",
         "colors": ["#FF4500", "#1E90FF"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "Minimal_AD74416H",
@@ -456,6 +459,36 @@ PROJECT_REPOS_WITHOUT_LINKS = [
     and not repo["has_project_links"]
     and "learning" not in repo["name"].lower()
 ]
+
+
+def create_repo_link_column(project_name: str) -> dbc.Col:
+    """Create a right-side column with a GitHub link for a repository."""
+    return dbc.Col(
+        [
+            html.H4("Repository"),
+            html.Div(
+                children=[
+                    html.A(
+                        children=(
+                            f"GitHub Repo -> {project_name.replace('_', ' ')}"
+                        ),
+                        href=(
+                            f"https://github.com/{GITHUB_USERNAME}/"
+                            f"{project_name}"
+                        ),
+                        target="_blank",
+                    ),
+                ],
+                style={
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "10px",
+                },
+            ),
+        ],
+        xs=12,
+        md=3,
+    )
 
 
 def check_github_pages_simple(username: str, repo_name: str) -> bool:
@@ -621,15 +654,34 @@ def create_main_repo_section(
             dbc.Col(
                 children=create_repo_graphs(f"{module_name}"),
                 xs=12,
-                md=8,
+                md=9,
             ),
             dbc.Col(
                 [
-                    html.H4("Components Data Base Pages"),
-                    links_display_div,
+                    html.H4("Repository"),
+                    html.Div(
+                        children=[
+                            html.A(
+                                children=(
+                                    f"GitHub Repo -> "
+                                    f"{MAIN_REPO['name'].replace('_', ' ')}"
+                                ),
+                                href=(
+                                    f"https://github.com/{GITHUB_USERNAME}/"
+                                    f"{MAIN_REPO['name']}"
+                                ),
+                                target="_blank",
+                            ),
+                        ],
+                        style={
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "gap": "10px",
+                        },
+                    ),
                 ],
                 xs=12,
-                md=4,
+                md=3,
             ),
         ]),
         html.Hr(),
@@ -641,6 +693,20 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
     project_name = repo_config["name"]
 
     if not repo_config["has_project_links"]:
+        if repo_config.get("show_simple_link"):
+            return [
+                dbc.Row([
+                    dbc.Col(
+                        children=create_repo_graphs(
+                            f"{module_name}_{project_name}"
+                        ),
+                        xs=12,
+                        md=9,
+                    ),
+                    create_repo_link_column(project_name),
+                ]),
+                html.Hr(),
+            ]
         return [
             dbc.Row([
                 dbc.Col(
@@ -751,6 +817,19 @@ def create_learning_project_section(
 
 tabs = dbc.Tabs(
     [
+        dbc.Tab(
+            label="Components Data Base",
+            tab_id="components-db-tab",
+            children=[
+                html.Div(
+                    [
+                        html.H4("Components Data Base Pages"),
+                        links_display_div,
+                    ],
+                    style={"padding": "20px"},
+                )
+            ],
+        ),
         dbc.Tab(
             label=MAIN_REPO["name"].replace("_", " ").title(),
             children=[
