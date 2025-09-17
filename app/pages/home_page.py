@@ -305,6 +305,7 @@ REPO_CONFIGS = [
         "colors": ["#7B68EE", "#FFD700"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "SystemVerilog_Learning",
@@ -317,24 +318,28 @@ REPO_CONFIGS = [
         "colors": ["#9370DB", "#32CD32"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "PDF_RAG_Learning",
         "colors": ["#FF1493", "#00CED1"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "Model_Context_Protocol_Learning",
         "colors": ["#4169E1", "#FFA500"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "uvm_learning",
         "colors": ["#DC143C", "#00FF7F"],
         "is_main": False,
         "has_project_links": False,
+        "show_simple_link": True,
     },
     {
         "name": "Docker_3D_Models_Hosting",
@@ -530,6 +535,11 @@ def initialize_learning_projects():
             project_config["pages_url"] = (
                 f"https://{GITHUB_USERNAME}.github.io/{project_name}/"
             )
+
+        # Carry over the simple link flag if present
+        project_config["show_simple_link"] = repo.get(
+            "show_simple_link", False
+        )
 
         learning_projects_with_pages.append(project_config)
 
@@ -759,16 +769,18 @@ def create_learning_project_section(
     project_name = repo_config["name"]
 
     # Create the standard graphs
+    has_pages = repo_config.get("has_github_pages")
+    show_simple_link = repo_config.get("show_simple_link")
     graphs_col = dbc.Col(
         children=create_repo_graphs(f"{module_name}_{project_name}"),
         xs=12,
-        md=9 if repo_config.get("has_github_pages") else 12,
+        md=9 if (has_pages or show_simple_link) else 12,
     )
 
     cols = [graphs_col]
 
     # Add links column if GitHub Pages is available
-    if repo_config.get("has_github_pages"):
+    if has_pages:
         links = [
             html.A(
                 children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
@@ -808,6 +820,8 @@ def create_learning_project_section(
             md=3,
         )
         cols.append(links_col)
+    elif show_simple_link:
+        cols.append(create_repo_link_column(project_name))
 
     return [
         dbc.Row(cols),
