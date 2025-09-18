@@ -27,6 +27,7 @@ import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
 import plotly.graph_objects as go
+import requests
 from dash import Input, Output, State, callback, dcc, html
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
@@ -194,14 +195,64 @@ def create_project_links(
         ),
     ]
 
-    image_prefixes = ["side", "top", "bottom"]
+    def load_project_image_urls() -> list[str]:
+        """Load project image filenames from a single shared text file.
 
-    image_paths = [
-        f"https://raw.githubusercontent.com/{username}/{project_name}/"
-        f"main/{project_name_lower}/docs/pictures/"
-        f"{index}_{project_name_lower}_{prefix}.png"
-        for index, prefix in enumerate(image_prefixes, 1)
-    ]
+        The loader reads one filename per line from app/pictures.txt.
+        Lines starting with '#' and empty lines are ignored. The resulting
+        filenames are joined with the standard GitHub raw path for the
+        repository's docs/pictures folder.
+
+        If the file lists filenames for multiple projects, only the entries
+        that contain the current project's name are used. If no matching
+        entries are found, no carousel is shown.
+        """
+        github_txt_url = (
+            f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
+            "KiCAD_Symbols_Generator/main/app/pictures.txt"
+        )
+
+        filenames: list[str] = []
+        loaded_text: str | None = None
+        try:
+            response = requests.get(github_txt_url, timeout=5)
+            if response.ok and response.text:
+                loaded_text = response.text
+        except requests.RequestException:
+            loaded_text = None
+
+        if loaded_text:
+            try:
+                for raw_line in loaded_text.splitlines():
+                    line = raw_line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if line.startswith("\ufeff"):
+                        line = line.lstrip("\ufeff")
+                    processed = line
+                    lower_name = processed.lower()
+                    if not lower_name.endswith((".png",)):
+                        continue
+                    filenames.append(processed)
+            except Exception:
+                filenames = []
+
+        if filenames:
+            project_filtered = [
+                name
+                for name in filenames
+                if project_name_lower in name.lower()
+            ]
+            if project_filtered:
+                filenames = project_filtered
+
+        base = (
+            f"https://raw.githubusercontent.com/{username}/{project_name}/"
+            f"main/{project_name_lower}/docs/pictures/"
+        )
+        return [f"{base}{name}" for name in filenames]
+
+    image_paths = load_project_image_urls()
 
     modal_carousel_items = [{"src": img_path} for img_path in image_paths]
 
