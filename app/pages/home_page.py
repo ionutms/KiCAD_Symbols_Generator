@@ -142,58 +142,87 @@ def create_project_links(
     project_name_lower = project_name.lower()
     base_github_url = f"https://github.com/{username}/{project_name}"
 
-    links = [
-        html.A(
-            children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
-            href=base_github_url,
-            target="_blank",
-        ),
-        html.A(
-            "View Interactive BOM (HTML)",
-            href=(
-                f"https://htmlpreview.github.io/?{base_github_url}/blob/main/"
-                f"{project_name_lower}/docs/bom/{project_name_lower}_ibom.html"
-            ),
-            target="_blank",
-        ),
-        html.A(
-            children="View Schematics (PDF)",
-            href=(
-                f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
-                f"https://raw.githubusercontent.com/{username}/{project_name}/"
-                f"main/{project_name_lower}/docs/schematics/"
-                f"{project_name_lower}_schematics.pdf"
-            ),
-            target="_blank",
-        ),
-        html.A(
-            children="View 3D Model (WRL)",
-            href=(
-                "https://3dviewer.net/#model="
-                "https://threed-model-server-latest.onrender.com/models/"
-                f"{project_name_lower}.wrl"
-            ),
-            target="_blank",
-        ),
-        html.A(
-            children="View 3D Model (GLB)",
-            href=(
-                "https://3dviewer.net/#model="
-                "https://threed-model-server-latest.onrender.com/models/"
-                f"{project_name_lower}.glb"
-            ),
-            target="_blank",
-        ),
-        html.A(
-            children="View in KiCanvas",
-            href=(
-                f"https://kicanvas.org/?"
-                f"github=https%3A%2F%2Fgithub.com%2F{username}%2F"
-                f"{project_name}%2Ftree%2Fmain%2F{project_name_lower}"
-            ),
-            target="_blank",
-        ),
-    ]
+    repo_config = next(
+        (repo for repo in REPO_CONFIGS if repo["name"] == project_name), None
+    )
+    hidden_links = (repo_config or {}).get("hidden_links", {})
+
+    links: list[Any] = []
+
+    if not hidden_links.get("repo"):
+        links.append(
+            html.A(
+                children=f"GitHub Repo -> {project_name.replace('_', ' ')}",
+                href=base_github_url,
+                target="_blank",
+            )
+        )
+
+    if not hidden_links.get("ibom"):
+        links.append(
+            html.A(
+                "View Interactive BOM (HTML)",
+                href=(
+                    f"https://htmlpreview.github.io/?{base_github_url}/"
+                    f"blob/main/{project_name_lower}/docs/bom/"
+                    f"{project_name_lower}_ibom.html"
+                ),
+                target="_blank",
+            )
+        )
+
+    if not hidden_links.get("schematics"):
+        links.append(
+            html.A(
+                children="View Schematics (PDF)",
+                href=(
+                    f"https://mozilla.github.io/pdf.js/web/viewer.html?file="
+                    f"https://raw.githubusercontent.com/{username}/"
+                    f"{project_name}/main/{project_name_lower}/docs/"
+                    f"schematics/{project_name_lower}_schematics.pdf"
+                ),
+                target="_blank",
+            )
+        )
+
+    if not hidden_links.get("wrl"):
+        links.append(
+            html.A(
+                children="View 3D Model (WRL)",
+                href=(
+                    "https://3dviewer.net/#model="
+                    "https://threed-model-server-latest.onrender.com/models/"
+                    f"{project_name_lower}.wrl"
+                ),
+                target="_blank",
+            )
+        )
+
+    if not hidden_links.get("glb"):
+        links.append(
+            html.A(
+                children="View 3D Model (GLB)",
+                href=(
+                    "https://3dviewer.net/#model="
+                    "https://threed-model-server-latest.onrender.com/models/"
+                    f"{project_name_lower}.glb"
+                ),
+                target="_blank",
+            )
+        )
+
+    if not hidden_links.get("kicanvas"):
+        links.append(
+            html.A(
+                children="View in KiCanvas",
+                href=(
+                    f"https://kicanvas.org/?"
+                    f"github=https%3A%2F%2Fgithub.com%2F{username}%2F"
+                    f"{project_name}%2Ftree%2Fmain%2F{project_name_lower}"
+                ),
+                target="_blank",
+            )
+        )
 
     def load_project_image_urls() -> list[str]:
         """Load project image filenames from a single shared text file.
@@ -423,6 +452,13 @@ REPO_CONFIGS = [
         "colors": ["#9A0CA3", "#F209B7"],
         "is_main": False,
         "has_project_links": True,
+        "hidden_links": {
+            "ibom": True,
+            "schematics": True,
+            "wrl": True,
+            "glb": True,
+            "kicanvas": True,
+        },
     },
     {
         "name": "Minimal_ADP1032",
