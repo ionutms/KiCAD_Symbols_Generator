@@ -37,6 +37,32 @@ def generate_footprint(
     pins_per_side = specs.pad_dimensions.pin_count // 2
     reverse_pin_numbering = specs.pad_dimensions.reverse_pin_numbering
 
+    # Generate pads based on custom pad properties for SMD pads
+    if specs.pad_dimensions.pad_properties is not None:
+        # Use custom SMD pad positions and properties
+        pads = []
+        for pad_property in specs.pad_dimensions.pad_properties:
+            pad = f"""
+            (pad "{pad_property.name}" smd circle
+                (at {pad_property.x} {pad_property.y})
+                (size {pad_property.pad_size} {pad_property.pad_size})
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (uuid "{footprint_utils.uuid4()}")
+            )
+            """
+            pads.append(pad)
+        pads = "\n".join(pads)
+    else:
+        # Use standard SMD pad generation
+        pads = footprint_utils.generate_pads(
+            pad_width,
+            pad_height,
+            pad_center_x,
+            pad_pitch_y,
+            pins_per_side,
+            reverse_pin_numbering=reverse_pin_numbering,
+        )
+
     sections = [
         footprint_utils.generate_header(part_info.series),
         footprint_utils.generate_properties(
@@ -56,14 +82,7 @@ def generate_footprint(
             pitch_y=pad_pitch_y,
             mirror_x_coordonate=reverse_pin_numbering,
         ),
-        footprint_utils.generate_pads(
-            pad_width,
-            pad_height,
-            pad_center_x,
-            pad_pitch_y,
-            pins_per_side,
-            reverse_pin_numbering=reverse_pin_numbering,
-        ),
+        pads,
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/transformers",
             part_info.series,

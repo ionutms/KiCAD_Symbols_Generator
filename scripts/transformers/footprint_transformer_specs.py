@@ -15,7 +15,7 @@ Constants:
         specifications
 """
 
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 
 class BodyDimensions(NamedTuple):
@@ -29,8 +29,25 @@ class BodyDimensions(NamedTuple):
 
     """
 
-    width: float  # Total width of transformer body
-    height: float  # Total height of transformer body
+    width: float
+    height: float
+
+
+class Pad(NamedTuple):
+    """Defines properties for individual pads in a transformer footprint.
+
+    Attributes:
+        name: Identifier for the pad (e.g., '1', '2', etc.)
+        x: X coordinate of the pad center relative to the origin
+        y: Y coordinate of the pad center relative to the origin
+        pad_size: Diameter of the pad
+
+    """
+
+    name: str
+    x: float
+    y: float
+    pad_size: float
 
 
 class PadDimensions(NamedTuple):
@@ -45,23 +62,25 @@ class PadDimensions(NamedTuple):
         pitch_y: Vertical distance between adjacent pads
         pin_count: Total number of pins (must be even)
         reverse_pin_numbering: Flag to reverse pin numbering
+        pad_properties: List of individual pad properties and positions
 
     """
 
-    width: float  # Width of each pad
-    height: float  # Height of each pad
-    center_x: float  # Distance from origin to pad center on X axis
-    pitch_y: float  # Vertical distance between adjacent pads
-    pin_count: int  # Total number of pins (must be even)
-    reverse_pin_numbering: bool = False  # Reverse pin numbering direction
+    width: float
+    height: float
+    center_x: float
+    pitch_y: float
+    pin_count: int
+    reverse_pin_numbering: bool = False
+    pad_properties: Optional[list[Pad]] = None
 
 
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a transformer footprint."""
 
-    body_dimensions: BodyDimensions  # Basic rectangle dimensions
-    pad_dimensions: PadDimensions  # Pad size and positioning
-    ref_offset_y: float  # Y offset for reference designator
+    body_dimensions: BodyDimensions
+    pad_dimensions: PadDimensions
+    ref_offset_y: float
 
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
@@ -131,5 +150,29 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pin_count=8,
         ),
         ref_offset_y=-7.62,
+    ),
+    "PL160X9-102L": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=24, height=21.5),
+        pad_dimensions=PadDimensions(
+            width=1.9,
+            height=1.6,
+            center_x=4.05,
+            pitch_y=2.49,
+            pin_count=8,
+            pad_properties=[
+                Pad("1", -10.41, -7.875, 2.03),
+                Pad("2", -10.41, -5.08, 2.03),
+                Pad("3", -10.41, -2.285, 2.03),
+                Pad("4", -10.41, 2.285, 2.03),
+                Pad("5", -10.41, 5.08, 2.03),
+                Pad("6", -10.41, 7.875, 2.03),
+                Pad("7", 9.91, 3.175 * 2, 2.79),
+                Pad("8", 9.91, 3.175, 2.79),
+                Pad("9", 9.91, 0, 2.79),
+                Pad("10", 9.91, -3.175, 2.79),
+                Pad("11", 9.91, -3.175 * 2, 2.79),
+            ],
+        ),
+        ref_offset_y=-11.684,
     ),
 }

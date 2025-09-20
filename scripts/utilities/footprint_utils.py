@@ -600,6 +600,7 @@ def generate_thru_hole_pads(  # noqa: PLR0913
         start_pos: X-coordinate of the first pad
         row_pitch: Pitch between connector rows
         row_count: Number of connector rows
+        pin_numbers: List of custom pin numbers
 
     Returns:
         str: KiCad formatted pad definitions
@@ -636,7 +637,9 @@ def generate_thru_hole_pads(  # noqa: PLR0913
 
         pad_type = "rect" if pin_num == 0 else "circle"
         pad_label = (
-            str(pin_numbers[pin_index]) if pin_numbers is not None else str(pin_num + 1)
+            str(pin_numbers[pin_index])
+            if pin_numbers is not None
+            else str(pin_num + 1)
         )
         pad = f"""
             (pad "{pad_label}" thru_hole {pad_type}
@@ -663,7 +666,6 @@ def generate_custom_thru_hole_pads(pad_properties: list[NamedTuple]) -> str:
         str: KiCad formatted pad definitions
 
     """
-
     pads = []
     for pad_property in pad_properties:
         pad_type = "rect" if pad_property.name == "1" else "circle"
@@ -704,6 +706,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         row_count: Number of connector rows
         mirror_x_pin_numbering: change pin numbering direction
         anti_clockwise_numbering: use anti-clockwise pin numbering
+        pin_numbers: List of custom pin numbers
 
     Returns:
         str: KiCad formatted pad definitions
@@ -738,12 +741,10 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         )
         ypos = ypos if not mirror_x_pin_numbering else -ypos
 
-        # Calculate pin number based on numbering scheme unless custom provided
         if pin_numbers is not None:
             pin_number = pin_numbers[pin_index]
         elif anti_clockwise_numbering and row_count == 2:
             # Anti-clockwise numbering for dual row
-            pins_per_row = total_pins // 2
             if pin_index % 2 == 0:
                 # Bottom row: 1, 2, 3, ... (left to right)
                 pin_number = (pin_index // 2) + 1
@@ -788,6 +789,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
         start_pos: X-coordinate of the first pad
         row_pitch: Pitch between connector rows
         mirror_y_position: Mirror the Y-coordinate of the pads
+        pin_numbers: List of custom pin numbers
 
     Returns:
         str: KiCad formatted pad definitions
@@ -799,7 +801,8 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     # Validate custom numbering if provided
     if pin_numbers is not None and len(pin_numbers) != pin_count:
         msg = (
-            f"Number of pin numbers ({len(pin_numbers)}) must match pin_count ({pin_count})"
+            f"Number of pin numbers ({len(pin_numbers)}) "
+            f"must match pin_count ({pin_count})"
         )
         raise ValueError(msg)
 
@@ -812,7 +815,11 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
         ) * (row_pitch / 2)
 
         pad = f"""
-            (pad "{(pin_numbers[pin_index] if pin_numbers is not None else (pin_num + 1))}" smd roundrect
+            (pad "{
+            pin_numbers[pin_index]
+            if pin_numbers is not None
+            else (pin_num + 1)
+        }" smd roundrect
                 (at {xpos[pin_index]:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
