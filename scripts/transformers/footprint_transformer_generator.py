@@ -9,7 +9,10 @@ silkscreen markings for surface mount power transformers with multiple pins.
 from pathlib import Path
 
 import symbol_transformer_specs
-from footprint_transformer_specs import FOOTPRINTS_SPECS, FootprintSpecs
+from footprint_transformer_specs import (
+    FOOTPRINTS_SPECS,
+    FootprintSpecs,
+)
 from utilities import footprint_utils
 
 
@@ -30,18 +33,10 @@ def generate_footprint(
     body_width = specs.body_dimensions.width
     body_height = specs.body_dimensions.height
 
-    pad_center_x = specs.pad_dimensions.center_x
-    pad_width = specs.pad_dimensions.width
-    pad_height = specs.pad_dimensions.height
-    pad_pitch_y = specs.pad_dimensions.pitch_y
-    pins_per_side = specs.pad_dimensions.pin_count // 2
-    reverse_pin_numbering = specs.pad_dimensions.reverse_pin_numbering
-
-    # Generate pads based on custom pad properties for SMD pads
-    if specs.pad_dimensions.pad_properties is not None:
+    if isinstance(specs.pad_dimensions, list):
         # Use custom SMD pad positions and properties
         pads = []
-        for pad_property in specs.pad_dimensions.pad_properties:
+        for pad_property in specs.pad_dimensions:
             pad = f"""
             (pad "{pad_property.name}" smd circle
                 (at {pad_property.x} {pad_property.y})
@@ -52,8 +47,21 @@ def generate_footprint(
             """
             pads.append(pad)
         pads = "\n".join(pads)
+
+        pad_center_x = 0
+        pad_width = 0
+        pad_height = 0
+        pad_pitch_y = 0
+        pins_per_side = 0
+        reverse_pin_numbering = False
     else:
-        # Use standard SMD pad generation
+        pad_center_x = specs.pad_dimensions.center_x
+        pad_width = specs.pad_dimensions.width
+        pad_height = specs.pad_dimensions.height
+        pad_pitch_y = specs.pad_dimensions.pitch_y
+        pins_per_side = specs.pad_dimensions.pin_count // 2
+        reverse_pin_numbering = specs.pad_dimensions.reverse_pin_numbering
+
         pads = footprint_utils.generate_pads(
             pad_width,
             pad_height,

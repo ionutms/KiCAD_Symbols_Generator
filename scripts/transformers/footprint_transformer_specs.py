@@ -6,6 +6,7 @@ dimensions, pad specifications, and complete footprint parameters.
 Classes:
     BodyDimensions:
         Defines rectangular dimensions for transformer body outlines
+    Pad: Defines properties for individual pads in a transformer footprint
     PadDimensions: Defines dimensions and positioning for transformer pads
     FootprintSpecs:
         Combines body and pad specs for complete footprint definition
@@ -15,7 +16,7 @@ Constants:
         specifications
 """
 
-from typing import NamedTuple, Optional
+from typing import NamedTuple, Union
 
 
 class BodyDimensions(NamedTuple):
@@ -62,7 +63,6 @@ class PadDimensions(NamedTuple):
         pitch_y: Vertical distance between adjacent pads
         pin_count: Total number of pins (must be even)
         reverse_pin_numbering: Flag to reverse pin numbering
-        pad_properties: List of individual pad properties and positions
 
     """
 
@@ -72,14 +72,13 @@ class PadDimensions(NamedTuple):
     pitch_y: float
     pin_count: int
     reverse_pin_numbering: bool = False
-    pad_properties: Optional[list[Pad]] = None
 
 
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a transformer footprint."""
 
     body_dimensions: BodyDimensions
-    pad_dimensions: PadDimensions
+    pad_dimensions: Union[PadDimensions, list[Pad]]
     ref_offset_y: float
 
 
@@ -153,26 +152,19 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
     ),
     "PL160X9-102L": FootprintSpecs(
         body_dimensions=BodyDimensions(width=24, height=21.5),
-        pad_dimensions=PadDimensions(
-            width=1.9,
-            height=1.6,
-            center_x=4.05,
-            pitch_y=2.49,
-            pin_count=8,
-            pad_properties=[
-                Pad("1", -10.41, -7.875, 2.03),
-                Pad("2", -10.41, -5.08, 2.03),
-                Pad("3", -10.41, -2.285, 2.03),
-                Pad("4", -10.41, 2.285, 2.03),
-                Pad("5", -10.41, 5.08, 2.03),
-                Pad("6", -10.41, 7.875, 2.03),
-                Pad("7", 9.91, 3.175 * 2, 2.79),
-                Pad("8", 9.91, 3.175, 2.79),
-                Pad("9", 9.91, 0, 2.79),
-                Pad("10", 9.91, -3.175, 2.79),
-                Pad("11", 9.91, -3.175 * 2, 2.79),
-            ],
-        ),
+        pad_dimensions=[
+            Pad("1", -10.41, -7.875, 2.03),
+            Pad("2", -10.41, -5.08, 2.03),
+            Pad("3", -10.41, -2.285, 2.03),
+            Pad("4", -10.41, 2.285, 2.03),
+            Pad("5", -10.41, 5.08, 2.03),
+            Pad("6", -10.41, 7.875, 2.03),
+            Pad("7", 9.91, 3.175 * 2, 2.79),
+            Pad("8", 9.91, 3.175, 2.79),
+            Pad("9", 9.91, 0, 2.79),
+            Pad("10", 9.91, -3.175, 2.79),
+            Pad("11", 9.91, -3.175 * 2, 2.79),
+        ],
         ref_offset_y=-11.684,
     ),
 }
