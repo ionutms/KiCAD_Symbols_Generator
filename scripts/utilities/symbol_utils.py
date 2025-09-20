@@ -993,6 +993,102 @@ def write_transformer_symbol_drawing_v4(
     symbol_file.write("        )\n")
 
 
+def write_transformer_symbol_drawing_v5(
+    symbol_file: TextIO,
+    symbol_name: str,
+    pin_config: dict,
+) -> None:
+    """Write the horizontal graphical representation of a transformer symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+        pin_config (dict, optional): Dictionary defining pin configuration.
+
+    Returns:
+        None
+
+    """
+    # Calculate symbol bounds
+    min_y, max_y = get_symbol_bounds(pin_config)
+
+    # Write symbol drawing section - split into two units
+    symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
+
+    # Write left inductor arcs
+    write_arcs(symbol_file, -2.54, [0.0, 2.54 * 3])
+    write_arcs(symbol_file, -2.54, [0.0, -2.54 * 2])
+    write_arcs(symbol_file, -2.54, [0.0, -2.54 * 7])
+
+    # Write right inductor arcs
+    write_arcs(symbol_file, 2.54, [0.0, 10.16])
+    write_arcs(symbol_file, 2.54, [0.0, 0.0])
+    write_arcs(symbol_file, 2.54, [0.0, -10.16])
+    write_arcs(symbol_file, 2.54, [0.0, -20.32])
+
+    # Write bottom right inductor arcs
+    # write_arcs(symbol_file, 2.54, [0.0, -5.08])
+
+    # write_arcs(symbol_file, 2.54, [0.0, -12.7])
+
+    # Write polarity dots
+    for x, y in [
+        (-2.54, 1.27 * 13),
+        (-2.54, 1.27 * 3),
+        (-2.54, -1.27 * 7),
+        (2.54, 11.43),
+        (2.54, 1.27),
+        (2.54, -1.27 * 7),
+        (2.54, -1.27 * 15),
+    ]:
+        symbol_file.write(f"""
+            (circle
+                (center {x} {y})
+                (radius 0.508)
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            """)
+
+    # Write coupling lines
+    for x in [-0.254, 0.254]:
+        symbol_file.write(f"""
+            (polyline
+                (pts (xy {x} {max_y}) (xy {x} {min_y}))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            """)
+
+    # Write left side pins
+    for pin in pin_config["left"]:
+        write_pin(
+            symbol_file=symbol_file,
+            x_pos=-7.62,
+            y_pos=pin["y_pos"],
+            angle=0,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
+
+    # Write right side pins
+    for pin in pin_config["right"]:
+        write_pin(
+            symbol_file=symbol_file,
+            x_pos=7.62,
+            y_pos=pin["y_pos"],
+            angle=180,
+            number=pin["number"],
+            pin_type=pin["pin_type"],
+            hide=pin.get("hide", False),
+            length=pin["lenght"],
+        )
+
+    symbol_file.write("        )\n")
+
+
 def write_coupled_inductor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,

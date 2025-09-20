@@ -178,4 +178,16 @@ def write_component(
             symbol_name,
             pin_config,
         )
+    if component_data.get("Series") in ("PL160X9-102L"):
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            9,
+        )
+        symbol_utils.write_transformer_symbol_drawing_v5(
+            symbol_file,
+            symbol_name,
+            pin_config,
+        )
     symbol_file.write(")")
