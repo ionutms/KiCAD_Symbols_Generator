@@ -231,6 +231,7 @@ def generate_silkscreen_lines(
     height: float,
     center_x: float,
     pad_width: float,
+    custom_pad_x_coords: list[float] | None = None,
 ) -> str:
     """Generate silkscreen reference lines for a component.
 
@@ -241,13 +242,22 @@ def generate_silkscreen_lines(
         height (float): Total height of the component.
         center_x (float): X-coordinate of the component center.
         pad_width (float): Width of the component's pad.
+        custom_pad_x_coords (list[float] | None):
+            Custom X coordinates of pads
+            (used when custom pad coordinates are provided).
 
     Returns:
         str: KiCad formatted silkscreen line definitions.
 
     """
     half_height = height / 2
-    silkscreen_x = center_x - pad_width / 2
+
+    if custom_pad_x_coords and len(custom_pad_x_coords) >= 2:
+        leftmost_x = min(custom_pad_x_coords)
+        rightmost_x = max(custom_pad_x_coords)
+        silkscreen_x = max(abs(leftmost_x), abs(rightmost_x))
+    else:
+        silkscreen_x = center_x - pad_width / 2
 
     shapes: str = ""
 
@@ -406,6 +416,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
     mirror_x_coordonate: bool = False,  # noqa: FBT001, FBT002
     margin_offset: float = 0.4,  # Distance from body edge
+    custom_pin_1_y: float | None = None,  # Custom y coordinate for pin 1
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
@@ -417,6 +428,9 @@ def generate_pin_1_indicator(  # noqa: PLR0913
         mirror_y_coordonate: Mirror the Y-coordinate of the pin 1 indicator
         mirror_x_coordonate: Mirror the X-coordinate of the pin 1 indicator
         margin_offset: Distance from body edge to place the indicator
+        custom_pin_1_y:
+            Custom y coordinate for pin 1
+            (used when custom pad coordinates are provided)
 
     Returns:
         str: KiCad formatted pin 1 indicator
@@ -424,16 +438,19 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     """
     shapes = []
 
-    total_height = pitch_y * (pins_per_side - 1)
+    # Use custom pin 1 y coordinate if provided, otherwise calculate it
+    if custom_pin_1_y is not None:
+        circle_y = custom_pin_1_y
+    else:
+        total_height = pitch_y * (pins_per_side - 1)
+        circle_y = (
+            -total_height / 2 if not mirror_y_coordonate else total_height / 2
+        )
 
     circle_x = (
         -(body_width / 2 + margin_offset)
         if not mirror_x_coordonate
         else (body_width / 2 + margin_offset)
-    )
-
-    circle_y = (
-        -total_height / 2 if not mirror_y_coordonate else total_height / 2
     )
 
     radius = 0.2

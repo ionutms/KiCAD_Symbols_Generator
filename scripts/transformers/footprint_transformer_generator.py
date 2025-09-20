@@ -48,6 +48,15 @@ def generate_footprint(
             pads.append(pad)
         pads = "\n".join(pads)
 
+        # Extract pin 1 y coordinate for pin 1 indicator
+        pin_1_y = None
+        # Extract x coordinates for silkscreen lines
+        pad_x_coords = []
+        for pad_property in specs.pad_dimensions:
+            pad_x_coords.append(pad_property.x)
+            if pad_property.name == "1":
+                pin_1_y = pad_property.y
+
         pad_center_x = 0
         pad_width = 0
         pad_height = 0
@@ -61,6 +70,8 @@ def generate_footprint(
         pad_pitch_y = specs.pad_dimensions.pitch_y
         pins_per_side = specs.pad_dimensions.pin_count // 2
         reverse_pin_numbering = specs.pad_dimensions.reverse_pin_numbering
+        pin_1_y = None  # Not needed for standard pads
+        pad_x_coords = None  # Not needed for standard pads
 
         pads = footprint_utils.generate_pads(
             pad_width,
@@ -83,12 +94,14 @@ def generate_footprint(
             body_height,
             pad_center_x,
             pad_width,
+            pad_x_coords,  # Pass custom pad x coordinates
         ),
         footprint_utils.generate_pin_1_indicator(
             body_width=body_width,
             pins_per_side=pins_per_side,
             pitch_y=pad_pitch_y,
             mirror_x_coordonate=reverse_pin_numbering,
+            custom_pin_1_y=pin_1_y,  # Pass the custom pin 1 y coordinate
         ),
         pads,
         footprint_utils.associate_3d_model(
