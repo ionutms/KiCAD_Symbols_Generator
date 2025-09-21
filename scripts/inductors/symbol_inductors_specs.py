@@ -149,6 +149,41 @@ class PartInfo(NamedTuple):
         return f"{base_code}{value_suffix}"
 
     @staticmethod
+    def generate_taiyo_yuden_value_code(
+        inductance: float,
+        value_suffix: str,
+    ) -> str:
+        """Generate inductance values according to part numbering system.
+
+        Args:
+            inductance: Inductance value in µH
+            value_suffix: AEC qualification suffix
+
+        Raises:
+            ValueError: If inductance value is out of range
+
+        Returns:
+            Formatted inductance value code
+
+        """
+        if inductance >= 1000.0:  # noqa: PLR2004
+            value = round(inductance / 100)
+            base_code = f"{value:02d}2"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 100.0:  # noqa: PLR2004
+            value = round(inductance / 10)
+            base_code = f"{value:02d}1"
+            return f"{base_code}{value_suffix}"
+
+        if inductance >= 10.0:  # noqa: PLR2004
+            return f"{inductance}0{value_suffix}"
+
+        value = round(inductance * 1000)
+        base_code = f"{value:02d}0"
+        return f"{base_code}{value_suffix}"
+
+    @staticmethod
     def generate_wurth_value_code(inductance: float) -> str:
         """Generate Wurth Elektronik inductance value codes.
 
@@ -240,6 +275,12 @@ class PartInfo(NamedTuple):
 
         if specs.manufacturer in ("Taiyo Yuden", "Murata"):
             mpn = f"{specs.base_series}"
+            if specs.base_series == "CB2518T":
+                value_code = cls.generate_taiyo_yuden_value_code(
+                    inductance, ""
+                )
+                mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
+                datasheet = f"{specs.datasheet}{mpn}&u=M"
 
         if specs.manufacturer == "Wurth Elektronik":
             value_code = cls.generate_wurth_value_code(inductance)
@@ -1322,6 +1363,57 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         inductance_values=[0.24, 0.47, 0.68, 1, 2.2],
         max_dc_current=[6.9, 5.4, 3.8, 3.15, 2.1],
         max_dc_resistance=[21, 30, 49, 60, 140],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "CB2518T": SeriesSpec(
+        manufacturer="Taiyo Yuden",
+        base_series="CB2518T",
+        value_suffix="K",
+        footprint="inductor_footprints:CB2518T",
+        tolerance="±10%",
+        datasheet=("https://ds.yuden.co.jp/TYCOMPAS/eu/detail?pn="),
+        inductance_values=[
+            10,
+            15,
+            22,
+            33,
+            47,
+            100,
+            150,
+            220,
+            330,
+            470,
+            680,
+            1000,
+        ],
+        max_dc_current=[
+            0.82,
+            0.65,
+            0.58,
+            0.46,
+            0.42,
+            0.26,
+            0.21,
+            0.18,
+            0.14,
+            0.12,
+            0.09,
+            0.075,
+        ],
+        max_dc_resistance=[
+            0.325,
+            0.416,
+            0.65,
+            0.91,
+            1.24,
+            2.73,
+            4.16,
+            5.85,
+            9.1,
+            13,
+            22.1,
+            0.0312,
+        ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
 }

@@ -555,4 +555,14 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ref_offset_y=-1.778,
         enable_pin_1_indicator=False,
     ),
+    "CB2518T": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=3.1, height=2.5),
+        pad_dimensions=PadDimensions(
+            width=0.6,
+            height=2,
+            center_x=1.05,
+        ),
+        ref_offset_y=-2.032,
+        enable_pin_1_indicator=False,
+    ),
 }
