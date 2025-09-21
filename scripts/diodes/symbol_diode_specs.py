@@ -590,4 +590,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Schottky",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "1N4148WX-TP": SeriesSpec(
+        manufacturer="Micro Commercial Components",
+        base_series="1N4148WX-TP",
+        footprint="diode_footprints:SOD323",
+        datasheet=(
+            "https://www.mccsemi.com/pdf/Products/1N4148WX(SOD-323).pdf"
+        ),
+        voltage_rating=[100],
+        package="SOD323",
+        diode_type="Zener",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
