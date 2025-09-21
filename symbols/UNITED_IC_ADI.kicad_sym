@@ -14143,7 +14143,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 10.16 22.86 0)
+			(at 12.7 20.32 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -14152,7 +14152,7 @@
 			)
 		)
 		(property "Value" "ADP1074ACCZ-R7"
-			(at 10.16 20.32 0)
+			(at 12.7 17.78 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -14161,7 +14161,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:CC-24-6_ADI"
-			(at 10.16 -25.4 0)
+			(at 12.7 -22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14172,7 +14172,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/adp1074.pdf"
-			(at 10.16 -20.32 0)
+			(at 12.7 -17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14183,7 +14183,7 @@
 			)
 		)
 		(property "Description" "Isolated, Synchronous Forward Controller with Active Clamp and iCoupler"
-			(at 10.16 -22.86 0)
+			(at 12.7 -20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14193,7 +14193,7 @@
 			)
 		)
 		(property "MPN" "ADP1074ACCZ-R7"
-			(at 10.16 -27.94 0)
+			(at 12.7 -25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14204,8 +14204,8 @@
 		)
 		(symbol "U_ADP1074ACCZ-R7_0_1"
 			(rectangle
-				(start -10.16 17.78)
-				(end 10.16 -17.78)
+				(start -12.7 16.51)
+				(end 12.7 -16.51)
 				(stroke
 					(width 0)
 					(type default)
@@ -14215,7 +14215,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 15.24 0)
+				(at -15.24 13.97 0)
 				(length 2.54)
 				(name "NGATE"
 					(effects
@@ -14233,7 +14233,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 12.7 0)
+				(at -15.24 11.43 0)
 				(length 2.54)
 				(name "PGATE"
 					(effects
@@ -14251,25 +14251,7 @@
 				)
 			)
 			(pin power_out line
-				(at -12.7 10.16 0)
-				(length 2.54)
-				(name "PGND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at -12.7 7.62 0)
+				(at -15.24 6.35 0)
 				(length 2.54)
 				(name "AGND1"
 					(effects
@@ -14287,7 +14269,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 5.08 0)
+				(at -15.24 3.81 0)
 				(length 2.54)
 				(name "VREG1"
 					(effects
@@ -14305,7 +14287,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 2.54 0)
+				(at -15.24 1.27 0)
 				(length 2.54)
 				(name "VIN"
 					(effects
@@ -14323,7 +14305,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 0 0)
+				(at -15.24 -1.27 0)
 				(length 2.54)
 				(name "EN"
 					(effects
@@ -14341,7 +14323,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 -2.54 0)
+				(at -15.24 -3.81 0)
 				(length 2.54)
 				(name "CS"
 					(effects
@@ -14359,7 +14341,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 -5.08 0)
+				(at -15.24 -6.35 0)
 				(length 2.54)
 				(name "RT"
 					(effects
@@ -14377,7 +14359,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 -7.62 0)
+				(at -15.24 -8.89 0)
 				(length 2.54)
 				(name "SYNC"
 					(effects
@@ -14395,7 +14377,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 -10.16 0)
+				(at -15.24 -11.43 0)
 				(length 2.54)
 				(name "SS1"
 					(effects
@@ -14413,7 +14395,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -12.7 -12.7 0)
+				(at -15.24 -13.97 0)
 				(length 2.54)
 				(name "DMAX"
 					(effects
@@ -14430,44 +14412,8 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at -12.7 -15.24 0)
-				(length 2.54)
-				(name "MODE"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "13"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin power_out line
-				(at 12.7 15.24 180)
-				(length 2.54)
-				(name "AGND2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "26"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 12.7 12.7 180)
+				(at -2.54 -19.05 90)
 				(length 2.54)
 				(name "AGND1"
 					(effects
@@ -14484,8 +14430,26 @@
 					)
 				)
 			)
+			(pin power_out line
+				(at 2.54 -19.05 90)
+				(length 2.54)
+				(name "AGND2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "26"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin bidirectional line
-				(at 12.7 10.16 180)
+				(at 15.24 13.97 180)
 				(length 2.54)
 				(name "SR1"
 					(effects
@@ -14503,7 +14467,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 7.62 180)
+				(at 15.24 11.43 180)
 				(length 2.54)
 				(name "SR2"
 					(effects
@@ -14521,7 +14485,7 @@
 				)
 			)
 			(pin power_out line
-				(at 12.7 5.08 180)
+				(at 15.24 8.89 180)
 				(length 2.54)
 				(name "PGND2"
 					(effects
@@ -14539,7 +14503,7 @@
 				)
 			)
 			(pin power_out line
-				(at 12.7 2.54 180)
+				(at 15.24 6.35 180)
 				(length 2.54)
 				(name "AGND2"
 					(effects
@@ -14557,7 +14521,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 12.7 0 180)
+				(at 15.24 3.81 180)
 				(length 2.54)
 				(name "VREG2"
 					(effects
@@ -14575,7 +14539,7 @@
 				)
 			)
 			(pin power_in line
-				(at 12.7 -2.54 180)
+				(at 15.24 1.27 180)
 				(length 2.54)
 				(name "VDD2"
 					(effects
@@ -14593,7 +14557,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 12.7 -5.08 180)
+				(at 15.24 -1.27 180)
 				(length 2.54)
 				(name "OVP"
 					(effects
@@ -14611,7 +14575,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 12.7 -7.62 180)
+				(at 15.24 -3.81 180)
 				(length 2.54)
 				(name "FB"
 					(effects
@@ -14629,7 +14593,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 12.7 -10.16 180)
+				(at 15.24 -6.35 180)
 				(length 2.54)
 				(name "COMP"
 					(effects
@@ -14647,7 +14611,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 -12.7 180)
+				(at 15.24 -8.89 180)
 				(length 2.54)
 				(name "SS2"
 					(effects
@@ -14664,11 +14628,29 @@
 					)
 				)
 			)
+			(pin unspecified line
+				(at 15.24 -13.97 180)
+				(length 2.54)
+				(name "MODE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 		)
 		(symbol "U_ADP1074ACCZ-R7_1_1"
 			(polyline
 				(pts
-					(xy -0.635 17.78) (xy -0.635 -17.78)
+					(xy -0.635 16.51) (xy -0.635 -19.05)
 				)
 				(stroke
 					(width 0)
@@ -14680,7 +14662,7 @@
 			)
 			(polyline
 				(pts
-					(xy 0.635 17.78) (xy 0.635 -17.78)
+					(xy 0.635 16.51) (xy 0.635 -19.05)
 				)
 				(stroke
 					(width 0)
@@ -14690,8 +14672,26 @@
 					(type none)
 				)
 			)
+			(pin power_out line
+				(at -15.24 8.89 0)
+				(length 2.54)
+				(name "PGND1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin unspecified line
-				(at 12.7 -15.24 180)
+				(at 15.24 -11.43 180)
 				(length 2.54)
 				(name "~{PGOOD}"
 					(effects
