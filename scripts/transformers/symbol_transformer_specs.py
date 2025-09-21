@@ -423,9 +423,9 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.coilcraft.com/getmedia/"
             "2a17d20e-ce43-41cf-8df1-58b60bcf2330/pl160.pdf"
         ),
-        turns_ratio={"pri : sec1": "1 : 1.5", "pri : sec2": "1 : 0.4"},
-        primary_inductance=30,
-        max_dc_resistance={"pri": "0.18", "sec1": "0.68", "sec2": "0.18"},
+        turns_ratio={"pri1 : sec": "5 : 4", "pri2 : sec": "5 : 4"},
+        primary_inductance=378,
+        max_dc_resistance={"pri1": "0.185", "pri2": "0.185", "sec": "0.0068"},
         value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
