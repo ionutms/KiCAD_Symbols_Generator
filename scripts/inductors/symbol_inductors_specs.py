@@ -223,6 +223,27 @@ class PartInfo(NamedTuple):
             return f"1{int(inductance * 100)}"
         return f"2{int(inductance * 10)}"
 
+    @staticmethod
+    def generate_vishay_value_code(inductance: float) -> str:
+        """Generate Vishay inductance value codes.
+
+        Args:
+            inductance: Inductance value in µH
+
+        Returns:
+            Formatted inductance value code
+
+        """
+        if inductance < 1:
+            return f"R{int(inductance * 100)}"
+        elif inductance < 10:
+            integer_part = int(inductance)
+            fractional_part = int((inductance - integer_part) * 10)
+            return f"{integer_part}R{fractional_part}"
+        elif inductance < 100:
+            return f"{inductance}0"
+        return f"{int(inductance / 10)}1"
+
     @classmethod
     def create_description(
         cls,
@@ -281,6 +302,10 @@ class PartInfo(NamedTuple):
                 )
                 mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
                 datasheet = f"{specs.datasheet}{mpn}&u=M"
+
+        if specs.manufacturer in ("Vishay"):
+            value_code = cls.generate_vishay_value_code(inductance)
+            mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
 
         if specs.manufacturer == "Wurth Elektronik":
             value_code = cls.generate_wurth_value_code(inductance)
@@ -1383,6 +1408,27 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=[
             *[0.325, 0.416, 0.65, 0.91, 1.24, 2.73],
             *[4.16, 5.85, 9.1, 13, 22.1, 0.0312],
+        ],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "IHLP4040DZE_": SeriesSpec(
+        manufacturer="Vishay",
+        base_series="IHLP4040DZE_",
+        value_suffix="M11",
+        footprint="inductor_footprints:IHLP4040DZE_",
+        tolerance="±20%",
+        datasheet=("https://www.vishay.com/docs/34192/ihlp-4040dz-11.pdf"),
+        inductance_values=[
+            *[0.19, 0.22, 0.24, 0.36, 0.47, 0.56, 0.78, 1, 1.8, 2],
+            *[4.7, 6.8, 10, 15, 18, 22, 33, 47, 100],
+        ],
+        max_dc_current=[
+            *[40, 33, 33, 32, 30, 32, 27, 25, 17, 16],
+            *[9.5, 9, 7.5, 6.25, 5.6, 5, 4.4, 3.3, 2.5],
+        ],
+        max_dc_resistance=[
+            *[0.7, 0.85, 0.85, 1.05, 1.53, 1.61, 1.8, 2.3, 4.5, 5.2],
+            *[12.9, 17.5, 27.8, 40.9, 46.4, 60.4, 87.5, 132, 249],
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
