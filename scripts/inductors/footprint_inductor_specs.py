@@ -565,4 +565,24 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ref_offset_y=-2.032,
         enable_pin_1_indicator=False,
     ),
+    "IHLP4040DZE_V1": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=13, height=10.5),
+        pad_dimensions=PadDimensions(
+            width=3.175,
+            height=4.953,
+            center_x=4.5085,
+        ),
+        ref_offset_y=-5.842,
+        enable_pin_1_indicator=False,
+    ),
+    "IHLP4040DZE_V2": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=13, height=10.5),
+        pad_dimensions=PadDimensions(
+            width=3.124,
+            height=3.251,
+            center_x=4.4705,
+        ),
+        ref_offset_y=-5.842,
+        enable_pin_1_indicator=False,
+    ),
 }

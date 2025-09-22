@@ -43,11 +43,13 @@ def generate_footprint(
         else ""
     )
 
+    footprint_name = part_info.footprint.split(":")[1]
+
     sections = [
-        footprint_utils.generate_header(part_info.series),
+        footprint_utils.generate_header(footprint_name),
         footprint_utils.generate_properties(
             specs.ref_offset_y,
-            part_info.series,
+            footprint_name,
         ),
         footprint_utils.generate_courtyard(body_width, body_height),
         footprint_utils.generate_fab_rectangle(body_width, body_height),
@@ -60,7 +62,7 @@ def generate_footprint(
         footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/inductors",
-            part_info.series,
+            footprint_name,
         ),
         ")",  # Close the footprint
     ]
@@ -81,10 +83,11 @@ def generate_footprint_file(
         None
 
     """
-    specs = FOOTPRINTS_SPECS[part_info.series]
+    footprint_name = part_info.footprint.split(":")[1]
+    specs = FOOTPRINTS_SPECS[footprint_name]
     footprint_content = generate_footprint(part_info, specs)
 
-    filename = f"{part_info.series}.kicad_mod"
+    filename = f"{footprint_name}.kicad_mod"
     file_path = f"{output_path}/{filename}"
 
     with Path.open(file_path, "w", encoding="utf-8") as file_handle:

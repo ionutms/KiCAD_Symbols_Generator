@@ -8,7 +8,7 @@ specifications and generate consistent part information.
 
 import os
 import sys
-from typing import NamedTuple
+from typing import NamedTuple, Union
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -24,7 +24,7 @@ class SeriesSpec(NamedTuple):
     Attributes:
         manufacturer: Manufacturer name
         base_series: Series identifier
-        footprint: KiCad footprint name
+        footprint: KiCad footprint name or list of footprint names
         tolerance: Inductance tolerance
         datasheet: URL to the series datasheet
         inductance_values: List of available inductance values
@@ -38,7 +38,7 @@ class SeriesSpec(NamedTuple):
 
     manufacturer: str
     base_series: str
-    footprint: str
+    footprint: Union[str, list[str]]
     tolerance: str
     datasheet: str
     inductance_values: list[float]
@@ -339,11 +339,16 @@ class PartInfo(NamedTuple):
             max_dc_current = 0.0
             max_dc_resistance = 0.0
 
+        footprint = specs.footprint
+        if isinstance(footprint, list):
+            index = specs.inductance_values.index(inductance)
+            footprint = footprint[index]
+
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference=specs.reference,
             value=inductance,
-            footprint=specs.footprint,
+            footprint=footprint,
             datasheet=datasheet,
             description=cls.create_description(inductance, specs),
             manufacturer=specs.manufacturer,
@@ -1415,20 +1420,23 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         manufacturer="Vishay",
         base_series="IHLP4040DZE_",
         value_suffix="M11",
-        footprint="inductor_footprints:IHLP4040DZE_",
+        footprint=[
+            *["inductor_footprints:IHLP4040DZE_V1"] * 8,
+            *["inductor_footprints:IHLP4040DZE_V2"] * 11,
+        ],
         tolerance="±20%",
         datasheet=("https://www.vishay.com/docs/34192/ihlp-4040dz-11.pdf"),
         inductance_values=[
-            *[0.19, 0.22, 0.24, 0.36, 0.47, 0.56, 0.78, 1, 1.8, 2],
-            *[4.7, 6.8, 10, 15, 18, 22, 33, 47, 100],
+            *[0.19, 0.22, 0.24, 0.36, 0.47, 0.56, 0.78, 1],
+            *[1.8, 2, 4.7, 6.8, 10, 15, 18, 22, 33, 47, 100],
         ],
         max_dc_current=[
-            *[40, 33, 33, 32, 30, 32, 27, 25, 17, 16],
-            *[9.5, 9, 7.5, 6.25, 5.6, 5, 4.4, 3.3, 2.5],
+            *[40, 33, 33, 32, 30, 32, 27, 25],
+            *[17, 16, 9.5, 9, 7.5, 6.25, 5.6, 5, 4.4, 3.3, 2.5],
         ],
         max_dc_resistance=[
-            *[0.7, 0.85, 0.85, 1.05, 1.53, 1.61, 1.8, 2.3, 4.5, 5.2],
-            *[12.9, 17.5, 27.8, 40.9, 46.4, 60.4, 87.5, 132, 249],
+            *[0.7, 0.85, 0.85, 1.05, 1.53, 1.61, 1.8, 2.3],
+            *[4.5, 5.2, 12.9, 17.5, 27.8, 40.9, 46.4, 60.4, 87.5, 132, 249],
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
