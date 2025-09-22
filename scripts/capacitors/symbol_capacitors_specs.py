@@ -972,6 +972,20 @@ TDK_SYMBOLS_SPECS = {
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "C1005X5R1V": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="C1005X5R1V",
+        value_range={"X5R": (1.5e-6, 2.2e-6)},
+        tolerance_map={"X5R": {"M": "20%"}},
+        mpn_sufix=["050BC"],
+        footprint="capacitor_footprints:C_0603_1608Metric",
+        voltage_rating="35V",
+        case_code_in="0603",
+        case_code_mm="1608",
+        specified_values=[1.5e-6, 2.2e-6],
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Base URLs for documentation
