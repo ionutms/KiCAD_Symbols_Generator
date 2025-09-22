@@ -159,7 +159,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-3.6,
     ),
-    "PowerPAK SO-8": FootprintSpecs(
+    "PowerPAK SO-8 Dual": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7.0, height=5.0),
         pad_dimensions=PadDimensionsAsymmetric(
             width=1.27,

@@ -285,11 +285,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "SI7997DP-T1-GE3": SeriesSpec(
         manufacturer="Vishay Semiconductors",
         base_series="SI7997DP-T1-GE3",
-        footprint="transistor_footprints:PowerPAK SO-8",
+        footprint="transistor_footprints:PowerPAK SO-8 Dual",
         datasheet=("https://www.vishay.com/docs/66719/si7997dp.pdf"),
         drain_source_voltage=[-30],
         drain_current=[-60],
-        package="PowerPAK SO-8",
+        package="PowerPAK SO-8 Dual",
         transistor_type="P-Channel Dual",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
