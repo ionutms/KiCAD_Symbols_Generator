@@ -337,4 +337,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SIR680DP-T1-RE3": SeriesSpec(
+        manufacturer="Vishay Semiconductors",
+        base_series="SIR680DP-T1-RE3",
+        footprint="transistor_footprints:PowerPAK SO-8 Single",
+        datasheet=("https://www.vishay.com/docs/75267/sir680dp.pdf"),
+        drain_source_voltage=[80],
+        drain_current=[100],
+        package="PowerPAK SO-8 Single",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
