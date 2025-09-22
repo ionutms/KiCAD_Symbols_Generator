@@ -152,8 +152,23 @@ class PartInfo(NamedTuple):
         """
         # Construct MPN with optional suffix
         mpn = f"{specs.base_series}"
+
         if specs.manufacturer == "Kingbright":
             mpn = f"{specs.base_series.replace('-', '/', 1)}"
+
+        if (
+            specs.manufacturer == "Diodes Incorporated"
+            and specs.part_number_suffix
+        ):
+            index = specs.voltage_rating.index(value)
+            value = float(specs.voltage_rating[index])
+            voltage = (
+                f"{int(value)}"
+                if value >= 10
+                else f"{value:.1f}".replace(".", "V")
+            )
+            mpn = f"{specs.base_series}{voltage}{specs.part_number_suffix}"
+
         if specs.manufacturer == "Onsemi" and specs.part_number_suffix:
             # Find index of voltage in ratings list
             index = specs.voltage_rating.index(value)
@@ -601,5 +616,26 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         package="SOD323",
         diode_type="Zener",
         trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BZT52C": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="BZT52C",
+        footprint="diode_footprints:SOD_123",
+        datasheet=(
+            "https://4donline.ihs.com/images/VipMasterIC/"
+            "IC/DIOD/DIOD-S-A0003550684/DIOD-S-A0003550684-1.pdf?hkey="
+            "CECEF36DEECDED6468708AAF2E19C0C6"
+        ),
+        voltage_rating=[
+            *[2, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6],
+            *[6.2, 6.8, 7.5, 8.2, 9.1, 10, 11, 12, 13],
+            *[15, 16, 18, 20, 22, 24],
+            *[27, 30, 33, 36, 39, 43, 47, 51],
+        ],
+        current_rating=[0.5] * 51,
+        package="SOD_123",
+        diode_type="Zener",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        part_number_suffix="-7-F",
     ),
 }
