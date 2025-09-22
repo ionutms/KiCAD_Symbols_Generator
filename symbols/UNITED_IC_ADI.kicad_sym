@@ -14204,8 +14204,8 @@
 		)
 		(symbol "U_ADP1074ACCZ-R7_0_1"
 			(rectangle
-				(start -12.7 16.51)
-				(end 12.7 -16.51)
+				(start -12.7 15.24)
+				(end 12.7 -15.24)
 				(stroke
 					(width 0)
 					(type default)
@@ -14215,7 +14215,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 13.97 0)
+				(at -15.24 12.7 0)
 				(length 2.54)
 				(name "NGATE"
 					(effects
@@ -14233,7 +14233,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 11.43 0)
+				(at -15.24 10.16 0)
 				(length 2.54)
 				(name "PGATE"
 					(effects
@@ -14251,7 +14251,7 @@
 				)
 			)
 			(pin power_out line
-				(at -15.24 6.35 0)
+				(at -15.24 5.08 0)
 				(length 2.54)
 				(name "AGND1"
 					(effects
@@ -14268,26 +14268,8 @@
 					)
 				)
 			)
-			(pin bidirectional line
-				(at -15.24 3.81 0)
-				(length 2.54)
-				(name "VREG1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin unspecified line
-				(at -15.24 1.27 0)
+				(at -15.24 2.54 0)
 				(length 2.54)
 				(name "VIN"
 					(effects
@@ -14305,7 +14287,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -1.27 0)
+				(at -15.24 0 0)
 				(length 2.54)
 				(name "EN"
 					(effects
@@ -14323,7 +14305,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -3.81 0)
+				(at -15.24 -2.54 0)
 				(length 2.54)
 				(name "CS"
 					(effects
@@ -14341,7 +14323,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -6.35 0)
+				(at -15.24 -5.08 0)
 				(length 2.54)
 				(name "RT"
 					(effects
@@ -14359,7 +14341,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -8.89 0)
+				(at -15.24 -7.62 0)
 				(length 2.54)
 				(name "SYNC"
 					(effects
@@ -14377,7 +14359,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -15.24 -11.43 0)
+				(at -15.24 -10.16 0)
 				(length 2.54)
 				(name "SS1"
 					(effects
@@ -14395,7 +14377,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -15.24 -13.97 0)
+				(at -15.24 -12.7 0)
 				(length 2.54)
 				(name "DMAX"
 					(effects
@@ -14412,8 +14394,26 @@
 					)
 				)
 			)
+			(pin bidirectional line
+				(at -2.54 17.78 270)
+				(length 2.54)
+				(name "VREG1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin power_out line
-				(at -2.54 -19.05 90)
+				(at -2.54 -17.78 90)
 				(length 2.54)
 				(name "AGND1"
 					(effects
@@ -14430,8 +14430,26 @@
 					)
 				)
 			)
+			(pin unspecified line
+				(at 2.54 17.78 270)
+				(length 2.54)
+				(name "VREG2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "20"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin power_out line
-				(at 2.54 -19.05 90)
+				(at 2.54 -17.78 90)
 				(length 2.54)
 				(name "AGND2"
 					(effects
@@ -14449,7 +14467,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 15.24 13.97 180)
+				(at 15.24 12.7 180)
 				(length 2.54)
 				(name "SR1"
 					(effects
@@ -14467,7 +14485,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 15.24 11.43 180)
+				(at 15.24 10.16 180)
 				(length 2.54)
 				(name "SR2"
 					(effects
@@ -14485,7 +14503,7 @@
 				)
 			)
 			(pin power_out line
-				(at 15.24 8.89 180)
+				(at 15.24 7.62 180)
 				(length 2.54)
 				(name "PGND2"
 					(effects
@@ -14503,7 +14521,7 @@
 				)
 			)
 			(pin power_out line
-				(at 15.24 6.35 180)
+				(at 15.24 5.08 180)
 				(length 2.54)
 				(name "AGND2"
 					(effects
@@ -14520,26 +14538,8 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at 15.24 3.81 180)
-				(length 2.54)
-				(name "VREG2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "20"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin power_in line
-				(at 15.24 1.27 180)
+				(at 15.24 2.54 180)
 				(length 2.54)
 				(name "VDD2"
 					(effects
@@ -14557,7 +14557,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 15.24 -1.27 180)
+				(at 15.24 0 180)
 				(length 2.54)
 				(name "OVP"
 					(effects
@@ -14575,7 +14575,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 15.24 -3.81 180)
+				(at 15.24 -2.54 180)
 				(length 2.54)
 				(name "FB"
 					(effects
@@ -14593,7 +14593,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 15.24 -6.35 180)
+				(at 15.24 -5.08 180)
 				(length 2.54)
 				(name "COMP"
 					(effects
@@ -14611,7 +14611,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 15.24 -8.89 180)
+				(at 15.24 -7.62 180)
 				(length 2.54)
 				(name "SS2"
 					(effects
@@ -14629,7 +14629,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 15.24 -13.97 180)
+				(at 15.24 -12.7 180)
 				(length 2.54)
 				(name "MODE"
 					(effects
@@ -14650,7 +14650,7 @@
 		(symbol "U_ADP1074ACCZ-R7_1_1"
 			(polyline
 				(pts
-					(xy -0.635 16.51) (xy -0.635 -19.05)
+					(xy -0.635 15.24) (xy -0.635 -15.24)
 				)
 				(stroke
 					(width 0)
@@ -14662,7 +14662,7 @@
 			)
 			(polyline
 				(pts
-					(xy 0.635 16.51) (xy 0.635 -19.05)
+					(xy 0.635 15.24) (xy 0.635 -15.24)
 				)
 				(stroke
 					(width 0)
@@ -14673,7 +14673,7 @@
 				)
 			)
 			(pin power_out line
-				(at -15.24 8.89 0)
+				(at -15.24 7.62 0)
 				(length 2.54)
 				(name "PGND1"
 					(effects
@@ -14691,7 +14691,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 15.24 -11.43 180)
+				(at 15.24 -10.16 180)
 				(length 2.54)
 				(name "~{PGOOD}"
 					(effects
