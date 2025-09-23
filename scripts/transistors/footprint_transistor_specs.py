@@ -62,10 +62,10 @@ class PadDimensionsAsymmetric(NamedTuple):
         pad_center_x: The x-coordinate of the center of the first pad.
         pad_pitch_y: The distance between the centers of adjacent pads.
         pins_per_side: The number of pads on each side of the diode.
-        thermal_width: The width of the thermal pad.
-        thermal_height: The height of the thermal pad.
+        thermal_width: The width of the thermal pad(s).
+        thermal_height: The height of the thermal pad(s).
         thermal_pad_center_x:
-            The x-coordinate of the center of the thermal pad.
+            The x-coordinates of the centers of the thermal pads.
         thermal_pad_center_y:
             The y-coordinates of the centers of the thermal pads.
         thermal_pad_numbers: The pad numbers for the thermal pads.
@@ -80,9 +80,9 @@ class PadDimensionsAsymmetric(NamedTuple):
     pad_pitch_y: float
     pins_per_side: float
     pad_numbers: list[int]
-    thermal_width: float | None = None
-    thermal_height: float | None = None
-    thermal_pad_center_x: float | None = None
+    thermal_width: list[float] | None = None
+    thermal_height: list[float] | None = None
+    thermal_pad_center_x: list[float] | None = None
     thermal_pad_center_y: list[float] | None = None
     thermal_pad_numbers: list[int] | None = None
 
@@ -116,9 +116,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=1.435,
             pad_pitch_y=0.66,
             pins_per_side=4,
-            thermal_width=1.725,
-            thermal_height=2.385,
-            thermal_pad_center_x=0.558,
+            thermal_width=[1.725],
+            thermal_height=[2.385],
+            thermal_pad_center_x=[0.558],
             thermal_pad_center_y=[0],
             thermal_pad_numbers=[5],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
@@ -133,9 +133,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=1.535,
             pad_pitch_y=0.65,
             pins_per_side=4,
-            thermal_width=1.85,
-            thermal_height=2.35,
-            thermal_pad_center_x=0.405,
+            thermal_width=[1.85],
+            thermal_height=[2.35],
+            thermal_pad_center_x=[0.405],
             thermal_pad_center_y=[0],
             thermal_pad_numbers=[5],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
@@ -150,9 +150,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=2.95,
             pad_pitch_y=1.27,
             pins_per_side=4,
-            thermal_width=4.4,
-            thermal_height=1.97,
-            thermal_pad_center_x=0.425,
+            thermal_width=[4.4, 4.4],
+            thermal_height=[1.97, 1.97],
+            thermal_pad_center_x=[0.425, 0.425],
             thermal_pad_center_y=[1.27, -1.27],
             thermal_pad_numbers=[5, 6],
             pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6],
@@ -167,9 +167,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=2.67,
             pad_pitch_y=1.27,
             pins_per_side=4,
-            thermal_width=3.81,
-            thermal_height=1.93,
-            thermal_pad_center_x=0.69,
+            thermal_width=[3.81, 3.81],
+            thermal_height=[1.93, 1.93],
+            thermal_pad_center_x=[0.69, 0.69],
             thermal_pad_center_y=[1.27, -1.27],
             thermal_pad_numbers=[5, 6],
             pad_numbers=[1, 2, 3, 4, 5, 5, 6, 6],
@@ -207,9 +207,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=2.8,
             pad_pitch_y=1.27,
             pins_per_side=4,
-            thermal_width=4.53,
-            thermal_height=4.56,
-            thermal_pad_center_x=0.935,
+            thermal_width=[4.53],
+            thermal_height=[4.56],
+            thermal_pad_center_x=[0.935],
             thermal_pad_center_y=[0],
             thermal_pad_numbers=[5],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
@@ -235,9 +235,9 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=2.67,
             pad_pitch_y=1.27,
             pins_per_side=4,
-            thermal_width=3.81,
-            thermal_height=4.47,
-            thermal_pad_center_x=0.69,
+            thermal_width=[3.81],
+            thermal_height=[4.47],
+            thermal_pad_center_x=[0.69],
             thermal_pad_center_y=[0],
             thermal_pad_numbers=[5],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
@@ -252,11 +252,11 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             pad_center_x=2.775,
             pad_pitch_y=1.27,
             pins_per_side=4,
-            thermal_width=4.55,
-            thermal_height=4.41,
-            thermal_pad_center_x=1.05,
-            thermal_pad_center_y=[0],
-            thermal_pad_numbers=[5],
+            thermal_width=[4.55, 1.1],
+            thermal_height=[4.41, 3.04],
+            thermal_pad_center_x=[1.05, -2.775],
+            thermal_pad_center_y=[0, -0.635],
+            thermal_pad_numbers=[5, 1],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
         ),
         ref_offset_y=-3.2,

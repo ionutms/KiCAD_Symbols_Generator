@@ -562,18 +562,18 @@ def generate_pads(  # noqa: D417, PLR0913
 
 
 def generate_thermal_pad(
-    pad_width: float,
-    pad_heigh: float,
-    pad_x: float,
+    pad_width: float | list[float],
+    pad_heigh: float | list[float],
+    pad_x: float | list[float],
     pad_y: list[float],
     thermal_pad_numbers: list[int],
 ) -> str:
     """Generate the thermal pads section of the footprint.
 
     Args:
-        pad_width: Width of the thermal pad
-        pad_heigh: Height of the thermal pad
-        pad_x: X-coordinate of the thermal pad
+        pad_width: Width of the thermal pad(s)
+        pad_heigh: Height of the thermal pad(s)
+        pad_x: X-coordinate(s) of the thermal pad(s)
         pad_y: List of Y-coordinates of the thermal pads
         thermal_pad_numbers: List of thermal pad numbers
 
@@ -581,11 +581,19 @@ def generate_thermal_pad(
         str: KiCad formatted thermal pad definitions
 
     """
+    # Convert single values to lists if needed
+    if isinstance(pad_width, (int, float)):
+        pad_width = [pad_width] * len(thermal_pad_numbers)
+    if isinstance(pad_heigh, (int, float)):
+        pad_heigh = [pad_heigh] * len(thermal_pad_numbers)
+    if isinstance(pad_x, (int, float)):
+        pad_x = [pad_x] * len(thermal_pad_numbers)
+        
     pads = [
         f"""
         (pad "{pad_number}" smd roundrect
-            (at {pad_x} {pad_y[index]})
-            (size {pad_width} {pad_heigh})
+            (at {pad_x[index]} {pad_y[index]})
+            (size {pad_width[index]} {pad_heigh[index]})
             (layers "F.Cu" "F.Paste" "F.Mask")
             (roundrect_rratio 0.05)
             (uuid "{uuid4()}")
