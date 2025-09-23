@@ -348,4 +348,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSC014N04LSI": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSC014N04LSI",
+        footprint="transistor_footprints:TDSON-8 FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsc014n04lsi-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[40],
+        drain_current=[195],
+        package="TDSON-8 FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

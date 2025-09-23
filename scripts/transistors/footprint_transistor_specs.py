@@ -244,4 +244,21 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-3.2,
     ),
+    "TDSON-8 FL": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=7.0, height=5.0),
+        pad_dimensions=PadDimensionsAsymmetric(
+            width=1.1,
+            height=0.5,
+            pad_center_x=2.67 + 0.105,
+            pad_pitch_y=1.27,
+            pins_per_side=4,
+            thermal_width=4.55,
+            thermal_height=4.41,
+            thermal_pad_center_x=0.69 + 0.36,
+            thermal_pad_center_y=[0],
+            thermal_pad_numbers=[5],
+            pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
+        ),
+        ref_offset_y=-3.2,
+    ),
 }
