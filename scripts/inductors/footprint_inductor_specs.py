@@ -593,6 +593,6 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.2,
         ),
         ref_offset_y=-6.858,
-        enable_pin_1_indicator=False,
+        enable_pin_1_indicator=True,
     ),
 }
