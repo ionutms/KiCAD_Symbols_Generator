@@ -749,6 +749,20 @@ MURATA_SYMBOLS_SPECS = {
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "GRM31CR60J": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GRM31CR60J",
+        value_range={"X5R": (220e-6, 220e-6)},
+        tolerance_map={"X5R": {"M": "20%"}},
+        characteristic_codes={0: "E11"},
+        mpn_sufix=["K", "L"],
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="6.3V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 YAGEO_DOC_BASE = "https://www.yageo.com/en/Chart/Download/pdf/"
