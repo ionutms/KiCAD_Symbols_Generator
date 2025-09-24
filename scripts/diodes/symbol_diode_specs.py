@@ -638,4 +638,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         part_number_suffix="-7-F",
     ),
+    "B240A-13-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="B240A-13-F",
+        footprint="diode_footprints:SMA",
+        datasheet=(
+            "https://4donline.ihs.com/images/VipMasterIC/IC/"
+            "DIOD/DIOD-S-A0001756908/DIOD-S-A0001756908-1.pdf?"
+            "hkey=CECEF36DEECDED6468708AAF2E19C0C6"
+        ),
+        voltage_rating=[40],
+        current_rating=[2],
+        package="SMA",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

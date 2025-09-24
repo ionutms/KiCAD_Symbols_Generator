@@ -268,4 +268,16 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.524,
     ),
+    "SMA": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=7, height=2.9),
+        pad_dimensions=PadDimensionsAsymmetric(
+            cathode_width=2.5,
+            cathode_height=1.7,
+            cathode_center_x=2,
+            anode_width=2.5,
+            anode_height=1.7,
+            anode_center_x=2,
+        ),
+        ref_offset_y=-2.286,
+    ),
 }
