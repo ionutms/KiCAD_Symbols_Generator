@@ -5,7 +5,7 @@ series, including their specifications and individual component
 information.
 """
 
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 from utilities import print_message_utilities
 
@@ -18,11 +18,14 @@ class SeriesSpec(NamedTuple):
         base_series: The base series name of the transistor.
         footprint: The KiCad footprint name for the transistor.
         datasheet: The URL of the datasheet for the transistor.
-        drain_source_voltage: A list of drain-source voltage ratings.
         trustedparts_link: The URL of the TrustedParts website.
-        drain_current: A list of drain current ratings.
         package: The package type of the transistor.
         transistor_type: The type of transistor (e.g., N-Channel, P-Channel).
+        drain_source_voltage: A list of drain-source voltage ratings.
+        drain_current: A list of drain current ratings.
+        collector_emitter_voltage:
+            A list of collector-emitter voltage ratings.
+        collector_current: A list of collector current ratings.
         reference: The reference designator prefix for the transistor.
 
     """
@@ -31,11 +34,13 @@ class SeriesSpec(NamedTuple):
     base_series: str
     footprint: str
     datasheet: str
-    drain_source_voltage: list[float]
     trustedparts_link: str
-    drain_current: list[float]
     package: str
     transistor_type: str
+    drain_source_voltage: Optional[list[float]] = None
+    drain_current: Optional[list[float]] = None
+    collector_emitter_voltage: Optional[list[float]] = None
+    collector_current: Optional[list[float]] = None
     reference: str = "Q"
 
 
@@ -54,6 +59,7 @@ class PartInfo(NamedTuple):
         series: The base series name of the transistor.
         trustedparts_link: The URL of the TrustedParts website.
         drain_current: The drain current rating of the transistor.
+        collector_current: The collector current rating of the transistor.
         package: The package type of the transistor.
         transistor_type: The type of transistor (e.g., N-Channel, P-Channel).
 
@@ -70,6 +76,7 @@ class PartInfo(NamedTuple):
     series: str
     trustedparts_link: str
     drain_current: float
+    collector_current: float
     package: str
     transistor_type: str
 
@@ -108,21 +115,84 @@ class PartInfo(NamedTuple):
 
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
-        try:
-            index = specs.drain_source_voltage.index(value)
-            drain_current = float(specs.drain_current[index])
-        except ValueError:
-            print_message_utilities.print_error(
-                f"Error: value {value} V "
-                f"not found in series {specs.base_series}",
-            )
-            drain_current = 0.0
-        except IndexError:
-            print_message_utilities.print_error(
-                "Error: No DC specifications found for value "
-                f"{value} V in series {specs.base_series}",
-            )
-            drain_current = 0.0
+        # Initialize both drain and collector currents to 0.0
+        drain_current = 0.0
+        collector_current = 0.0
+
+        # Check if it's a MOSFET or BJT and handle accordingly
+        if specs.transistor_type in [
+            "N-Channel",
+            "P-Channel",
+            "N-Channel Dual",
+            "P-Channel Dual",
+        ]:
+            # It's a MOSFET - use drain-source voltage and drain current
+            if specs.drain_source_voltage and specs.drain_current:
+                try:
+                    index = specs.drain_source_voltage.index(value)
+                    drain_current = float(specs.drain_current[index])
+                except ValueError:
+                    print_message_utilities.print_error(
+                        f"Error: value {value} V "
+                        f"not found in series {specs.base_series}",
+                    )
+                    drain_current = 0.0
+                except IndexError:
+                    print_message_utilities.print_error(
+                        "Error: No DC specifications found for value "
+                        f"{value} V in series {specs.base_series}",
+                    )
+                    drain_current = 0.0
+            else:
+                print_message_utilities.print_error(
+                    f"Error: No drain_current data available "
+                    f"for MOSFET {specs.base_series}",
+                )
+                drain_current = 0.0
+        elif specs.transistor_type in ["NPN", "PNP", "NPN/PNP"]:
+            # It's a BJT - use collector-emitter voltage and collector current
+            if specs.collector_emitter_voltage and specs.collector_current:
+                try:
+                    index = specs.collector_emitter_voltage.index(value)
+                    collector_current = float(specs.collector_current[index])
+                except ValueError:
+                    print_message_utilities.print_error(
+                        f"Error: value {value} V "
+                        f"not found in series {specs.base_series}",
+                    )
+                    collector_current = 0.0
+                except IndexError:
+                    print_message_utilities.print_error(
+                        "Error: No collector current specifications found "
+                        f"for value {value} V in series {specs.base_series}",
+                    )
+                    collector_current = 0.0
+            else:
+                print_message_utilities.print_error(
+                    f"Error: No collector current data available for BJT "
+                    f"{specs.base_series}",
+                )
+                collector_current = 0.0
+        else:
+            # Default to MOSFET behavior for unknown types
+            if specs.drain_source_voltage and specs.drain_current:
+                try:
+                    index = specs.drain_source_voltage.index(value)
+                    drain_current = float(specs.drain_current[index])
+                except ValueError:
+                    print_message_utilities.print_error(
+                        f"Error: value {value} V "
+                        f"not found in series {specs.base_series}",
+                    )
+                    drain_current = 0.0
+                except IndexError:
+                    print_message_utilities.print_error(
+                        "Error: No DC specifications found for value "
+                        f"{value} V in series {specs.base_series}",
+                    )
+                    drain_current = 0.0
+            else:
+                drain_current = 0.0
 
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
@@ -137,6 +207,7 @@ class PartInfo(NamedTuple):
             series=specs.base_series,
             trustedparts_link=trustedparts_link,
             drain_current=drain_current,
+            collector_current=collector_current,
             transistor_type=specs.transistor_type,
         )
 
@@ -154,9 +225,29 @@ class PartInfo(NamedTuple):
             A list of PartInfo instances for the transistor components.
 
         """
+        # Determine which voltage list to use based on transistor type
+        voltage_list = []
+        if specs.transistor_type in [
+            "N-Channel",
+            "P-Channel",
+            "N-Channel Dual",
+            "P-Channel Dual",
+        ]:
+            # It's a MOSFET - use drain-source voltage
+            if specs.drain_source_voltage:
+                voltage_list = specs.drain_source_voltage
+        elif specs.transistor_type in ["NPN", "PNP", "NPN/PNP"]:
+            # It's a BJT - use collector-emitter voltage
+            if specs.collector_emitter_voltage:
+                voltage_list = specs.collector_emitter_voltage
+        else:
+            # For unknown types, default to drain-source voltage if available
+            if specs.drain_source_voltage:
+                voltage_list = specs.drain_source_voltage
+
         return [
             cls.create_part_info(value, specs)
-            for value in specs.drain_source_voltage
+            for value in voltage_list
             if cls.create_part_info(value, specs) is not None
         ]
 
@@ -367,8 +458,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="FMMT625TA",
         footprint="transistor_footprints:SOT23-3",
         datasheet=("https://www.diodes.com/assets/Datasheets/FMMT625.pdf"),
-        drain_source_voltage=[50],
-        drain_current=[0.2],
+        collector_emitter_voltage=[150],
+        collector_current=[1],
         package="SOT23-3",
         transistor_type="NPN",
         trustedparts_link="https://www.trustedparts.com/en/search",

@@ -58,7 +58,12 @@ HEADER_MAPPING: Final[dict] = {
     "MPN": lambda part: part.mpn,
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
-    "Drain Current (A)": lambda part: f"{part.drain_current:.1f}",
+    "Drain Current (A)": lambda part: f"{part.drain_current:.1f}"
+    if part.drain_current != 0.0
+    else "-",
+    "Collector Current (A)": lambda part: f"{part.collector_current:.1f}"
+    if part.collector_current != 0.0
+    else "-",
     "Transistor Type": lambda part: part.transistor_type,
 }
 
