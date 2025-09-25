@@ -2404,6 +2404,70 @@ def write_rectangle(
         """)
 
 
+def write_npn_transistor_symbol_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+    vertical_offset: float = 0.0,
+) -> None:
+    """Write the graphical representation of a P-MOS transistor symbol.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name of the symbol.
+        vertical_offset:
+            Vertical translation in units.
+            Positive moves up, negative moves down. Defaults to 0.0.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    symbol_file.write("""
+			(polyline
+				(pts (xy -2.54 0) (xy 0.635 0))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts (xy 0.635 1.905) (xy 0.635 -1.905))
+				(stroke (width 0.508) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts (xy 0.635 0.635) (xy 2.54 2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts (xy 0.635 -0.635) (xy 2.54 -2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center 1.27 0)
+				(radius 2.8194)
+				(stroke (width 0.254) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy 1.27 -1.778) (xy 1.778 -1.27)
+                    (xy 2.286 -2.286) (xy 1.27 -1.778)
+				)
+				(stroke (width 0) (type default))
+				(fill (type outline))
+			)
+        """)
+
+    write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
+    write_pin(symbol_file, 2.54, 5.08, 270, "3", "C", length=2.54)
+    write_pin(symbol_file, 2.54, -5.08, 90, "2", "E", length=2.54)
+
+    symbol_file.write("\t\t)\n")
+
+
 def write_dip_switch_symbol_drawing(
     *,
     symbol_file: TextIO,

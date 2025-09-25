@@ -68,11 +68,17 @@ def write_component(
     """
     symbol_name = component_data.get("Symbol Name", "")
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
+    text_x_offset = 0
+
+    if component_data.get("Transistor Type") == "NPN":
+        text_x_offset = 4
+
     symbol_utils.write_properties(
         symbol_file,
         component_data,
         property_order,
-        3,
+        text_x_offset=text_x_offset,
+        text_y_offset=3,
     )
     if component_data.get("Transistor Type") == "P-Channel":
         if component_data.get("Series") == "ZXMP6A17E6TA":
@@ -103,6 +109,11 @@ def write_component(
         )
     if component_data.get("Transistor Type") == "P-Channel Dual":
         symbol_utils.write_p_mos_dual_transistor_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
+    if component_data.get("Transistor Type") == "NPN":
+        symbol_utils.write_npn_transistor_symbol_drawing(
             symbol_file,
             symbol_name,
         )
