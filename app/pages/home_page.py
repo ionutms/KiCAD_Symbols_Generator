@@ -467,6 +467,12 @@ REPO_CONFIGS = [
         "has_project_links": True,
     },
     {
+        "name": "Minimal_ADPL76030",
+        "colors": ["#1AEBC9", "#FF5219"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
         "name": "Minimal_ADP1032",
         "colors": ["#1AE65C", "#FF2D5C"],
         "is_main": False,
