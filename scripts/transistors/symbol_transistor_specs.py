@@ -479,4 +479,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSZ031NE2LS5ATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ031NE2LS5ATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz031ne2ls5-datasheet-en.pdf?"
+            "fileId=5546d4624eeb2bc7014f17a9bb6a75fa"
+        ),
+        drain_source_voltage=[25],
+        drain_current=[80],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
