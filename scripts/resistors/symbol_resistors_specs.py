@@ -193,8 +193,8 @@ class PartInfo(NamedTuple):
             return cls._generate_murata_resistance_code(resistance)
 
         if specs.manufacturer == "Bourns":
-            if specs.mpn_prefix.startswith("CRM"):
-                return cls._generate_bourns_crm_resistance_code(resistance)
+            if specs.mpn_prefix.startswith(("CRM", "CRF")):
+                return cls._generate_bourns_cr_resistance_code(resistance)
             return cls._generate_bourns_resistance_code(resistance)
 
         if specs.manufacturer == "Vishay":
@@ -284,7 +284,7 @@ class PartInfo(NamedTuple):
         return f"{significant}{power}"
 
     @classmethod
-    def _generate_bourns_crm_resistance_code(cls, resistance: float) -> str:
+    def _generate_bourns_cr_resistance_code(cls, resistance: float) -> str:
         """Generate resistance code for Bourns CRM series."""
         if resistance < 1:
             decimal_str = f"{resistance:.3f}".split(".")[1]
@@ -1779,6 +1779,24 @@ BOURNS_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             "https://bourns.com/docs/product-datasheets/"
             "crm0805_1206_2010.pdf?sfvrsn=a50d66f6_11"
         ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "CRF2010-FZ-": SeriesSpec(
+        manufacturer="Bourns",
+        mpn_prefix="CRF2010-FZ-",
+        mpn_sufix="ELF",
+        footprint="resistor_footprints:R_2010_5025Metric",
+        voltage_rating="2kV",
+        case_code_in="2010",
+        case_code_mm="5025",
+        power_rating="1.5W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.001, 0.02],
+        specified_values=[
+            *[0.001, 0.002, 0.005, 0.01, 0.02],
+        ],
+        tolerance_map={"E24": "1%"},
+        datasheet=("https://www.bourns.com/docs/product-datasheets/crf.pdf"),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
 }
