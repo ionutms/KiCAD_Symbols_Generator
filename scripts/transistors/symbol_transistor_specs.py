@@ -479,6 +479,133 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSZ042N06NSATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ042N06NSATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz042n06ns-datasheet-en.pdf?"
+            "fileId=db3a3043345a30bc013465d4bf1862fd"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[98],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ100N06LS3GATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ100N06LS3GATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz100n06ls3-g-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[20],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ099N06LS5ATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ099N06LS5ATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz099n06ls5-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ068N06NSATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ068N06NSATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz068n06ns-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ040N06LS5ATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ040N06LS5ATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz040n06ls5-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ042N06NS": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ042N06NS",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz042n06ns-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[98],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ100N06NS": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ100N06NS",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz100n06ns-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ100N06NSATMA1": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ100N06NSATMA1",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz100n06ns-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "BSZ068N06NS": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ068N06NS",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz068n06ns-datasheet-en.pdf"
+        ),
+        drain_source_voltage=[60],
+        drain_current=[40],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BSZ031NE2LS5ATMA1": SeriesSpec(
         manufacturer="Infineon Technologies",
         base_series="BSZ031NE2LS5ATMA1",
