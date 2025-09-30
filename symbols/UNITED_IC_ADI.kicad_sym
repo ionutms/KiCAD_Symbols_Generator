@@ -15521,6 +15521,24 @@
 					(type none)
 				)
 			)
+			(pin unspecified line
+				(at -22.86 35.56 0)
+				(length 2.54)
+				(name "SW1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "28"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin power_in line
 				(at -22.86 30.48 0)
 				(length 2.54)
@@ -15666,7 +15684,7 @@
 				)
 			)
 			(pin input line
-				(at -22.86 -25.4 0)
+				(at -22.86 -27.94 0)
 				(length 2.54)
 				(name "CTRL"
 					(effects
@@ -15684,25 +15702,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -17.78 40.64 270)
-				(length 2.54)
-				(name "SW1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "28"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -15.24 -40.64 90)
+				(at -22.86 -35.56 0)
 				(length 2.54)
 				(name "SS"
 					(effects
@@ -15738,24 +15738,6 @@
 				)
 			)
 			(pin unspecified line
-				(at -5.08 -40.64 90)
-				(length 2.54)
-				(name "TEST1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
 				(at -2.54 40.64 270)
 				(length 2.54)
 				(name "LSN"
@@ -15773,8 +15755,26 @@
 					)
 				)
 			)
+			(pin unspecified line
+				(at -2.54 -40.64 90)
+				(length 2.54)
+				(name "TEST1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin power_out line
-				(at 0 -40.64 90)
+				(at 2.54 -40.64 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -15791,44 +15791,8 @@
 					)
 				)
 			)
-			(pin output line
-				(at 5.08 -40.64 90)
-				(length 2.54)
-				(name "VC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "17"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin unspecified line
-				(at 15.24 -40.64 90)
-				(length 2.54)
-				(name "RT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 17.78 40.64 270)
+				(at 22.86 35.56 180)
 				(length 2.54)
 				(name "SW2"
 					(effects
@@ -16007,10 +15971,46 @@
 					)
 				)
 			)
+			(pin output line
+				(at 22.86 -33.02 180)
+				(length 2.54)
+				(name "VC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 22.86 -35.56 180)
+				(length 2.54)
+				(name "RT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "18"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 		)
 		(symbol "U_ADPL76030EUFD-PBF_1_1"
 			(pin no_connect line
-				(at -2.54 -40.64 90)
+				(at 0 -40.64 90)
 				(length 2.54)
 				(hide yes)
 				(name "DNC"
@@ -16029,7 +16029,7 @@
 				)
 			)
 			(pin output line
-				(at 22.86 -25.4 180)
+				(at 22.86 -27.94 180)
 				(length 2.54)
 				(name "~{PGOOD}"
 					(effects
