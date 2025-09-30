@@ -825,6 +825,21 @@ SAMSUNG_SYMBOLS_SPECS = {
         datasheet_url=f"{SAMSUNG_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search/CL31",
     ),
+    "CL31A": SeriesSpec(
+        mpn_prefix="CL31A",
+        manufacturer="Samsung Electro-Mechanics",
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="25V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        mpn_sufix=["AHNNNE"],
+        tolerance_map={"X5R": {"K": "10%"}},
+        value_range={"X5R": (0.47e-6, 22e-6)},
+        dielectric_code={"X5R": "B"},
+        specified_values=[4.7e-6, 10e-6, 22e-6],
+        datasheet_url=f"{SAMSUNG_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search/CL31",
+    ),
 }
 
 # Base URLs for documentation
