@@ -94,15 +94,27 @@ def create_repo_graphs(name_sufix: str) -> list[dcc.Loading]:
         list[dcc.Loading]: List of Loading components containing the graphs
 
     """
+    initial_figure = {
+        "data": [],
+        "layout": {
+            "paper_bgcolor": "rgba(0,0,0,0)",
+            "plot_bgcolor": "rgba(0,0,0,0)",
+            "xaxis": {"visible": False},
+            "yaxis": {"visible": False},
+            "height": 250,
+        },
+    }
+
     clones_graph = dcc.Loading(
         [
             dcc.Graph(
                 id=f"{name_sufix}_repo_clones_graph",
                 config={"displaylogo": False},
+                figure=initial_figure,
             ),
         ],
-        delay_show=100,
-        delay_hide=100,
+        delay_show=0,
+        delay_hide=0,
     )
 
     visitors_graph = dcc.Loading(
@@ -110,10 +122,11 @@ def create_repo_graphs(name_sufix: str) -> list[dcc.Loading]:
             dcc.Graph(
                 id=f"{name_sufix}_repo_visitors_graph",
                 config={"displaylogo": False},
+                figure=initial_figure,
             ),
         ],
-        delay_show=100,
-        delay_hide=100,
+        delay_show=0,
+        delay_hide=0,
     )
 
     return [clones_graph, html.Hr(), visitors_graph]
@@ -932,7 +945,7 @@ tabs = dbc.Tabs(
     [
         dbc.Tab(
             label="Components Data Base",
-            tab_id="components-db-tab",
+            tab_id="components_db_tab",
             children=[
                 html.Div(
                     [
@@ -945,6 +958,7 @@ tabs = dbc.Tabs(
         ),
         dbc.Tab(
             label=MAIN_REPO["name"].replace("_", " ").title(),
+            tab_id=f"tab_{MAIN_REPO['name']}",
             children=[
                 html.Div(
                     [
@@ -959,6 +973,7 @@ tabs = dbc.Tabs(
         *[
             dbc.Tab(
                 label=repo["name"].replace("_", " ").title(),
+                tab_id=f"tab_{repo['name']}",
                 children=[
                     html.Div(
                         [
@@ -972,7 +987,7 @@ tabs = dbc.Tabs(
         ],
         dbc.Tab(
             label="Learning Projects",
-            tab_id="learning-tab",
+            tab_id="learning_tab",
             children=[
                 html.Div(
                     [
@@ -990,7 +1005,7 @@ tabs = dbc.Tabs(
         ),
         dbc.Tab(
             label="Concepts Projects",
-            tab_id="additional-tab",
+            tab_id="additional_tab",
             children=[
                 html.Div(
                     [
@@ -1007,6 +1022,8 @@ tabs = dbc.Tabs(
             ],
         ),
     ],
+    id="repository_tabs",
+    active_tab="components_db_tab",
 )
 
 # Main layout construction
@@ -1392,9 +1409,12 @@ def load_traffic_data(
         for graph in ["clones", "visitors"]
     ],
     Input("theme_switch_value_store", "data"),
+    Input("repository_tabs", "active_tab"),
 )
-def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
-    """Read CSV data and update the repository graphs."""
+def update_graph_with_uploaded_file(
+    theme_switch: bool, active_tab: str
+) -> tuple[Any, ...]:
+    """Update graphs based on the selected tab and theme."""
     base_github_url = (
         f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
         "KiCAD_Symbols_Generator/main"
@@ -1431,9 +1451,35 @@ def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
             load_traffic_data(**visitors_source),
         )
 
-    # Create a mapping of repo names to their data
+    all_repos = (
+        [MAIN_REPO]
+        + PROJECT_REPOS_WITHOUT_LINKS
+        + LEARNING_PROJECTS
+        + PROJECT_REPOS_WITH_LINKS
+    )
+    repo_to_index = {repo["name"]: i for i, repo in enumerate(all_repos)}
+
+    num_figures = len(all_repos) * 2
+    figures = [dash.no_update] * num_figures
+
+    repos_to_update_configs = []
+    if active_tab == "learning_tab":
+        repos_to_update_configs = LEARNING_PROJECTS
+    elif active_tab == "additional_tab":
+        repos_to_update_configs = PROJECT_REPOS_WITH_LINKS
+    elif active_tab and active_tab.startswith("tab_"):
+        repo_name = active_tab.split("tab_", 1)[1]
+        repo_config = next(
+            (repo for repo in all_repos if repo["name"] == repo_name), None
+        )
+        if repo_config:
+            repos_to_update_configs = [repo_config]
+
+    if not repos_to_update_configs:
+        return tuple(figures)
+
     repo_data_map = {}
-    for repo_config in REPO_CONFIGS:
+    for repo_config in repos_to_update_configs:
         clones_df, visitors_df = load_repo_data(repo_config)
         repo_data_map[repo_config["name"]] = {
             "clones": clones_df,
@@ -1471,35 +1517,15 @@ def update_graph_with_uploaded_file(theme_switch: bool) -> tuple[Any, ...]:
             titles=titles,
         )
 
-    # Generate figures in the exact order expected by the callback outputs
-    figures = []
-
-    # Main repo figures (first in callback outputs)
-    main_repo_name = MAIN_REPO["name"]
-    figures.extend([
-        create_figure_for_repo(main_repo_name, "clones"),
-        create_figure_for_repo(main_repo_name, "visitors"),
-    ])
-
-    # Project repos without links (second group in callback outputs)
-    for repo in PROJECT_REPOS_WITHOUT_LINKS:
-        figures.extend([
-            create_figure_for_repo(repo["name"], "clones"),
-            create_figure_for_repo(repo["name"], "visitors"),
-        ])
-
-    # Learning projects (third group in callback outputs)
-    for repo in LEARNING_PROJECTS:
-        figures.extend([
-            create_figure_for_repo(repo["name"], "clones"),
-            create_figure_for_repo(repo["name"], "visitors"),
-        ])
-
-    # Project repos with links (fourth group in callback outputs)
-    for repo in PROJECT_REPOS_WITH_LINKS:
-        figures.extend([
-            create_figure_for_repo(repo["name"], "clones"),
-            create_figure_for_repo(repo["name"], "visitors"),
-        ])
+    for repo_config in repos_to_update_configs:
+        repo_name = repo_config["name"]
+        repo_index = repo_to_index.get(repo_name)
+        if repo_index is not None:
+            figures[repo_index * 2] = create_figure_for_repo(
+                repo_name, "clones"
+            )
+            figures[repo_index * 2 + 1] = create_figure_for_repo(
+                repo_name, "visitors"
+            )
 
     return tuple(figures)
