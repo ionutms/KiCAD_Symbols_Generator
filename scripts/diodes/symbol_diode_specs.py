@@ -653,4 +653,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Schottky",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BAT46WJ,115": SeriesSpec(
+        manufacturer="Nexperia",
+        base_series="BAT46WJ,115",
+        footprint="diode_footprints:SOD323F",
+        part_number_suffix="",
+        datasheet=(
+            "https://assets.nexperia.com/documents/data-sheet/BAT46WJ.pdf"
+        ),
+        voltage_rating=[100.0],
+        current_rating=[0.25],
+        package="SOD323F",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
