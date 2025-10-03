@@ -751,6 +751,27 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Surface Mount",
         contact_plating="Gold",
     ),
+    "FW-xx-03-G-D-150-160": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="FW-xx-03-G-D-150-160",
+        footprint_pattern="connector_footprints:FW-{:02d}-03-G-D-150-160",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/fw_sm.pdf?"
+            "_gl=1*696njn*_gcl_au*OTQ3NjE2MTIwLjE3NTQ5MDMyODE.*"
+            "_ga*NzIxODQzNjU3LjE3NTQ5MDMyODI.*_ga_3KFNZC07WW*"
+            "czE3NTk0NzU3MTckbzkkZzEkdDE3NTk0Nzk3ODIkajYwJGwwJGgw"
+        ),
+        pin_counts=list(range(2, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Surface Mount",
+        contact_plating="Gold",
+    ),
     "FTSH-1xx-01-L-DV": SeriesSpec(
         manufacturer="Samtec",
         base_series="FTSH-1xx-01-L-DV",
