@@ -24,11 +24,14 @@ jobs:
       - name: List pictures and update file
         run: |
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
-          OUTPUT_FILE="picture_names.txt"
-          METADATA_FILE=".picture_metadata.txt"
+          OUTPUT_FILE="app/pictures.txt"
+          METADATA_FILE="app/.picture_metadata.txt"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           TEMP_FILE="temp_pictures.txt"
           MANUAL_ENTRIES="manual_entries.tmp"
+          
+          # Create app directory if it doesn't exist
+          mkdir -p app
           
           # Get list of new pictures with repo prefix
           if [ -d "$PICTURES_PATH" ]; then
@@ -93,5 +96,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add picture_names.txt .picture_metadata.txt
+          git add app/pictures.txt app/.picture_metadata.txt
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update picture names from ${{ github.event.client_payload.source_repo }}" && git push)
