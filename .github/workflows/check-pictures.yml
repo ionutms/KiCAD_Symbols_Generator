@@ -26,17 +26,12 @@ jobs:
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
           OUTPUT_FILE="picture_names.txt"
           
-          echo "Pictures from ${{ github.event.client_payload.source_repo }}:" > $OUTPUT_FILE
-          echo "Path: ${{ github.event.client_payload.pictures_path }}" >> $OUTPUT_FILE
-          echo "Commit: ${{ github.event.client_payload.source_ref }}" >> $OUTPUT_FILE
-          echo "Date: $(date -u)" >> $OUTPUT_FILE
-          echo "---" >> $OUTPUT_FILE
-          
           if [ -d "$PICTURES_PATH" ]; then
-            ls -1 "$PICTURES_PATH" >> $OUTPUT_FILE
+            ls -1 "$PICTURES_PATH" > $OUTPUT_FILE
             echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files"
           else
-            echo "Directory not found!" >> $OUTPUT_FILE
+            echo "Directory not found!"
+            touch $OUTPUT_FILE
           fi
       
       - name: Commit and push changes
