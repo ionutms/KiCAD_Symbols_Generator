@@ -1,0 +1,47 @@
+name: Check Pictures from Source Repo
+
+on:
+  repository_dispatch:
+    types: [check_pictures]
+
+jobs:
+  check-and-save:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo (KiCAD_Symbols_Generator)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
+      
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.client_payload.source_repo }}
+          ref: ${{ github.event.client_payload.source_ref }}
+          token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
+          path: source-repo
+      
+      - name: List pictures and save to file
+        run: |
+          PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
+          OUTPUT_FILE="picture_names.txt"
+          
+          echo "Pictures from ${{ github.event.client_payload.source_repo }}:" > $OUTPUT_FILE
+          echo "Path: ${{ github.event.client_payload.pictures_path }}" >> $OUTPUT_FILE
+          echo "Commit: ${{ github.event.client_payload.source_ref }}" >> $OUTPUT_FILE
+          echo "Date: $(date -u)" >> $OUTPUT_FILE
+          echo "---" >> $OUTPUT_FILE
+          
+          if [ -d "$PICTURES_PATH" ]; then
+            ls -1 "$PICTURES_PATH" >> $OUTPUT_FILE
+            echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files"
+          else
+            echo "Directory not found!" >> $OUTPUT_FILE
+          fi
+      
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add picture_names.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update picture names from ${{ github.event.client_payload.source_repo }}" && git push)
