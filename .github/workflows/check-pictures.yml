@@ -25,9 +25,9 @@ jobs:
         run: |
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
           OUTPUT_FILE="picture_names.txt"
+          METADATA_FILE=".picture_metadata.txt"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           TEMP_FILE="temp_pictures.txt"
-          REPO_DATA_FILE="repo_pictures_data.tmp"
           
           # Get list of new pictures with repo prefix
           if [ -d "$PICTURES_PATH" ]; then
@@ -38,34 +38,26 @@ jobs:
             echo "Directory not found for $SOURCE_REPO"
           fi
           
-          # If output file exists, read existing data and update
-          if [ -f "$OUTPUT_FILE" ]; then
-            # Convert existing file to repo:filename format (if not already)
-            if grep -q ":" "$OUTPUT_FILE"; then
-              cat "$OUTPUT_FILE" > "$REPO_DATA_FILE"
-            else
-              # Old format without repo prefix, skip it
-              echo "" > "$REPO_DATA_FILE"
-            fi
-            
-            # Remove old entries from this repo
-            grep -v "^$SOURCE_REPO:" "$REPO_DATA_FILE" > "$TEMP_FILE" || true
-            
-            # Add new entries
-            echo "$NEW_PICTURES" >> "$TEMP_FILE"
-            
-            # Sort by repo name, then by filename, and output only filenames
-            sort "$TEMP_FILE" | awk -F: '{print $2}' > "$OUTPUT_FILE"
-            
-            rm -f "$TEMP_FILE" "$REPO_DATA_FILE"
-          else
-            # Create new file
-            echo "$NEW_PICTURES" | awk -F: '{print $2}' > "$OUTPUT_FILE"
-          fi
+          # Create or read metadata file
+          touch "$METADATA_FILE"
+          
+          # Remove old entries from this repo and keep others
+          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" || true
+          
+          # Add new entries
+          echo "$NEW_PICTURES" >> "$TEMP_FILE"
+          
+          # Sort by repo name, then by filename, and save metadata
+          sort "$TEMP_FILE" > "$METADATA_FILE"
+          
+          # Generate output file with just filenames
+          awk -F: '{print $2}' "$METADATA_FILE" > "$OUTPUT_FILE"
+          
+          rm -f "$TEMP_FILE"
       
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add picture_names.txt
+          git add picture_names.txt .picture_metadata.txt
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update picture names from ${{ github.event.client_payload.source_repo }}" && git push)
