@@ -65,12 +65,25 @@ jobs:
           # Sort by repo name, then by filename, and save metadata
           sort "$TEMP_FILE" > "$METADATA_FILE"
           
-          # Generate output file with just filenames
-          awk -F: '{print $2}' "$METADATA_FILE" > "$OUTPUT_FILE"
+          # Generate output file with filenames grouped by repo with blank lines
+          > "$OUTPUT_FILE"
+          CURRENT_REPO=""
+          while IFS=: read -r repo filename; do
+            if [ "$CURRENT_REPO" != "$repo" ]; then
+              if [ -n "$CURRENT_REPO" ]; then
+                echo "" >> "$OUTPUT_FILE"
+              fi
+              CURRENT_REPO="$repo"
+            fi
+            echo "$filename" >> "$OUTPUT_FILE"
+          done < "$METADATA_FILE"
           
           # Append manual entries at the end if any exist
           if [ -s "$MANUAL_ENTRIES" ]; then
             echo "Preserving $(wc -l < "$MANUAL_ENTRIES") manual entries"
+            if [ -s "$OUTPUT_FILE" ]; then
+              echo "" >> "$OUTPUT_FILE"
+            fi
             cat "$MANUAL_ENTRIES" >> "$OUTPUT_FILE"
           fi
           
