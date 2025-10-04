@@ -27,30 +27,40 @@ jobs:
           OUTPUT_FILE="picture_names.txt"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           TEMP_FILE="temp_pictures.txt"
+          REPO_DATA_FILE="repo_pictures_data.tmp"
           
-          # Get list of new pictures
+          # Get list of new pictures with repo prefix
           if [ -d "$PICTURES_PATH" ]; then
-            NEW_PICTURES=$(ls -1 "$PICTURES_PATH")
+            NEW_PICTURES=$(ls -1 "$PICTURES_PATH" | sed "s|^|$SOURCE_REPO:|")
             echo "Found $(echo "$NEW_PICTURES" | wc -l) files from $SOURCE_REPO"
           else
             NEW_PICTURES=""
             echo "Directory not found for $SOURCE_REPO"
           fi
           
-          # If output file exists, remove old entries from this repo and keep others
+          # If output file exists, read existing data and update
           if [ -f "$OUTPUT_FILE" ]; then
-            # Create a marker file with pictures from source repo
-            echo "$NEW_PICTURES" | sort > new_sorted.txt
+            # Convert existing file to repo:filename format (if not already)
+            if grep -q ":" "$OUTPUT_FILE"; then
+              cat "$OUTPUT_FILE" > "$REPO_DATA_FILE"
+            else
+              # Old format without repo prefix, skip it
+              echo "" > "$REPO_DATA_FILE"
+            fi
             
-            # Keep existing pictures, remove duplicates, and add new ones
-            cat $OUTPUT_FILE | sort | comm -23 - new_sorted.txt > $TEMP_FILE
-            cat new_sorted.txt >> $TEMP_FILE
-            sort $TEMP_FILE | uniq > $OUTPUT_FILE
+            # Remove old entries from this repo
+            grep -v "^$SOURCE_REPO:" "$REPO_DATA_FILE" > "$TEMP_FILE" || true
             
-            rm -f new_sorted.txt $TEMP_FILE
+            # Add new entries
+            echo "$NEW_PICTURES" >> "$TEMP_FILE"
+            
+            # Sort by repo name, then by filename, and output only filenames
+            sort "$TEMP_FILE" | awk -F: '{print $2}' > "$OUTPUT_FILE"
+            
+            rm -f "$TEMP_FILE" "$REPO_DATA_FILE"
           else
-            # Create new file with pictures
-            echo "$NEW_PICTURES" > $OUTPUT_FILE
+            # Create new file
+            echo "$NEW_PICTURES" | awk -F: '{print $2}' > "$OUTPUT_FILE"
           fi
       
       - name: Commit and push changes
