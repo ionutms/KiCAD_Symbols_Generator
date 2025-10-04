@@ -28,15 +28,20 @@ jobs:
           METADATA_FILE="app/.picture_metadata.txt"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           TEMP_FILE="temp_pictures.txt"
-          MANUAL_ENTRIES="manual_entries.tmp"
           
           # Create app directory if it doesn't exist
           mkdir -p app
           
-          # Get list of new pictures with repo prefix, removing BOM and special characters
+          # Get list of new pictures with repo prefix
+          # Remove BOM and special characters
           if [ -d "$PICTURES_PATH" ]; then
-            NEW_PICTURES=$(ls -1 "$PICTURES_PATH" | sed 's/^\xEF\xBB\xBF//g' | sed "s|^|$SOURCE_REPO:|")
-            echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files from $SOURCE_REPO"
+            NEW_PICTURES=$(
+              ls -1 "$PICTURES_PATH" | \
+              sed 's/^\xEF\xBB\xBF//g' | \
+              sed "s|^|$SOURCE_REPO:|"
+            )
+            FILE_COUNT=$(ls -1 "$PICTURES_PATH" | wc -l)
+            echo "Found $FILE_COUNT files from $SOURCE_REPO"
           else
             NEW_PICTURES=""
             echo "Directory not found for $SOURCE_REPO"
@@ -46,40 +51,22 @@ jobs:
           touch "$METADATA_FILE"
           touch "$OUTPUT_FILE"
           
-          # Find manual entries (in output but not in metadata), excluding empty lines
-          if [ -f "$OUTPUT_FILE" ] && [ -f "$METADATA_FILE" ]; then
-            # Get filenames from metadata
-            awk -F: '{print $2}' "$METADATA_FILE" | sort | uniq > metadata_files.tmp
-            # Get current output files, remove empty lines and BOM
-            grep -v '^[[:space:]]*$' "$OUTPUT_FILE" | sed 's/^\xEF\xBB\xBF//g' | sort | uniq > output_files.tmp
-            # Find entries only in output (manual additions) and add MANUAL prefix
-            comm -13 metadata_files.tmp output_files.tmp | sed 's/^/MANUAL:/' > "$MANUAL_ENTRIES"
-            rm -f metadata_files.tmp output_files.tmp
-          else
-            touch "$MANUAL_ENTRIES"
-          fi
-          
-          # Remove old entries from this repo only, keep everything else including MANUAL
-          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" 2>/dev/null || touch "$TEMP_FILE"
+          # Remove old entries from this repo only
+          # Keep everything else
+          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" \
+            2>/dev/null || touch "$TEMP_FILE"
           
           # Add new entries
           if [ -n "$NEW_PICTURES" ]; then
             echo "$NEW_PICTURES" >> "$TEMP_FILE"
           fi
           
-          # Add manual entries back (they were filtered out earlier for comparison)
-          if [ -s "$MANUAL_ENTRIES" ]; then
-            # Remove any existing MANUAL entries first to avoid duplicates
-            grep -v "^MANUAL:" "$TEMP_FILE" > "${TEMP_FILE}.tmp" 2>/dev/null || touch "${TEMP_FILE}.tmp"
-            mv "${TEMP_FILE}.tmp" "$TEMP_FILE"
-            # Add the manual entries
-            cat "$MANUAL_ENTRIES" >> "$TEMP_FILE"
-          fi
-          
-          # Sort by repo name, then by filename, and save metadata
+          # Sort by repo name, then by filename
+          # Save metadata
           sort "$TEMP_FILE" > "$METADATA_FILE"
           
-          # Generate output file with filenames grouped by repo with blank lines
+          # Generate output file with filenames
+          # Grouped by repo with blank lines
           > "$OUTPUT_FILE"
           CURRENT_REPO=""
           while IFS=: read -r repo filename; do
@@ -94,11 +81,13 @@ jobs:
             fi
           done < "$METADATA_FILE"
           
-          rm -f "$TEMP_FILE" "$MANUAL_ENTRIES"
+          rm -f "$TEMP_FILE"
       
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add app/pictures.txt app/.picture_metadata.txt
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update picture names from ${{ github.event.client_payload.source_repo }}" && git push)
+          git diff --quiet && git diff --staged --quiet || \
+            (git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}" && \
+             git push)
