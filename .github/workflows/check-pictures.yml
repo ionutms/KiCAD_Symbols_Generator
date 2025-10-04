@@ -21,17 +21,36 @@ jobs:
           token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
           path: source-repo
       
-      - name: List pictures and save to file
+      - name: List pictures and update file
         run: |
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
           OUTPUT_FILE="picture_names.txt"
+          SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
+          TEMP_FILE="temp_pictures.txt"
           
+          # Get list of new pictures
           if [ -d "$PICTURES_PATH" ]; then
-            ls -1 "$PICTURES_PATH" > $OUTPUT_FILE
-            echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files"
+            NEW_PICTURES=$(ls -1 "$PICTURES_PATH")
+            echo "Found $(echo "$NEW_PICTURES" | wc -l) files from $SOURCE_REPO"
           else
-            echo "Directory not found!"
-            touch $OUTPUT_FILE
+            NEW_PICTURES=""
+            echo "Directory not found for $SOURCE_REPO"
+          fi
+          
+          # If output file exists, remove old entries from this repo and keep others
+          if [ -f "$OUTPUT_FILE" ]; then
+            # Create a marker file with pictures from source repo
+            echo "$NEW_PICTURES" | sort > new_sorted.txt
+            
+            # Keep existing pictures, remove duplicates, and add new ones
+            cat $OUTPUT_FILE | sort | comm -23 - new_sorted.txt > $TEMP_FILE
+            cat new_sorted.txt >> $TEMP_FILE
+            sort $TEMP_FILE | uniq > $OUTPUT_FILE
+            
+            rm -f new_sorted.txt $TEMP_FILE
+          else
+            # Create new file with pictures
+            echo "$NEW_PICTURES" > $OUTPUT_FILE
           fi
       
       - name: Commit and push changes
