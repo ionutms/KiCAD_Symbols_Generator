@@ -52,18 +52,25 @@ jobs:
             awk -F: '{print $2}' "$METADATA_FILE" | sort | uniq > metadata_files.tmp
             # Get current output files, remove empty lines and BOM
             grep -v '^[[:space:]]*$' "$OUTPUT_FILE" | sed 's/^\xEF\xBB\xBF//g' | sort | uniq > output_files.tmp
-            # Find entries only in output (manual additions)
-            comm -13 metadata_files.tmp output_files.tmp > "$MANUAL_ENTRIES"
+            # Find entries only in output (manual additions) and add MANUAL prefix
+            comm -13 metadata_files.tmp output_files.tmp | sed 's/^/MANUAL:/' > "$MANUAL_ENTRIES"
             rm -f metadata_files.tmp output_files.tmp
           else
             touch "$MANUAL_ENTRIES"
           fi
           
-          # Remove old entries from this repo and keep others
-          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" || true
+          # Remove old entries from this repo and keep others (excluding MANUAL entries)
+          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" | grep -v "^MANUAL:" > "$TEMP_FILE" 2>/dev/null || touch "$TEMP_FILE"
           
           # Add new entries
-          echo "$NEW_PICTURES" >> "$TEMP_FILE"
+          if [ -n "$NEW_PICTURES" ]; then
+            echo "$NEW_PICTURES" >> "$TEMP_FILE"
+          fi
+          
+          # Add manual entries back
+          if [ -s "$MANUAL_ENTRIES" ]; then
+            cat "$MANUAL_ENTRIES" >> "$TEMP_FILE"
+          fi
           
           # Sort by repo name, then by filename, and save metadata
           sort "$TEMP_FILE" > "$METADATA_FILE"
@@ -72,23 +79,16 @@ jobs:
           > "$OUTPUT_FILE"
           CURRENT_REPO=""
           while IFS=: read -r repo filename; do
-            if [ "$CURRENT_REPO" != "$repo" ]; then
-              if [ -n "$CURRENT_REPO" ]; then
-                echo "" >> "$OUTPUT_FILE"
+            if [ -n "$repo" ] && [ -n "$filename" ]; then
+              if [ "$CURRENT_REPO" != "$repo" ]; then
+                if [ -n "$CURRENT_REPO" ]; then
+                  echo "" >> "$OUTPUT_FILE"
+                fi
+                CURRENT_REPO="$repo"
               fi
-              CURRENT_REPO="$repo"
+              echo "$filename" >> "$OUTPUT_FILE"
             fi
-            echo "$filename" >> "$OUTPUT_FILE"
           done < "$METADATA_FILE"
-          
-          # Append manual entries at the end if any exist
-          if [ -s "$MANUAL_ENTRIES" ]; then
-            echo "Preserving $(wc -l < "$MANUAL_ENTRIES") manual entries"
-            if [ -s "$OUTPUT_FILE" ]; then
-              echo "" >> "$OUTPUT_FILE"
-            fi
-            cat "$MANUAL_ENTRIES" >> "$OUTPUT_FILE"
-          fi
           
           rm -f "$TEMP_FILE" "$MANUAL_ENTRIES"
       
