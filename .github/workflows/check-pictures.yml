@@ -59,16 +59,20 @@ jobs:
             touch "$MANUAL_ENTRIES"
           fi
           
-          # Remove old entries from this repo and keep others (excluding MANUAL entries)
-          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" | grep -v "^MANUAL:" > "$TEMP_FILE" 2>/dev/null || touch "$TEMP_FILE"
+          # Remove old entries from this repo only, keep everything else including MANUAL
+          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" 2>/dev/null || touch "$TEMP_FILE"
           
           # Add new entries
           if [ -n "$NEW_PICTURES" ]; then
             echo "$NEW_PICTURES" >> "$TEMP_FILE"
           fi
           
-          # Add manual entries back
+          # Add manual entries back (they were filtered out earlier for comparison)
           if [ -s "$MANUAL_ENTRIES" ]; then
+            # Remove any existing MANUAL entries first to avoid duplicates
+            grep -v "^MANUAL:" "$TEMP_FILE" > "${TEMP_FILE}.tmp" 2>/dev/null || touch "${TEMP_FILE}.tmp"
+            mv "${TEMP_FILE}.tmp" "$TEMP_FILE"
+            # Add the manual entries
             cat "$MANUAL_ENTRIES" >> "$TEMP_FILE"
           fi
           
