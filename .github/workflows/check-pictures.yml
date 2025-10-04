@@ -33,9 +33,9 @@ jobs:
           # Create app directory if it doesn't exist
           mkdir -p app
           
-          # Get list of new pictures with repo prefix
+          # Get list of new pictures with repo prefix, removing BOM and special characters
           if [ -d "$PICTURES_PATH" ]; then
-            NEW_PICTURES=$(ls -1 "$PICTURES_PATH" | sed "s|^|$SOURCE_REPO:|")
+            NEW_PICTURES=$(ls -1 "$PICTURES_PATH" | sed 's/^\xEF\xBB\xBF//g' | sed "s|^|$SOURCE_REPO:|")
             echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files from $SOURCE_REPO"
           else
             NEW_PICTURES=""
@@ -46,12 +46,12 @@ jobs:
           touch "$METADATA_FILE"
           touch "$OUTPUT_FILE"
           
-          # Find manual entries (in output but not in metadata)
+          # Find manual entries (in output but not in metadata), excluding empty lines
           if [ -f "$OUTPUT_FILE" ] && [ -f "$METADATA_FILE" ]; then
             # Get filenames from metadata
-            awk -F: '{print $2}' "$METADATA_FILE" | sort > metadata_files.tmp
-            # Get current output files
-            sort "$OUTPUT_FILE" > output_files.tmp
+            awk -F: '{print $2}' "$METADATA_FILE" | sort | uniq > metadata_files.tmp
+            # Get current output files, remove empty lines and BOM
+            grep -v '^[[:space:]]*$' "$OUTPUT_FILE" | sed 's/^\xEF\xBB\xBF//g' | sort | uniq > output_files.tmp
             # Find entries only in output (manual additions)
             comm -13 metadata_files.tmp output_files.tmp > "$MANUAL_ENTRIES"
             rm -f metadata_files.tmp output_files.tmp
