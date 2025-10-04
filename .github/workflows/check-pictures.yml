@@ -28,11 +28,12 @@ jobs:
           METADATA_FILE=".picture_metadata.txt"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           TEMP_FILE="temp_pictures.txt"
+          MANUAL_ENTRIES="manual_entries.tmp"
           
           # Get list of new pictures with repo prefix
           if [ -d "$PICTURES_PATH" ]; then
             NEW_PICTURES=$(ls -1 "$PICTURES_PATH" | sed "s|^|$SOURCE_REPO:|")
-            echo "Found $(echo "$NEW_PICTURES" | wc -l) files from $SOURCE_REPO"
+            echo "Found $(ls -1 "$PICTURES_PATH" | wc -l) files from $SOURCE_REPO"
           else
             NEW_PICTURES=""
             echo "Directory not found for $SOURCE_REPO"
@@ -40,6 +41,20 @@ jobs:
           
           # Create or read metadata file
           touch "$METADATA_FILE"
+          touch "$OUTPUT_FILE"
+          
+          # Find manual entries (in output but not in metadata)
+          if [ -f "$OUTPUT_FILE" ] && [ -f "$METADATA_FILE" ]; then
+            # Get filenames from metadata
+            awk -F: '{print $2}' "$METADATA_FILE" | sort > metadata_files.tmp
+            # Get current output files
+            sort "$OUTPUT_FILE" > output_files.tmp
+            # Find entries only in output (manual additions)
+            comm -13 metadata_files.tmp output_files.tmp > "$MANUAL_ENTRIES"
+            rm -f metadata_files.tmp output_files.tmp
+          else
+            touch "$MANUAL_ENTRIES"
+          fi
           
           # Remove old entries from this repo and keep others
           grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" || true
@@ -53,7 +68,13 @@ jobs:
           # Generate output file with just filenames
           awk -F: '{print $2}' "$METADATA_FILE" > "$OUTPUT_FILE"
           
-          rm -f "$TEMP_FILE"
+          # Append manual entries at the end if any exist
+          if [ -s "$MANUAL_ENTRIES" ]; then
+            echo "Preserving $(wc -l < "$MANUAL_ENTRIES") manual entries"
+            cat "$MANUAL_ENTRIES" >> "$OUTPUT_FILE"
+          fi
+          
+          rm -f "$TEMP_FILE" "$MANUAL_ENTRIES"
       
       - name: Commit and push changes
         run: |
