@@ -249,6 +249,8 @@ def create_project_links(
         that contain the current project's name are used. If no matching
         entries are found, no carousel is shown.
         """
+        import logging
+
         github_txt_url = (
             f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
             "KiCAD_Symbols_Generator/main/app/pictures.txt"
@@ -256,12 +258,37 @@ def create_project_links(
 
         filenames: list[str] = []
         loaded_text: str | None = None
+
+        # Increase timeout to 15 seconds for deployed environments
         try:
-            response = requests.get(github_txt_url, timeout=5)
+            response = requests.get(github_txt_url, timeout=15)
             if response.ok and response.text:
                 loaded_text = response.text
-        except requests.RequestException:
-            loaded_text = None
+            else:
+                logging.warning(
+                    f"Failed to fetch pictures.txt: "
+                    f"Status {response.status_code}"
+                )
+        except requests.RequestException as e:
+            logging.error(
+                f"Request error when fetching pictures.txt: {str(e)}"
+            )
+            # Try fallback method using local file if available
+            try:
+                local_file_path = "app/pictures.txt"
+                with open(local_file_path, "r", encoding="utf-8") as f:
+                    loaded_text = f.read()
+                logging.info(
+                    "Loaded pictures.txt from local file as fallback"
+                )
+            except FileNotFoundError:
+                logging.error("Local pictures.txt file not found")
+                loaded_text = None
+            except Exception as local_error:
+                logging.error(
+                    f"Error reading local pictures.txt: {str(local_error)}"
+                )
+                loaded_text = None
 
         if loaded_text:
             try:
@@ -276,7 +303,10 @@ def create_project_links(
                     if not lower_name.endswith((".png",)):
                         continue
                     filenames.append(processed)
-            except Exception:
+            except Exception as e:
+                logging.error(
+                    f"Error processing pictures.txt content: {str(e)}"
+                )
                 filenames = []
 
         if filenames:
@@ -287,6 +317,15 @@ def create_project_links(
             ]
             if project_filtered:
                 filenames = project_filtered
+            else:
+                logging.info(
+                    f"No images found for project {project_name_lower}"
+                )
+
+        if not filenames:
+            logging.info(
+                f"No image filenames found for project {project_name}"
+            )
 
         base = (
             f"https://raw.githubusercontent.com/{username}/{project_name}/"
@@ -615,7 +654,7 @@ def check_github_pages_simple(username: str, repo_name: str) -> bool:
     pages_url = f"https://{username}.github.io/{repo_name}/"
 
     try:
-        response = requests.head(pages_url, timeout=5, allow_redirects=True)
+        response = requests.head(pages_url, timeout=15, allow_redirects=True)
         return response.status_code == 200
     except requests.RequestException:
         return False
