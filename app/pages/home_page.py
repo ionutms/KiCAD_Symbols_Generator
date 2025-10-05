@@ -238,134 +238,11 @@ def create_project_links(
             )
         )
 
-    def load_project_image_urls() -> list[str]:
-        """Load project image filenames from a single shared text file.
-
-        The loader reads one filename per line from app/pictures.txt.
-        Lines starting with '#' and empty lines are ignored. The resulting
-        filenames are joined with the standard GitHub raw path for the
-        repository's docs/pictures folder.
-
-        If the file lists filenames for multiple projects, only the entries
-        that contain the current project's name are used. If no matching
-        entries are found, no carousel is shown.
-        """
-        github_txt_url = (
-            f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
-            "KiCAD_Symbols_Generator/main/app/pictures.txt"
-        )
-
-        filenames: list[str] = []
-        loaded_text: str | None = None
-
-        # Increase timeout to 15 seconds for deployed environments
-        try:
-            response = requests.get(github_txt_url, timeout=15)
-            if response.ok and response.text:
-                loaded_text = response.text
-                logging.info(
-                    f"Successfully loaded pictures.txt from remote: "
-                    f"{len(response.text)} characters"
-                )
-            else:
-                logging.warning(
-                    f"Failed to fetch pictures.txt from remote: "
-                    f"Status {response.status_code}"
-                )
-        except requests.RequestException as e:
-            logging.error(
-                f"Request error when fetching pictures.txt: {str(e)}"
-            )
-            # Try fallback method using local file if available
-            try:
-                local_file_path = "app/pictures.txt"
-                with open(local_file_path, "r", encoding="utf-8") as f:
-                    loaded_text = f.read()
-                logging.info(
-                    f"Loaded pictures.txt from local file as fallback: "
-                    f"{len(loaded_text)} characters"
-                )
-            except FileNotFoundError:
-                logging.error("Local pictures.txt file not found")
-                loaded_text = None
-            except Exception as local_error:
-                logging.error(
-                    f"Error reading local pictures.txt: {str(local_error)}"
-                )
-                loaded_text = None
-
-        if loaded_text:
-            try:
-                for raw_line in loaded_text.splitlines():
-                    line = raw_line.strip()
-                    if not line or line.startswith("#"):
-                        continue
-                    if line.startswith("\ufeff"):
-                        line = line.lstrip("\ufeff")
-                    processed = line
-                    lower_name = processed.lower()
-                    if not lower_name.endswith((".png",)):
-                        continue
-                    filenames.append(processed)
-                logging.info(
-                    f"Processed {len(filenames)} potential "
-                    "image filenames from text file"
-                )
-            except Exception as e:
-                logging.error(
-                    f"Error processing pictures.txt content: {str(e)}"
-                )
-                filenames = []
-
-        if filenames:
-            project_filtered = [
-                name
-                for name in filenames
-                if project_name_lower in name.lower()
-            ]
-            if project_filtered:
-                logging.info(
-                    f"Found {len(project_filtered)} images "
-                    f"for project {project_name_lower} "
-                    f"(from {len(filenames)} total images)"
-                )
-                filenames = project_filtered
-            else:
-                logging.info(
-                    f"No images found for project {project_name_lower} "
-                    f"(from {len(filenames)} total images)"
-                )
-        else:
-            logging.info(
-                f"No image filenames found for project {project_name}"
-            )
-
-        base = (
-            f"https://raw.githubusercontent.com/{username}/{project_name}/"
-            f"main/{project_name_lower}/docs/pictures/"
-        )
-        image_urls = [f"{base}{name}" for name in filenames]
-        if image_urls:
-            logging.info(
-                f"Generated {len(image_urls)} image URLs "
-                f"for project {project_name}"
-            )
-        else:
-            logging.info(
-                f"No image URLs generated for project {project_name}"
-            )
-
-        return image_urls
-
-    image_paths = load_project_image_urls()
-
-    modal_carousel_items = [{"src": img_path} for img_path in image_paths]
-
     modal = dbc.Modal(
         [
             dbc.ModalBody(
                 dbc.Carousel(
-                    items=modal_carousel_items,
+                    items=[],
                     controls=True,
                     indicators=False,
                     interval=None,
@@ -379,7 +256,7 @@ def create_project_links(
     )
 
     carousel = dbc.Carousel(
-        items=[{"src": img_path} for img_path in image_paths],
+        items=[],
         controls=False,
         indicators=False,
         id=f"{project_name_lower}_carousel",
@@ -702,7 +579,6 @@ def initialize_learning_projects():
         project_config = repo.copy()
         project_name = repo["name"]
 
-        # Check for GitHub Pages
         has_pages = check_github_pages_simple(GITHUB_USERNAME, project_name)
         project_config["has_github_pages"] = has_pages
 
@@ -711,7 +587,6 @@ def initialize_learning_projects():
                 f"https://{GITHUB_USERNAME}.github.io/{project_name}/"
             )
 
-        # Carry over the simple link flag if present
         project_config["show_simple_link"] = repo.get(
             "show_simple_link", False
         )
@@ -762,11 +637,9 @@ def register_carousel_callbacks() -> None:
             if not ctx.triggered:
                 return current_index or 0
 
-            # Get the actual number of items in the carousel
             num_items = len(items) if items else 1
-            # Ensure we don't divide by zero
             if num_items == 0:
-                num_items = 1
+                return 0
 
             button_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
@@ -780,6 +653,139 @@ def register_carousel_callbacks() -> None:
 
 register_modal_callbacks()
 register_carousel_callbacks()
+
+
+def load_project_image_urls(project_name: str, username: str) -> list[str]:
+    """Load project image filenames from a single shared text file.
+
+    The loader reads one filename per line from app/pictures.txt.
+    Lines starting with '#' and empty lines are ignored. The resulting
+    filenames are joined with the standard GitHub raw path for the
+    repository's docs/pictures folder.
+
+    If the file lists filenames for multiple projects, only the entries
+    that contain the current project's name are used. If no matching
+    entries are found, no carousel is shown.
+    """
+    github_txt_url = (
+        f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
+        "KiCAD_Symbols_Generator/main/app/pictures.txt"
+    )
+
+    filenames: list[str] = []
+    loaded_text: str | None = None
+
+    try:
+        response = requests.get(github_txt_url, timeout=15)
+        if response.ok and response.text:
+            loaded_text = response.text
+        else:
+            logging.warning(
+                f"Failed to fetch pictures.txt from remote: "
+                f"Status {response.status_code}"
+            )
+    except requests.RequestException as e:
+        logging.error(f"Request error when fetching pictures.txt: {str(e)}")
+        try:
+            local_file_path = "app/pictures.txt"
+            with open(local_file_path, "r", encoding="utf-8") as f:
+                loaded_text = f.read()
+        except FileNotFoundError:
+            logging.error("Local pictures.txt file not found")
+            loaded_text = None
+        except Exception as local_error:
+            logging.error(
+                f"Error reading local pictures.txt: {str(local_error)}"
+            )
+            loaded_text = None
+
+    if loaded_text:
+        try:
+            for raw_line in loaded_text.splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("\ufeff"):
+                    line = line.lstrip("\ufeff")
+                processed = line
+                lower_name = processed.lower()
+                if not lower_name.endswith((".png",)):
+                    continue
+                filenames.append(processed)
+        except Exception as e:
+            logging.error(f"Error processing pictures.txt content: {str(e)}")
+            filenames = []
+
+    if filenames:
+        project_filtered = [
+            name for name in filenames if project_name.lower() in name.lower()
+        ]
+        if project_filtered:
+            logging.info(
+                f"Loading {len(project_filtered)} "
+                f"images for project {project_name}"
+            )
+            filenames = project_filtered
+        else:
+            logging.info(f"No images found for project {project_name}")
+    else:
+        logging.info(f"No image filenames found for project {project_name}")
+
+    base = (
+        f"https://raw.githubusercontent.com/{username}/{project_name}/"
+        f"main/{project_name.lower()}/docs/pictures/"
+    )
+    image_urls = [f"{base}{name}" for name in filenames]
+
+    return image_urls
+
+
+@callback(
+    [
+        Output(f"{repo['name'].lower()}_carousel", "items")
+        for repo in PROJECT_REPOS_WITH_LINKS
+    ]
+    + [
+        Output(f"{repo['name'].lower()}_modal_carousel", "items")
+        for repo in PROJECT_REPOS_WITH_LINKS
+    ],
+    Input("repository_tabs", "active_tab"),
+)
+def load_images_on_tab_activation(active_tab: str):
+    """Load project images only when the tab is activated."""
+    if active_tab != "additional_tab":
+        return [dash.no_update] * (len(PROJECT_REPOS_WITH_LINKS) * 2)
+
+    project_image_urls = {}
+
+    for repo in PROJECT_REPOS_WITH_LINKS:
+        project_name = repo["name"]
+        image_urls = load_project_image_urls(project_name, GITHUB_USERNAME)
+        project_image_urls[project_name] = image_urls
+
+    all_outputs = []
+
+    for repo in PROJECT_REPOS_WITH_LINKS:
+        project_name = repo["name"]
+        image_urls = project_image_urls[project_name]
+
+        carousel_items = [
+            {"src": img_path, "key": f"{project_name}_carousel_{idx}"}
+            for idx, img_path in enumerate(image_urls)
+        ]
+        all_outputs.append(carousel_items)
+
+    for repo in PROJECT_REPOS_WITH_LINKS:
+        project_name = repo["name"]
+        image_urls = project_image_urls[project_name]
+
+        modal_items = [
+            {"src": img_path, "key": f"{project_name}_modal_{idx}"}
+            for idx, img_path in enumerate(image_urls)
+        ]
+        all_outputs.append(modal_items)
+
+    return all_outputs
 
 
 def create_header_section(
@@ -943,7 +949,6 @@ def create_learning_project_section(
     """
     project_name = repo_config["name"]
 
-    # Create the standard graphs
     has_pages = repo_config.get("has_github_pages")
     show_simple_link = repo_config.get("show_simple_link")
     graphs_col = dbc.Col(
@@ -954,7 +959,6 @@ def create_learning_project_section(
 
     cols = [graphs_col]
 
-    # Add links column if GitHub Pages is available
     if has_pages:
         links = [
             html.A(
@@ -1002,6 +1006,20 @@ def create_learning_project_section(
         dbc.Row(cols),
         html.Hr(),
     ]
+
+
+def create_concepts_projects_tab_content():
+    """Create the content for the tab that will be updated by callbacks."""
+    return html.Div(
+        [
+            *[
+                component
+                for repo in PROJECT_REPOS_WITH_LINKS
+                for component in create_project_section(module_name, repo)
+            ],
+        ],
+        style={"padding": "20px"},
+    )
 
 
 tabs = dbc.Tabs(
@@ -1069,20 +1087,7 @@ tabs = dbc.Tabs(
         dbc.Tab(
             label="Concepts Projects",
             tab_id="additional_tab",
-            children=[
-                html.Div(
-                    [
-                        *[
-                            component
-                            for repo in PROJECT_REPOS_WITH_LINKS
-                            for component in create_project_section(
-                                module_name, repo
-                            )
-                        ],
-                    ],
-                    style={"padding": "20px"},
-                )
-            ],
+            children=create_concepts_projects_tab_content(),
         ),
     ],
     id="repository_tabs",
@@ -1123,7 +1128,6 @@ def create_figure(
         Plotly Figure object
 
     """
-    # Calculate axis ranges across all dataframes
     all_timestamps = []
     y1_values = []
     y2_values = []
@@ -1134,7 +1138,6 @@ def create_figure(
             y1_values.extend(df["total_clones"])
             y2_values.extend(df["unique_clones"])
 
-    # If no data is available, return an empty figure with a message
     if not all_timestamps:
         figure = go.Figure()
         figure.update_layout(
@@ -1161,14 +1164,11 @@ def create_figure(
     y1_min, y1_max = min(y1_values), max(y1_values)
     y2_min, y2_max = min(y2_values), max(y2_values)
 
-    # Add padding to y-axis ranges
     y1_padding = max(1, int((y1_max - y1_min) * 0.1))
     y2_padding = max(1, int((y2_max - y2_min) * 0.1))
 
-    # Create tick labels
     tick_text = [ts.strftime("%m/%d") for ts in all_timestamps]
 
-    # Optimize number of ticks
     max_ticks = 8
     num_data_points = len(all_timestamps)
 
@@ -1182,7 +1182,6 @@ def create_figure(
         all_timestamps = [all_timestamps[i] for i in tick_indices]
         tick_text = [tick_text[i] for i in tick_indices]
 
-    # Create hover templates
     hover_template_total = (
         "Date: %{x|%Y-%m-%d}<br>Total %{data.name}: %{y}<br>"
     )
@@ -1199,7 +1198,6 @@ def create_figure(
         project_name = titles[3 + (data_frames_index * 2)]
         project_name = project_name.split(" ")[0]
 
-        # Create a trace group for each project
         traces.extend([
             go.Scatter(
                 x=df["clone_timestamp"],
@@ -1227,7 +1225,6 @@ def create_figure(
             ),
         ])
 
-    # Figure layout configuration
     figure_layout = {
         "xaxis": {
             "gridcolor": "#808080",
@@ -1303,7 +1300,6 @@ def create_figure(
 
     figure = go.Figure(data=traces, layout=figure_layout)
 
-    # Update layout with primary y-axis styling
     figure.update_layout(
         height=250,
         hovermode="x unified",
@@ -1337,7 +1333,6 @@ def create_figure(
         },
     )
 
-    # Theme configuration
     theme = {
         "template": "plotly" if theme_switch else "plotly_dark",
         "paper_bgcolor": "white" if theme_switch else "#222222",
@@ -1400,7 +1395,6 @@ def load_traffic_data(
 
     """
     try:
-        # Try loading from GitHub
         data_frame = pd.read_csv(github_url)
     except (
         pd.errors.ParserError,
@@ -1409,7 +1403,6 @@ def load_traffic_data(
     ) as error_message:
         print(f"Error reading github file: {error_message} from {github_url}")
         try:
-            # Fallback to local file
             data_frame = pd.read_csv(local_file)
         except (
             FileNotFoundError,
@@ -1417,23 +1410,19 @@ def load_traffic_data(
             pd.errors.EmptyDataError,
         ) as error_message:
             print(f"Error reading local file: {error_message}")
-            # Return empty DataFrame if both attempts fail
             return pd.DataFrame({
                 "clone_timestamp": pd.Series(dtype="datetime64[ns]"),
                 "total_clones": pd.Series(dtype="int"),
                 "unique_clones": pd.Series(dtype="int"),
             })
 
-    # Rename columns if specified
     if rename_columns:
         data_frame = data_frame.rename(columns=rename_columns)
 
-    # Convert timestamp to datetime
     data_frame["clone_timestamp"] = pd.to_datetime(
         data_frame["clone_timestamp"],
     )
 
-    # Ensure missing dates are filled with 0
     if not data_frame.empty:
         date_range = pd.date_range(
             start=data_frame["clone_timestamp"].min(),
@@ -1450,22 +1439,18 @@ def load_traffic_data(
 
 
 @callback(
-    # Main repo graphs
     Output(f"{module_name}_repo_clones_graph", "figure"),
     Output(f"{module_name}_repo_visitors_graph", "figure"),
-    # Project repos without links graphs (in order they appear in tabs)
     *[
         Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
         for repo in PROJECT_REPOS_WITHOUT_LINKS
         for graph in ["clones", "visitors"]
     ],
-    # Learning projects graphs
     *[
         Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
         for repo in LEARNING_PROJECTS
         for graph in ["clones", "visitors"]
     ],
-    # Project repos with links graphs (Concepts Projects tab)
     *[
         Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
         for repo in PROJECT_REPOS_WITH_LINKS
