@@ -19,6 +19,7 @@ styling to create an interactive and informative dashboard experience.
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 import dash
@@ -249,8 +250,6 @@ def create_project_links(
         that contain the current project's name are used. If no matching
         entries are found, no carousel is shown.
         """
-        import logging
-
         github_txt_url = (
             f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
             "KiCAD_Symbols_Generator/main/app/pictures.txt"
@@ -264,9 +263,13 @@ def create_project_links(
             response = requests.get(github_txt_url, timeout=15)
             if response.ok and response.text:
                 loaded_text = response.text
+                logging.info(
+                    f"Successfully loaded pictures.txt from remote: "
+                    f"{len(response.text)} characters"
+                )
             else:
                 logging.warning(
-                    f"Failed to fetch pictures.txt: "
+                    f"Failed to fetch pictures.txt from remote: "
                     f"Status {response.status_code}"
                 )
         except requests.RequestException as e:
@@ -279,7 +282,8 @@ def create_project_links(
                 with open(local_file_path, "r", encoding="utf-8") as f:
                     loaded_text = f.read()
                 logging.info(
-                    "Loaded pictures.txt from local file as fallback"
+                    f"Loaded pictures.txt from local file as fallback: "
+                    f"{len(loaded_text)} characters"
                 )
             except FileNotFoundError:
                 logging.error("Local pictures.txt file not found")
@@ -303,6 +307,10 @@ def create_project_links(
                     if not lower_name.endswith((".png",)):
                         continue
                     filenames.append(processed)
+                logging.info(
+                    f"Processed {len(filenames)} potential "
+                    "image filenames from text file"
+                )
             except Exception as e:
                 logging.error(
                     f"Error processing pictures.txt content: {str(e)}"
@@ -316,13 +324,18 @@ def create_project_links(
                 if project_name_lower in name.lower()
             ]
             if project_filtered:
+                logging.info(
+                    f"Found {len(project_filtered)} images "
+                    f"for project {project_name_lower} "
+                    f"(from {len(filenames)} total images)"
+                )
                 filenames = project_filtered
             else:
                 logging.info(
-                    f"No images found for project {project_name_lower}"
+                    f"No images found for project {project_name_lower} "
+                    f"(from {len(filenames)} total images)"
                 )
-
-        if not filenames:
+        else:
             logging.info(
                 f"No image filenames found for project {project_name}"
             )
@@ -331,7 +344,18 @@ def create_project_links(
             f"https://raw.githubusercontent.com/{username}/{project_name}/"
             f"main/{project_name_lower}/docs/pictures/"
         )
-        return [f"{base}{name}" for name in filenames]
+        image_urls = [f"{base}{name}" for name in filenames]
+        if image_urls:
+            logging.info(
+                f"Generated {len(image_urls)} image URLs "
+                f"for project {project_name}"
+            )
+        else:
+            logging.info(
+                f"No image URLs generated for project {project_name}"
+            )
+
+        return image_urls
 
     image_paths = load_project_image_urls()
 

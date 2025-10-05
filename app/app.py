@@ -16,13 +16,30 @@ Environment Variables:
 """
 
 import importlib
+import logging
 from typing import Optional
 
+import colorlog
 import dash
 import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, callback, dcc, html
 from dash.exceptions import PreventUpdate
 from dash_bootstrap_templates import ThemeSwitchAIO
+
+colorlog.basicConfig(
+    level=logging.INFO,
+    format=(
+        "%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    ),
+    datefmt="%Y-%m-%d %H:%M:%S",
+    log_colors={
+        "DEBUG": "cyan",
+        "INFO": "green",
+        "WARNING": "yellow",
+        "ERROR": "red",
+        "CRITICAL": "red,bg_white",
+    },
+)
 
 
 def get_page_count(module_path: str) -> Optional[int]:  # noqa: FA100
