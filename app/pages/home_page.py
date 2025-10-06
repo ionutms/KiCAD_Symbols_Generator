@@ -389,6 +389,13 @@ REPO_CONFIGS = [
         "show_simple_link": True,
     },
     {
+        "name": "workflow_distributor",
+        "colors": ["#FF4555", "#1E90aa"],
+        "is_main": False,
+        "has_project_links": False,
+        "show_simple_link": True,
+    },
+    {
         "name": "Minimal_AD74416H",
         "colors": ["#3A0CA3", "#7209B7"],
         "is_main": False,
