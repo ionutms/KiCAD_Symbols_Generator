@@ -1565,6 +1565,23 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "744393305": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="744393305",
+        footprint="inductor_footprints:744393305",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[
+            *[3.3, 5.6, 6.8, 8.2, 10, 15, 22],
+        ],
+        max_dc_current=[
+            *[9.2, 6.7, 6.6, 5.9, 5, 4, 3.5],
+        ],
+        max_dc_resistance=[
+            *[16.6, 25.44, 29.28, 34.68, 43.08, 70.8, 90],
+        ],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "74437336": SeriesSpec(
         manufacturer="Wurth Elektronik",
         base_series="74437336",
