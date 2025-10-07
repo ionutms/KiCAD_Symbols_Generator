@@ -615,6 +615,26 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ref_offset_y=-3.048,
         enable_pin_1_indicator=True,
     ),
+    "74439324": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=4.5, height=4.5),
+        pad_dimensions=PadDimensions(
+            width=1.2,
+            height=3.8,
+            center_x=1.225,
+        ),
+        ref_offset_y=-3.048,
+        enable_pin_1_indicator=True,
+    ),
+    "74439325": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=4.5, height=4.5),
+        pad_dimensions=PadDimensions(
+            width=1.2,
+            height=3.8,
+            center_x=1.225,
+        ),
+        ref_offset_y=-3.048,
+        enable_pin_1_indicator=True,
+    ),
     "74437336": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7, height=5.5),
         pad_dimensions=PadDimensions(
