@@ -6,6 +6,7 @@ with inductance, current rating, and DC resistance values.
 
 import csv
 import re
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -101,7 +102,11 @@ def extract_part_numbers_with_inductance(url):
 
 def save_to_csv(parts_data, filename="we_xhmi_parts.csv"):
     """Save part numbers and inductance to a CSV file."""
-    with open(filename, "w", newline="", encoding="utf-8") as f:
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent
+    filepath = script_dir / filename
+
+    with open(filepath, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
             "Part Number",

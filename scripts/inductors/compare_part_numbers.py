@@ -9,6 +9,7 @@ def load_part_numbers_from_we_xhmi(file_path):
     parts_data = {}
     with open(file_path, "r", newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
+        next(reader, None)  # Skip header row
         for row in reader:
             if row:
                 part_number = row[0].strip()
@@ -224,14 +225,23 @@ def print_detailed_comparison(
 
 
 if __name__ == "__main__":
-    we_xhmi_file = "we_xhmi_parts.csv"
-    united_inductors_file = "../../app/data/UNITED_INDUCTORS_DATA_BASE.csv"
+    script_dir = Path(__file__).parent
 
-    if not Path(we_xhmi_file).exists():
+    we_xhmi_file = script_dir / "we_xhmi_parts.csv"
+    united_inductors_file = (
+        script_dir
+        / ".."
+        / ".."
+        / "app"
+        / "data"
+        / "UNITED_INDUCTORS_DATA_BASE.csv"
+    )
+
+    if not we_xhmi_file.exists():
         print(f"Error: {we_xhmi_file} not found")
         exit(1)
 
-    if not Path(united_inductors_file).exists():
+    if not united_inductors_file.exists():
         print(f"Error: {united_inductors_file} not found")
         exit(1)
 
