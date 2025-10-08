@@ -225,7 +225,7 @@ def print_detailed_comparison(
 
 if __name__ == "__main__":
     we_xhmi_file = "we_xhmi_parts.csv"
-    united_inductors_file = "app/data/UNITED_INDUCTORS_DATA_BASE.csv"
+    united_inductors_file = "../../app/data/UNITED_INDUCTORS_DATA_BASE.csv"
 
     if not Path(we_xhmi_file).exists():
         print(f"Error: {we_xhmi_file} not found")
