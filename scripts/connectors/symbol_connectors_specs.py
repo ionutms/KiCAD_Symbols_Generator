@@ -859,6 +859,27 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "FTSH-1xx-04-L-DH": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="FTSH-1xx-04-L-DH",
+        footprint_pattern="connector_footprints:FTSH-1{:02d}-04-L-DH",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/ftsh_smt.pdf?"
+            "_gl=1*uwyfuk*_gcl_au*OTQ3NjE2MTIwLjE3NTQ5MDMyODE.*"
+            "_ga*NzIxODQzNjU3LjE3NTQ5MDMyODI.*_ga_3KFNZC07WW*"
+            "czE3NTk5OTE3NDIkbzE1JGcxJHQxNzU5OTkxODU5JGo4JGwwJGgw"
+        ),
+        pin_counts=list(range(2, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
+        mounting_angle="Horizontal",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Surface Mount",
+        contact_plating="Tin",
+    ),
     "TSM-1xx-01-S-SV-P-TR": SeriesSpec(
         manufacturer="Samtec",
         base_series="TSM-1xx-01-S-SV-P-TR",

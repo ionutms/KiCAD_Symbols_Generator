@@ -566,6 +566,20 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=4.318,
         ref_y=-4.318,
     ),
+    "FTSH-1xx-04-L-DH": FootprintSpecs(
+        pad_pitch=1.27,
+        row_pitch=3.05,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=1.4,
+            width_right=1.4,
+            height_top=5.6,
+            height_bottom=3,
+        ),
+        pad_size=[0.76, 2.03],
+        mpn_y=3.81,
+        ref_y=-6.35,
+    ),
     "TSM-1xx-01-S-SV-P-TR": FootprintSpecs(
         pad_pitch=2.54,
         row_pitch=2.92,
