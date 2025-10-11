@@ -402,6 +402,12 @@ REPO_CONFIGS = [
         "has_project_links": True,
     },
     {
+        "name": "Minimal_AD74416H_Stack_Adapter",
+        "colors": ["#3A0C03", "#720907"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
         "name": "AD74416H_Power_Interface_Module",
         "colors": ["#6A0CA3", "#A209B7"],
         "is_main": False,
