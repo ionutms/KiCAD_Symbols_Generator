@@ -730,9 +730,37 @@ def load_project_image_urls(project_name: str, username: str) -> list[str]:
             filenames = []
 
     if filenames:
-        project_filtered = [
-            name for name in filenames if project_name.lower() in name.lower()
-        ]
+        project_lower = project_name.lower()
+
+        project_parts = project_lower.split("_")
+
+        project_filtered = []
+        for name in filenames:
+            name_parts = name.lower().replace(".png", "").split("_")
+
+            if name_parts and name_parts[0].isdigit():
+                name_parts = name_parts[1:]
+
+            is_match = False
+            for i in range(len(name_parts) - len(project_parts) + 1):
+                if name_parts[i : i + len(project_parts)] == project_parts:
+                    next_idx = i + len(project_parts)
+                    if next_idx < len(name_parts):
+                        next_part = name_parts[next_idx]
+                        project_extensions = ["stack"]
+
+                        if next_part in project_extensions:
+                            break
+                        else:
+                            is_match = True
+                            break
+                    else:
+                        is_match = True
+                        break
+
+            if is_match:
+                project_filtered.append(name)
+
         if project_filtered:
             logging.info(
                 f"Loading {len(project_filtered)} "
