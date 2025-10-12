@@ -7,17 +7,13 @@ on:
 jobs:
   check-and-save:
     runs-on: ubuntu-latest
-    # Prevent concurrent runs - queue them instead
-    concurrency:
-      group: update-pictures
-      cancel-in-progress: false
     
     steps:
       - name: Checkout target repo (KiCAD_Symbols_Generator)
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
-          fetch-depth: 0  # Fetch full history for better rebasing
+          fetch-depth: 0
       
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -27,138 +23,58 @@ jobs:
           token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
           path: source-repo
       
-      - name: List pictures and update file
+      - name: Update pictures with retry logic
         run: |
-          # Always work with the latest version
-          git pull origin main
-          
+          SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
           OUTPUT_FILE="app/pictures.txt"
           METADATA_FILE="app/.picture_metadata.txt"
-          SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
-          TEMP_FILE="temp_pictures.txt"
           
-          # Create app directory if it doesn't exist
-          mkdir -p app
-          
-          # Get list of new pictures with repo prefix
-          # Remove BOM and special characters
-          if [ -d "$PICTURES_PATH" ]; then
-            NEW_PICTURES=$(
-              ls -1 "$PICTURES_PATH" | \
-              sed 's/^\xEF\xBB\xBF//g' | \
-              sed "s|^|$SOURCE_REPO:|"
-            )
-            FILE_COUNT=$(ls -1 "$PICTURES_PATH" | wc -l)
-            echo "Found $FILE_COUNT files from $SOURCE_REPO"
-          else
-            NEW_PICTURES=""
-            echo "Directory not found for $SOURCE_REPO"
-          fi
-          
-          # Create or read metadata file
-          touch "$METADATA_FILE"
-          touch "$OUTPUT_FILE"
-          
-          # Remove old entries from this repo only
-          # Keep everything else
-          grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" \
-            2>/dev/null || touch "$TEMP_FILE"
-          
-          # Add new entries
-          if [ -n "$NEW_PICTURES" ]; then
-            echo "$NEW_PICTURES" >> "$TEMP_FILE"
-          fi
-          
-          # Sort by repo name, then by filename
-          # Save metadata
-          sort "$TEMP_FILE" > "$METADATA_FILE"
-          
-          # Generate output file with filenames
-          # Grouped by repo with blank lines
-          > "$OUTPUT_FILE"
-          CURRENT_REPO=""
-          while IFS=: read -r repo filename; do
-            if [ -n "$repo" ] && [ -n "$filename" ]; then
-              if [ "$CURRENT_REPO" != "$repo" ]; then
-                if [ -n "$CURRENT_REPO" ]; then
-                  echo "" >> "$OUTPUT_FILE"
-                fi
-                CURRENT_REPO="$repo"
-              fi
-              echo "$filename" >> "$OUTPUT_FILE"
-            fi
-          done < "$METADATA_FILE"
-          
-          rm -f "$TEMP_FILE"
-      
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add app/pictures.txt app/.picture_metadata.txt
-          
-          # Check if there are changes to commit
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          
-          # Commit changes
-          git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}"
-          
-          # Push with retry logic
-          max_attempts=5
+          max_attempts=10
           attempt=1
           
           while [ $attempt -le $max_attempts ]; do
-            echo "Push attempt $attempt of $max_attempts"
+            echo "=== Attempt $attempt of $max_attempts ==="
             
-            if git push origin main; then
-              echo "Successfully pushed changes"
-              exit 0
-            fi
+            # Always start with the latest remote state
+            git fetch origin main
+            git reset --hard origin/main
             
-            # Push failed, likely due to concurrent update
-            echo "Push failed, pulling latest changes..."
+            # Create app directory if it doesn't exist
+            mkdir -p app
             
-            # Reset to before our commit
-            git reset --soft HEAD~1
-            
-            # Pull latest changes
-            git pull origin main
-            
-            # Re-process the pictures with the latest metadata
-            PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
-            OUTPUT_FILE="app/pictures.txt"
-            METADATA_FILE="app/.picture_metadata.txt"
-            SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
-            TEMP_FILE="temp_pictures.txt"
-            
-            # Get list of new pictures
+            # Get list of pictures from source repo
             if [ -d "$PICTURES_PATH" ]; then
               NEW_PICTURES=$(
                 ls -1 "$PICTURES_PATH" | \
                 sed 's/^\xEF\xBB\xBF//g' | \
                 sed "s|^|$SOURCE_REPO:|"
               )
+              FILE_COUNT=$(ls -1 "$PICTURES_PATH" | wc -l)
+              echo "Found $FILE_COUNT files from $SOURCE_REPO"
             else
               NEW_PICTURES=""
+              echo "Directory not found for $SOURCE_REPO"
             fi
             
-            # Remove old entries from this repo
+            # Create or read existing metadata
+            touch "$METADATA_FILE"
+            touch "$OUTPUT_FILE"
+            
+            # Remove old entries from this specific repo
+            TEMP_FILE="temp_pictures_$$.txt"
             grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" \
               2>/dev/null || touch "$TEMP_FILE"
             
-            # Add new entries
+            # Add new entries for this repo
             if [ -n "$NEW_PICTURES" ]; then
               echo "$NEW_PICTURES" >> "$TEMP_FILE"
             fi
             
-            # Sort and save
+            # Sort by repo name, then by filename
             sort "$TEMP_FILE" > "$METADATA_FILE"
             
-            # Regenerate output file
+            # Generate output file with filenames grouped by repo
             > "$OUTPUT_FILE"
             CURRENT_REPO=""
             while IFS=: read -r repo filename; do
@@ -175,23 +91,45 @@ jobs:
             
             rm -f "$TEMP_FILE"
             
-            # Stage and commit again
+            # Configure git
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            
+            # Stage changes
             git add app/pictures.txt app/.picture_metadata.txt
             
+            # Check if there are changes
             if git diff --staged --quiet; then
-              echo "No changes after merge - already up to date"
+              echo "No changes to commit - files already up to date"
               exit 0
             fi
             
-            git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}"
+            # Commit changes
+            git commit -m "Update pictures from $SOURCE_REPO"
+            
+            # Try to push
+            if git push origin main; then
+              echo "✓ Successfully pushed changes for $SOURCE_REPO"
+              exit 0
+            else
+              echo "✗ Push failed - remote has new commits"
+              
+              if [ $attempt -lt $max_attempts ]; then
+                # Exponential backoff with jitter
+                base_delay=2
+                max_jitter=3
+                delay=$((base_delay * attempt + RANDOM % max_jitter))
+                echo "Waiting ${delay}s before retry..."
+                sleep $delay
+              fi
+            fi
             
             attempt=$((attempt + 1))
-            
-            if [ $attempt -le $max_attempts ]; then
-              echo "Retrying in 3 seconds..."
-              sleep 3
-            fi
           done
           
-          echo "Failed to push after $max_attempts attempts"
+          echo "ERROR: Failed to push after $max_attempts attempts"
+          echo "This might indicate:"
+          echo "  - Too many concurrent workflows"
+          echo "  - Network issues"
+          echo "  - Repository access problems"
           exit 1
