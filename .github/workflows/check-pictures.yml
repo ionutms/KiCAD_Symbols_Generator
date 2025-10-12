@@ -7,11 +7,17 @@ on:
 jobs:
   check-and-save:
     runs-on: ubuntu-latest
+    # Prevent concurrent runs - queue them instead
+    concurrency:
+      group: update-pictures
+      cancel-in-progress: false
+    
     steps:
       - name: Checkout target repo (KiCAD_Symbols_Generator)
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TRAFIC_UPDATE_TOKEN }}
+          fetch-depth: 0  # Fetch full history for better rebasing
       
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -23,6 +29,9 @@ jobs:
       
       - name: List pictures and update file
         run: |
+          # Always work with the latest version
+          git pull origin main
+          
           PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
           OUTPUT_FILE="app/pictures.txt"
           METADATA_FILE="app/.picture_metadata.txt"
@@ -98,27 +107,89 @@ jobs:
           # Commit changes
           git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}"
           
-          # Pull with rebase and push (retry logic)
-          max_attempts=3
+          # Push with retry logic
+          max_attempts=5
           attempt=1
           
           while [ $attempt -le $max_attempts ]; do
             echo "Push attempt $attempt of $max_attempts"
             
-            # Pull latest changes with rebase
-            git pull --rebase origin main
-            
-            # Try to push
-            if git push; then
+            if git push origin main; then
               echo "Successfully pushed changes"
               exit 0
             fi
             
+            # Push failed, likely due to concurrent update
+            echo "Push failed, pulling latest changes..."
+            
+            # Reset to before our commit
+            git reset --soft HEAD~1
+            
+            # Pull latest changes
+            git pull origin main
+            
+            # Re-process the pictures with the latest metadata
+            PICTURES_PATH="source-repo/${{ github.event.client_payload.pictures_path }}"
+            OUTPUT_FILE="app/pictures.txt"
+            METADATA_FILE="app/.picture_metadata.txt"
+            SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
+            TEMP_FILE="temp_pictures.txt"
+            
+            # Get list of new pictures
+            if [ -d "$PICTURES_PATH" ]; then
+              NEW_PICTURES=$(
+                ls -1 "$PICTURES_PATH" | \
+                sed 's/^\xEF\xBB\xBF//g' | \
+                sed "s|^|$SOURCE_REPO:|"
+              )
+            else
+              NEW_PICTURES=""
+            fi
+            
+            # Remove old entries from this repo
+            grep -v "^$SOURCE_REPO:" "$METADATA_FILE" > "$TEMP_FILE" \
+              2>/dev/null || touch "$TEMP_FILE"
+            
+            # Add new entries
+            if [ -n "$NEW_PICTURES" ]; then
+              echo "$NEW_PICTURES" >> "$TEMP_FILE"
+            fi
+            
+            # Sort and save
+            sort "$TEMP_FILE" > "$METADATA_FILE"
+            
+            # Regenerate output file
+            > "$OUTPUT_FILE"
+            CURRENT_REPO=""
+            while IFS=: read -r repo filename; do
+              if [ -n "$repo" ] && [ -n "$filename" ]; then
+                if [ "$CURRENT_REPO" != "$repo" ]; then
+                  if [ -n "$CURRENT_REPO" ]; then
+                    echo "" >> "$OUTPUT_FILE"
+                  fi
+                  CURRENT_REPO="$repo"
+                fi
+                echo "$filename" >> "$OUTPUT_FILE"
+              fi
+            done < "$METADATA_FILE"
+            
+            rm -f "$TEMP_FILE"
+            
+            # Stage and commit again
+            git add app/pictures.txt app/.picture_metadata.txt
+            
+            if git diff --staged --quiet; then
+              echo "No changes after merge - already up to date"
+              exit 0
+            fi
+            
+            git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}"
+            
             attempt=$((attempt + 1))
             
             if [ $attempt -le $max_attempts ]; then
-              echo "Push failed, retrying in 2 seconds..."
-              sleep 2
+              echo "Retrying in 3 seconds..."
+              sleep 3
             fi
           done
           
