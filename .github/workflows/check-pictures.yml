@@ -88,6 +88,39 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add app/pictures.txt app/.picture_metadata.txt
-          git diff --quiet && git diff --staged --quiet || \
-            (git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}" && \
-             git push)
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          # Commit changes
+          git commit -m "Update pictures from ${{ github.event.client_payload.source_repo }}"
+          
+          # Pull with rebase and push (retry logic)
+          max_attempts=3
+          attempt=1
+          
+          while [ $attempt -le $max_attempts ]; do
+            echo "Push attempt $attempt of $max_attempts"
+            
+            # Pull latest changes with rebase
+            git pull --rebase origin main
+            
+            # Try to push
+            if git push; then
+              echo "Successfully pushed changes"
+              exit 0
+            fi
+            
+            attempt=$((attempt + 1))
+            
+            if [ $attempt -le $max_attempts ]; then
+              echo "Push failed, retrying in 2 seconds..."
+              sleep 2
+            fi
+          done
+          
+          echo "Failed to push after $max_attempts attempts"
+          exit 1
