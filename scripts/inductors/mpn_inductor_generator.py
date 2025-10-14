@@ -38,7 +38,7 @@ HEADER_MAPPING: Final[dict] = {
     "Series": lambda part: part.series,
     "Trustedparts Search": lambda part: part.trustedparts_link,
     "Maximum DC Current (A)": lambda part: f"{part.max_dc_current}",
-    "Maximum DC Resistance (Ω)": lambda part: f"{part.max_dc_resistance}",
+    "Maximum DC Resistance (mΩ)": lambda part: f"{part.max_dc_resistance}",
 }
 
 # Define the data directory
