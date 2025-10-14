@@ -1,0 +1,130 @@
+(footprint "74437368"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 -5.842 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "4d9539d3-73c2-4a5a-b5dc-b2fe60e3be0b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "74437368"
+            (at 0 5.842 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "62a0e428-ac94-4ecc-a26b-36e922555534")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "d85337e9-5a82-4031-82f0-3c6edfab23a8")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 7.112 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "4893de09-de41-4caf-8530-4664b6c0cc2b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -7.0 -5.1)
+            (end 7.0 5.1)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "100b176c-358e-4210-9966-577524f104a9")
+        )
+        
+
+        (fp_rect
+            (start -7.0 -5.1)
+            (end 7.0 5.1)
+            (stroke (width 0.0254) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "2de22339-802e-4d03-9ae5-60fa317407bb")
+        )
+        
+
+            (fp_line
+                (start 2.7 -5.1)
+                (end -2.7 -5.1)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "6ac81875-8aa7-4542-8685-cf5364d1aa8a")
+            )
+            
+            (fp_line
+                (start 2.7 5.1)
+                (end -2.7 5.1)
+                (stroke (width 0.1524) (type solid))
+                (layer "F.SilkS")
+                (uuid "79da19b4-abf8-44ee-8541-fcb8d16e252d")
+            )
+            
+
+        (fp_circle
+            (center -7.4 -0.0)
+            (end -7.6000000000000005 -0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "8d5d3df6-8fa5-46d0-bb6a-19f61e831c14")
+        )
+        
+
+            (pad "1" smd roundrect
+                (at -4.75 0.0)
+                (size 4.1 3.5)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "90ddaec9-a3b5-4bd2-b2db-d039bb5473d6")
+            )
+            
+
+            (pad "2" smd roundrect
+                (at 4.75 0.0)
+                (size 4.1 3.5)
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+                (uuid "c1acdbde-3a16-43c0-9e66-6de7012ea922")
+            )
+            
+
+        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/inductors/74437368.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
