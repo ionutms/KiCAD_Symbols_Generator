@@ -34,7 +34,23 @@ def generate_footprint(
     pad_width = specs.pad_dimensions.width
     pad_height = specs.pad_dimensions.height
 
-    pads = footprint_utils.generate_pads(pad_width, pad_height, pad_center_x)
+    offset_pad_center_x = pad_center_x + specs.pad_offset_x
+    offset_pad_center_y = 0.0 + specs.pad_offset_y
+
+    pads = f"""
+            (pad "1" smd roundrect
+                (at {-offset_pad_center_x} {offset_pad_center_y})
+                (size {pad_width} {pad_height})
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+            )
+            (pad "2" smd roundrect
+                (at {offset_pad_center_x} {offset_pad_center_y})
+                (size {pad_width} {pad_height})
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+            )
+            """
 
     if specs.additional_pads:
         additional_pads = []
@@ -51,7 +67,10 @@ def generate_footprint(
 
         pads = pads + "\n" + "\n".join(additional_pads)
 
-        pad_x_coords = [pad_center_x, -pad_center_x]
+        pad_x_coords = [
+            offset_pad_center_x,
+            -offset_pad_center_x,
+        ]
         for pad_property in specs.additional_pads:
             if pad_property.x not in pad_x_coords:
                 pad_x_coords.append(pad_property.x)
@@ -79,7 +98,7 @@ def generate_footprint(
         footprint_utils.generate_fab_rectangle(body_width, body_height),
         footprint_utils.generate_silkscreen_lines(
             body_height,
-            pad_center_x,
+            offset_pad_center_x,
             pad_width,
             pad_x_coords,
         ),
