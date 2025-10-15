@@ -34,6 +34,30 @@ def generate_footprint(
     pad_width = specs.pad_dimensions.width
     pad_height = specs.pad_dimensions.height
 
+    pads = footprint_utils.generate_pads(pad_width, pad_height, pad_center_x)
+
+    if specs.additional_pads:
+        additional_pads = []
+        for pad_property in specs.additional_pads:
+            pad = f"""
+            (pad "{pad_property.name}" smd roundrect
+                (at {pad_property.x} {pad_property.y})
+                (size {pad_property.pad_size_x} {pad_property.pad_size_y})
+                (layers "F.Cu" "F.Paste" "F.Mask")
+                (roundrect_rratio 0.25)
+            )
+            """
+            additional_pads.append(pad)
+
+        pads = pads + "\n" + "\n".join(additional_pads)
+
+        pad_x_coords = [pad_center_x, -pad_center_x]
+        for pad_property in specs.additional_pads:
+            if pad_property.x not in pad_x_coords:
+                pad_x_coords.append(pad_property.x)
+    else:
+        pad_x_coords = None
+
     add_pin_1_indicator = (
         footprint_utils.generate_pin_1_indicator(
             body_width,
@@ -57,9 +81,10 @@ def generate_footprint(
             body_height,
             pad_center_x,
             pad_width,
+            pad_x_coords,
         ),
         add_pin_1_indicator,
-        footprint_utils.generate_pads(pad_width, pad_height, pad_center_x),
+        pads,
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/inductors",
             footprint_name,

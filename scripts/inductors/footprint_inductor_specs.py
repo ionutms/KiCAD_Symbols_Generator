@@ -24,6 +24,25 @@ class BodyDimensions(NamedTuple):
     height: float  # Total height of inductor body
 
 
+class Pad(NamedTuple):
+    """Defines properties for individual pads in an inductor footprint.
+
+    Attributes:
+        name: Identifier for the pad (e.g., '1', '2', etc.)
+        x: X coordinate of the pad center relative to the origin
+        y: Y coordinate of the pad center relative to the origin
+        pad_size_x: Width of the pad
+        pad_size_y: Height of the pad
+
+    """
+
+    name: str
+    x: float
+    y: float
+    pad_size_x: float
+    pad_size_y: float
+
+
 class PadDimensions(NamedTuple):
     """Defines dimensions for inductor pads.
 
@@ -50,6 +69,8 @@ class FootprintSpecs(NamedTuple):
     Attributes:
         body_dimensions: BodyDimensions object with inductor body dimensions
         pad_dimensions: PadDimensions object with pad dimensions and positions
+        additional_pads:
+            Optional list of additional Pad objects for custom pad placement
         ref_offset_y: Y offset for reference designator
         enable_pin_1_indicator: Flag to enable pin 1 indicator (default: True)
 
@@ -59,6 +80,7 @@ class FootprintSpecs(NamedTuple):
     pad_dimensions: PadDimensions  # Pad size and positioning
     ref_offset_y: float  # Y offset for reference designator
     enable_pin_1_indicator: bool = True  # Enable pin 1 indicator
+    additional_pads: list[Pad] | None = None  # Additional pads
 
 
 FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
@@ -914,5 +936,8 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-7.366,
         enable_pin_1_indicator=True,
+        additional_pads=[
+            Pad("3", 0, 4.5, 2.0, 2.0),
+        ],
     ),
 }
