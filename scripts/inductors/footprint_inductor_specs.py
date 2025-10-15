@@ -73,8 +73,8 @@ class FootprintSpecs(NamedTuple):
         enable_pin_1_indicator: Flag to enable pin 1 indicator (default: True)
         additional_pads:
             Optional list of additional Pad objects for custom pad placement
-        pad_offset_x:
-            Optional horizontal offset for the original pads (default: 0.0)
+        pad_offset_y:
+            Optional vertical offset for the original pads (default: 0.0)
 
     """
 
@@ -83,7 +83,6 @@ class FootprintSpecs(NamedTuple):
     ref_offset_y: float  # Y offset for reference designator
     enable_pin_1_indicator: bool = True  # Enable pin 1 indicator
     additional_pads: list[Pad] | None = None  # Additional pads
-    pad_offset_x: float = 0.0  # Horizontal offset for original pads
     pad_offset_y: float = 0.0  # Vertical offset for original pads
 
 
@@ -932,16 +931,11 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         enable_pin_1_indicator=True,
     ),
     "7443642010": FootprintSpecs(
-        body_dimensions=BodyDimensions(width=19, height=24),
-        pad_dimensions=PadDimensions(
-            width=3.8,
-            height=4.7,
-            center_x=5.2,
-        ),
-        ref_offset_y=-12.7,
+        body_dimensions=BodyDimensions(width=19.5, height=22),
+        pad_dimensions=PadDimensions(width=3.8, height=4.7, center_x=5.2),
+        ref_offset_y=-11.938,
         enable_pin_1_indicator=True,
-        additional_pads=[Pad("3", 0, -7.36, 7.37, 4.06)],
-        pad_offset_x=0,
-        pad_offset_y=8.96,
+        additional_pads=[Pad("3", 0, -7.36 - 0.96, 7.37, 4.06)],
+        pad_offset_y=8.96 - 0.96,
     ),
 }

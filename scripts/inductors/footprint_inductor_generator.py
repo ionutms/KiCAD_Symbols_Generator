@@ -34,7 +34,7 @@ def generate_footprint(
     pad_width = specs.pad_dimensions.width
     pad_height = specs.pad_dimensions.height
 
-    offset_pad_center_x = pad_center_x + specs.pad_offset_x
+    offset_pad_center_x = pad_center_x
     offset_pad_center_y = 0.0 + specs.pad_offset_y
 
     pads = f"""
