@@ -480,12 +480,14 @@ def write_thermistor_symbol_drawing(
 def write_inductor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
+    pin_config: dict = None,
 ) -> None:
     """Write the horizontal graphical representation of an inductor symbol.
 
     Args:
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
+        pin_config (dict, optional): Dictionary defining pin configuration.
 
     Returns:
         None
@@ -533,9 +535,24 @@ def write_inductor_symbol_drawing(
     for start_x, mid_x, end_x in arc_params:
         write_arc(symbol_file, start_x, mid_x, end_x)
 
-    # Write pins
+    # Write standard pins
     write_pin(symbol_file, -7.62, 0, 0, "1")
     write_pin(symbol_file, 7.62, 0, 180, "2")
+
+    # Write additional pins if they exist
+    if pin_config and "additional_pins" in pin_config:
+        for pin in pin_config["additional_pins"]:
+            write_pin(
+                symbol_file=symbol_file,
+                x_pos=pin["x_pos"],
+                y_pos=pin["y_pos"],
+                angle=0,
+                number=pin["number"],
+                name="",
+                pin_type=pin["pin_type"],
+                hide=pin.get("hide", False),
+                length=pin["length"],
+            )
 
     symbol_file.write("\t\t)\n")
 

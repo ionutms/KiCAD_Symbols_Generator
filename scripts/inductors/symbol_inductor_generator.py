@@ -23,7 +23,44 @@ representation of the inductor.
 from pathlib import Path
 from typing import TextIO
 
+import symbol_inductors_specs
 from utilities import file_handler_utilities, symbol_utils
+
+
+def convert_pin_config(
+    series_spec,
+) -> dict[str, list[dict[str, float | bool]]]:  # noqa: FA102
+    """Convert pin configuration data to dictionary format.
+
+    Args:
+        series_spec:
+            Series specification that may contain additional pin config
+
+    Returns:
+        dict[str, list[dict[str, float | bool]]]: Pin configuration data
+
+    """
+    if (
+        not series_spec
+        or not hasattr(series_spec, "additional_pin_config")
+        or not series_spec.additional_pin_config
+    ):
+        return {"additional_pins": []}
+
+    config = {
+        "additional_pins": [
+            {
+                "number": pin.number,
+                "x_pos": pin.x_pos,
+                "y_pos": pin.y_pos,
+                "pin_type": pin.pin_type,
+                "length": pin.length,
+                "hide": pin.hide,
+            }
+            for pin in series_spec.additional_pin_config.additional_pins
+        ]
+    }
+    return config
 
 
 def generate_kicad_symbol(
@@ -67,6 +104,16 @@ def write_component(
 
     """
     symbol_name = component_data.get("Symbol Name", "")
+    series = component_data.get("Series", "")
+
+    # Get pin configuration from SYMBOLS_SPECS if available
+    series_spec = symbol_inductors_specs.SYMBOLS_SPECS.get(series)
+    pin_config = (
+        convert_pin_config(series_spec)
+        if series_spec
+        else {"additional_pins": []}
+    )
+
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     if component_data.get("Reference") == "E":
         symbol_utils.write_properties(
@@ -86,5 +133,7 @@ def write_component(
             property_order,
             text_y_offset=1,
         )
-        symbol_utils.write_inductor_symbol_drawing(symbol_file, symbol_name)
+        symbol_utils.write_inductor_symbol_drawing(
+            symbol_file, symbol_name, pin_config
+        )
     symbol_file.write(")")

@@ -15,6 +15,41 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utilities import print_message_utilities
 
 
+class PinConfig(NamedTuple):
+    """Configuration specification for a single inductor pin.
+
+    Attributes:
+        number: Pin number identifier
+        x_pos: Horizontal position of the pin on the component
+        y_pos: Vertical position of the pin on the component
+        pin_type: Type of pin (e.g., "unspecified", "no_connect")
+        length: Length of the pin in millimeters
+        hide: Flag to hide the pin in the schematic (default: False)
+
+    """
+
+    number: str
+    x_pos: float
+    y_pos: float
+    pin_type: str
+    length: float
+    hide: bool = False
+
+
+class AdditionalPinConfig(NamedTuple):
+    """Additional pin configuration specification for inductors.
+
+    Defines the configuration for optional additional pins on inductor
+    components.
+
+    Attributes:
+        additional_pins: List of PinConfig instances for additional pins
+
+    """
+
+    additional_pins: list[PinConfig]
+
+
 class SeriesSpec(NamedTuple):
     """Inductor series specifications for Coilcraft components.
 
@@ -33,6 +68,7 @@ class SeriesSpec(NamedTuple):
         max_dc_resistance: List of maximum DC resistance ratings
         value_suffix: AEC qualification suffix
         reference: Component reference prefix (default: "L")
+        additional_pin_config: Optional additional pin configuration
 
     """
 
@@ -47,6 +83,7 @@ class SeriesSpec(NamedTuple):
     max_dc_resistance: list[float]
     value_suffix: str = ""
     reference: str = "L"
+    additional_pin_config: AdditionalPinConfig | None = None
 
 
 class PartInfo(NamedTuple):
@@ -2034,5 +2071,21 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             *[10, 11.6, 16.5, 20, 28, 37, 58, 90, 165],
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
+    "7443642010": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="7443642010",
+        footprint="inductor_footprints:7443642010",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[1, 1.2, 2],
+        max_dc_current=[50.3, 50.3, 50.3],
+        max_dc_resistance=[0.92, 0.92, 0.92],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        additional_pin_config=AdditionalPinConfig(
+            additional_pins=[
+                PinConfig("3", -7.62, -2.54, "passive", 2.54, False),
+            ]
+        ),
     ),
 }
