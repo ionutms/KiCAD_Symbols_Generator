@@ -261,6 +261,24 @@ class PartInfo(NamedTuple):
         return f"2{int(inductance * 10)}"
 
     @staticmethod
+    def generate_wurth_hcf_value_code(inductance: float) -> str:
+        """Generate Wurth Elektronik inductance value codes.
+
+        Args:
+            inductance: Inductance value in µH
+            value_suffix: AEC qualification suffix (unused for Wurth)
+
+        Returns:
+            Formatted inductance value code
+
+        """
+        if inductance < 1:
+            return f"00{int(inductance * 100)}"
+        if inductance < 10:
+            return f"0{int(inductance * 10)}0"
+        return f"{inductance * 10}0"
+
+    @staticmethod
     def generate_vishay_value_code(inductance: float) -> str:
         """Generate Vishay inductance value codes.
 
@@ -348,6 +366,8 @@ class PartInfo(NamedTuple):
             value_code = cls.generate_wurth_value_code(inductance)
             if specs.base_series == "74479276":
                 value_code = cls.generate_wurth_pmci_value_code(inductance)
+            if specs.base_series == "744363":
+                value_code = cls.generate_wurth_hcf_value_code(inductance)
             mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
             datasheet = f"{specs.datasheet}{value_code}.pdf"
 
@@ -2081,6 +2101,31 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         inductance_values=[1, 1.2, 2],
         max_dc_current=[50.3, 50.3, 50.3],
         max_dc_resistance=[0.92, 0.92, 0.92],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        additional_pin_config=AdditionalPinConfig(
+            additional_pins=[
+                PinConfig("3", -7.62, -2.54, "passive", 2.54, False),
+            ]
+        ),
+    ),
+    "744363": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="744363",
+        footprint="inductor_footprints:744363",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[
+            *[0.7, 1.4, 2.2, 3.1, 4.2, 5.5, 7],
+            *[8.6, 10, 15, 22, 33, 47],
+        ],
+        max_dc_current=[
+            *[54.7, 47.1, 39.5, 33.15, 27, 23.35, 19.5],
+            *[17.1, 16.15, 15.4, 13.8, 13.3, 12.8],
+        ],
+        max_dc_resistance=[
+            *[0.91, 1.19, 1.65, 2.3, 3.34, 4.4, 6.17],
+            *[7.91, 8.76, 9.57, 11.72, 12.54, 13.42],
+        ],
         trustedparts_link="https://www.trustedparts.com/en/search",
         additional_pin_config=AdditionalPinConfig(
             additional_pins=[
