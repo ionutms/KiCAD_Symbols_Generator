@@ -81,6 +81,9 @@ def generate_footprint(
         footprint_utils.generate_pin_1_indicator(
             body_width,
             pad_width,
+            custom_pin_1_y=specs.pad_offset_y
+            if specs.pad_offset_y != 0.0
+            else None,
         )
         if specs.enable_pin_1_indicator
         else ""
