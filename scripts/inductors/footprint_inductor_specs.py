@@ -20,8 +20,8 @@ class BodyDimensions(NamedTuple):
 
     """
 
-    width: float  # Total width of inductor body
-    height: float  # Total height of inductor body
+    width: float
+    height: float
 
 
 class Pad(NamedTuple):
@@ -55,9 +55,9 @@ class PadDimensions(NamedTuple):
 
     """
 
-    width: float  # Width of each pad
-    height: float  # Height of each pad
-    center_x: float  # Distance from origin to pad center on X axis
+    width: float
+    height: float
+    center_x: float
 
 
 class FootprintSpecs(NamedTuple):
@@ -70,7 +70,10 @@ class FootprintSpecs(NamedTuple):
         body_dimensions: BodyDimensions object with inductor body dimensions
         pad_dimensions: PadDimensions object with pad dimensions and positions
         ref_offset_y: Y offset for reference designator
-        enable_pin_1_indicator: Flag to enable pin 1 indicator (default: True)
+        enable_polarity_indicator:
+            Flag to enable polarity indicator (default: True)
+        polarity_indicator_swap:
+            Flag to swap polarity indicator placement (default: False)
         additional_pads:
             Optional list of additional Pad objects for custom pad placement
         pad_offset_y:
@@ -81,7 +84,8 @@ class FootprintSpecs(NamedTuple):
     body_dimensions: BodyDimensions  # Basic rectangle dimensions
     pad_dimensions: PadDimensions  # Pad size and positioning
     ref_offset_y: float  # Y offset for reference designator
-    enable_pin_1_indicator: bool = True  # Enable pin 1 indicator
+    enable_polarity_indicator: bool = True  # Enable pin 1 indicator
+    polarity_indicator_swap: bool = False  # Swap polarity indicator placement
     additional_pads: list[Pad] | None = None  # Additional pads
     pad_offset_y: float = 0.0  # Vertical offset for original pads
 
@@ -437,7 +441,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=0.5,
         ),
         ref_offset_y=-1.27,
-        enable_pin_1_indicator=False,
+        enable_polarity_indicator=False,
     ),
     "LCENA2016MKTR47M0NK": FootprintSpecs(
         body_dimensions=BodyDimensions(width=2.7, height=2.2),
@@ -578,7 +582,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=0.8,
         ),
         ref_offset_y=-1.778,
-        enable_pin_1_indicator=False,
+        enable_polarity_indicator=False,
     ),
     "CB2518T": FootprintSpecs(
         body_dimensions=BodyDimensions(width=3.1, height=2.5),
@@ -588,7 +592,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.05,
         ),
         ref_offset_y=-2.032,
-        enable_pin_1_indicator=False,
+        enable_polarity_indicator=False,
     ),
     "IHLP4040DZE_V1": FootprintSpecs(
         body_dimensions=BodyDimensions(width=13, height=10.5),
@@ -598,7 +602,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=4.5085,
         ),
         ref_offset_y=-5.842,
-        enable_pin_1_indicator=False,
+        enable_polarity_indicator=False,
     ),
     "IHLP4040DZE_V2": FootprintSpecs(
         body_dimensions=BodyDimensions(width=13, height=10.5),
@@ -608,7 +612,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=4.4705,
         ),
         ref_offset_y=-5.842,
-        enable_pin_1_indicator=False,
+        enable_polarity_indicator=False,
     ),
     "74439369": FootprintSpecs(
         body_dimensions=BodyDimensions(width=12, height=12),
@@ -618,7 +622,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.2,
         ),
         ref_offset_y=-6.858,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744393605": FootprintSpecs(
         body_dimensions=BodyDimensions(width=11.4, height=11.4),
@@ -628,7 +632,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.2,
         ),
         ref_offset_y=-6.604,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744393665": FootprintSpecs(
         body_dimensions=BodyDimensions(width=11.4, height=11.4),
@@ -638,7 +642,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.2,
         ),
         ref_offset_y=-6.604,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439370": FootprintSpecs(
         body_dimensions=BodyDimensions(width=16.8, height=16.8),
@@ -648,7 +652,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=5.3,
         ),
         ref_offset_y=-9.398,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439323": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.5, height=4.5),
@@ -658,7 +662,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.225,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439324": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.5, height=4.5),
@@ -668,7 +672,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.225,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439325": FootprintSpecs(
         body_dimensions=BodyDimensions(width=4.5, height=4.5),
@@ -678,7 +682,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.225,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439333": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.6, height=5.6),
@@ -688,7 +692,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.675,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439334": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.6, height=5.6),
@@ -698,7 +702,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.675,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744393305": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.6, height=5.6),
@@ -708,7 +712,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.675,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439344": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.7, height=6.7),
@@ -718,7 +722,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439346": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.7, height=6.7),
@@ -728,7 +732,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744393445": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.7, height=6.7),
@@ -738,7 +742,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744393465": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.7, height=6.7),
@@ -748,7 +752,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439384": FootprintSpecs(
         body_dimensions=BodyDimensions(width=8, height=8),
@@ -758,7 +762,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.3,
         ),
         ref_offset_y=-4.826,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439387": FootprintSpecs(
         body_dimensions=BodyDimensions(width=8, height=8),
@@ -768,7 +772,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.3,
         ),
         ref_offset_y=-4.826,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74439358": FootprintSpecs(
         body_dimensions=BodyDimensions(width=8.9, height=8.9),
@@ -778,7 +782,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.5,
         ),
         ref_offset_y=-5.334,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437321": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.5, height=4.4),
@@ -788,7 +792,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.85,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437324": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.5, height=4.4),
@@ -798,7 +802,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.85,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "7443732448": FootprintSpecs(
         body_dimensions=BodyDimensions(width=5.5, height=4.4),
@@ -808,7 +812,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=1.85,
         ),
         ref_offset_y=-3.048,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437334": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.5, height=5.4),
@@ -818,7 +822,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.05,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "7443733448": FootprintSpecs(
         body_dimensions=BodyDimensions(width=6.5, height=5.4),
@@ -828,7 +832,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.05,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437336": FootprintSpecs(
         body_dimensions=BodyDimensions(width=7, height=5.5),
@@ -838,7 +842,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.25,
         ),
         ref_offset_y=-3.556,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437346": FootprintSpecs(
         body_dimensions=BodyDimensions(width=9, height=6.8),
@@ -848,7 +852,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.725,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "7443734648": FootprintSpecs(
         body_dimensions=BodyDimensions(width=9, height=6.8),
@@ -858,7 +862,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.725,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437349": FootprintSpecs(
         body_dimensions=BodyDimensions(width=9, height=6.8),
@@ -868,7 +872,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.725,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "7443734948": FootprintSpecs(
         body_dimensions=BodyDimensions(width=9, height=6.8),
@@ -878,7 +882,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=2.725,
         ),
         ref_offset_y=-4.064,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437356": FootprintSpecs(
         body_dimensions=BodyDimensions(width=10, height=8.6),
@@ -888,7 +892,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.62,
         ),
         ref_offset_y=-5.08,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437358": FootprintSpecs(
         body_dimensions=BodyDimensions(width=10, height=8.6),
@@ -898,7 +902,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=3.62,
         ),
         ref_offset_y=-5.08,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437368": FootprintSpecs(
         body_dimensions=BodyDimensions(width=14, height=10.2),
@@ -908,7 +912,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=4.75,
         ),
         ref_offset_y=-5.842,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "74437377": FootprintSpecs(
         body_dimensions=BodyDimensions(width=14.6, height=13),
@@ -918,7 +922,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=5.55,
         ),
         ref_offset_y=-7.366,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "744373965": FootprintSpecs(
         body_dimensions=BodyDimensions(width=14.6, height=13),
@@ -928,13 +932,14 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             center_x=5.55,
         ),
         ref_offset_y=-7.366,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
     ),
     "7443642010": FootprintSpecs(
         body_dimensions=BodyDimensions(width=19.5, height=22),
         pad_dimensions=PadDimensions(width=3.8, height=4.7, center_x=5.2),
         ref_offset_y=-11.938,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
+        polarity_indicator_swap=True,
         additional_pads=[Pad("3", 0, -8.32, 7.37, 4.06)],
         pad_offset_y=8,
     ),
@@ -942,7 +947,8 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(width=22, height=23),
         pad_dimensions=PadDimensions(width=5, height=5, center_x=4.5),
         ref_offset_y=-12.446,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
+        polarity_indicator_swap=True,
         additional_pads=[Pad("3", 0, -8.5, 5, 5)],
         pad_offset_y=8.5,
     ),
@@ -950,7 +956,8 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(width=28, height=29),
         pad_dimensions=PadDimensions(width=5.33, height=5.59, center_x=5.075),
         ref_offset_y=-15.24,
-        enable_pin_1_indicator=True,
+        enable_polarity_indicator=True,
+        polarity_indicator_swap=True,
         additional_pads=[Pad("3", 0, -10.96, 6.35, 5.28)],
         pad_offset_y=11.115,
     ),

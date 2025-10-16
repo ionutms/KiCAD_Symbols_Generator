@@ -84,8 +84,9 @@ def generate_footprint(
             custom_pin_1_y=specs.pad_offset_y
             if specs.pad_offset_y != 0.0
             else None,
+            mirror_x_coordonate=specs.polarity_indicator_swap,
         )
-        if specs.enable_pin_1_indicator
+        if specs.enable_polarity_indicator
         else ""
     )
 
