@@ -2233,4 +2233,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             ]
         ),
     ),
+    "7443641": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="7443641",
+        footprint="inductor_footprints:7443641",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[1.5, 2.2, 3.3, 4.7, 6.8, 10, 15, 22, 33],
+        max_dc_current=[44] * 9,
+        max_dc_resistance=[1.44] * 9,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        additional_pin_config=AdditionalPinConfig(
+            additional_pins=[
+                PinConfig("3", -7.62, -2.54, "passive", 2.54, False),
+            ]
+        ),
+    ),
 }
