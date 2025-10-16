@@ -388,7 +388,7 @@ class PartInfo(NamedTuple):
             value_code = cls.generate_wurth_value_code(inductance)
             if specs.base_series == "74479276":
                 value_code = cls.generate_wurth_pmci_value_code(inductance)
-            if specs.base_series == "744363":
+            if specs.base_series in ("744363", "7443641"):
                 value_code = cls.generate_wurth_hcf_value_code(inductance)
             mpn = f"{specs.base_series}{value_code}{specs.value_suffix}"
             datasheet = f"{specs.datasheet}{value_code}.pdf"
