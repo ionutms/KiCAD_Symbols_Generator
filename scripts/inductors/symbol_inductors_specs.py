@@ -69,6 +69,7 @@ class SeriesSpec(NamedTuple):
         value_suffix: AEC qualification suffix
         reference: Component reference prefix (default: "L")
         additional_pin_config: Optional additional pin configuration
+        alt_suffixes: List of alternative suffixes for specific components
 
     """
 
@@ -84,6 +85,7 @@ class SeriesSpec(NamedTuple):
     value_suffix: str = ""
     reference: str = "L"
     additional_pin_config: AdditionalPinConfig | None = None
+    alt_suffixes: list[str] | None = None
 
 
 class PartInfo(NamedTuple):
@@ -279,6 +281,26 @@ class PartInfo(NamedTuple):
         return f"{inductance * 10}0"
 
     @staticmethod
+    def generate_wurth_hcf_with_suffix_value_code(
+        inductance: float, suffix: str
+    ) -> str:
+        """Generate Wurth Elektronik inductance value codes.
+
+        Args:
+            inductance: Inductance value in µH
+            suffix: Suffix for special series
+
+        Returns:
+            Formatted inductance value code
+
+        """
+        if inductance < 1:
+            return f"00{int(inductance * 100)}{suffix}"
+        if inductance < 10:
+            return f"0{int(inductance * 10)}0{suffix}"
+        return f"{inductance * 10}0{suffix}"
+
+    @staticmethod
     def generate_vishay_value_code(inductance: float) -> str:
         """Generate Vishay inductance value codes.
 
@@ -431,6 +453,56 @@ class PartInfo(NamedTuple):
             List of PartInfo instances for the series
 
         """
+        if specs.base_series == "744364":
+            parts = []
+            for i in range(len(specs.inductance_values)):
+                inductance = specs.inductance_values[i]
+                suffix = (
+                    specs.alt_suffixes[i]
+                    if i < len(specs.alt_suffixes)
+                    else ""
+                )
+                max_dc_current = (
+                    float(specs.max_dc_current[i])
+                    if i < len(specs.max_dc_current)
+                    else 0.0
+                )
+                max_dc_resistance = (
+                    float(specs.max_dc_resistance[i])
+                    if i < len(specs.max_dc_resistance)
+                    else 0.0
+                )
+                footprint = (
+                    specs.footprint[i]
+                    if isinstance(specs.footprint, list)
+                    and i < len(specs.footprint)
+                    else specs.footprint
+                )
+
+                value_code = cls.generate_wurth_hcf_with_suffix_value_code(
+                    inductance, suffix
+                )
+                mpn = f"{specs.base_series}{value_code}"
+                datasheet = f"{specs.datasheet}{value_code}.pdf"
+
+                part = cls(
+                    symbol_name=f"{specs.reference}_{mpn}",
+                    reference=specs.reference,
+                    value=inductance,
+                    footprint=footprint,
+                    datasheet=datasheet,
+                    description=cls.create_description(inductance, specs),
+                    manufacturer=specs.manufacturer,
+                    mpn=mpn,
+                    tolerance=specs.tolerance,
+                    series=specs.base_series,
+                    trustedparts_link=f"{specs.trustedparts_link}/{mpn}",
+                    max_dc_current=max_dc_current,
+                    max_dc_resistance=max_dc_resistance,
+                )
+                parts.append(part)
+            return parts
+
         return [
             cls.create_part_info(value, specs)
             for value in specs.inductance_values
@@ -2125,6 +2197,34 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         max_dc_resistance=[
             *[0.91, 1.19, 1.65, 2.3, 3.34, 4.4, 6.17],
             *[7.91, 8.76, 9.57, 11.72, 12.54, 13.42],
+        ],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        additional_pin_config=AdditionalPinConfig(
+            additional_pins=[
+                PinConfig("3", -7.62, -2.54, "passive", 2.54, False),
+            ]
+        ),
+    ),
+    "744364": SeriesSpec(
+        manufacturer="Wurth Elektronik",
+        base_series="744364",
+        footprint="inductor_footprints:744364",
+        tolerance="±20%",
+        datasheet="https://www.we-online.com/components/products/datasheet/",
+        inductance_values=[
+            *[1, 1.5, 3.3, 3.3, 4.7, 4.7, 6.8],
+            *[6.8, 10, 10, 15, 22, 33],
+        ],
+        max_dc_current=[
+            *[86.2, 86.2, 34.95, 59.2, 34.95, 59.2, 34.95],
+            *[59.2, 34.95, 59.2, 34.95, 34.95, 34.95],
+        ],
+        max_dc_resistance=[
+            *[0.48, 0.48, 2.64, 0.97, 2.64, 0.97, 2.64],
+            *[0.97, 2.64, 0.97, 2.64, 2.64, 2.64],
+        ],
+        alt_suffixes=[
+            *["B", "B", "", "B", "", "B", "", "B", "", "B", "", "", ""],
         ],
         trustedparts_link="https://www.trustedparts.com/en/search",
         additional_pin_config=AdditionalPinConfig(
