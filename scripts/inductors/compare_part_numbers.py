@@ -12,6 +12,10 @@ SERIES_CONFIG = {
         "extracted_file": "we_lhmi_parts.csv",
         "display_name": "WE-LHMI",
     },
+    "WE-HCF": {
+        "extracted_file": "we_hcf_parts.csv",
+        "display_name": "WE-HCF",
+    },
 }
 
 REFERENCE_DB = {
@@ -55,7 +59,7 @@ def load_part_numbers_from_reference_db(file_path):
                 inductance = row.get("Value", "").strip()
                 current_rating = row.get("Maximum DC Current (A)", "").strip()
                 dc_resistance = row.get(
-                    "Maximum DC Resistance (Ω)", ""
+                    "Maximum DC Resistance (mΩ)", ""
                 ).strip()
                 parts_data[mpn] = {
                     "inductance": inductance,

@@ -3,6 +3,7 @@
 Extract part numbers from product pages and save them to a CSV file
 with inductance, current rating, and DC resistance values.
 This script is generic and can be configured for different part series.
+Currently supports: WE-XHMI, WE-LHMI, and WE-HCF.
 """
 
 import csv
@@ -25,6 +26,14 @@ SERIES_CONFIG = {
         "url": "https://www.we-online.com/en/components/products/WE-LHMI",
         "pattern": r"\b(744373\d+|74437\d+)\b",
         "filename": "we_lhmi_parts.csv",
+        "inductance_col": 5,
+        "current_col": 6,
+        "resistance_col": 9,
+    },
+    "WE-HCF": {
+        "url": "https://www.we-online.com/en/components/products/WE-HCF",
+        "pattern": r"\b(74436\d{5}\w*|74437\d{5}\w*)\b",
+        "filename": "we_hcf_parts.csv",
         "inductance_col": 5,
         "current_col": 6,
         "resistance_col": 9,
