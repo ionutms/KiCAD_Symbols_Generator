@@ -1045,4 +1045,25 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Gold",
     ),
+    "FW-xx-01-G-D-160-160": SeriesSpec(
+        manufacturer="Samtec",
+        base_series="FW-xx-01-G-D-160-160",
+        footprint_pattern="connector_footprints:FW-{:02d}-01-G-D-160-160",
+        datasheet=(
+            "https://suddendocs.samtec.com/catalog_english/fw_th.pdf?"
+            "_gl=1*12wer0i*_gcl_au*OTQ3NjE2MTIwLjE3NTQ5MDMyODE.*"
+            "_ga*NzIxODQzNjU3LjE3NTQ5MDMyODI.*_ga_3KFNZC07WW*"
+            "czE3NjA4NTY2ODgkbzE3JGcxJHQxNzYwODU5NDQxJGo2MCRsMCRoMA.."
+        ),
+        pin_counts=list(range(2, 51)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=1.27,
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
+    ),
 }
