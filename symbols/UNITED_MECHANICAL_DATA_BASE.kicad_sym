@@ -74,7 +74,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "M"
-			(at 0 15.24 0)
+			(at 0 2.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -92,7 +92,7 @@
 			)
 		)
 		(property "Footprint" "mechanical_parts:2203404"
-			(at 0 -15.24 0)
+			(at 0 -7.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -102,7 +102,7 @@
 			)
 		)
 		(property "Datasheet" "https://product-download.phoenixcontact.com/8993829?response-content-disposition=inline;%20filename%3D%22pxc_2203404_00_04_UCS-CCD-5018_2D.pdf%22&Expires=1760993781&Signature=hiXDHE2a7QlZMelQjIMSlmcRDcrNVedl0tuJNL~EhL~9If~dxsbeqpHLNqBCKf1c8pUA0HdKEZKHIUr7KcAP3qLvEPi-ukzmFAk0mC-qXU~U8xA8X4o0dOvUYeueJ7pZNDl-GI8wH3Jfz9SOoQVhLWhGz6Pp45rDxzPFH57g2VCTMNN-zQ8WBDXPo08ORLR2n8kDh48RR0DGYbqUmSuPK-aXdS-1a30H7ZOCpl8-yNSBEcm~2BxBElp-A3ML~5aXGysvYFKdSa3a0wTRto4stLt-TIalFjSigaIjx-qH~ey4o-n4mHwclgh0TG0tPf-K-hl5pxWdDLXNhBTB-s0SJA__&Key-Pair-Id=K1I2N54A7B0GD"
-			(at 0 -17.78 0)
+			(at 0 -10.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -112,7 +112,7 @@
 			)
 		)
 		(property "Description" "UCS CCD 5018 - Corner inlay"
-			(at 0 -20.32 0)
+			(at 0 -12.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -121,10 +121,23 @@
 				(hide yes)
 			)
 		)
-		(symbol "M_2203404_1_1"
-			(rectangle
-				(start -12.7 12.7)
-				(end 12.7 -12.7)
+		(symbol "M_2203404_0_1"
+			(polyline
+				(pts
+					(xy -5.08 0) (xy 0 0) (xy 0 -5.08)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 -5.08)
+				(mid -3.5921 -3.5921)
+				(end -5.08 0)
 				(stroke
 					(width 0)
 					(type default)
@@ -141,7 +154,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "M"
-			(at 0 15.24 0)
+			(at 0 2.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -159,7 +172,7 @@
 			)
 		)
 		(property "Footprint" "mechanical_parts:2203404_v2"
-			(at 0 -15.24 0)
+			(at 0 -7.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -169,7 +182,7 @@
 			)
 		)
 		(property "Datasheet" "https://product-download.phoenixcontact.com/8993829?response-content-disposition=inline;%20filename%3D%22pxc_2203404_00_04_UCS-CCD-5018_2D.pdf%22&Expires=1760993781&Signature=hiXDHE2a7QlZMelQjIMSlmcRDcrNVedl0tuJNL~EhL~9If~dxsbeqpHLNqBCKf1c8pUA0HdKEZKHIUr7KcAP3qLvEPi-ukzmFAk0mC-qXU~U8xA8X4o0dOvUYeueJ7pZNDl-GI8wH3Jfz9SOoQVhLWhGz6Pp45rDxzPFH57g2VCTMNN-zQ8WBDXPo08ORLR2n8kDh48RR0DGYbqUmSuPK-aXdS-1a30H7ZOCpl8-yNSBEcm~2BxBElp-A3ML~5aXGysvYFKdSa3a0wTRto4stLt-TIalFjSigaIjx-qH~ey4o-n4mHwclgh0TG0tPf-K-hl5pxWdDLXNhBTB-s0SJA__&Key-Pair-Id=K1I2N54A7B0GD"
-			(at 0 -17.78 0)
+			(at 0 -10.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -179,7 +192,7 @@
 			)
 		)
 		(property "Description" "UCS CCD 5018 - Corner inlay"
-			(at 0 -20.32 0)
+			(at 0 -12.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -188,10 +201,23 @@
 				(hide yes)
 			)
 		)
-		(symbol "M_2203404_v2_1_1"
-			(rectangle
-				(start -12.7 12.7)
-				(end 12.7 -12.7)
+		(symbol "M_2203404_v2_0_1"
+			(polyline
+				(pts
+					(xy -5.08 0) (xy 0 0) (xy 0 -5.08)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 -5.08)
+				(mid -3.5921 -3.5921)
+				(end -5.08 0)
 				(stroke
 					(width 0)
 					(type default)
