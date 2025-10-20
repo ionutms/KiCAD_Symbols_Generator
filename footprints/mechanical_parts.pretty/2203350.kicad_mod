@@ -1,0 +1,177 @@
+(footprint "2203350"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "UCS HH 125-87 9005 - Housing half shell")
+	(property "Reference" "REF**"
+		(at 0 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "98a4fe02-a51b-4014-8ebd-c6e4d28fafcd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "2203350"
+		(at 0 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "19ef5d56-d019-481e-99fd-46fef6a506f0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "48af4cc9-7d33-4a68-bbf9-75250fe5eda6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "UCS HH 125-87 9005 - Housing half shell"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "968a706a-0439-4dea-a805-a3be61e67146")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -43.5 54.2)
+		(end -43.5 -54.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "0c007019-073c-4147-8a02-2f19feb6ac96")
+	)
+	(fp_line
+		(start -35.2 -62.5)
+		(end 35.2 -62.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "ececf347-1b48-472e-bb53-d4603d64cb65")
+	)
+	(fp_line
+		(start 35.2 62.5)
+		(end -35.2 62.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "9cedb342-a73b-40dd-b2fe-8b9d7905a2e3")
+	)
+	(fp_line
+		(start 43.5 -54.2)
+		(end 43.5 54.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "290fe4c3-bd08-4f4b-be66-d0d68619605a")
+	)
+	(fp_rect
+		(start -31.35 -50.35)
+		(end 31.35 50.35)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "Cmts.User")
+		(uuid "7fc60811-59c6-4478-be28-e724bdd6793b")
+	)
+	(fp_arc
+		(start -43.5 -54.2)
+		(mid -41.068986 -60.068986)
+		(end -35.2 -62.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "c07a2b0c-a1a3-4c45-b394-b757224db9fa")
+	)
+	(fp_arc
+		(start -35.2 62.5)
+		(mid -41.068986 60.068986)
+		(end -43.5 54.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "b74ff701-3077-47ea-9dab-4942f2865d7c")
+	)
+	(fp_arc
+		(start 35.2 -62.5)
+		(mid 41.068986 -60.068986)
+		(end 43.5 -54.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "c3bba5a8-2704-4a9c-950c-2a83c3fdfbb9")
+	)
+	(fp_arc
+		(start 43.5 54.2)
+		(mid 41.068986 60.068986)
+		(end 35.2 62.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Cmts.User")
+		(uuid "0fb6e3e0-8b13-47e0-9ef8-bae69b9f6e7b")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "21b8d3b7-7d4f-4d4c-b273-36a6359f3eac")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3D_MODELS_VAULT}/3D_models/mechanical/2203350.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

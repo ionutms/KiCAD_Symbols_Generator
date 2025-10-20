@@ -1,7 +1,74 @@
 (kicad_symbol_lib
-	(version 20231120)
+	(version 20241209)
 	(generator "kicad_symbol_editor")
-	(generator_version "8.0")
+	(generator_version "9.0")
+	(symbol "M_2203350"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "M"
+			(at 0 15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "mechanical_parts:2203350"
+			(at 0 -15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://product-download.phoenixcontact.com/8025199?response-content-disposition=inline;%20filename%3D%22pxc_2203350_00_02_UCS-HH-125-87-9005_2D.pdf%22&Expires=1760989045&Signature=yE5~e9oEp1czmAuNjEVI-zMCk115UdZsJSv~rrHj0mJAaEc55~bR20bW9JJOB3hki3HOREKBknujH~8gYOUKHzLpSGgETtHOQerG8jWvvCgEOtBdmOWxPCFsOz9Wsha5f2~VPSQJvuGHCf2CTsN5w1iZpHUNsgk-mkW2p9pzyOLKxVWYhtjSbQv3gEOsVOjFHlOlmTX7rqb6sJSqriLur8mA9m3Tjg-Z30FHvQ1KxAkSK4hrzVgTKxESnhz77NCWnp-s970KOF79zwJtK4mF8zDCIv5i5t6kHDL5A9xxqz5SxQzMk3O-D3HhNnTfdPWE6WLROkbUQOZ4tbjTyLeyWA__&Key-Pair-Id=K1I2N54A7B0GD"
+			(at 0 -17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "UCS HH 125-87 9005 - Housing half shell"
+			(at 0 -20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(symbol "M_2203350_1_1"
+			(rectangle
+				(start -12.7 12.7)
+				(end 12.7 -12.7)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	(symbol "M_9774005243R"
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -64,10 +131,34 @@
 			)
 		)
 		(symbol "M_9774005243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -78,20 +169,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -112,19 +191,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774010243R"
 		(exclude_from_sim no)
@@ -188,10 +256,34 @@
 			)
 		)
 		(symbol "M_9774010243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -202,20 +294,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -236,19 +316,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774015243R"
 		(exclude_from_sim no)
@@ -312,10 +381,34 @@
 			)
 		)
 		(symbol "M_9774015243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -326,20 +419,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -360,19 +441,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774020243R"
 		(exclude_from_sim no)
@@ -436,10 +506,34 @@
 			)
 		)
 		(symbol "M_9774020243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -450,20 +544,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -484,19 +566,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774025243R"
 		(exclude_from_sim no)
@@ -560,10 +631,34 @@
 			)
 		)
 		(symbol "M_9774025243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -574,20 +669,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -608,19 +691,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774030243R"
 		(exclude_from_sim no)
@@ -684,10 +756,34 @@
 			)
 		)
 		(symbol "M_9774030243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -698,20 +794,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -732,19 +816,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774035243R"
 		(exclude_from_sim no)
@@ -808,10 +881,34 @@
 			)
 		)
 		(symbol "M_9774035243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -822,20 +919,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -856,19 +941,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774040243R"
 		(exclude_from_sim no)
@@ -932,10 +1006,34 @@
 			)
 		)
 		(symbol "M_9774040243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -946,20 +1044,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -980,19 +1066,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774045243R"
 		(exclude_from_sim no)
@@ -1056,10 +1131,34 @@
 			)
 		)
 		(symbol "M_9774045243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -1070,20 +1169,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -1104,19 +1191,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774050243R"
 		(exclude_from_sim no)
@@ -1180,10 +1256,34 @@
 			)
 		)
 		(symbol "M_9774050243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -1194,20 +1294,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -1228,19 +1316,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774060243R"
 		(exclude_from_sim no)
@@ -1304,10 +1381,34 @@
 			)
 		)
 		(symbol "M_9774060243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -1318,20 +1419,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -1352,19 +1441,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774070243R"
 		(exclude_from_sim no)
@@ -1428,10 +1506,34 @@
 			)
 		)
 		(symbol "M_9774070243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -1442,20 +1544,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -1476,19 +1566,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_9774080243R"
 		(exclude_from_sim no)
@@ -1552,10 +1631,34 @@
 			)
 		)
 		(symbol "M_9774080243R_0_1"
+			(polyline
+				(pts
+					(xy -2.54 1.905) (xy -2.54 -1.905)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(arc
-				(start -2.54 -1.905)
+				(start 2.54 1.905)
+				(mid 0 0.8529)
+				(end -2.54 1.905)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 2.54 -1.905)
 				(mid 0 -2.9571)
-				(end 2.54 -1.905)
+				(end -2.54 -1.905)
 				(stroke
 					(width 0)
 					(type default)
@@ -1566,20 +1669,8 @@
 			)
 			(arc
 				(start -2.54 1.905)
-				(mid 0 0.8529)
+				(mid 0 2.9571)
 				(end 2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.905) (xy -2.54 -1.905)
-				)
 				(stroke
 					(width 0)
 					(type default)
@@ -1600,19 +1691,8 @@
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 1.905)
-				(mid 0 2.9571)
-				(end -2.54 1.905)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_UM108_PROFIL"
 		(exclude_from_sim no)
@@ -1674,6 +1754,7 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_UM108_SEFE_L"
 		(exclude_from_sim no)
@@ -1739,6 +1820,7 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 	(symbol "M_UM108_SEFE_R"
 		(exclude_from_sim no)
@@ -1804,5 +1886,6 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 )
