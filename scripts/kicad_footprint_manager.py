@@ -1,15 +1,18 @@
 """Extract footprint code and modify it in a KiCad .kicad_pcb file.
 
 This script can extract the complete footprint code for a specified reference,
-or modify the footprint by adding/removing (hide yes) to/from the model field.
+or modify the footprint by adding/removing (hide yes) to/from the model field,
+or offset the 3D model coordinates.
 
 Usage:
     Extract:
-        python extract_footprints.py <kicad_pcb_file> <reference> --code
+        python kicad_footprint_manager.py <file> <reference> --code
     Hide 3D model:
-        python extract_footprints.py <kicad_pcb_file> <reference> --hide
+        python kicad_footprint_manager.py <file> <reference> --hide
     Show 3D model:
-        python extract_footprints.py <kicad_pcb_file> <reference> --show
+        python kicad_footprint_manager.py <file> <reference> --show
+    Offset coordinates:
+        python kicad_footprint_manager.py <file> <reference> --offset X Y Z
 
 """
 
@@ -151,6 +154,44 @@ def remove_hide_from_model(footprint_code):
     return modified_code
 
 
+def offset_model_coordinates(footprint_code, dx, dy, dz):
+    """Offset the existing model coordinates by the specified deltas.
+
+    Args:
+        footprint_code (str): The footprint code to modify
+        dx (float): Offset to add to X coordinate
+        dy (float): Offset to add to Y coordinate
+        dz (float): Offset to add to Z coordinate
+
+    Returns:
+        str: The modified footprint code
+
+    """
+    pattern = (
+        r'(\(model\s+"[^"]+"\s*\n\s*(?:\(hide yes\)\s*\n\s*)?'
+        r"\(offset\s*\n\s*\(xyz\s+)"
+        r"([+-]?\d+\.?\d*)\s+"
+        r"([+-]?\d+\.?\d*)\s+"
+        r"([+-]?\d+\.?\d*)"
+        r"(\s*\))"
+    )
+
+    def replace_func(match):
+        x = float(match.group(2)) + dx
+        y = float(match.group(3)) + dy
+        z = float(match.group(4)) + dz
+        return f"{match.group(1)}{x} {y} {z}{match.group(5)}"
+
+    modified_code = re.sub(pattern, replace_func, footprint_code)
+
+    if modified_code == footprint_code:
+        print("Warning: No offset section found in the model.")
+    else:
+        print(f"Applied offset: ({dx:+g}, {dy:+g}, {dz:+g})")
+
+    return modified_code
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description=(
@@ -181,6 +222,13 @@ if __name__ == "__main__":
             "of the footprint to show 3D model"
         ),
     )
+    parser.add_argument(
+        "--offset",
+        nargs=3,
+        type=float,
+        metavar=("DX", "DY", "DZ"),
+        help="Offset the model coordinates by (dx, dy, dz)",
+    )
 
     args = parser.parse_args()
 
@@ -193,7 +241,11 @@ if __name__ == "__main__":
     if not pcb_path.suffix.lower() == ".kicad_pcb":
         print(f"Warning: File {pcb_path} does not have .kicad_pcb extension.")
 
-    if args.code and args.reference and not args.hide and not args.show:
+    if (
+        args.code
+        and args.reference
+        and not any([args.hide, args.show, args.offset])
+    ):
         _, footprints = parse_kicad_pcb(pcb_path)
         if args.reference in footprints:
             print(f"Complete footprint code for reference: {args.reference}")
@@ -203,7 +255,11 @@ if __name__ == "__main__":
             print("Available references:")
             for ref in sorted(footprints.keys()):
                 print(f"  - {ref}")
-    elif args.hide and args.reference and not args.code and not args.show:
+    elif (
+        args.hide
+        and args.reference
+        and not any([args.code, args.show, args.offset])
+    ):
         _, footprints = parse_kicad_pcb(pcb_path)
         if args.reference not in footprints:
             print(
@@ -217,7 +273,11 @@ if __name__ == "__main__":
         replace_footprint_in_file(
             pcb_path, args.reference, modified_footprint
         )
-    elif args.show and args.reference and not args.code and not args.hide:
+    elif (
+        args.show
+        and args.reference
+        and not any([args.code, args.hide, args.offset])
+    ):
         _, footprints = parse_kicad_pcb(pcb_path)
         if args.reference not in footprints:
             print(
@@ -227,6 +287,26 @@ if __name__ == "__main__":
 
         original_footprint = footprints[args.reference]["full_data"]
         modified_footprint = remove_hide_from_model(original_footprint)
+
+        replace_footprint_in_file(
+            pcb_path, args.reference, modified_footprint
+        )
+    elif (
+        args.offset
+        and args.reference
+        and not any([args.code, args.hide, args.show])
+    ):
+        _, footprints = parse_kicad_pcb(pcb_path)
+        if args.reference not in footprints:
+            print(
+                f"Error: No footprint found with reference: {args.reference}"
+            )
+            sys.exit(1)
+
+        original_footprint = footprints[args.reference]["full_data"]
+        modified_footprint = offset_model_coordinates(
+            original_footprint, args.offset[0], args.offset[1], args.offset[2]
+        )
 
         replace_footprint_in_file(
             pcb_path, args.reference, modified_footprint
@@ -241,3 +321,4 @@ if __name__ == "__main__":
         print("  Extract: --code option")
         print("  Hide 3D model: --hide option")
         print("  Show 3D model: --show option")
+        print("  Offset coordinates: --offset DX DY DZ option")
