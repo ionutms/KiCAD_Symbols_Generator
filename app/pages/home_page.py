@@ -766,7 +766,16 @@ def load_project_image_urls(project_name: str, username: str) -> list[str]:
                 f"Loading {len(project_filtered)} "
                 f"images for project {project_name}"
             )
-            filenames = project_filtered
+
+            def extract_numeric_prefix(filename):
+                import re
+
+                match = re.match(r"^(\d+)", filename)
+                if match:
+                    return int(match.group(1))
+                return float("inf")
+
+            filenames = sorted(project_filtered, key=extract_numeric_prefix)
         else:
             logging.info(f"No images found for project {project_name}")
     else:
