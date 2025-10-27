@@ -421,7 +421,7 @@ REPO_CONFIGS = [
         "hidden_links": {
             "ibom": True,
             "schematics": True,
-            "wrl": True,
+            "wrl": False,
             "glb": True,
             "kicanvas": True,
         },
