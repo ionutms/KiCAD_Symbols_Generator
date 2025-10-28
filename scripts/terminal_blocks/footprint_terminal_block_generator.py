@@ -86,7 +86,7 @@ def generate_footprint(
             footprint_value,
             footprint_specs.mpn_y,
         ),
-        footprint_utils.generate_usr_comment_courtyard(
+        footprint_utils.generate_user_comment_courtyard(
             width_left,
             width_right,
             height_top,

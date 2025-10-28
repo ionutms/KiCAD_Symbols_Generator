@@ -161,7 +161,7 @@ def generate_courtyard_2(
         """
 
 
-def generate_usr_comment_courtyard(
+def generate_user_comment_courtyard(
     width_left: float,
     width_right: float,
     height_top: float,
