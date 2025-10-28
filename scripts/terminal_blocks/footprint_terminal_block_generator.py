@@ -20,7 +20,7 @@ from footprint_terminal_block_specs import CONNECTOR_SPECS, FootprintSpecs
 from utilities import footprint_utils
 
 
-def generate_footprint(  # noqa: C901
+def generate_footprint(
     part_info: symbol_terminal_block_specs.PartInfo,
     footprint_specs: FootprintSpecs,
 ) -> str:
@@ -55,7 +55,6 @@ def generate_footprint(  # noqa: C901
     )
 
     if part_info.manufacturer == "Same Sky":
-        model_file_name = f"CUI_DEVICES_{part_info.mpn}"
         footprint_value = part_info.series
 
     # Prepare custom pin numbering from pin_names if provided
@@ -80,105 +79,6 @@ def generate_footprint(  # noqa: C901
             # Fallback to sequential numbering logic if counts don't align
             custom_pin_numbers = None
 
-    if part_info.mounting_style == "Through Hole":
-        pads = footprint_utils.generate_thru_hole_pads(
-            part_info.pin_count,
-            footprint_specs.pad_pitch,
-            footprint_specs.pad_size,
-            footprint_specs.drill_size,
-            dimensions["start_pos"],
-            row_pitch=footprint_specs.row_pitch,
-            row_count=footprint_specs.number_of_rows,
-            pin_numbers=custom_pin_numbers,
-        )
-
-    f_silk_pin_1_indicator = ""
-    f_fab_pin_1_indicator = ""
-    if getattr(footprint_specs, "show_pin1_indicator", True):
-        pin_1_indicators = {}
-        for layer in ["F.SilkS", "F.Fab"]:
-            pin_1_indicators[layer] = (
-                footprint_utils.generate_pin_1_indicator(
-                    body_width=dimensions["width_left"] * 2,
-                    pins_per_side=footprint_specs.number_of_rows,
-                    pitch_y=footprint_specs.row_pitch,
-                )
-            )
-
-        f_silk_pin_1_indicator = pin_1_indicators["F.SilkS"]
-        f_fab_pin_1_indicator = pin_1_indicators["F.Fab"]
-
-    if (
-        part_info.mounting_style == "Surface Mount"
-        and footprint_specs.number_of_rows == 1
-    ):
-        pads = [
-            footprint_utils.generate_zig_zag_surface_mount_pads(
-                part_info.pin_count,
-                footprint_specs.pad_pitch,
-                footprint_specs.pad_size,
-                dimensions["start_pos"],
-                row_pitch=footprint_specs.row_pitch,
-                mirror_y_position=footprint_specs.miror_zig_zag,
-                pin_numbers=custom_pin_numbers,
-            ),
-        ]
-        pads = "".join(pads)
-
-    if (
-        part_info.mounting_style == "Surface Mount"
-        and footprint_specs.number_of_rows == 2  # noqa: PLR2004
-    ):
-        pads = [
-            footprint_utils.generate_surface_mount_pads(
-                part_info.pin_count,
-                footprint_specs.pad_pitch,
-                footprint_specs.pad_size,
-                dimensions["start_pos"],
-                row_pitch=footprint_specs.row_pitch,
-                row_count=footprint_specs.number_of_rows,
-                mirror_x_pin_numbering=footprint_specs.mirror_x_pin_numbering,
-                pin_numbers=custom_pin_numbers,
-            ),
-        ]
-        pads = "".join(pads)
-
-    if footprint_specs.non_plated_round_mounting_holes is not None:
-        for _, mounting_holes_specs in enumerate(
-            footprint_specs.non_plated_round_mounting_holes.footprint_specs,
-        ):
-            pads += footprint_utils.generate_non_plated_through_hole(
-                mounting_holes_specs,
-            )
-
-    if footprint_specs.plated_oval_mounting_holes is not None:
-        for _, mounting_holes_specs in enumerate(
-            footprint_specs.plated_oval_mounting_holes.footprint_specs,
-        ):
-            pads += footprint_utils.generate_oval_plated_through_hole(
-                mounting_holes_specs,
-            )
-
-    second_coutyard = ""
-    if footprint_specs.internal_courtyard is not None:
-        second_coutyard = footprint_utils.generate_courtyard_2(
-            footprint_specs.internal_courtyard.width_left,
-            footprint_specs.internal_courtyard.width_right,
-            footprint_specs.internal_courtyard.height_top,
-            footprint_specs.internal_courtyard.height_bottom,
-        )
-
-    if footprint_specs.non_plated_drill_size is not None:
-        pads += footprint_utils.generate_non_plated_through_holes(
-            part_info.pin_count,
-            footprint_specs.pad_pitch,
-            footprint_specs.non_plated_pad_size,
-            footprint_specs.non_plated_drill_size,
-            dimensions["start_pos"],
-            row_pitch=footprint_specs.non_plated_row_pitch,
-            row_count=footprint_specs.number_of_rows,
-        )
-
     sections = [
         footprint_utils.generate_header(part_info.mpn),
         footprint_utils.generate_properties(
@@ -186,28 +86,12 @@ def generate_footprint(  # noqa: C901
             footprint_value,
             footprint_specs.mpn_y,
         ),
-        footprint_utils.generate_courtyard_2(
+        footprint_utils.generate_usr_comment_courtyard(
             width_left,
             width_right,
             height_top,
             height_bottom,
         ),
-        second_coutyard,
-        footprint_utils.generate_silkscreen_rectangle(
-            width_left,
-            width_right,
-            height_top,
-            height_bottom,
-        ),
-        footprint_utils.generate_fabrication_rectangle(
-            width_left,
-            width_right,
-            height_top,
-            height_bottom,
-        ),
-        f_silk_pin_1_indicator,
-        f_fab_pin_1_indicator,
-        pads,
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/terminal_blocks",
             model_file_name,

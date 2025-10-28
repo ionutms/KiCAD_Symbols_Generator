@@ -161,6 +161,39 @@ def generate_courtyard_2(
         """
 
 
+def generate_usr_comment_courtyard(
+    width_left: float,
+    width_right: float,
+    height_top: float,
+    height_bottom: float,
+) -> str:
+    """Generate KiCad courtyard outline for rectangular components.
+
+    Creates a rectangular courtyard outline defining the minimum
+    clearance zone around a component.
+
+    Args:
+        width_left (float): Component body width in millimeters.
+        width_right (float): Component body width in millimeters.
+        height_top (float): Component body height in millimeters.
+        height_bottom (float): Component body height in millimeters.
+
+    Returns:
+        str: KiCad format courtyard outline specification.
+
+    """
+    return f"""
+        (fp_rect
+            (start -{width_left} {height_bottom})
+            (end {width_right} -{height_top})
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "Cmts.User")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
 def generate_silkscreen_rectangle(
     width_left: float,
     width_right: float,
@@ -588,7 +621,7 @@ def generate_thermal_pad(
         pad_heigh = [pad_heigh] * len(thermal_pad_numbers)
     if isinstance(pad_x, (int, float)):
         pad_x = [pad_x] * len(thermal_pad_numbers)
-        
+
     pads = [
         f"""
         (pad "{pad_number}" smd roundrect
