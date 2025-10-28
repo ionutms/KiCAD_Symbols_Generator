@@ -174,7 +174,7 @@ class PartInfo(NamedTuple):
 
         """
         if manufacturer == "Same Sky":
-            return f"{series_code}-{pin_count:02d}PE"
+            return f"{series_code}-{pin_count:02d}BE"
         # else if manufacturer is Samtec
         return f"{series_code.replace('xx', f'{pin_count:02d}')}"
 
@@ -233,7 +233,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "TBP02P1-381": SeriesSpec(
         manufacturer="Same Sky",
         base_series="TBP02P1-381",
-        footprint_pattern="terminal_block_footprints:TBP02P1-381-{:02d}PE",
+        footprint_pattern="terminal_block_footprints:TBP02P1-381-{:02d}BE",
         datasheet=(
             "https://www.sameskydevices.com/product/resource/tbp02p1-381.pdf"
         ),
