@@ -139,12 +139,12 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         body_dimensions=BodyDimensions(
             width_left=4.4,
             width_right=4.4,
-            height_top=7.9,
-            height_bottom=1.4,
+            height_top=17.3,
+            height_bottom=-1.4,
         ),
         pad_size=2.1,
         drill_size=1.4,
-        mpn_y=-10.2,
-        ref_y=2.4,
+        mpn_y=-19.558,
+        ref_y=-0.762,
     ),
 }
