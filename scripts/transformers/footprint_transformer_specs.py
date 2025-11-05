@@ -167,4 +167,21 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ],
         ref_offset_y=-11.684,
     ),
+    "PL300X9-102L": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=29.5, height=26.8),
+        pad_dimensions=[
+            Pad("1", -12.7, -7.95, 2.03),
+            Pad("2", -12.7, -4.77, 2.03),
+            Pad("3", -12.7, -1.59, 2.03),
+            Pad("4", -12.7, 1.59, 2.03),
+            Pad("5", -12.7, 4.77, 2.03),
+            Pad("6", -12.7, 7.95, 2.03),
+            Pad("7", 12.7, 3.81 * 2, 2.79),
+            Pad("8", 12.7, 3.81, 2.79),
+            Pad("9", 12.7, 0, 2.79),
+            Pad("10", 12.7, -3.81, 2.79),
+            Pad("11", 12.7, -3.81 * 2, 2.79),
+        ],
+        ref_offset_y=-14.224,
+    ),
 }

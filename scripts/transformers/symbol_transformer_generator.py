@@ -178,7 +178,7 @@ def write_component(
             symbol_name,
             pin_config,
         )
-    if component_data.get("Series") in ("PL160X9-102L"):
+    if component_data.get("Series") in ("PL160X9-102L", "PL300X9-102L"):
         symbol_utils.write_properties(
             symbol_file,
             component_data,

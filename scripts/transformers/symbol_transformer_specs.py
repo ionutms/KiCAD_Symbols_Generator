@@ -446,4 +446,36 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             ],
         ),
     ),
+    "PL300X9-102L": SeriesSpec(
+        manufacturer="Coilcraft",
+        base_series="PL300X9-102L",
+        footprint="transformer_footprints:PL300X9-102L",
+        tolerance="±10%",
+        datasheet=(
+            "https://www.coilcraft.com/getmedia/"
+            "636aef6f-8168-4ece-bb01-e16574e130d8/pl300.pdf"
+        ),
+        turns_ratio={"pri1 : sec": "5 : 4", "pri2 : sec": "5 : 4"},
+        primary_inductance=378,
+        max_dc_resistance={"pri1": "0.009", "pri2": "0.009", "sec": "0.0042"},
+        value_suffix="-BLD",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig("2", 2.54 * 7, "unspecified", 5.08),
+                PinConfig("4", 2.54 * 3, "unspecified", 5.08),
+                PinConfig("3", 5.08, "unspecified", 5.08),
+                PinConfig("5", -5.08, "unspecified", 5.08),
+                PinConfig("1", -2.54 * 3, "unspecified", 5.08),
+                PinConfig("6", -2.54 * 7, "unspecified", 5.08),
+            ],
+            right=[
+                PinConfig("7", 20.32, "unspecified", 5.08),
+                PinConfig("8", 10.16, "unspecified", 5.08),
+                PinConfig("9", 0, "unspecified", 5.08),
+                PinConfig("10", -10.16, "unspecified", 5.08),
+                PinConfig("11", -20.32, "unspecified", 5.08),
+            ],
+        ),
+    ),
 }
