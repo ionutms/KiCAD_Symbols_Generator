@@ -70,10 +70,10 @@ class SeriesSpec(NamedTuple):
         datasheet: URL to component datasheet
         primary_inductance: Typical primary inductance in µH
         trustedparts_link: URL to component listing on Trusted Parts
-        value_suffix: Suffix for the component value
         turns_ratio: Transformer turns ratio specification
         pin_config: Pin configuration for the transformer
         max_dc_resistance: Maximum DC resistance for the transformer
+        value_suffix: Suffix for the component value
         reference: Reference designator prefix for the series (default: "T")
 
     """
@@ -85,10 +85,10 @@ class SeriesSpec(NamedTuple):
     datasheet: str
     primary_inductance: float
     trustedparts_link: str
-    value_suffix: str
     turns_ratio: dict[dict[str, str]]
     pin_config: SidePinConfig
     max_dc_resistance: dict[dict[str, str]]
+    value_suffix: str = ""
     reference: str = "T"
 
 
@@ -301,7 +301,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         turns_ratio={"N1+N2 : N3": "1 : 1"},
         primary_inductance=40,
         max_dc_resistance={"pri": "0.095", "sec": "0.09"},
-        value_suffix="",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
@@ -426,7 +425,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         turns_ratio={"pri1 : sec": "5 : 4", "pri2 : sec": "5 : 4"},
         primary_inductance=378,
         max_dc_resistance={"pri1": "0.185", "pri2": "0.185", "sec": "0.0068"},
-        value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
@@ -458,7 +456,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         turns_ratio={"pri1 : sec": "5 : 4", "pri2 : sec": "5 : 4"},
         primary_inductance=378,
         max_dc_resistance={"pri1": "0.009", "pri2": "0.009", "sec": "0.0042"},
-        value_suffix="-BLD",
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
