@@ -12,13 +12,11 @@ class SeriesSpec(NamedTuple):
     base_series: str
     footprint_pattern: str
     datasheet: str
-    pin_counts: list[int]
+    pin_count: int
     trustedparts_link: str
     color: str
     pitch: float
     mounting_angle: str
-    current_rating: float | str
-    voltage_rating: int
     mounting_style: str
     display_type: str
     reference: str = "DS"
@@ -45,8 +43,6 @@ class PartInfo(NamedTuple):
     pitch: float
     pin_count: int
     mounting_angle: str
-    current_rating: float | str
-    voltage_rating: int
     mounting_style: str
     display_type: str
     number_of_rows: int
@@ -82,8 +78,6 @@ class PartInfo(NamedTuple):
             pitch=specs.pitch,
             pin_count=pin_count,
             mounting_angle=specs.mounting_angle,
-            current_rating=specs.current_rating,
-            voltage_rating=specs.voltage_rating,
             mounting_style=specs.mounting_style,
             display_type=specs.display_type,
             number_of_rows=specs.number_of_rows,
@@ -125,8 +119,6 @@ class PartInfo(NamedTuple):
             f"{specs.display_type}, ",
             f"{specs.color} segments, ",
             f"{specs.mounting_angle} mounting, ",
-            f"{specs.current_rating} A, ",
-            f"{specs.voltage_rating} V, ",
             f"{specs.mounting_style}",
         ]
 
@@ -146,10 +138,7 @@ class PartInfo(NamedTuple):
             List of PartInfo instances
 
         """
-        return [
-            cls.create_part_info(pin_count, specs)
-            for pin_count in specs.pin_counts
-        ]
+        return [cls.create_part_info(specs.pin_count, specs)]
 
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
@@ -162,13 +151,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "157142B12803.pdf?"
             "srsltid=AfmBOorWAV13U_ljl4jImkqhkGTTvex004ocV0phVLEt_Sq6DI_r274e"
         ),
-        pin_counts=[10],
+        pin_count=10,
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Blue",
         pitch=2.54,
         mounting_angle="Vertical",
-        current_rating=30.0,
-        voltage_rating=25,
         mounting_style="Through Hole",
         display_type="Common Anode",
         reference="DS",
@@ -195,13 +182,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "157143B12800.pdf?"
             "srsltid=AfmBOopWIjRtx3PotVrKoA5nX-pDkrLhAJL8G0V-MiBL1VxnND_REzTM"
         ),
-        pin_counts=[10],
+        pin_count=10,
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Blue",
         pitch=2.54,
         mounting_angle="Vertical",
-        current_rating=30.0,
-        voltage_rating=25,
         mounting_style="Surface Mount",
         display_type="Common Anode",
         reference="DS",
@@ -227,13 +212,11 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.we-online.com/components/products/datasheet/"
             "157143V12800.pdf"
         ),
-        pin_counts=[10],
+        pin_count=10,
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Bright Green",
         pitch=2.54,
         mounting_angle="Vertical",
-        current_rating=30.0,
-        voltage_rating=25,
         mounting_style="Surface Mount",
         display_type="Common Anode",
         reference="DS",

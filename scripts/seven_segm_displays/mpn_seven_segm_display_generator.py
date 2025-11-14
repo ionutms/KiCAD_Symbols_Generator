@@ -32,8 +32,6 @@ HEADER_MAPPING: Final[dict] = {
     "Pitch (mm)": lambda part: part.pitch,
     "Pin Count": lambda part: part.pin_count,
     "Mounting Angle": lambda part: part.mounting_angle,
-    "Current Rating (A)": lambda part: part.current_rating,
-    "Voltage Rating (V)": lambda part: part.voltage_rating,
     "Mounting Style": lambda part: part.mounting_style,
     "Display Type": lambda part: part.display_type,
     "Number of Rows": lambda part: part.number_of_rows,
