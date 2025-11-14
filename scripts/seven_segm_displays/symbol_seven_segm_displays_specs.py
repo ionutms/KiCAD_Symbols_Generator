@@ -156,7 +156,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "157142B12803": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="157142B12803",
-        footprint_pattern="seven_segm_display_footprints:{}_157142B12803",
+        footprint_pattern="seven_segm_display:157142B12803",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "157142B12803.pdf?"
@@ -189,7 +189,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "157143B12800": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="157143B12800",
-        footprint_pattern="seven_segm_display_footprints:{}_157143B12800",
+        footprint_pattern="seven_segm_display:157143B12800",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "157143B12800.pdf?"
@@ -198,6 +198,38 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         pin_counts=[10],
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Blue",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=30.0,
+        voltage_rating=25,
+        mounting_style="Surface Mount",
+        display_type="Common Anode",
+        reference="DS",
+        rectangle_width=2.54 * 6,
+        pin_names={
+            "1": "E",
+            "2": "D",
+            "3": "Anode",
+            "4": "C",
+            "5": "DP",
+            "6": "B",
+            "7": "A",
+            "8": "Anode",
+            "9": "F",
+            "10": "G",
+        },
+    ),
+    "157143V12800": SeriesSpec(
+        manufacturer="Würth Elektronik",
+        base_series="157143V12800",
+        footprint_pattern="seven_segm_display:157143V12800",
+        datasheet=(
+            "https://www.we-online.com/components/products/datasheet/"
+            "157143V12800.pdf"
+        ),
+        pin_counts=[10],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Bright Green",
         pitch=2.54,
         mounting_angle="Vertical",
         current_rating=30.0,

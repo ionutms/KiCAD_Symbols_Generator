@@ -165,4 +165,19 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         number_of_rows=2,
         row_pitch=-19,
     ),
+    "157143V12800": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=6.2,
+            width_right=6.2,
+            height_top=12,
+            height_bottom=12,
+        ),
+        pad_size=[1.7, 3.4],
+        drill_size=None,
+        mpn_y=12.954,
+        ref_y=-12.954,
+        number_of_rows=2,
+        row_pitch=-19,
+    ),
 }
