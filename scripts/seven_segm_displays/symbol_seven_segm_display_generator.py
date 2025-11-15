@@ -29,38 +29,20 @@ def write_component(
 ) -> None:
     """Write a single component to the KiCad symbol file."""
     symbol_name = component_data.get("Symbol Name", "")
-    number_of_rows = int(component_data.get("Number of Rows", "1"))
     symbol_utils.write_symbol_header(symbol_file, symbol_name)
     pin_count = int(component_data.get("Pin Count", "14"))
-    row_count = int(component_data.get("Number of Rows", "1"))
 
-    series_name = component_data.get("Series", "")
-    rectangle_width = symbol_seven_segm_displays_specs.SYMBOLS_SPECS[
-        series_name
-    ].rectangle_width
+    pins_per_side = pin_count // 2
+    pin_spacing = 2.54
+    rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
 
-    rect_half_width = rectangle_width / 2
-
-    extra_offset = (
-        ((pin_count / row_count) / 2)
-        if row_count == 1
-        else (pin_count / row_count)
-    )
+    extra_offset = round((rectangle_height / 2.54) / 2)
 
     symbol_utils.write_properties(
-        symbol_file,
-        component_data,
-        property_order,
-        1 + extra_offset,
-        rect_half_width + 2.54,
+        symbol_file, component_data, property_order, extra_offset + 1
     )
 
-    write_symbol_drawing(
-        symbol_file,
-        symbol_name,
-        component_data,
-        number_of_rows,
-    )
+    write_symbol_drawing(symbol_file, symbol_name, component_data)
     symbol_file.write(")")
 
 
@@ -68,7 +50,6 @@ def write_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
     component_data: dict[str, str],
-    number_of_rows: int,
 ) -> None:
     """Write the drawing for a seven segment display symbol.
 
@@ -76,7 +57,6 @@ def write_symbol_drawing(
         symbol_file (TextIO): File object for writing the symbol file.
         symbol_name (str): Name of the symbol.
         component_data (dict[str, str]): Data for the component.
-        number_of_rows (int): Number of rows of the symbol.
 
     Returns:
         None
@@ -99,10 +79,8 @@ def write_symbol_drawing(
     left_pin_x = left_pin_x_default
     right_pin_x = right_pin_x_default
 
-    min_height = 12.7  # Adjusted for 7-segment display
     pins_per_side = pin_count // 2
-    calculated_height = max(min_height, pins_per_side * pin_spacing + 2.54)
-    rectangle_height = calculated_height
+    rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
