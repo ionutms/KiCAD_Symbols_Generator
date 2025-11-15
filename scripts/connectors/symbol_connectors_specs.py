@@ -1066,4 +1066,22 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Gold",
     ),
+    "68000-2xxHLF": SeriesSpec(
+        manufacturer="Amphenol ICC",
+        base_series="68000-2xxHLF",
+        footprint_pattern="connector_footprints:68000-2{:02d}HLF",
+        datasheet=(
+            "https://www.tme.eu/Document/deb83b8ba474aa6382ee38bb24abad5e/"
+            "68000-XXXXLF.pdf"
+        ),
+        pin_counts=list(range(2, 18)) + [20, 24, 26, 36],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
+    ),
 }
