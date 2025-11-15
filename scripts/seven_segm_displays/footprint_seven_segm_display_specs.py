@@ -135,20 +135,21 @@ class FootprintSpecs(NamedTuple):
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
-    "157142B12803": FootprintSpecs(
-        pad_pitch=2.46,
+    "157119B12801": FootprintSpecs(
+        pad_pitch=2.54,
         body_dimensions=BodyDimensions(
-            width_left=6.3,
-            width_right=6.3,
-            height_top=9.5,
-            height_bottom=9.5,
+            width_left=6.6,
+            width_right=6.6,
+            height_top=5.1,
+            height_bottom=5.1,
         ),
         pad_size=1.8,
         drill_size=1.0,
-        mpn_y=11.5,
-        ref_y=-11.5,
+        mpn_y=5.842,
+        ref_y=-5.842,
         number_of_rows=2,
-        row_pitch=-15.24,
+        row_pitch=-7.52,
+        show_pin1_indicator=False,
     ),
     "157143B12800": FootprintSpecs(
         pad_pitch=2.54,
@@ -159,11 +160,11 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=12,
         ),
         pad_size=[1.7, 3.4],
-        drill_size=None,
         mpn_y=12.954,
         ref_y=-12.954,
         number_of_rows=2,
         row_pitch=-19,
+        show_pin1_indicator=False,
     ),
     "157143V12800": FootprintSpecs(
         pad_pitch=2.54,
@@ -174,10 +175,10 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=12,
         ),
         pad_size=[1.7, 3.4],
-        drill_size=None,
         mpn_y=12.954,
         ref_y=-12.954,
         number_of_rows=2,
         row_pitch=-19,
+        show_pin1_indicator=False,
     ),
 }

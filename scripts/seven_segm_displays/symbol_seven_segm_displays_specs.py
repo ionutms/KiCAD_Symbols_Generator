@@ -142,14 +142,13 @@ class PartInfo(NamedTuple):
 
 
 SYMBOLS_SPECS: dict[str, SeriesSpec] = {
-    "157142B12803": SeriesSpec(
+    "157119B12801": SeriesSpec(
         manufacturer="Würth Elektronik",
-        base_series="157142B12803",
-        footprint_pattern="seven_segm_display:157142B12803",
+        base_series="157119B12801",
+        footprint_pattern="seven_segm_display:157119B12801",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
-            "157142B12803.pdf?"
-            "srsltid=AfmBOorWAV13U_ljl4jImkqhkGTTvex004ocV0phVLEt_Sq6DI_r274e"
+            "157119B12801.pdf"
         ),
         pin_count=10,
         trustedparts_link="https://www.trustedparts.com/en/search",
