@@ -233,4 +233,34 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "10": "G",
         },
     ),
+    "FYS-15011BUHR-21": SeriesSpec(
+        manufacturer="Würth Elektronik",
+        base_series="FYS-15011BUHR-21",
+        footprint_pattern="seven_segm_display:FYS-15011BUHR-21",
+        datasheet=(
+            "https://cetest02.cn-bj.ufileos.com/100001_2003185297/"
+            "83%20FYS-15011A-BX-XX.pdf"
+        ),
+        pin_count=10,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Red",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        mounting_style="Through Hole",
+        display_type="Common Anode",
+        reference="DS",
+        rectangle_width=2.54 * 6,
+        pin_names={
+            "1": "Anode",
+            "2": "E",
+            "3": "D",
+            "4": "C",
+            "5": "Anode",
+            "6": "B",
+            "7": "A",
+            "8": "DP",
+            "9": "F",
+            "10": "G",
+        },
+    ),
 }
