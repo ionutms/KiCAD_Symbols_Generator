@@ -175,6 +175,8 @@ class PartInfo(NamedTuple):
         """
         if manufacturer == "Same Sky":
             return f"{series_code}-{pin_count:02d}BE"
+        if manufacturer == "Amphenol Anytek":
+            return f"{series_code}{pin_count:02d}31530000G"
         # else if manufacturer is Samtec
         return f"{series_code.replace('xx', f'{pin_count:02d}')}"
 
@@ -240,6 +242,23 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         pin_counts=list(range(2, 25)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Blue",
+        pitch=3.81,
+        mounting_angle="Vertical",
+        current_rating=8.0,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
+    "TJ": SeriesSpec(
+        manufacturer="Amphenol Anytek",
+        base_series="TJ",
+        footprint_pattern="terminal_block_footprints:TJ{:02d}31530000G",
+        datasheet=(
+            "http://www.anytek.com.tw/UserUpFiles/20181017/vCheHtsK2_to.pdf"
+        ),
+        pin_counts=list(range(2, 11)) + [12] + list(range(16, 25)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Green",
         pitch=3.81,
         mounting_angle="Vertical",
         current_rating=8.0,

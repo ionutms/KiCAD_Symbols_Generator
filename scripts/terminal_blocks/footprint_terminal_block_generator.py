@@ -57,6 +57,9 @@ def generate_footprint(
     if part_info.manufacturer == "Same Sky":
         footprint_value = part_info.series
 
+    if part_info.manufacturer == "Amphenol Anytek":
+        footprint_value = part_info.series
+
     # Prepare custom pin numbering from pin_names if provided
     series_spec = symbol_terminal_block_specs.SYMBOLS_SPECS[part_info.series]
     custom_pin_numbers: list[int] | None = None
