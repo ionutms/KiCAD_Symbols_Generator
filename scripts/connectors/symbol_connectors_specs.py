@@ -174,6 +174,8 @@ class PartInfo(NamedTuple):
         """
         if manufacturer == "Same Sky":
             return f"{series_code}-{pin_count:02d}BE"
+        if manufacturer == "Amphenol Anytek":
+            return f"{series_code}{pin_count:02d}32500000G"
         # else if manufactures is Samtec
         return f"{series_code.replace('xx', f'{pin_count:02d}')}"
 
@@ -1083,5 +1085,23 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=300,
         mounting_style="Through Hole",
         contact_plating="Gold",
+    ),
+    "OQ": SeriesSpec(
+        manufacturer="Amphenol Anytek",
+        base_series="OQ",
+        footprint_pattern="connector_footprints:OQ{:02d}32500000G",
+        datasheet=(
+            "https://www.tme.eu/Document/c6f68741922c0647240c19a990c9cbc8/"
+            "OQ0232500000G.pdf"
+        ),
+        pin_counts=[2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Green",
+        pitch=3.81,
+        mounting_angle="Vertical",
+        current_rating=8.0,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
     ),
 }

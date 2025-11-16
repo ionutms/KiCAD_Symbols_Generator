@@ -1,0 +1,149 @@
+(footprint "OQ0332500000G"
+    (version 20240108)
+    (generator "pcbnew")
+    (generator_version "8.0")
+    (layer "F.Cu")
+    
+
+        (property "Reference" "REF**"
+            (at 0 4.2 0)
+            (unlocked yes)
+            (layer "F.SilkS")
+            (uuid "a3bb688d-e7a2-4b6d-95b2-d6a4602ee698")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Value" "OQ"
+            (at 0 -6.8 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "05134a38-7e4c-4a74-9743-e73e72bfdb90")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (property "Footprint" ""
+            (at 0 0 0)
+            (layer "F.Fab")
+            (hide yes)
+            (uuid "86b03aa3-c74c-463a-a3a7-afb3c6aa5af6")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 -5.529999999999999 0)
+            (unlocked yes)
+            (layer "F.Fab")
+            (uuid "2cfd3537-7dfe-4f06-abb1-f98eb0a0ec1b")
+            
+        (effects
+            (font (size 0.762 0.762) (thickness 0.1524))
+            (justify left)
+        )
+        
+        )
+        
+
+        (fp_rect
+            (start -6.3500000000000005 3.2512)
+            (end 6.3500000000000005 -4.445)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "d849efd4-3572-4f0f-9b56-6a6869241e30")
+        )
+        
+
+
+        (fp_rect
+            (start -6.3500000000000005 3.2512)
+            (end 6.3500000000000005 -4.445)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "43397404-cdfd-430e-8af3-cad870722c26")
+        )
+        
+
+        (fp_rect
+            (start -6.3500000000000005 3.2512)
+            (end 6.3500000000000005 -4.445)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "c74799fe-0c44-4d27-ad67-9f2a520c466b")
+        )
+        
+
+        (fp_circle
+            (center -6.750000000000001 0.0)
+            (end -6.950000000000001 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "e90cabcc-7e13-4e8a-9419-c67a36234ce2")
+        )
+        
+
+        (fp_circle
+            (center -6.750000000000001 0.0)
+            (end -6.950000000000001 0.0)
+            (stroke (width 0.1524) (type solid))
+            (fill solid)
+            (layer F.SilkS)
+            (uuid "06685b4e-d688-4fe5-9182-7969c2499cac")
+        )
+        
+
+            (pad "1" thru_hole rect
+                (at -3.810 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "17bafa24-9251-45e5-92e7-2e4eed41edd4")
+            )
+            
+
+            (pad "2" thru_hole circle
+                (at 0.000 0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "a5c1b400-5344-49dc-8f49-9aac4bc55397")
+            )
+            
+
+            (pad "3" thru_hole circle
+                (at 3.810 -0.000)
+                (size 2.1 2.1)
+                (drill 1.4)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "73cb4513-9557-404c-98eb-102ad73bf717")
+            )
+            
+
+        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/connectors/OQ0332500000G.step"
+            
+            (offset (xyz 0 0 0))
+            (scale (xyz 1 1 1))
+            (rotate (xyz 0 0 0))
+        )
+        
+)
