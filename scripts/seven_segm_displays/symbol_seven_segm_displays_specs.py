@@ -145,7 +145,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "157119B12801": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="157119B12801",
-        footprint_pattern="seven_segm_display:157119B12801",
+        footprint_pattern="seven_segm_display_footprints:157119B12801",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "157119B12801.pdf"
@@ -175,7 +175,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "157143B12800": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="157143B12800",
-        footprint_pattern="seven_segm_display:157143B12800",
+        footprint_pattern="seven_segm_display_footprints:157143B12800",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "157143B12800.pdf?"
@@ -206,7 +206,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "157143V12800": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="157143V12800",
-        footprint_pattern="seven_segm_display:157143V12800",
+        footprint_pattern="seven_segm_display_footprints:157143V12800",
         datasheet=(
             "https://www.we-online.com/components/products/datasheet/"
             "157143V12800.pdf"
@@ -236,7 +236,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
     "FYS-15011BUHR-21": SeriesSpec(
         manufacturer="Würth Elektronik",
         base_series="FYS-15011BUHR-21",
-        footprint_pattern="seven_segm_display:FYS-15011BUHR-21",
+        footprint_pattern="seven_segm_display_footprints:FYS-15011BUHR-21",
         datasheet=(
             "https://cetest02.cn-bj.ufileos.com/100001_2003185297/"
             "83%20FYS-15011A-BX-XX.pdf"
