@@ -632,4 +632,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="NPN",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BC857A-AQ": SeriesSpec(
+        manufacturer="Diotec Semiconductor",
+        base_series="BC857A-AQ",
+        footprint="transistor_footprints:SOT23",
+        datasheet=("https://diotec.com/request/datasheet/bc856.pdf"),
+        collector_emitter_voltage=[45],
+        collector_current=[0.1],
+        package="SOT23",
+        transistor_type="PNP",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

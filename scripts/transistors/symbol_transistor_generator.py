@@ -117,4 +117,9 @@ def write_component(
             symbol_file,
             symbol_name,
         )
+    if component_data.get("Transistor Type") == "PNP":
+        symbol_utils.write_pnp_transistor_symbol_drawing(
+            symbol_file,
+            symbol_name,
+        )
     symbol_file.write(")")
