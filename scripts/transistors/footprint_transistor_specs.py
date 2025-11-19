@@ -278,4 +278,15 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-3.2,
     ),
+    "SOT23": FootprintSpecs(
+        pin_count=3,
+        body_dimensions=BodyDimensions(width=3, height=3.2),
+        pad_dimensions=PadDimensions(
+            width=0.8,
+            height=0.9,
+            pad_center_x=1.9,
+            pad_pitch_y=2,
+        ),
+        ref_offset_y=-2.286,
+    ),
 }

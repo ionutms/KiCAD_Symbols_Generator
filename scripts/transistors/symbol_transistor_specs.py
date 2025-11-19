@@ -621,4 +621,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BC847A-AQ": SeriesSpec(
+        manufacturer="Diotec Semiconductor",
+        base_series="BC847A-AQ",
+        footprint="transistor_footprints:SOT23",
+        datasheet=("https://diotec.com/request/datasheet/bc846.pdf"),
+        collector_emitter_voltage=[45],
+        collector_current=[0.1],
+        package="SOT23",
+        transistor_type="NPN",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
