@@ -176,7 +176,8 @@ class PartInfo(NamedTuple):
             return f"{series_code}-{pin_count:02d}BE"
         if manufacturer == "Amphenol Anytek":
             return f"{series_code}{pin_count:02d}32500000G"
-        # else if manufactures is Samtec
+        if manufacturer == "Fischer Elektronik":
+            return f"{series_code.replace('xx', f'{pin_count}')}"
         return f"{series_code.replace('xx', f'{pin_count:02d}')}"
 
     @classmethod
@@ -1103,5 +1104,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=300,
         mounting_style="Through Hole",
         contact_plating="Tin",
+    ),
+    "SL 11 139 xx G": SeriesSpec(
+        manufacturer="Fischer Elektronik",
+        base_series="SL 11 139 xx G",
+        footprint_pattern="connector_footprints:SL 11 139 {} G",
+        datasheet=(
+            "https://www.fischerelektronik.de/web_fischer/en_GB/VA/"
+            "SL111394G/datasheet.xhtml"
+        ),
+        # TODO: Add missing pin counts when available from 1 to 36
+        pin_counts=list(range(1, 4)) + list(range(5, 28)),
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        current_rating=5.2,
+        voltage_rating=300,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
     ),
 }

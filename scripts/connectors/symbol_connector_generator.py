@@ -152,7 +152,11 @@ def write_symbol_drawing(
                 if (left_keys is not None and index < len(left_keys))
                 else str(pin_num)
             )
-            pin_name = series_spec.pin_names.get(left_id, "") if series_spec.pin_names else ""
+            pin_name = (
+                series_spec.pin_names.get(left_id, "")
+                if series_spec.pin_names
+                else ""
+            )
             symbol_utils.write_pin(
                 symbol_file,
                 left_pin_x,
@@ -163,13 +167,24 @@ def write_symbol_drawing(
                 length=pin_length,
             )
             # Right pin identifier (reverse order on right)
-            right_index = (len(right_keys) - 1 - index) if right_keys is not None else None
+            right_index = (
+                (len(right_keys) - 1 - index)
+                if right_keys is not None
+                else None
+            )
             right_id = (
                 right_keys[right_index]
-                if (right_keys is not None and 0 <= right_index < len(right_keys))
+                if (
+                    right_keys is not None
+                    and 0 <= right_index < len(right_keys)
+                )
                 else str(pin_num + 1)
             )
-            pin_name = series_spec.pin_names.get(right_id, "") if series_spec.pin_names else ""
+            pin_name = (
+                series_spec.pin_names.get(right_id, "")
+                if series_spec.pin_names
+                else ""
+            )
             symbol_utils.write_pin(
                 symbol_file,
                 right_pin_x,

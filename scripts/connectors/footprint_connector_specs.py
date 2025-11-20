@@ -745,4 +745,17 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=-6.8,
         ref_y=4.2,
     ),
+    "SL 11 139 xx G": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=2.7,
+            width_right=2.7,
+            height_top=1.35,
+            height_bottom=1.35,
+        ),
+        pad_size=1.7,
+        drill_size=1,
+        mpn_y=2.286,
+        ref_y=-2.286,
+    ),
 }
