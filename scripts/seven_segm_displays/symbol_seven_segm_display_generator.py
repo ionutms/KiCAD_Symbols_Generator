@@ -34,7 +34,16 @@ def write_component(
 
     pins_per_side = pin_count // 2
     pin_spacing = 2.54
-    rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
+
+    # Get series name and spec to use rectangle height from spec
+    series_name = component_data.get("Series", "")
+    if series_name in symbol_seven_segm_displays_specs.SYMBOLS_SPECS:
+        series_spec = symbol_seven_segm_displays_specs.SYMBOLS_SPECS[
+            series_name
+        ]
+        rectangle_height = series_spec.rectangle_height
+    else:
+        rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
 
     extra_offset = round((rectangle_height / 2.54) / 2)
 
@@ -95,13 +104,11 @@ def write_symbol_drawing(
     series_name = component_data.get("Series", "")
     series_spec = symbol_seven_segm_displays_specs.SYMBOLS_SPECS[series_name]
     rectangle_width = series_spec.rectangle_width
+    rectangle_height = series_spec.rectangle_height
     rect_half_width = rectangle_width / 2
 
     # Use per-series symbol pin length if provided
     pin_length = getattr(series_spec, "symbol_pin_length", 2.54)
-
-    pins_per_side = pin_count // 2
-    rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
@@ -131,6 +138,8 @@ def write_symbol_drawing(
             all_pin_ids = list(series_spec.pin_names.keys())
         else:
             all_pin_ids = [str(i) for i in range(1, pin_count + 1)]
+
+        pins_per_side = pin_count // 2
 
         # Compute default X positions for pin anchors
         left_pin_x = -rect_half_width - pin_length

@@ -61,6 +61,7 @@ class SeriesSpec(NamedTuple):
     reference: str = "DS"
     number_of_rows: int = 1
     rectangle_width: float = 7.62
+    rectangle_height: float = 10.16
     pin_names: dict[str, str] | None = None
     symbol_pin_length: float = 2.54
     pin_config: SidePinConfig | None = None
@@ -87,6 +88,7 @@ class PartInfo(NamedTuple):
     display_type: str
     number_of_rows: int
     rectangle_width: float = 7.62
+    rectangle_height: float = 10.16
 
     @classmethod
     def create_part_info(
@@ -122,6 +124,7 @@ class PartInfo(NamedTuple):
             display_type=specs.display_type,
             number_of_rows=specs.number_of_rows,
             rectangle_width=specs.rectangle_width,
+            rectangle_height=specs.rectangle_height,
         )
 
     @classmethod
@@ -197,7 +200,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Through Hole",
         display_type="Common Anode",
-        rectangle_width=2.54 * 6,
+        rectangle_width=2.54 * 8,
+        rectangle_height=2.54 * 10,
         pin_names={
             "1": "E",
             "2": "D",
@@ -212,8 +216,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("1", 2.54 * 3, 2.54 * 4, 270, "unspecified", 2.54),
-                PinConfig("5", 2.54 * 2, 2.54 * 4, 270, "unspecified", 2.54),
+                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
+                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
                 PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
                 PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
                 PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
@@ -241,7 +245,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
         display_type="Common Anode",
-        rectangle_width=2.54 * 6,
+        rectangle_width=2.54 * 8,
+        rectangle_height=2.54 * 10,
         pin_names={
             "1": "E",
             "2": "D",
@@ -256,8 +261,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("1", 2.54 * 3, 2.54 * 4, 270, "unspecified", 2.54),
-                PinConfig("5", 2.54 * 2, 2.54 * 4, 270, "unspecified", 2.54),
+                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
+                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
                 PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
                 PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
                 PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
@@ -284,7 +289,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
         display_type="Common Anode",
-        rectangle_width=2.54 * 6,
+        rectangle_width=2.54 * 8,
+        rectangle_height=2.54 * 10,
         pin_names={
             "1": "E",
             "2": "D",
@@ -299,8 +305,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("1", 2.54 * 3, 2.54 * 4, 270, "unspecified", 2.54),
-                PinConfig("5", 2.54 * 2, 2.54 * 4, 270, "unspecified", 2.54),
+                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
+                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
                 PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
                 PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
                 PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
@@ -328,6 +334,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         display_type="Common Anode",
         rectangle_width=2.54 * 8,
+        rectangle_height=2.54 * 10,
         pin_names={
             "1": "CA",
             "2": "E",
@@ -342,8 +349,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("1", 2.54 * 3, 2.54 * 4, 270, "unspecified", 2.54),
-                PinConfig("5", 2.54 * 2, 2.54 * 4, 270, "unspecified", 2.54),
+                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
+                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
                 PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
                 PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
                 PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
