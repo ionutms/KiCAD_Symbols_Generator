@@ -319,7 +319,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         ),
     ),
     "FYS-15011BUHR-21": SeriesSpec(
-        manufacturer="Würth Elektronik",
+        manufacturer="Foryard",
         base_series="FYS-15011BUHR-21",
         footprint_pattern="seven_segm_display_footprints:FYS-15011BUHR-21",
         datasheet=(
