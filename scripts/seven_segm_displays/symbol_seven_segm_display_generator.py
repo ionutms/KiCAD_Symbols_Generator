@@ -46,6 +46,33 @@ def write_component(
     symbol_file.write(")")
 
 
+def convert_pin_config(
+    spec_config: symbol_seven_segm_displays_specs.SidePinConfig,
+) -> list[dict[str, float | bool | str | int]]:
+    """Convert pin configuration data to dictionary format.
+
+    Args:
+        spec_config: Pin configuration from series spec
+
+    Returns:
+        list: Pin configuration data in dictionary format
+
+    """
+    pin_list = [
+        {
+            "number": pin.number,
+            "x_pos": pin.x_pos,
+            "y_pos": pin.y_pos,
+            "rotation": pin.rotation,
+            "pin_type": pin.pin_type,
+            "length": pin.length,
+            "hide": pin.hide,
+        }
+        for pin in spec_config.pins
+    ]
+    return pin_list
+
+
 def write_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
@@ -73,70 +100,88 @@ def write_symbol_drawing(
     # Use per-series symbol pin length if provided
     pin_length = getattr(series_spec, "symbol_pin_length", 2.54)
 
-    # Compute X positions for pin anchors
-    left_pin_x_default = -rect_half_width - pin_length
-    right_pin_x_default = rect_half_width + pin_length
-    left_pin_x = left_pin_x_default
-    right_pin_x = right_pin_x_default
-
     pins_per_side = pin_count // 2
     rectangle_height = max(5.08, pins_per_side * pin_spacing + 2.54)
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # For symmetrical layout, we'll divide pins equally on left and right
-    if series_spec.pin_names:
-        all_pin_ids = list(series_spec.pin_names.keys())
+    # Use custom pin configuration if available, otherwise use default
+    if series_spec.pin_config:
+        # Use custom pin configuration
+        pin_config = convert_pin_config(series_spec.pin_config)
+
+        # Write all pins from the configuration
+        for pin in pin_config:
+            symbol_utils.write_pin(
+                symbol_file,
+                pin["x_pos"],
+                pin["y_pos"],
+                pin["rotation"],
+                pin["number"],
+                series_spec.pin_names.get(pin["number"], "")
+                if series_spec.pin_names
+                else "",
+                pin_type=pin["pin_type"],
+                hide=pin.get("hide", False),
+                length=pin["length"],
+            )
     else:
-        all_pin_ids = [str(i) for i in range(1, pin_count + 1)]
+        # For symmetrical layout, we'll divide pins equally on left and right
+        if series_spec.pin_names:
+            all_pin_ids = list(series_spec.pin_names.keys())
+        else:
+            all_pin_ids = [str(i) for i in range(1, pin_count + 1)]
 
-    # Split pins equally between left and right sides based on mounting style
-    if component_data.get("Mounting Style", "") == "Surface Mount":
-        left_pins = all_pin_ids[:pins_per_side]
-        right_pins = all_pin_ids[pins_per_side:pin_count]
-    else:  # Through hole
-        left_pins = all_pin_ids[:pins_per_side]
-        right_pins = all_pin_ids[pins_per_side:pin_count]
+        # Compute default X positions for pin anchors
+        left_pin_x = -rect_half_width - pin_length
+        right_pin_x = rect_half_width + pin_length
 
-    # Calculate starting Y position to center the pins
-    total_pins_for_centering = max(len(left_pins), len(right_pins))
-    start_y = (total_pins_for_centering - 1) * pin_spacing / 2
+        if component_data.get("Mounting Style", "") == "Surface Mount":
+            left_pins = all_pin_ids[:pins_per_side]
+            right_pins = all_pin_ids[pins_per_side:pin_count]
+        else:  # Through hole
+            left_pins = all_pin_ids[:pins_per_side]
+            right_pins = all_pin_ids[pins_per_side:pin_count]
 
-    # Place pins on left side (top to bottom)
-    for index, pin_id in enumerate(left_pins):
-        y_pos = start_y - index * pin_spacing
-        pin_name = (
-            series_spec.pin_names.get(pin_id, "")
-            if series_spec.pin_names
-            else ""
-        )
-        symbol_utils.write_pin(
-            symbol_file,
-            left_pin_x,
-            y_pos,
-            0,
-            pin_id,
-            pin_name,
-            length=pin_length,
-        )
+        # Calculate starting Y position to center the pins
+        total_pins_for_centering = max(len(left_pins), len(right_pins))
+        start_y = (total_pins_for_centering - 1) * pin_spacing / 2
 
-    # Place pins on right side (top to bottom to maintain symmetry)
-    for index, pin_id in enumerate(right_pins):
-        y_pos = start_y - index * pin_spacing
-        pin_name = (
-            series_spec.pin_names.get(pin_id, "")
-            if series_spec.pin_names
-            else ""
-        )
-        symbol_utils.write_pin(
-            symbol_file,
-            right_pin_x,
-            y_pos,
-            180,
-            pin_id,
-            pin_name,
-            length=pin_length,
-        )
+        # Place pins on left side (top to bottom)
+        for index, pin_id in enumerate(left_pins):
+            y_pos = start_y - index * pin_spacing
+            pin_name = (
+                series_spec.pin_names.get(pin_id, "")
+                if series_spec.pin_names
+                else ""
+            )
+            symbol_utils.write_pin(
+                symbol_file,
+                left_pin_x,
+                y_pos,
+                0,
+                pin_id,
+                pin_name,
+                length=pin_length,
+            )
+
+        # Place pins on right side (top to bottom to maintain symmetry)
+        for index, pin_id in enumerate(right_pins):
+            y_pos = start_y - index * pin_spacing
+            pin_name = (
+                series_spec.pin_names.get(pin_id, "")
+                if series_spec.pin_names
+                else ""
+            )
+            symbol_utils.write_pin(
+                symbol_file,
+                right_pin_x,
+                y_pos,
+                180,
+                pin_id,
+                pin_name,
+                length=pin_length,
+            )
 
     symbol_file.write("\t\t)\n")
 
