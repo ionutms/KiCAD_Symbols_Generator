@@ -1113,8 +1113,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.fischerelektronik.de/web_fischer/en_GB/VA/"
             "SL111394G/datasheet.xhtml"
         ),
-        # TODO: Add missing pin counts when available from 1 to 36
-        pin_counts=list(range(1, 4)) + list(range(5, 28)),
+        pin_counts=list(range(1, 37)),
         trustedparts_link="https://www.trustedparts.com/en/search",
         color="Black",
         pitch=2.54,
