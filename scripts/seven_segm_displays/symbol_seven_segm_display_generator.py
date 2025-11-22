@@ -48,7 +48,7 @@ def write_component(
     extra_offset = round((rectangle_height / 2.54) / 2)
 
     symbol_utils.write_properties(
-        symbol_file, component_data, property_order, extra_offset + 1
+        symbol_file, component_data, property_order, extra_offset + 1, 13
     )
 
     write_symbol_drawing(symbol_file, symbol_name, component_data)
@@ -202,6 +202,7 @@ def write_symbol_drawing(
         rect_half_width,
         -rectangle_height / 2,
     )
+    write_segments(symbol_file)
     symbol_file.write("\t\t)\n")
 
 
@@ -219,5 +220,178 @@ def write_rectangle(
             (end {end_x} {end_y})
             (stroke (width 0.254) (type solid) )
             (fill (type none) )
+        )
+        """)
+
+
+def write_segments(
+    symbol_file: TextIO,
+) -> None:
+    """Write a rectangle to the KiCad symbol file."""
+    symbol_file.write("""
+        (polyline
+            (pts
+                (xy -7.8994 -11.938) (xy -5.7404 -10.033) (xy -4.6482 -2.413)
+                (xy -6.2992 -0.508) (xy -8.4582 -2.413) (xy -9.5504 -10.033)
+                (xy -7.8994 -11.938)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy -7.4676 -12.446) (xy -5.2832 -10.541) (xy 2.3368 -10.541)
+                (xy 3.9624 -12.446) (xy 1.8034 -14.351) (xy -5.8166 -14.351)
+                (xy -7.4676 -12.446)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy -6.1468 0.508) (xy -3.9878 2.413) (xy -2.8956 10.033)
+                (xy -4.5466 11.938) (xy -6.7056 10.033)
+                (xy -7.7978 2.413) (xy -6.1468 0.508)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy -5.715 0) (xy -3.5306 1.905) (xy 4.0894 1.905)
+                (xy 5.715 0) (xy 3.5306 -1.905) (xy -4.0894 -1.905)
+                (xy -5.715 0)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy -3.9624 12.446) (xy -1.8034 14.351) (xy 5.8166 14.351)
+                (xy 7.4676 12.446) (xy 5.2832 10.541) (xy -2.3368 10.541)
+                (xy -3.9624 12.446)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy 4.5466 -11.938) (xy 6.7056 -10.033) (xy 7.7978 -2.413)
+                (xy 6.1468 -0.508) (xy 3.9878 -2.413) (xy 2.8956 -10.033)
+                (xy 4.5466 -11.938)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (polyline
+            (pts
+                (xy 6.2992 0.508) (xy 8.4582 2.413) (xy 9.5504 10.033)
+                (xy 7.8994 11.938) (xy 5.7404 10.033) (xy 4.6482 2.413)
+                (xy 6.2992 0.508)
+            )
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (circle
+            (center 8.128 -12.446)
+            (radius 1.651)
+            (stroke
+                (width 0)
+                (type default)
+            )
+            (fill
+                (type none)
+            )
+        )
+        (text "e"
+            (at -7.0866 -6.223 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "f"
+            (at -5.3594 6.223 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "d"
+            (at -1.7526 -12.446 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "g"
+            (at 0 0 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "a"
+            (at 1.7526 12.446 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "c"
+            (at 5.3594 -6.223 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
+        )
+        (text "b"
+            (at 7.0866 6.223 0)
+            (effects
+                (font
+                    (size 1.905 1.905)
+                )
+            )
         )
         """)

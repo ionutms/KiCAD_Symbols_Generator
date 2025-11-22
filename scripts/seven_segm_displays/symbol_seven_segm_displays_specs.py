@@ -60,11 +60,24 @@ class SeriesSpec(NamedTuple):
     display_type: str
     reference: str = "DS"
     number_of_rows: int = 1
-    rectangle_width: float = 7.62
-    rectangle_height: float = 10.16
+    rectangle_width: float = 2.54 * 10
+    rectangle_height: float = 2.54 * 14
     pin_names: dict[str, str] | None = None
     symbol_pin_length: float = 2.54
-    pin_config: SidePinConfig | None = None
+    pin_config: SidePinConfig | None = SidePinConfig(
+        pins=[
+            PinConfig("1", -2.54, 2.54 * 8, 270, "unspecified", 2.54),
+            PinConfig("5", 2.54, 2.54 * 8, 270, "unspecified", 2.54),
+            PinConfig("7", -2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("6", -2.54 * 3, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("4", -2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("3", -2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("2", -2.54 * 0, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("9", 2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("10", 2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("8", 2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
+        ],
+    )
 
 
 class PartInfo(NamedTuple):
@@ -82,11 +95,11 @@ class PartInfo(NamedTuple):
     trustedparts_link: str
     color: str
     pitch: float
-    pin_count: int
     mounting_angle: str
     mounting_style: str
     display_type: str
     number_of_rows: int
+    pin_count: int = 10
     rectangle_width: float = 7.62
     rectangle_height: float = 10.16
 
@@ -97,11 +110,7 @@ class PartInfo(NamedTuple):
         specs: SeriesSpec,
     ) -> PartInfo:
         """Create complete part information."""
-        mpn = cls.generate_part_code(
-            pin_count,
-            specs.base_series,
-            specs.manufacturer,
-        )
+        mpn = cls.generate_part_code(specs.base_series)
         footprint = specs.footprint_pattern.format(pin_count)
         trustedparts_link = f"{specs.trustedparts_link}/{mpn}"
 
@@ -130,12 +139,9 @@ class PartInfo(NamedTuple):
     @classmethod
     def generate_part_code(
         cls,
-        pin_count: int,
         series_code: str,
-        manufacturer: str,
     ) -> str:
         """Generate seven segment display part code based on pin count."""
-        # For fixed part numbers like 157142B12803, return as is
         return series_code
 
     @classmethod
@@ -200,34 +206,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Through Hole",
         display_type="Common Anode",
-        rectangle_width=2.54 * 8,
-        rectangle_height=2.54 * 10,
         pin_names={
-            "1": "E",
-            "2": "D",
+            "1": "G",
+            "2": "F",
             "3": "CA",
-            "4": "C",
-            "5": "DP",
-            "6": "B",
-            "7": "A",
+            "4": "E",
+            "5": "D",
+            "6": "DP",
+            "7": "C",
             "8": "CA",
-            "9": "F",
-            "10": "G",
+            "9": "B",
+            "10": "A",
         },
-        pin_config=SidePinConfig(
-            pins=[
-                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
-                PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("3", -2.54 * 5, 2.54, 0, "unspecified", 2.54),
-                PinConfig("2", -2.54 * 5, 0, 0, "unspecified", 2.54),
-                PinConfig("9", -2.54 * 5, -2.54, 0, "unspecified", 2.54),
-                PinConfig("10", -2.54 * 5, -2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("8", -2.54 * 5, -2.54 * 4, 0, "unspecified", 2.54),
-            ],
-        ),
     ),
     "157143B12800": SeriesSpec(
         manufacturer="Würth Elektronik",
@@ -245,8 +235,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
         display_type="Common Anode",
-        rectangle_width=2.54 * 8,
-        rectangle_height=2.54 * 10,
         pin_names={
             "1": "E",
             "2": "D",
@@ -259,20 +247,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "9": "F",
             "10": "G",
         },
-        pin_config=SidePinConfig(
-            pins=[
-                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
-                PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("3", -2.54 * 5, 2.54, 0, "unspecified", 2.54),
-                PinConfig("2", -2.54 * 5, 0, 0, "unspecified", 2.54),
-                PinConfig("9", -2.54 * 5, -2.54, 0, "unspecified", 2.54),
-                PinConfig("10", -2.54 * 5, -2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("8", -2.54 * 5, -2.54 * 4, 0, "unspecified", 2.54),
-            ],
-        ),
     ),
     "157143V12800": SeriesSpec(
         manufacturer="Würth Elektronik",
@@ -289,8 +263,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Surface Mount",
         display_type="Common Anode",
-        rectangle_width=2.54 * 8,
-        rectangle_height=2.54 * 10,
         pin_names={
             "1": "E",
             "2": "D",
@@ -303,20 +275,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "9": "F",
             "10": "G",
         },
-        pin_config=SidePinConfig(
-            pins=[
-                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
-                PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("3", -2.54 * 5, 2.54, 0, "unspecified", 2.54),
-                PinConfig("2", -2.54 * 5, 0, 0, "unspecified", 2.54),
-                PinConfig("9", -2.54 * 5, -2.54, 0, "unspecified", 2.54),
-                PinConfig("10", -2.54 * 5, -2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("8", -2.54 * 5, -2.54 * 4, 0, "unspecified", 2.54),
-            ],
-        ),
     ),
     "FYS-15011BUHR-21": SeriesSpec(
         manufacturer="Foryard",
@@ -333,8 +291,6 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_angle="Vertical",
         mounting_style="Through Hole",
         display_type="Common Anode",
-        rectangle_width=2.54 * 8,
-        rectangle_height=2.54 * 10,
         pin_names={
             "1": "CA",
             "2": "E",
@@ -347,19 +303,5 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "9": "F",
             "10": "G",
         },
-        pin_config=SidePinConfig(
-            pins=[
-                PinConfig("1", -2.54 * 2, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("5", -2.54, 2.54 * 6, 270, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 5, 2.54 * 4, 0, "unspecified", 2.54),
-                PinConfig("6", -2.54 * 5, 2.54 * 3, 0, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 5, 2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("3", -2.54 * 5, 2.54, 0, "unspecified", 2.54),
-                PinConfig("2", -2.54 * 5, 0, 0, "unspecified", 2.54),
-                PinConfig("9", -2.54 * 5, -2.54, 0, "unspecified", 2.54),
-                PinConfig("10", -2.54 * 5, -2.54 * 2, 0, "unspecified", 2.54),
-                PinConfig("8", -2.54 * 5, -2.54 * 4, 0, "unspecified", 2.54),
-            ],
-        ),
     ),
 }
