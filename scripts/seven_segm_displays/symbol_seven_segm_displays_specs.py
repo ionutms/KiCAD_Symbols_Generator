@@ -76,7 +76,7 @@ class SeriesSpec(NamedTuple):
             PinConfig("9", 2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
             PinConfig("10", 2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
             PinConfig("8", 2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
-        ],
+        ]
     )
 
 
@@ -218,6 +218,22 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "9": "B",
             "10": "A",
         },
+        pin_config=SidePinConfig(
+            pins=[
+                PinConfig("3", -2.54, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("8", 2.54, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig(
+                    "10", -2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54
+                ),
+                PinConfig("9", -2.54 * 3, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("7", -2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("5", -2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("4", -2.54 * 0, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("2", 2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("1", 2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("6", 2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
+            ]
+        ),
     ),
     "157143B12800": SeriesSpec(
         manufacturer="Würth Elektronik",
