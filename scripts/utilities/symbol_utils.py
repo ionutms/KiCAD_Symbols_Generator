@@ -2723,7 +2723,9 @@ def write_slide_switch_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+            write_pin(
+                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
+            )
     else:
         start_y = (pin_count - 1) * pin_spacing / 2
 
@@ -2736,9 +2738,21 @@ def write_slide_switch_symbol_drawing(
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
                 # Both pins in this row use the same angle
-                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
-                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
+                    symbol_file,
+                    -2.54 / 2,
+                    y_pos,
+                    angle,
+                    str(pin_num),
+                    pin_type="passive",
+                )
+                write_pin(
+                    symbol_file,
+                    2.54 / 2,
+                    y_pos,
+                    angle,
+                    str(pin_num + 1),
+                    pin_type="passive",
                 )
 
                 # Toggle angle for next row
@@ -2746,42 +2760,32 @@ def write_slide_switch_symbol_drawing(
         else:
             for pin_num in range(1, pin_count + 1):
                 y_pos = start_y - (pin_num - 1) * pin_spacing
-                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+                write_pin(
+                    symbol_file,
+                    -5.08,
+                    y_pos,
+                    0,
+                    str(pin_num),
+                    pin_type="passive",
+                )
 
     symbol_file.write("""
 			(polyline
-				(pts
-					(xy -2.54 0) (xy 0 0) (xy 2.032 2.286)
-				)
-				(stroke
-					(width 0.2032)
-					(type solid)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy -2.54 0) (xy 0 0) (xy 2.032 2.286))
+				(stroke (width 0.2032) (type solid))
+				(fill (type none))
 			)
 			(circle
 				(center 2.286 2.54)
 				(radius 0.254)
-				(stroke
-					(width 0.2032)
-					(type solid)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0.2032) (type solid))
+				(fill (type none))
 			)
 			(circle
 				(center 2.286 -2.54)
 				(radius 0.254)
-				(stroke
-					(width 0.2032)
-					(type solid)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0.2032) (type solid))
+				(fill (type none))
 			)
     """)
 
