@@ -1875,12 +1875,66 @@ def write_p_mos_transistor_symbol_drawing_2(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "1", "D", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(-1.27), 0, "2", "D", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(-3.81), 0, "5", "D", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(-6.35), 0, "6", "D", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "4", "S", length=2.54)
-    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "3", "G", length=2.54)
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(1.27),
+        0,
+        "1",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(-1.27),
+        0,
+        "2",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(-3.81),
+        0,
+        "5",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(-6.35),
+        0,
+        "6",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(1.27),
+        180,
+        "4",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        offset_y(-6.35),
+        180,
+        "3",
+        "G",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -1965,11 +2019,56 @@ def write_n_mos_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(-3.81), 180, "3", "S", length=2.54)
-    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "4", "G", length=2.54)
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(1.27),
+        0,
+        "5",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(1.27),
+        180,
+        "1",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(-1.27),
+        180,
+        "2",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(-3.81),
+        180,
+        "3",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        offset_y(-6.35),
+        180,
+        "4",
+        "G",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -2053,9 +2152,36 @@ def write_n_mos_basic_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
+    write_pin(
+        symbol_file,
+        2.54,
+        offset_y(-6.35),
+        180,
+        "1",
+        "G",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(1.27),
+        180,
+        "2",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(1.27),
+        0,
+        "3",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -2182,6 +2308,7 @@ def write_n_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][0],
             name[index - 1][0],
+            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2190,6 +2317,7 @@ def write_n_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][1],
             name[index - 1][1],
+            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2198,6 +2326,7 @@ def write_n_mos_dual_transistor_symbol_drawing(
             0,
             number[index - 1][2],
             name[index - 1][2],
+            pin_type="passive",
         )
 
         symbol_file.write(")")
@@ -2328,6 +2457,7 @@ def write_p_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][0],
             name[index - 1][0],
+            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2336,6 +2466,7 @@ def write_p_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][1],
             name[index - 1][1],
+            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2344,6 +2475,7 @@ def write_p_mos_dual_transistor_symbol_drawing(
             0,
             number[index - 1][2],
             name[index - 1][2],
+            pin_type="passive",
         )
 
         symbol_file.write(")")
