@@ -283,8 +283,8 @@ def write_capacitor_symbol_drawing(
     """)
 
     # Write pins
-    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
-    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
+    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8, pin_type="passive")
+    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8, pin_type="passive")
 
 
 def write_polarised_capacitor_symbol_drawing(
@@ -329,8 +329,8 @@ def write_polarised_capacitor_symbol_drawing(
     """)
 
     # Write pins
-    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
-    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
+    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8, pin_type="passive")
+    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8, pin_type="passive")
 
 
 def write_resistor_symbol_drawing(
