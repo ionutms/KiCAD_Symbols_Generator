@@ -11,7 +11,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 2.54 0)
+            (at 0 2.54 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -21,7 +21,7 @@
         )
         
         (property "Value" "416131160801"
-            (at 0.0 -2.54 0)
+            (at 0 -2.54 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -31,7 +31,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160801"
-            (at 0.0 -5.08 0)
+            (at 0 -5.08 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -41,7 +41,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160801.pdf"
-            (at 0.0 -7.62 0)
+            (at 0 -7.62 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -51,7 +51,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -10.16 0)
+            (at 0 -10.16 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -61,7 +61,7 @@
         )
         
         (property "MPN" "416131160801"
-            (at 0.0 -12.7 0)
+            (at 0 -12.7 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -71,7 +71,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -15.239999999999998 0)
+            (at 0 -15.239999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -81,7 +81,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -17.779999999999998 0)
+            (at 0 -17.779999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -91,7 +91,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -20.319999999999997 0)
+            (at 0 -20.319999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -101,7 +101,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -22.859999999999996 0)
+            (at 0 -22.859999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -111,7 +111,7 @@
         )
         
         (property "Pin Count" "1"
-            (at 0.0 -25.399999999999995 0)
+            (at 0 -25.399999999999995 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -121,7 +121,7 @@
         )
         
         (property "Series" "416131160801"
-            (at 0.0 -27.939999999999994 0)
+            (at 0 -27.939999999999994 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -131,7 +131,7 @@
         )
         
         (property "Symbol Name" "S_416131160801"
-            (at 0.0 -30.479999999999993 0)
+            (at 0 -30.479999999999993 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -141,7 +141,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160801"
-            (at 0.0 -33.019999999999996 0)
+            (at 0 -33.019999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -151,7 +151,7 @@
         )
         		(symbol "S_416131160801_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 0.0 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -159,7 +159,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 0.0 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -169,49 +169,28 @@
         
 			(polyline
 				(pts
-					(xy -2.54 0.0) (xy -1.27 0.0) (xy 1.27 1.27)
+					(xy -2.54 0.0) (xy -1.27 0.0)
+                    (xy 1.27 1.27)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 0.0) (xy 1.27 0.0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160801_1_0"
 		)
@@ -223,7 +202,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 3.81 0)
+            (at 0 3.81 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -233,7 +212,7 @@
         )
         
         (property "Value" "416131160802"
-            (at 0.0 -3.81 0)
+            (at 0 -3.81 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -243,7 +222,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160802"
-            (at 0.0 -6.35 0)
+            (at 0 -6.35 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -253,7 +232,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160802.pdf"
-            (at 0.0 -8.89 0)
+            (at 0 -8.89 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -263,7 +242,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -11.43 0)
+            (at 0 -11.43 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -273,7 +252,7 @@
         )
         
         (property "MPN" "416131160802"
-            (at 0.0 -13.97 0)
+            (at 0 -13.97 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -283,7 +262,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -293,7 +272,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -303,7 +282,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -313,7 +292,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -323,7 +302,7 @@
         )
         
         (property "Pin Count" "2"
-            (at 0.0 -26.669999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -333,7 +312,7 @@
         )
         
         (property "Series" "416131160802"
-            (at 0.0 -29.209999999999997 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -343,7 +322,7 @@
         )
         
         (property "Symbol Name" "S_416131160802"
-            (at 0.0 -31.749999999999996 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -353,7 +332,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160802"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -363,7 +342,7 @@
         )
         		(symbol "S_416131160802_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -371,7 +350,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -379,7 +358,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.27 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -387,7 +366,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.27 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -397,95 +376,53 @@
         
 			(polyline
 				(pts
-					(xy -2.54 1.27) (xy -1.27 1.27) (xy 1.27 2.54)
+					(xy -2.54 1.27) (xy -1.27 1.27)
+                    (xy 1.27 2.54)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.27) (xy 1.27 1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.27) (xy 1.27 1.27)
+					(xy -2.54 -1.27) (xy -1.27 -1.27)
+                    (xy 1.27 0.0)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.27) (xy -1.27 -1.27) (xy 1.27 0.0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -1.27) (xy 1.27 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160802_1_0"
 		)
@@ -497,7 +434,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 5.08 0)
+            (at 0 5.08 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -507,7 +444,7 @@
         )
         
         (property "Value" "416131160803"
-            (at 0.0 -5.08 0)
+            (at 0 -5.08 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -517,7 +454,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160803"
-            (at 0.0 -7.62 0)
+            (at 0 -7.62 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -527,7 +464,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160803.pdf"
-            (at 0.0 -10.16 0)
+            (at 0 -10.16 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -537,7 +474,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -12.7 0)
+            (at 0 -12.7 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -547,7 +484,7 @@
         )
         
         (property "MPN" "416131160803"
-            (at 0.0 -15.24 0)
+            (at 0 -15.24 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -557,7 +494,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -17.78 0)
+            (at 0 -17.78 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -567,7 +504,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -20.32 0)
+            (at 0 -20.32 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -577,7 +514,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -22.86 0)
+            (at 0 -22.86 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -587,7 +524,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -25.4 0)
+            (at 0 -25.4 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -597,7 +534,7 @@
         )
         
         (property "Pin Count" "3"
-            (at 0.0 -27.939999999999998 0)
+            (at 0 -27.939999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -607,7 +544,7 @@
         )
         
         (property "Series" "416131160803"
-            (at 0.0 -30.479999999999997 0)
+            (at 0 -30.479999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -617,7 +554,7 @@
         )
         
         (property "Symbol Name" "S_416131160803"
-            (at 0.0 -33.019999999999996 0)
+            (at 0 -33.019999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -627,7 +564,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160803"
-            (at 0.0 -35.559999999999995 0)
+            (at 0 -35.559999999999995 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -637,7 +574,7 @@
         )
         		(symbol "S_416131160803_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -645,7 +582,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 0.0 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -653,7 +590,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -661,7 +598,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 2.54 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -669,7 +606,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 0.0 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -677,7 +614,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -2.54 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -687,141 +624,78 @@
         
 			(polyline
 				(pts
-					(xy -2.54 2.54) (xy -1.27 2.54) (xy 1.27 3.81)
+					(xy -2.54 2.54) (xy -1.27 2.54)
+                    (xy 1.27 3.81)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 2.54) (xy 1.27 2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 2.54) (xy 1.27 2.54)
+					(xy -2.54 0.0) (xy -1.27 0.0)
+                    (xy 1.27 1.27)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 0.0) (xy -1.27 0.0) (xy 1.27 1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 0.0) (xy 1.27 0.0)
+					(xy -2.54 -2.54) (xy -1.27 -2.54)
+                    (xy 1.27 -1.27)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -2.54) (xy -1.27 -2.54) (xy 1.27 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -2.54) (xy 1.27 -2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -2.54) (xy 1.27 -2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160803_1_0"
 		)
@@ -833,7 +707,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 6.35 0)
+            (at 0 6.35 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -843,7 +717,7 @@
         )
         
         (property "Value" "416131160804"
-            (at 0.0 -6.35 0)
+            (at 0 -6.35 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -853,7 +727,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160804"
-            (at 0.0 -8.89 0)
+            (at 0 -8.89 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -863,7 +737,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160804.pdf"
-            (at 0.0 -11.43 0)
+            (at 0 -11.43 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -873,7 +747,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -13.97 0)
+            (at 0 -13.97 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -883,7 +757,7 @@
         )
         
         (property "MPN" "416131160804"
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -893,7 +767,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -903,7 +777,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -913,7 +787,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -923,7 +797,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -26.669999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -933,7 +807,7 @@
         )
         
         (property "Pin Count" "4"
-            (at 0.0 -29.209999999999997 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -943,7 +817,7 @@
         )
         
         (property "Series" "416131160804"
-            (at 0.0 -31.749999999999996 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -953,7 +827,7 @@
         )
         
         (property "Symbol Name" "S_416131160804"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -963,7 +837,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160804"
-            (at 0.0 -36.83 0)
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -973,7 +847,7 @@
         )
         		(symbol "S_416131160804_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 3.81 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -981,7 +855,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -989,7 +863,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -997,7 +871,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -3.81 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1005,7 +879,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 3.81 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1013,7 +887,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.27 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1021,7 +895,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.27 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1029,7 +903,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -3.81 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1039,187 +913,103 @@
         
 			(polyline
 				(pts
-					(xy -2.54 3.81) (xy -1.27 3.81) (xy 1.27 5.08)
+					(xy -2.54 3.81) (xy -1.27 3.81)
+                    (xy 1.27 5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 3.81)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 3.81)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 3.81) (xy 1.27 3.81))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 3.81) (xy 1.27 3.81)
+					(xy -2.54 1.27) (xy -1.27 1.27)
+                    (xy 1.27 2.54)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.27) (xy -1.27 1.27) (xy 1.27 2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.27) (xy 1.27 1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.27) (xy 1.27 1.27)
+					(xy -2.54 -1.27) (xy -1.27 -1.27)
+                    (xy 1.27 0.0)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.27) (xy -1.27 -1.27) (xy 1.27 0.0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.27)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -1.27) (xy 1.27 -1.27)
+					(xy -2.54 -3.81) (xy -1.27 -3.81)
+                    (xy 1.27 -2.54)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.81) (xy -1.27 -3.81) (xy 1.27 -2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -3.81)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -3.81)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -3.81) (xy 1.27 -3.81)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -3.81) (xy 1.27 -3.81))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160804_1_0"
 		)
@@ -1231,7 +1021,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 7.62 0)
+            (at 0 7.62 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1241,7 +1031,7 @@
         )
         
         (property "Value" "416131160805"
-            (at 0.0 -7.62 0)
+            (at 0 -7.62 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1251,7 +1041,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160805"
-            (at 0.0 -10.16 0)
+            (at 0 -10.16 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1261,7 +1051,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160805.pdf"
-            (at 0.0 -12.7 0)
+            (at 0 -12.7 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1271,7 +1061,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -15.24 0)
+            (at 0 -15.24 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1281,7 +1071,7 @@
         )
         
         (property "MPN" "416131160805"
-            (at 0.0 -17.78 0)
+            (at 0 -17.78 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1291,7 +1081,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -20.32 0)
+            (at 0 -20.32 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1301,7 +1091,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -22.86 0)
+            (at 0 -22.86 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1311,7 +1101,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -25.4 0)
+            (at 0 -25.4 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1321,7 +1111,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -27.939999999999998 0)
+            (at 0 -27.939999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1331,7 +1121,7 @@
         )
         
         (property "Pin Count" "5"
-            (at 0.0 -30.479999999999997 0)
+            (at 0 -30.479999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1341,7 +1131,7 @@
         )
         
         (property "Series" "416131160805"
-            (at 0.0 -33.019999999999996 0)
+            (at 0 -33.019999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1351,7 +1141,7 @@
         )
         
         (property "Symbol Name" "S_416131160805"
-            (at 0.0 -35.559999999999995 0)
+            (at 0 -35.559999999999995 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1361,7 +1151,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160805"
-            (at 0.0 -38.099999999999994 0)
+            (at 0 -38.099999999999994 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1371,7 +1161,7 @@
         )
         		(symbol "S_416131160805_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 5.08 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1379,7 +1169,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1387,7 +1177,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 0.0 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1395,7 +1185,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1403,7 +1193,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -5.08 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1411,7 +1201,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 5.08 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1419,7 +1209,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 2.54 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1427,7 +1217,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 0.0 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1435,7 +1225,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -2.54 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1443,7 +1233,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -5.08 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1453,233 +1243,128 @@
         
 			(polyline
 				(pts
-					(xy -2.54 5.08) (xy -1.27 5.08) (xy 1.27 6.35)
+					(xy -2.54 5.08) (xy -1.27 5.08)
+                    (xy 1.27 6.35)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 5.08)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 5.08)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 5.08) (xy 1.27 5.08))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 5.08) (xy 1.27 5.08)
+					(xy -2.54 2.54) (xy -1.27 2.54)
+                    (xy 1.27 3.81)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 2.54) (xy -1.27 2.54) (xy 1.27 3.81)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 2.54) (xy 1.27 2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 2.54) (xy 1.27 2.54)
+					(xy -2.54 0.0) (xy -1.27 0.0)
+                    (xy 1.27 1.27)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 0.0) (xy -1.27 0.0) (xy 1.27 1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 0.0)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 0.0) (xy 1.27 0.0)
+					(xy -2.54 -2.54) (xy -1.27 -2.54)
+                    (xy 1.27 -1.27)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -2.54) (xy -1.27 -2.54) (xy 1.27 -1.27)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -2.54)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -2.54) (xy 1.27 -2.54))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -2.54) (xy 1.27 -2.54)
+					(xy -2.54 -5.08) (xy -1.27 -5.08)
+                    (xy 1.27 -3.81)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -5.08) (xy -1.27 -5.08) (xy 1.27 -3.81)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -5.08)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -5.08)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -5.08) (xy 1.27 -5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -5.08) (xy 1.27 -5.08))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160805_1_0"
 		)
@@ -1691,7 +1376,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 8.89 0)
+            (at 0 8.89 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1701,7 +1386,7 @@
         )
         
         (property "Value" "416131160806"
-            (at 0.0 -8.89 0)
+            (at 0 -8.89 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1711,7 +1396,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160806"
-            (at 0.0 -11.43 0)
+            (at 0 -11.43 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1721,7 +1406,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160806.pdf"
-            (at 0.0 -13.97 0)
+            (at 0 -13.97 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1731,7 +1416,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1741,7 +1426,7 @@
         )
         
         (property "MPN" "416131160806"
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1751,7 +1436,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1761,7 +1446,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1771,7 +1456,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -26.669999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1781,7 +1466,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -29.209999999999997 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1791,7 +1476,7 @@
         )
         
         (property "Pin Count" "6"
-            (at 0.0 -31.749999999999996 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1801,7 +1486,7 @@
         )
         
         (property "Series" "416131160806"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1811,7 +1496,7 @@
         )
         
         (property "Symbol Name" "S_416131160806"
-            (at 0.0 -36.83 0)
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1821,7 +1506,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160806"
-            (at 0.0 -39.37 0)
+            (at 0 -39.37 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1831,7 +1516,7 @@
         )
         		(symbol "S_416131160806_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 6.35 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1839,7 +1524,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 3.8099999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1847,7 +1532,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.2699999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1855,7 +1540,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.2700000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1863,7 +1548,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -3.8100000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1871,7 +1556,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -6.35 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1879,7 +1564,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 6.35 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1887,7 +1572,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 3.8099999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1895,7 +1580,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.2699999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1903,7 +1588,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.2700000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1911,7 +1596,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -3.8100000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1919,7 +1604,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -6.35 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -1929,279 +1614,153 @@
         
 			(polyline
 				(pts
-					(xy -2.54 6.35) (xy -1.27 6.35) (xy 1.27 7.619999999999999)
+					(xy -2.54 6.35) (xy -1.27 6.35)
+                    (xy 1.27 7.619999999999999)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 6.35) (xy 1.27 6.35))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 6.35) (xy 1.27 6.35)
+					(xy -2.54 3.8099999999999996) (xy -1.27 3.8099999999999996)
+                    (xy 1.27 5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 3.8099999999999996) (xy -1.27 3.8099999999999996) (xy 1.27 5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 3.8099999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 3.8099999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 3.8099999999999996) (xy 1.27 3.8099999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 3.8099999999999996) (xy 1.27 3.8099999999999996)
+					(xy -2.54 1.2699999999999996) (xy -1.27 1.2699999999999996)
+                    (xy 1.27 2.5399999999999996)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.2699999999999996) (xy -1.27 1.2699999999999996) (xy 1.27 2.5399999999999996)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.2699999999999996) (xy 1.27 1.2699999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.2699999999999996) (xy 1.27 1.2699999999999996)
+					(xy -2.54 -1.2700000000000005) (xy -1.27 -1.2700000000000005)
+                    (xy 1.27 -4.440892098500626e-16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.2700000000000005) (xy -1.27 -1.2700000000000005) (xy 1.27 -4.440892098500626e-16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.2700000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.2700000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.2700000000000005) (xy 1.27 -1.2700000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -1.2700000000000005) (xy 1.27 -1.2700000000000005)
+					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005)
+                    (xy 1.27 -2.5400000000000005)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005) (xy 1.27 -2.5400000000000005)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005)
+					(xy -2.54 -6.35) (xy -1.27 -6.35)
+                    (xy 1.27 -5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -6.35) (xy -1.27 -6.35) (xy 1.27 -5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -6.35) (xy 1.27 -6.35)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -6.35) (xy 1.27 -6.35))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160806_1_0"
 		)
@@ -2213,7 +1772,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 11.43 0)
+            (at 0 11.43 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2223,7 +1782,7 @@
         )
         
         (property "Value" "416131160808"
-            (at 0.0 -11.43 0)
+            (at 0 -11.43 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2233,7 +1792,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160808"
-            (at 0.0 -13.97 0)
+            (at 0 -13.97 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2243,7 +1802,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160808.pdf"
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2253,7 +1812,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2263,7 +1822,7 @@
         )
         
         (property "MPN" "416131160808"
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2273,7 +1832,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2283,7 +1842,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -26.669999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2293,7 +1852,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -29.209999999999997 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2303,7 +1862,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -31.749999999999996 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2313,7 +1872,7 @@
         )
         
         (property "Pin Count" "8"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2323,7 +1882,7 @@
         )
         
         (property "Series" "416131160808"
-            (at 0.0 -36.83 0)
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2333,7 +1892,7 @@
         )
         
         (property "Symbol Name" "S_416131160808"
-            (at 0.0 -39.37 0)
+            (at 0 -39.37 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2343,7 +1902,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160808"
-            (at 0.0 -41.91 0)
+            (at 0 -41.91 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2353,7 +1912,7 @@
         )
         		(symbol "S_416131160808_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 8.89 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2361,7 +1920,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 6.3500000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2369,7 +1928,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 3.8100000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2377,7 +1936,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.2700000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2385,7 +1944,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.2699999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2393,7 +1952,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -3.8099999999999987 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2401,7 +1960,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -6.35 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2409,7 +1968,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -8.89 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2417,7 +1976,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 8.89 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2425,7 +1984,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 6.3500000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2433,7 +1992,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 3.8100000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2441,7 +2000,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.2700000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2449,7 +2008,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.2699999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2457,7 +2016,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -3.8099999999999987 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2465,7 +2024,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -6.35 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2473,7 +2032,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -8.89 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -2483,371 +2042,203 @@
         
 			(polyline
 				(pts
-					(xy -2.54 8.89) (xy -1.27 8.89) (xy 1.27 10.16)
+					(xy -2.54 8.89) (xy -1.27 8.89)
+                    (xy 1.27 10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 8.89) (xy 1.27 8.89))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 8.89) (xy 1.27 8.89)
+					(xy -2.54 6.3500000000000005) (xy -1.27 6.3500000000000005)
+                    (xy 1.27 7.620000000000001)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 6.3500000000000005) (xy -1.27 6.3500000000000005) (xy 1.27 7.620000000000001)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 6.3500000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 6.3500000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 6.3500000000000005) (xy 1.27 6.3500000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 6.3500000000000005) (xy 1.27 6.3500000000000005)
+					(xy -2.54 3.8100000000000005) (xy -1.27 3.8100000000000005)
+                    (xy 1.27 5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 3.8100000000000005) (xy -1.27 3.8100000000000005) (xy 1.27 5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 3.8100000000000005) (xy 1.27 3.8100000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 3.8100000000000005) (xy 1.27 3.8100000000000005)
+					(xy -2.54 1.2700000000000005) (xy -1.27 1.2700000000000005)
+                    (xy 1.27 2.5400000000000005)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.2700000000000005) (xy -1.27 1.2700000000000005) (xy 1.27 2.5400000000000005)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.2700000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.2700000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.2700000000000005) (xy 1.27 1.2700000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.2700000000000005) (xy 1.27 1.2700000000000005)
+					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996)
+                    (xy 1.27 4.440892098500626e-16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996) (xy 1.27 4.440892098500626e-16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996)
+					(xy -2.54 -3.8099999999999987) (xy -1.27 -3.8099999999999987)
+                    (xy 1.27 -2.5399999999999987)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.8099999999999987) (xy -1.27 -3.8099999999999987) (xy 1.27 -2.5399999999999987)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -3.8099999999999987)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -3.8099999999999987)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -3.8099999999999987) (xy 1.27 -3.8099999999999987))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -3.8099999999999987) (xy 1.27 -3.8099999999999987)
+					(xy -2.54 -6.35) (xy -1.27 -6.35)
+                    (xy 1.27 -5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -6.35) (xy -1.27 -6.35) (xy 1.27 -5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -6.35) (xy 1.27 -6.35))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -6.35) (xy 1.27 -6.35)
+					(xy -2.54 -8.89) (xy -1.27 -8.89)
+                    (xy 1.27 -7.620000000000001)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -8.89) (xy -1.27 -8.89) (xy 1.27 -7.620000000000001)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -8.89) (xy 1.27 -8.89)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -8.89) (xy 1.27 -8.89))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160808_1_0"
 		)
@@ -2859,7 +2250,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 13.97 0)
+            (at 0 13.97 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2869,7 +2260,7 @@
         )
         
         (property "Value" "416131160810"
-            (at 0.0 -13.97 0)
+            (at 0 -13.97 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2879,7 +2270,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160810"
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2889,7 +2280,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160810.pdf"
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2899,7 +2290,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2909,7 +2300,7 @@
         )
         
         (property "MPN" "416131160810"
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2919,7 +2310,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -26.669999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2929,7 +2320,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -29.209999999999997 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2939,7 +2330,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -31.749999999999996 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2949,7 +2340,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2959,7 +2350,7 @@
         )
         
         (property "Pin Count" "10"
-            (at 0.0 -36.83 0)
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2969,7 +2360,7 @@
         )
         
         (property "Series" "416131160810"
-            (at 0.0 -39.37 0)
+            (at 0 -39.37 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2979,7 +2370,7 @@
         )
         
         (property "Symbol Name" "S_416131160810"
-            (at 0.0 -41.91 0)
+            (at 0 -41.91 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2989,7 +2380,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160810"
-            (at 0.0 -44.449999999999996 0)
+            (at 0 -44.449999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2999,7 +2390,7 @@
         )
         		(symbol "S_416131160810_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 11.43 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3007,7 +2398,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 8.89 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3015,7 +2406,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 6.35 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3023,7 +2414,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 3.8099999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3031,7 +2422,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.2699999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3039,7 +2430,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.2699999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3047,7 +2438,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -3.8100000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3055,7 +2446,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -6.350000000000001 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3063,7 +2454,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -8.89 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3071,7 +2462,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -11.43 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3079,7 +2470,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 11.43 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3087,7 +2478,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 8.89 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3095,7 +2486,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 6.35 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3103,7 +2494,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 3.8099999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3111,7 +2502,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.2699999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3119,7 +2510,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.2699999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3127,7 +2518,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -3.8100000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3135,7 +2526,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -6.350000000000001 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3143,7 +2534,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -8.89 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3151,7 +2542,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -11.43 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3161,463 +2552,253 @@
         
 			(polyline
 				(pts
-					(xy -2.54 11.43) (xy -1.27 11.43) (xy 1.27 12.7)
+					(xy -2.54 11.43) (xy -1.27 11.43)
+                    (xy 1.27 12.7)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 11.43) (xy 1.27 11.43))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 11.43) (xy 1.27 11.43)
+					(xy -2.54 8.89) (xy -1.27 8.89)
+                    (xy 1.27 10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 8.89) (xy -1.27 8.89) (xy 1.27 10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 8.89) (xy 1.27 8.89))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 8.89) (xy 1.27 8.89)
+					(xy -2.54 6.35) (xy -1.27 6.35)
+                    (xy 1.27 7.619999999999999)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 6.35) (xy -1.27 6.35) (xy 1.27 7.619999999999999)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 6.35) (xy 1.27 6.35))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 6.35) (xy 1.27 6.35)
+					(xy -2.54 3.8099999999999996) (xy -1.27 3.8099999999999996)
+                    (xy 1.27 5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 3.8099999999999996) (xy -1.27 3.8099999999999996) (xy 1.27 5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 3.8099999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 3.8099999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 3.8099999999999996) (xy 1.27 3.8099999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 3.8099999999999996) (xy 1.27 3.8099999999999996)
+					(xy -2.54 1.2699999999999996) (xy -1.27 1.2699999999999996)
+                    (xy 1.27 2.5399999999999996)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.2699999999999996) (xy -1.27 1.2699999999999996) (xy 1.27 2.5399999999999996)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.2699999999999996) (xy 1.27 1.2699999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.2699999999999996) (xy 1.27 1.2699999999999996)
+					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996)
+                    (xy 1.27 4.440892098500626e-16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996) (xy 1.27 4.440892098500626e-16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996)
+					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005)
+                    (xy 1.27 -2.5400000000000005)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005) (xy 1.27 -2.5400000000000005)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005)
+					(xy -2.54 -6.350000000000001) (xy -1.27 -6.350000000000001)
+                    (xy 1.27 -5.080000000000002)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -6.350000000000001) (xy -1.27 -6.350000000000001) (xy 1.27 -5.080000000000002)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -6.350000000000001)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -6.350000000000001)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -6.350000000000001) (xy 1.27 -6.350000000000001))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -6.350000000000001) (xy 1.27 -6.350000000000001)
+					(xy -2.54 -8.89) (xy -1.27 -8.89)
+                    (xy 1.27 -7.620000000000001)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -8.89) (xy -1.27 -8.89) (xy 1.27 -7.620000000000001)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -8.89) (xy 1.27 -8.89))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -8.89) (xy 1.27 -8.89)
+					(xy -2.54 -11.43) (xy -1.27 -11.43)
+                    (xy 1.27 -10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -11.43) (xy -1.27 -11.43) (xy 1.27 -10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -11.43) (xy 1.27 -11.43)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -11.43) (xy 1.27 -11.43))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160810_1_0"
 		)
@@ -3629,7 +2810,7 @@
             (on_board yes)
         
         (property "Reference" "S"
-            (at 0.0 16.51 0)
+            (at 0 16.51 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -3639,7 +2820,7 @@
         )
         
         (property "Value" "416131160812"
-            (at 0.0 -16.51 0)
+            (at 0 -16.51 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -3649,7 +2830,7 @@
         )
         
         (property "Footprint" "dip_switches_footprints:416131160812"
-            (at 0.0 -19.05 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3659,7 +2840,7 @@
         )
         
         (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160812.pdf"
-            (at 0.0 -21.59 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3669,7 +2850,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0.0 -24.13 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3679,7 +2860,7 @@
         )
         
         (property "MPN" "416131160812"
-            (at 0.0 -26.67 0)
+            (at 0 -26.67 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3689,7 +2870,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0.0 -29.21 0)
+            (at 0 -29.21 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3699,7 +2880,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0.0 -31.75 0)
+            (at 0 -31.75 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3709,7 +2890,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0.0 -34.29 0)
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3719,7 +2900,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0.0 -36.83 0)
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3729,7 +2910,7 @@
         )
         
         (property "Pin Count" "12"
-            (at 0.0 -39.37 0)
+            (at 0 -39.37 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3739,7 +2920,7 @@
         )
         
         (property "Series" "416131160812"
-            (at 0.0 -41.91 0)
+            (at 0 -41.91 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3749,7 +2930,7 @@
         )
         
         (property "Symbol Name" "S_416131160812"
-            (at 0.0 -44.449999999999996 0)
+            (at 0 -44.449999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3759,7 +2940,7 @@
         )
         
         (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160812"
-            (at 0.0 -46.989999999999995 0)
+            (at 0 -46.989999999999995 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -3769,7 +2950,7 @@
         )
         		(symbol "S_416131160812_0_0"
 
-        (pin unspecified line
+        (pin passive line
             (at -5.08 13.97 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3777,7 +2958,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 11.43 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3785,7 +2966,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 8.89 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3793,7 +2974,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 6.3500000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3801,7 +2982,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 3.8100000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3809,7 +2990,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 1.2700000000000014 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3817,7 +2998,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -1.2699999999999996 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3825,7 +3006,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -3.8100000000000005 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3833,7 +3014,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -6.35 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3841,7 +3022,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -8.889999999999999 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3849,7 +3030,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -11.429999999999998 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3857,7 +3038,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at -5.08 -13.97 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3865,7 +3046,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 13.97 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3873,7 +3054,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 11.43 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3881,7 +3062,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 8.89 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3889,7 +3070,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 6.3500000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3897,7 +3078,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 3.8100000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3905,7 +3086,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 1.2700000000000014 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3913,7 +3094,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -1.2699999999999996 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3921,7 +3102,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -3.8100000000000005 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3929,7 +3110,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -6.35 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3937,7 +3118,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -8.889999999999999 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3945,7 +3126,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -11.429999999999998 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3953,7 +3134,7 @@
             
         )
         
-        (pin unspecified line
+        (pin passive line
             (at 5.08 -13.97 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
@@ -3963,555 +3144,303 @@
         
 			(polyline
 				(pts
-					(xy -2.54 13.97) (xy -1.27 13.97) (xy 1.27 15.24)
+					(xy -2.54 13.97) (xy -1.27 13.97)
+                    (xy 1.27 15.24)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 13.97)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 13.97)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 13.97) (xy 1.27 13.97))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 13.97) (xy 1.27 13.97)
+					(xy -2.54 11.43) (xy -1.27 11.43)
+                    (xy 1.27 12.7)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 11.43) (xy -1.27 11.43) (xy 1.27 12.7)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 11.43)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 11.43) (xy 1.27 11.43))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 11.43) (xy 1.27 11.43)
+					(xy -2.54 8.89) (xy -1.27 8.89)
+                    (xy 1.27 10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 8.89) (xy -1.27 8.89) (xy 1.27 10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 8.89)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 8.89) (xy 1.27 8.89))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 8.89) (xy 1.27 8.89)
+					(xy -2.54 6.3500000000000005) (xy -1.27 6.3500000000000005)
+                    (xy 1.27 7.620000000000001)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 6.3500000000000005) (xy -1.27 6.3500000000000005) (xy 1.27 7.620000000000001)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 6.3500000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 6.3500000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 6.3500000000000005) (xy 1.27 6.3500000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 6.3500000000000005) (xy 1.27 6.3500000000000005)
+					(xy -2.54 3.8100000000000005) (xy -1.27 3.8100000000000005)
+                    (xy 1.27 5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 3.8100000000000005) (xy -1.27 3.8100000000000005) (xy 1.27 5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 3.8100000000000005) (xy 1.27 3.8100000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 3.8100000000000005) (xy 1.27 3.8100000000000005)
+					(xy -2.54 1.2700000000000014) (xy -1.27 1.2700000000000014)
+                    (xy 1.27 2.5400000000000014)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.2700000000000014) (xy -1.27 1.2700000000000014) (xy 1.27 2.5400000000000014)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 1.2700000000000014)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 1.2700000000000014)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.2700000000000014) (xy 1.27 1.2700000000000014))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 1.2700000000000014) (xy 1.27 1.2700000000000014)
+					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996)
+                    (xy 1.27 4.440892098500626e-16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.2699999999999996) (xy -1.27 -1.2699999999999996) (xy 1.27 4.440892098500626e-16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -1.2699999999999996)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -1.2699999999999996) (xy 1.27 -1.2699999999999996)
+					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005)
+                    (xy 1.27 -2.5400000000000005)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.8100000000000005) (xy -1.27 -3.8100000000000005) (xy 1.27 -2.5400000000000005)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -3.8100000000000005)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -3.8100000000000005) (xy 1.27 -3.8100000000000005)
+					(xy -2.54 -6.35) (xy -1.27 -6.35)
+                    (xy 1.27 -5.08)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -6.35) (xy -1.27 -6.35) (xy 1.27 -5.08)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -6.35)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -6.35) (xy 1.27 -6.35))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -6.35) (xy 1.27 -6.35)
+					(xy -2.54 -8.889999999999999) (xy -1.27 -8.889999999999999)
+                    (xy 1.27 -7.619999999999999)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -8.889999999999999) (xy -1.27 -8.889999999999999) (xy 1.27 -7.619999999999999)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -8.889999999999999)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -8.889999999999999)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -8.889999999999999) (xy 1.27 -8.889999999999999))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -8.889999999999999) (xy 1.27 -8.889999999999999)
+					(xy -2.54 -11.429999999999998) (xy -1.27 -11.429999999999998)
+                    (xy 1.27 -10.159999999999998)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -11.429999999999998) (xy -1.27 -11.429999999999998) (xy 1.27 -10.159999999999998)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -11.429999999999998)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -11.429999999999998)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -11.429999999999998) (xy 1.27 -11.429999999999998))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy 2.54 -11.429999999999998) (xy 1.27 -11.429999999999998)
+					(xy -2.54 -13.97) (xy -1.27 -13.97)
+                    (xy 1.27 -12.700000000000001)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -2.54 -13.97) (xy -1.27 -13.97) (xy 1.27 -12.700000000000001)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(circle
 				(center -1.27 -13.97)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(circle
 				(center 1.27 -13.97)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
 			)
 			(polyline
-				(pts
-					(xy 2.54 -13.97) (xy 1.27 -13.97)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 2.54 -13.97) (xy 1.27 -13.97))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)		)
 		(symbol "S_416131160812_1_0"
 		)
