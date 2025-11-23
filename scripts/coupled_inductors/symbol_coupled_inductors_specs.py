@@ -355,16 +355,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("3", -5.08, "unspecified", 5.08),
+                PinConfig("1", 5.08, "passive", 5.08),
+                PinConfig("3", -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("2", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "passive", 5.08),
+                PinConfig("4", -5.08, "passive", 5.08),
             ],
             right_alternative=[
-                PinConfig("2", -5.08, "unspecified", 5.08),
-                PinConfig("4", 5.08, "unspecified", 5.08),
+                PinConfig("2", -5.08, "passive", 5.08),
+                PinConfig("4", 5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -384,16 +384,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("3", -5.08, "unspecified", 5.08),
+                PinConfig("1", 5.08, "passive", 5.08),
+                PinConfig("3", -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("4", 5.08, "unspecified", 5.08),
-                PinConfig("2", -5.08, "unspecified", 5.08),
+                PinConfig("4", 5.08, "passive", 5.08),
+                PinConfig("2", -5.08, "passive", 5.08),
             ],
             right_alternative=[
-                PinConfig("4", -5.08, "unspecified", 5.08),
-                PinConfig("2", 5.08, "unspecified", 5.08),
+                PinConfig("4", -5.08, "passive", 5.08),
+                PinConfig("2", 5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -422,16 +422,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("3", -5.08, "unspecified", 5.08),
+                PinConfig("1", 5.08, "passive", 5.08),
+                PinConfig("3", -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("2", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "passive", 5.08),
+                PinConfig("4", -5.08, "passive", 5.08),
             ],
             right_alternative=[
-                PinConfig("2", -5.08, "unspecified", 5.08),
-                PinConfig("4", 5.08, "unspecified", 5.08),
+                PinConfig("2", -5.08, "passive", 5.08),
+                PinConfig("4", 5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -457,16 +457,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "unspecified", 5.08),
-                PinConfig("4", -5.08, "unspecified", 5.08),
+                PinConfig("1", 5.08, "passive", 5.08),
+                PinConfig("4", -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("2", -5.08, "unspecified", 5.08),
-                PinConfig("3", 5.08, "unspecified", 5.08),
+                PinConfig("2", -5.08, "passive", 5.08),
+                PinConfig("3", 5.08, "passive", 5.08),
             ],
             right_alternative=[
-                PinConfig("2", 5.08, "unspecified", 5.08),
-                PinConfig("3", -5.08, "unspecified", 5.08),
+                PinConfig("2", 5.08, "passive", 5.08),
+                PinConfig("3", -5.08, "passive", 5.08),
             ],
         ),
     ),
