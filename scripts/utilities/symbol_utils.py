@@ -1216,8 +1216,8 @@ def write_schottky_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1251,8 +1251,8 @@ def write_zener_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1285,8 +1285,8 @@ def write_rectifier_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1320,8 +1320,8 @@ def write_unidirectional_tvs_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1394,8 +1394,10 @@ def write_unidirectional_tvs_symbol_drawing_v2(
         """)
 
     # Write pins
-    write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
+    write_pin(
+        symbol_file, 10.16, 0, 180, "1", length=3.81, pin_type="passive"
+    )
+    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1431,8 +1433,8 @@ def write_bidirectional_tvs_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1510,8 +1512,10 @@ def write_bidirectional_tvs_symbol_drawing_v2(
         """)
 
     # Write pins
-    write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
+    write_pin(
+        symbol_file, 10.16, 0, 180, "1", length=3.81, pin_type="passive"
+    )
+    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1553,9 +1557,11 @@ def write_dual_small_signal_diodes_symbol_drawing_v1(
         """)
 
     # Write pins
-    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
-    write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
-    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
+    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81, pin_type="passive")
+    write_pin(
+        symbol_file, 10.16, 0, 180, "2", length=3.81, pin_type="passive"
+    )
+    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1597,9 +1603,11 @@ def write_small_signal_schottky_diodes_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
-    write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
-    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
+    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81, pin_type="passive")
+    write_pin(
+        symbol_file, 10.16, 0, 180, "2", length=3.81, pin_type="passive"
+    )
+    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1648,8 +1656,8 @@ def write_red_led_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
@@ -1698,8 +1706,8 @@ def write_green_led_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
