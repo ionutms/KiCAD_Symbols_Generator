@@ -79,6 +79,7 @@ def write_component(
     )
     if symbol_type == "Thermistor":
         symbol_utils.write_thermistor_symbol_drawing(symbol_file, symbol_name)
-    symbol_utils.write_resistor_symbol_drawing(symbol_file, symbol_name)
+    else:
+        symbol_utils.write_resistor_symbol_drawing(symbol_file, symbol_name)
 
     symbol_file.write(")")
