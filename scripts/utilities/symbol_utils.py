@@ -536,8 +536,8 @@ def write_inductor_symbol_drawing(
         write_arc(symbol_file, start_x, mid_x, end_x)
 
     # Write standard pins
-    write_pin(symbol_file, -7.62, 0, 0, "1")
-    write_pin(symbol_file, 7.62, 0, 180, "2")
+    write_pin(symbol_file, -7.62, 0, 0, "1", pin_type="passive")
+    write_pin(symbol_file, 7.62, 0, 180, "2", pin_type="passive")
 
     # Write additional pins if they exist
     if pin_config and "additional_pins" in pin_config:
@@ -574,47 +574,28 @@ def write_ferrite_bead_symbol_drawing(
     symbol_file.write(f"""
         (symbol "{symbol_name}_0_1"
             (polyline
-				(pts
-					(xy -1.27 0) (xy -2.54 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy -1.27 0) (xy -2.54 0))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
 			(polyline
-				(pts
-					(xy 1.27 0) (xy 2.54 0)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(pts (xy 1.27 0) (xy 2.54 0))
+				(stroke (width 0) (type default))
+				(fill (type none))
 			)
             (polyline
 				(pts
 					(xy 0 2.54) (xy 2.54 2.54) (xy 0 -2.54)
                     (xy -2.54 -2.54) (xy 0 2.54)
 				)
-				(stroke
-					(width 0.2032)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
+				(stroke (width 0.2032) (type default))
+				(fill (type none))
 			)
         )
         """)
     # Write pins
-    write_pin(symbol_file, -5.08, 0, 0, "1")
-    write_pin(symbol_file, 5.08, 0, 180, "2")
+    write_pin(symbol_file, -5.08, 0, 0, "1", pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "2", pin_type="passive")
 
     symbol_file.write("\t\t)\n")
 
