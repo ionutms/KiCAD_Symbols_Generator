@@ -2593,7 +2593,9 @@ def write_dip_switch_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+            write_pin(
+                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
+            )
     else:
         total_pins = pin_count * 2
         pins_per_side = total_pins // 2
@@ -2605,22 +2607,50 @@ def write_dip_switch_symbol_drawing(
                 for i in range(pins_per_side):
                     pin_num = (i * 2) + 1
                     y_pos = start_y - i * pin_spacing
-                    write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+                    write_pin(
+                        symbol_file,
+                        -5.08,
+                        y_pos,
+                        0,
+                        str(pin_num),
+                        pin_type="passive",
+                    )
 
                 for i in range(pins_per_side):
                     pin_num = (i * 2) + 2
                     y_pos = start_y - i * pin_spacing
-                    write_pin(symbol_file, 5.08, y_pos, 180, str(pin_num))
+                    write_pin(
+                        symbol_file,
+                        5.08,
+                        y_pos,
+                        180,
+                        str(pin_num),
+                        pin_type="passive",
+                    )
             else:
                 for i in range(pins_per_side):
                     pin_num = i + 1
                     y_pos = start_y - i * pin_spacing
-                    write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+                    write_pin(
+                        symbol_file,
+                        -5.08,
+                        y_pos,
+                        0,
+                        str(pin_num),
+                        pin_type="passive",
+                    )
 
                 for i in range(pins_per_side):
                     pin_num = total_pins - i
                     y_pos = start_y - i * pin_spacing
-                    write_pin(symbol_file, 5.08, y_pos, 180, str(pin_num))
+                    write_pin(
+                        symbol_file,
+                        5.08,
+                        y_pos,
+                        180,
+                        str(pin_num),
+                        pin_type="passive",
+                    )
 
         else:
             for pin_num in range(1, pin_count + 1):
@@ -2629,7 +2659,14 @@ def write_dip_switch_symbol_drawing(
                 else:
                     actual_pin_num = pin_num
                 y_pos = start_y - (pin_num - 1) * pin_spacing
-                write_pin(symbol_file, -5.08, y_pos, 0, str(actual_pin_num))
+                write_pin(
+                    symbol_file,
+                    -5.08,
+                    y_pos,
+                    0,
+                    str(actual_pin_num),
+                    pin_type="passive",
+                )
 
     for switch_idx in range(pin_count):
         if number_of_rows == 2:
