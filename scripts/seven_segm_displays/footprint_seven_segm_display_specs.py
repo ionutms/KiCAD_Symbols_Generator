@@ -197,4 +197,20 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         row_pitch=-40,
         show_pin1_indicator=False,
     ),
+    "FYS-15011AUHR-21": FootprintSpecs(
+        pad_pitch=2.54,
+        body_dimensions=BodyDimensions(
+            width_left=15.3,
+            width_right=15.3,
+            height_top=22,
+            height_bottom=22,
+        ),
+        pad_size=1.5,
+        drill_size=1.0,
+        mpn_y=22.86,
+        ref_y=-22.86,
+        number_of_rows=2,
+        row_pitch=-40,
+        show_pin1_indicator=False,
+    ),
 }

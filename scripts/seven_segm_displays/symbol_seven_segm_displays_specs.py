@@ -320,4 +320,46 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "10": "G",
         },
     ),
+    "FYS-15011AUHR-21": SeriesSpec(
+        manufacturer="Foryard",
+        base_series="FYS-15011AUHR-21",
+        footprint_pattern="seven_segm_display_footprints:FYS-15011AUHR-21",
+        datasheet=(
+            "https://cetest02.cn-bj.ufileos.com/100001_2003185297/"
+            "83%20FYS-15011A-BX-XX.pdf"
+        ),
+        pin_count=10,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Red",
+        pitch=2.54,
+        mounting_angle="Vertical",
+        mounting_style="Through Hole",
+        display_type="Common Cathode",
+        pin_names={
+            "1": "CC",
+            "2": "E",
+            "3": "D",
+            "4": "C",
+            "5": "CC",
+            "6": "B",
+            "7": "A",
+            "8": "DP",
+            "9": "F",
+            "10": "G",
+        },
+        pin_config=SidePinConfig(
+            pins=[
+                PinConfig("1", -2.54, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("5", 2.54, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("7", -2.54 * 4, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("6", -2.54 * 3, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("4", -2.54 * 2, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("3", -2.54 * 1, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("2", -2.54 * 0, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("9", 2.54 * 1, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("10", 2.54 * 2, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("8", 2.54 * 4, 2.54 * 8, 270, "unspecified", 2.54),
+            ]
+        ),
+    ),
 }
