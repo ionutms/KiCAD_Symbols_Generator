@@ -473,8 +473,8 @@ def write_thermistor_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, -5.08, 0, 0, "1")
-    write_pin(symbol_file, 5.08, 0, 180, "2")
+    write_pin(symbol_file, -5.08, 0, 0, "1", pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "2", pin_type="passive")
 
 
 def write_inductor_symbol_drawing(
