@@ -165,6 +165,7 @@ def write_symbol_drawing(
                 left_id,
                 pin_name,
                 length=pin_length,
+                pin_type="passive",
             )
             # Right pin identifier (reverse order on right)
             right_index = (
@@ -193,6 +194,7 @@ def write_symbol_drawing(
                 right_id,
                 pin_name,
                 length=pin_length,
+                pin_type="passive",
             )
     else:
         # Determine numbering order: use pin_names keys if provided
@@ -218,6 +220,7 @@ def write_symbol_drawing(
                 str(pin_num),
                 pin_name,
                 length=pin_length,
+                pin_type="passive",
             )
 
     symbol_file.write("\t\t)\n")
