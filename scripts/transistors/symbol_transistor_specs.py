@@ -643,4 +643,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="PNP",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "DMP6350S-7": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="DMP6350S-7",
+        footprint="transistor_footprints:SOT23",
+        datasheet=(
+            "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/"
+            "epc-lpc%20(converters)/DMP6350S-P%20Signal%20MOSFET-"
+            "Diodes%20Inc.pdf"
+        ),
+        drain_source_voltage=[-60],
+        drain_current=[-1.2],
+        package="SOT23",
+        transistor_type="P-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

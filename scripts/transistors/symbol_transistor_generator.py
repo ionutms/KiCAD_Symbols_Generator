@@ -86,6 +86,11 @@ def write_component(
                 symbol_file,
                 symbol_name,
             )
+        elif component_data.get("Series") == "DMP6350S-7":
+            symbol_utils.write_p_mos_transistor_symbol_drawing_3(
+                symbol_file,
+                symbol_name,
+            )
         else:
             symbol_utils.write_p_mos_transistor_symbol_drawing(
                 symbol_file,

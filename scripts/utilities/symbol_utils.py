@@ -1939,6 +1939,86 @@ def write_p_mos_transistor_symbol_drawing_2(
     symbol_file.write("\t\t)\n")
 
 
+def write_p_mos_transistor_symbol_drawing_3(
+    symbol_file: TextIO,
+    symbol_name: str,
+    vertical_offset: float = 0.0,
+) -> None:
+    """Write the graphical representation of a P-MOS transistor symbol.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name of the symbol.
+        vertical_offset:
+            Vertical translation in units.
+            Positive moves up, negative moves down. Defaults to 0.0.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    def offset_y(y: float) -> float:
+        """Offset y-coordinate by vertical translation."""
+        return y + vertical_offset
+
+    symbol_file.write(f"""
+        (polyline
+            (pts
+                (xy 0 {offset_y(-6.35)}) (xy 0 {offset_y(-2.54)})
+                (xy -2.54 {offset_y(-2.54)}) (xy 2.54 {offset_y(-2.54)})
+                (xy 0 {offset_y(-2.54)}) (xy 0 {offset_y(-6.35)})
+            )
+            (stroke (width 0) (type default))
+            (fill (type outline))
+        )
+        (polyline
+            (pts
+                (xy -5.08 {offset_y(1.27)}) (xy -5.08 {offset_y(0)})
+                (xy -2.54 {offset_y(0)}) (xy -2.032 {offset_y(0)})
+                (xy -2.032 {offset_y(-2.032)}) (xy -2.54 {offset_y(-2.032)})
+                (xy -1.524 {offset_y(-2.032)}) (xy -2.032 {offset_y(-2.032)})
+                (xy -2.032 {offset_y(0)}) (xy -2.54 {offset_y(0)})
+                (xy -2.54 {offset_y(1.27)}) (xy -0.508 {offset_y(1.27)})
+                (xy -0.508 {offset_y(0.762)}) (xy 0.508 {offset_y(1.27)})
+                (xy 0.508 {offset_y(0.762)}) (xy 0.508 {offset_y(1.27)})
+                (xy 2.54 {offset_y(1.27)}) (xy 2.54 {offset_y(0)})
+                (xy 0 {offset_y(0)}) (xy -0.508 {offset_y(-1.016)})
+                (xy 0 {offset_y(-1.016)}) (xy 0 {offset_y(-2.032)})
+                (xy -0.508 {offset_y(-2.032)}) (xy 0.508 {offset_y(-2.032)})
+                (xy 0 {offset_y(-2.032)}) (xy 0 {offset_y(-1.016)})
+                (xy 0.508 {offset_y(-1.016)}) (xy 0 {offset_y(0)})
+                (xy 2.032 {offset_y(0)}) (xy 2.032 {offset_y(-2.032)})
+                (xy 1.524 {offset_y(-2.032)}) (xy 2.54 {offset_y(-2.032)})
+                (xy 2.032 {offset_y(-2.032)}) (xy 2.032 {offset_y(0)})
+                (xy 2.54 {offset_y(0)}) (xy 5.08 {offset_y(0)})
+                (xy 5.08 {offset_y(1.27)}) (xy 5.08 {offset_y(0)})
+                (xy 2.54 {offset_y(0)}) (xy 2.54 {offset_y(1.27)})
+                (xy 0.508 {offset_y(1.27)}) (xy 0.508 {offset_y(1.778)})
+                (xy 0.508 {offset_y(1.27)}) (xy -0.508 {offset_y(1.778)})
+                (xy -0.508 {offset_y(1.27)}) (xy -2.54 {offset_y(1.27)})
+                (xy -2.54 {offset_y(0)}) (xy -5.08 {offset_y(0)})
+                (xy -5.08 {offset_y(1.27)})
+            )
+            (stroke (width 0) (type default))
+            (fill (type outline))
+        )
+        """)
+
+    # Write symbol circles with vertical offset
+    write_circle(symbol_file, -2.54, offset_y(0))
+    write_circle(symbol_file, 2.032, offset_y(0))
+    write_circle(symbol_file, 2.54, offset_y(0))
+
+    # Write pins with vertical offset
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
+
+    symbol_file.write("\t\t)\n")
+
+
 def write_n_mos_transistor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
