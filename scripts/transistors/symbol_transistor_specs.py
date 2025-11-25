@@ -658,4 +658,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="P-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "FMMT718TA": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="FMMT718TA",
+        footprint="transistor_footprints:SOT23",
+        datasheet=("https://www.diodes.com/assets/Datasheets/FMMT718.pdf"),
+        collector_emitter_voltage=[20],
+        collector_current=[1.5],
+        package="SOT23",
+        transistor_type="PNP",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
