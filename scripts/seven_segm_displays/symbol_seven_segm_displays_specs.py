@@ -66,16 +66,16 @@ class SeriesSpec(NamedTuple):
     symbol_pin_length: float = 2.54
     pin_config: SidePinConfig | None = SidePinConfig(
         pins=[
-            PinConfig("1", -2.54, 2.54 * 8, 270, "unspecified", 2.54),
-            PinConfig("5", 2.54, 2.54 * 8, 270, "unspecified", 2.54),
-            PinConfig("7", -2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("6", -2.54 * 3, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("4", -2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("3", -2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("2", -2.54 * 0, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("9", 2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("10", 2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
-            PinConfig("8", 2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
+            PinConfig("1", -2.54, 2.54 * 8, 270, "passive", 2.54),
+            PinConfig("5", 2.54, 2.54 * 8, 270, "passive", 2.54),
+            PinConfig("7", -2.54 * 4, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("6", -2.54 * 3, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("4", -2.54 * 2, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("3", -2.54 * 1, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("2", -2.54 * 0, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("9", 2.54 * 1, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("10", 2.54 * 2, -2.54 * 8, 90, "passive", 2.54),
+            PinConfig("8", 2.54 * 4, -2.54 * 8, 90, "passive", 2.54),
         ]
     )
 
@@ -220,18 +220,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("3", -2.54, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("8", 2.54, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig(
-                    "10", -2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54
-                ),
-                PinConfig("9", -2.54 * 3, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("5", -2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 0, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("2", 2.54 * 1, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("1", 2.54 * 2, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("6", 2.54 * 4, -2.54 * 8, 90, "unspecified", 2.54),
+                PinConfig("3", -2.54, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("8", 2.54, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("10", -2.54 * 4, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("9", -2.54 * 3, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("7", -2.54 * 2, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("5", -2.54 * 1, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("4", -2.54 * 0, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("2", 2.54 * 1, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("1", 2.54 * 2, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("6", 2.54 * 4, -2.54 * 8, 90, "passive", 2.54),
             ]
         ),
     ),
@@ -349,16 +347,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         },
         pin_config=SidePinConfig(
             pins=[
-                PinConfig("1", -2.54, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("5", 2.54, -2.54 * 8, 90, "unspecified", 2.54),
-                PinConfig("7", -2.54 * 4, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("6", -2.54 * 3, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("4", -2.54 * 2, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("3", -2.54 * 1, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("2", -2.54 * 0, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("9", 2.54 * 1, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("10", 2.54 * 2, 2.54 * 8, 270, "unspecified", 2.54),
-                PinConfig("8", 2.54 * 4, 2.54 * 8, 270, "unspecified", 2.54),
+                PinConfig("1", -2.54, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("5", 2.54, -2.54 * 8, 90, "passive", 2.54),
+                PinConfig("7", -2.54 * 4, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("6", -2.54 * 3, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("4", -2.54 * 2, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("3", -2.54 * 1, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("2", -2.54 * 0, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("9", 2.54 * 1, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("10", 2.54 * 2, 2.54 * 8, 270, "passive", 2.54),
+                PinConfig("8", 2.54 * 4, 2.54 * 8, 270, "passive", 2.54),
             ]
         ),
     ),
