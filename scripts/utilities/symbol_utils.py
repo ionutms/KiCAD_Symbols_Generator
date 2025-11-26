@@ -1792,11 +1792,56 @@ def write_p_mos_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(-3.81), 180, "3", "S", length=2.54)
-    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "4", "G", length=2.54)
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(1.27),
+        0,
+        "5",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(1.27),
+        180,
+        "1",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(-1.27),
+        180,
+        "2",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(-3.81),
+        180,
+        "3",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        offset_y(-6.35),
+        180,
+        "4",
+        "G",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -2012,9 +2057,36 @@ def write_p_mos_transistor_symbol_drawing_3(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
-    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
-    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
+    write_pin(
+        symbol_file,
+        2.54,
+        offset_y(-6.35),
+        180,
+        "1",
+        "G",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        7.62,
+        offset_y(1.27),
+        180,
+        "2",
+        "S",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        -7.62,
+        offset_y(1.27),
+        0,
+        "3",
+        "D",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -2589,7 +2661,9 @@ def write_connector_symbol_drawing(
     start_y = (pin_count - 1) * pin_spacing / 2
     for pin_num in range(1, pin_count + 1):
         y_pos = start_y - (pin_num - 1) * pin_spacing
-        write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
+        write_pin(
+            symbol_file, -5.08, y_pos, 0, str(pin_num), pin_type="passive"
+        )
 
     symbol_file.write("\t\t)\n")
 
@@ -2679,9 +2753,29 @@ def write_npn_transistor_symbol_drawing(
 			)
         """)
 
-    write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
-    write_pin(symbol_file, 2.54, 5.08, 270, "3", "C", length=2.54)
-    write_pin(symbol_file, 2.54, -5.08, 90, "2", "E", length=2.54)
+    write_pin(
+        symbol_file, -5.08, 0, 0, "1", "B", length=2.54, pin_type="passive"
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        5.08,
+        270,
+        "3",
+        "C",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        -5.08,
+        90,
+        "2",
+        "E",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
@@ -2743,9 +2837,29 @@ def write_pnp_transistor_symbol_drawing(
 			)
         """)
 
-    write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
-    write_pin(symbol_file, 2.54, 5.08, 270, "2", "E", length=2.54)
-    write_pin(symbol_file, 2.54, -5.08, 90, "3", "C", length=2.54)
+    write_pin(
+        symbol_file, -5.08, 0, 0, "1", "B", length=2.54, pin_type="passive"
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        5.08,
+        270,
+        "2",
+        "E",
+        length=2.54,
+        pin_type="passive",
+    )
+    write_pin(
+        symbol_file,
+        2.54,
+        -5.08,
+        90,
+        "3",
+        "C",
+        length=2.54,
+        pin_type="passive",
+    )
 
     symbol_file.write("\t\t)\n")
 
