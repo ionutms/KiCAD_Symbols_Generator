@@ -402,6 +402,20 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Green LED",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "KP-1608SGC": SeriesSpec(
+        manufacturer="Kingbright",
+        base_series="KP-1608SGC",
+        footprint="diode_footprints:LED_GREEN_0603_1608Metric",
+        datasheet=(
+            "https://www.kingbright.com/attachments/file/psearch/000/00/"
+            "20160808bak/KP-1608SGC(Ver.20B).pdf"
+        ),
+        voltage_rating=[2.2],
+        current_rating=[0.02],
+        package="LED_GREEN_0603_1608Metric",
+        diode_type="Green LED",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "SBAV99WT1G": SeriesSpec(
         reference="CR",
         manufacturer="Onsemi",

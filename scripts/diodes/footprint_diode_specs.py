@@ -162,6 +162,18 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-1.27,
     ),
+    "LED_GREEN_0603_1608Metric": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=2.8, height=1.2),
+        pad_dimensions=PadDimensionsAsymmetric(
+            cathode_width=0.8,
+            cathode_height=0.8,
+            cathode_center_x=0.825,
+            anode_width=0.8,
+            anode_height=0.8,
+            anode_center_x=0.825,
+        ),
+        ref_offset_y=-1.27,
+    ),
     "SC_70": FootprintSpecs(
         pin_count=3,
         body_dimensions=BodyDimensions(width=2.6, height=3.4),
