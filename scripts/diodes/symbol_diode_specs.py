@@ -396,7 +396,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "https://www.kingbrightusa.com/product.asp?catalog_name="
             "LED&product_id=APHHS1005CGCK"
         ),
-        voltage_rating=[1.8],
+        voltage_rating=[2.1],
         current_rating=[0.03],
         package="LED_GREEN_0402_1005Metric",
         diode_type="Green LED",
@@ -407,8 +407,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         base_series="KP-1608SGC",
         footprint="diode_footprints:LED_GREEN_0603_1608Metric",
         datasheet=(
-            "https://www.kingbright.com/attachments/file/psearch/000/00/"
-            "20160808bak/KP-1608SGC(Ver.20B).pdf"
+            "https://www.tme.eu/Document/00c026014e4e4cabfb9c846616baea66/"
+            "KP-1608SGC.pdf"
         ),
         voltage_rating=[2.2],
         current_rating=[0.02],
