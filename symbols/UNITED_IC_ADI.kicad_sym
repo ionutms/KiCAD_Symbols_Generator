@@ -2587,7 +2587,7 @@
 			)
 		)
 		(symbol "U_ADIN1110CCPZ_1_1"
-			(pin unspecified line
+			(pin input line
 				(at -20.32 20.32 0)
 				(length 2.54)
 				(name "~{CS}"
@@ -2623,7 +2623,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 15.24 0)
 				(length 2.54)
 				(name "SDI"
@@ -2641,7 +2641,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin bidirectional line
 				(at -20.32 12.7 0)
 				(length 2.54)
 				(name "SDO/SPI_CFG0"
@@ -2659,7 +2659,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 10.16 0)
 				(length 2.54)
 				(name "SPI_CFG1"
@@ -2695,7 +2695,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 5.08 0)
 				(length 2.54)
 				(name "~{RESET}"
@@ -2713,7 +2713,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin output line
 				(at -20.32 2.54 0)
 				(length 2.54)
 				(name "LINK_ST"
@@ -2731,7 +2731,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 0 0)
 				(length 2.54)
 				(name "~{TX2P4_EN}"
@@ -2749,7 +2749,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 -2.54 0)
 				(length 2.54)
 				(name "~{SWPD_EN}"
@@ -3190,7 +3190,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin bidirectional line
 				(at 20.32 7.62 180)
 				(length 2.54)
 				(name "RXP"
@@ -3208,7 +3208,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin bidirectional line
 				(at 20.32 5.08 180)
 				(length 2.54)
 				(name "RXN"
@@ -3226,7 +3226,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin bidirectional line
 				(at 20.32 2.54 180)
 				(length 2.54)
 				(name "TXP"
@@ -3244,7 +3244,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin bidirectional line
 				(at 20.32 0 180)
 				(length 2.54)
 				(name "TXN"
@@ -3298,7 +3298,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin passive line
 				(at 20.32 -25.4 180)
 				(length 2.54)
 				(name "CEXT_2"
@@ -3316,7 +3316,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin passive line
 				(at 20.32 -27.94 180)
 				(length 2.54)
 				(name "CEXT_3"
@@ -3451,42 +3451,6 @@
 				)
 			)
 			(pin output line
-				(at -20.32 12.7 0)
-				(length 2.54)
-				(name "SDO/SPI_CFG0"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -20.32 10.16 0)
-				(length 2.54)
-				(name "SPI_CFG1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "29"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
 				(at -20.32 2.54 0)
 				(length 2.54)
 				(name "LINK_ST"
@@ -3515,24 +3479,6 @@
 					)
 				)
 				(number "24"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -20.32 -7.62 0)
-				(length 2.54)
-				(name "TS_CAPT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "32"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -3720,117 +3666,9 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at 20.32 2.54 180)
-				(length 2.54)
-				(name "TXP"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "12"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 20.32 -2.54 180)
-				(length 2.54)
-				(name "TXN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 20.32 -12.7 180)
-				(length 2.54)
-				(name "TEST1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "21"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 20.32 -15.24 180)
-				(length 2.54)
-				(name "TEST2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "22"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 20.32 -22.86 180)
-				(length 2.54)
-				(name "CEXT_2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "15"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 20.32 -25.4 180)
-				(length 2.54)
-				(name "CEXT_3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "16"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 		)
 		(symbol "U_ADIN1111BCPZ-R7_1_1"
-			(pin unspecified line
+			(pin input line
 				(at -20.32 20.32 0)
 				(length 2.54)
 				(name "~{CS}"
@@ -3841,6 +3679,42 @@
 					)
 				)
 				(number "23"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at -20.32 12.7 0)
+				(length 2.54)
+				(name "SDO/SPI_CFG0"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -20.32 10.16 0)
+				(length 2.54)
+				(name "SPI_CFG1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "29"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -3884,7 +3758,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 0 0)
 				(length 2.54)
 				(name "~{TX2P4_EN}"
@@ -3902,7 +3776,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at -20.32 -2.54 0)
 				(length 2.54)
 				(name "~{SWPD_EN}"
@@ -3913,6 +3787,24 @@
 					)
 				)
 				(number "26"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -20.32 -7.62 0)
+				(length 2.54)
+				(name "TS_CAPT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "32"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -4008,6 +3900,114 @@
 					)
 				)
 				(number "27"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 2.54 180)
+				(length 2.54)
+				(name "TXP"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 -2.54 180)
+				(length 2.54)
+				(name "TXN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 -12.7 180)
+				(length 2.54)
+				(name "TEST1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "21"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 -15.24 180)
+				(length 2.54)
+				(name "TEST2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "22"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 20.32 -22.86 180)
+				(length 2.54)
+				(name "CEXT_2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "15"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 20.32 -25.4 180)
+				(length 2.54)
+				(name "CEXT_3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "16"
 					(effects
 						(font
 							(size 1.27 1.27)
