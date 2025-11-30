@@ -17810,7 +17810,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 15.24 30.48 0)
+			(at 40.64 81.28 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -17819,7 +17819,7 @@
 			)
 		)
 		(property "Value" "LTC3350EUHF-PBF"
-			(at 15.24 27.94 0)
+			(at 40.64 78.74 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -17828,7 +17828,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:QFN-38_UHF_LIT"
-			(at 15.24 -33.02 0)
+			(at 40.64 -83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17839,7 +17839,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc3350.pdf"
-			(at 15.24 -27.94 0)
+			(at 40.64 -78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17850,7 +17850,7 @@
 			)
 		)
 		(property "Description" "High Current Supercapacitor Backup Controller and System Monitor"
-			(at 15.24 -30.48 0)
+			(at 40.64 -81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17860,7 +17860,7 @@
 			)
 		)
 		(property "MPN" "LTC3350EUHF#PBF"
-			(at 15.24 -35.56 0)
+			(at 40.64 -86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17871,8 +17871,8 @@
 		)
 		(symbol "U_LTC3350EUHF-PBF_0_1"
 			(rectangle
-				(start -15.24 25.4)
-				(end 15.24 -25.4)
+				(start -40.64 76.2)
+				(end 40.64 -76.2)
 				(stroke
 					(width 0)
 					(type default)
@@ -17881,386 +17881,8 @@
 					(type none)
 				)
 			)
-			(pin unspecified line
-				(at -17.78 22.86 0)
-				(length 2.54)
-				(name "SCL"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -17.78 20.32 0)
-				(length 2.54)
-				(name "SDA"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -17.78 17.78 0)
-				(length 2.54)
-				(name "*SMBALERT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -17.78 15.24 0)
-				(length 2.54)
-				(name "CAPGD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin input line
-				(at -17.78 12.7 0)
-				(length 2.54)
-				(name "VC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 10.16 0)
-				(length 2.54)
-				(name "CAPFB"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "6"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -17.78 7.62 0)
-				(length 2.54)
-				(name "OUTFB"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -17.78 5.08 0)
-				(length 2.54)
-				(name "SGND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 2.54 0)
-				(length 2.54)
-				(name "RT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "9"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -17.78 0 0)
-				(length 2.54)
-				(name "GPI"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "10"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -2.54 0)
-				(length 2.54)
-				(name "ITST"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -5.08 0)
-				(length 2.54)
-				(name "CAPRTN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "12"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -7.62 0)
-				(length 2.54)
-				(name "CAP1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "13"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -10.16 0)
-				(length 2.54)
-				(name "CAP2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "14"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -12.7 0)
-				(length 2.54)
-				(name "CAP3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "15"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -15.24 0)
-				(length 2.54)
-				(name "CAP4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "16"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -17.78 0)
-				(length 2.54)
-				(name "CFP"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "17"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at -17.78 -20.32 0)
-				(length 2.54)
-				(name "CFN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -17.78 -22.86 0)
-				(length 2.54)
-				(name "VCAPP5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "19"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 0 -27.94 90)
-				(length 2.54)
-				(name "PGND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "39"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at 17.78 22.86 180)
-				(length 2.54)
-				(name "*PFO"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "38"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 17.78 20.32 180)
+				(at -43.18 66.04 0)
 				(length 2.54)
 				(name "PFI"
 					(effects
@@ -18277,8 +17899,26 @@
 					)
 				)
 			)
+			(pin output line
+				(at -43.18 53.34 0)
+				(length 2.54)
+				(name "VCC2P5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "23"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin unspecified line
-				(at 17.78 17.78 180)
+				(at -43.18 40.64 0)
 				(length 2.54)
 				(name "CAP_SLCT1"
 					(effects
@@ -18296,7 +17936,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 17.78 15.24 180)
+				(at -43.18 27.94 0)
 				(length 2.54)
 				(name "CAP_SLCT0"
 					(effects
@@ -18314,7 +17954,133 @@
 				)
 			)
 			(pin input line
-				(at 17.78 12.7 180)
+				(at -43.18 22.86 0)
+				(length 2.54)
+				(name "GPI"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "10"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -43.18 17.78 0)
+				(length 2.54)
+				(name "VC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at -43.18 15.24 0)
+				(length 2.54)
+				(name "ITST"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at -43.18 12.7 0)
+				(length 2.54)
+				(name "RT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -43.18 0 0)
+				(length 2.54)
+				(name "SGND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at -43.18 -66.04 0)
+				(length 2.54)
+				(name "SCL"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at -43.18 -68.58 0)
+				(length 2.54)
+				(name "SDA"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -30.48 78.74 270)
 				(length 2.54)
 				(name "VIN"
 					(effects
@@ -18332,7 +18098,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 17.78 10.16 180)
+				(at -20.32 78.74 270)
 				(length 2.54)
 				(name "INFET"
 					(effects
@@ -18350,7 +18116,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 17.78 7.62 180)
+				(at -10.16 78.74 270)
 				(length 2.54)
 				(name "VOUTM5"
 					(effects
@@ -18368,7 +18134,7 @@
 				)
 			)
 			(pin input line
-				(at 17.78 5.08 180)
+				(at 0 78.74 270)
 				(length 2.54)
 				(name "VOUTSP"
 					(effects
@@ -18385,8 +18151,26 @@
 					)
 				)
 			)
+			(pin power_in line
+				(at 0 -78.74 90)
+				(length 2.54)
+				(name "PGND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "39"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin input line
-				(at 17.78 2.54 180)
+				(at 10.16 78.74 270)
 				(length 2.54)
 				(name "VOUTSN"
 					(effects
@@ -18404,7 +18188,61 @@
 				)
 			)
 			(pin output line
-				(at 17.78 0 180)
+				(at 20.32 78.74 270)
+				(length 2.54)
+				(name "OUTFB"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 30.48 78.74 270)
+				(length 2.54)
+				(name "OUTFET"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "20"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 43.18 66.04 180)
+				(length 2.54)
+				(name "TGATE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "25"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 43.18 58.42 180)
 				(length 2.54)
 				(name "INTVCC"
 					(effects
@@ -18422,7 +18260,7 @@
 				)
 			)
 			(pin power_in line
-				(at 17.78 -2.54 180)
+				(at 43.18 53.34 180)
 				(length 2.54)
 				(name "DRVCC"
 					(effects
@@ -18439,26 +18277,8 @@
 					)
 				)
 			)
-			(pin output line
-				(at 17.78 -5.08 180)
-				(length 2.54)
-				(name "BGATE"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "27"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin input line
-				(at 17.78 -7.62 180)
+				(at 43.18 40.64 180)
 				(length 2.54)
 				(name "BST"
 					(effects
@@ -18475,26 +18295,8 @@
 					)
 				)
 			)
-			(pin output line
-				(at 17.78 -10.16 180)
-				(length 2.54)
-				(name "TGATE"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "25"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin unspecified line
-				(at 17.78 -12.7 180)
+				(at 43.18 27.94 180)
 				(length 2.54)
 				(name "SW"
 					(effects
@@ -18512,16 +18314,16 @@
 				)
 			)
 			(pin output line
-				(at 17.78 -15.24 180)
+				(at 43.18 22.86 180)
 				(length 2.54)
-				(name "VCC2P5"
+				(name "BGATE"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "23"
+				(number "27"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -18530,7 +18332,7 @@
 				)
 			)
 			(pin input line
-				(at 17.78 -17.78 180)
+				(at 43.18 10.16 180)
 				(length 2.54)
 				(name "ICAP"
 					(effects
@@ -18548,7 +18350,7 @@
 				)
 			)
 			(pin input line
-				(at 17.78 -20.32 180)
+				(at 43.18 -2.54 180)
 				(length 2.54)
 				(name "VCAP"
 					(effects
@@ -18565,17 +18367,215 @@
 					)
 				)
 			)
-			(pin output line
-				(at 17.78 -22.86 180)
+			(pin unspecified line
+				(at 43.18 -7.62 180)
 				(length 2.54)
-				(name "OUTFET"
+				(name "CFP"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "20"
+				(number "17"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -17.78 180)
+				(length 2.54)
+				(name "CFN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "18"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 43.18 -22.86 180)
+				(length 2.54)
+				(name "VCAPP5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "19"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -27.94 180)
+				(length 2.54)
+				(name "CAP4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "16"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -33.02 180)
+				(length 2.54)
+				(name "CAP3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "15"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -38.1 180)
+				(length 2.54)
+				(name "CAP2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "14"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -43.18 180)
+				(length 2.54)
+				(name "CAP1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -48.26 180)
+				(length 2.54)
+				(name "CAPRTN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 43.18 -53.34 180)
+				(length 2.54)
+				(name "CAPFB"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 43.18 -58.42 180)
+				(length 2.54)
+				(name "*SMBALERT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 43.18 -63.5 180)
+				(length 2.54)
+				(name "CAPGD"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 43.18 -68.58 180)
+				(length 2.54)
+				(name "*PFO"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "38"
 					(effects
 						(font
 							(size 1.27 1.27)
