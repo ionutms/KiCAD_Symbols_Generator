@@ -214,6 +214,9 @@ class PartInfo(NamedTuple):
                 resistance,
             )
 
+        if specs.manufacturer == "Susumu":
+            return cls._generate_susumu_resistance_code(resistance)
+
         # Special handling for specific ERJ series
         if specs.mpn_prefix in (
             "ERJ-2GEJ",
@@ -493,6 +496,31 @@ class PartInfo(NamedTuple):
             whole = int(resistance * 1_000)
             decimal = f"{((resistance % 1000000) / 10000):01.0f}"
             return f"{whole}L{decimal}"
+
+        return f"{resistance}"
+
+    @classmethod
+    def _generate_susumu_resistance_code(
+        cls,
+        resistance: float,
+    ) -> str:
+        """Generate resistance code for Susumu series.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        if resistance < 0.01:
+            return f"R00{int(resistance * 1_000)}"
+
+        if resistance < 0.1:
+            return f"R0{int(resistance * 1_000)}"
+
+        if resistance < 1:
+            return f"R{int(resistance * 1_000)}"
 
         return f"{resistance}"
 
@@ -1947,6 +1975,32 @@ VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     ),
 }
 
+SUSUMU_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
+    "PRL1632-": SeriesSpec(
+        manufacturer="Susumu",
+        mpn_prefix="PRL1632-",
+        mpn_sufix="-F-T1",
+        footprint="resistor_footprints:R_0612_1632Metric",
+        voltage_rating="",
+        case_code_in="0612",
+        case_code_mm="1632",
+        power_rating="1W",
+        temperature_coefficient="",
+        resistance_range=[0.005, 0.1],
+        specified_values=[
+            *[5e-3, 6e-3, 7e-3, 8e-3, 9e-3, 10e-3, 11e-3, 12e-3, 13e-3],
+            *[15e-3, 16e-3, 18e-3, 20e-3, 22e-3, 24e-3, 27e-3, 30e-3],
+            *[33e-3, 36e-3, 39e-3, 43e-3, 47e-3, 50e-3, 51e-3, 56e-3, 62e-3],
+            *[68e-3, 75e-3, 82e-3, 91e-3, 100e-3],
+        ],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://www.susumu.co.jp/common/pdf/n_catalog_partition07_en.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+}
+
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
@@ -1956,4 +2010,5 @@ SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
     **BOURNS_SYMBOLS_SPECS,
     **VISHAY_SYMBOLS_SPECS,
+    **SUSUMU_SYMBOLS_SPECS,
 }
