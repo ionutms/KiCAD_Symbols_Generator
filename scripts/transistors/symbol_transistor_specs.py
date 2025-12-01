@@ -669,4 +669,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="PNP",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SIS438DN-T1-GE3": SeriesSpec(
+        manufacturer="Vishay Semiconductors",
+        base_series="SIS438DN-T1-GE3",
+        footprint="transistor_footprints:PowerPAK 1212-8",
+        datasheet="https://www.vishay.com/docs/64826/sis438dn.pdf",
+        drain_source_voltage=[20.0],
+        drain_current=[16],
+        package="PowerPAK 1212-8",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
