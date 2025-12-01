@@ -214,15 +214,15 @@ def write_properties(
                 y_offset -= 2.54
 
 
-def write_pin(  # noqa: PLR0913
+def write_pin(
     symbol_file: TextIO,
     x_pos: float,
     y_pos: float,
     angle: int,
     number: str,
     name: str = "",
-    pin_type: str = "unspecified",
-    hide: bool = False,  # noqa: FBT001, FBT002
+    pin_type: str = "passive",
+    hide: bool = False,
     length: float = 2.54,
 ) -> None:
     """Write a single pin for a symbol.
@@ -283,8 +283,8 @@ def write_capacitor_symbol_drawing(
     """)
 
     # Write pins
-    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8, pin_type="passive")
-    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8, pin_type="passive")
+    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
+    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
 
 
 def write_polarised_capacitor_symbol_drawing(
@@ -329,8 +329,8 @@ def write_polarised_capacitor_symbol_drawing(
     """)
 
     # Write pins
-    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8, pin_type="passive")
-    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8, pin_type="passive")
+    write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
+    write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
 
 
 def write_resistor_symbol_drawing(
@@ -387,8 +387,8 @@ def write_resistor_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, -5.08, 0, 0, "1", pin_type="passive")
-    write_pin(symbol_file, 5.08, 0, 180, "2", pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "1")
+    write_pin(symbol_file, 5.08, 0, 180, "2")
 
 
 def write_thermistor_symbol_drawing(
@@ -473,8 +473,8 @@ def write_thermistor_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, -5.08, 0, 0, "1", pin_type="passive")
-    write_pin(symbol_file, 5.08, 0, 180, "2", pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "1")
+    write_pin(symbol_file, 5.08, 0, 180, "2")
 
 
 def write_inductor_symbol_drawing(
@@ -536,8 +536,8 @@ def write_inductor_symbol_drawing(
         write_arc(symbol_file, start_x, mid_x, end_x)
 
     # Write standard pins
-    write_pin(symbol_file, -7.62, 0, 0, "1", pin_type="passive")
-    write_pin(symbol_file, 7.62, 0, 180, "2", pin_type="passive")
+    write_pin(symbol_file, -7.62, 0, 0, "1")
+    write_pin(symbol_file, 7.62, 0, 180, "2")
 
     # Write additional pins if they exist
     if pin_config and "additional_pins" in pin_config:
@@ -594,8 +594,8 @@ def write_ferrite_bead_symbol_drawing(
         )
         """)
     # Write pins
-    write_pin(symbol_file, -5.08, 0, 0, "1", pin_type="passive")
-    write_pin(symbol_file, 5.08, 0, 180, "2", pin_type="passive")
+    write_pin(symbol_file, -5.08, 0, 0, "1")
+    write_pin(symbol_file, 5.08, 0, 180, "2")
 
     symbol_file.write("\t\t)\n")
 
@@ -1197,8 +1197,8 @@ def write_schottky_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1232,8 +1232,8 @@ def write_zener_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1266,8 +1266,8 @@ def write_rectifier_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1301,8 +1301,8 @@ def write_unidirectional_tvs_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1375,10 +1375,8 @@ def write_unidirectional_tvs_symbol_drawing_v2(
         """)
 
     # Write pins
-    write_pin(
-        symbol_file, 10.16, 0, 180, "1", length=3.81, pin_type="passive"
-    )
-    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1414,8 +1412,8 @@ def write_bidirectional_tvs_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27)
 
     symbol_file.write("\t\t)\n")
 
@@ -1493,10 +1491,8 @@ def write_bidirectional_tvs_symbol_drawing_v2(
         """)
 
     # Write pins
-    write_pin(
-        symbol_file, 10.16, 0, 180, "1", length=3.81, pin_type="passive"
-    )
-    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1538,11 +1534,9 @@ def write_dual_small_signal_diodes_symbol_drawing_v1(
         """)
 
     # Write pins
-    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81, pin_type="passive")
-    write_pin(
-        symbol_file, 10.16, 0, 180, "2", length=3.81, pin_type="passive"
-    )
-    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
+    write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
+    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1584,11 +1578,9 @@ def write_small_signal_schottky_diodes_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81, pin_type="passive")
-    write_pin(
-        symbol_file, 10.16, 0, 180, "2", length=3.81, pin_type="passive"
-    )
-    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81, pin_type="passive")
+    write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
+    write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
+    write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1637,8 +1629,8 @@ def write_red_led_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -1687,8 +1679,8 @@ def write_green_led_symbol_drawing(
         """)
 
     # Write pins
-    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81, pin_type="passive")
-    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81, pin_type="passive")
+    write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
+    write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
 
@@ -2661,9 +2653,7 @@ def write_connector_symbol_drawing(
     start_y = (pin_count - 1) * pin_spacing / 2
     for pin_num in range(1, pin_count + 1):
         y_pos = start_y - (pin_num - 1) * pin_spacing
-        write_pin(
-            symbol_file, -5.08, y_pos, 0, str(pin_num), pin_type="passive"
-        )
+        write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
     symbol_file.write("\t\t)\n")
 
@@ -2753,9 +2743,7 @@ def write_npn_transistor_symbol_drawing(
 			)
         """)
 
-    write_pin(
-        symbol_file, -5.08, 0, 0, "1", "B", length=2.54, pin_type="passive"
-    )
+    write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
     write_pin(
         symbol_file,
         2.54,
@@ -2837,9 +2825,7 @@ def write_pnp_transistor_symbol_drawing(
 			)
         """)
 
-    write_pin(
-        symbol_file, -5.08, 0, 0, "1", "B", length=2.54, pin_type="passive"
-    )
+    write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
     write_pin(
         symbol_file,
         2.54,
@@ -2900,9 +2886,7 @@ def write_dip_switch_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(
-                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
-            )
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
         total_pins = pin_count * 2
         pins_per_side = total_pins // 2
@@ -3049,9 +3033,7 @@ def write_slide_switch_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(
-                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
-            )
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
         start_y = (pin_count - 1) * pin_spacing / 2
 
@@ -3156,9 +3138,7 @@ def write_tactile_switch_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(
-                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
-            )
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
         start_y = (pin_count - 1) * pin_spacing / 2
 
@@ -3276,9 +3256,7 @@ def write_tactile_switch_with_led_symbol_drawing(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(
-                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
-            )
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
         start_y = (pin_count - 1) * pin_spacing / 2
 
@@ -3435,9 +3413,7 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
 
     if override_pins:
         for pin_num, x_pos, y_pos, angle in override_pins:
-            write_pin(
-                symbol_file, x_pos, y_pos, angle, pin_num, pin_type="passive"
-            )
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
     else:
         start_y = (pin_count - 1) * pin_spacing / 2
 
