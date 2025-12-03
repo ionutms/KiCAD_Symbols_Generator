@@ -621,6 +621,21 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BSZ060NE2LS": SeriesSpec(
+        manufacturer="Infineon Technologies",
+        base_series="BSZ060NE2LS",
+        footprint="transistor_footprints:TSDSON-8FL",
+        datasheet=(
+            "https://www.infineon.com/assets/row/public/documents/24/49/"
+            "infineon-bsz060ne2ls-datasheet-en.pdf?"
+            "fileId=db3a30432ea425a4012ec927cb360e1f"
+        ),
+        drain_source_voltage=[20],
+        drain_current=[51],
+        package="TSDSON-8FL",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BC847A-AQ": SeriesSpec(
         manufacturer="Diotec Semiconductor",
         base_series="BC847A-AQ",
