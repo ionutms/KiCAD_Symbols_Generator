@@ -1119,14 +1119,35 @@ TDK_SYMBOLS_SPECS = {
         tolerance_map={"X5R": {"M": "20%"}},
         mpn_sufix=["160AB"],
         value_based_mpn_sufix_map={
-            (15e-6, 22e-6): "160AB",  # First 2 values get 160AB suffix
-            (33e-6, 47e-6): "160AC",  # Higher values get 160AC suffix
+            (15e-6, 22e-6): "160AB",
+            (33e-6, 47e-6): "160AC",
         },
         footprint="capacitor_footprints:C_1206_3216Metric",
         voltage_rating="25V",
         case_code_in="1206",
         case_code_mm="3216",
         specified_values=[15e-6, 22e-6, 33e-6, 47e-6],
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "C1005X5R1E": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="C1005X5R1E",
+        value_range={"X5R": (10e-9, 47e-6)},
+        tolerance_map={"X5R": {"K": "10%"}},
+        mpn_sufix=["050BA"],
+        value_based_mpn_sufix_map={
+            (100e-9, 220e-9, 680e-9, 1e-6, 1.5e-6, 2.2e-6): "050BC",
+            (330e-9, 470e-9): "050BB",
+        },
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="25V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        specified_values=[
+            *[10e-9, 22e-9, 47e-9, 100e-9, 220e-9, 330e-9],
+            *[470e-9, 680e-9, 1e-6, 1.5e-6, 2.2e-6],
+        ],
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
