@@ -681,4 +681,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Schottky",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "1N4448HWT-7": SeriesSpec(
+        manufacturer="STMicroelectronics",
+        base_series="1N4448HWT-7",
+        footprint="diode_footprints:SOD_523",
+        datasheet="https://www.diodes.com/assets/Datasheets/1N4448HWT.pdf",
+        voltage_rating=[80.0],
+        current_rating=[0.125],
+        package="SOD_523",
+        diode_type="Rectifier",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
