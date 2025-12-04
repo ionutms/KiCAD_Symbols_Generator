@@ -18,6 +18,8 @@ from typing import TYPE_CHECKING, Final, NamedTuple
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+ValueBasedSuffixMapping = dict[tuple[float, ...], str]
+
 
 class SeriesSpec(NamedTuple):
     """Detailed specifications for a capacitor series.
@@ -44,6 +46,8 @@ class SeriesSpec(NamedTuple):
         specified_values: List of specified capacitance values
         additional_values:
             Dictionary mapping dielectric types to lists of additional values
+        value_based_mpn_sufix_map:
+            Optional mapping of value tuples to MPN suffixes
         reference: Reference designator for the component
 
     """
@@ -66,6 +70,7 @@ class SeriesSpec(NamedTuple):
     capacitor_type: str = "Ceramic"
     reference: str = "C"
     mpn_sufix: list[str] | str = ""
+    value_based_mpn_sufix_map: ValueBasedSuffixMapping | None = None
 
 
 class PartInfo(NamedTuple):
@@ -365,23 +370,55 @@ class PartInfo(NamedTuple):
         characteristic_code = cls.get_characteristic_code(capacitance, specs)
         formatted_value = cls.format_value(capacitance)
 
+        # Determine packaging suffix based on value-based mapping if available
+        effective_packaging = packaging
+        if specs.value_based_mpn_sufix_map and packaging == "":
+            value_found = False
+            for (
+                value_tuple,
+                suffix,
+            ) in specs.value_based_mpn_sufix_map.items():
+                for specific_value in value_tuple:
+                    if (
+                        abs(capacitance - specific_value) < 1e-15
+                    ):  # Very small tolerance for float comparison
+                        effective_packaging = suffix
+                        value_found = True
+                        break
+                if value_found:
+                    break
+
+            if not value_found:
+                if (
+                    isinstance(specs.mpn_sufix, list)
+                    and len(specs.mpn_sufix) > 0
+                ):
+                    effective_packaging = specs.mpn_sufix[0]
+                elif isinstance(specs.mpn_sufix, str) and specs.mpn_sufix:
+                    effective_packaging = specs.mpn_sufix
+                else:
+                    # If no default suffix is available, keep it empty
+                    # This might result in invalid MPN for some manufacturers
+                    effective_packaging = ""
+        # If packaging is not empty (traditional case), use it as-is
+
         if specs.manufacturer == "Murata Electronics":
             mpn = (
                 f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
                 f"{characteristic_code}"
-                f"{packaging}"
+                f"{effective_packaging}"
             )
         elif specs.manufacturer == "TDK":
             mpn = (
                 f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
-                f"{packaging}"
+                f"{effective_packaging}"
             )
         elif specs.manufacturer == "KYOCERA AVX":
-            mpn = f"{specs.mpn_prefix}{capacitance_code}{packaging}"
+            mpn = f"{specs.mpn_prefix}{capacitance_code}{effective_packaging}"
         elif specs.manufacturer == "YAGEO":
             mpn = f"{specs.mpn_prefix}{capacitance_code}"
         elif specs.manufacturer == "Wurth Elektronik":
@@ -397,7 +434,7 @@ class PartInfo(NamedTuple):
                 f"{specs.mpn_prefix}"
                 f"{capacitance_code}"
                 f"{tolerance_code}"
-                f"{packaging}"
+                f"{effective_packaging}"
             )
 
         description = (
@@ -460,20 +497,65 @@ class PartInfo(NamedTuple):
                         tolerance_code,
                         tolerance_value,
                     ) in specs.tolerance_map[dielectric_type].items():
-                        suffixes = (
-                            specs.mpn_sufix if specs.mpn_sufix else [""]
-                        )
-                        for packaging in suffixes:
-                            parts_list.append(  # noqa: PERF401
-                                cls.create_part_info(
-                                    capacitance=capacitance,
-                                    tolerance_code=tolerance_code,
-                                    tolerance_value=tolerance_value,
-                                    packaging=packaging,
-                                    dielectric_type=dielectric_type,
-                                    specs=specs,
-                                ),
+                        if specs.value_based_mpn_sufix_map:
+                            value_has_mapping = False
+                            for (
+                                value_tuple
+                            ) in specs.value_based_mpn_sufix_map.keys():
+                                for specific_value in value_tuple:
+                                    if (
+                                        abs(capacitance - specific_value)
+                                        < 1e-15
+                                    ):
+                                        value_has_mapping = True
+                                        break
+                                if value_has_mapping:
+                                    break
+
+                            if value_has_mapping:
+                                parts_list.append(
+                                    cls.create_part_info(
+                                        capacitance=capacitance,
+                                        tolerance_code=tolerance_code,
+                                        tolerance_value=tolerance_value,
+                                        packaging="",
+                                        dielectric_type=dielectric_type,
+                                        specs=specs,
+                                    ),
+                                )
+                            else:
+                                suffixes = (
+                                    specs.mpn_sufix
+                                    if specs.mpn_sufix
+                                    else [""]
+                                )
+                                for packaging in suffixes:
+                                    parts_list.append(  # noqa: PERF401
+                                        cls.create_part_info(
+                                            capacitance=capacitance,
+                                            tolerance_code=tolerance_code,
+                                            tolerance_value=tolerance_value,
+                                            packaging=packaging,
+                                            dielectric_type=dielectric_type,
+                                            specs=specs,
+                                        ),
+                                    )
+                        else:
+                            # Use traditional approach with fixed MPN suffixes
+                            suffixes = (
+                                specs.mpn_sufix if specs.mpn_sufix else [""]
                             )
+                            for packaging in suffixes:
+                                parts_list.append(  # noqa: PERF401
+                                    cls.create_part_info(
+                                        capacitance=capacitance,
+                                        tolerance_code=tolerance_code,
+                                        tolerance_value=tolerance_value,
+                                        packaging=packaging,
+                                        dielectric_type=dielectric_type,
+                                        specs=specs,
+                                    ),
+                                )
 
         return sorted(parts_list, key=lambda x: (x.dielectric, x.value))
 
@@ -1027,6 +1109,24 @@ TDK_SYMBOLS_SPECS = {
         case_code_in="0603",
         case_code_mm="1608",
         specified_values=[1.5e-6, 2.2e-6],
+        datasheet_url=f"{TDK_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+    "C3216X5R1E": SeriesSpec(
+        manufacturer="TDK",
+        mpn_prefix="C3216X5R1E",
+        value_range={"X5R": (15e-6, 47e-6)},
+        tolerance_map={"X5R": {"M": "20%"}},
+        mpn_sufix=["160AB"],
+        value_based_mpn_sufix_map={
+            (15e-6, 22e-6): "160AB",  # First 2 values get 160AB suffix
+            (33e-6, 47e-6): "160AC",  # Higher values get 160AC suffix
+        },
+        footprint="capacitor_footprints:C_1206_3216Metric",
+        voltage_rating="25V",
+        case_code_in="1206",
+        case_code_mm="3216",
+        specified_values=[15e-6, 22e-6, 33e-6, 47e-6],
         datasheet_url=f"{TDK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
