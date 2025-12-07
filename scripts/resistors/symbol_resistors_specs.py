@@ -225,6 +225,7 @@ class PartInfo(NamedTuple):
             "ERJ-3GEYJ",
             "ERJ-6GEYJ",
             "ERJ-6DQJ",
+            "ERJ-6DQF",
         ):
             return cls._generate_erj_special_series_code(resistance)
 
@@ -903,6 +904,30 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=(
             "https://industrial.panasonic.com/cdbs/www-data/pdf/"
             "RDA0000/AOA0000C304.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERJ-6DQF": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERJ-6DQF",
+        mpn_sufix="V",
+        footprint="resistor_footprints:R_0805_2012Metric",
+        voltage_rating="150V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        power_rating="0.125W",
+        temperature_coefficient="100 ppm/°C",
+        resistance_range=[0.1, 9.1],
+        specified_values=[
+            *[0.22, 0.24, 0.27, 0.3, 0.33, 0.36, 0.39, 0.43, 0.47, 0.51],
+            *[0.56, 0.62, 0.68, 0.75, 0.82, 0.91, 1, 1.1, 1.2, 1.3, 1.5],
+            *[1.6, 1.8, 2, 2.2, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1],
+            *[5.6, 6.2, 6.8, 7.5, 8.2, 9.1],
+        ],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/RDN0000/"
+            "AOA0000C313.pdf"
         ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
