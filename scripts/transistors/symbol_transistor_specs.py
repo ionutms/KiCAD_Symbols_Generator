@@ -695,4 +695,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SI2374DS-T1-BE3": SeriesSpec(
+        manufacturer="Vishay Semiconductors",
+        base_series="SI2374DS-T1-BE3",
+        footprint="transistor_footprints:SOT23",
+        datasheet=("https://www.vishay.com/docs/62947/si2374ds.pdf"),
+        drain_source_voltage=[20.0],
+        drain_current=[5.9],
+        package="SOT23",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
