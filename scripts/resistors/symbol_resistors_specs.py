@@ -1713,6 +1713,28 @@ YAGEO_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
+    "RC2512FK-7W": SeriesSpec(
+        manufacturer="Yageo",
+        mpn_prefix="RC2512FK-7W",
+        mpn_sufix="L",
+        footprint="resistor_footprints:R_2512_6332Metric",
+        voltage_rating="200V",
+        case_code_in="2512",
+        case_code_mm="6332",
+        power_rating="2W",
+        temperature_coefficient="200 ppm/°C",
+        resistance_range=[1, 10],
+        specified_values=[
+            *[1, 1.2, 1.6, 1.8, 2, 2.2, 2.7, 3],
+            *[3.3, 3.9, 4.7, 6.2, 6.8, 7.5, 10],
+        ],
+        tolerance_map={"E96": "1%", "E24": "1%"},
+        datasheet=(
+            "https://www.yageogroup.com/content/datasheet/asset/file/"
+            "PYU-RC_GROUP_51_ROHS_L"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
 }
 
 SEI_STACKPOLE_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
