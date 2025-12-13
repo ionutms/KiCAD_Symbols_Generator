@@ -17810,7 +17810,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 33.02 106.68 0)
+			(at 33.02 88.9 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -17819,7 +17819,7 @@
 			)
 		)
 		(property "Value" "LTC3350EUHF-PBF"
-			(at 33.02 104.14 0)
+			(at 33.02 86.36 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -17828,7 +17828,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:QFN-38_UHF_LIT"
-			(at 33.02 -109.22 0)
+			(at 33.02 -91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17839,7 +17839,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc3350.pdf"
-			(at 33.02 -104.14 0)
+			(at 33.02 -86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17850,7 +17850,7 @@
 			)
 		)
 		(property "Description" "High Current Supercapacitor Backup Controller and System Monitor"
-			(at 33.02 -106.68 0)
+			(at 33.02 -88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17860,7 +17860,7 @@
 			)
 		)
 		(property "MPN" "LTC3350EUHF#PBF"
-			(at 33.02 -111.76 0)
+			(at 33.02 -93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17871,8 +17871,8 @@
 		)
 		(symbol "U_LTC3350EUHF-PBF_0_1"
 			(rectangle
-				(start -33.02 101.6)
-				(end 33.02 -101.6)
+				(start -33.02 83.82)
+				(end 33.02 -83.82)
 				(stroke
 					(width 0)
 					(type default)
@@ -17882,7 +17882,7 @@
 				)
 			)
 			(pin input line
-				(at -35.56 96.52 0)
+				(at -35.56 78.74 0)
 				(length 2.54)
 				(name "PFI"
 					(effects
@@ -17900,7 +17900,7 @@
 				)
 			)
 			(pin output line
-				(at -35.56 91.44 0)
+				(at -35.56 73.66 0)
 				(length 2.54)
 				(name "VCC2P5"
 					(effects
@@ -17918,7 +17918,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -35.56 63.5 0)
+				(at -35.56 45.72 0)
 				(length 2.54)
 				(name "CAP_SLCT1"
 					(effects
@@ -17936,7 +17936,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -35.56 43.18 0)
+				(at -35.56 25.4 0)
 				(length 2.54)
 				(name "CAP_SLCT0"
 					(effects
@@ -17954,7 +17954,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -35.56 33.02 0)
+				(at -35.56 15.24 0)
 				(length 2.54)
 				(name "SCL"
 					(effects
@@ -17972,7 +17972,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -35.56 27.94 0)
+				(at -35.56 10.16 0)
 				(length 2.54)
 				(name "SDA"
 					(effects
@@ -17990,7 +17990,7 @@
 				)
 			)
 			(pin input line
-				(at -35.56 17.78 0)
+				(at -35.56 0 0)
 				(length 2.54)
 				(name "VC"
 					(effects
@@ -18007,8 +18007,26 @@
 					)
 				)
 			)
+			(pin power_in line
+				(at -35.56 -30.48 0)
+				(length 2.54)
+				(name "CAPGD"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin input line
-				(at -35.56 -22.86 0)
+				(at -35.56 -71.12 0)
 				(length 2.54)
 				(name "GPI"
 					(effects
@@ -18026,7 +18044,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -35.56 -43.18 0)
+				(at -35.56 -76.2 0)
 				(length 2.54)
 				(name "RT"
 					(effects
@@ -18044,7 +18062,7 @@
 				)
 			)
 			(pin input line
-				(at -25.4 104.14 270)
+				(at -25.4 86.36 270)
 				(length 2.54)
 				(name "VIN"
 					(effects
@@ -18062,7 +18080,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -17.78 104.14 270)
+				(at -17.78 86.36 270)
 				(length 2.54)
 				(name "INFET"
 					(effects
@@ -18080,7 +18098,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -7.62 104.14 270)
+				(at -7.62 86.36 270)
 				(length 2.54)
 				(name "VOUTM5"
 					(effects
@@ -18098,7 +18116,7 @@
 				)
 			)
 			(pin power_in line
-				(at -2.54 -104.14 90)
+				(at -2.54 -86.36 90)
 				(length 2.54)
 				(name "SGND"
 					(effects
@@ -18116,7 +18134,7 @@
 				)
 			)
 			(pin input line
-				(at 2.54 104.14 270)
+				(at 2.54 86.36 270)
 				(length 2.54)
 				(name "VOUTSP"
 					(effects
@@ -18134,7 +18152,7 @@
 				)
 			)
 			(pin power_in line
-				(at 2.54 -104.14 90)
+				(at 2.54 -86.36 90)
 				(length 2.54)
 				(name "PGND"
 					(effects
@@ -18152,7 +18170,7 @@
 				)
 			)
 			(pin input line
-				(at 7.62 104.14 270)
+				(at 7.62 86.36 270)
 				(length 2.54)
 				(name "VOUTSN"
 					(effects
@@ -18170,7 +18188,7 @@
 				)
 			)
 			(pin output line
-				(at 12.7 104.14 270)
+				(at 12.7 86.36 270)
 				(length 2.54)
 				(name "OUTFB"
 					(effects
@@ -18188,7 +18206,7 @@
 				)
 			)
 			(pin output line
-				(at 25.4 104.14 270)
+				(at 25.4 86.36 270)
 				(length 2.54)
 				(name "OUTFET"
 					(effects
@@ -18206,7 +18224,7 @@
 				)
 			)
 			(pin output line
-				(at 35.56 91.44 180)
+				(at 35.56 73.66 180)
 				(length 2.54)
 				(name "TGATE"
 					(effects
@@ -18224,7 +18242,7 @@
 				)
 			)
 			(pin output line
-				(at 35.56 86.36 180)
+				(at 35.56 68.58 180)
 				(length 2.54)
 				(name "INTVCC"
 					(effects
@@ -18242,7 +18260,7 @@
 				)
 			)
 			(pin power_in line
-				(at 35.56 81.28 180)
+				(at 35.56 63.5 180)
 				(length 2.54)
 				(name "DRVCC"
 					(effects
@@ -18260,7 +18278,7 @@
 				)
 			)
 			(pin input line
-				(at 35.56 68.58 180)
+				(at 35.56 50.8 180)
 				(length 2.54)
 				(name "BST"
 					(effects
@@ -18278,7 +18296,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 58.42 180)
+				(at 35.56 40.64 180)
 				(length 2.54)
 				(name "SW"
 					(effects
@@ -18296,7 +18314,7 @@
 				)
 			)
 			(pin output line
-				(at 35.56 48.26 180)
+				(at 35.56 30.48 180)
 				(length 2.54)
 				(name "BGATE"
 					(effects
@@ -18314,7 +18332,7 @@
 				)
 			)
 			(pin input line
-				(at 35.56 33.02 180)
+				(at 35.56 15.24 180)
 				(length 2.54)
 				(name "ICAP"
 					(effects
@@ -18332,7 +18350,7 @@
 				)
 			)
 			(pin input line
-				(at 35.56 27.94 180)
+				(at 35.56 10.16 180)
 				(length 2.54)
 				(name "VCAP"
 					(effects
@@ -18350,7 +18368,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 22.86 180)
+				(at 35.56 5.08 180)
 				(length 2.54)
 				(name "CFP"
 					(effects
@@ -18368,7 +18386,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 12.7 180)
+				(at 35.56 -5.08 180)
 				(length 2.54)
 				(name "CFN"
 					(effects
@@ -18386,7 +18404,7 @@
 				)
 			)
 			(pin output line
-				(at 35.56 7.62 180)
+				(at 35.56 -10.16 180)
 				(length 2.54)
 				(name "VCAPP5"
 					(effects
@@ -18404,7 +18422,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -2.54 180)
+				(at 35.56 -20.32 180)
 				(length 2.54)
 				(name "CAP4"
 					(effects
@@ -18422,7 +18440,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -12.7 180)
+				(at 35.56 -30.48 180)
 				(length 2.54)
 				(name "CAP3"
 					(effects
@@ -18440,7 +18458,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -22.86 180)
+				(at 35.56 -40.64 180)
 				(length 2.54)
 				(name "CAP2"
 					(effects
@@ -18458,7 +18476,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -33.02 180)
+				(at 35.56 -50.8 180)
 				(length 2.54)
 				(name "CAP1"
 					(effects
@@ -18476,7 +18494,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -43.18 180)
+				(at 35.56 -60.96 180)
 				(length 2.54)
 				(name "CAPRTN"
 					(effects
@@ -18494,7 +18512,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -53.34 180)
+				(at 35.56 -71.12 180)
 				(length 2.54)
 				(name "ITST"
 					(effects
@@ -18512,7 +18530,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 35.56 -58.42 180)
+				(at 35.56 -76.2 180)
 				(length 2.54)
 				(name "CAPFB"
 					(effects
@@ -18529,28 +18547,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 35.56 -86.36 180)
-				(length 2.54)
-				(name "CAPGD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 		)
 		(symbol "U_LTC3350EUHF-PBF_1_1"
 			(pin output line
-				(at 35.56 -76.2 180)
+				(at -35.56 -20.32 0)
 				(length 2.54)
 				(name "~{SMBALERT}"
 					(effects
@@ -18568,7 +18568,7 @@
 				)
 			)
 			(pin output line
-				(at 35.56 -96.52 180)
+				(at -35.56 -40.64 0)
 				(length 2.54)
 				(name "~{PFO}"
 					(effects
