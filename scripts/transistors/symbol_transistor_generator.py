@@ -106,6 +106,11 @@ def write_component(
                 symbol_file,
                 symbol_name,
             )
+        elif component_data.get("Series") == "SIA436DJ-T1-GE3":
+            symbol_utils.write_n_mos_transistor_symbol_drawing_v2(
+                symbol_file,
+                symbol_name,
+            )
         else:
             symbol_utils.write_n_mos_transistor_symbol_drawing(
                 symbol_file,

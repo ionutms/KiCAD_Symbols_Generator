@@ -289,4 +289,21 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ),
         ref_offset_y=-2.286,
     ),
+    "PowerPAK SC-70": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=7.0, height=5.0),
+        pad_dimensions=PadDimensionsAsymmetric(
+            width=0.35,
+            height=0.3,
+            pad_center_x=0.925,
+            pad_pitch_y=0.65,
+            pins_per_side=3,
+            thermal_width=[1.7, 0.87],
+            thermal_height=[0.95, 0.235],
+            thermal_pad_center_x=[0, 0],
+            thermal_pad_center_y=[-0.325, 0.668],
+            thermal_pad_numbers=[6, 7],
+            pad_numbers=[1, 2, 3, 4, 5, 6],
+        ),
+        ref_offset_y=-3.2,
+    ),
 }

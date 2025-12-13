@@ -706,4 +706,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "SIA436DJ-T1-GE3": SeriesSpec(
+        manufacturer="Vishay Semiconductors",
+        base_series="SIA436DJ-T1-GE3",
+        footprint="transistor_footprints:PowerPAK SC-70",
+        datasheet=("https://www.vishay.com/docs/63535/sia436dj.pdf"),
+        drain_source_voltage=[8],
+        drain_current=[12],
+        package="PowerPAK SC-70",
+        transistor_type="N-Channel",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }

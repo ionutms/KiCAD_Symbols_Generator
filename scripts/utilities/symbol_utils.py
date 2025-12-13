@@ -2163,56 +2163,93 @@ def write_n_mos_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(1.27),
-        0,
-        "5",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(1.27),
-        180,
-        "1",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(-1.27),
-        180,
-        "2",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(-3.81),
-        180,
-        "3",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        2.54,
-        offset_y(-6.35),
-        180,
-        "4",
-        "G",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(-3.81), 180, "3", "S", length=2.54)
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "4", "G", length=2.54)
+
+    symbol_file.write("\t\t)\n")
+
+
+def write_n_mos_transistor_symbol_drawing_v2(
+    symbol_file: TextIO,
+    symbol_name: str,
+    vertical_offset: float = 0.0,
+) -> None:
+    """Write the graphical representation of an N-MOS transistor symbol.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name of the symbol.
+        vertical_offset:
+            Vertical translation in units.
+            Positive moves up, negative moves down. Defaults to 0.0.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+
+    def offset_y(y: float) -> float:
+        """Offset y-coordinate by vertical translation.
+
+        Args:
+            y: Y-coordinate to offset.
+
+        Returns:
+            float: Offset y-coordinate.
+
+        """
+        return y + vertical_offset
+
+    symbol_file.write("""
+        (polyline
+            (pts
+                (xy 0 -6.35) (xy 0 -2.54) (xy -2.54 -2.54)
+                (xy 2.54 -2.54) (xy 0 -2.54) (xy 0 -6.35)
+            )
+            (stroke (width 0) (type default) )
+            (fill (type none) )
+        )
+        (polyline
+            (pts
+                (xy 5.08 1.27) (xy 5.08 0) (xy 2.54 0) (xy 2.54 1.27)
+                (xy 0.508 1.27) (xy 0.508 1.778) (xy -0.508 1.27)
+                (xy -0.508 1.778) (xy -0.508 1.27) (xy -2.54 1.27)
+                (xy -2.54 0) (xy -5.08 0) (xy -5.08 -3.81) (xy -5.08 3.81)
+                (xy -5.08 0) (xy -2.032 0) (xy -2.032 -2.032)
+                (xy -2.54 -2.032) (xy -1.524 -2.032) (xy -2.032 -2.032)
+                (xy -2.032 0) (xy -2.54 0) (xy -2.54 1.27) (xy -0.508 1.27)
+                (xy -0.508 0.762) (xy -0.508 1.27) (xy 0.508 0.762)
+                (xy 0.508 1.27) (xy 2.54 1.27) (xy 2.54 0) (xy 0 0)
+                (xy 0 -1.016) (xy -0.508 -1.016) (xy 0 -2.032)
+                (xy -0.508 -2.032) (xy 0.508 -2.032) (xy 0 -2.032)
+                (xy 0.508 -1.016) (xy 0 -1.016) (xy 0 0) (xy 2.032 0)
+                (xy 2.032 -2.032) (xy 1.524 -2.032) (xy 2.54 -2.032)
+                (xy 2.032 -2.032) (xy 2.032 0) (xy 5.08 0) (xy 5.08 -1.27)
+            )
+            (stroke (width 0) (type default) )
+            (fill (type outline) )
+        )
+        """)
+
+    # Write symbol circles with vertical offset
+    write_circle(symbol_file, -2.54, offset_y(0))
+    write_circle(symbol_file, 2.032, offset_y(0))
+    write_circle(symbol_file, 2.54, offset_y(0))
+
+    # Write pins with vertical offset
+    write_pin(symbol_file, -7.62, offset_y(3.81), 0, "1", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "2", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(-1.27), 0, "5", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(-3.81), 0, "6", "D", length=2.54)
+
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "3", "G", length=2.54)
+
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "4", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "7", "S", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
