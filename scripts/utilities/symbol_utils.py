@@ -1784,56 +1784,11 @@ def write_p_mos_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(1.27),
-        0,
-        "5",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(1.27),
-        180,
-        "1",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(-1.27),
-        180,
-        "2",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(-3.81),
-        180,
-        "3",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        2.54,
-        offset_y(-6.35),
-        180,
-        "4",
-        "G",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(-3.81), 180, "3", "S", length=2.54)
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "4", "G", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -1912,66 +1867,12 @@ def write_p_mos_transistor_symbol_drawing_2(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(1.27),
-        0,
-        "1",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(-1.27),
-        0,
-        "2",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(-3.81),
-        0,
-        "5",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(-6.35),
-        0,
-        "6",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(1.27),
-        180,
-        "4",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        2.54,
-        offset_y(-6.35),
-        180,
-        "3",
-        "G",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "1", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(-1.27), 0, "2", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(-3.81), 0, "5", "D", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(-6.35), 0, "6", "D", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "4", "S", length=2.54)
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "3", "G", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -2049,36 +1950,9 @@ def write_p_mos_transistor_symbol_drawing_3(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(
-        symbol_file,
-        2.54,
-        offset_y(-6.35),
-        180,
-        "1",
-        "G",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(1.27),
-        180,
-        "2",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(1.27),
-        0,
-        "3",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -2333,36 +2207,9 @@ def write_n_mos_basic_transistor_symbol_drawing(
     write_circle(symbol_file, 2.54, offset_y(0))
 
     # Write pins with vertical offset
-    write_pin(
-        symbol_file,
-        2.54,
-        offset_y(-6.35),
-        180,
-        "1",
-        "G",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        7.62,
-        offset_y(1.27),
-        180,
-        "2",
-        "S",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        -7.62,
-        offset_y(1.27),
-        0,
-        "3",
-        "D",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
+    write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
+    write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -2489,7 +2336,6 @@ def write_n_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][0],
             name[index - 1][0],
-            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2498,7 +2344,6 @@ def write_n_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][1],
             name[index - 1][1],
-            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2507,7 +2352,6 @@ def write_n_mos_dual_transistor_symbol_drawing(
             0,
             number[index - 1][2],
             name[index - 1][2],
-            pin_type="passive",
         )
 
         symbol_file.write(")")
@@ -2638,7 +2482,6 @@ def write_p_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][0],
             name[index - 1][0],
-            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2647,7 +2490,6 @@ def write_p_mos_dual_transistor_symbol_drawing(
             180,
             number[index - 1][1],
             name[index - 1][1],
-            pin_type="passive",
         )
         write_pin(
             symbol_file,
@@ -2656,7 +2498,6 @@ def write_p_mos_dual_transistor_symbol_drawing(
             0,
             number[index - 1][2],
             name[index - 1][2],
-            pin_type="passive",
         )
 
         symbol_file.write(")")
@@ -2726,16 +2567,12 @@ def write_rectangle(
 def write_npn_transistor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
-    vertical_offset: float = 0.0,
 ) -> None:
     """Write the graphical representation of a P-MOS transistor symbol.
 
     Args:
         symbol_file: File object for writing the symbol file.
         symbol_name: Name of the symbol.
-        vertical_offset:
-            Vertical translation in units.
-            Positive moves up, negative moves down. Defaults to 0.0.
 
     Returns:
         None
@@ -2781,26 +2618,8 @@ def write_npn_transistor_symbol_drawing(
         """)
 
     write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
-    write_pin(
-        symbol_file,
-        2.54,
-        5.08,
-        270,
-        "3",
-        "C",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        2.54,
-        -5.08,
-        90,
-        "2",
-        "E",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, 2.54, 5.08, 270, "3", "C", length=2.54)
+    write_pin(symbol_file, 2.54, -5.08, 90, "2", "E", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -2863,26 +2682,8 @@ def write_pnp_transistor_symbol_drawing(
         """)
 
     write_pin(symbol_file, -5.08, 0, 0, "1", "B", length=2.54)
-    write_pin(
-        symbol_file,
-        2.54,
-        5.08,
-        270,
-        "2",
-        "E",
-        length=2.54,
-        pin_type="passive",
-    )
-    write_pin(
-        symbol_file,
-        2.54,
-        -5.08,
-        90,
-        "3",
-        "C",
-        length=2.54,
-        pin_type="passive",
-    )
+    write_pin(symbol_file, 2.54, 5.08, 270, "2", "E", length=2.54)
+    write_pin(symbol_file, 2.54, -5.08, 90, "3", "C", length=2.54)
 
     symbol_file.write("\t\t)\n")
 
@@ -2941,7 +2742,6 @@ def write_dip_switch_symbol_drawing(
                         y_pos,
                         0,
                         str(pin_num),
-                        pin_type="passive",
                     )
 
                 for i in range(pins_per_side):
@@ -2953,7 +2753,6 @@ def write_dip_switch_symbol_drawing(
                         y_pos,
                         180,
                         str(pin_num),
-                        pin_type="passive",
                     )
             else:
                 for i in range(pins_per_side):
@@ -2965,7 +2764,6 @@ def write_dip_switch_symbol_drawing(
                         y_pos,
                         0,
                         str(pin_num),
-                        pin_type="passive",
                     )
 
                 for i in range(pins_per_side):
@@ -2977,7 +2775,6 @@ def write_dip_switch_symbol_drawing(
                         y_pos,
                         180,
                         str(pin_num),
-                        pin_type="passive",
                     )
 
         else:
@@ -2993,7 +2790,6 @@ def write_dip_switch_symbol_drawing(
                     y_pos,
                     0,
                     str(actual_pin_num),
-                    pin_type="passive",
                 )
 
     for switch_idx in range(pin_count):
@@ -3083,21 +2879,9 @@ def write_slide_switch_symbol_drawing(
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
                 # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
-                    symbol_file,
-                    -2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num),
-                    pin_type="passive",
-                )
-                write_pin(
-                    symbol_file,
-                    2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num + 1),
-                    pin_type="passive",
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
                 # Toggle angle for next row
@@ -3111,7 +2895,6 @@ def write_slide_switch_symbol_drawing(
                     y_pos,
                     0,
                     str(pin_num),
-                    pin_type="passive",
                 )
 
     symbol_file.write("""
@@ -3188,21 +2971,9 @@ def write_tactile_switch_symbol_drawing(
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
                 # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
-                    symbol_file,
-                    -2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num),
-                    pin_type="passive",
-                )
-                write_pin(
-                    symbol_file,
-                    2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num + 1),
-                    pin_type="passive",
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
                 # Toggle angle for next row
@@ -3216,7 +2987,6 @@ def write_tactile_switch_symbol_drawing(
                     y_pos,
                     0,
                     str(pin_num),
-                    pin_type="passive",
                 )
 
     symbol_file.write("""
@@ -3306,21 +3076,9 @@ def write_tactile_switch_with_led_symbol_drawing(
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
                 # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
-                    symbol_file,
-                    -2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num),
-                    pin_type="passive",
-                )
-                write_pin(
-                    symbol_file,
-                    2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num + 1),
-                    pin_type="passive",
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
                 # Toggle angle for next row
@@ -3328,14 +3086,7 @@ def write_tactile_switch_with_led_symbol_drawing(
         else:
             for pin_num in range(1, pin_count + 1):
                 y_pos = start_y - (pin_num - 1) * pin_spacing
-                write_pin(
-                    symbol_file,
-                    -5.08,
-                    y_pos,
-                    0,
-                    str(pin_num),
-                    pin_type="passive",
-                )
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
     symbol_file.write(f"""
 			(polyline
@@ -3463,21 +3214,9 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
                 # Both pins in this row use the same angle
+                write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
-                    symbol_file,
-                    -2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num),
-                    pin_type="passive",
-                )
-                write_pin(
-                    symbol_file,
-                    2.54 / 2,
-                    y_pos,
-                    angle,
-                    str(pin_num + 1),
-                    pin_type="passive",
+                    symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
                 # Toggle angle for next row
@@ -3485,14 +3224,7 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
         else:
             for pin_num in range(1, pin_count + 1):
                 y_pos = start_y - (pin_num - 1) * pin_spacing
-                write_pin(
-                    symbol_file,
-                    -5.08,
-                    y_pos,
-                    0,
-                    str(pin_num),
-                    pin_type="passive",
-                )
+                write_pin(symbol_file, -5.08, y_pos, 0, str(pin_num))
 
     symbol_file.write(f"""
 			(polyline
