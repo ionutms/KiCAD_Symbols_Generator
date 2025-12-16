@@ -481,7 +481,14 @@ class PartInfo(NamedTuple):
 
         """
         parts_list: list[PartInfo] = []
-        dielectric_types = ["X5R", "X7R", "X7S", "C0G (NP0)", "Polymer"]
+        dielectric_types = [
+            "X5R",
+            "X7R",
+            "X7S",
+            "C0G (NP0)",
+            "Polymer",
+            "Supercapacitor",
+        ]
 
         for dielectric_type in dielectric_types:
             if dielectric_type in specs.value_range:
@@ -1436,6 +1443,29 @@ CHEMI_CON_SYMBOLS_SPECS = {
     ),
 }
 
+
+EATON_ELECTRONICS_DOC_BASE = (
+    "https://www.eaton.com/content/dam/eaton/"
+    "products/electronic-components/resources/data-sheet/"
+    "eaton-hv-supercapacitors-cylindrical-cells-data-sheet.pdf"
+)
+
+EATON_ELECTRONICS_SYMBOLS_SPECS = {
+    "HV1030-2R7106-R": SeriesSpec(
+        mpn_prefix="HV1030-2R7106-R",
+        manufacturer="Eaton Electronics",
+        footprint="capacitor_footprints:C_197x394_5_0x10Metric",
+        voltage_rating="2.7V",
+        capacitor_type="Supercapacitor",
+        case_code_in="197x394",
+        case_code_mm="5_0x10",
+        tolerance_map={"Supercapacitor": {"": "10%"}},
+        value_range={"Supercapacitor": (10, 10)},
+        datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
+}
+
 # Combined specifications dictionary
 SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **MURATA_SYMBOLS_SPECS,
@@ -1448,4 +1478,5 @@ SERIES_SPECS: Final[dict[str, SeriesSpec]] = {
     **CHEMI_CON_SYMBOLS_SPECS,
     **KYOCERA_AVX_SYMBOLS_SPECS,
     **YAGEO_SYMBOLS_SPECS,
+    **EATON_ELECTRONICS_SYMBOLS_SPECS,
 }
