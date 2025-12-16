@@ -88,6 +88,167 @@ def generate_courtyard(width: float, height: float) -> str:
         """
 
 
+def generate_circular_courtyard(diameter: float) -> str:
+    """Generate KiCad courtyard outline for circular components.
+
+    Creates a circular courtyard outline defining the minimum
+    clearance zone around a radial component.
+
+    Args:
+        diameter (float): Component body diameter in millimeters.
+
+    Returns:
+        str: KiCad format courtyard outline specification.
+
+    """
+    radius = diameter / 2
+
+    return f"""
+        (fp_circle
+            (center 0 0)
+            (end {radius} 0)
+            (stroke (width 0.00635) (type solid))
+            (fill none)
+            (layer "F.CrtYd")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
+def generate_circular_silkscreen(diameter: float) -> str:
+    """Generate KiCad silkscreen outline for circular components.
+
+    Creates a circular silkscreen outline representing a radial component.
+
+    Args:
+        diameter (float): Component body diameter in millimeters.
+
+    Returns:
+        str: KiCad format silkscreen outline specification.
+
+    """
+    radius = diameter / 2
+
+    return f"""
+        (fp_circle
+            (center 0 0)
+            (end {radius} 0)
+            (stroke (width 0.1524) (type solid))
+            (fill none)
+            (layer "F.SilkS")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
+def generate_circular_fab(diameter: float) -> str:
+    """Generate KiCad fabrication layer outline for circular components.
+
+    Creates a circular fabrication outline representing a radial component.
+
+    Args:
+        diameter (float): Component body diameter in millimeters.
+
+    Returns:
+        str: KiCad format fabrication layer outline specification.
+
+    """
+    radius = diameter / 2
+
+    return f"""
+        (fp_circle
+            (center 0 0)
+            (end {radius} 0)
+            (stroke (width 0.0254) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "{uuid4()}")
+        )
+        """
+
+
+def generate_plus_sign_silkscreen(x: float, y: float) -> str:
+    """Generate a plus sign on the silkscreen layer.
+
+    Args:
+        x: X-coordinate of the plus sign center
+        y: Y-coordinate of the plus sign center
+
+    Returns:
+        str: KiCad format plus sign specification for silkscreen
+
+    """
+    # Define dimensions for the plus sign (twice as big)
+    line_length = 1.0  # Length of each line of the plus sign (was 0.5)
+    line_width = 0.1524  # Width of the line
+
+    # Horizontal line
+    horizontal_line = f"""
+        (fp_line
+            (start {x - line_length/2} {y})
+            (end {x + line_length/2} {y})
+            (stroke (width {line_width}) (type solid))
+            (layer "F.SilkS")
+            (uuid "{uuid4()}")
+        )
+        """
+
+    # Vertical line
+    vertical_line = f"""
+        (fp_line
+            (start {x} {y - line_length/2})
+            (end {x} {y + line_length/2})
+            (stroke (width {line_width}) (type solid))
+            (layer "F.SilkS")
+            (uuid "{uuid4()}")
+        )
+        """
+
+    return horizontal_line + vertical_line
+
+
+def generate_plus_sign_fab(x: float, y: float) -> str:
+    """Generate a plus sign on the fabrication layer.
+
+    Args:
+        x: X-coordinate of the plus sign center
+        y: Y-coordinate of the plus sign center
+
+    Returns:
+        str: KiCad format plus sign specification for fabrication layer
+
+    """
+    # Define dimensions for the plus sign (twice as big)
+    line_length = 1.0  # Length of each line of the plus sign (was 0.5)
+    line_width = 0.0254  # Width of the line
+
+    # Horizontal line
+    horizontal_line = f"""
+        (fp_line
+            (start {x - line_length/2} {y})
+            (end {x + line_length/2} {y})
+            (stroke (width {line_width}) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "{uuid4()}")
+        )
+        """
+
+    # Vertical line
+    vertical_line = f"""
+        (fp_line
+            (start {x} {y - line_length/2})
+            (end {x} {y + line_length/2})
+            (stroke (width {line_width}) (type default))
+            (fill none)
+            (layer "F.Fab")
+            (uuid "{uuid4()}")
+        )
+        """
+
+    return horizontal_line + vertical_line
+
+
 def generate_chamfered_shape(
     width: float,
     height: float,

@@ -28,6 +28,19 @@ class BodyDimensions(NamedTuple):
     height: float
 
 
+class RadialBodyDimensions(NamedTuple):
+    """Defines circular dimensions for radial component footprint body.
+
+    All measurements are in millimeters.
+
+    Attributes:
+        diameter: Total diameter of the component body
+
+    """
+
+    diameter: float
+
+
 class PadDimensions(NamedTuple):
     """Defines dimensions for component pads.
 
@@ -43,6 +56,27 @@ class PadDimensions(NamedTuple):
     width: float
     height: float
     center_x: float
+
+
+class RadialPadDimensions(NamedTuple):
+    """Defines dimensions for radial component pads.
+
+    All measurements are in millimeters.
+
+    Attributes:
+        pad_diameter: Diameter of each pad
+        drill_size: Size of drill hole for through hole
+        pad_distance: Distance from center to pad center
+        pad_width: Width of the pad (for oval pads)
+        pad_height: Height of the pad (for oval pads)
+
+    """
+
+    pad_diameter: float
+    drill_size: float
+    pad_distance: float
+    pad_width: float = 0.0
+    pad_height: float = 0.0
 
 
 class FootprintSpecs(NamedTuple):
@@ -63,7 +97,27 @@ class FootprintSpecs(NamedTuple):
     ref_offset_y: float
 
 
-FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
+class RadialFootprintSpecs(NamedTuple):
+    """Complete specifications for generating a radial capacitor footprint.
+
+    Defines all physical dimensions, pad properties, and text positions
+    needed to generate a complete KiCad footprint file for radial components.
+
+    Attributes:
+        body_dimensions: Dimensions of the component body (circular)
+        pad_dimensions: Dimensions of the component pads (through hole)
+        ref_offset_y: Y offset for reference designator text
+        is_radial: Flag indicating this is a radial component
+
+    """
+
+    body_dimensions: RadialBodyDimensions
+    pad_dimensions: RadialPadDimensions
+    ref_offset_y: float
+    is_radial: bool = True
+
+
+FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
     "0402": FootprintSpecs(
         body_dimensions=BodyDimensions(width=1.82, height=0.92),
         pad_dimensions=PadDimensions(width=0.56, height=0.62, center_x=0.48),
@@ -154,9 +208,17 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         pad_dimensions=PadDimensions(width=1.89, height=6.81, center_x=3.26),
         ref_offset_y=-4.318,
     ),
-    "197x394": FootprintSpecs(
-        body_dimensions=BodyDimensions(width=12.5, height=9),
-        pad_dimensions=PadDimensions(width=4.2, height=2.2, center_x=3.65),
+}
+
+# Radial capacitor footprint specifications
+RADIAL_FOOTPRINTS_SPECS: dict[str, RadialFootprintSpecs] = {
+    "197x394": RadialFootprintSpecs(
+        body_dimensions=RadialBodyDimensions(diameter=10.0),
+        pad_dimensions=RadialPadDimensions(
+            pad_diameter=2.0,
+            drill_size=1.0,
+            pad_distance=2.5,
+        ),
         ref_offset_y=-6.096,
     ),
 }
