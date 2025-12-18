@@ -1451,6 +1451,19 @@ EATON_ELECTRONICS_DOC_BASE = (
 )
 
 EATON_ELECTRONICS_SYMBOLS_SPECS = {
+    "HV0810-2R7105-R": SeriesSpec(
+        mpn_prefix="HV0810-2R7105-R",
+        manufacturer="Eaton Electronics",
+        footprint="capacitor_footprints:C_138x315_3_5x8Metric",
+        voltage_rating="2.7V",
+        capacitor_type="Supercapacitor",
+        case_code_in="138x315",
+        case_code_mm="3_5x8",
+        tolerance_map={"Supercapacitor": {"": "10%"}},
+        value_range={"Supercapacitor": (1, 1)},
+        datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
     "HV1030-2R7106-R": SeriesSpec(
         mpn_prefix="HV1030-2R7106-R",
         manufacturer="Eaton Electronics",
