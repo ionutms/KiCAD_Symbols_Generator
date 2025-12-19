@@ -8,10 +8,7 @@ accurate footprints with appropriate pad dimensions and clearances.
 from pathlib import Path
 
 from footprint_capacitor_specs import (
-    FOOTPRINTS_SPECS as REGULAR_FOOTPRINTS,
-)
-from footprint_capacitor_specs import (
-    RADIAL_FOOTPRINTS_SPECS,
+    FOOTPRINTS_SPECS,
     FootprintSpecs,
     RadialFootprintSpecs,
 )
@@ -197,10 +194,7 @@ def generate_footprint_file(
     series_spec: SeriesSpec = SERIES_SPECS[series_name]
     case_code_in = series_spec.case_code_in
 
-    if case_code_in in RADIAL_FOOTPRINTS_SPECS:
-        capacitor_specs = RADIAL_FOOTPRINTS_SPECS[case_code_in]
-    else:
-        capacitor_specs = REGULAR_FOOTPRINTS[case_code_in]
+    capacitor_specs = FOOTPRINTS_SPECS[case_code_in]
 
     footprint_content: str = generate_footprint(series_spec, capacitor_specs)
 

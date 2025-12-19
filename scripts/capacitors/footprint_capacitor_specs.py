@@ -208,10 +208,6 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
         pad_dimensions=PadDimensions(width=1.89, height=6.81, center_x=3.26),
         ref_offset_y=-4.318,
     ),
-}
-
-# Radial capacitor footprint specifications
-RADIAL_FOOTPRINTS_SPECS: dict[str, RadialFootprintSpecs] = {
     "197x394": RadialFootprintSpecs(
         body_dimensions=RadialBodyDimensions(diameter=10.0),
         pad_dimensions=RadialPadDimensions(
