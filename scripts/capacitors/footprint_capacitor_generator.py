@@ -19,21 +19,29 @@ from utilities import footprint_utils
 def generate_radial_footprint(
     series_spec: SeriesSpec,
     capacitor_specs: RadialFootprintSpecs,
+    case_code_in: str | None = None,
+    case_code_mm: str | None = None,
+    step_file_name: str | None = None,
 ) -> str:
     """Generate complete KiCad footprint file content for a radial capacitor.
 
     Args:
         series_spec: Series specifications from SERIES_SPECS
         capacitor_specs: Physical specifications from RADIAL_FOOTPRINTS_SPECS
+        case_code_in: Optional case code to override the series default
+        case_code_mm: Optional case code mm to override the series default
+        step_file_name: Optional 3D model name to override the default
 
     Returns:
         Complete .kicad_mod file content as formatted string
 
     """
-    case_in: str = series_spec.case_code_in
-    case_mm: str = series_spec.case_code_mm
+    case_in: str = case_code_in if case_code_in else series_spec.case_code_in
+    case_mm: str = case_code_mm if case_code_mm else series_spec.case_code_mm
     footprint_name: str = f"C_{case_in}_{case_mm}Metric"
-    step_file_name: str = f"C_{case_in}"
+    step_file_name_final: str = (
+        step_file_name if step_file_name else f"C_{case_in}"
+    )
 
     body_diameter: float = capacitor_specs.body_dimensions.diameter
 
@@ -74,7 +82,7 @@ def generate_radial_footprint(
         ),
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
-            step_file_name,
+            step_file_name_final,
         ),
         ")",  # Close the footprint
     ]
@@ -85,6 +93,9 @@ def generate_radial_footprint(
 def generate_footprint(
     series_spec: SeriesSpec,
     capacitor_specs: FootprintSpecs | RadialFootprintSpecs,
+    case_code_in: str | None = None,
+    case_code_mm: str | None = None,
+    step_file_name: str | None = None,
 ) -> str:
     """Generate complete KiCad footprint file content for a capacitor.
 
@@ -93,18 +104,29 @@ def generate_footprint(
         capacitor_specs:
             Physical specifications from FOOTPRINTS_SPECS or
             RADIAL_FOOTPRINTS_SPECS
+        case_code_in: Optional case code to override the series default
+        case_code_mm: Optional case code mm to override the series default
+        step_file_name: Optional 3D model name to override the default
 
     Returns:
         Complete .kicad_mod file content as formatted string
 
     """
-    case_in: str = series_spec.case_code_in
-    case_mm: str = series_spec.case_code_mm
+    case_in: str = case_code_in if case_code_in else series_spec.case_code_in
+    case_mm: str = case_code_mm if case_code_mm else series_spec.case_code_mm
     footprint_name: str = f"C_{case_in}_{case_mm}Metric"
-    step_file_name: str = f"C_{case_in}"
+    step_file_name_final: str = (
+        step_file_name if step_file_name else f"C_{case_in}"
+    )
 
     if hasattr(capacitor_specs, "is_radial") and capacitor_specs.is_radial:
-        return generate_radial_footprint(series_spec, capacitor_specs)
+        return generate_radial_footprint(
+            series_spec,
+            capacitor_specs,
+            case_code_in,
+            case_code_mm,
+            step_file_name,
+        )
 
     # Regular SMD capacitor
     body_width: float = capacitor_specs.body_dimensions.width
@@ -135,7 +157,7 @@ def generate_footprint(
             ),
             footprint_utils.associate_3d_model(
                 "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
-                step_file_name,
+                step_file_name_final,
             ),
             ")",  # Close the footprint
         ]
@@ -169,7 +191,7 @@ def generate_footprint(
             ),
             footprint_utils.associate_3d_model(
                 "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
-                step_file_name,
+                step_file_name_final,
             ),
             ")",  # Close the footprint
         ]
@@ -213,7 +235,7 @@ def generate_footprint_file(
     # If the series has value_footprints, generate additional footprints
     if series_spec.value_footprints:
         for (
-            _,
+            capacitance_value,
             footprint_name,
         ) in series_spec.value_footprints.items():
             if ":" in footprint_name:
@@ -221,13 +243,32 @@ def generate_footprint_file(
                 parts = footprint_part.replace("C_", "").split("_")
                 if len(parts) >= 2:
                     case_code_in = parts[0]
+                    case_code_mm = parts[1].replace("Metric", "")
+
+                    step_file_name = None
+                    if (
+                        series_spec.value_3d_models
+                        and capacitance_value in series_spec.value_3d_models
+                    ):
+                        # Extract the model name from the full path if needed
+                        model_path = series_spec.value_3d_models[
+                            capacitance_value
+                        ]
+                        if ":" in model_path:
+                            step_file_name = model_path.split(":")[1]
+                        else:
+                            step_file_name = model_path
 
                     if case_code_in in FOOTPRINTS_SPECS:
                         specific_capacitor_specs = FOOTPRINTS_SPECS[
                             case_code_in
                         ]
                         specific_footprint_content: str = generate_footprint(
-                            series_spec, specific_capacitor_specs
+                            series_spec,
+                            specific_capacitor_specs,
+                            case_code_in,
+                            case_code_mm,
+                            step_file_name,
                         )
 
                         specific_filename: str = f"{footprint_part}.kicad_mod"

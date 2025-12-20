@@ -75,6 +75,7 @@ class SeriesSpec(NamedTuple):
     value_voltage_ratings: dict[float, str] | None = None
     value_case_codes_in: dict[float, str] | None = None
     value_case_codes_mm: dict[float, str] | None = None
+    value_3d_models: dict[float, str] | None = None
 
 
 class PartInfo(NamedTuple):
@@ -1534,6 +1535,11 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             1.0: "3_5x8",
             3.0: "3_5x8",
             10.0: "5_0x10",
+        },
+        value_3d_models={
+            1.0: "capacitor_3d_models:C_138x315",
+            3.0: "capacitor_3d_models:C_138x315_H21",
+            10.0: "capacitor_3d_models:C_197x394",
         },
         datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
