@@ -135,11 +135,18 @@ class PartInfo(NamedTuple):
         """
         pf_value = capacitance * 1e12
 
+        # 1 F and above
+        if capacitance >= 1:
+            value = capacitance
+            unit = "F"
+        # Between 1000 µF and 1,000,000 µF (exclusive) -> convert to mF
+        elif capacitance >= 1000e-6 and capacitance < 1:
+            value = capacitance / 1e-3
+            unit = "mF"
         # 1 µF and above
-        if capacitance >= 1e-6:  # noqa: PLR2004
+        elif capacitance >= 1e-6:  # noqa: PLR2004
             value = capacitance / 1e-6
             unit = "µF"
-
         # 1000 pF and above -> convert to nF
         elif pf_value >= 1000:  # noqa: PLR2004
             value = pf_value / 1000
