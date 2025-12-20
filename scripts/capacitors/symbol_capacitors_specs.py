@@ -71,6 +71,10 @@ class SeriesSpec(NamedTuple):
     reference: str = "C"
     mpn_sufix: list[str] | str = ""
     value_based_mpn_sufix_map: ValueBasedSuffixMapping | None = None
+    value_footprints: dict[float, str] | None = None
+    value_voltage_ratings: dict[float, str] | None = None
+    value_case_codes_in: dict[float, str] | None = None
+    value_case_codes_mm: dict[float, str] | None = None
 
 
 class PartInfo(NamedTuple):
@@ -191,6 +195,38 @@ class PartInfo(NamedTuple):
         zero_count = power - 1
 
         return f"{first_two}{zero_count}"
+
+    @staticmethod
+    def generate_eaton_capacitance_code(capacitance: float) -> str:
+        """Generate Eaton-style capacitance code from capacitance value.
+
+        Args:
+            capacitance: Capacitance value in farads
+
+        Returns:
+            Eaton capacitance code as a string
+
+        """
+        if capacitance >= 100:
+            exp_indicator = 7
+        elif capacitance >= 10:
+            exp_indicator = 6
+        elif capacitance >= 1:
+            exp_indicator = 5
+        elif capacitance >= 0.1:
+            exp_indicator = 4
+        elif capacitance >= 0.01:
+            exp_indicator = 3
+        else:
+            exp_indicator = 2
+
+        base_value = capacitance * (10 ** (6 - exp_indicator))
+
+        base_value = round(base_value)
+
+        code = f"{base_value}{exp_indicator}-R"
+
+        return code
 
     @classmethod
     def get_characteristic_code(
@@ -370,7 +406,6 @@ class PartInfo(NamedTuple):
         characteristic_code = cls.get_characteristic_code(capacitance, specs)
         formatted_value = cls.format_value(capacitance)
 
-        # Determine packaging suffix based on value-based mapping if available
         effective_packaging = packaging
         if specs.value_based_mpn_sufix_map and packaging == "":
             value_found = False
@@ -379,9 +414,7 @@ class PartInfo(NamedTuple):
                 suffix,
             ) in specs.value_based_mpn_sufix_map.items():
                 for specific_value in value_tuple:
-                    if (
-                        abs(capacitance - specific_value) < 1e-15
-                    ):  # Very small tolerance for float comparison
+                    if abs(capacitance - specific_value) < 1e-15:
                         effective_packaging = suffix
                         value_found = True
                         break
@@ -397,10 +430,7 @@ class PartInfo(NamedTuple):
                 elif isinstance(specs.mpn_sufix, str) and specs.mpn_sufix:
                     effective_packaging = specs.mpn_sufix
                 else:
-                    # If no default suffix is available, keep it empty
-                    # This might result in invalid MPN for some manufacturers
                     effective_packaging = ""
-        # If packaging is not empty (traditional case), use it as-is
 
         if specs.manufacturer == "Murata Electronics":
             mpn = (
@@ -429,6 +459,11 @@ class PartInfo(NamedTuple):
                 f"{formatted_value.split(' ')[0]}"
                 f"{specs.mpn_sufix}"
             )
+        elif specs.manufacturer == "Eaton Electronics":
+            capacitance_code = cls.generate_eaton_capacitance_code(
+                capacitance
+            )
+            mpn = f"{specs.mpn_prefix}{capacitance_code}"
         else:
             mpn = (
                 f"{specs.mpn_prefix}"
@@ -437,30 +472,52 @@ class PartInfo(NamedTuple):
                 f"{effective_packaging}"
             )
 
+        case_code_in_value = (
+            specs.value_case_codes_in.get(capacitance, specs.case_code_in)
+            if specs.value_case_codes_in
+            else specs.case_code_in
+        )
+        voltage_rating_value = (
+            specs.value_voltage_ratings.get(capacitance, specs.voltage_rating)
+            if specs.value_voltage_ratings
+            else specs.voltage_rating
+        )
+
         description = (
             f"CAP SMD {formatted_value} "
             f"{dielectric_type} {tolerance_value} "
-            f"{specs.case_code_in} {specs.voltage_rating}"
+            f"{case_code_in_value} {voltage_rating_value}"
         )
 
         trustedparts_link = f"{specs.trustedparts_url}/{mpn}"
         datasheet_url = cls.generate_datasheet_url(mpn, specs)
+
+        footprint_value = (
+            specs.value_footprints.get(capacitance, specs.footprint)
+            if specs.value_footprints
+            else specs.footprint
+        )
+        case_code_mm_value = (
+            specs.value_case_codes_mm.get(capacitance, specs.case_code_mm)
+            if specs.value_case_codes_mm
+            else specs.case_code_mm
+        )
 
         return cls(
             symbol_name=f"{specs.reference}_{mpn}",
             reference="C",
             value=capacitance,
             formatted_value=formatted_value,
-            footprint=specs.footprint,
+            footprint=footprint_value,
             datasheet=datasheet_url,
             description=description,
             manufacturer=specs.manufacturer,
             mpn=mpn,
             dielectric=dielectric_type,
             tolerance=tolerance_value,
-            voltage_rating=specs.voltage_rating,
-            case_code_in=specs.case_code_in,
-            case_code_mm=specs.case_code_mm,
+            voltage_rating=voltage_rating_value,
+            case_code_in=case_code_in_value,
+            case_code_mm=case_code_mm_value,
             series=specs.mpn_prefix,
             trustedparts_link=trustedparts_link,
             capacitor_type=specs.capacitor_type,
@@ -1451,8 +1508,8 @@ EATON_ELECTRONICS_DOC_BASE = (
 )
 
 EATON_ELECTRONICS_SYMBOLS_SPECS = {
-    "HV0810-2R7105-R": SeriesSpec(
-        mpn_prefix="HV0810-2R7105-R",
+    "HV0810-2R7": SeriesSpec(
+        mpn_prefix="HV0810-2R7",
         manufacturer="Eaton Electronics",
         footprint="capacitor_footprints:C_138x315_3_5x8Metric",
         voltage_rating="2.7V",
@@ -1460,33 +1517,24 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
         case_code_in="138x315",
         case_code_mm="3_5x8",
         tolerance_map={"Supercapacitor": {"": "10%"}},
-        value_range={"Supercapacitor": (1, 1)},
-        datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
-        trustedparts_url="https://www.trustedparts.com/en/search",
-    ),
-    "HV0820-2R7305-R": SeriesSpec(
-        mpn_prefix="HV0820-2R7305-R",
-        manufacturer="Eaton Electronics",
-        footprint="capacitor_footprints:C_138x315_H21_3_5x8Metric",
-        voltage_rating="2.7V",
-        capacitor_type="Supercapacitor",
-        case_code_in="138x315_H21",
-        case_code_mm="3_5x8",
-        tolerance_map={"Supercapacitor": {"": "10%"}},
-        value_range={"Supercapacitor": (3, 3)},
-        datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
-        trustedparts_url="https://www.trustedparts.com/en/search",
-    ),
-    "HV1030-2R7106-R": SeriesSpec(
-        mpn_prefix="HV1030-2R7106-R",
-        manufacturer="Eaton Electronics",
-        footprint="capacitor_footprints:C_197x394_5_0x10Metric",
-        voltage_rating="2.7V",
-        capacitor_type="Supercapacitor",
-        case_code_in="197x394",
-        case_code_mm="5_0x10",
-        tolerance_map={"Supercapacitor": {"": "10%"}},
-        value_range={"Supercapacitor": (10, 10)},
+        value_range={"Supercapacitor": (1, 10)},
+        specified_values=[1, 3, 10],
+        additional_values=[3],
+        value_footprints={
+            1.0: "capacitor_footprints:C_138x315_3_5x8Metric",
+            3.0: "capacitor_footprints:C_138x315_H21_3_5x8Metric",
+            10.0: "capacitor_footprints:C_197x394_5_0x10Metric",
+        },
+        value_case_codes_in={
+            1.0: "138x315",
+            3.0: "138x315_H21",
+            10.0: "197x394",
+        },
+        value_case_codes_mm={
+            1.0: "3_5x8",
+            3.0: "3_5x8",
+            10.0: "5_0x10",
+        },
         datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
