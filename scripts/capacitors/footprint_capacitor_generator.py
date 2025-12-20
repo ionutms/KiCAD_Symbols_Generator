@@ -42,7 +42,7 @@ def generate_radial_footprint(
     pad_distance: float = capacitor_specs.pad_dimensions.pad_distance
 
     # Calculate position for plus sign outside the circular body
-    plus_pos_x = -body_diameter/2 - 0.75
+    plus_pos_x = -body_diameter / 2 - 0.75
 
     # Generate radial footprint sections
     sections: list[str] = [
@@ -181,28 +181,61 @@ def generate_footprint_file(
     series_name: str,
     output_path: str,
 ) -> None:
-    """Generate and save a complete .kicad_mod file for a capacitor.
+    """Generate and save complete .kicad_mod files for a capacitor series.
 
     Args:
         series_name: Name of the capacitor series
-        output_path: Directory to save the generated footprint file
+        output_path: Directory to save the generated footprint files
 
     Returns:
         None
 
     """
     series_spec: SeriesSpec = SERIES_SPECS[series_name]
-    case_code_in = series_spec.case_code_in
 
-    capacitor_specs = FOOTPRINTS_SPECS[case_code_in]
+    # Generate the default footprint based on the series specification
+    default_case_code_in = series_spec.case_code_in
+    capacitor_specs = FOOTPRINTS_SPECS[default_case_code_in]
 
-    footprint_content: str = generate_footprint(series_spec, capacitor_specs)
+    default_footprint_content: str = generate_footprint(
+        series_spec, capacitor_specs
+    )
 
-    filename: str = (
+    default_filename: str = (
         f"C_{series_spec.case_code_in}_{series_spec.case_code_mm}"
         "Metric.kicad_mod"
     )
-    file_path: str = f"{output_path}/{filename}"
+    default_file_path: str = f"{output_path}/{default_filename}"
 
-    with Path.open(file_path, "w", encoding="utf-8") as file_handle:
-        file_handle.write(footprint_content)
+    with Path.open(default_file_path, "w", encoding="utf-8") as file_handle:
+        file_handle.write(default_footprint_content)
+
+    # If the series has value_footprints, generate additional footprints
+    if series_spec.value_footprints:
+        for (
+            _,
+            footprint_name,
+        ) in series_spec.value_footprints.items():
+            if ":" in footprint_name:
+                footprint_part = footprint_name.split(":")[1]
+                parts = footprint_part.replace("C_", "").split("_")
+                if len(parts) >= 2:
+                    case_code_in = parts[0]
+
+                    if case_code_in in FOOTPRINTS_SPECS:
+                        specific_capacitor_specs = FOOTPRINTS_SPECS[
+                            case_code_in
+                        ]
+                        specific_footprint_content: str = generate_footprint(
+                            series_spec, specific_capacitor_specs
+                        )
+
+                        specific_filename: str = f"{footprint_part}.kicad_mod"
+                        specific_file_path: str = (
+                            f"{output_path}/{specific_filename}"
+                        )
+
+                        with Path.open(
+                            specific_file_path, "w", encoding="utf-8"
+                        ) as file_handle:
+                            file_handle.write(specific_footprint_content)
