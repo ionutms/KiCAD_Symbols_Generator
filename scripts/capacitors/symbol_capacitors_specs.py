@@ -1525,9 +1525,9 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
         case_code_in="138x315",
         case_code_mm="3_5x8",
         tolerance_map={"Supercapacitor": {"": "10%"}},
-        value_range={"Supercapacitor": (1, 15)},
-        specified_values=[1, 3, 5, 6, 10, 15],
-        additional_values=[3, 5, 6],
+        value_range={"Supercapacitor": (1, 16)},
+        specified_values=[1, 3, 5, 6, 10, 15, 16],
+        additional_values=[3, 5, 6, 16],
         value_footprints={
             1.0: "capacitor_footprints:C_138x315_H13_5_3_5x8Metric",
             3.0: "capacitor_footprints:C_138x315_H21_3_5x8Metric",
@@ -1535,6 +1535,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             6.0: "capacitor_footprints:C_138x315_H31_3_5x8Metric",
             10.0: "capacitor_footprints:C_197x394_H31_5_5_0x10Metric",
             15.0: "capacitor_footprints:C_197x512_H28_4_5_0x10Metric",
+            16.0: "capacitor_footprints:C_295x630_H28_4_5_0x10Metric",
         },
         value_case_codes_in={
             1.0: "138x315_H13_5",
@@ -1543,6 +1544,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             6.0: "138x315_H31",
             10.0: "197x394_H31_5",
             15.0: "197x512_H28_4",
+            16.0: "295x630_H28_4",
         },
         value_case_codes_mm={
             1.0: "3_5x8",
@@ -1551,6 +1553,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             6.0: "3_5x8",
             10.0: "5_0x10",
             15.0: "5_0x13",
+            16.0: "7_5x16",
         },
         value_3d_models={
             1.0: "capacitor_3d_models:C_138x315_H13_5",
@@ -1559,6 +1562,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             6.0: "capacitor_3d_models:C_138x315_H31",
             10.0: "capacitor_3d_models:C_197x394_H31_5",
             15.0: "capacitor_3d_models:C_197x512_H28_4",
+            16.0: "capacitor_3d_models:C_295x630_H28_4",
         },
         datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
