@@ -1516,7 +1516,7 @@ EATON_ELECTRONICS_DOC_BASE = (
 )
 
 EATON_ELECTRONICS_SYMBOLS_SPECS = {
-    "HV0810-2R7": SeriesSpec(
+    "HV": SeriesSpec(
         mpn_prefix="HV0810-2R7",
         manufacturer="Eaton Electronics",
         footprint="capacitor_footprints:C_138x315_3_5x8Metric",
