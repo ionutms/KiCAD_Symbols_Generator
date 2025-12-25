@@ -253,4 +253,13 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
         ),
         ref_offset_y=-8.89,
     ),
+    "197x492": RadialFootprintSpecs(
+        body_dimensions=RadialBodyDimensions(diameter=12.5),
+        pad_dimensions=RadialPadDimensions(
+            pad_diameter=2.0,
+            drill_size=1.0,
+            pad_distance=2.5,
+        ),
+        ref_offset_y=-7.112,
+    ),
 }

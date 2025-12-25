@@ -1557,8 +1557,8 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
         case_code_mm="3_5x8",
         tolerance_map={"Supercapacitor": {"": "10%"}},
         value_range={"Supercapacitor": (1, 100)},
-        specified_values=[1, 3, 5, 6, 10, 15, 25],
-        additional_values=[3, 5, 6, 25],
+        specified_values=[1, 3, 5, 6, 10, 15, 25, 35],
+        additional_values=[3, 5, 6, 25, 35],
         value_based_mpn_prefix_map={
             (1.0,): "HV0810-2R7",
             (3.0,): "HV0820-2R7",
@@ -1567,6 +1567,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             (10.0,): "HV1030-2R7",
             (15.0,): "HV1325-2R7",
             (25.0,): "HV1625-2R7",
+            (35.0,): "HV1245-2R7",
         },
         value_footprints={
             1.0: "capacitor_footprints:C_138x315_H13_5_3_5x8Metric",
@@ -1576,6 +1577,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             10.0: "capacitor_footprints:C_197x394_H31_5_5_0x10Metric",
             15.0: "capacitor_footprints:C_197x512_H28_4_5_0x10Metric",
             25.0: "capacitor_footprints:C_295x630_H28_4_5_0x10Metric",
+            35.0: "capacitor_footprints:C_197x492_H49_5_0x12_5Metric",
         },
         value_case_codes_in={
             1.0: "138x315_H13_5",
@@ -1585,6 +1587,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             10.0: "197x394_H31_5",
             15.0: "197x512_H28_4",
             25.0: "295x630_H28_4",
+            35.0: "197x492_H49",
         },
         value_case_codes_mm={
             1.0: "3_5x8",
@@ -1594,6 +1597,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             10.0: "5_0x10",
             15.0: "5_0x13",
             25.0: "7_5x16",
+            35.0: "5_0x12_5",
         },
         value_3d_models={
             1.0: "capacitor_3d_models:C_138x315_H13_5",
@@ -1603,6 +1607,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
             10.0: "capacitor_3d_models:C_197x394_H31_5",
             15.0: "capacitor_3d_models:C_197x512_H28_4",
             25.0: "capacitor_3d_models:C_295x630_H28_4",
+            35.0: "capacitor_3d_models:C_197x492_H49",
         },
         datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
