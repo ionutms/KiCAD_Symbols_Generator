@@ -1558,7 +1558,7 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
         tolerance_map={"Supercapacitor": {"": "10%"}},
         value_range={"Supercapacitor": (1, 100)},
         specified_values=[1, 3, 5, 6, 10, 15, 25, 35, 60, 100],
-        additional_values=[3, 5, 6, 25, 35, 60, 100],
+        additional_values=[3, 5, 6, 25, 35, 60],
         value_based_mpn_prefix_map={
             (1,): "HV0810-2R7",
             (3,): "HV0820-2R7",
