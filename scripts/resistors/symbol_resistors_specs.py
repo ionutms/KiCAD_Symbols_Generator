@@ -149,6 +149,8 @@ class PartInfo(NamedTuple):
             """
             return f"{num:g}"
 
+        if resistance < 1:
+            return f"{clean_number(resistance * 1000)} mΩ"
         if resistance >= 1_000_000:  # noqa: PLR2004
             return f"{clean_number(resistance / 1_000_000)} MΩ"
         if resistance >= 1_000:  # noqa: PLR2004
