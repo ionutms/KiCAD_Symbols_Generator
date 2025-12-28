@@ -233,6 +233,10 @@ class PartInfo(NamedTuple):
         if specs.mpn_prefix in ("ERA-2AEB"):
             return cls._generate_era_special_series_code(resistance)
 
+        # Special handling for specific ERA series
+        if specs.mpn_prefix in ("ERJ-B2CF"):
+            return cls._generate_erj_bx_special_series_code(resistance)
+
         # Standard Panasonic/generic resistance code generation
         return cls._generate_standard_resistance_code(resistance)
 
@@ -612,6 +616,28 @@ class PartInfo(NamedTuple):
             significant = round(resistance / 1e5)
             multiplier = "5"
         return f"{significant:02d}{multiplier}"
+
+    @classmethod
+    def _generate_erj_bx_special_series_code(cls, resistance: float) -> str:
+        """Generate resistance code for ERA series.
+
+        Special handling for ERA series with unique resistance code format.
+
+        Args:
+            resistance: Resistance value in ohms
+
+        Returns:
+            The resistance code portion of the manufacturer's part number
+
+        """
+        if resistance < 0.1:
+            result = int(str(resistance).replace(".", ""))
+            return f"R0{result}"
+        if resistance < 1:
+            result = int(resistance * 100)
+            return f"R{result}"
+
+        return f"{resistance}"
 
     @classmethod
     def _generate_standard_resistance_code(cls, resistance: float) -> str:
@@ -1092,6 +1118,30 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         datasheet=(
             "https://industrial.panasonic.com/cdbs/www-data/pdf/"
             "RDN0000/AOA0000C313.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERJ-B2CF": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERJ-B2CF",
+        mpn_sufix="V",
+        footprint="resistor_footprints:R_0612_1632Metric",
+        voltage_rating="",
+        case_code_in="0612",
+        case_code_mm="1632",
+        power_rating="1W",
+        temperature_coefficient="",
+        resistance_range=[0.01, 0.2],
+        specified_values=[
+            *[0.01, 0.013, 0.015, 0.016, 0.018, 0.02, 0.022, 0.024, 0.027],
+            *[0.03, 0.033, 0.036, 0.047, 0.051, 0.056, 0.068, 0.075, 0.082],
+            *[0.1, 0.11, 0.12, 0.13, 0.15, 0.16, 0.18, 0.2],
+        ],
+        extra_values=[0.05],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/RDN0000/"
+            "AOA0000C325.pdf"
         ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
@@ -2090,11 +2140,11 @@ SUSUMU_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
 # Combined specifications dictionary
 SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
     **PANASONIC_SYMBOLS_SPECS,
-    **YAGEO_SYMBOLS_SPECS,
-    **SEI_STACKPOLE_SYMBOLS_SPECS,
-    **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
-    **MURATA_SYMBOLS_SPECS,
-    **BOURNS_SYMBOLS_SPECS,
-    **VISHAY_SYMBOLS_SPECS,
-    **SUSUMU_SYMBOLS_SPECS,
+    # **YAGEO_SYMBOLS_SPECS,
+    # **SEI_STACKPOLE_SYMBOLS_SPECS,
+    # **ROHM_SEMICONDUCTOR_SYMBOLS_SPECS,
+    # **MURATA_SYMBOLS_SPECS,
+    # **BOURNS_SYMBOLS_SPECS,
+    # **VISHAY_SYMBOLS_SPECS,
+    # **SUSUMU_SYMBOLS_SPECS,
 }
