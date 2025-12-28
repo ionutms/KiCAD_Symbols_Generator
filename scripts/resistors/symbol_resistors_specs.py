@@ -234,8 +234,8 @@ class PartInfo(NamedTuple):
             return cls._generate_era_special_series_code(resistance)
 
         # Special handling for specific ERA series
-        if specs.mpn_prefix in ("ERJ-B2CF"):
-            return cls._generate_erj_bx_special_series_code(resistance)
+        if specs.mpn_prefix in ("ERJ-B2CF", "ERJ-B2BF"):
+            return cls._generate_erj_bxcf_special_series_code(resistance)
 
         # Standard Panasonic/generic resistance code generation
         return cls._generate_standard_resistance_code(resistance)
@@ -618,7 +618,7 @@ class PartInfo(NamedTuple):
         return f"{significant:02d}{multiplier}"
 
     @classmethod
-    def _generate_erj_bx_special_series_code(cls, resistance: float) -> str:
+    def _generate_erj_bxcf_special_series_code(cls, resistance: float) -> str:
         """Generate resistance code for ERA series.
 
         Special handling for ERA series with unique resistance code format.
@@ -636,8 +636,12 @@ class PartInfo(NamedTuple):
         if resistance < 1:
             result = int(resistance * 100)
             return f"R{result}"
+        if resistance < 10:
+            whole = int(resistance)
+            decimal = round((resistance - whole) * 10)
+            return f"{whole}R{decimal}"
 
-        return f"{resistance}"
+        return f"R{resistance}"
 
     @classmethod
     def _generate_standard_resistance_code(cls, resistance: float) -> str:
@@ -1138,6 +1142,29 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
             *[0.1, 0.11, 0.12, 0.13, 0.15, 0.16, 0.18, 0.2],
         ],
         extra_values=[0.05],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/RDN0000/"
+            "AOA0000C325.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERJ-B2BF": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERJ-B2BF",
+        mpn_sufix="V",
+        footprint="resistor_footprints:R_0612_1632Metric",
+        voltage_rating="",
+        case_code_in="0612",
+        case_code_mm="1632",
+        power_rating="1W",
+        temperature_coefficient="",
+        resistance_range=[0.22, 9.1],
+        specified_values=[
+            *[0.22, 0.24, 0.33, 0.39, 0.51, 0.62, 0.68, 0.75, 0.82, 0.91],
+            *[1, 1.1, 1.2, 1.3, 1.5, 1.8, 2, 2.2, 2.4, 2.7, 3, 3.3, 3.6],
+            *[4.3, 4.7, 5.1, 6.2, 6.8, 7.5, 8.2, 9.1],
+        ],
         tolerance_map={"E24": "1%"},
         datasheet=(
             "https://industrial.panasonic.com/cdbs/www-data/pdf/RDN0000/"
