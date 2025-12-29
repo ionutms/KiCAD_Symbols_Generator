@@ -324,6 +324,15 @@ class PartInfo(NamedTuple):
             resistance: Resistance value in ohms
 
         """
+        if resistance < 0.01:  # noqa: PLR2004
+            whole = int(resistance * 1000)
+            decimal = round((resistance * 1000 - whole) * 100)
+            return f"{whole}L{decimal:03d}"
+
+        if resistance < 0.1:  # noqa: PLR2004
+            whole = int(resistance * 10000)
+            return f"R0{whole}"
+
         if resistance < 10:  # noqa: PLR2004
             whole = int(resistance)
             decimal = round((resistance - whole) * 100)
@@ -2136,6 +2145,28 @@ VISHAY_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         specified_values=[10_000, 22_000, 33_000, 47_000, 330_000],
         tolerance_map={"E24": "5%"},
         datasheet=("https://www.vishay.com/docs/29044/ntcs0805e3t.pdf"),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "WFCP0612": SeriesSpec(
+        manufacturer="Vishay",
+        mpn_prefix="WFCP0612",
+        mpn_sufix="FE66",
+        footprint="resistor_footprints:R_0612_1632Metric",
+        voltage_rating="",
+        case_code_in="0612",
+        case_code_mm="1632",
+        power_rating="1W",
+        temperature_coefficient="",
+        resistance_range=[0.006, 0.03],
+        specified_values=[
+            *[0.006, 0.007, 0.008, 0.009, 0.01, 0.012, 0.015, 0.018, 0.02],
+            *[0.024, 0.03],
+        ],
+        tolerance_map={"E24": "1%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/RDN0000/"
+            "AOA0000C325.pdf"
+        ),
         trustedparts_url="https://www.trustedparts.com/en/search/",
     ),
 }
