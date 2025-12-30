@@ -59,6 +59,9 @@ def generate_footprint(
         thermal_pad_center_y = specs.pad_dimensions.thermal_pad_center_y
         thermal_pad_numbers = specs.pad_dimensions.thermal_pad_numbers
         pad_numbers = specs.pad_dimensions.pad_numbers
+        solid_pad_numbers = (
+            getattr(specs.pad_dimensions, "solid_pad_numbers", []) or []
+        )
 
         thermal_pad = (
             footprint_utils.generate_thermal_pad(
@@ -67,6 +70,7 @@ def generate_footprint(
                 thermal_pad_center_x,
                 thermal_pad_center_y,
                 thermal_pad_numbers,
+                solid_pad_numbers,
             )
             if part_info.package not in ("SOT-26")
             else ""
@@ -86,6 +90,8 @@ def generate_footprint(
                 pad_pitch_y,
                 pins_per_side,
                 pad_numbers,
+                reverse_pin_numbering=False,
+                solid_pad_numbers=solid_pad_numbers,
             ),
             thermal_pad,
             footprint_utils.associate_3d_model(
@@ -205,6 +211,7 @@ def generate_zig_zag_pads(specs: FootprintSpecs) -> str:
 
     """
     pad_props = specs.pad_dimensions
+    solid_pad_numbers = getattr(pad_props, "solid_pad_numbers", []) or []
 
     pads = []
 
@@ -213,12 +220,18 @@ def generate_zig_zag_pads(specs: FootprintSpecs) -> str:
     pin_numbers = generate_pin_numbers(1, specs.pin_count)
 
     for pin_index, pin_number in enumerate(pin_numbers):
+        zone_connect = (
+            " (zone_connect 2)"
+            if int(pin_number) in solid_pad_numbers
+            else ""
+        )
         pad = f"""
             (pad "{pin_number}" smd roundrect
                 (at {x_pos[pin_index]} {y_pos[pin_index]})
                 (size {pad_props.width} {pad_props.height})
                 (layers "F.Cu" "F.Paste" "F.Mask")
                 (roundrect_rratio 0.25)
+                {zone_connect}
                 (uuid "{uuid4()}")
             )
             """

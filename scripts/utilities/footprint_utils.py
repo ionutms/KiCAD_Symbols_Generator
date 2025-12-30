@@ -185,8 +185,8 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
     # Horizontal line
     horizontal_line = f"""
         (fp_line
-            (start {x - line_length/2} {y})
-            (end {x + line_length/2} {y})
+            (start {x - line_length / 2} {y})
+            (end {x + line_length / 2} {y})
             (stroke (width {line_width}) (type solid))
             (layer "F.SilkS")
             (uuid "{uuid4()}")
@@ -196,8 +196,8 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
     # Vertical line
     vertical_line = f"""
         (fp_line
-            (start {x} {y - line_length/2})
-            (end {x} {y + line_length/2})
+            (start {x} {y - line_length / 2})
+            (end {x} {y + line_length / 2})
             (stroke (width {line_width}) (type solid))
             (layer "F.SilkS")
             (uuid "{uuid4()}")
@@ -225,8 +225,8 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
     # Horizontal line
     horizontal_line = f"""
         (fp_line
-            (start {x - line_length/2} {y})
-            (end {x + line_length/2} {y})
+            (start {x - line_length / 2} {y})
+            (end {x + line_length / 2} {y})
             (stroke (width {line_width}) (type default))
             (fill none)
             (layer "F.Fab")
@@ -237,8 +237,8 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
     # Vertical line
     vertical_line = f"""
         (fp_line
-            (start {x} {y - line_length/2})
-            (end {x} {y + line_length/2})
+            (start {x} {y - line_length / 2})
+            (end {x} {y + line_length / 2})
             (stroke (width {line_width}) (type default))
             (fill none)
             (layer "F.Fab")
@@ -704,6 +704,7 @@ def generate_pads(  # noqa: D417, PLR0913
     pins_per_side: int = 1,
     pin_numbers: list = None,  # noqa: RUF013
     reverse_pin_numbering: bool = False,  # noqa: FBT001, FBT002
+    solid_pad_numbers: list[int] | None = None,  # noqa: RUF013
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -714,6 +715,8 @@ def generate_pads(  # noqa: D417, PLR0913
         pad_pitch_y: Distance between adjacent pads
         pins_per_side: Number of pins on each side
         pin_numbers: List of custom pin numbers
+        solid_pad_numbers:
+            List of pad numbers that should have solid connection to zones
 
     Returns:
         str: KiCad formatted pad definitions
@@ -741,13 +744,23 @@ def generate_pads(  # noqa: D417, PLR0913
         )
         raise ValueError(msg)
 
+    # Default to empty list if solid_pad_numbers is None
+    if solid_pad_numbers is None:
+        solid_pad_numbers = []
+
     for (x_pos, y_pos), pad_number in zip(pad_positions, pin_numbers):
+        zone_connect = (
+            " (zone_connect 2)"
+            if int(pad_number) in solid_pad_numbers
+            else ""
+        )
         pads.append(f"""
             (pad "{pad_number}" smd roundrect
                 (at {x_pos} {y_pos})
                 (size {pad_width} {pad_height})
                 (layers "F.Cu" "F.Paste" "F.Mask")
                 (roundrect_rratio 0.25)
+                {zone_connect}
                 (uuid "{uuid4()}")
             )
             """)
@@ -761,6 +774,7 @@ def generate_thermal_pad(
     pad_x: float | list[float],
     pad_y: list[float],
     thermal_pad_numbers: list[int],
+    solid_pad_numbers: list[int] | None = None,  # noqa: RUF013
 ) -> str:
     """Generate the thermal pads section of the footprint.
 
@@ -770,6 +784,8 @@ def generate_thermal_pad(
         pad_x: X-coordinate(s) of the thermal pad(s)
         pad_y: List of Y-coordinates of the thermal pads
         thermal_pad_numbers: List of thermal pad numbers
+        solid_pad_numbers:
+            List of pad numbers that should have solid connection to zones
 
     Returns:
         str: KiCad formatted thermal pad definitions
@@ -783,18 +799,27 @@ def generate_thermal_pad(
     if isinstance(pad_x, (int, float)):
         pad_x = [pad_x] * len(thermal_pad_numbers)
 
-    pads = [
-        f"""
+    # Default to empty list if solid_pad_numbers is None
+    if solid_pad_numbers is None:
+        solid_pad_numbers = []
+
+    pads = []
+    for index, pad_number in enumerate(thermal_pad_numbers):
+        zone_connect = (
+            " (zone_connect 2)"
+            if int(pad_number) in solid_pad_numbers
+            else ""
+        )
+        pads.append(f"""
         (pad "{pad_number}" smd roundrect
             (at {pad_x[index]} {pad_y[index]})
             (size {pad_width[index]} {pad_heigh[index]})
             (layers "F.Cu" "F.Paste" "F.Mask")
             (roundrect_rratio 0.05)
+            {zone_connect}
             (uuid "{uuid4()}")
         )
-        """
-        for index, pad_number in enumerate(thermal_pad_numbers)
-    ]
+        """)
 
     return "\n".join(pads)
 

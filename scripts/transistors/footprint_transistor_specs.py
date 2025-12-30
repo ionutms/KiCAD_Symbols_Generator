@@ -70,6 +70,8 @@ class PadDimensionsAsymmetric(NamedTuple):
             The y-coordinates of the centers of the thermal pads.
         thermal_pad_numbers: The pad numbers for the thermal pads.
         pad_numbers: The pad numbers for the regular pads.
+        solid_pad_numbers:
+            The pad numbers that should have solid connection to zones.
 
 
     """
@@ -85,6 +87,7 @@ class PadDimensionsAsymmetric(NamedTuple):
     thermal_pad_center_x: list[float] | None = None
     thermal_pad_center_y: list[float] | None = None
     thermal_pad_numbers: list[int] | None = None
+    solid_pad_numbers: list[int] | None = None
 
 
 class FootprintSpecs(NamedTuple):
@@ -122,6 +125,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             thermal_pad_center_y=[0],
             thermal_pad_numbers=[5],
             pad_numbers=[1, 2, 3, 4, 5, 5, 5, 5],
+            solid_pad_numbers=[5],
         ),
         ref_offset_y=-2.5,
     ),
