@@ -510,6 +510,12 @@ REPO_CONFIGS = [
         "is_main": False,
         "has_project_links": True,
     },
+    {
+        "name": "Supercap_Bank",
+        "colors": ["#2A9D8F", "#FF9F1C"],
+        "is_main": False,
+        "has_project_links": True,
+    },
 ]
 
 MAIN_REPO = next(repo for repo in REPO_CONFIGS if repo["is_main"])
