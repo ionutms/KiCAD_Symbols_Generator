@@ -238,6 +238,23 @@ def create_project_links(
             )
         )
 
+    # Add internal app page link for Minimal_LTC3350
+    if project_name == "Minimal_LTC3350":
+        links.append(
+            html.A(
+                "LTC3350 Interactive Calculator",
+                href="/ltc3350_interactive_calculator",
+                target="_self",
+            )
+        )
+        links.append(
+            html.A(
+                "LTC3350 Analysis (Binder)",
+                href="https://hub.bids.mybinder.org/user/ionutms-ltc3350-tive_calculator-t5f4tkc5/doc/workspaces/auto-I/tree/LTC3350_Analysis.ipynb",
+                target="_blank",
+            )
+        )
+
     modal = dbc.Modal(
         [
             dbc.ModalBody(

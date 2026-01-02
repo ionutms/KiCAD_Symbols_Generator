@@ -151,6 +151,9 @@ def update_links_store(
 
     links = []
     for page in dash.page_registry.values():
+        if page.get("exclude_from_nav"):
+            continue
+
         name = page["name"]
         module_path = page.get("module", "")
 
