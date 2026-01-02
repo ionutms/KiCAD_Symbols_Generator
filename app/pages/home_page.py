@@ -250,7 +250,7 @@ def create_project_links(
         links.append(
             html.A(
                 "LTC3350 Analysis (Binder)",
-                href="https://hub.bids.mybinder.org/user/ionutms-ltc3350-tive_calculator-t5f4tkc5/doc/workspaces/auto-I/tree/LTC3350_Analysis.ipynb",
+                href="https://mybinder.org/v2/gh/ionutms/LTC3350_Interactive_Calculator/main?urlpath=%2Fdoc%2Ftree%2FLTC3350_Analysis.ipynb",
                 target="_blank",
             )
         )
