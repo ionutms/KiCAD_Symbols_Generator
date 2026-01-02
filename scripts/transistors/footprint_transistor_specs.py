@@ -308,6 +308,7 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
             thermal_pad_center_y=[-0.325, 0.668],
             thermal_pad_numbers=[6, 7],
             pad_numbers=[1, 2, 3, 4, 5, 6],
+            solid_pad_numbers=[1, 2, 4, 5, 6, 7],
         ),
         ref_offset_y=-2.032,
     ),
