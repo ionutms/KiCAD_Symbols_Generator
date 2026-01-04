@@ -23,14 +23,6 @@ register_page(
     **{"exclude_from_nav": True},
 )
 
-formula_markdown_style = {
-    "display": "flex",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "width": "98%",
-    "margin": "2px auto",
-}
-
 paragraph_1 = dcc.Markdown(
     "When choosing the capacitance needed the condition of the "
     "supercapacitor at end of life (EOL) needs to be considered."
@@ -63,7 +55,7 @@ formula_c_end_of_life = html.Div(
             mathjax=True,
         )
     ],
-    style=formula_markdown_style,
+    className="formula-container",
 )
 
 

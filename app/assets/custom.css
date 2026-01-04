@@ -1,0 +1,42 @@
+.formula-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    padding: 2px 0;
+}
+
+.formula-container .katex-display {
+    margin: 0 !important;
+}
+
+/* Scale formula based on viewport width - adjusted for better readability */
+@media (max-width: 1200px) {
+    .formula-container {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 992px) {
+    .formula-container {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .formula-container {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 576px) {
+    .formula-container {
+        font-size: 0.65em;
+    }
+}
+
+@media (max-width: 400px) {
+    .formula-container {
+        font-size: 0.55em;
+    }
+}
