@@ -42,7 +42,6 @@ paragraph_3 = dcc.Markdown(
     "can be calculated by the following equation:"
 )
 
-# Create a Div for the formula with centered layout
 formula_c_end_of_life = html.Div(
     [
         dcc.Markdown(
@@ -52,6 +51,164 @@ formula_c_end_of_life = html.Div(
             \left[\alpha_B + \sqrt{\alpha_B} -
             (1-\alpha_B)\log\left(\frac{1+\sqrt{\alpha_B}}
             {\sqrt{1-\sqrt{\alpha_B}}}\right)\right]^{-1} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_4 = dcc.Markdown(
+    "Where $\\pmb{\\eta}$ represents the boost efficiency, "
+    "$\\pmb{n}$ represents the number of capacitors in the stack.",
+    mathjax=True,
+)
+
+paragraph_5 = dcc.Markdown(
+    "Since the backup time and backup power are known, the next item that "
+    "needs to be determined is the maximum voltage to be applied to the "
+    "capacitor $\\pmb{V_{CELL(MAX)}}$ to provide the "
+    "maximum life expectancy for the application.",
+    mathjax=True,
+)
+
+paragraph_6 = dcc.Markdown(
+    "The maximum capacitor ESR at end of life can then be determined below:"
+)
+
+formula_esr_end_of_life = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ ESR_{EOL} = \frac{\eta \cdot (1-\alpha_B) \cdot n
+            \cdot V_{CELL(MAX)}^2}{4 \cdot P_{BACKUP}} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_7 = dcc.Markdown(
+    "Now the EOL parameters are known, the capacitor can be chosen based on "
+    "the manufacture capacitor specification for EOL."
+)
+
+paragraph_8 = dcc.Markdown(
+    "To verify the capacitors are adequate at EOL we first need to determine "
+    "the minimum stack voltage ($\\pmb{V_{CELL(MIN)}}$) at "
+    "EOL. $\\pmb{V_{CELL(MIN)}}$ will be limited by either "
+    "the maximum power transfer rule or by current limit, "
+    "*whichever is greater*.",
+    mathjax=True,
+)
+
+paragraph_9 = dcc.Markdown(
+    "The minimum capacitor voltage due to the maximum power transfer rule "
+    "can be calculated with the following formula:"
+)
+
+formula_v_stk_min_at_max_power = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{STK(MIN)} = \sqrt{\frac{4 \cdot ESR_{EOL} \cdot n
+            \cdot P_{BACKUP}}{\eta}} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_10 = dcc.Markdown(
+    "$\\pmb{V_{STK(MIN)}}$ can also be determined by the "
+    "current limit and the $\\pmb{ESR_{EOL}}$ as shown in "
+    "the following equation:",
+    mathjax=True,
+)
+
+formula_v_stk_min_at_crt_lim = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{STK(MIN)} = {\frac{P_{BACKUP}}{\eta \cdot I_{LMAX}}}
+            + n \cdot ESR_{EOL} \cdot I_{LMAX} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_11 = dcc.Markdown(
+    "Where $\\pmb{I_{LMAX}}$ is the boost peak current limit.",
+    mathjax=True,
+)
+
+paragraph_12 = dcc.Markdown(
+    "The calculated $\\pmb{V_{STK(MIN)}}$ can be used to "
+    "determine if the chosen capacitor will be sufficient for worst case EOL "
+    "conditions, when both $\\pmb{ESR_{EOL}}$ and "
+    "$\\pmb{C_{EOL}}$ have been reached.",
+    mathjax=True,
+)
+
+formula_t_backup = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ t_{BACKUP} = \frac{\eta \cdot C_{STK}}
+            {4 \cdot P_{BACKUP}} \cdot
+            \left[\gamma_{(MAX)} \cdot V_{STK(MAX)}^2 -
+            \gamma_{(MIN)} \cdot V_{STK(MIN)}^2 - V_{LOSS}^2\right] $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_13 = dcc.Markdown(
+    "Where $\\pmb{C_{STK}}$ is the total stack capacitance, "
+    "$\\pmb{V_{STK(MIN)}}$ is based on the higher calculated "
+    "$\\pmb{V_{STK(MIN)}}$,",
+    mathjax=True,
+)
+
+formula_gamma_max = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ \gamma_{(MAX)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
+            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MAX)}^2}} \text{ , } $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+formula_gamma_min = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ \gamma_{(MIN)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
+            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MIN)}^2}} \text{ and } $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+formula_v_square_loss = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{LOSS}^2 = \frac{4 \cdot n \cdot ESR_{EOL} P_{BACKUP}}
+            {\eta} \cdot \log{\left(\frac{\gamma_{(MAX)} \cdot V_{STK(MAX)}}
+            {\gamma_{(MIN)} \cdot V_{STK(MIN)}}\right)} $$
             """,
             mathjax=True,
         )
@@ -87,6 +244,23 @@ def layout() -> html.Div:
             paragraph_2,
             paragraph_3,
             formula_c_end_of_life,
+            paragraph_4,
+            paragraph_5,
+            paragraph_6,
+            formula_esr_end_of_life,
+            paragraph_7,
+            paragraph_8,
+            paragraph_9,
+            formula_v_stk_min_at_max_power,
+            paragraph_10,
+            formula_v_stk_min_at_crt_lim,
+            paragraph_11,
+            paragraph_12,
+            formula_t_backup,
+            paragraph_13,
+            formula_gamma_max,
+            formula_gamma_min,
+            formula_v_square_loss,
         ],
         className="p-4",
     )

@@ -1,9 +1,22 @@
+/* Very compact paragraph spacing */
+.p-4 p {
+    margin-bottom: 0.1rem;
+    margin-top: 0;
+}
+
+/* Very compact spacing for Markdown components */
+.p-4>div {
+    margin-bottom: 0.1rem;
+}
+
 .formula-container {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     width: 100%;
     padding: 2px 0;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
 }
 
 .formula-container .katex-display {
