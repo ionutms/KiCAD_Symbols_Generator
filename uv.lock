@@ -174,6 +174,15 @@ wheels = [
 ]
 
 [[package]]
+name = "forallpeople"
+version = "2.7.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/a4/472da01db5a6f22696f913499b25ab4f8999220b4feed87f0424084ce1a6/forallpeople-2.7.1.tar.gz", hash = "sha256:cc46bcf0a468df5868113b8eb00191cfc8cc42103506aaa58e38237debcdb982", size = 851994, upload-time = "2024-12-01T21:13:26.422Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2c/0f/bd1a37730538268ae350c3481f8ce9786b345617b1b929ebd82a87999021/forallpeople-2.7.1-py2.py3-none-any.whl", hash = "sha256:9b8abf690c508672fac0a48a53463f091f2df8709c6bd3ba2fd4840136a0e7d3", size = 40758, upload-time = "2024-12-01T21:13:24.631Z" },
+]
+
+[[package]]
 name = "gunicorn"
 version = "23.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -238,6 +247,7 @@ dependencies = [
     { name = "dash-ag-grid" },
     { name = "dash-bootstrap-components" },
     { name = "dash-bootstrap-templates" },
+    { name = "forallpeople" },
     { name = "gunicorn" },
     { name = "pandas" },
 ]
@@ -255,6 +265,7 @@ requires-dist = [
     { name = "dash-ag-grid", specifier = ">=32.3.1" },
     { name = "dash-bootstrap-components", specifier = ">=2.0.3" },
     { name = "dash-bootstrap-templates", specifier = ">=2.1.0" },
+    { name = "forallpeople", specifier = ">=2.7.1" },
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "pandas", specifier = ">=2.3.1" },
 ]

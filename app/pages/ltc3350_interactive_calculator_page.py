@@ -10,7 +10,7 @@ Attributes:
 
 """
 
-from dash import html, register_page
+from dash import dcc, html, register_page
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
@@ -21,6 +21,51 @@ register_page(
     path="/ltc3350_interactive_calculator",
     order=99,
     **{"exclude_from_nav": True},
+)
+
+formula_markdown_style = {
+    "display": "flex",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "width": "98%",
+    "margin": "2px auto",
+}
+
+paragraph_1 = dcc.Markdown(
+    "When choosing the capacitance needed the condition of the "
+    "supercapacitor at end of life (EOL) needs to be considered."
+)
+
+paragraph_2 = dcc.Markdown(
+    "The number of capacitors in the stack also needs to be chosen plus the "
+    "Utilization Factor (<strong>&alpha;<sub>B</sub></strong>). "
+    "<strong>&alpha;<sub>B</sub></strong> is the amount of energy in the "
+    "capacitor to be used for backup. "
+    "A typical <strong>&alpha;<sub>B</sub></strong> is 80%, "
+    "but a conservative &alpha;<sub>B</sub> of 70% can be used.",
+    dangerously_allow_html=True,
+)
+
+paragraph_3 = dcc.Markdown(
+    "The minimum capacitance required for each capacitor in the stack at EOL "
+    "can be calculated by the following equation:"
+)
+
+# Create a Div for the formula with centered layout
+formula_c_end_of_life = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ C_{EOL} = \frac{4 \cdot P_{BACKUP} \cdot t_{BACKUP}}
+            {n \cdot \eta \cdot V_{CELL(MAX)}^2} \cdot
+            \left[\alpha_B + \sqrt{\alpha_B} -
+            (1-\alpha_B)\log\left(\frac{1+\sqrt{\alpha_B}}
+            {\sqrt{1-\sqrt{\alpha_B}}}\right)\right]^{-1} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    style=formula_markdown_style,
 )
 
 
@@ -47,7 +92,10 @@ def layout() -> html.Div:
                 ],
                 className="d-flex align-items-center mb-4",
             ),
-            html.P("This is an interactive calculator for the LTC3350 IC. "),
+            paragraph_1,
+            paragraph_2,
+            paragraph_3,
+            formula_c_end_of_life,
         ],
         className="p-4",
     )
