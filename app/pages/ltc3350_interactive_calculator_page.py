@@ -38,12 +38,10 @@ paragraph_1 = dcc.Markdown(
 
 paragraph_2 = dcc.Markdown(
     "The number of capacitors in the stack also needs to be chosen plus the "
-    "Utilization Factor (<strong>&alpha;<sub>B</sub></strong>). "
-    "<strong>&alpha;<sub>B</sub></strong> is the amount of energy in the "
-    "capacitor to be used for backup. "
-    "A typical <strong>&alpha;<sub>B</sub></strong> is 80%, "
-    "but a conservative &alpha;<sub>B</sub> of 70% can be used.",
-    dangerously_allow_html=True,
+    "Utilization Factor ($\\alpha_B$). $\\alpha_B$ is the amount of energy "
+    "in the capacitor to be used for backup. A typical $\\alpha_B$ is 80%, "
+    "but a conservative $\\alpha_B$ of 70% can be used.",
+    mathjax=True,
 )
 
 paragraph_3 = dcc.Markdown(
