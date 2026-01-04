@@ -1,12 +1,13 @@
 """LTC3350 Interactive Calculator Page.
 
-This module contains the layout for the LTC3350 Interactive Calculator
-page of the Dash web application. It serves as a calculator tool
-for the LTC3350 project.
+This module contains the layout for the LTC3350 Interactive
+Calculator page of the Dash web application. It provides a
+documentation page with formulas and explanations for capacitor
+calculations, ESR analysis, and backup time verification.
 
-Attributes:
-    link_name (str): The name of the page link.
-    module_name (str): The name of the module.
+The page uses a responsive multi-column layout system that adapts
+to different screen sizes, displaying technical content alongside
+mathematical formulas.
 
 """
 
@@ -23,23 +24,112 @@ register_page(
     **{"exclude_from_nav": True},
 )
 
+
+def create_section(*columns, column_widths=None, responsive_breakpoint="lg"):
+    """Create a responsive section with multiple columns.
+
+    All columns are treated equally - content is always wrapped
+    in a list for consistent handling, regardless of position.
+
+    Args:
+        *columns: Variable number of content items. Each can be:
+                  - A single component (will be wrapped in list)
+                  - A list of components (used as-is)
+        column_widths: List of column widths for each column
+                       (default: equal distribution)
+                       Can be integers (1-12) or tuples for
+                       responsive widths
+                       Examples: [6, 6], [(12, 6), (12, 6)],
+                       [4, 4, 4]
+        responsive_breakpoint: Bootstrap breakpoint for responsive
+                               behavior. Options: 'sm', 'md', 'lg',
+                               'xl', 'xxl' (default: 'lg')
+
+    Returns:
+        html.Div: Responsive row container with specified columns
+
+    """
+    if not columns:
+        return html.Div(className="row mb-4")
+
+    num_columns = len(columns)
+
+    # Determine column widths
+    if column_widths is None:
+        # Equal distribution
+        width_per_column = 12 // num_columns
+        column_widths = [width_per_column] * num_columns
+
+    # Validate column widths
+    if len(column_widths) != num_columns:
+        raise ValueError(
+            f"Number of column_widths ({len(column_widths)}) "
+            f"must match number of columns ({num_columns})"
+        )
+
+    # Create column divs
+    column_divs = []
+    for idx, (content, width) in enumerate(zip(columns, column_widths)):
+        # ALWAYS normalize content to list for consistent handling
+        if not isinstance(content, list):
+            content = [content]
+
+        # Handle responsive widths
+        if isinstance(width, tuple):
+            mobile_width, desktop_width = width
+            col_class = (
+                f"col-{mobile_width} "
+                f"col-{responsive_breakpoint}-{desktop_width}"
+            )
+        else:
+            col_class = f"col-12 col-{responsive_breakpoint}-{width}"
+
+        # Add spacing classes
+        spacing_class = "mb-3" if idx < num_columns - 1 else ""
+        spacing_class += (
+            f" mb-{responsive_breakpoint}-0" if idx < num_columns - 1 else ""
+        )
+
+        column_divs.append(
+            html.Div(
+                content,
+                className=f"{col_class} {spacing_class}".strip(),
+            )
+        )
+
+    return html.Div(
+        column_divs,
+        className="row mb-4",
+    )
+
+
+# Content components
 paragraph_1 = dcc.Markdown(
     "When choosing the capacitance needed the condition of the "
     "supercapacitor at end of life (EOL) needs to be considered."
 )
 
 paragraph_2 = dcc.Markdown(
-    "The number of capacitors in the stack also needs to be chosen plus the "
-    "Utilization Factor ($\\pmb{\\alpha_B}$). $\\pmb{\\alpha_B}$ is the "
-    "amount of energy in the capacitor to be used for backup. "
-    "A typical $\\pmb{\\alpha_B}$ is 80%, but a conservative "
-    "$\\pmb{\\alpha_B}$ of 70% can be used.",
+    "Since the backup time and backup power are known, the next "
+    "item that needs to be determined is the maximum voltage to "
+    "be applied to the capacitor $\\pmb{V_{CELL(MAX)}}$ to "
+    "provide the maximum life expectancy for the application.",
     mathjax=True,
 )
 
 paragraph_3 = dcc.Markdown(
-    "The minimum capacitance required for each capacitor in the stack at EOL "
-    "can be calculated by the following equation:"
+    "The number of capacitors in the stack also needs to be "
+    "chosen plus the Utilization Factor ($\\pmb{\\alpha_B}$). "
+    "$\\pmb{\\alpha_B}$ is the amount of energy in the "
+    "capacitor to be used for backup. A typical "
+    "$\\pmb{\\alpha_B}$ is 80%, but a conservative "
+    "$\\pmb{\\alpha_B}$ of 70% can be used.",
+    mathjax=True,
+)
+
+paragraph_4 = dcc.Markdown(
+    "The minimum capacitance required for each capacitor in the "
+    "stack at EOL can be calculated by the following equation:"
 )
 
 formula_c_end_of_life = html.Div(
@@ -58,17 +148,9 @@ formula_c_end_of_life = html.Div(
     className="formula-container",
 )
 
-paragraph_4 = dcc.Markdown(
-    "Where $\\pmb{\\eta}$ represents the boost efficiency, "
-    "$\\pmb{n}$ represents the number of capacitors in the stack.",
-    mathjax=True,
-)
-
 paragraph_5 = dcc.Markdown(
-    "Since the backup time and backup power are known, the next item that "
-    "needs to be determined is the maximum voltage to be applied to the "
-    "capacitor $\\pmb{V_{CELL(MAX)}}$ to provide the "
-    "maximum life expectancy for the application.",
+    "Where $\\pmb{\\eta}$ represents the boost efficiency, $\\pmb{n}$ "
+    "represents the number of capacitors in the stack.",
     mathjax=True,
 )
 
@@ -96,16 +178,15 @@ paragraph_7 = dcc.Markdown(
 
 paragraph_8 = dcc.Markdown(
     "To verify the capacitors are adequate at EOL we first need to determine "
-    "the minimum stack voltage ($\\pmb{V_{CELL(MIN)}}$) at "
-    "EOL. $\\pmb{V_{CELL(MIN)}}$ will be limited by either "
-    "the maximum power transfer rule or by current limit, "
-    "*whichever is greater*.",
+    "the minimum stack voltage ($\\pmb{V_{CELL(MIN)}}$) at EOL. "
+    "$\\pmb{V_{CELL(MIN)}}$ will be limited by either the maximum power "
+    "transfer rule or by current limit, *whichever is greater*.",
     mathjax=True,
 )
 
 paragraph_9 = dcc.Markdown(
-    "The minimum capacitor voltage due to the maximum power transfer rule "
-    "can be calculated with the following formula:"
+    "The minimum capacitor voltage due to the maximum power "
+    "transfer rule can be calculated with the following formula:"
 )
 
 formula_v_stk_min_at_max_power = html.Div(
@@ -147,10 +228,9 @@ paragraph_11 = dcc.Markdown(
 )
 
 paragraph_12 = dcc.Markdown(
-    "The calculated $\\pmb{V_{STK(MIN)}}$ can be used to "
-    "determine if the chosen capacitor will be sufficient for worst case EOL "
-    "conditions, when both $\\pmb{ESR_{EOL}}$ and "
-    "$\\pmb{C_{EOL}}$ have been reached.",
+    "The calculated $\\pmb{V_{STK(MIN)}}$ can be used to determine if the "
+    "chosen capacitor will be sufficient for worst case EOL conditions, "
+    "when both $\\pmb{ESR_{EOL}}$ and $\\pmb{C_{EOL}}$ have been reached.",
     mathjax=True,
 )
 
@@ -221,7 +301,7 @@ def layout() -> html.Div:
     """Define the page layout.
 
     Returns:
-        html.Div: The layout for the Minimal LTC3350 Project page
+        html.Div: The layout for the LTC3350 Calculator page
 
     """
     return html.Div(
@@ -235,32 +315,55 @@ def layout() -> html.Div:
                     html.A(
                         "Return Home",
                         href="/",
-                        className="text-decoration-none text-primary fw-bold",
+                        className=(
+                            "text-decoration-none text-primary fw-bold"
+                        ),
                     ),
                 ],
                 className="d-flex align-items-center mb-4",
             ),
-            paragraph_1,
-            paragraph_2,
-            paragraph_3,
-            formula_c_end_of_life,
-            paragraph_4,
-            paragraph_5,
-            paragraph_6,
-            formula_esr_end_of_life,
-            paragraph_7,
-            paragraph_8,
-            paragraph_9,
-            formula_v_stk_min_at_max_power,
-            paragraph_10,
-            formula_v_stk_min_at_crt_lim,
-            paragraph_11,
-            paragraph_12,
-            formula_t_backup,
-            paragraph_13,
-            formula_gamma_max,
-            formula_gamma_min,
-            formula_v_square_loss,
+            create_section([paragraph_1, paragraph_2, paragraph_3]),
+            html.Hr(className="my-2"),
+            html.H3("Capacitance Calculation at EOL", className="mb-2"),
+            create_section(
+                [paragraph_4, paragraph_5],
+                [formula_c_end_of_life],
+                column_widths=[5, 7],
+            ),
+            html.Hr(className="my-2"),
+            html.H3("ESR Calculation at EOL", className="mb-2"),
+            create_section(
+                [paragraph_6, paragraph_7],
+                [formula_esr_end_of_life],
+                column_widths=[5, 7],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                "Minimum Stack Voltage Verification",
+                className="mb-2",
+            ),
+            create_section([paragraph_8]),
+            create_section(
+                [paragraph_9],
+                [paragraph_10],
+            ),
+            create_section(
+                [formula_v_stk_min_at_max_power],
+                [formula_v_stk_min_at_crt_lim, paragraph_11],
+            ),
+            create_section([paragraph_12]),
+            html.Hr(className="my-2"),
+            html.H3("Backup Time Calculation", className="mb-2"),
+            create_section(
+                [formula_t_backup, paragraph_13],
+                [
+                    formula_gamma_max,
+                    formula_gamma_min,
+                    formula_v_square_loss,
+                ],
+                column_widths=[7, 5],
+            ),
+            html.Hr(className="my-2"),
         ],
-        className="p-4",
+        className="container-fluid p-4",
     )
