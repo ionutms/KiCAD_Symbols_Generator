@@ -415,8 +415,8 @@ interactive_calculator = html.Div([
     html.Hr(className="my-2"),
     html.Div([
         html.Div(
-            id="c_eol_output",
-            style={"fontSize": "1.2em"},
+            id="calculated_values",
+            style={"fontSize": "1.1em"},
         ),
     ]),
     html.Hr(className="my-2"),
@@ -424,7 +424,7 @@ interactive_calculator = html.Div([
 
 
 @callback(
-    Output("c_eol_output", "children"),
+    Output("calculated_values", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -440,13 +440,13 @@ def calculate_values(
     v_cell_max_slider_value,
     alpha_b_slider_value,
 ):
-    """TODO."""
+    """Calculate C_EOL and ESR_EOL based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
-    t_BACKUP = t_backup_slider_value * si.s
+    t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
 
     C_EOL = (
-        (4 * p_backup * t_BACKUP)
+        (4 * p_backup * t_backup)
         / (n_slider_value * eta_slider_value * (v_cell_max**2))
     ) * (
         (
@@ -461,7 +461,30 @@ def calculate_values(
         ** -1
     )
 
-    return dcc.Markdown(f"$C_{{EOL}}$ = {C_EOL}", mathjax=True)
+    ESR_EOL = (
+        eta_slider_value
+        * (1 - alpha_b_slider_value)
+        * n_slider_value
+        * (v_cell_max**2)
+    ) / (4 * p_backup)
+
+    return html.Div(
+        [
+            html.Div(
+                [
+                    dcc.Markdown(f"$C_{{EOL}}$ = {C_EOL}", mathjax=True),
+                ],
+                className="col-12 col-md-2",
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(f"$ESR_{{EOL}}$ = {ESR_EOL}", mathjax=True),
+                ],
+                className="col-12 col-md-2",
+            ),
+        ],
+        className="row",
+    )
 
 
 def layout() -> html.Div:
