@@ -479,6 +479,7 @@ def calculate_values(
     v_cell_max = v_cell_max_slider_value * si.V
     r_snsc_slider = r_snsc_slider_value * si.Ohm
     esr_eol_selected_slider = esr_eol_selected_slider_value * si.Ohm
+    c_eol_selected_slider = c_eol_selected_slider_value * si.F
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -514,49 +515,135 @@ def calculate_values(
         n_slider_value * esr_eol_selected_slider * i_peak
     )
 
-    return html.Div(
-        [
-            html.Div(
-                [
-                    dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
-                ],
-                className="col-12 col-md",
-            ),
-            html.Div(
-                [
-                    dcc.Markdown(f"$ESR_{{EOL}}$ = {esr_eol}", mathjax=True),
-                ],
-                className="col-12 col-md",
-            ),
-            html.Div(
-                [
-                    dcc.Markdown(f"$I_{{PEAK}}$ = {i_peak}", mathjax=True),
-                ],
-                className="col-12 col-md",
-            ),
-            html.Div(
-                [
-                    dcc.Markdown(
-                        "$V_{{STK(MIN) Max Power}}$ = "
-                        f"{v_stk_min_max_power}",
-                        mathjax=True,
-                    ),
-                ],
-                className="col-12 col-md",
-            ),
-            html.Div(
-                [
-                    dcc.Markdown(
-                        "$V_{{STK(MIN) Current Limit}}$ = "
-                        f"{v_stk_min_current_limit}",
-                        mathjax=True,
-                    ),
-                ],
-                className="col-12 col-md",
-            ),
-        ],
-        className="row",
+    v_stk_min = max(v_stk_min_max_power, v_stk_min_current_limit)
+
+    v_stk_max = n_slider_value * v_cell_max
+
+    gamma_max = 1 + np.sqrt(
+        1
+        - (4 * n_slider_value * esr_eol_selected_slider * p_backup)
+        / (eta_slider_value * (v_stk_max**2))
     )
+
+    gamma_min = 1 + np.sqrt(
+        1
+        - (4 * n_slider_value * esr_eol_selected_slider * p_backup)
+        / (eta_slider_value * (v_stk_min**2))
+    )
+
+    v_loss_squared = (
+        (4 * n_slider_value * esr_eol_selected_slider * p_backup)
+        / eta_slider_value
+    ) * np.log((gamma_max * v_stk_max) / (gamma_min * v_stk_min))
+
+    t_backup_calculated = (
+        (eta_slider_value * (c_eol_selected_slider / n_slider_value))
+        / (4 * p_backup)
+    ) * (
+        gamma_max * (v_stk_max**2)
+        - gamma_min * (v_stk_min**2)
+        - v_loss_squared
+    )
+
+    return html.Div([
+        html.Div(
+            [
+                html.Div(
+                    [
+                        dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$ESR_{{EOL}}$ = {esr_eol}", mathjax=True
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$I_{{PEAK}}$ = {i_peak}", mathjax=True
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            "$V_{{STK(MIN) Max Power}}$ = "
+                            f"{v_stk_min_max_power}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            "$V_{{STK(MIN) Current Limit}}$ = "
+                            f"{v_stk_min_current_limit}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$V_{{STK(MIN)}}$ = {v_stk_min}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$\\gamma_{{(MAX)}}$ = {gamma_max:.4f}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$\\gamma_{{(MIN)}}$ = {gamma_min:.4f}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$V_{{LOSS}}^2$ = {v_loss_squared}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+                html.Div(
+                    [
+                        dcc.Markdown(
+                            f"$t_{{BACKUP}}$ = {t_backup_calculated}",
+                            mathjax=True,
+                        ),
+                    ],
+                    className="col-12 col-md",
+                ),
+            ],
+            className="row",
+        ),
+    ])
 
 
 def layout() -> html.Div:
