@@ -443,7 +443,7 @@ interactive_calculator = html.Div([
     html.Div([
         html.Div(
             id="calculated_values",
-            style={"fontSize": "1.1em"},
+            style={"fontSize": "1em"},
         ),
     ]),
     html.Hr(className="my-2"),
@@ -520,39 +520,39 @@ def calculate_values(
                 [
                     dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
                 ],
-                className="col-12 col-md-2",
+                className="col-12 col-md",
             ),
             html.Div(
                 [
                     dcc.Markdown(f"$ESR_{{EOL}}$ = {esr_eol}", mathjax=True),
                 ],
-                className="col-12 col-md-2",
+                className="col-12 col-md",
             ),
             html.Div(
                 [
                     dcc.Markdown(f"$I_{{PEAK}}$ = {i_peak}", mathjax=True),
                 ],
-                className="col-12 col-md-2",
+                className="col-12 col-md",
             ),
             html.Div(
                 [
                     dcc.Markdown(
-                        "$V_{{STK(MIN)}}$ (Max Power) = "
+                        "$V_{{STK(MIN) Max Power}}$ = "
                         f"{v_stk_min_max_power}",
                         mathjax=True,
                     ),
                 ],
-                className="col-12 col-md-3",
+                className="col-12 col-md",
             ),
             html.Div(
                 [
                     dcc.Markdown(
-                        "$V_{{STK(MIN)}}$ (Current Limit) = "
+                        "$V_{{STK(MIN) Current Limit}}$ = "
                         f"{v_stk_min_current_limit}",
                         mathjax=True,
                     ),
                 ],
-                className="col-12 col-md-3",
+                className="col-12 col-md",
             ),
         ],
         className="row",
