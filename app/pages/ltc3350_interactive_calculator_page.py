@@ -421,6 +421,24 @@ interactive_calculator = html.Div([
         default_val=0.006,
         use_mathjax=True,
     ),
+    create_slider(
+        "${ESR_{EOL\\ SELECTED}}$ (${\\Omega}$)",
+        "esr_eol_selected_slider",
+        min_val=0.001,
+        max_val=0.2,
+        step=0.001,
+        default_val=0.064,
+        use_mathjax=True,
+    ),
+    create_slider(
+        "${C_{EOL\\ SELECTED}}$ (F)",
+        "c_eol_selected_slider",
+        min_val=1,
+        max_val=300,
+        step=1,
+        default_val=7,
+        use_mathjax=True,
+    ),
     html.Hr(className="my-2"),
     html.Div([
         html.Div(
@@ -441,6 +459,8 @@ interactive_calculator = html.Div([
     Input("v_cell_max_slider", "value"),
     Input("alpha_b_slider", "value"),
     Input("r_snsc_slider", "value"),
+    Input("esr_eol_selected_slider", "value"),
+    Input("c_eol_selected_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -450,12 +470,15 @@ def calculate_values(
     v_cell_max_slider_value,
     alpha_b_slider_value,
     r_snsc_slider_value,
+    esr_eol_selected_slider_value,
+    c_eol_selected_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
     t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
     r_snsc_slider = r_snsc_slider_value * si.Ohm
+    esr_eol_selected_slider = esr_eol_selected_slider_value * si.Ohm
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -482,6 +505,15 @@ def calculate_values(
 
     i_peak = 0.058 * si.V / r_snsc_slider
 
+    v_stk_min_max_power = np.sqrt(
+        (4 * esr_eol_selected_slider * n_slider_value * p_backup)
+        / eta_slider_value
+    )
+
+    v_stk_min_current_limit = p_backup / (eta_slider_value * i_peak) + (
+        n_slider_value * esr_eol_selected_slider * i_peak
+    )
+
     return html.Div(
         [
             html.Div(
@@ -501,6 +533,26 @@ def calculate_values(
                     dcc.Markdown(f"$I_{{PEAK}}$ = {i_peak}", mathjax=True),
                 ],
                 className="col-12 col-md-2",
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        "$V_{{STK(MIN)}}$ (Max Power) = "
+                        f"{v_stk_min_max_power}",
+                        mathjax=True,
+                    ),
+                ],
+                className="col-12 col-md-3",
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        "$V_{{STK(MIN)}}$ (Current Limit) = "
+                        f"{v_stk_min_current_limit}",
+                        mathjax=True,
+                    ),
+                ],
+                className="col-12 col-md-3",
             ),
         ],
         className="row",
