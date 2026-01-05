@@ -412,31 +412,36 @@ interactive_calculator = html.Div(
     Input("v_cell_max_slider", "value"),
     Input("alpha_b_slider", "value"),
 )
-def calculate_c_eol(p_backup, t_backup, n, eta, v_cell_max, alpha_b):
-    """Calculate C_EOL based on slider inputs using forallpeople."""
-    P_BACKUP = p_backup * si.W
-    t_BACKUP = t_backup * si.s
-    V_CELL_MAX = v_cell_max * si.V
+def calculate_values(
+    p_backup_slider_value,
+    t_backup_slider_value,
+    n_slider_value,
+    eta_slider_value,
+    v_cell_max_slider_value,
+    alpha_b_slider_value,
+):
+    """TODO."""
+    p_backup = p_backup_slider_value * si.W
+    t_BACKUP = t_backup_slider_value * si.s
+    v_cell_max = v_cell_max_slider_value * si.V
 
-    sqrt_alpha = np.sqrt(alpha_b)
-    numerator = 1 + sqrt_alpha
-    denominator = np.sqrt(1 - alpha_b)
+    C_EOL = (
+        (4 * p_backup * t_BACKUP)
+        / (n_slider_value * eta_slider_value * (v_cell_max**2))
+    ) * (
+        (
+            alpha_b_slider_value
+            + np.sqrt(alpha_b_slider_value)
+            - (1 - alpha_b_slider_value)
+            * np.log(
+                (1 + np.sqrt(alpha_b_slider_value))
+                / np.sqrt(1 - alpha_b_slider_value)
+            )
+        )
+        ** -1
+    )
 
-    if denominator == 0:
-        return "Error: Invalid alpha_B value"
-
-    log_term = np.log(numerator / denominator)
-    bracket_term = alpha_b + sqrt_alpha - (1 - alpha_b) * log_term
-
-    if bracket_term == 0:
-        return "Error: Division by zero in calculation"
-
-    numerator_ceol = 4 * P_BACKUP * t_BACKUP
-    denominator_ceol = n * eta * (V_CELL_MAX**2)
-
-    C_EOL = (numerator_ceol / denominator_ceol) * (1 / bracket_term)
-
-    return f"C_EOL = {C_EOL}"
+    return dcc.Markdown(f"$C_{{EOL}}$ = {C_EOL}", mathjax=True)
 
 
 def layout() -> html.Div:
