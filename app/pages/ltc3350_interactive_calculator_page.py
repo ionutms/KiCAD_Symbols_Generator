@@ -412,6 +412,15 @@ interactive_calculator = html.Div([
         marks_list=[1.0, 2.0, 3.0, 4.0, 5.0],
         use_mathjax=True,
     ),
+    create_slider(
+        "${R_{SNSC}}$ (${\\Omega}$)",
+        "r_snsc_slider",
+        min_val=0.001,
+        max_val=0.02,
+        step=0.001,
+        default_val=0.006,
+        use_mathjax=True,
+    ),
     html.Hr(className="my-2"),
     html.Div([
         html.Div(
@@ -431,6 +440,7 @@ interactive_calculator = html.Div([
     Input("eta_slider", "value"),
     Input("v_cell_max_slider", "value"),
     Input("alpha_b_slider", "value"),
+    Input("r_snsc_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -439,13 +449,15 @@ def calculate_values(
     eta_slider_value,
     v_cell_max_slider_value,
     alpha_b_slider_value,
+    r_snsc_slider_value,
 ):
-    """Calculate C_EOL and ESR_EOL based on slider inputs."""
+    """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
     t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
+    r_snsc_slider = r_snsc_slider_value * si.Ohm
 
-    C_EOL = (
+    c_eol = (
         (4 * p_backup * t_backup)
         / (n_slider_value * eta_slider_value * (v_cell_max**2))
     ) * (
@@ -461,24 +473,32 @@ def calculate_values(
         ** -1
     )
 
-    ESR_EOL = (
+    esr_eol = (
         eta_slider_value
         * (1 - alpha_b_slider_value)
         * n_slider_value
         * (v_cell_max**2)
     ) / (4 * p_backup)
 
+    i_peak = 0.058 * si.V / r_snsc_slider
+
     return html.Div(
         [
             html.Div(
                 [
-                    dcc.Markdown(f"$C_{{EOL}}$ = {C_EOL}", mathjax=True),
+                    dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
                 ],
                 className="col-12 col-md-2",
             ),
             html.Div(
                 [
-                    dcc.Markdown(f"$ESR_{{EOL}}$ = {ESR_EOL}", mathjax=True),
+                    dcc.Markdown(f"$ESR_{{EOL}}$ = {esr_eol}", mathjax=True),
+                ],
+                className="col-12 col-md-2",
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(f"$I_{{PEAK}}$ = {i_peak}", mathjax=True),
                 ],
                 className="col-12 col-md-2",
             ),
