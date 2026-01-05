@@ -300,107 +300,127 @@ formula_v_square_loss = html.Div(
     className="formula-container",
 )
 
-interactive_calculator = html.Div(
-    [
-        html.Div(
-            [
-                dcc.Markdown("Boost Efficiency (${\\eta}$):", mathjax=True),
-                dcc.Slider(
-                    id="eta_slider",
-                    min=0.5,
-                    max=1.0,
-                    step=0.01,
-                    value=0.9,
-                    marks={i / 10: f"{i / 10:.1f}" for i in range(5, 11)},
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
+
+def create_slider(
+    label,
+    slider_id,
+    min_val,
+    max_val,
+    step,
+    default_val,
+    marks_list=None,
+    marks_step=None,
+    use_mathjax=False,
+):
+    """Create a slider with label.
+
+    Args:
+        label: Label text for the slider
+        slider_id: ID for the slider component
+        min_val: Minimum slider value
+        max_val: Maximum slider value
+        step: Step size
+        default_val: Default value
+        marks_list: List of specific mark values
+        marks_step: Step for automatic marks
+        use_mathjax: Whether to render label with MathJax
+
+    """
+    if marks_list is not None:
+        marks = {
+            mark: f"{mark:.1f}" if isinstance(mark, float) else str(mark)
+            for mark in marks_list
+        }
+    elif marks_step is not None:
+        marks = {
+            i: str(i)
+            for i in range(int(min_val), int(max_val) + 1, marks_step)
+        }
+    else:
+        marks = None
+
+    return html.Div([
+        dcc.Markdown(label, mathjax=use_mathjax),
+        dcc.Slider(
+            id=slider_id,
+            min=min_val,
+            max=max_val,
+            step=step,
+            value=default_val,
+            marks=marks,
+            tooltip={"placement": "bottom", "always_visible": True},
         ),
+    ])
+
+
+# Now use it to create the interactive calculator
+interactive_calculator = html.Div([
+    create_slider(
+        "Boost Efficiency (${\\eta}$):",
+        "eta_slider",
+        min_val=0.5,
+        max_val=1.0,
+        step=0.01,
+        default_val=0.9,
+        marks_list=[i / 10 for i in range(5, 11)],
+        use_mathjax=True,
+    ),
+    create_slider(
+        "Number of Capacitors (n):",
+        "n_slider",
+        min_val=1,
+        max_val=4,
+        step=1,
+        default_val=4,
+        marks_list=[1, 2, 3, 4],
+    ),
+    create_slider(
+        "Utilization Factor (${\\alpha_B}$):",
+        "alpha_b_slider",
+        min_val=0.1,
+        max_val=0.9,
+        step=0.05,
+        default_val=0.7,
+        marks_list=[i / 10 for i in range(1, 10)],
+        use_mathjax=True,
+    ),
+    create_slider(
+        "Backup Power (W):",
+        "p_backup_slider",
+        min_val=1,
+        max_val=100,
+        step=1,
+        default_val=25,
+        marks_step=20,
+    ),
+    create_slider(
+        "Backup Time (s):",
+        "t_backup_slider",
+        min_val=0.1,
+        max_val=60,
+        step=0.1,
+        default_val=1.8,
+        marks_step=10,
+    ),
+    create_slider(
+        "${V_{CELL(MAX)}}$",
+        "v_cell_max_slider",
+        min_val=1.0,
+        max_val=5.0,
+        step=0.1,
+        default_val=2.5,
+        marks_list=[1.0, 2.0, 3.0, 4.0, 5.0],
+        use_mathjax=True,
+    ),
+    html.Hr(className="my-2"),
+    html.Div([
         html.Div(
-            [
-                dcc.Markdown("Number of Capacitors (n):"),
-                dcc.Slider(
-                    id="n_slider",
-                    min=1,
-                    max=4,
-                    step=1,
-                    value=4,
-                    marks={i: str(i) for i in range(1, 5)},
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
+            id="c_eol_output",
+            style={"fontSize": "1.2em"},
         ),
-        html.Div(
-            [
-                dcc.Markdown(
-                    "Utilization Factor (${\\alpha_B}$): ", mathjax=True
-                ),
-                dcc.Slider(
-                    id="alpha_b_slider",
-                    min=0.1,
-                    max=0.9,
-                    step=0.05,
-                    value=0.7,
-                    marks={i / 10: f"{i / 10:.1f}" for i in range(1, 10)},
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
-        ),
-        html.Div(
-            [
-                dcc.Markdown("Backup Power (W):"),
-                dcc.Slider(
-                    id="p_backup_slider",
-                    min=1,
-                    max=100,
-                    step=1,
-                    value=25,
-                    marks={i: str(i) for i in range(0, 101, 20)},
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
-        ),
-        html.Div(
-            [
-                dcc.Markdown("Backup Time (s):"),
-                dcc.Slider(
-                    id="t_backup_slider",
-                    min=0.1,
-                    max=60,
-                    step=0.1,
-                    value=1.8,
-                    marks={i: str(i) for i in range(0, 61, 10)},
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
-        ),
-        html.Div(
-            [
-                dcc.Markdown("${V_{CELL(MAX)}}$", mathjax=True),
-                dcc.Slider(
-                    id="v_cell_max_slider",
-                    min=1.0,
-                    max=5.0,
-                    step=0.1,
-                    value=2.5,
-                    marks={
-                        mark: f"{mark:.1f}"
-                        for mark in [1.0, 2.0, 3.0, 4.0, 5.0]
-                    },
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-            ],
-        ),
-        html.Hr(className="my-2"),
-        html.Div([
-            html.Div(
-                id="c_eol_output",
-                style={"fontSize": "1.2em"},
-            ),
-        ]),
-        html.Hr(className="my-2"),
-    ],
-)
+    ]),
+    html.Hr(className="my-2"),
+])
 
 
 @callback(
