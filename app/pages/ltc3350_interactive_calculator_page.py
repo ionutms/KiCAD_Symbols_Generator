@@ -11,7 +11,11 @@ mathematical formulas.
 
 """
 
-from dash import dcc, html, register_page
+import forallpeople as si
+import numpy as np
+from dash import Input, Output, callback, dcc, html, register_page
+
+si.environment("default")
 
 link_name = __name__.rsplit(".", maxsplit=1)[-1].replace("_page", "").title()
 module_name = __name__.rsplit(".", maxsplit=1)[-1]
@@ -32,18 +36,18 @@ def create_section(*columns, column_widths=None, responsive_breakpoint="lg"):
     in a list for consistent handling, regardless of position.
 
     Args:
-        *columns: Variable number of content items. Each can be:
-                  - A single component (will be wrapped in list)
-                  - A list of components (used as-is)
-        column_widths: List of column widths for each column
-                       (default: equal distribution)
-                       Can be integers (1-12) or tuples for
-                       responsive widths
-                       Examples: [6, 6], [(12, 6), (12, 6)],
-                       [4, 4, 4]
-        responsive_breakpoint: Bootstrap breakpoint for responsive
-                               behavior. Options: 'sm', 'md', 'lg',
-                               'xl', 'xxl' (default: 'lg')
+        *columns:
+            Variable number of content items. Each can be:
+                - A single component (will be wrapped in list)
+                - A list of components (used as-is)
+        column_widths:
+            List of column widths for each column
+            (default: equal distribution)
+            Can be integers (1-12) or tuples for responsive widths
+            Examples: [6, 6], [(12, 6), (12, 6)], [4, 4, 4]
+        responsive_breakpoint:
+            Bootstrap breakpoint for responsive behavior.
+            Options: 'sm', 'md', 'lg', 'xl', 'xxl' (default: 'lg')
 
     Returns:
         html.Div: Responsive row container with specified columns
@@ -296,6 +300,144 @@ formula_v_square_loss = html.Div(
     className="formula-container",
 )
 
+interactive_calculator = html.Div(
+    [
+        html.Div(
+            [
+                dcc.Markdown("Boost Efficiency (${\\eta}$):", mathjax=True),
+                dcc.Slider(
+                    id="eta_slider",
+                    min=0.5,
+                    max=1.0,
+                    step=0.01,
+                    value=0.9,
+                    marks={i / 10: f"{i / 10:.1f}" for i in range(5, 11)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Div(
+            [
+                dcc.Markdown("Number of Capacitors (n):"),
+                dcc.Slider(
+                    id="n_slider",
+                    min=1,
+                    max=4,
+                    step=1,
+                    value=4,
+                    marks={i: str(i) for i in range(1, 5)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Div(
+            [
+                dcc.Markdown(
+                    "Utilization Factor (${\\alpha_B}$): ", mathjax=True
+                ),
+                dcc.Slider(
+                    id="alpha_b_slider",
+                    min=0.1,
+                    max=0.9,
+                    step=0.05,
+                    value=0.7,
+                    marks={i / 10: f"{i / 10:.1f}" for i in range(1, 10)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Div(
+            [
+                dcc.Markdown("Backup Power (W):"),
+                dcc.Slider(
+                    id="p_backup_slider",
+                    min=1,
+                    max=100,
+                    step=1,
+                    value=25,
+                    marks={i: str(i) for i in range(0, 101, 20)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Div(
+            [
+                dcc.Markdown("Backup Time (s):"),
+                dcc.Slider(
+                    id="t_backup_slider",
+                    min=0.1,
+                    max=60,
+                    step=0.1,
+                    value=1.8,
+                    marks={i: str(i) for i in range(0, 61, 10)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Div(
+            [
+                dcc.Markdown("${V_{CELL(MAX)}}$", mathjax=True),
+                dcc.Slider(
+                    id="v_cell_max_slider",
+                    min=1.0,
+                    max=5.0,
+                    step=0.1,
+                    value=2.5,
+                    marks={
+                        mark: f"{mark:.1f}"
+                        for mark in [1.0, 2.0, 3.0, 4.0, 5.0]
+                    },
+                    tooltip={"placement": "bottom", "always_visible": True},
+                ),
+            ],
+        ),
+        html.Hr(className="my-2"),
+        html.Div([
+            html.Div(
+                id="c_eol_output",
+                style={"fontSize": "1.2em"},
+            ),
+        ]),
+        html.Hr(className="my-2"),
+    ],
+)
+
+
+@callback(
+    Output("c_eol_output", "children"),
+    Input("p_backup_slider", "value"),
+    Input("t_backup_slider", "value"),
+    Input("n_slider", "value"),
+    Input("eta_slider", "value"),
+    Input("v_cell_max_slider", "value"),
+    Input("alpha_b_slider", "value"),
+)
+def calculate_c_eol(p_backup, t_backup, n, eta, v_cell_max, alpha_b):
+    """Calculate C_EOL based on slider inputs using forallpeople."""
+    P_BACKUP = p_backup * si.W
+    t_BACKUP = t_backup * si.s
+    V_CELL_MAX = v_cell_max * si.V
+
+    sqrt_alpha = np.sqrt(alpha_b)
+    numerator = 1 + sqrt_alpha
+    denominator = np.sqrt(1 - alpha_b)
+
+    if denominator == 0:
+        return "Error: Invalid alpha_B value"
+
+    log_term = np.log(numerator / denominator)
+    bracket_term = alpha_b + sqrt_alpha - (1 - alpha_b) * log_term
+
+    if bracket_term == 0:
+        return "Error: Division by zero in calculation"
+
+    numerator_ceol = 4 * P_BACKUP * t_BACKUP
+    denominator_ceol = n * eta * (V_CELL_MAX**2)
+
+    C_EOL = (numerator_ceol / denominator_ceol) * (1 / bracket_term)
+
+    return f"C_EOL = {C_EOL}"
+
 
 def layout() -> html.Div:
     """Define the page layout.
@@ -364,6 +506,7 @@ def layout() -> html.Div:
                 column_widths=[7, 5],
             ),
             html.Hr(className="my-2"),
+            create_section([interactive_calculator]),
         ],
         className="container-fluid p-4",
     )
