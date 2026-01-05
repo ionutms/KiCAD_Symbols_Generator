@@ -413,13 +413,6 @@ REPO_CONFIGS = [
         "show_simple_link": True,
     },
     {
-        "name": "LTC3350_Interactive_Calculator",
-        "colors": ["#00BBF9", "#F15BB5"],
-        "is_main": False,
-        "has_project_links": False,
-        "show_simple_link": True,
-    },
-    {
         "name": "Minimal_AD74416H",
         "colors": ["#6029E0", "#870BDA"],
         "is_main": False,
