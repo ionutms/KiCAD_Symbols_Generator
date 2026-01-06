@@ -699,23 +699,23 @@ def calculate_values(
 
     table_data = []
 
-    power_row = {"Parameter": "P_BACKUP (W)"}
+    power_row = {"Parameter": "P<sub>BACKUP</sub> (W)"}
     for i in range(len(cap_esr_pairs)):
         power_row[f"Cap_{i + 1}"] = f"{p_backup_slider_value * si.W:.0f}"
     table_data.append(power_row)
 
-    time_row = {"Parameter": "t_BACKUP [s]"}
+    time_row = {"Parameter": "t<sub>BACKUP</sub> [s]"}
     for i in range(len(cap_esr_pairs)):
         time_row[f"Cap_{i + 1}"] = f"{t_backup_slider_value * si.s:.1f}"
     table_data.append(time_row)
 
-    cap_row = {"Parameter": "C (C_EOL) [F]"}
+    cap_row = {"Parameter": "C (C<sub>EOL</sub>) [F]"}
     for i, (cap_initial, _) in enumerate(cap_esr_pairs):
         cap_eol = f"{cap_initial * 0.8 * si.F:.0f}"
         cap_row[f"Cap_{i + 1}"] = f"{cap_initial * si.F:.0f} ({cap_eol})"
     table_data.append(cap_row)
 
-    esr_row = {"Parameter": "ESR (ESR_EOL) [Ω]"}
+    esr_row = {"Parameter": "ESR (ESR<sub>EOL</sub>) [Ω]"}
     for i, (_, esr_initial) in enumerate(cap_esr_pairs):
         esr_eol_val = f"{esr_initial * 2 * si.Ohm:.0f}"
         esr_row[f"Cap_{i + 1}"] = (
@@ -723,7 +723,7 @@ def calculate_values(
         )
     table_data.append(esr_row)
 
-    initial_time_row = {"Parameter": "t_BACKUP Initial [s]"}
+    initial_time_row = {"Parameter": "t<sub>BACKUP Initial</sub> [s]"}
     for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
         cap_si = cap_initial * si.F
         esr_si = esr_initial * si.Ohm
@@ -748,7 +748,7 @@ def calculate_values(
         initial_time_row[f"Cap_{i + 1}"] = time_str
     table_data.append(initial_time_row)
 
-    eol_time_row = {"Parameter": "t_BACKUP EOL [s]"}
+    eol_time_row = {"Parameter": "t<sub>BACKUP EOL</sub> [s]"}
     for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
         cap_eol = cap_initial * 0.8
         esr_eol_val = esr_initial * 2
@@ -776,7 +776,9 @@ def calculate_values(
         eol_time_row[f"Cap_{i + 1}"] = time_str
     table_data.append(eol_time_row)
 
-    columns = [{"name": "Parameter", "id": "Parameter"}]
+    columns = [
+        {"name": "Parameter", "id": "Parameter", "presentation": "markdown"}
+    ]
     for i in range(len(cap_esr_pairs)):
         columns.append({"name": f"Capacitor {i + 1}", "id": f"Cap_{i + 1}"})
 
@@ -785,6 +787,7 @@ def calculate_values(
             data=table_data,
             columns=columns,
             cell_selectable=False,
+            markdown_options={"html": True},
             css=[
                 {
                     "selector": "tr:hover",
@@ -815,6 +818,7 @@ def calculate_values(
                     "if": {"column_id": "Parameter"},
                     "fontWeight": "bold",
                     "textAlign": "left",
+                    "fontFamily": "inherit",
                 },
             ],
         ),
