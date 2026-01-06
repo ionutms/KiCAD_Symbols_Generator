@@ -738,10 +738,7 @@ def calculate_values(
             i_peak,
         )
 
-        if hasattr(t_backup_calc, "value"):
-            time_value = float(t_backup_calc.value)
-        else:
-            time_value = float(t_backup_calc)
+        time_value = float(t_backup_calc.value)
 
         time_str = (
             "N/A"
@@ -769,10 +766,7 @@ def calculate_values(
             i_peak,
         )
 
-        if hasattr(t_backup_calc, "value"):
-            time_value = float(t_backup_calc.value)
-        else:
-            time_value = float(t_backup_calc)
+        time_value = float(t_backup_calc.value)
 
         time_str = (
             "N/A"
