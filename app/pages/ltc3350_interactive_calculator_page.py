@@ -398,11 +398,15 @@ def create_markdown_div(content, class_name="col-12 text-center"):
 
 
 def read_cap_esr_pairs_from_csv(csv_file_path):
-    """Read capacitor and ESR pairs from a CSV file."""
+    """Read data from a CSV file."""
     try:
         df = pd.read_csv(csv_file_path)
         cap_esr_pairs = [
-            (float(row["cap_value"]), float(row["esr_value"]))
+            (
+                float(row["cap_value"]),
+                float(row["esr_value"]),
+                row["part_number"],
+            )
             for _, row in df.iterrows()
         ]
     except FileNotFoundError:
@@ -676,32 +680,39 @@ def calculate_values(
 
     table_data = []
 
-    power_row = {"Parameter": "P<sub>BACKUP</sub> (W)"}
+    power_row = {"Parameter": "P<sub>BACKUP</sub>"}
     for i in range(len(cap_esr_pairs)):
         power_row[f"Cap_{i + 1}"] = f"{p_backup_slider_value * si.W:.0f}"
     table_data.append(power_row)
 
-    time_row = {"Parameter": "t<sub>BACKUP</sub> [s]"}
+    time_row = {"Parameter": "t<sub>BACKUP</sub>"}
     for i in range(len(cap_esr_pairs)):
         time_row[f"Cap_{i + 1}"] = f"{t_backup_slider_value * si.s:.1f}"
     table_data.append(time_row)
 
-    cap_row = {"Parameter": "C (C<sub>EOL</sub>) [F]"}
-    for i, (cap_initial, _) in enumerate(cap_esr_pairs):
+    part_number_row = {"Parameter": "Part Number"}
+    for i, (_, _, part_number) in enumerate(cap_esr_pairs):
+        part_number_row[f"Cap_{i + 1}"] = part_number
+    table_data.append(part_number_row)
+
+    cap_row = {"Parameter": "C (C<sub>EOL</sub>)"}
+    for i, (cap_initial, _, _) in enumerate(cap_esr_pairs):
         cap_eol = f"{cap_initial * 0.8 * si.F:.0f}"
         cap_row[f"Cap_{i + 1}"] = f"{cap_initial * si.F:.0f} ({cap_eol})"
     table_data.append(cap_row)
 
-    esr_row = {"Parameter": "ESR (ESR<sub>EOL</sub>) [Ω]"}
-    for i, (_, esr_initial) in enumerate(cap_esr_pairs):
-        esr_eol_val = f"{esr_initial * 2 * si.Ohm:.0f}"
+    esr_row = {"Parameter": "ESR (ESR<sub>EOL</sub>)"}
+    for i, (_, esr_initial, _) in enumerate(cap_esr_pairs):
+        esr_eol_val = f"{esr_initial * 2 * si.Ohm:.1f}"
+        esr_initial_val = f"{esr_initial * si.Ohm:.1f}"
         esr_row[f"Cap_{i + 1}"] = (
-            f"{esr_initial * si.Ohm:.0f} ({esr_eol_val})"
+            f"{esr_initial_val.replace('.0', '')} "
+            f"({esr_eol_val.replace('.0', '')})"
         )
     table_data.append(esr_row)
 
-    initial_time_row = {"Parameter": "t<sub>BACKUP Initial</sub> [s]"}
-    for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
+    initial_time_row = {"Parameter": "t<sub>BACKUP Initial</sub>"}
+    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
         cap_si = cap_initial * si.F
         esr_si = esr_initial * si.Ohm
 
@@ -722,11 +733,11 @@ def calculate_values(
             if time_value < 0 or np.isnan(time_value)
             else f"{time_value * si.s:.1f}"
         )
-        initial_time_row[f"Cap_{i + 1}"] = time_str
+        initial_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
     table_data.append(initial_time_row)
 
-    eol_time_row = {"Parameter": "t<sub>BACKUP EOL</sub> [s]"}
-    for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
+    eol_time_row = {"Parameter": "t<sub>BACKUP EOL</sub>"}
+    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
         cap_eol = cap_initial * 0.8
         esr_eol_val = esr_initial * 2
 
@@ -750,7 +761,7 @@ def calculate_values(
             if time_value < 0 or np.isnan(time_value)
             else f"{time_value * si.s:.1f}"
         )
-        eol_time_row[f"Cap_{i + 1}"] = time_str
+        eol_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
     table_data.append(eol_time_row)
 
     columns = [
