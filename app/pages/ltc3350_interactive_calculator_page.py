@@ -701,25 +701,26 @@ def calculate_values(
 
     power_row = {"Parameter": "P_BACKUP (W)"}
     for i in range(len(cap_esr_pairs)):
-        power_row[f"Cap_{i + 1}"] = f"{int(p_backup_slider_value)}"
+        power_row[f"Cap_{i + 1}"] = f"{p_backup_slider_value * si.W:.0f}"
     table_data.append(power_row)
 
-    t_backup_formatted = f"{t_backup_slider_value:g}"
     time_row = {"Parameter": "t_BACKUP [s]"}
     for i in range(len(cap_esr_pairs)):
-        time_row[f"Cap_{i + 1}"] = t_backup_formatted
+        time_row[f"Cap_{i + 1}"] = f"{t_backup_slider_value * si.s:.1f}"
     table_data.append(time_row)
 
     cap_row = {"Parameter": "C (C_EOL) [F]"}
     for i, (cap_initial, _) in enumerate(cap_esr_pairs):
-        cap_eol = cap_initial * 0.8
-        cap_row[f"Cap_{i + 1}"] = f"{cap_initial} ({cap_eol})"
+        cap_eol = f"{cap_initial * 0.8 * si.F:.0f}"
+        cap_row[f"Cap_{i + 1}"] = f"{cap_initial * si.F:.0f} ({cap_eol})"
     table_data.append(cap_row)
 
     esr_row = {"Parameter": "ESR (ESR_EOL) [Ω]"}
     for i, (_, esr_initial) in enumerate(cap_esr_pairs):
-        esr_eol_val = esr_initial * 2
-        esr_row[f"Cap_{i + 1}"] = f"{esr_initial} ({esr_eol_val})"
+        esr_eol_val = f"{esr_initial * 2 * si.Ohm:.0f}"
+        esr_row[f"Cap_{i + 1}"] = (
+            f"{esr_initial * si.Ohm:.0f} ({esr_eol_val})"
+        )
     table_data.append(esr_row)
 
     initial_time_row = {"Parameter": "t_BACKUP Initial [s]"}
@@ -745,7 +746,7 @@ def calculate_values(
         time_str = (
             "N/A"
             if time_value < 0 or np.isnan(time_value)
-            else f"{time_value:.2f}"
+            else f"{time_value * si.s:.1f}"
         )
         initial_time_row[f"Cap_{i + 1}"] = time_str
     table_data.append(initial_time_row)
@@ -776,7 +777,7 @@ def calculate_values(
         time_str = (
             "N/A"
             if time_value < 0 or np.isnan(time_value)
-            else f"{time_value:.2f}"
+            else f"{time_value * si.s:.1f}"
         )
         eol_time_row[f"Cap_{i + 1}"] = time_str
     table_data.append(eol_time_row)
