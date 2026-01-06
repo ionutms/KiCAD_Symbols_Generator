@@ -624,19 +624,20 @@ def calculate_values(
         html.Div(
             [
                 create_markdown_div(
-                    f"$I_{{PEAK}}$ = {i_peak}", "col-12 col-md"
+                    f"$I_{{PEAK}}$ = {i_peak}", "col-12 col-md text-center"
                 ),
                 create_markdown_div(
                     f"$V_{{STK(MIN) Max Power}}$ = {v_stk_min_max_power}",
-                    "col-12 col-md",
+                    "col-12 col-md text-center",
                 ),
                 create_markdown_div(
                     f"$V_{{STK(MIN) Current Limit}}$ = "
                     f"{v_stk_min_current_limit}",
-                    "col-12 col-md",
+                    "col-12 col-md text-center",
                 ),
                 create_markdown_div(
-                    f"$V_{{STK(MIN)}}$ = {v_stk_min}", "col-12 col-md"
+                    f"$V_{{STK(MIN)}}$ = {v_stk_min}",
+                    "col-12 col-md text-center",
                 ),
             ],
             className="row",
@@ -644,16 +645,20 @@ def calculate_values(
         html.Div(
             [
                 create_markdown_div(
-                    f"$\\gamma_{{(MAX)}}$ = {gamma_max:.4f}", "col-12 col-md"
+                    f"$\\gamma_{{(MAX)}}$ = {gamma_max:.4f}",
+                    "col-12 col-md text-center",
                 ),
                 create_markdown_div(
-                    f"$\\gamma_{{(MIN)}}$ = {gamma_min:.4f}", "col-12 col-md"
+                    f"$\\gamma_{{(MIN)}}$ = {gamma_min:.4f}",
+                    "col-12 col-md text-center",
                 ),
                 create_markdown_div(
-                    f"$V_{{LOSS}}^2$ = {v_loss_squared}", "col-12 col-md"
+                    f"$V_{{LOSS}}^2$ = {v_loss_squared}",
+                    "col-12 col-md text-center",
                 ),
                 create_markdown_div(
-                    f"$t_{{BACKUP}}$ = {t_backup_calculated}", "col-12 col-md"
+                    f"$t_{{BACKUP}}$ = {t_backup_calculated}",
+                    "col-12 col-md text-center",
                 ),
             ],
             className="row",
