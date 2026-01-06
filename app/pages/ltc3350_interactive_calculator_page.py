@@ -13,6 +13,7 @@ mathematical formulas.
 
 import forallpeople as si
 import numpy as np
+import pandas as pd
 from dash import Input, Output, callback, dash_table, dcc, html, register_page
 
 si.environment("default")
@@ -58,27 +59,21 @@ def create_section(*columns, column_widths=None, responsive_breakpoint="lg"):
 
     num_columns = len(columns)
 
-    # Determine column widths
     if column_widths is None:
-        # Equal distribution
         width_per_column = 12 // num_columns
         column_widths = [width_per_column] * num_columns
 
-    # Validate column widths
     if len(column_widths) != num_columns:
         raise ValueError(
             f"Number of column_widths ({len(column_widths)}) "
             f"must match number of columns ({num_columns})"
         )
 
-    # Create column divs
     column_divs = []
     for idx, (content, width) in enumerate(zip(columns, column_widths)):
-        # ALWAYS normalize content to list for consistent handling
         if not isinstance(content, list):
             content = [content]
 
-        # Handle responsive widths
         if isinstance(width, tuple):
             mobile_width, desktop_width = width
             col_class = (
@@ -88,7 +83,6 @@ def create_section(*columns, column_widths=None, responsive_breakpoint="lg"):
         else:
             col_class = f"col-12 col-{responsive_breakpoint}-{width}"
 
-        # Add spacing classes
         spacing_class = "mb-3" if idx < num_columns - 1 else ""
         spacing_class += (
             f" mb-{responsive_breakpoint}-0" if idx < num_columns - 1 else ""
@@ -107,7 +101,6 @@ def create_section(*columns, column_widths=None, responsive_breakpoint="lg"):
     )
 
 
-# Content components
 paragraph_1 = dcc.Markdown(
     "When choosing the capacitance needed the condition of the "
     "supercapacitor at end of life (EOL) needs to be considered."
@@ -404,6 +397,20 @@ def create_markdown_div(content, class_name="col-12 text-center"):
     )
 
 
+def read_cap_esr_pairs_from_csv(csv_file_path):
+    """Read capacitor and ESR pairs from a CSV file."""
+    try:
+        df = pd.read_csv(csv_file_path)
+        cap_esr_pairs = [
+            (float(row["cap_value"]), float(row["esr_value"]))
+            for _, row in df.iterrows()
+        ]
+    except FileNotFoundError:
+        print(f"Warning: CSV file {csv_file_path} not found.")
+
+    return cap_esr_pairs
+
+
 interactive_calculator = html.Div([
     create_slider(
         "Boost Efficiency (${\\eta}$):",
@@ -665,14 +672,7 @@ def calculate_values(
         ),
     ])
 
-    cap_esr_pairs = [
-        (10, 0.034),
-        (15, 0.03),
-        (20, 0.03),
-        (50, 0.024),
-        (100, 0.001),
-        (300, 0.0045),
-    ]
+    cap_esr_pairs = read_cap_esr_pairs_from_csv("cap_esr_pairs.csv")
 
     table_data = []
 
