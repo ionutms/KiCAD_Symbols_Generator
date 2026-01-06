@@ -785,70 +785,45 @@ def calculate_values(
     for i in range(len(cap_esr_pairs)):
         columns.append({"name": f"Capacitor {i + 1}", "id": f"Cap_{i + 1}"})
 
-    backup_time_table = dash_table.DataTable(
-        data=table_data,
-        columns=columns,
-        cell_selectable=False,
-        css=[
-            {
-                "selector": "tr:hover",
-                "rule": "background-color: rgba(0, 0, 0, 0) !important;",
-            }
-        ],
-        style_cell={
-            "textAlign": "center",
-            "padding": "10px",
-            "fontSize": "14px",
-            "border": "1px solid rgba(128, 128, 128, 0.3)",
-        },
-        style_header={
-            "backgroundColor": "rgba(200, 130, 246, 0.1)",
-            "color": "inherit",
-            "fontWeight": "bold",
-            "border": "1px solid rgba(128, 128, 128, 0.5)",
-        },
-        style_data={
-            "backgroundColor": "rgba(0, 0, 0, 0)",
-            "color": "inherit",
-            "border": "1px solid rgba(128, 128, 128, 0.3)",
-        },
-        style_data_conditional=[
-            {
-                "if": {"row_index": 0},
-                "backgroundColor": "rgba(59, 130, 246, 0.1)",
-                "color": "inherit",
+    backup_time_table = html.Div(
+        dash_table.DataTable(
+            data=table_data,
+            columns=columns,
+            cell_selectable=False,
+            css=[
+                {
+                    "selector": "tr:hover",
+                    "rule": "background-color: rgba(0, 0, 0, 0) !important;",
+                }
+            ],
+            style_cell={
+                "textAlign": "center",
+                "padding": "10px",
+                "fontSize": "14px",
+                "border": "1px solid rgba(100, 100, 100, 0.4)",
+                "minWidth": "120px",
             },
-            {
-                "if": {"row_index": 1},
-                "backgroundColor": "rgba(234, 179, 8, 0.15)",
+            style_header={
+                "backgroundColor": "rgba(0, 0, 0, 0)",
                 "color": "inherit",
-            },
-            {
-                "if": {"row_index": 2},
-                "backgroundColor": "rgba(148, 163, 184, 0.1)",
-                "color": "inherit",
-            },
-            {
-                "if": {"row_index": 3},
-                "backgroundColor": "rgba(148, 163, 184, 0.05)",
-                "color": "inherit",
-            },
-            {
-                "if": {"row_index": 4},
-                "backgroundColor": "rgba(34, 197, 94, 0.15)",
-                "color": "inherit",
-            },
-            {
-                "if": {"row_index": 5},
-                "backgroundColor": "rgba(239, 68, 68, 0.15)",
-                "color": "inherit",
-            },
-            {
-                "if": {"column_id": "Parameter"},
                 "fontWeight": "bold",
-                "textAlign": "left",
+                "border": "1px solid rgba(100, 100, 100, 0.4)",
+                "borderBottom": "2px solid rgba(80, 80, 80, 0.6)",
             },
-        ],
+            style_data={
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "color": "inherit",
+                "border": "1px solid rgba(100, 100, 100, 0.4)",
+            },
+            style_data_conditional=[
+                {
+                    "if": {"column_id": "Parameter"},
+                    "fontWeight": "bold",
+                    "textAlign": "left",
+                },
+            ],
+        ),
+        style={"overflowX": "auto"},
     )
 
     return calculated_values_output, backup_time_table
