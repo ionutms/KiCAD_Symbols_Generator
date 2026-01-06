@@ -668,7 +668,7 @@ def calculate_values(
                     "col-12 col-md text-center",
                 ),
                 create_markdown_div(
-                    f"$t_{{BACKUP}}$ = {t_backup_calculated}",
+                    f"$t_{{BACKUP}}$ = {t_backup_calculated:.1f}",
                     "col-12 col-md text-center",
                 ),
             ],
