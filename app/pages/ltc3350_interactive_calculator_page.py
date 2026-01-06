@@ -462,6 +462,12 @@ interactive_calculator = html.Div([
         default_val=0.006,
         use_mathjax=True,
     ),
+    html.Div([
+        html.Div(
+            id="calculated_values_between_sliders",
+            style={"fontSize": "1em"},
+        ),
+    ]),
     create_slider(
         "${ESR_{EOL\\ SELECTED}}$ (${\\Omega}$)",
         "esr_eol_selected_slider",
@@ -494,6 +500,7 @@ interactive_calculator = html.Div([
 
 @callback(
     Output("calculated_values", "children"),
+    Output("calculated_values_between_sliders", "children"),
     Output("backup_time_table", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
@@ -588,23 +595,31 @@ def calculate_values(
         - v_loss_squared
     )
 
-    calculated_values_output = html.Div([
+    calculated_values_between_sliders = html.Div([
         html.Div(
             [
                 html.Div(
                     [
                         dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
                     ],
-                    className="col-12 col-md",
+                    className="col-12 col-md-3 offset-md-3 text-center",
                 ),
                 html.Div(
                     [
                         dcc.Markdown(
-                            f"$ESR_{{EOL}}$ = {esr_eol}", mathjax=True
+                            f"$ESR_{{EOL}}$ = {esr_eol:.1f}", mathjax=True
                         ),
                     ],
-                    className="col-12 col-md",
+                    className="col-12 col-md-3 offset-md-0 text-center",
                 ),
+            ],
+            className="row",
+        ),
+    ])
+
+    calculated_values_output = html.Div([
+        html.Div(
+            [
                 html.Div(
                     [
                         dcc.Markdown(
@@ -633,11 +648,6 @@ def calculate_values(
                     ],
                     className="col-12 col-md",
                 ),
-            ],
-            className="row",
-        ),
-        html.Div(
-            [
                 html.Div(
                     [
                         dcc.Markdown(
@@ -647,6 +657,11 @@ def calculate_values(
                     ],
                     className="col-12 col-md",
                 ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
                 html.Div(
                     [
                         dcc.Markdown(
@@ -825,7 +840,11 @@ def calculate_values(
         style={"overflowX": "auto"},
     )
 
-    return calculated_values_output, backup_time_table
+    return (
+        calculated_values_output,
+        calculated_values_between_sliders,
+        backup_time_table,
+    )
 
 
 def layout() -> html.Div:
@@ -896,6 +915,7 @@ def layout() -> html.Div:
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
+            html.Hr(className="my-2"),
         ],
         className="container-fluid p-4",
     )
