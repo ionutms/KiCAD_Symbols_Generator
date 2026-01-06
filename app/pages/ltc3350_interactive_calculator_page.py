@@ -394,7 +394,16 @@ def calculate_backup_time(
     return t_backup_calc
 
 
-# Now use it to create the interactive calculator
+def create_markdown_div(content, class_name="col-12 text-center"):
+    """Create a markdown div with consistent styling."""
+    return html.Div(
+        [
+            dcc.Markdown(content, mathjax=True),
+        ],
+        className=class_name,
+    )
+
+
 interactive_calculator = html.Div([
     create_slider(
         "Boost Efficiency (${\\eta}$):",
@@ -598,19 +607,13 @@ def calculate_values(
     calculated_values_between_sliders = html.Div([
         html.Div(
             [
-                html.Div(
-                    [
-                        dcc.Markdown(f"$C_{{EOL}}$ = {c_eol}", mathjax=True),
-                    ],
-                    className="col-12 col-md-3 offset-md-3 text-center",
+                create_markdown_div(
+                    f"$C_{{EOL}}$ = {c_eol}",
+                    "col-12 col-md-4 offset-md-2 text-center",
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$ESR_{{EOL}}$ = {esr_eol:.1f}", mathjax=True
-                        ),
-                    ],
-                    className="col-12 col-md-3 offset-md-0 text-center",
+                create_markdown_div(
+                    f"$ESR_{{EOL}}$ = {esr_eol:.1f}",
+                    "col-12 col-md-4 offset-md-0 text-center",
                 ),
             ],
             className="row",
@@ -620,83 +623,37 @@ def calculate_values(
     calculated_values_output = html.Div([
         html.Div(
             [
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$I_{{PEAK}}$ = {i_peak}", mathjax=True
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$I_{{PEAK}}$ = {i_peak}", "col-12 col-md"
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            "$V_{{STK(MIN) Max Power}}$ = "
-                            f"{v_stk_min_max_power}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$V_{{STK(MIN) Max Power}}$ = {v_stk_min_max_power}",
+                    "col-12 col-md",
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            "$V_{{STK(MIN) Current Limit}}$ = "
-                            f"{v_stk_min_current_limit}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$V_{{STK(MIN) Current Limit}}$ = "
+                    f"{v_stk_min_current_limit}",
+                    "col-12 col-md",
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$V_{{STK(MIN)}}$ = {v_stk_min}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$V_{{STK(MIN)}}$ = {v_stk_min}", "col-12 col-md"
                 ),
             ],
             className="row",
         ),
         html.Div(
             [
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$\\gamma_{{(MAX)}}$ = {gamma_max:.4f}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$\\gamma_{{(MAX)}}$ = {gamma_max:.4f}", "col-12 col-md"
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$\\gamma_{{(MIN)}}$ = {gamma_min:.4f}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$\\gamma_{{(MIN)}}$ = {gamma_min:.4f}", "col-12 col-md"
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$V_{{LOSS}}^2$ = {v_loss_squared}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$V_{{LOSS}}^2$ = {v_loss_squared}", "col-12 col-md"
                 ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            f"$t_{{BACKUP}}$ = {t_backup_calculated}",
-                            mathjax=True,
-                        ),
-                    ],
-                    className="col-12 col-md",
+                create_markdown_div(
+                    f"$t_{{BACKUP}}$ = {t_backup_calculated}", "col-12 col-md"
                 ),
             ],
             className="row",
