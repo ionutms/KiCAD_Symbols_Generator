@@ -13,7 +13,7 @@ mathematical formulas.
 
 import forallpeople as si
 import numpy as np
-from dash import Input, Output, callback, dcc, html, register_page
+from dash import Input, Output, callback, dash_table, dcc, html, register_page
 
 si.environment("default")
 
@@ -353,6 +353,47 @@ def create_slider(
     ])
 
 
+def calculate_backup_time(
+    cap_si, esr_si, eta, n, p_backup_si, v_cell_max_si, i_peak
+):
+    """Calculate backup time for given capacitor parameters."""
+    v_stk_min_power = np.sqrt(4 * esr_si * n * p_backup_si / eta)
+    v_stk_min_current = (p_backup_si / (eta * i_peak)) + (n * esr_si * i_peak)
+    v_stk_min_calc = max(v_stk_min_power, v_stk_min_current)
+
+    gama_max_calc = 1 + np.sqrt(
+        1
+        - (
+            (4 * n * esr_si * p_backup_si)
+            / (eta * np.power(n * v_cell_max_si, 2))
+        )
+    )
+    gama_min_calc = 1 + np.sqrt(
+        1
+        - (
+            (4 * n * esr_si * p_backup_si)
+            / (eta * np.power(v_stk_min_calc, 2))
+        )
+    )
+
+    v_loss_sq_calc = ((4 * n * esr_si * p_backup_si) / eta) * np.log(
+        (gama_max_calc * n * v_cell_max_si) / (gama_min_calc * v_stk_min_calc)
+    )
+
+    t_backup_calc = (
+        eta
+        * (cap_si / n)
+        / (4 * p_backup_si)
+        * (
+            gama_max_calc * (n * v_cell_max_si) ** 2
+            - gama_min_calc * v_stk_min_calc**2
+            - v_loss_sq_calc
+        )
+    )
+
+    return t_backup_calc
+
+
 # Now use it to create the interactive calculator
 interactive_calculator = html.Div([
     create_slider(
@@ -447,11 +488,13 @@ interactive_calculator = html.Div([
         ),
     ]),
     html.Hr(className="my-2"),
+    html.Div(id="backup_time_table"),
 ])
 
 
 @callback(
     Output("calculated_values", "children"),
+    Output("backup_time_table", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -545,7 +588,7 @@ def calculate_values(
         - v_loss_squared
     )
 
-    return html.Div([
+    calculated_values_output = html.Div([
         html.Div(
             [
                 html.Div(
@@ -644,6 +687,171 @@ def calculate_values(
             className="row",
         ),
     ])
+
+    cap_esr_pairs = [
+        (10, 0.034),
+        (15, 0.03),
+        (20, 0.03),
+        (50, 0.024),
+        (100, 0.001),
+        (300, 0.0045),
+    ]
+
+    table_data = []
+
+    power_row = {"Parameter": "P_BACKUP (W)"}
+    for i in range(len(cap_esr_pairs)):
+        power_row[f"Cap_{i + 1}"] = f"{int(p_backup_slider_value)}"
+    table_data.append(power_row)
+
+    t_backup_formatted = f"{t_backup_slider_value:g}"
+    time_row = {"Parameter": "t_BACKUP [s]"}
+    for i in range(len(cap_esr_pairs)):
+        time_row[f"Cap_{i + 1}"] = t_backup_formatted
+    table_data.append(time_row)
+
+    cap_row = {"Parameter": "C (C_EOL) [F]"}
+    for i, (cap_initial, _) in enumerate(cap_esr_pairs):
+        cap_eol = cap_initial * 0.8
+        cap_row[f"Cap_{i + 1}"] = f"{cap_initial} ({cap_eol})"
+    table_data.append(cap_row)
+
+    esr_row = {"Parameter": "ESR (ESR_EOL) [Ω]"}
+    for i, (_, esr_initial) in enumerate(cap_esr_pairs):
+        esr_eol_val = esr_initial * 2
+        esr_row[f"Cap_{i + 1}"] = f"{esr_initial} ({esr_eol_val})"
+    table_data.append(esr_row)
+
+    initial_time_row = {"Parameter": "t_BACKUP Initial [s]"}
+    for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
+        cap_si = cap_initial * si.F
+        esr_si = esr_initial * si.Ohm
+
+        t_backup_calc = calculate_backup_time(
+            cap_si,
+            esr_si,
+            eta_slider_value,
+            n_slider_value,
+            p_backup,
+            v_cell_max,
+            i_peak,
+        )
+
+        if hasattr(t_backup_calc, "value"):
+            time_value = float(t_backup_calc.value)
+        else:
+            time_value = float(t_backup_calc)
+
+        time_str = (
+            "N/A"
+            if time_value < 0 or np.isnan(time_value)
+            else f"{time_value:.2f}"
+        )
+        initial_time_row[f"Cap_{i + 1}"] = time_str
+    table_data.append(initial_time_row)
+
+    eol_time_row = {"Parameter": "t_BACKUP EOL [s]"}
+    for i, (cap_initial, esr_initial) in enumerate(cap_esr_pairs):
+        cap_eol = cap_initial * 0.8
+        esr_eol_val = esr_initial * 2
+
+        cap_si = cap_eol * si.F
+        esr_si = esr_eol_val * si.Ohm
+
+        t_backup_calc = calculate_backup_time(
+            cap_si,
+            esr_si,
+            eta_slider_value,
+            n_slider_value,
+            p_backup,
+            v_cell_max,
+            i_peak,
+        )
+
+        if hasattr(t_backup_calc, "value"):
+            time_value = float(t_backup_calc.value)
+        else:
+            time_value = float(t_backup_calc)
+
+        time_str = (
+            "N/A"
+            if time_value < 0 or np.isnan(time_value)
+            else f"{time_value:.2f}"
+        )
+        eol_time_row[f"Cap_{i + 1}"] = time_str
+    table_data.append(eol_time_row)
+
+    columns = [{"name": "Parameter", "id": "Parameter"}]
+    for i in range(len(cap_esr_pairs)):
+        columns.append({"name": f"Capacitor {i + 1}", "id": f"Cap_{i + 1}"})
+
+    backup_time_table = dash_table.DataTable(
+        data=table_data,
+        columns=columns,
+        cell_selectable=False,
+        css=[
+            {
+                "selector": "tr:hover",
+                "rule": "background-color: rgba(0, 0, 0, 0) !important;",
+            }
+        ],
+        style_cell={
+            "textAlign": "center",
+            "padding": "10px",
+            "fontSize": "14px",
+            "border": "1px solid rgba(128, 128, 128, 0.3)",
+        },
+        style_header={
+            "backgroundColor": "rgba(200, 130, 246, 0.1)",
+            "color": "inherit",
+            "fontWeight": "bold",
+            "border": "1px solid rgba(128, 128, 128, 0.5)",
+        },
+        style_data={
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "inherit",
+            "border": "1px solid rgba(128, 128, 128, 0.3)",
+        },
+        style_data_conditional=[
+            {
+                "if": {"row_index": 0},
+                "backgroundColor": "rgba(59, 130, 246, 0.1)",
+                "color": "inherit",
+            },
+            {
+                "if": {"row_index": 1},
+                "backgroundColor": "rgba(234, 179, 8, 0.15)",
+                "color": "inherit",
+            },
+            {
+                "if": {"row_index": 2},
+                "backgroundColor": "rgba(148, 163, 184, 0.1)",
+                "color": "inherit",
+            },
+            {
+                "if": {"row_index": 3},
+                "backgroundColor": "rgba(148, 163, 184, 0.05)",
+                "color": "inherit",
+            },
+            {
+                "if": {"row_index": 4},
+                "backgroundColor": "rgba(34, 197, 94, 0.15)",
+                "color": "inherit",
+            },
+            {
+                "if": {"row_index": 5},
+                "backgroundColor": "rgba(239, 68, 68, 0.15)",
+                "color": "inherit",
+            },
+            {
+                "if": {"column_id": "Parameter"},
+                "fontWeight": "bold",
+                "textAlign": "left",
+            },
+        ],
+    )
+
+    return calculated_values_output, backup_time_table
 
 
 def layout() -> html.Div:
