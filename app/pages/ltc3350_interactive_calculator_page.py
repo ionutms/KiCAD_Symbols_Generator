@@ -359,6 +359,51 @@ formula_v_cap = html.Div(
     className="formula-container",
 )
 
+paragraph_16 = dcc.Markdown(
+    "The input voltage threshold below which the power-fail status pin, "
+    "$\\overline{\\text{PFO}}$, indicates a power-fail condition and the "
+    "LTC3350 bidirectional controller switches to step-up mode is "
+    "programmed using a resistor divider from the VIN pin to SGND via the "
+    "PFI pin. $\\pmb{V_{PFI(TH)}}$ is 1.17V. Typical values for "
+    "$\\pmb{R_{PF\\_TOP}}$ and $\\pmb{R_{PF\\_BOTTOM}}$ are in the range "
+    "of 40k to 1M.",
+    mathjax=True,
+)
+
+formula_v_in_step_up_mode = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{IN\_STEP\_UP} = 1 + \left( \frac{R_{PF\_TOP}}
+            {R_{PF\_BOTTOM}} \right) \cdot V_{PFI(TH)} $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+paragraph_17 = dcc.Markdown(
+    "The input voltage above which the power-fail status pin "
+    "$\\overline{\\text{PFO}}$ is high impedance and the bidirectional "
+    "controller switches to step-down mode. $\\pmb{V_{PFI(HYS)}}$ is the "
+    "hysteresis of the PFI comparator and is equal to 30mV",
+    mathjax=True,
+)
+
+formula_v_in_step_down_mode = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{IN\_STEP\_DOWN} = 1 + \left( \frac{R_{PF\ TOP}}
+            {R_{PF\ BOTTOM}} \right) \cdot (V_{PFI(TH)} + V_{PFI(HYS)}) $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -582,6 +627,15 @@ interactive_calculator = html.Div([
         use_mathjax=True,
     ),
     html.Hr(className="my-2"),
+    html.Div([
+        html.Div(
+            id="calculated_values",
+            style={"fontSize": "1em"},
+        ),
+    ]),
+    html.Hr(className="my-2"),
+    html.Div(id="backup_time_table"),
+    html.Hr(className="my-2"),
     create_slider(
         "${R_{FBC\\ TOP}}$ (${\\Omega}$)",
         "r_fbc_top_slider",
@@ -609,14 +663,24 @@ interactive_calculator = html.Div([
         default_val=1.2,
     ),
     html.Hr(className="my-2"),
-    html.Div([
-        html.Div(
-            id="calculated_values",
-            style={"fontSize": "1em"},
-        ),
-    ]),
-    html.Hr(className="my-2"),
-    html.Div(id="backup_time_table"),
+    create_slider(
+        "${R_{PF\\ TOP}}$ (${\\Omega}$)",
+        "r_pf_top_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=787_000,
+        use_mathjax=True,
+    ),
+    create_slider(
+        "${R_{PF\\ BOTTOM}}$ (${\\Omega}$)",
+        "r_pf_bottom_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=100_000,
+        use_mathjax=True,
+    ),
 ])
 
 
@@ -637,6 +701,8 @@ interactive_calculator = html.Div([
     Input("r_fbc_top_slider", "value"),
     Input("r_fbc_bottom_slider", "value"),
     Input("capfbref_slider", "value"),
+    Input("r_pf_top_slider", "value"),
+    Input("r_pf_bottom_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -652,6 +718,8 @@ def calculate_values(
     r_fbc_top_slider_value,
     r_fbc_bottom_slider_value,
     capfbref_slider_value,
+    r_pf_top_slider_value,
+    r_pf_bottom_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -664,6 +732,8 @@ def calculate_values(
     r_fbc_top_slider = r_fbc_top_slider_value * si.Ohm
     r_fbc_bottom_slider = r_fbc_bottom_slider_value * si.Ohm
     capfbref_slider = capfbref_slider_value * si.V
+    r_pf_top_slider = r_pf_top_slider_value * si.Ohm
+    r_pf_bottom_slider = r_pf_bottom_slider_value * si.Ohm
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -732,6 +802,11 @@ def calculate_values(
     )
 
     v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
+
+    v_in_step_up = 1 + (r_pf_top_slider / r_pf_bottom_slider) * 1.17 * si.V
+    v_in_step_down = 1 + (r_pf_top_slider / r_pf_bottom_slider) * (
+        1.17 * si.V + 0.03 * si.V
+    )
 
     calculated_values_between_sliders = html.Div([
         html.Div(
@@ -804,11 +879,29 @@ def calculate_values(
         html.Div(
             [
                 create_markdown_div(
+                    f"$t_{{BACKUP}}$ = {t_backup:.1f}",
+                    "col-12 col-md text-center",
+                ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
+                create_markdown_div(
                     f"$V_{{CAP}}$ = {v_cap:.2f}",
                     "col-12 col-md text-center",
                 ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
                 create_markdown_div(
-                    f"$t_{{BACKUP}}$ = {t_backup:.1f}",
+                    f"$V_{{IN\\_STEP\\_UP}}$ = {v_in_step_up:.2f}",
+                    "col-12 col-md text-center",
+                ),
+                create_markdown_div(
+                    f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
                     "col-12 col-md text-center",
                 ),
             ],
@@ -1040,6 +1133,21 @@ def layout() -> html.Div:
             ),
             create_section(
                 [paragraph_15], [formula_v_cap], column_widths=[8, 4]
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                "Power-Fail Comparator Input Voltage Threshold",
+                className="mb-2",
+            ),
+            create_section(
+                [paragraph_16],
+                [formula_v_in_step_up_mode],
+                column_widths=[7, 5],
+            ),
+            create_section(
+                [paragraph_17],
+                [formula_v_in_step_down_mode],
+                column_widths=[7, 5],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
