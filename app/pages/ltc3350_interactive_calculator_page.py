@@ -682,23 +682,41 @@ interactive_calculator = html.Div([
         default_val=1.2,
     ),
     html.Hr(className="my-2"),
-    create_slider(
-        "${R_{PF\\ TOP}}$ (${\\Omega}$)",
-        "r_pf_top_slider",
-        min_val=1000,
-        max_val=1_000_000,
-        step=1000,
-        default_val=787_000,
-        use_mathjax=True,
-    ),
-    create_slider(
-        "${R_{PF\\ BOTTOM}}$ (${\\Omega}$)",
-        "r_pf_bottom_slider",
-        min_val=1000,
-        max_val=1_000_000,
-        step=1000,
-        default_val=100_000,
-        use_mathjax=True,
+    html.Div(
+        [
+            html.Div(
+                [
+                    create_slider(
+                        "${R_{PF\\ TOP}}$ (${\\Omega}$)",
+                        "r_pf_top_slider",
+                        min_val=1000,
+                        max_val=1_000_000,
+                        step=1000,
+                        default_val=787_000,
+                        use_mathjax=True,
+                    ),
+                    create_slider(
+                        "${R_{PF\\ BOTTOM}}$ (${\\Omega}$)",
+                        "r_pf_bottom_slider",
+                        min_val=1000,
+                        max_val=1_000_000,
+                        step=1000,
+                        default_val=100_000,
+                        use_mathjax=True,
+                    ),
+                ],
+                className="col-12 col-lg-9",
+            ),
+            html.Div(
+                id="v_in_display",
+                className=(
+                    "col-12 col-lg-3 d-flex align-items-center "
+                    "justify-content-center"
+                ),
+                style={"fontSize": "1.2em"},
+            ),
+        ],
+        className="row",
     ),
     html.Hr(className="my-2"),
     html.Div(
@@ -745,6 +763,7 @@ interactive_calculator = html.Div([
     Output("calculated_values_between_sliders", "children"),
     Output("backup_time_table", "children"),
     Output("v_out_display", "children"),
+    Output("v_in_display", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -960,19 +979,6 @@ def calculate_values(
             ],
             className="row",
         ),
-        html.Div(
-            [
-                create_markdown_div(
-                    f"$V_{{IN\\_STEP\\_UP}}$ = {v_in_step_up:.2f}",
-                    "col-12 col-md text-center",
-                ),
-                create_markdown_div(
-                    f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
-                    "col-12 col-md text-center",
-                ),
-            ],
-            className="row",
-        ),
     ])
 
     cap_esr_pairs = read_cap_esr_pairs_from_csv("cap_esr_pairs.csv")
@@ -1119,11 +1125,23 @@ def calculate_values(
         )
     ])
 
+    v_in_display = html.Div([
+        create_markdown_div(
+            f"$V_{{IN\\_STEP\\_UP}}$ = {v_in_step_up:.2f}",
+            "col-12 text-center",
+        ),
+        create_markdown_div(
+            f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
+            "col-12 text-center",
+        ),
+    ])
+
     return (
         calculated_values_output,
         calculated_values_between_sliders,
         backup_time_table,
         v_out_display,
+        v_in_display,
     )
 
 
