@@ -338,6 +338,27 @@ formula_i_peak = html.Div(
     className="formula-container",
 )
 
+paragraph_15 = dcc.Markdown(
+    "The LTC3350 $\\pmb{V_{CAP}}$ voltage is set by an external feedback "
+    "resistor divider. \n\nThe regulated output voltage is determined by "
+    "following formula where CAPFBREF is the output of the $\\pmb{V_{CAP}}$ "
+    "DAC, programmed in the vcapfb_dac register",
+    mathjax=True,
+)
+
+formula_v_cap = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{CAP} = 1 + \left( \frac{R_{FBC\ TOP}}
+            {R_{FBC\ BOTTOM}} \right) \cdot CAPFBREF $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -561,6 +582,33 @@ interactive_calculator = html.Div([
         use_mathjax=True,
     ),
     html.Hr(className="my-2"),
+    create_slider(
+        "${R_{FBC\\ TOP}}$ (${\\Omega}$)",
+        "r_fbc_top_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=886_000,
+        use_mathjax=True,
+    ),
+    create_slider(
+        "${R_{FBC\\ BOTTOM}}$ (${\\Omega}$)",
+        "r_fbc_bottom_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=118_000,
+        use_mathjax=True,
+    ),
+    create_slider(
+        "CAPFBREF (V)",
+        "capfbref_slider",
+        min_val=0.6375,
+        max_val=1.2,
+        step=0.0375,
+        default_val=1.2,
+    ),
+    html.Hr(className="my-2"),
     html.Div([
         html.Div(
             id="calculated_values",
@@ -586,6 +634,9 @@ interactive_calculator = html.Div([
     Input("r_snsi_slider", "value"),
     Input("esr_eol_selected_slider", "value"),
     Input("c_eol_selected_slider", "value"),
+    Input("r_fbc_top_slider", "value"),
+    Input("r_fbc_bottom_slider", "value"),
+    Input("capfbref_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -598,6 +649,9 @@ def calculate_values(
     r_snsi_slider_value,
     esr_eol_selected_slider_value,
     c_eol_selected_slider_value,
+    r_fbc_top_slider_value,
+    r_fbc_bottom_slider_value,
+    capfbref_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -607,6 +661,9 @@ def calculate_values(
     r_snsi_slider = r_snsi_slider_value * si.Ohm
     esr_eol_selected_slider = esr_eol_selected_slider_value * si.Ohm
     c_eol_selected_slider = c_eol_selected_slider_value * si.F
+    r_fbc_top_slider = r_fbc_top_slider_value * si.Ohm
+    r_fbc_bottom_slider = r_fbc_bottom_slider_value * si.Ohm
+    capfbref_slider = capfbref_slider_value * si.V
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -673,6 +730,8 @@ def calculate_values(
         - gamma_min * (v_stk_min**2)
         - v_loss_squared
     )
+
+    v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
 
     calculated_values_between_sliders = html.Div([
         html.Div(
@@ -744,6 +803,10 @@ def calculate_values(
         ),
         html.Div(
             [
+                create_markdown_div(
+                    f"$V_{{CAP}}$ = {v_cap:.2f}",
+                    "col-12 col-md text-center",
+                ),
                 create_markdown_div(
                     f"$t_{{BACKUP}}$ = {t_backup:.1f}",
                     "col-12 col-md text-center",
@@ -970,6 +1033,13 @@ def layout() -> html.Div:
                 [formula_i_in_max],
                 [formula_i_chg_max, formula_i_peak],
                 column_widths=[8, 2, 2],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                ["Setting V", html.Sub("CAP"), " Voltage"], className="mb-2"
+            ),
+            create_section(
+                [paragraph_15], [formula_v_cap], column_widths=[8, 4]
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
