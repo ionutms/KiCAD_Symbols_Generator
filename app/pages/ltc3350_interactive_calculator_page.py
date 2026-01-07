@@ -701,23 +701,41 @@ interactive_calculator = html.Div([
         use_mathjax=True,
     ),
     html.Hr(className="my-2"),
-    create_slider(
-        "${R_{FBO\\ TOP}}$ (${\\Omega}$)",
-        "r_fbo_top_slider",
-        min_val=1000,
-        max_val=1_000_000,
-        step=1000,
-        default_val=669_000,
-        use_mathjax=True,
-    ),
-    create_slider(
-        "${R_{FBO\\ BOTTOM}}$ (${\\Omega}$)",
-        "r_fbo_bottom_slider",
-        min_val=1000,
-        max_val=1_000_000,
-        step=1000,
-        default_val=162_000,
-        use_mathjax=True,
+    html.Div(
+        [
+            html.Div(
+                [
+                    create_slider(
+                        "${R_{FBO\\ TOP}}$ (${\\Omega}$)",
+                        "r_fbo_top_slider",
+                        min_val=1000,
+                        max_val=1_000_000,
+                        step=1000,
+                        default_val=669_000,
+                        use_mathjax=True,
+                    ),
+                    create_slider(
+                        "${R_{FBO\\ BOTTOM}}$ (${\\Omega}$)",
+                        "r_fbo_bottom_slider",
+                        min_val=1000,
+                        max_val=1_000_000,
+                        step=1000,
+                        default_val=162_000,
+                        use_mathjax=True,
+                    ),
+                ],
+                className="col-12 col-lg-10",
+            ),
+            html.Div(
+                id="v_out_display",
+                className=(
+                    "col-12 col-lg-2 d-flex align-items-center "
+                    "justify-content-center"
+                ),
+                style={"fontSize": "1.2em"},
+            ),
+        ],
+        className="row",
     ),
 ])
 
@@ -726,6 +744,7 @@ interactive_calculator = html.Div([
     Output("calculated_values", "children"),
     Output("calculated_values_between_sliders", "children"),
     Output("backup_time_table", "children"),
+    Output("v_out_display", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -951,10 +970,6 @@ def calculate_values(
                     f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
                     "col-12 col-md text-center",
                 ),
-                create_markdown_div(
-                    f"$V_{{OUT}}$ = {v_out:.2f}",
-                    "col-12 col-md text-center",
-                ),
             ],
             className="row",
         ),
@@ -1097,10 +1112,18 @@ def calculate_values(
         style={"overflowX": "auto"},
     )
 
+    v_out_display = html.Div([
+        create_markdown_div(
+            f"$V_{{OUT}}$ = {v_out:.2f}",
+            "col-12 col-md text-center",
+        )
+    ])
+
     return (
         calculated_values_output,
         calculated_values_between_sliders,
         backup_time_table,
+        v_out_display,
     )
 
 
