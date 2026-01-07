@@ -293,6 +293,51 @@ formula_v_square_loss = html.Div(
     className="formula-container",
 )
 
+paragraph_14 = dcc.Markdown(
+    "The maximum input current is determined by the resistance across the "
+    "VOUTSP and VOUTSN pins, $\\pmb{R_{SNSI}}$.\n\n"
+    "The maximum charge current is determined by the value of the sense "
+    "resistor, $\\pmb{R_{SNSC}}$, used in series with the inductor.\n\n"
+    "The input and charge current loops servo the voltage across their "
+    "respective sense resistor to 32mV.\n\n"
+    "The peak inductor current limit, $\\pmb{I_{PEAK}}$, is 80% higher than "
+    "the maximum charge current",
+    mathjax=True,
+)
+
+formula_i_in_max = html.Div(
+    dcc.Markdown(
+        r"""
+        $$ I_{IN(MAX)} = \frac{32mV}
+        {R_{SNSI}} $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
+formula_i_chg_max = html.Div(
+    dcc.Markdown(
+        r"""
+        $$ I_{CHG(MAX)} = \frac{32mV}
+        {R_{SNSC}} $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
+formula_i_peak = html.Div(
+    dcc.Markdown(
+        r"""
+        $$ I_{PEAK} = \frac{58mV}
+        {R_{SNSC}} $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -482,6 +527,15 @@ interactive_calculator = html.Div([
         default_val=0.006,
         use_mathjax=True,
     ),
+    create_slider(
+        "${R_{SNSI}}$ (${\\Omega}$)",
+        "r_snsi_slider",
+        min_val=0.001,
+        max_val=0.02,
+        step=0.001,
+        default_val=0.016,
+        use_mathjax=True,
+    ),
     html.Div([
         html.Div(
             id="calculated_values_between_sliders",
@@ -529,6 +583,7 @@ interactive_calculator = html.Div([
     Input("v_cell_max_slider", "value"),
     Input("alpha_b_slider", "value"),
     Input("r_snsc_slider", "value"),
+    Input("r_snsi_slider", "value"),
     Input("esr_eol_selected_slider", "value"),
     Input("c_eol_selected_slider", "value"),
 )
@@ -540,6 +595,7 @@ def calculate_values(
     v_cell_max_slider_value,
     alpha_b_slider_value,
     r_snsc_slider_value,
+    r_snsi_slider_value,
     esr_eol_selected_slider_value,
     c_eol_selected_slider_value,
 ):
@@ -548,6 +604,7 @@ def calculate_values(
     t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
     r_snsc_slider = r_snsc_slider_value * si.Ohm
+    r_snsi_slider = r_snsi_slider_value * si.Ohm
     esr_eol_selected_slider = esr_eol_selected_slider_value * si.Ohm
     c_eol_selected_slider = c_eol_selected_slider_value * si.F
 
@@ -574,6 +631,8 @@ def calculate_values(
         * (v_cell_max**2)
     ) / (4 * p_backup)
 
+    i_in_max = 0.032 * si.V / r_snsi_slider
+    i_chg_max = 0.032 * si.V / r_snsc_slider
     i_peak = 0.058 * si.V / r_snsc_slider
 
     v_stk_min_max_power = np.sqrt(
@@ -606,7 +665,7 @@ def calculate_values(
         / eta_slider_value
     ) * np.log((gamma_max * v_stk_max) / (gamma_min * v_stk_min))
 
-    t_backup_calculated = (
+    t_backup = (
         (eta_slider_value * (c_eol_selected_slider / n_slider_value))
         / (4 * p_backup)
     ) * (
@@ -638,6 +697,19 @@ def calculate_values(
                     f"$I_{{PEAK}}$ = {i_peak}", "col-12 col-md text-center"
                 ),
                 create_markdown_div(
+                    f"$I_{{IN(MAX)}}$ = {i_in_max:.3f}",
+                    "col-12 col-md text-center",
+                ),
+                create_markdown_div(
+                    f"$I_{{CHG(MAX)}}$ = {i_chg_max:.3f}",
+                    "col-12 col-md text-center",
+                ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
+                create_markdown_div(
                     f"$V_{{STK(MIN) Max Power}}$ = {v_stk_min_max_power}",
                     "col-12 col-md text-center",
                 ),
@@ -667,8 +739,13 @@ def calculate_values(
                     f"$V_{{LOSS}}^2$ = {v_loss_squared}",
                     "col-12 col-md text-center",
                 ),
+            ],
+            className="row",
+        ),
+        html.Div(
+            [
                 create_markdown_div(
-                    f"$t_{{BACKUP}}$ = {t_backup_calculated:.1f}",
+                    f"$t_{{BACKUP}}$ = {t_backup:.1f}",
                     "col-12 col-md text-center",
                 ),
             ],
@@ -885,6 +962,14 @@ def layout() -> html.Div:
                     formula_v_square_loss,
                 ],
                 column_widths=[7, 5],
+            ),
+            html.Hr(className="my-2"),
+            html.H3("Setting Input and Charge Currents", className="mb-2"),
+            create_section(
+                [paragraph_14],
+                [formula_i_in_max],
+                [formula_i_chg_max, formula_i_peak],
+                column_widths=[8, 2, 2],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
