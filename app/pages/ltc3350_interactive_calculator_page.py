@@ -404,6 +404,25 @@ formula_v_in_step_down_mode = html.Div(
     className="formula-container",
 )
 
+paragraph_18 = dcc.Markdown(
+    "The output voltage for the controller in step-up mode is set by an "
+    "external feedback resistor divider",
+    mathjax=True,
+)
+
+formula_v_out = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{OUT} = 1 + \left( \frac{R_{FBO\ TOP}}
+            {R_{PBO\ BOTTOM}} \right) \cdot 1.2V $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -681,6 +700,25 @@ interactive_calculator = html.Div([
         default_val=100_000,
         use_mathjax=True,
     ),
+    html.Hr(className="my-2"),
+    create_slider(
+        "${R_{FBO\\ TOP}}$ (${\\Omega}$)",
+        "r_fbo_top_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=669_000,
+        use_mathjax=True,
+    ),
+    create_slider(
+        "${R_{FBO\\ BOTTOM}}$ (${\\Omega}$)",
+        "r_fbo_bottom_slider",
+        min_val=1000,
+        max_val=1_000_000,
+        step=1000,
+        default_val=162_000,
+        use_mathjax=True,
+    ),
 ])
 
 
@@ -703,6 +741,8 @@ interactive_calculator = html.Div([
     Input("capfbref_slider", "value"),
     Input("r_pf_top_slider", "value"),
     Input("r_pf_bottom_slider", "value"),
+    Input("r_fbo_top_slider", "value"),
+    Input("r_fbo_bottom_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -720,6 +760,8 @@ def calculate_values(
     capfbref_slider_value,
     r_pf_top_slider_value,
     r_pf_bottom_slider_value,
+    r_fbo_top_slider_value,
+    r_fbo_bottom_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -734,6 +776,8 @@ def calculate_values(
     capfbref_slider = capfbref_slider_value * si.V
     r_pf_top_slider = r_pf_top_slider_value * si.Ohm
     r_pf_bottom_slider = r_pf_bottom_slider_value * si.Ohm
+    r_fbo_top_slider = r_fbo_top_slider_value * si.Ohm
+    r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -804,9 +848,12 @@ def calculate_values(
     v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
 
     v_in_step_up = 1 + (r_pf_top_slider / r_pf_bottom_slider) * 1.17 * si.V
+
     v_in_step_down = 1 + (r_pf_top_slider / r_pf_bottom_slider) * (
         1.17 * si.V + 0.03 * si.V
     )
+
+    v_out = 1 + (r_fbo_top_slider / r_fbo_bottom_slider) * 1.2 * si.V
 
     calculated_values_between_sliders = html.Div([
         html.Div(
@@ -902,6 +949,10 @@ def calculate_values(
                 ),
                 create_markdown_div(
                     f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
+                    "col-12 col-md text-center",
+                ),
+                create_markdown_div(
+                    f"$V_{{OUT}}$ = {v_out:.2f}",
                     "col-12 col-md text-center",
                 ),
             ],
@@ -1148,6 +1199,16 @@ def layout() -> html.Div:
                 [paragraph_17],
                 [formula_v_in_step_down_mode],
                 column_widths=[7, 5],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                ["Setting V", html.Sub("OUT"), " Voltage in Backup Mode"],
+                className="mb-2",
+            ),
+            create_section(
+                [paragraph_18],
+                [formula_v_out],
+                column_widths=[8, 4],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
