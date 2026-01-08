@@ -773,6 +773,34 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
+    html.Hr(className="my-2"),
+    html.Div(
+        [
+            html.Div(
+                [
+                    create_slider(
+                        "${R_{T}}$ (${\\Omega}$)",
+                        "r_t_slider",
+                        min_val=53600,
+                        max_val=267000,
+                        step=100,
+                        default_val=71500,
+                        use_mathjax=True,
+                    ),
+                ],
+                className="col-12 col-lg-10",
+            ),
+            html.Div(
+                id="f_sw_display",
+                className=(
+                    "col-12 col-lg-2 d-flex align-items-center "
+                    "justify-content-center"
+                ),
+                style={"fontSize": "1.2em"},
+            ),
+        ],
+        className="row",
+    ),
 ])
 
 
@@ -783,6 +811,7 @@ interactive_calculator = html.Div([
     Output("v_out_display", "children"),
     Output("v_in_display", "children"),
     Output("v_cap_display", "children"),
+    Output("f_sw_display", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -800,6 +829,7 @@ interactive_calculator = html.Div([
     Input("r_pf_bottom_slider", "value"),
     Input("r_fbo_top_slider", "value"),
     Input("r_fbo_bottom_slider", "value"),
+    Input("r_t_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -819,6 +849,7 @@ def calculate_values(
     r_pf_bottom_slider_value,
     r_fbo_top_slider_value,
     r_fbo_bottom_slider_value,
+    r_t_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -835,6 +866,7 @@ def calculate_values(
     r_pf_bottom_slider = r_pf_bottom_slider_value * si.Ohm
     r_fbo_top_slider = r_fbo_top_slider_value * si.Ohm
     r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
+    r_t_slider = r_t_slider_value * si.Ohm
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -911,6 +943,8 @@ def calculate_values(
     )
 
     v_out = 1 + (r_fbo_top_slider / r_fbo_bottom_slider) * 1.2 * si.V
+
+    f_sw = 53.5 * 1_000_000 * si.Hz * 1000 * si.Ohm / r_t_slider
 
     calculated_values_between_sliders = html.Div([
         html.Div(
@@ -1153,6 +1187,13 @@ def calculate_values(
         )
     ])
 
+    f_sw_display = html.Div([
+        create_markdown_div(
+            f"$f_{{SW}}$ = {f_sw:.2f}",
+            "col-12 text-center",
+        )
+    ])
+
     return (
         calculated_values_output,
         calculated_values_between_sliders,
@@ -1160,6 +1201,7 @@ def calculate_values(
         v_out_display,
         v_in_display,
         v_cap_display,
+        f_sw_display,
     )
 
 
