@@ -801,6 +801,34 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
+    html.Hr(className="my-2"),
+    html.Div(
+        [
+            html.Div(
+                [
+                    create_slider(
+                        "${V_{IN(MAX)}}$ (${\\Omega}$)",
+                        "v_in_max_slider",
+                        min_val=4.5,
+                        max_val=35,
+                        step=0.1,
+                        default_val=12,
+                        use_mathjax=True,
+                    ),
+                ],
+                className="col-12 col-lg-9",
+            ),
+            html.Div(
+                id="v_in_max_display",
+                className=(
+                    "col-12 col-lg-3 d-flex align-items-center "
+                    "justify-content-center"
+                ),
+                style={"fontSize": "1.2em"},
+            ),
+        ],
+        className="row",
+    ),
 ])
 
 
@@ -812,6 +840,7 @@ interactive_calculator = html.Div([
     Output("v_in_display", "children"),
     Output("v_cap_display", "children"),
     Output("f_sw_display", "children"),
+    Output("v_in_max_display", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -830,6 +859,7 @@ interactive_calculator = html.Div([
     Input("r_fbo_top_slider", "value"),
     Input("r_fbo_bottom_slider", "value"),
     Input("r_t_slider", "value"),
+    Input("v_in_max_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -850,6 +880,7 @@ def calculate_values(
     r_fbo_top_slider_value,
     r_fbo_bottom_slider_value,
     r_t_slider_value,
+    v_in_max_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -867,6 +898,7 @@ def calculate_values(
     r_fbo_top_slider = r_fbo_top_slider_value * si.Ohm
     r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
     r_t_slider = r_t_slider_value * si.Ohm
+    v_in_max_slider = v_in_max_slider_value * si.V
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -945,6 +977,11 @@ def calculate_values(
     v_out = 1 + (r_fbo_top_slider / r_fbo_bottom_slider) * 1.2 * si.V
 
     f_sw = 53.5 * 1_000_000 * si.Hz * 1000 * si.Ohm / r_t_slider
+
+    indunctance_v_in_max_leq_2_v_cap = v_in_max_slider / (i_chg_max * f_sw)
+    indunctance_v_in_max_geq_2_v_cap = (1 - v_cap / v_in_max_slider) * (
+        v_cap / (0.25 * i_chg_max * f_sw)
+    )
 
     calculated_values_between_sliders = html.Div([
         html.Div(
@@ -1194,6 +1231,19 @@ def calculate_values(
         )
     ])
 
+    inductance_display = html.Div([
+        create_markdown_div(
+            "$L_{{V_{{IN(MAX)}} \\leq 2V_{{CAP}}}}$ = "
+            f"{indunctance_v_in_max_leq_2_v_cap:.2f}",
+            "col-12 text-center",
+        ),
+        create_markdown_div(
+            "$L_{{V_{{IN(MAX)}} \\geq 2V_{{CAP}}}}$ = "
+            f"{indunctance_v_in_max_geq_2_v_cap:.2f}",
+            "col-12 text-center",
+        ),
+    ])
+
     return (
         calculated_values_output,
         calculated_values_between_sliders,
@@ -1202,6 +1252,7 @@ def calculate_values(
         v_in_display,
         v_cap_display,
         f_sw_display,
+        inductance_display,
     )
 
 
