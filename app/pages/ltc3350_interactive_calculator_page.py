@@ -450,6 +450,51 @@ formula_f_sw = html.Div(
     className="formula-container",
 )
 
+paragraph_21 = dcc.Markdown(
+    "The switching frequency and inductor selection are interrelated. "
+    "Higher switching frequencies allow the use of smaller inductor and "
+    "capacitor values, but generally results in lower efficiency due to "
+    "MOSFET switching and gate charge losses. In addition, the effect of "
+    "inductor value on ripple current must also be considered. "
+    "The inductor ripple current decreases with higher inductance or higher "
+    "frequency and increases with higher VIN. Accepting larger values of "
+    "ripple current allows the use of low inductances but results in higher "
+    "output voltage ripple and greater core losses. "
+    "$\\pmb{V_{IN(MAX)}}$ is the maximum input voltage, "
+    "$\\pmb{I_{CHG(MAX)}}$ is the maximum regulated charge current, "
+    "and $\\pmb{f_{SW}}$ is the switching frequency. "
+    "Using these equations, the inductor ripple will be at most 25% of "
+    "$\\pmb{I_{CHG(MAX)}}$.",
+    mathjax=True,
+)
+
+formula_indunctance_v_in_max_leq_2_v_cap = html.Div(
+    dcc.Markdown(
+        r"""
+        $$
+        L_{V_{IN(MAX)} \leq 2V_{CAP}} = \frac{V_{IN(MAX)}}
+        {I_{CHG(MAX)} \cdot f_{SW}}
+        $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
+formula_indunctance_v_in_max_geq_2_v_cap = html.Div(
+    dcc.Markdown(
+        r"""
+        $$
+        L_{V_{IN(MAX)} \geq 2V_{CAP}} = \left(1 - \frac{V_{CAP}}
+        {V_{IN(MAX)}}\right) \cdot \frac{V_{CAP}}
+        {0.25 \cdot I_{CHG(MAX)} \cdot f_{SW}}
+        $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -1398,6 +1443,19 @@ def layout() -> html.Div:
                 [paragraph_19, paragraph_20],
                 [formula_f_sw],
                 column_widths=[9, 3],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                "Inductor Selection",
+                className="mb-2",
+            ),
+            create_section(
+                [paragraph_21],
+                [
+                    formula_indunctance_v_in_max_leq_2_v_cap,
+                    formula_indunctance_v_in_max_geq_2_v_cap,
+                ],
+                column_widths=[7, 5],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
