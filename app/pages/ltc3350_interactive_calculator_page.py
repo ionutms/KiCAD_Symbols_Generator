@@ -423,6 +423,33 @@ formula_v_out = html.Div(
     className="formula-container",
 )
 
+paragraph_19 = dcc.Markdown(
+    "The $\\pmb{R_{T}}$ pin is used to program the switching frequency. "
+    "A resistor, $\\pmb{R_{T}}$, from this pin to ground sets the "
+    "switching frequency according to:",
+    mathjax=True,
+)
+
+paragraph_20 = dcc.Markdown(
+    "$\\pmb{R_{T}}$ also sets the scale factor for the capacitor "
+    "measurement value.",
+    mathjax=True,
+)
+
+formula_f_sw = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$
+            F_{SW}(MHz) = \frac{53.5}{R_{T}(kHz)}
+            $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -1361,6 +1388,16 @@ def layout() -> html.Div:
                 [paragraph_18],
                 [formula_v_out],
                 column_widths=[8, 4],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                "RT Oscillator and Switching Frequency",
+                className="mb-2",
+            ),
+            create_section(
+                [paragraph_19, paragraph_20],
+                [formula_f_sw],
+                column_widths=[9, 3],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
