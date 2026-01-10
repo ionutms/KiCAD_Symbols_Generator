@@ -1147,11 +1147,11 @@ def calculate_values(
     )
 
     delta_v_out_step_up_used = abs(
-        (1 - (v_cap / v_out))
-        * (1 / (c_out_slider * f_sw) + ((v_out / v_cap) * r_esr_slider))
-        * (c_out_slider / (100 * 1e-6 * si.F))
-        * 2
-        * si.A
+        (
+            (1 - (v_cap / v_out))
+            * (1 / (c_out_slider * f_sw) + ((v_out / v_cap) * r_esr_slider))
+        )
+        * ((c_out_slider / (100 * 1e-6 * si.F)) * 2 * si.A)
     )
 
     delta_v_out_step_up_unused = abs(
