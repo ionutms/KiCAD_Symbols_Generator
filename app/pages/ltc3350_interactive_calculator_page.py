@@ -495,6 +495,53 @@ formula_indunctance_v_in_max_geq_2_v_cap = html.Div(
     className="formula-container",
 )
 
+paragraph_22 = dcc.Markdown(
+    "$\\pmb{V_{OUT}}$ serves as the input to the synchronous controller in "
+    "step-down mode and as the output in step-up (backup) mode. \n\nIf "
+    "step-up mode is used, place 100µF of bulk (aluminum electrolytic, "
+    "OS-CON, POSCAP) capacitance for every 2A of backup current desired. "
+    "\n\nFor 5V system applications, 100µF per 1A of backup current is "
+    "recommended. In addition, a certain amount of high frequency bypass "
+    "capacitance is needed to minimize voltage ripple. \n\nMaximum ripple "
+    "occurs at the lowest $\\pmb{V_{CAP}}$ that can supply "
+    "$\\pmb{I_{OUT(BACKUP)}}$. \n\nMultilayer ceramics are recommended for "
+    "high frequency filtering. \n\nIf step-up mode is unused, then the "
+    "specification for $\\pmb{C_{OUT}}$ will be determined by the desired "
+    "ripple voltage in step-down mode.",
+    mathjax=True,
+)
+
+formula_delta_v_out_step_up_used = html.Div(
+    dcc.Markdown(
+        r"""
+        $$
+        \Delta V_{OUT}(step\text{-}up\ used) = \left[\left(1
+        - \frac{V_{CAP}}{V_{OUT}}\right)
+        \cdot \frac{1}{C_{OUT} \cdot f_{SW}}
+        + \frac{V_{OUT}}{V_{CAP}} \cdot R_{ESR}\right]
+        \cdot I_{OUT(BACKUP)}
+        $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
+formula_delta_v_out_step_up_unused = html.Div(
+    dcc.Markdown(
+        r"""
+        $$
+        \Delta V_{OUT}(step\text{-}up\ unused) = \frac{V_{CAP}}
+        {V_{OUT}} \cdot \left(1 - \frac{V_{CAP}}{V_{OUT}}\right)
+        \cdot \frac{I_{CHG(MAX)}}{C_{OUT} \cdot f_{SW}}
+        + I_{CHG(MAX)} \cdot R_{ESR}
+        $$
+        """,
+        mathjax=True,
+    ),
+    className="formula-container",
+)
+
 
 def create_slider(
     label,
@@ -1456,6 +1503,25 @@ def layout() -> html.Div:
                     formula_indunctance_v_in_max_geq_2_v_cap,
                 ],
                 column_widths=[7, 5],
+            ),
+            html.Hr(className="my-2"),
+            html.H3(
+                [
+                    "C",
+                    html.Sub("OUT"),
+                    " and C",
+                    html.Sub("CAP"),
+                    " Capacitance",
+                ],
+                className="mb-2",
+            ),
+            create_section(
+                [paragraph_22],
+                [
+                    formula_delta_v_out_step_up_used,
+                    formula_delta_v_out_step_up_unused,
+                ],
+                column_widths=[5, 7],
             ),
             html.Hr(className="my-2"),
             create_section([interactive_calculator]),
