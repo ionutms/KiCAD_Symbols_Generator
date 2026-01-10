@@ -948,6 +948,43 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
+    html.Hr(className="my-2"),
+    html.Div(
+        [
+            html.Div(
+                [
+                    create_slider(
+                        "${C_{OUT}}$ (${\\mu}F$)",
+                        "c_out_slider",
+                        min_val=100,
+                        max_val=500,
+                        step=100,
+                        default_val=100,
+                        use_mathjax=True,
+                    ),
+                    create_slider(
+                        "${R_{ESR}}$ (${m\\Omega}$)",
+                        "r_esr_slider",
+                        min_val=1,
+                        max_val=4500,
+                        step=0.1,
+                        default_val=12,
+                        use_mathjax=True,
+                    ),
+                ],
+                className="col-12 col-lg-8",
+            ),
+            html.Div(
+                id="delta_v_out_display",
+                className=(
+                    "col-12 col-lg-4 d-flex align-items-center "
+                    "justify-content-center"
+                ),
+                style={"fontSize": "1.2em"},
+            ),
+        ],
+        className="row",
+    ),
 ])
 
 
@@ -960,6 +997,7 @@ interactive_calculator = html.Div([
     Output("v_cap_display", "children"),
     Output("f_sw_display", "children"),
     Output("v_in_max_display", "children"),
+    Output("delta_v_out_display", "children"),
     Input("p_backup_slider", "value"),
     Input("t_backup_slider", "value"),
     Input("n_slider", "value"),
@@ -979,6 +1017,8 @@ interactive_calculator = html.Div([
     Input("r_fbo_bottom_slider", "value"),
     Input("r_t_slider", "value"),
     Input("v_in_max_slider", "value"),
+    Input("c_out_slider", "value"),
+    Input("r_esr_slider", "value"),
 )
 def calculate_values(
     p_backup_slider_value,
@@ -1000,6 +1040,8 @@ def calculate_values(
     r_fbo_bottom_slider_value,
     r_t_slider_value,
     v_in_max_slider_value,
+    c_out_slider_value,
+    r_esr_slider_value,
 ):
     """Calculate values based on slider inputs."""
     p_backup = p_backup_slider_value * si.W
@@ -1018,6 +1060,8 @@ def calculate_values(
     r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
     r_t_slider = r_t_slider_value * si.Ohm
     v_in_max_slider = v_in_max_slider_value * si.V
+    c_out_slider = c_out_slider_value * 1e-6 * si.F
+    r_esr_slider = r_esr_slider_value * 1e-3 * si.Ohm
 
     c_eol = (
         (4 * p_backup * t_backup)
@@ -1100,6 +1144,22 @@ def calculate_values(
     indunctance_v_in_max_leq_2_v_cap = v_in_max_slider / (i_chg_max * f_sw)
     indunctance_v_in_max_geq_2_v_cap = (1 - v_cap / v_in_max_slider) * (
         v_cap / (0.25 * i_chg_max * f_sw)
+    )
+
+    delta_v_out_step_up_used = abs(
+        (1 - (v_cap / v_out))
+        * (1 / (c_out_slider * f_sw) + ((v_out / v_cap) * r_esr_slider))
+        * (c_out_slider / (100 * 1e-6 * si.F))
+        * 2
+        * si.A
+    )
+
+    delta_v_out_step_up_unused = abs(
+        (v_cap / v_out)
+        * (
+            (1 - (v_cap / v_out)) * (i_chg_max / (c_out_slider * f_sw))
+            + i_chg_max * r_esr_slider
+        )
     )
 
     calculated_values_between_sliders = html.Div([
@@ -1363,6 +1423,19 @@ def calculate_values(
         ),
     ])
 
+    delta_vout_display = html.Div([
+        create_markdown_div(
+            "$\\Delta V_{{{{OUT}}}}$ (step-up used) = "
+            f"{delta_v_out_step_up_used:.2f}",
+            "col-12 text-center",
+        ),
+        create_markdown_div(
+            "$\\Delta V_{{{{OUT}}}}$ (step-up unused) = "
+            f"{delta_v_out_step_up_unused:.2f}",
+            "col-12 text-center",
+        ),
+    ])
+
     return (
         calculated_values_output,
         calculated_values_between_sliders,
@@ -1372,6 +1445,7 @@ def calculate_values(
         v_cap_display,
         f_sw_display,
         inductance_display,
+        delta_vout_display,
     )
 
 
