@@ -553,6 +553,7 @@ def create_slider(
     marks_list=None,
     marks_step=None,
     use_mathjax=False,
+    unit=None,
 ):
     """Create a slider with label.
 
@@ -566,16 +567,35 @@ def create_slider(
         marks_list: List of specific mark values
         marks_step: Step for automatic marks
         use_mathjax: Whether to render label with MathJax
+        unit: forallpeople unit for mark formatting
 
     """
+
+    def format_mark_value(mark, unit):
+        """Format mark value with unit, removing unnecessary zeros."""
+        if unit is not None:
+            value_with_unit = mark * unit
+            str_val = str(value_with_unit)
+            if "." in str_val:
+                parts = str_val.rsplit(" ", 1)
+                if len(parts) == 2:
+                    num_part, unit_part = parts
+                    num_part = num_part.rstrip("0").rstrip(".")
+                    return f"{num_part} {unit_part}"
+            return str_val
+        else:
+            if isinstance(mark, float) and mark == int(mark):
+                return str(int(mark))
+            elif isinstance(mark, float):
+                return f"{mark:.10f}".rstrip("0").rstrip(".")
+            else:
+                return str(mark)
+
     if marks_list is not None:
-        marks = {
-            mark: f"{mark:.1f}" if isinstance(mark, float) else str(mark)
-            for mark in marks_list
-        }
+        marks = {mark: format_mark_value(mark, unit) for mark in marks_list}
     elif marks_step is not None:
         marks = {
-            i: str(i)
+            i: format_mark_value(i, unit)
             for i in range(int(min_val), int(max_val) + 1, marks_step)
         }
     else:
@@ -706,6 +726,7 @@ interactive_calculator = html.Div([
         step=1,
         default_val=25,
         marks_list=[1, 20, 40, 60, 80, 100],
+        unit=si.W,
     ),
     create_slider(
         "Backup Time (s):",
@@ -715,16 +736,18 @@ interactive_calculator = html.Div([
         step=0.1,
         default_val=1.8,
         marks_list=[0.1, 10, 20, 30, 40, 50, 60],
+        unit=si.s,
     ),
     create_slider(
-        "${V_{CELL(MAX)}}$",
+        "${V_{CELL(MAX)}}$ (V):",
         "v_cell_max_slider",
         min_val=1.0,
         max_val=5.0,
         step=0.1,
         default_val=2.5,
-        marks_list=[1.0, 2.0, 3.0, 4.0, 5.0],
+        marks_list=[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
         use_mathjax=True,
+        unit=si.V,
     ),
     html.H5(
         "Current Sense Resistors", className="mt-4 mb-3 fw-bold text-primary"
@@ -738,6 +761,7 @@ interactive_calculator = html.Div([
         default_val=0.006,
         marks_list=[0.001, 0.005, 0.01, 0.015, 0.02],
         use_mathjax=True,
+        unit=si.Ohm,
     ),
     create_slider(
         "${R_{SNSI}}$ (${\\Omega}$)",
@@ -748,6 +772,7 @@ interactive_calculator = html.Div([
         default_val=0.016,
         marks_list=[0.001, 0.005, 0.01, 0.015, 0.02],
         use_mathjax=True,
+        unit=si.Ohm,
     ),
     html.Div([
         html.Div(
@@ -768,6 +793,7 @@ interactive_calculator = html.Div([
         default_val=0.064,
         marks_list=[0.001, 0.05, 0.1, 0.15, 0.2],
         use_mathjax=True,
+        unit=si.Ohm,
     ),
     create_slider(
         "${C_{EOL\\ SELECTED}}$ (F)",
@@ -778,6 +804,7 @@ interactive_calculator = html.Div([
         default_val=7,
         marks_list=[1, 50, 100, 150, 200, 250, 300],
         use_mathjax=True,
+        unit=si.F,
     ),
     html.Hr(className="my-2"),
     html.Div([
@@ -806,6 +833,7 @@ interactive_calculator = html.Div([
                         default_val=886_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                     create_slider(
                         "${R_{FBC\\ BOTTOM}}$ (${\\Omega}$)",
@@ -816,6 +844,7 @@ interactive_calculator = html.Div([
                         default_val=118_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                     create_slider(
                         "CAPFBREF (V)",
@@ -825,6 +854,7 @@ interactive_calculator = html.Div([
                         step=0.0375,
                         default_val=1.2,
                         marks_list=[0.6375, 0.8, 1.0, 1.2],
+                        unit=si.V,
                     ),
                 ],
                 className="col-12 col-lg-10",
@@ -858,6 +888,7 @@ interactive_calculator = html.Div([
                         default_val=787_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                     create_slider(
                         "${R_{PF\\ BOTTOM}}$ (${\\Omega}$)",
@@ -868,6 +899,7 @@ interactive_calculator = html.Div([
                         default_val=100_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                 ],
                 className="col-12 col-lg-9",
@@ -901,6 +933,7 @@ interactive_calculator = html.Div([
                         default_val=669_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                     create_slider(
                         "${R_{FBO\\ BOTTOM}}$ (${\\Omega}$)",
@@ -911,6 +944,7 @@ interactive_calculator = html.Div([
                         default_val=162_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                 ],
                 className="col-12 col-lg-10",
@@ -951,6 +985,7 @@ interactive_calculator = html.Div([
                             267000,
                         ],
                         use_mathjax=True,
+                        unit=si.Ohm,
                     ),
                 ],
                 className="col-12 col-lg-10",
@@ -984,6 +1019,7 @@ interactive_calculator = html.Div([
                         default_val=12,
                         marks_list=[4.5, 10, 15, 20, 25, 30, 35],
                         use_mathjax=True,
+                        unit=si.V,
                     ),
                 ],
                 className="col-12 col-lg-9",
@@ -1021,6 +1057,7 @@ interactive_calculator = html.Div([
                         default_val=100,
                         marks_list=[100, 200, 300, 400, 500],
                         use_mathjax=True,
+                        unit=1e-6 * si.F,
                     ),
                     create_slider(
                         "${R_{ESR}}$ (${m\\Omega}$)",
@@ -1031,6 +1068,7 @@ interactive_calculator = html.Div([
                         default_val=12,
                         marks_list=[1, 1000, 2000, 3000, 4000, 4500],
                         use_mathjax=True,
+                        unit=1e-3 * si.Ohm,
                     ),
                 ],
                 className="col-12 col-lg-8",
