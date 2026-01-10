@@ -665,6 +665,7 @@ def read_cap_esr_pairs_from_csv(csv_file_path):
 
 
 interactive_calculator = html.Div([
+    html.H5("System Parameters", className="mt-3 mb-3 fw-bold text-primary"),
     create_slider(
         "Boost Efficiency (${\\eta}$):",
         "eta_slider",
@@ -694,6 +695,9 @@ interactive_calculator = html.Div([
         marks_list=[i / 10 for i in range(1, 10)],
         use_mathjax=True,
     ),
+    html.H5(
+        "Backup Requirements", className="mt-4 mb-3 fw-bold text-primary"
+    ),
     create_slider(
         "Backup Power (W):",
         "p_backup_slider",
@@ -701,7 +705,7 @@ interactive_calculator = html.Div([
         max_val=100,
         step=1,
         default_val=25,
-        marks_step=20,
+        marks_list=[1, 20, 40, 60, 80, 100],
     ),
     create_slider(
         "Backup Time (s):",
@@ -710,7 +714,7 @@ interactive_calculator = html.Div([
         max_val=60,
         step=0.1,
         default_val=1.8,
-        marks_step=10,
+        marks_list=[0.1, 10, 20, 30, 40, 50, 60],
     ),
     create_slider(
         "${V_{CELL(MAX)}}$",
@@ -722,6 +726,9 @@ interactive_calculator = html.Div([
         marks_list=[1.0, 2.0, 3.0, 4.0, 5.0],
         use_mathjax=True,
     ),
+    html.H5(
+        "Current Sense Resistors", className="mt-4 mb-3 fw-bold text-primary"
+    ),
     create_slider(
         "${R_{SNSC}}$ (${\\Omega}$)",
         "r_snsc_slider",
@@ -729,6 +736,7 @@ interactive_calculator = html.Div([
         max_val=0.02,
         step=0.001,
         default_val=0.006,
+        marks_list=[0.001, 0.005, 0.01, 0.015, 0.02],
         use_mathjax=True,
     ),
     create_slider(
@@ -738,6 +746,7 @@ interactive_calculator = html.Div([
         max_val=0.02,
         step=0.001,
         default_val=0.016,
+        marks_list=[0.001, 0.005, 0.01, 0.015, 0.02],
         use_mathjax=True,
     ),
     html.Div([
@@ -746,6 +755,10 @@ interactive_calculator = html.Div([
             style={"fontSize": "1em"},
         ),
     ]),
+    html.H5(
+        "Selected Capacitor EOL Specifications",
+        className="mt-4 mb-3 fw-bold text-primary",
+    ),
     create_slider(
         "${ESR_{EOL\\ SELECTED}}$ (${\\Omega}$)",
         "esr_eol_selected_slider",
@@ -753,6 +766,7 @@ interactive_calculator = html.Div([
         max_val=0.2,
         step=0.001,
         default_val=0.064,
+        marks_list=[0.001, 0.05, 0.1, 0.15, 0.2],
         use_mathjax=True,
     ),
     create_slider(
@@ -762,6 +776,7 @@ interactive_calculator = html.Div([
         max_val=300,
         step=1,
         default_val=7,
+        marks_list=[1, 50, 100, 150, 200, 250, 300],
         use_mathjax=True,
     ),
     html.Hr(className="my-2"),
@@ -774,6 +789,10 @@ interactive_calculator = html.Div([
     html.Hr(className="my-2"),
     html.Div(id="backup_time_table"),
     html.Hr(className="my-2"),
+    html.H5(
+        [html.Span("V"), html.Sub("CAP"), html.Span(" Feedback Resistors")],
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -785,6 +804,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=886_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                     create_slider(
@@ -794,6 +814,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=118_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                     create_slider(
@@ -803,6 +824,7 @@ interactive_calculator = html.Div([
                         max_val=1.2,
                         step=0.0375,
                         default_val=1.2,
+                        marks_list=[0.6375, 0.8, 1.0, 1.2],
                     ),
                 ],
                 className="col-12 col-lg-10",
@@ -819,6 +841,10 @@ interactive_calculator = html.Div([
         className="row",
     ),
     html.Hr(className="my-2"),
+    html.H5(
+        "Power-Fail Input Resistors",
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -830,6 +856,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=787_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                     create_slider(
@@ -839,6 +866,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=100_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                 ],
@@ -856,6 +884,10 @@ interactive_calculator = html.Div([
         className="row",
     ),
     html.Hr(className="my-2"),
+    html.H5(
+        [html.Span("V"), html.Sub("OUT"), html.Span(" Feedback Resistors")],
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -867,6 +899,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=669_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                     create_slider(
@@ -876,6 +909,7 @@ interactive_calculator = html.Div([
                         max_val=1_000_000,
                         step=1000,
                         default_val=162_000,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                     ),
                 ],
@@ -893,6 +927,10 @@ interactive_calculator = html.Div([
         className="row",
     ),
     html.Hr(className="my-2"),
+    html.H5(
+        [html.Span("Switching Frequency (R"), html.Sub("T"), html.Span(")")],
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -904,6 +942,14 @@ interactive_calculator = html.Div([
                         max_val=267000,
                         step=100,
                         default_val=71500,
+                        marks_list=[
+                            53600,
+                            100000,
+                            150000,
+                            200000,
+                            250000,
+                            267000,
+                        ],
                         use_mathjax=True,
                     ),
                 ],
@@ -921,6 +967,10 @@ interactive_calculator = html.Div([
         className="row",
     ),
     html.Hr(className="my-2"),
+    html.H5(
+        "Inductor Selection Parameters",
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -932,6 +982,7 @@ interactive_calculator = html.Div([
                         max_val=35,
                         step=0.1,
                         default_val=12,
+                        marks_list=[4.5, 10, 15, 20, 25, 30, 35],
                         use_mathjax=True,
                     ),
                 ],
@@ -949,6 +1000,14 @@ interactive_calculator = html.Div([
         className="row",
     ),
     html.Hr(className="my-2"),
+    html.H5(
+        [
+            html.Span("Output Capacitor (C"),
+            html.Sub("OUT"),
+            html.Span(") Parameters"),
+        ],
+        className="mt-3 mb-3 fw-bold text-primary",
+    ),
     html.Div(
         [
             html.Div(
@@ -960,6 +1019,7 @@ interactive_calculator = html.Div([
                         max_val=500,
                         step=100,
                         default_val=100,
+                        marks_list=[100, 200, 300, 400, 500],
                         use_mathjax=True,
                     ),
                     create_slider(
@@ -969,6 +1029,7 @@ interactive_calculator = html.Div([
                         max_val=4500,
                         step=0.1,
                         default_val=12,
+                        marks_list=[1, 1000, 2000, 3000, 4000, 4500],
                         use_mathjax=True,
                     ),
                 ],
