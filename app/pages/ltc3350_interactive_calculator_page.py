@@ -806,16 +806,16 @@ interactive_calculator = html.Div([
         use_mathjax=True,
         unit=si.F,
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.Div([
         html.Div(
             id="calculated_values",
             style={"fontSize": "1em"},
         ),
     ]),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.Div(id="backup_time_table"),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         [html.Span("V"), html.Sub("CAP"), html.Span(" Feedback Resistors")],
         className="mt-3 mb-3 fw-bold text-primary",
@@ -870,7 +870,7 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         "Power-Fail Input Resistors",
         className="mt-3 mb-3 fw-bold text-primary",
@@ -915,7 +915,7 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         [html.Span("V"), html.Sub("OUT"), html.Span(" Feedback Resistors")],
         className="mt-3 mb-3 fw-bold text-primary",
@@ -960,7 +960,7 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         [html.Span("Switching Frequency (R"), html.Sub("T"), html.Span(")")],
         className="mt-3 mb-3 fw-bold text-primary",
@@ -1001,7 +1001,7 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         "Inductor Selection Parameters",
         className="mt-3 mb-3 fw-bold text-primary",
@@ -1035,7 +1035,7 @@ interactive_calculator = html.Div([
         ],
         className="row",
     ),
-    html.Hr(className="my-2"),
+    html.Hr(className="my-3"),
     html.H5(
         [
             html.Span("Output Capacitor (C"),
@@ -1574,21 +1574,21 @@ def layout() -> html.Div:
                 className="d-flex align-items-center mb-4",
             ),
             create_section([paragraph_1, paragraph_2, paragraph_3]),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3("Capacitance Calculation at EOL", className="mb-2"),
             create_section(
                 [paragraph_4, paragraph_5],
                 [formula_c_end_of_life],
                 column_widths=[5, 7],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3("ESR Calculation at EOL", className="mb-2"),
             create_section(
                 [paragraph_6, paragraph_7],
                 [formula_esr_end_of_life],
                 column_widths=[5, 7],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 "Minimum Stack Voltage Verification",
                 className="mb-2",
@@ -1603,7 +1603,7 @@ def layout() -> html.Div:
                 [formula_v_stk_min_at_crt_lim, paragraph_11],
             ),
             create_section([paragraph_12]),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3("Backup Time Calculation", className="mb-2"),
             create_section(
                 [formula_t_backup, paragraph_13],
@@ -1614,7 +1614,7 @@ def layout() -> html.Div:
                 ],
                 column_widths=[7, 5],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3("Setting Input and Charge Currents", className="mb-2"),
             create_section(
                 [paragraph_14],
@@ -1622,14 +1622,14 @@ def layout() -> html.Div:
                 [formula_i_chg_max, formula_i_peak],
                 column_widths=[8, 2, 2],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 ["Setting V", html.Sub("CAP"), " Voltage"], className="mb-2"
             ),
             create_section(
                 [paragraph_15], [formula_v_cap], column_widths=[8, 4]
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 "Power-Fail Comparator Input Voltage Threshold",
                 className="mb-2",
@@ -1644,7 +1644,7 @@ def layout() -> html.Div:
                 [formula_v_in_step_down_mode],
                 column_widths=[7, 5],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 ["Setting V", html.Sub("OUT"), " Voltage in Backup Mode"],
                 className="mb-2",
@@ -1654,7 +1654,7 @@ def layout() -> html.Div:
                 [formula_v_out],
                 column_widths=[8, 4],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 "RT Oscillator and Switching Frequency",
                 className="mb-2",
@@ -1664,7 +1664,7 @@ def layout() -> html.Div:
                 [formula_f_sw],
                 column_widths=[9, 3],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 "Inductor Selection",
                 className="mb-2",
@@ -1677,7 +1677,7 @@ def layout() -> html.Div:
                 ],
                 column_widths=[7, 5],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             html.H3(
                 [
                     "C",
@@ -1696,9 +1696,9 @@ def layout() -> html.Div:
                 ],
                 column_widths=[5, 7],
             ),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
             create_section([interactive_calculator]),
-            html.Hr(className="my-2"),
+            html.Hr(className="my-3"),
         ],
         className="container-fluid p-4",
     )
