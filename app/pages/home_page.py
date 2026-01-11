@@ -522,6 +522,12 @@ REPO_CONFIGS = [
         "has_project_links": True,
     },
     {
+        "name": "PLC_SPOE_UPS",
+        "colors": ["#2A9D8F", "#FF9F1C"],
+        "is_main": False,
+        "has_project_links": True,
+    },
+    {
         "name": "Minimal_LTC3350",
         "colors": ["#2A9D8F", "#FF9F1C"],
         "is_main": False,
