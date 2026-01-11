@@ -741,11 +741,11 @@ interactive_calculator = html.Div([
     create_slider(
         "${V_{CELL(MAX)}}$ (V):",
         "v_cell_max_slider",
-        min_val=1.0,
+        min_val=2.2,
         max_val=5.0,
         step=0.1,
         default_val=2.5,
-        marks_list=[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+        marks_list=[2.2, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
         use_mathjax=True,
         unit=si.V,
     ),
