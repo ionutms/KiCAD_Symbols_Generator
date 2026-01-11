@@ -601,18 +601,27 @@ def create_slider(
     else:
         marks = None
 
-    return html.Div([
-        dcc.Markdown(label, mathjax=use_mathjax),
-        dcc.Slider(
-            id=slider_id,
-            min=min_val,
-            max=max_val,
-            step=step,
-            value=default_val,
-            marks=marks,
-            tooltip={"placement": "bottom", "always_visible": True},
-        ),
-    ])
+    return html.Div(
+        [
+            dcc.Markdown(label, mathjax=use_mathjax),
+            html.Div(
+                [
+                    dcc.Slider(
+                        id=slider_id,
+                        min=min_val,
+                        max=max_val,
+                        step=step,
+                        value=default_val,
+                        marks=marks,
+                        tooltip={
+                            "placement": "bottom",
+                            "always_visible": True,
+                        },
+                    ),
+                ],
+            ),
+        ],
+    )
 
 
 def calculate_backup_time(
@@ -690,10 +699,10 @@ interactive_calculator = html.Div([
         "Boost Efficiency (${\\eta}$):",
         "eta_slider",
         min_val=0.5,
-        max_val=1.0,
+        max_val=0.99,
         step=0.01,
         default_val=0.9,
-        marks_list=[i / 10 for i in range(5, 11)],
+        marks_list=[0.5, 0.6, 0.7, 0.8, 0.9, 0.99],
         use_mathjax=True,
     ),
     create_slider(
@@ -742,10 +751,10 @@ interactive_calculator = html.Div([
         "${V_{CELL(MAX)}}$ (V):",
         "v_cell_max_slider",
         min_val=2.2,
-        max_val=5.0,
+        max_val=5.1,
         step=0.1,
         default_val=2.5,
-        marks_list=[2.2, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+        marks_list=[2.2, 2.5, 3.0, 3.5, 4.0, 4.5, 5.1],
         use_mathjax=True,
         unit=si.V,
     ),

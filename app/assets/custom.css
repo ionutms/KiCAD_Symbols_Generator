@@ -53,3 +53,36 @@
         font-size: 0.55em;
     }
 }
+
+/* Fix slider marks overflow and visibility */
+.rc-slider {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 0px !important;
+}
+
+.rc-slider-mark {
+    width: 100% !important;
+    left: 0 !important;
+    top: 18px !important;
+}
+
+.rc-slider-mark-text {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    transform: translateX(-50%) !important;
+    font-size: 12px !important;
+    position: absolute !important;
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* First mark - align left */
+.rc-slider-mark-text[style*="left: 0%"] {
+    transform: translateX(0) !important;
+}
+
+/* Last mark - align right */
+.rc-slider-mark-text[style*="left: 100%"] {
+    transform: translateX(-100%) !important;
+}
