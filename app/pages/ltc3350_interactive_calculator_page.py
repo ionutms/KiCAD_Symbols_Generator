@@ -1272,15 +1272,18 @@ def calculate_values(
 
     v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
 
-    v_in_step_up = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
+    # FALLING THRESHOLD - Power Fail (triggers step-up/backup mode)
+    v_in_power_fail = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
         1.17 * si.V
     )
 
-    v_in_step_down = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
+    # RISING THRESHOLD WITHOUT HYSTERESIS CIRCUIT (minimal hysteresis)
+    v_in_power_good_basic = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
         1.17 * si.V + 0.03 * si.V
     )
 
-    v_in_step_down_additional = (
+    # RISING THRESHOLD WITH HYSTERESIS CIRCUIT (RPF3 switched in)
+    v_in_power_good = (
         1
         + (r_pf_top_slider / r_pf_bottom_slider)
         + (r_pf_top_slider / r_pf_bottom_2_slider)
@@ -1536,16 +1539,17 @@ def calculate_values(
 
     v_in_display = html.Div([
         create_markdown_div(
-            f"$V_{{IN\\_STEP\\_UP}}$ = {v_in_step_up:.2f}",
+            f"$V_{{IN\\_FALLING}}$ (Power Fail) = {v_in_power_fail:.2f}",
             "col-12 text-center",
         ),
         create_markdown_div(
-            f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
+            "$V_{{IN\\_RISING}}$ (Built-in Hyst.) = "
+            f"{v_in_power_good_basic:.2f}",
             "col-12 text-center",
         ),
         create_markdown_div(
-            "$V_{{IN\\_STEP\\_DOWN\\_ADDITIONAL}}$ = "
-            f"{v_in_step_down_additional:.2f}",
+            "$V_{{IN\\_RISING}}$ (With $R_{{PF\\ BOTTOM\\ 2}}$) = "
+            f"{v_in_power_good:.2f}",
             "col-12 text-center",
         ),
     ])
