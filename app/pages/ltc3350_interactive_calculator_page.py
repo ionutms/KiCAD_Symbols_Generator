@@ -387,7 +387,12 @@ paragraph_17 = dcc.Markdown(
     "The input voltage above which the power-fail status pin "
     "$\\overline{\\text{PFO}}$ is high impedance and the bidirectional "
     "controller switches to step-down mode. $\\pmb{V_{PFI(HYS)}}$ is the "
-    "hysteresis of the PFI comparator and is equal to 30mV",
+    "hysteresis of the PFI comparator and is equal to 30mV. "
+    "\n\nAdditional hysteresis can be added by switching in an additional "
+    "resistor, $\\pmb{R_{PF\\_BOTTOM\\ 2}}$, in parallel with "
+    "$\\pmb{R_{PF\\_BOTTOM}}$ when the voltage at PFI falls below 1.17V. "
+    "\n\nThe falling VIN threshold is the same as before but the rising VIN "
+    "threshold becomes:",
     mathjax=True,
 )
 
@@ -397,6 +402,20 @@ formula_v_in_step_down_mode = html.Div(
             r"""
             $$ V_{IN\_STEP\_DOWN} = 1 + \left( \frac{R_{PF\ TOP}}
             {R_{PF\ BOTTOM}} \right) \cdot (V_{PFI(TH)} + V_{PFI(HYS)}) $$
+            """,
+            mathjax=True,
+        )
+    ],
+    className="formula-container",
+)
+
+formula_v_in_step_down_mode_additional = html.Div(
+    [
+        dcc.Markdown(
+            r"""
+            $$ V_{IN\_STEP\_DOWN\_ADDITIONAL} = \left(1 + \frac{R_{PF\ TOP}}
+            {R_{PF\ BOTTOM}} + \frac{R_{PF\ TOP}} {R_{PF\ BOTTOM\ 2}} \right)
+            \cdot (V_{PFI(TH)} + V_{PFI(HYS)}) $$
             """,
             mathjax=True,
         )
@@ -893,8 +912,8 @@ interactive_calculator = html.Div([
                         "r_pf_top_slider",
                         min_val=1000,
                         max_val=1_000_000,
-                        step=1000,
-                        default_val=787_000,
+                        step=100,
+                        default_val=75_500,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                         unit=si.Ohm,
@@ -904,19 +923,30 @@ interactive_calculator = html.Div([
                         "r_pf_bottom_slider",
                         min_val=1000,
                         max_val=1_000_000,
-                        step=1000,
-                        default_val=100_000,
+                        step=100,
+                        default_val=100_00,
+                        marks_list=[1000, 250000, 500000, 750000, 1000000],
+                        use_mathjax=True,
+                        unit=si.Ohm,
+                    ),
+                    create_slider(
+                        "${R_{PF\\ BOTTOM\\ 2}}$ (${\\Omega}$)",
+                        "r_pf_bottom_2_slider",
+                        min_val=1000,
+                        max_val=1_000_000,
+                        step=100,
+                        default_val=52_000,
                         marks_list=[1000, 250000, 500000, 750000, 1000000],
                         use_mathjax=True,
                         unit=si.Ohm,
                     ),
                 ],
-                className="col-12 col-lg-9",
+                className="col-12 col-lg-8",
             ),
             html.Div(
                 id="v_in_display",
                 className=(
-                    "col-12 col-lg-3 d-flex align-items-center "
+                    "col-12 col-lg-4 d-flex align-items-center "
                     "justify-content-center"
                 ),
                 style={"fontSize": "1.2em"},
@@ -1121,6 +1151,7 @@ interactive_calculator = html.Div([
     Input("capfbref_slider", "value"),
     Input("r_pf_top_slider", "value"),
     Input("r_pf_bottom_slider", "value"),
+    Input("r_pf_bottom_2_slider", "value"),
     Input("r_fbo_top_slider", "value"),
     Input("r_fbo_bottom_slider", "value"),
     Input("r_t_slider", "value"),
@@ -1144,6 +1175,7 @@ def calculate_values(
     capfbref_slider_value,
     r_pf_top_slider_value,
     r_pf_bottom_slider_value,
+    r_pf_bottom_2_slider_value,
     r_fbo_top_slider_value,
     r_fbo_bottom_slider_value,
     r_t_slider_value,
@@ -1164,6 +1196,7 @@ def calculate_values(
     capfbref_slider = capfbref_slider_value * si.V
     r_pf_top_slider = r_pf_top_slider_value * si.Ohm
     r_pf_bottom_slider = r_pf_bottom_slider_value * si.Ohm
+    r_pf_bottom_2_slider = r_pf_bottom_2_slider_value * si.Ohm
     r_fbo_top_slider = r_fbo_top_slider_value * si.Ohm
     r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
     r_t_slider = r_t_slider_value * si.Ohm
@@ -1239,11 +1272,19 @@ def calculate_values(
 
     v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
 
-    v_in_step_up = 1 + (r_pf_top_slider / r_pf_bottom_slider) * 1.17 * si.V
+    v_in_step_up = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
+        1.17 * si.V
+    )
 
-    v_in_step_down = 1 + (r_pf_top_slider / r_pf_bottom_slider) * (
+    v_in_step_down = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
         1.17 * si.V + 0.03 * si.V
     )
+
+    v_in_step_down_additional = (
+        1
+        + (r_pf_top_slider / r_pf_bottom_slider)
+        + (r_pf_top_slider / r_pf_bottom_2_slider)
+    ) * (1.17 * si.V + 0.03 * si.V)
 
     v_out = 1 + (r_fbo_top_slider / r_fbo_bottom_slider) * 1.2 * si.V
 
@@ -1502,6 +1543,11 @@ def calculate_values(
             f"$V_{{IN\\_STEP\\_DOWN}}$ = {v_in_step_down:.2f}",
             "col-12 text-center",
         ),
+        create_markdown_div(
+            "$V_{{IN\\_STEP\\_DOWN\\_ADDITIONAL}}$ = "
+            f"{v_in_step_down_additional:.2f}",
+            "col-12 text-center",
+        ),
     ])
 
     v_cap_display = html.Div([
@@ -1650,8 +1696,11 @@ def layout() -> html.Div:
             ),
             create_section(
                 [paragraph_17],
-                [formula_v_in_step_down_mode],
-                column_widths=[7, 5],
+                [
+                    formula_v_in_step_down_mode,
+                    formula_v_in_step_down_mode_additional,
+                ],
+                column_widths=[4, 8],
             ),
             html.Hr(className="my-3"),
             html.H3(
