@@ -1126,6 +1126,278 @@ interactive_calculator = html.Div([
 ])
 
 
+def calculate_core_parameters(
+    p_backup, t_backup, n, eta, v_cell_max, alpha_b
+):
+    """Calculate core capacitor and ESR parameters."""
+    c_eol = ((4 * p_backup * t_backup) / (n * eta * (v_cell_max**2))) * (
+        (
+            alpha_b
+            + np.sqrt(alpha_b)
+            - (1 - alpha_b)
+            * np.log((1 + np.sqrt(alpha_b)) / np.sqrt(1 - alpha_b))
+        )
+        ** -1
+    )
+
+    esr_eol = (eta * (1 - alpha_b) * n * (v_cell_max**2)) / (4 * p_backup)
+
+    return c_eol, esr_eol
+
+
+def calculate_current_limits(r_snsi, r_snsc):
+    """Calculate current limit parameters."""
+    i_in_max = 0.032 * si.V / r_snsi
+    i_chg_max = 0.032 * si.V / r_snsc
+    i_peak = 0.058 * si.V / r_snsc
+    return i_in_max, i_chg_max, i_peak
+
+
+def calculate_stack_voltages(
+    esr_eol_selected, n, p_backup, eta, i_peak, v_cell_max
+):
+    """Calculate stack voltage parameters."""
+    v_stk_min_max_power = np.sqrt((4 * esr_eol_selected * n * p_backup) / eta)
+
+    v_stk_min_current_limit = p_backup / (eta * i_peak) + (
+        n * esr_eol_selected * i_peak
+    )
+
+    v_stk_min = max(v_stk_min_max_power, v_stk_min_current_limit)
+    v_stk_max = n * v_cell_max
+
+    return (
+        v_stk_min,
+        v_stk_max,
+        v_stk_min_max_power,
+        v_stk_min_current_limit,
+    )
+
+
+def calculate_gamma_and_backup_time(
+    v_stk_min, v_stk_max, n, esr_eol_selected, p_backup, eta, c_eol_selected
+):
+    """Calculate gamma values and backup time."""
+    gamma_max = 1 + np.sqrt(
+        1 - (4 * n * esr_eol_selected * p_backup) / (eta * (v_stk_max**2))
+    )
+
+    gamma_min = 1 + np.sqrt(
+        1 - (4 * n * esr_eol_selected * p_backup) / (eta * (v_stk_min**2))
+    )
+
+    v_loss_squared = ((4 * n * esr_eol_selected * p_backup) / eta) * np.log(
+        (gamma_max * v_stk_max) / (gamma_min * v_stk_min)
+    )
+
+    t_backup = ((eta * (c_eol_selected / n)) / (4 * p_backup)) * (
+        gamma_max * (v_stk_max**2)
+        - gamma_min * (v_stk_min**2)
+        - v_loss_squared
+    )
+
+    return gamma_max, gamma_min, v_loss_squared, t_backup
+
+
+def calculate_voltage_thresholds(
+    r_fbc_top,
+    r_fbc_bottom,
+    capfbref,
+    r_pf_top,
+    r_pf_bottom,
+    r_pf_bottom_2,
+    r_fbo_top,
+    r_fbo_bottom,
+):
+    """Calculate voltage threshold parameters."""
+    v_cap = 1 + (r_fbc_top / r_fbc_bottom) * capfbref
+
+    v_in_power_fail = (1 + (r_pf_top / r_pf_bottom)) * (1.17 * si.V)
+
+    v_in_power_good_basic = (1 + (r_pf_top / r_pf_bottom)) * (
+        1.17 * si.V + 0.03 * si.V
+    )
+
+    v_in_power_good = (
+        1 + (r_pf_top / r_pf_bottom) + (r_pf_top / r_pf_bottom_2)
+    ) * (1.17 * si.V + 0.03 * si.V)
+
+    v_out = 1 + (r_fbo_top / r_fbo_bottom) * 1.2 * si.V
+
+    return (
+        v_cap,
+        v_in_power_fail,
+        v_in_power_good_basic,
+        v_in_power_good,
+        v_out,
+    )
+
+
+def calculate_switching_and_inductance(i_chg_max, v_in_max, v_cap, f_sw):
+    """Calculate switching frequency and inductance."""
+    indunctance_v_in_max_leq_2_v_cap = v_in_max / (i_chg_max * f_sw)
+
+    indunctance_v_in_max_geq_2_v_cap = (1 - v_cap / v_in_max) * (
+        v_cap / (0.25 * i_chg_max * f_sw)
+    )
+
+    return (
+        indunctance_v_in_max_leq_2_v_cap,
+        indunctance_v_in_max_geq_2_v_cap,
+    )
+
+
+def calculate_output_ripple(v_cap, v_out, c_out, f_sw, r_esr, i_chg_max):
+    """Calculate output voltage ripple for both scenarios."""
+    delta_v_out_step_up_used = abs(
+        (
+            (1 - (v_cap / v_out))
+            * (1 / (c_out * f_sw) + ((v_out / v_cap) * r_esr))
+        )
+        * ((c_out / (100 * 1e-6 * si.F)) * 2 * si.A)
+    )
+
+    delta_v_out_step_up_unused = abs(
+        (v_cap / v_out)
+        * (
+            (1 - (v_cap / v_out)) * (i_chg_max / (c_out * f_sw))
+            + i_chg_max * r_esr
+        )
+    )
+
+    return delta_v_out_step_up_used, delta_v_out_step_up_unused
+
+
+def create_backup_time_table(
+    cap_esr_pairs,
+    p_backup_slider_value,
+    t_backup_slider_value,
+    eta,
+    n,
+    p_backup,
+    v_cell_max,
+    i_peak,
+):
+    """Create the backup time comparison table."""
+    table_data = []
+
+    power_row = {"Parameter": "P<sub>BACKUP</sub>"}
+    for i in range(len(cap_esr_pairs)):
+        power_row[f"Cap_{i + 1}"] = f"{p_backup_slider_value * si.W:.0f}"
+    table_data.append(power_row)
+
+    time_row = {"Parameter": "t<sub>BACKUP</sub>"}
+    for i in range(len(cap_esr_pairs)):
+        time_row[f"Cap_{i + 1}"] = f"{t_backup_slider_value * si.s:.1f}"
+    table_data.append(time_row)
+
+    part_number_row = {"Parameter": "Part Number"}
+    for i, (_, _, part_number) in enumerate(cap_esr_pairs):
+        part_number_row[f"Cap_{i + 1}"] = part_number
+    table_data.append(part_number_row)
+
+    cap_row = {"Parameter": "C (C<sub>EOL</sub>)"}
+    for i, (cap_initial, _, _) in enumerate(cap_esr_pairs):
+        cap_eol = f"{cap_initial * 0.8 * si.F:.0f}"
+        cap_row[f"Cap_{i + 1}"] = f"{cap_initial * si.F:.0f} ({cap_eol})"
+    table_data.append(cap_row)
+
+    esr_row = {"Parameter": "ESR (ESR<sub>EOL</sub>)"}
+    for i, (_, esr_initial, _) in enumerate(cap_esr_pairs):
+        esr_eol_val = f"{esr_initial * 2 * si.Ohm:.1f}"
+        esr_initial_val = f"{esr_initial * si.Ohm:.1f}"
+        esr_row[f"Cap_{i + 1}"] = (
+            f"{esr_initial_val.replace('.0', '')} "
+            f"({esr_eol_val.replace('.0', '')})"
+        )
+    table_data.append(esr_row)
+
+    initial_time_row = {"Parameter": "t<sub>BACKUP Initial</sub>"}
+    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
+        cap_si = cap_initial * si.F
+        esr_si = esr_initial * si.Ohm
+
+        t_backup_calc = calculate_backup_time(
+            cap_si, esr_si, eta, n, p_backup, v_cell_max, i_peak
+        )
+
+        time_value = float(t_backup_calc.value)
+        time_str = (
+            "N/A"
+            if time_value < 0 or np.isnan(time_value)
+            else f"{time_value * si.s:.1f}"
+        )
+        initial_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
+    table_data.append(initial_time_row)
+
+    eol_time_row = {"Parameter": "t<sub>BACKUP EOL</sub>"}
+    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
+        cap_eol = cap_initial * 0.8
+        esr_eol_val = esr_initial * 2
+
+        cap_si = cap_eol * si.F
+        esr_si = esr_eol_val * si.Ohm
+
+        t_backup_calc = calculate_backup_time(
+            cap_si, esr_si, eta, n, p_backup, v_cell_max, i_peak
+        )
+
+        time_value = float(t_backup_calc.value)
+        time_str = (
+            "N/A"
+            if time_value < 0 or np.isnan(time_value)
+            else f"{time_value * si.s:.1f}"
+        )
+        eol_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
+    table_data.append(eol_time_row)
+
+    columns = [
+        {"name": "Parameter", "id": "Parameter", "presentation": "markdown"}
+    ]
+    for i in range(len(cap_esr_pairs)):
+        columns.append({"name": f"Capacitor {i + 1}", "id": f"Cap_{i + 1}"})
+
+    return dash_table.DataTable(
+        data=table_data,
+        columns=columns,
+        cell_selectable=False,
+        markdown_options={"html": True},
+        css=[
+            {
+                "selector": "tr:hover",
+                "rule": ("background-color: rgba(0, 0, 0, 0) !important;"),
+            }
+        ],
+        style_cell={
+            "textAlign": "center",
+            "padding": "10px",
+            "fontSize": "14px",
+            "border": "1px solid rgba(100, 100, 100, 0.4)",
+            "minWidth": "120px",
+        },
+        style_header={
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "inherit",
+            "fontWeight": "bold",
+            "border": "1px solid rgba(100, 100, 100, 0.4)",
+            "borderBottom": "2px solid rgba(80, 80, 80, 0.6)",
+        },
+        style_data={
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "inherit",
+            "border": "1px solid rgba(100, 100, 100, 0.4)",
+        },
+        style_data_conditional=[
+            {
+                "if": {"column_id": "Parameter"},
+                "fontWeight": "bold",
+                "textAlign": "left",
+                "fontFamily": "inherit",
+            },
+        ],
+    )
+
+
 @callback(
     Output("calculated_values", "children"),
     Output("calculated_values_between_sliders", "children"),
@@ -1183,135 +1455,82 @@ def calculate_values(
     c_out_slider_value,
     r_esr_slider_value,
 ):
-    """Calculate values based on slider inputs."""
+    """TODO."""
     p_backup = p_backup_slider_value * si.W
     t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
-    r_snsc_slider = r_snsc_slider_value * si.Ohm
-    r_snsi_slider = r_snsi_slider_value * si.Ohm
-    esr_eol_selected_slider = esr_eol_selected_slider_value * si.Ohm
-    c_eol_selected_slider = c_eol_selected_slider_value * si.F
-    r_fbc_top_slider = r_fbc_top_slider_value * si.Ohm
-    r_fbc_bottom_slider = r_fbc_bottom_slider_value * si.Ohm
-    capfbref_slider = capfbref_slider_value * si.V
-    r_pf_top_slider = r_pf_top_slider_value * si.Ohm
-    r_pf_bottom_slider = r_pf_bottom_slider_value * si.Ohm
-    r_pf_bottom_2_slider = r_pf_bottom_2_slider_value * si.Ohm
-    r_fbo_top_slider = r_fbo_top_slider_value * si.Ohm
-    r_fbo_bottom_slider = r_fbo_bottom_slider_value * si.Ohm
-    r_t_slider = r_t_slider_value * si.Ohm
-    v_in_max_slider = v_in_max_slider_value * si.V
-    c_out_slider = c_out_slider_value * 1e-6 * si.F
-    r_esr_slider = r_esr_slider_value * 1e-3 * si.Ohm
+    r_snsc = r_snsc_slider_value * si.Ohm
+    r_snsi = r_snsi_slider_value * si.Ohm
+    esr_eol_selected = esr_eol_selected_slider_value * si.Ohm
+    c_eol_selected = c_eol_selected_slider_value * si.F
+    r_fbc_top = r_fbc_top_slider_value * si.Ohm
+    r_fbc_bottom = r_fbc_bottom_slider_value * si.Ohm
+    capfbref = capfbref_slider_value * si.V
+    r_pf_top = r_pf_top_slider_value * si.Ohm
+    r_pf_bottom = r_pf_bottom_slider_value * si.Ohm
+    r_pf_bottom_2 = r_pf_bottom_2_slider_value * si.Ohm
+    r_fbo_top = r_fbo_top_slider_value * si.Ohm
+    r_fbo_bottom = r_fbo_bottom_slider_value * si.Ohm
+    r_t = r_t_slider_value * si.Ohm
+    v_in_max = v_in_max_slider_value * si.V
+    c_out = c_out_slider_value * 1e-6 * si.F
+    r_esr = r_esr_slider_value * 1e-3 * si.Ohm
 
-    c_eol = (
-        (4 * p_backup * t_backup)
-        / (n_slider_value * eta_slider_value * (v_cell_max**2))
-    ) * (
-        (
-            alpha_b_slider_value
-            + np.sqrt(alpha_b_slider_value)
-            - (1 - alpha_b_slider_value)
-            * np.log(
-                (1 + np.sqrt(alpha_b_slider_value))
-                / np.sqrt(1 - alpha_b_slider_value)
-            )
+    c_eol, esr_eol = calculate_core_parameters(
+        p_backup,
+        t_backup,
+        n_slider_value,
+        eta_slider_value,
+        v_cell_max,
+        alpha_b_slider_value,
+    )
+
+    i_in_max, i_chg_max, i_peak = calculate_current_limits(r_snsi, r_snsc)
+
+    v_stk_min, v_stk_max, v_stk_min_max_power, v_stk_min_current_limit = (
+        calculate_stack_voltages(
+            esr_eol_selected,
+            n_slider_value,
+            p_backup,
+            eta_slider_value,
+            i_peak,
+            v_cell_max,
         )
-        ** -1
     )
 
-    esr_eol = (
-        eta_slider_value
-        * (1 - alpha_b_slider_value)
-        * n_slider_value
-        * (v_cell_max**2)
-    ) / (4 * p_backup)
-
-    i_in_max = 0.032 * si.V / r_snsi_slider
-    i_chg_max = 0.032 * si.V / r_snsc_slider
-    i_peak = 0.058 * si.V / r_snsc_slider
-
-    v_stk_min_max_power = np.sqrt(
-        (4 * esr_eol_selected_slider * n_slider_value * p_backup)
-        / eta_slider_value
-    )
-
-    v_stk_min_current_limit = p_backup / (eta_slider_value * i_peak) + (
-        n_slider_value * esr_eol_selected_slider * i_peak
-    )
-
-    v_stk_min = max(v_stk_min_max_power, v_stk_min_current_limit)
-
-    v_stk_max = n_slider_value * v_cell_max
-
-    gamma_max = 1 + np.sqrt(
-        1
-        - (4 * n_slider_value * esr_eol_selected_slider * p_backup)
-        / (eta_slider_value * (v_stk_max**2))
-    )
-
-    gamma_min = 1 + np.sqrt(
-        1
-        - (4 * n_slider_value * esr_eol_selected_slider * p_backup)
-        / (eta_slider_value * (v_stk_min**2))
-    )
-
-    v_loss_squared = (
-        (4 * n_slider_value * esr_eol_selected_slider * p_backup)
-        / eta_slider_value
-    ) * np.log((gamma_max * v_stk_max) / (gamma_min * v_stk_min))
-
-    t_backup = (
-        (eta_slider_value * (c_eol_selected_slider / n_slider_value))
-        / (4 * p_backup)
-    ) * (
-        gamma_max * (v_stk_max**2)
-        - gamma_min * (v_stk_min**2)
-        - v_loss_squared
-    )
-
-    v_cap = 1 + (r_fbc_top_slider / r_fbc_bottom_slider) * capfbref_slider
-
-    # FALLING THRESHOLD - Power Fail (triggers step-up/backup mode)
-    v_in_power_fail = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
-        1.17 * si.V
-    )
-
-    # RISING THRESHOLD WITHOUT HYSTERESIS CIRCUIT (minimal hysteresis)
-    v_in_power_good_basic = (1 + (r_pf_top_slider / r_pf_bottom_slider)) * (
-        1.17 * si.V + 0.03 * si.V
-    )
-
-    # RISING THRESHOLD WITH HYSTERESIS CIRCUIT (RPF3 switched in)
-    v_in_power_good = (
-        1
-        + (r_pf_top_slider / r_pf_bottom_slider)
-        + (r_pf_top_slider / r_pf_bottom_2_slider)
-    ) * (1.17 * si.V + 0.03 * si.V)
-
-    v_out = 1 + (r_fbo_top_slider / r_fbo_bottom_slider) * 1.2 * si.V
-
-    f_sw = 53.5 * 1_000_000 * si.Hz * 1000 * si.Ohm / r_t_slider
-
-    indunctance_v_in_max_leq_2_v_cap = v_in_max_slider / (i_chg_max * f_sw)
-    indunctance_v_in_max_geq_2_v_cap = (1 - v_cap / v_in_max_slider) * (
-        v_cap / (0.25 * i_chg_max * f_sw)
-    )
-
-    delta_v_out_step_up_used = abs(
-        (
-            (1 - (v_cap / v_out))
-            * (1 / (c_out_slider * f_sw) + ((v_out / v_cap) * r_esr_slider))
+    gamma_max, gamma_min, v_loss_squared, t_backup_calc = (
+        calculate_gamma_and_backup_time(
+            v_stk_min,
+            v_stk_max,
+            n_slider_value,
+            esr_eol_selected,
+            p_backup,
+            eta_slider_value,
+            c_eol_selected,
         )
-        * ((c_out_slider / (100 * 1e-6 * si.F)) * 2 * si.A)
     )
 
-    delta_v_out_step_up_unused = abs(
-        (v_cap / v_out)
-        * (
-            (1 - (v_cap / v_out)) * (i_chg_max / (c_out_slider * f_sw))
-            + i_chg_max * r_esr_slider
+    v_cap, v_in_power_fail, v_in_power_good_basic, v_in_power_good, v_out = (
+        calculate_voltage_thresholds(
+            r_fbc_top,
+            r_fbc_bottom,
+            capfbref,
+            r_pf_top,
+            r_pf_bottom,
+            r_pf_bottom_2,
+            r_fbo_top,
+            r_fbo_bottom,
         )
+    )
+
+    f_sw = 53.5 * 1_000_000 * si.Hz * 1000 * si.Ohm / r_t
+
+    indunctance_v_in_max_leq_2_v_cap, indunctance_v_in_max_geq_2_v_cap = (
+        calculate_switching_and_inductance(i_chg_max, v_in_max, v_cap, f_sw)
+    )
+
+    delta_v_out_step_up_used, delta_v_out_step_up_unused = (
+        calculate_output_ripple(v_cap, v_out, c_out, f_sw, r_esr, i_chg_max)
     )
 
     calculated_values_between_sliders = html.Div([
@@ -1385,7 +1604,7 @@ def calculate_values(
         html.Div(
             [
                 create_markdown_div(
-                    f"$t_{{BACKUP}}$ = {t_backup:.1f}",
+                    f"$t_{{BACKUP}}$ = {t_backup_calc:.1f}",
                     "col-12 col-md text-center",
                 ),
             ],
@@ -1394,146 +1613,23 @@ def calculate_values(
     ])
 
     cap_esr_pairs = read_cap_esr_pairs_from_csv("cap_esr_pairs.csv")
-
-    table_data = []
-
-    power_row = {"Parameter": "P<sub>BACKUP</sub>"}
-    for i in range(len(cap_esr_pairs)):
-        power_row[f"Cap_{i + 1}"] = f"{p_backup_slider_value * si.W:.0f}"
-    table_data.append(power_row)
-
-    time_row = {"Parameter": "t<sub>BACKUP</sub>"}
-    for i in range(len(cap_esr_pairs)):
-        time_row[f"Cap_{i + 1}"] = f"{t_backup_slider_value * si.s:.1f}"
-    table_data.append(time_row)
-
-    part_number_row = {"Parameter": "Part Number"}
-    for i, (_, _, part_number) in enumerate(cap_esr_pairs):
-        part_number_row[f"Cap_{i + 1}"] = part_number
-    table_data.append(part_number_row)
-
-    cap_row = {"Parameter": "C (C<sub>EOL</sub>)"}
-    for i, (cap_initial, _, _) in enumerate(cap_esr_pairs):
-        cap_eol = f"{cap_initial * 0.8 * si.F:.0f}"
-        cap_row[f"Cap_{i + 1}"] = f"{cap_initial * si.F:.0f} ({cap_eol})"
-    table_data.append(cap_row)
-
-    esr_row = {"Parameter": "ESR (ESR<sub>EOL</sub>)"}
-    for i, (_, esr_initial, _) in enumerate(cap_esr_pairs):
-        esr_eol_val = f"{esr_initial * 2 * si.Ohm:.1f}"
-        esr_initial_val = f"{esr_initial * si.Ohm:.1f}"
-        esr_row[f"Cap_{i + 1}"] = (
-            f"{esr_initial_val.replace('.0', '')} "
-            f"({esr_eol_val.replace('.0', '')})"
-        )
-    table_data.append(esr_row)
-
-    initial_time_row = {"Parameter": "t<sub>BACKUP Initial</sub>"}
-    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
-        cap_si = cap_initial * si.F
-        esr_si = esr_initial * si.Ohm
-
-        t_backup_calc = calculate_backup_time(
-            cap_si,
-            esr_si,
-            eta_slider_value,
-            n_slider_value,
-            p_backup,
-            v_cell_max,
-            i_peak,
-        )
-
-        time_value = float(t_backup_calc.value)
-
-        time_str = (
-            "N/A"
-            if time_value < 0 or np.isnan(time_value)
-            else f"{time_value * si.s:.1f}"
-        )
-        initial_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
-    table_data.append(initial_time_row)
-
-    eol_time_row = {"Parameter": "t<sub>BACKUP EOL</sub>"}
-    for i, (cap_initial, esr_initial, _) in enumerate(cap_esr_pairs):
-        cap_eol = cap_initial * 0.8
-        esr_eol_val = esr_initial * 2
-
-        cap_si = cap_eol * si.F
-        esr_si = esr_eol_val * si.Ohm
-
-        t_backup_calc = calculate_backup_time(
-            cap_si,
-            esr_si,
-            eta_slider_value,
-            n_slider_value,
-            p_backup,
-            v_cell_max,
-            i_peak,
-        )
-
-        time_value = float(t_backup_calc.value)
-
-        time_str = (
-            "N/A"
-            if time_value < 0 or np.isnan(time_value)
-            else f"{time_value * si.s:.1f}"
-        )
-        eol_time_row[f"Cap_{i + 1}"] = time_str.replace(".0", "")
-    table_data.append(eol_time_row)
-
-    columns = [
-        {"name": "Parameter", "id": "Parameter", "presentation": "markdown"}
-    ]
-    for i in range(len(cap_esr_pairs)):
-        columns.append({"name": f"Capacitor {i + 1}", "id": f"Cap_{i + 1}"})
-
     backup_time_table = html.Div(
-        dash_table.DataTable(
-            data=table_data,
-            columns=columns,
-            cell_selectable=False,
-            markdown_options={"html": True},
-            css=[
-                {
-                    "selector": "tr:hover",
-                    "rule": "background-color: rgba(0, 0, 0, 0) !important;",
-                }
-            ],
-            style_cell={
-                "textAlign": "center",
-                "padding": "10px",
-                "fontSize": "14px",
-                "border": "1px solid rgba(100, 100, 100, 0.4)",
-                "minWidth": "120px",
-            },
-            style_header={
-                "backgroundColor": "rgba(0, 0, 0, 0)",
-                "color": "inherit",
-                "fontWeight": "bold",
-                "border": "1px solid rgba(100, 100, 100, 0.4)",
-                "borderBottom": "2px solid rgba(80, 80, 80, 0.6)",
-            },
-            style_data={
-                "backgroundColor": "rgba(0, 0, 0, 0)",
-                "color": "inherit",
-                "border": "1px solid rgba(100, 100, 100, 0.4)",
-            },
-            style_data_conditional=[
-                {
-                    "if": {"column_id": "Parameter"},
-                    "fontWeight": "bold",
-                    "textAlign": "left",
-                    "fontFamily": "inherit",
-                },
-            ],
+        create_backup_time_table(
+            cap_esr_pairs,
+            p_backup_slider_value,
+            t_backup_slider_value,
+            eta_slider_value,
+            n_slider_value,
+            p_backup,
+            v_cell_max,
+            i_peak,
         ),
         style={"overflowX": "auto"},
     )
 
     v_out_display = html.Div([
         create_markdown_div(
-            f"$V_{{OUT}}$ = {v_out:.2f}",
-            "col-12 col-md text-center",
+            f"$V_{{OUT}}$ = {v_out:.2f}", "col-12 col-md text-center"
         )
     ])
 
@@ -1548,24 +1644,20 @@ def calculate_values(
             "col-12 text-center",
         ),
         create_markdown_div(
-            "$V_{{IN\\_RISING}}$ (With $R_{{PF\\ BOTTOM\\ 2}}$) = "
-            f"{v_in_power_good:.2f}",
+            "$V_{{IN\\_RISING}}$ (With $R_{{PF\\ BOTTOM\\ 2}}$) "
+            f"= {v_in_power_good:.2f}",
             "col-12 text-center",
         ),
     ])
 
     v_cap_display = html.Div([
         create_markdown_div(
-            f"$V_{{CAP}}$ = {v_cap:.2f}",
-            "col-12 text-center",
+            f"$V_{{CAP}}$ = {v_cap:.2f}", "col-12 text-center"
         )
     ])
 
     f_sw_display = html.Div([
-        create_markdown_div(
-            f"$f_{{SW}}$ = {f_sw:.2f}",
-            "col-12 text-center",
-        )
+        create_markdown_div(f"$f_{{SW}}$ = {f_sw:.2f}", "col-12 text-center")
     ])
 
     inductance_display = html.Div([
