@@ -309,20 +309,21 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
             pad_diameter=4.0,
             drill_size=2.0,
             pad_distance=12.15,
+            # TODO: Fix additional pads possitions
             additional_pads=[
                 AdditionalPad(
                     x=-6,
                     y=11.5,
                     pad_diameter=4.0,
                     drill_size=2.0,
-                    name="3",
+                    name="1",
                 ),
                 AdditionalPad(
                     x=-6,
                     y=-11.5,
                     pad_diameter=4.0,
                     drill_size=2.0,
-                    name="4",
+                    name="1",
                 ),
             ],
         ),
