@@ -8,6 +8,7 @@ accurate footprints with appropriate pad dimensions and clearances.
 from pathlib import Path
 
 from footprint_capacitor_specs import (
+    AdditionalPad,
     FOOTPRINTS_SPECS,
     FootprintSpecs,
     RadialFootprintSpecs,
@@ -48,6 +49,7 @@ def generate_radial_footprint(
     pad_diameter: float = capacitor_specs.pad_dimensions.pad_diameter
     drill_size: float = capacitor_specs.pad_dimensions.drill_size
     pad_distance: float = capacitor_specs.pad_dimensions.pad_distance
+    additional_pads: list = capacitor_specs.pad_dimensions.additional_pads or []
 
     # Calculate position for plus sign outside the circular body
     plus_pos_x = -body_diameter / 2 - 0.75
@@ -80,12 +82,43 @@ def generate_radial_footprint(
             row_count=1,
             pin_numbers=["1", "2"],
         ),
+    ]
+
+    # Add additional pads if specified
+    if additional_pads:
+        # Import here to avoid circular imports
+        from typing import NamedTuple
+
+        # Create a temporary NamedTuple class to match the expected format
+        class PadProperty(NamedTuple):
+            name: str
+            x: float
+            y: float
+            pad_size: float
+            drill_size: float
+
+        # Convert additional pads to the format expected by generate_custom_thru_hole_pads
+        pad_properties = [
+            PadProperty(
+                name=pad.name,
+                x=pad.x,
+                y=pad.y,
+                pad_size=pad.pad_diameter,
+                drill_size=pad.drill_size
+            )
+            for pad in additional_pads
+        ]
+
+        additional_pads_section = footprint_utils.generate_custom_thru_hole_pads(pad_properties)
+        sections.insert(-2, additional_pads_section)  # Insert before the 3D model section
+
+    sections.extend([
         footprint_utils.associate_3d_model(
             "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors",
             step_file_name_final,
         ),
         ")",  # Close the footprint
-    ]
+    ])
 
     return "\n".join(sections)
 

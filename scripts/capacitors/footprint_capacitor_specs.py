@@ -58,6 +58,27 @@ class PadDimensions(NamedTuple):
     center_x: float
 
 
+class AdditionalPad(NamedTuple):
+    """Defines dimensions and position for additional pads.
+
+    All measurements are in millimeters.
+
+    Attributes:
+        x: X coordinate of the pad center
+        y: Y coordinate of the pad center
+        pad_diameter: Diameter of the pad
+        drill_size: Size of drill hole for through hole
+        name: Pad name/number
+
+    """
+
+    x: float
+    y: float
+    pad_diameter: float
+    drill_size: float
+    name: str = "3"
+
+
 class RadialPadDimensions(NamedTuple):
     """Defines dimensions for radial component pads.
 
@@ -69,6 +90,7 @@ class RadialPadDimensions(NamedTuple):
         pad_distance: Distance from center to pad center
         pad_width: Width of the pad (for oval pads)
         pad_height: Height of the pad (for oval pads)
+        additional_pads: List of additional pads
 
     """
 
@@ -77,6 +99,7 @@ class RadialPadDimensions(NamedTuple):
     pad_distance: float
     pad_width: float = 0.0
     pad_height: float = 0.0
+    additional_pads: list[AdditionalPad] | None = None
 
 
 class FootprintSpecs(NamedTuple):
@@ -286,6 +309,22 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
             pad_diameter=4.0,
             drill_size=2.0,
             pad_distance=12.15,
+            additional_pads=[
+                AdditionalPad(
+                    x=-6,
+                    y=11.5,
+                    pad_diameter=4.0,
+                    drill_size=2.0,
+                    name="3",
+                ),
+                AdditionalPad(
+                    x=-6,
+                    y=-11.5,
+                    pad_diameter=4.0,
+                    drill_size=2.0,
+                    name="4",
+                ),
+            ],
         ),
         ref_offset_y=-18.542,
     ),
