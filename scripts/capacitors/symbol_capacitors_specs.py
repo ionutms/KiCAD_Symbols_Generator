@@ -1425,6 +1425,56 @@ WURTH_ELEKTRONIK_SYMBOLS_SPECS = {
         datasheet_url=f"{WURTH_ELEKTRONIK_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "851617031001": SeriesSpec(
+        mpn_prefix="851617031001",
+        mpn_sufix="",
+        manufacturer="Wurth Elektronik",
+        footprint="capacitor_footprints:C_138x315_3_5x8Metric",
+        voltage_rating="2.7V",
+        capacitor_type="Supercapacitor",
+        case_code_in="138x315",
+        case_code_mm="3_5x8",
+        tolerance_map={"Supercapacitor": {"": "10%"}},
+        value_range={"Supercapacitor": (1, 100)},
+        specified_values=[100],
+        datasheet_url=(
+            "https://www.we-online.com/components/products/datasheet/"
+            "851617031001.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search",
+        value_based_mpn_prefix_map={(100,): "HV1860-2R7"},
+        value_footprints={
+            100: "capacitor_footprints:C_22x45_10x10Metric",
+        },
+        value_case_codes_in={100: "22x45"},
+        value_case_codes_mm={100: "7_5x18"},
+        value_3d_models={100: "capacitor_3d_models:C_22x45_H10"},
+    ),
+    "851617034001": SeriesSpec(
+        mpn_prefix="851617034001",
+        mpn_sufix="",
+        manufacturer="Wurth Elektronik",
+        footprint="capacitor_footprints:C_138x315_3_5x8Metric",
+        voltage_rating="2.7V",
+        capacitor_type="Supercapacitor",
+        case_code_in="138x315",
+        case_code_mm="3_5x8",
+        tolerance_map={"Supercapacitor": {"": "10%"}},
+        value_range={"Supercapacitor": (1, 300)},
+        specified_values=[300],
+        datasheet_url=(
+            "https://www.we-online.com/components/products/datasheet/"
+            "851617034001.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search",
+        value_based_mpn_prefix_map={(300,): "HV1860-2R7"},
+        value_footprints={
+            300: "capacitor_footprints:C_35X61_10x10Metric",
+        },
+        value_case_codes_in={300: "35X61"},
+        value_case_codes_mm={300: "7_5x18"},
+        value_3d_models={300: "capacitor_3d_models:C_35X61_H24_3"},
+    ),
 }
 
 # Base URLs for documentation
