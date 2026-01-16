@@ -76,7 +76,7 @@ class AdditionalPad(NamedTuple):
     y: float
     pad_diameter: float
     drill_size: float
-    name: str = "3"
+    name: str = ""
 
 
 class RadialPadDimensions(NamedTuple):
