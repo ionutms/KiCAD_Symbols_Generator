@@ -1174,6 +1174,35 @@ tabs = dbc.Tabs(
             tab_id="additional_tab",
             children=create_concepts_projects_tab_content(),
         ),
+        dbc.Tab(
+            label="Tools",
+            tab_id="tools_tab",
+            children=[
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.Div(
+                                    dcc.Link(
+                                        "LTC3350 Interactive Calculator",
+                                        href="/ltc3350_interactive_calculator",
+                                        style={
+                                            "display": "block",
+                                            "margin-bottom": "10px",
+                                            "color": "#007bff",
+                                            "text-decoration": "none",
+                                            "font-size": "16px",
+                                        },
+                                    )
+                                ),
+                            ],
+                            style={"padding": "20px"},
+                        ),
+                    ],
+                    style={"padding": "20px"},
+                )
+            ],
+        ),
     ],
     id="repository_tabs",
     active_tab="components_db_tab",
@@ -1514,7 +1543,8 @@ def load_traffic_data(
             end=data_frame["clone_timestamp"].max(),
         )
         data_frame = (
-            data_frame.set_index("clone_timestamp")
+            data_frame
+            .set_index("clone_timestamp")
             .reindex(date_range, fill_value=0)
             .reset_index()
             .rename(columns={"index": "clone_timestamp"})
