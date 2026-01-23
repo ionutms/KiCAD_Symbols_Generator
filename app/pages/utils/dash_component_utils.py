@@ -1,16 +1,18 @@
-"""Dash Component Utilities
+"""Dash Component Utilities.
 
 This module contains utility functions for creating and managing
 Dash components, particularly for tables and their styling.
 """
 
-from typing import Any
+from typing import Any, Callable
 
 import dash_bootstrap_components as dbc
+import pages.utils.signal_processing_utils as spu
 import pages.utils.style_utils as styles
 import pandas as pd
-from dash import callback, dcc, html
-from dash.dependencies import Input, Output, State
+from dash import callback, ctx, dcc, html, no_update
+from dash.dependencies import ALL, MATCH, Input, Output, State, Union
+from dash.exceptions import PreventUpdate
 
 
 def app_description(
@@ -272,6 +274,8 @@ def callback_update_ag_grid_visible_table_columns(
         dataframe (pd.DataFrame):
             The source DataFrame containing all possible columns and data.
             Used to filter and format data based on selected columns.
+        url_columns (list[str]):
+            A list of column names that should be treated as URL links
 
     Returns:
         None:
@@ -853,3 +857,909 @@ def save_previous_slider_state_callback(
         return current_value, current_value
 
     return save_previous_slider_state
+
+
+def make_input_groups_column(
+    label: str, input_id: str, value: str, md: int, theme_trigger_id: str
+) -> dbc.Col:
+    """Create a column with two input groups for a label and input field.
+
+    Args:
+        label (str): Text to display in the first input group.
+        input_id (str): ID for the input field in the second group.
+        value (str): Initial value for the input field.
+        md (int):
+            Number of columns the component should
+            span on medium and larger screens.
+        theme_trigger_id (str): ID of the theme switch trigger component.
+
+    Returns:
+        dbc.Col:
+            A Dash Bootstrap Components Column containing two input groups.
+            The column spans 12 columns on extra small screens
+            and 'md' columns on medium and larger screens.
+
+    """
+    input_groups_column = dbc.Col(
+        [
+            dbc.InputGroup(
+                [
+                    dbc.InputGroupText(label, className="flex-grow-1 px-2"),
+                    dbc.InputGroupText("/", className="px-2"),
+                ],
+                className="w-100",
+            ),
+            dbc.InputGroup([
+                dbc.Input(id=input_id, value=value, className="px-2"),
+                dbc.InputGroupText("/", className="px-2"),
+            ]),
+        ],
+        xs=12,
+        md=md,
+        className="mb-1 d-flex flex-column",
+    )
+
+    @callback(
+        Output(input_id, "style"),
+        Input(theme_trigger_id, "data"),
+    )
+    def update_input_styles(theme_switch: bool) -> dict[str, str]:
+        """Update the input styles based on the theme switch.
+
+        Args:
+            theme_switch (bool): True if light theme, False if dark theme.
+
+        Returns:
+            Dict[str, str]: A dictionary of CSS styles for the input.
+
+        """
+        input_style = {
+            "background-color": "#eee" if theme_switch else "#555",
+            "color": "#555" if theme_switch else "#eee",
+        }
+        return input_style
+
+    return input_groups_column
+
+
+def labeled_counter_trio(
+    id_section: str,
+    label: str,
+    limits: dict[str, float],
+    default_count: int = 1,
+    md: int = 3,
+) -> dbc.Col:
+    """Create a labeled button group for changing a count.
+
+    Args:
+        id_section (str): Unique identifier for component IDs.
+        label (str): Text to display above the button group.
+        limits (dict[str, float]):
+            Dictionary defining min and max limits for the counter.
+        default_count (int, optional): Initial count value. Defaults to 1.
+        max_count (int, optional):
+            Maximum value for the counter. Defaults to 1.
+        md (int, optional):
+            Column width for medium and larger screens. Defaults to 3.
+
+    Returns:
+        dbc.Col:
+            Bootstrap column containing the label and counter button group.
+
+    """
+    counter_button_group = dbc.Col(
+        [
+            dcc.Store(id=f"{id_section}_store", data=limits),
+            dbc.Label(
+                children=label,
+                id=f"{id_section}_label",
+                className=styles.CENTER_CLASS_NAME,
+            ),
+            dbc.ButtonGroup(
+                [
+                    dbc.Button(
+                        "<",
+                        id=f"{id_section}_decrement_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                    dbc.Button(
+                        f"{default_count}",
+                        id=f"{id_section}_button",
+                        outline=False,
+                        color="secondary",
+                        disabled=True,
+                    ),
+                    dbc.Button(
+                        ">",
+                        id=f"{id_section}_increment_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                ],
+                className="d-flex flex-wrap",
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=md,
+    )
+    return counter_button_group
+
+
+def labeled_range_slider(
+    id_section: str,
+    label: str,
+    default_value: list[int],
+    min_value: int = 1,
+    md=9,
+) -> dbc.Col:
+    """Create a labeled range slider column.
+
+    Args:
+        id_section (str): ID prefix for the range slider component.
+        label (str): Label text to display above the range slider.
+        default_value (List[int]):
+            Default values for the range slider (two ints).
+        min_value (int, optional):
+            Minimum value for the range slider. Defaults to 1.
+        md (int, optional):
+            Column width for medium and larger screens. Defaults to 9.
+
+    Returns:
+        dbc.Col: Dash Bootstrap column containing the labeled range slider.
+
+    """
+    labeled_range_slider_column = dbc.Col(
+        [
+            dbc.Label(label, className=styles.CENTER_CLASS_NAME),
+            dcc.RangeSlider(
+                id=f"{id_section}_range_slider",
+                min=min_value,
+                value=default_value,
+                pushable=1,
+                step=1,
+                marks=None,
+                tooltip={
+                    "placement": "topLeft",
+                    "always_visible": False,
+                    "style": {"fontSize": "12px"},
+                },
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=md,
+    )
+    return labeled_range_slider_column
+
+
+def labeled_counter_quintet(
+    id_section: str,
+    label: str,
+    limits: dict[str, float],
+    default_count: int = 1,
+    md: int = 3,
+) -> dbc.Col:
+    """Create a labeled button group with five buttons for count manipulation.
+
+    Args:
+        id_section (str): Unique identifier for component IDs.
+        label (str): Text to display above the button group.
+        limits (Dict[str, float]):
+            Dictionary containing min and max count limits.
+        default_count (int, optional): Initial count value. Defaults to 1.
+        md (int, optional):
+            Column width for medium and larger screens. Defaults to 3.
+
+    Returns:
+        dbc.Col:
+            Bootstrap column containing the label and counter button group.
+
+    """
+    counter_button_group = dbc.Col(
+        [
+            dcc.Store(id=f"{id_section}_store", data=limits),
+            dbc.Label(
+                children=label,
+                id=f"{id_section}_label",
+                className=styles.CENTER_CLASS_NAME,
+            ),
+            dbc.ButtonGroup(
+                [
+                    dbc.Button(
+                        "<<",
+                        id=f"{id_section}_divide_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                    dbc.Button(
+                        "<",
+                        id=f"{id_section}_decrement_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                    dbc.Button(
+                        f"{default_count}",
+                        id=f"{id_section}_button",
+                        outline=False,
+                        color="secondary",
+                        disabled=True,
+                    ),
+                    dbc.Button(
+                        ">",
+                        id=f"{id_section}_increment_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                    dbc.Button(
+                        ">>",
+                        id=f"{id_section}_multiply_button",
+                        outline=False,
+                        color="secondary",
+                    ),
+                ],
+                className="d-flex flex-wrap",
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=md,
+    )
+    return counter_button_group
+
+
+def callback_update_store_at_upload(
+    base_id: str,
+    file_store_id: str,
+    store_id: str,
+    process: Callable,
+    search_key: str | None = None,
+) -> None:
+    """Create a callback function to update a store.
+
+    This function generates a callback that processes ZIP file uploads,
+    extracts specific information based on the provided search key,
+    and updates the corresponding store.
+
+    Args:
+        base_id (str): Base ID for the store component.
+        file_store_id (str): ID of the file store component.
+        store_id (str): ID of the main store component.
+        process (Callable):
+            Function to process the uploaded ZIP file.
+        search_key (str | None, optional):
+            Key to search for within the ZIP file.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_store", "data", allow_duplicate=True),
+        Output(f"{base_id}_range_slider", "marks", allow_duplicate=True),
+        Input(f"{file_store_id}", "data"),
+        State(f"{store_id}", "data"),
+        State(f"{base_id}_store", "data"),
+        prevent_initial_call=True,
+    )
+    def update_count_from_zip(
+        contents: str,
+        global_store: dict[str, Any],
+        store: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Update the store with information extracted.
+
+        This callback function processes ZIP file uploads, extracting specific
+        information based on the search_key and updating the store
+        accordingly.
+
+        Args:
+            contents (str): Base64 encoded contents of the uploaded file.
+            global_store (Dict[str, Any]):
+                Global store containing additional context.
+            store (Dict[str, Any]): Current state of the store.
+
+        Returns:
+            Dict[str, Any]:
+                Updated store with new information extracted.
+
+        Raises:
+            PreventUpdate: If the uploaded file is not a ZIP file.
+
+        """
+        if contents["filename"].lower().endswith(".zip"):
+            if process.__name__ == "extract_info_from_zip_as_int":
+                store["max_count"] = process(
+                    contents["content"], contents["filename"], search_key
+                )
+                return store, None
+            if process.__name__ == "count_csv_files_from_zip":
+                store["max_count"] = process(contents["content"])
+                return store, None
+            if process.__name__ == "extract_data_frame_from_zip_contents":
+                names = process(
+                    contents["content"], contents["filename"], global_store
+                )
+                store["max_count"] = len(names)
+                marks = dict(enumerate(names, 1))
+                return store, marks
+        return no_update, no_update
+
+
+def extract_info_from_zip_as_int(
+    contents: str,
+    file_name: str,
+    search_key: str,
+) -> int:
+    """Extract information from a ZIP file and return it as an integer.
+
+    This function uses the `extract_info_from_zip` function to extract
+    information based on a given search key from a ZIP file's contents.
+    It then converts the first extracted value to an integer.
+
+    Args:
+        contents (str): Base64 encoded string of the ZIP file contents.
+        file_name (str): The name of the uploaded ZIP file.
+        search_key (str): The key to search for in the ZIP file's CSV
+        contents.
+
+    Returns:
+        int: The first extracted value converted to an integer.
+
+    Raises:
+        ValueError: If the extracted value cannot be converted to an integer.
+        IndexError: If no value is found for the given search key.
+
+    Note:
+        This function assumes that the `extract_info_from_zip` function
+        returnsa dictionary where values are either strings or lists of
+        strings.
+
+    """
+    if file_name.lower().endswith(".zip"):
+        return int(
+            next(
+                iter(
+                    spu.extract_info_from_zip(contents, [search_key]).values()
+                )
+            )
+        )
+    return no_update
+
+
+def callbacks_radioitems(id_section: str, row_id: str) -> None:
+    """Generate callbacks for radio items in a section.
+
+    This function sets up three callback functions for handling radio items
+    in a specific section of a Dash application. The callbacks are registered
+    with the Dash app and do not need to be returned.
+
+    Args:
+        id_section: The ID of the section.
+        row_id: The ID of the row.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(row_id, "children"),
+        Input(f"{id_section}_range_slider", "value"),
+        State(f"{id_section}_range_slider", "marks"),
+        prevent_initial_call=True,
+    )
+    def generate_radioitems(
+        values: list[int], marks: dict[str, str]
+    ) -> list[dbc.Col]:
+        """Generate radio items based on range slider values.
+
+        Args:
+            values: The selected values from the range slider.
+            marks: The marks on the range slider.
+
+        Returns:
+            A list of Column components containing radio items.
+
+        """
+        if values is None:
+            raise PreventUpdate
+
+        columns = []
+        y_axis_channels = [marks[f"{position}"] for position in values[1:]]
+        options = [
+            {"label": f"y{index}" if index > 1 else "y", "value": index}
+            for index, _ in enumerate(y_axis_channels, 1)
+        ]
+
+        for index, y_axis_data in enumerate(y_axis_channels[1:], 1):
+            columns.append(
+                dbc.Col(
+                    [
+                        dbc.Card(
+                            [
+                                dbc.Row([
+                                    dbc.Col(
+                                        [
+                                            dbc.Label(
+                                                f"{y_axis_data} "
+                                                "axis selection",
+                                                id={
+                                                    "type": "label selection",
+                                                    "index": index,
+                                                },
+                                                className=styles.CENTER_CLASS_NAME,
+                                            ),
+                                            dbc.RadioItems(
+                                                options=options,
+                                                value=options[0]["value"],
+                                                id={
+                                                    "type": "radioitems",
+                                                    "index": index,
+                                                },
+                                                className=styles.CENTER_CLASS_NAME,
+                                                inline=True,
+                                            ),
+                                        ],
+                                        xs=10,
+                                        md=10,
+                                    ),
+                                    dbc.Col(
+                                        [
+                                            dbc.Label(
+                                                "Left",
+                                                id={
+                                                    "type": "label side",
+                                                    "index": index,
+                                                },
+                                            ),
+                                            dbc.Switch(
+                                                id={
+                                                    "type": "switch",
+                                                    "index": index,
+                                                },
+                                                value=False,
+                                                className=(
+                                                    "d-flex "
+                                                    "justify-content-center"
+                                                ),
+                                            ),
+                                        ],
+                                        xs=2,
+                                        md=2,
+                                        className=styles.FLEX_CENTER_COLUMN,
+                                    ),
+                                ])
+                            ],
+                            body=True,
+                            style={
+                                "border": "1px dashed",
+                                "border-radius": "10px",
+                                "padding": "1px",
+                                "background-color": "transparent",
+                            },
+                        ),
+                        html.Br(),
+                    ],
+                    xs=12,
+                    md=4,
+                )
+            )
+
+        return columns
+
+    @callback(
+        Output("filtering_store", "data", allow_duplicate=True),
+        Input("legend_group_switch", "value"),
+        Input("filtering_store", "data"),
+        prevent_initial_call=True,
+    )
+    def update_filtering_store_2(
+        legend_group_switch: bool, filtering: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Update the filtering store with the legend group switch state.
+
+        This function adds or updates the 'legend_group' key in the filtering
+        dictionary based on the state of the legend group switch.
+
+        Args:
+            legend_group_switch (bool): The state of the legend group switch.
+            filtering (Dict[str, Any]): The current filtering dictionary.
+
+        Returns:
+            Dict[str, Any]: The updated filtering dictionary.
+
+        Note:
+            If filtering is None or not a dictionary, an empty dictionary
+            is returned with only the 'legend_group' key.
+
+        """
+        if not isinstance(filtering, dict):
+            return {"legend_group": legend_group_switch}
+
+        filtering["legend_group"] = legend_group_switch
+        return filtering
+
+    @callback(
+        Output("filtering_store", "data", allow_duplicate=True),
+        Output({"type": "switch", "index": ALL}, "value"),
+        Input({"type": "radioitems", "index": ALL}, "value"),
+        Input({"type": "switch", "index": ALL}, "value"),
+        Input("filtering_store", "data"),
+        prevent_initial_call=True,
+    )
+    def update_filtering_store(
+        radioitems_values: list[int],
+        switch: list[bool],
+        filtering: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Update the filtering store based on radio item selections.
+
+        Args:
+            radioitems_values: The selected values from the radio items.
+            switch: The current states of the switches.
+            filtering: The current filtering data.
+
+        Returns:
+            The updated filtering data.
+
+        """
+        try:
+            selection = {}
+            for index, key in enumerate(filtering["y_axis_data"][1:]):
+                selection[key] = (
+                    f"y{radioitems_values[index]}"
+                    if radioitems_values[index] > 1
+                    else "y"
+                )
+            filtering.update({"y_axis_selection": selection})
+
+            def update_list(original_list):
+                value_states = {}
+
+                for value, state in original_list:
+                    if value not in value_states:
+                        value_states[value] = state
+
+                result = [
+                    (value, value_states[value]) for value, _ in original_list
+                ]
+
+                return result
+
+            for index, item in enumerate(radioitems_values):
+                if item == 1:
+                    switch[index] = False
+                if item > 1:
+                    unzipped = list(
+                        zip(
+                            *update_list(list(zip(radioitems_values, switch)))
+                        )
+                    )
+                    switch = [list(state) for state in unzipped][1]
+
+            side = {}
+            for index, key in enumerate(filtering["y_axis_data"][1:]):
+                side[key] = switch[index]
+            filtering.update({"y_axis_side": side})
+
+            return filtering, switch
+        except (KeyError, IndexError):
+            return filtering, no_update
+
+    @callback(
+        Output({"type": "label side", "index": MATCH}, "children"),
+        Input({"type": "switch", "index": MATCH}, "value"),
+        prevent_initial_call=True,
+    )
+    def update_side_label(switch: bool) -> str:
+        """Update the side label based on the switch value.
+
+        Args:
+            switch: The current state of the switch (True/False).
+
+        Returns:
+            The updated label text ('Right' or 'Left').
+
+        """
+        return "Right" if switch else "Left"
+
+
+def callback_update_range_slider_max_and_label(
+    base_id: str, upload_id: str, reset_value: int = 1
+) -> None:
+    """Generate Dash callbacks to update range slider max value and label.
+
+    This function sets up three callback functions for handling updates to
+    range slider, label, and style based on file uploads and data changes.
+
+    Args:
+        base_id: Base ID for the related Dash components.
+        upload_id: ID of the upload component.
+        reset_value: Value to reset the counter to on upload (default: 1).
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_label", "children"),
+        Output(f"{base_id}_range_slider", "max"),
+        Input(f"{base_id}_store", "data"),
+        State(f"{base_id}_label", "children"),
+        prevent_initial_call=True,
+    )
+    def update_range_slider_max_and_label(
+        store: dict[str, Any], label: str
+    ) -> tuple[str, int]:
+        """Update UI components based on the number of detected files.
+
+        Args:
+            store: A dictionary containing the count of detected files.
+            label: The current label text for detected files.
+
+        Returns:
+            A tuple containing the updated label text and new max slider
+            value.
+
+        """
+        try:
+            new_label = label.replace(
+                label.split(" ")[0], str(store["max_count"])
+            )
+            return new_label, store["max_count"]
+        except KeyError:
+            return label, 0
+
+    @callback(
+        Output(f"{base_id}_button", "children", allow_duplicate=True),
+        Input(f"{upload_id}", "data"),
+        prevent_initial_call=True,
+    )
+    def reset_labeled_counter_callback(_upload: str) -> int:
+        """Reset the counter when an upload event occurs.
+
+        Args:
+            _upload: The contents of the upload component (unused).
+
+        Returns:
+            The reset value for the counter.
+
+        """
+        return reset_value
+
+    @callback(
+        Output(f"{base_id}_row", "style"),
+        Input(f"{base_id}_store", "data"),
+        prevent_initial_call=True,
+    )
+    def control_style(store: dict[str, Any]) -> dict[str, str]:
+        """Control the visibility of the row based on max count.
+
+        Args:
+            store: A dictionary containing the max count of items.
+
+        Returns:
+            A dictionary specifying the display style for the row.
+
+        """
+        return (
+            {"display": "none"}
+            if store["max_count"] == 1
+            else {"display": ""}
+        )
+
+
+def callback_labeled_counter_trio(base_id: str, resolution: int = 1) -> None:
+    """Generate a Dash callback for incrementing and decrementing a count.
+
+    Args:
+        base_id (str): Base ID for the related Dash components.
+        resolution (int, optional):
+            Step size for incrementing/decrementing. Defaults to 1.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_button", "children"),
+        Input(f"{base_id}_decrement_button", "n_clicks"),
+        Input(f"{base_id}_increment_button", "n_clicks"),
+        State(f"{base_id}_store", "data"),
+        State(f"{base_id}_button", "children"),
+        prevent_initial_call=True,
+    )
+    def labeled_counter_trio_callback(
+        _decrement: int,
+        _increment: int,
+        stored_data: dict[str, Any],
+        current_count: str,
+    ) -> Union[int, Any]:
+        """Update the count when increment/decrement buttons are clicked.
+
+        This function adjusts the current count, ensuring it stays within
+        the range of 'resolution' to the maximum count stored in the data.
+
+        Args:
+            _increment: Number of times increment button clicked (unused).
+            _decrement: Number of times decrement button clicked (unused).
+            stored_data: Dictionary containing the maximum count.
+            current_count: Current count as a string.
+
+        Returns:
+            Updated count, or no_update if no change.
+
+        """
+        try:
+            max_count = stored_data["max_count"]
+            min_count = stored_data["min_count"]
+            current = int(current_count)
+        except (KeyError, ValueError):
+            return no_update
+
+        if ctx.triggered_id == f"{base_id}_decrement_button":
+            current -= resolution
+        elif ctx.triggered_id == f"{base_id}_increment_button":
+            current += resolution
+
+        return max(min(current, max_count), min_count)
+
+
+def callback_update_range_slider_value(
+    base_id: str,
+    lock: int | None = None,
+) -> None:
+    """Create a Dash callback to update the range slider value.
+
+    Args:
+        base_id: Base ID for the related Dash components.
+        lock: Index of the slider handle to lock (0 or 1). Defaults to None.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_range_slider", "value"),
+        Input(f"{base_id}_button", "children"),
+        Input(f"{base_id}_range_slider", "value"),
+        prevent_initial_call=True,
+    )
+    def update_range_slider_value(
+        current_count: str,
+        range_slider_input,
+    ) -> list[int]:
+        """Update the range slider value based on the current count.
+
+        Args:
+            current_count: Current count as a string.
+            range_slider_input: Current value of the range slider.
+
+        Returns:
+            A list of integers from 1 to the current count.
+
+        """
+        if ctx.triggered_id == f"{base_id}_range_slider":
+            if lock is not None:
+                if range_slider_input[lock] != 1:
+                    range_slider_input[lock] = 1
+                    return range_slider_input
+            return no_update
+
+        current = int(current_count)
+        return list(range(1, current + 1))
+
+
+def callback_labeled_counter_quintet(
+    base_id: str,
+    resolution: Union[int, float],
+    decimal_places: Union[int, None] = None,
+) -> None:
+    """Create a Dash callback for incrementing and decrementing a count.
+
+    Args:
+        base_id: Base ID for the related Dash components.
+        resolution: Step size for incrementing/decrementing.
+        decimal_places: Number of decimal places to round to.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_button", "children"),
+        Input(f"{base_id}_divide_button", "n_clicks"),
+        Input(f"{base_id}_decrement_button", "n_clicks"),
+        Input(f"{base_id}_increment_button", "n_clicks"),
+        Input(f"{base_id}_multiply_button", "n_clicks"),
+        State(f"{base_id}_store", "data"),
+        State(f"{base_id}_button", "children"),
+        prevent_initial_call=True,
+    )
+    def labeled_counter_quintet_callback(
+        _divide: int,
+        _decrement: int,
+        _increment: int,
+        _multiply: int,
+        stored_data: dict[str, Any],
+        current_count: str,
+    ) -> Union[float, Any]:
+        """Update the count when increment/decrement buttons are clicked.
+
+        This function adjusts the current count, ensuring it stays within
+        the range of min_count to max_count stored in the data.
+
+        Args:
+            _divide: Number of times divide button clicked (unused).
+            _increment: Number of times increment button clicked (unused).
+            _decrement: Number of times decrement button clicked (unused).
+            _multiply: Number of times multiply button clicked (unused).
+            stored_data: Dictionary containing min and max counts.
+            current_count: Current count as a string.
+
+        Returns:
+            Updated count, or no_update if no change.
+
+        """
+        try:
+            max_count = stored_data["max_count"]
+            min_count = stored_data["min_count"]
+            current = float(current_count)
+        except (KeyError, ValueError):
+            return no_update
+
+        if ctx.triggered_id == f"{base_id}_divide_button":
+            current /= 10
+        elif ctx.triggered_id == f"{base_id}_decrement_button":
+            current -= resolution
+        elif ctx.triggered_id == f"{base_id}_increment_button":
+            current += resolution
+        elif ctx.triggered_id == f"{base_id}_multiply_button":
+            current *= 10
+
+        return round(
+            float(max(min(current, max_count), min_count)), decimal_places
+        )
+
+
+def callback_update_range_slider_pushable_and_value(base_id: str) -> None:
+    """Generate a callback to update range slider pushable property and value.
+
+    Args:
+        base_id (str): Base ID for the Dash components.
+
+    Returns:
+        None. The function registers callbacks with the Dash app.
+
+    """
+
+    @callback(
+        Output(f"{base_id}_range_slider", "pushable"),
+        Output(f"{base_id}_range_slider", "value"),
+        Input(f"{base_id}_button", "children"),
+        State(f"{base_id}_range_slider", "value"),
+        prevent_initial_call=True,
+    )
+    def update_range_slider_pushable_and_value(
+        current_count: str,
+        slider_value: list[int],
+    ) -> tuple[int, list[int]]:
+        """Update range slider pushable and value based on button clicks.
+
+        Args:
+            current_count (str): Current count from button clicks.
+            slider_value (List[int]): Current slider value.
+
+        Returns:
+            Tuple[int, List[int]]: Updated pushable value and slider value.
+
+        """
+        slider_value[1] = slider_value[0] + int(current_count)
+        return int(current_count), slider_value
