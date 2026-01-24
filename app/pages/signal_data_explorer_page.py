@@ -466,11 +466,8 @@ graph_row = dbc.Row([
     )
 ])
 
-output = dbc.Row([dbc.Col([html.Div(id="output-data-upload")])])
-
 
 MAIN_DIV_CHILDREN.extend([
-    output,
     file_select_row,
     file_upload_row,
     selection_row,
