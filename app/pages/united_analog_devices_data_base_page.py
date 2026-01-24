@@ -9,8 +9,8 @@ IC Analog Devices specifications. It includes features such as:
 - Responsive theme support
 """
 
-import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
+import dash_bootstrap_components as dbc
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd

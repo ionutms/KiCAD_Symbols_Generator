@@ -22,8 +22,8 @@ comprehensive styling support for both light and dark themes.
 
 from typing import Any
 
-import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
+import dash_bootstrap_components as dbc
 import pages.utils.dash_component_utils as dcu
 import pages.utils.style_utils as styles
 import pandas as pd
