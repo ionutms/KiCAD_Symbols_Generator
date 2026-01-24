@@ -52,7 +52,6 @@ from typing import Any, Dict, List, Tuple
 import dash_bootstrap_components as dbc
 import pages.utils.dash_component_utils as dcu
 import pages.utils.signal_processing_utils as spu
-import pages.utils.style_utils as styles
 from dash import (
     Input,
     Output,
@@ -133,20 +132,12 @@ usage_steps = [
 
 MAIN_DIV_CHILDREN = [
     dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
-    dbc.Row([
-        dbc.Col([
-            html.H3(
-                f"{link_name.replace('_', ' ')}", style=styles.heading_3_style
-            )
-        ])
-    ]),
+    dbc.Row([dbc.Col([html.H3(f"{link_name.replace('_', ' ')}")])]),
     dbc.Row([dcu.app_description(TITLE, ABOUT, features, usage_steps)]),
 ]
 
 
-layout = dbc.Container(
-    [html.Div(MAIN_DIV_CHILDREN, style=styles.GLOBAL_STYLE)], fluid=True
-)
+layout = dbc.Container([html.Div(MAIN_DIV_CHILDREN)], fluid=True)
 
 
 file_upload_component = dcc.Upload(
@@ -261,14 +252,9 @@ radioitems_row = dbc.Row([
                         dbc.Card(
                             id="group_legend_card",
                             children=[
-                                dbc.Label(
-                                    "Group Legend",
-                                    className=styles.CENTER_CLASS_NAME,
-                                ),
+                                dbc.Label("Group Legend"),
                                 dbc.Switch(
-                                    id="legend_group_switch",
-                                    value=False,
-                                    className=styles.CENTER_CLASS_NAME,
+                                    id="legend_group_switch", value=False
                                 ),
                             ],
                             body=True,
@@ -288,13 +274,7 @@ radioitems_row = dbc.Row([
                 dbc.Col(
                     [
                         dbc.Card(
-                            [
-                                dbc.Button(
-                                    "View",
-                                    id="view_data_button",
-                                    className=styles.CENTER_CLASS_NAME,
-                                )
-                            ],
+                            [dbc.Button("View", id="view_data_button")],
                             body=True,
                             style={
                                 "border": "none",
