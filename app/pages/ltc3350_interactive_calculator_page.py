@@ -1709,17 +1709,14 @@ def layout() -> html.Div:
     return html.Div(
         [
             html.Div(
+                [dcc.Link("Go back Home", href="/")],
+                style={"marginBottom": "20px"},
+            ),
+            html.Div(
                 [
                     html.H1(
                         "LTC3350 Interactive Calculator",
                         className="d-inline-block me-auto",
-                    ),
-                    html.A(
-                        "Return Home",
-                        href="/",
-                        className=(
-                            "text-decoration-none text-primary fw-bold"
-                        ),
                     ),
                 ],
                 className="d-flex align-items-center mb-4",
