@@ -859,69 +859,6 @@ def save_previous_slider_state_callback(
     return save_previous_slider_state
 
 
-def make_input_groups_column(
-    label: str, input_id: str, value: str, md: int, theme_trigger_id: str
-) -> dbc.Col:
-    """Create a column with two input groups for a label and input field.
-
-    Args:
-        label (str): Text to display in the first input group.
-        input_id (str): ID for the input field in the second group.
-        value (str): Initial value for the input field.
-        md (int):
-            Number of columns the component should
-            span on medium and larger screens.
-        theme_trigger_id (str): ID of the theme switch trigger component.
-
-    Returns:
-        dbc.Col:
-            A Dash Bootstrap Components Column containing two input groups.
-            The column spans 12 columns on extra small screens
-            and 'md' columns on medium and larger screens.
-
-    """
-    input_groups_column = dbc.Col(
-        [
-            dbc.InputGroup(
-                [
-                    dbc.InputGroupText(label, className="flex-grow-1 px-2"),
-                    dbc.InputGroupText("/", className="px-2"),
-                ],
-                className="w-100",
-            ),
-            dbc.InputGroup([
-                dbc.Input(id=input_id, value=value, className="px-2"),
-                dbc.InputGroupText("/", className="px-2"),
-            ]),
-        ],
-        xs=12,
-        md=md,
-        className="mb-1 d-flex flex-column",
-    )
-
-    @callback(
-        Output(input_id, "style"),
-        Input(theme_trigger_id, "data"),
-    )
-    def update_input_styles(theme_switch: bool) -> dict[str, str]:
-        """Update the input styles based on the theme switch.
-
-        Args:
-            theme_switch (bool): True if light theme, False if dark theme.
-
-        Returns:
-            Dict[str, str]: A dictionary of CSS styles for the input.
-
-        """
-        input_style = {
-            "background-color": "#eee" if theme_switch else "#555",
-            "color": "#555" if theme_switch else "#eee",
-        }
-        return input_style
-
-    return input_groups_column
-
-
 def labeled_counter_trio(
     id_section: str,
     label: str,
