@@ -69,7 +69,9 @@ from dash.exceptions import PreventUpdate
 
 
 def write_data_frame_to_buffer(
-    data_frame: pd.DataFrame, buffer: io.StringIO, header: bool = True
+    data_frame: pd.DataFrame,
+    buffer: io.StringIO,
+    header: bool = True,
 ) -> None:
     """Write a DataFrame to a StringIO buffer.
 
@@ -187,7 +189,9 @@ def create_zip_file(
     return zip_buffer.getvalue()
 
 
-def count_csv_files_from_zip(file_contents: str) -> int:
+def count_csv_files_from_zip(
+    file_contents: str,
+) -> int:
     """Count the number of CSV files in a zip archive.
 
     Args:
@@ -212,7 +216,9 @@ def count_csv_files_from_zip(file_contents: str) -> int:
 
 
 def find_first_empty_row_index(
-    zip_file: zipfile.ZipFile, csv_file_list: List[str], chunk_size: int = 20
+    zip_file: zipfile.ZipFile,
+    csv_file_list: List[str],
+    chunk_size: int = 20,
 ) -> int:
     """Find the consistent first empty row index across multiple CSV files.
 
@@ -262,7 +268,8 @@ def find_first_empty_row_index(
 
 
 def extract_info_from_zip(
-    file_contents: str, keywords: List[str]
+    file_contents: str,
+    keywords: List[str],
 ) -> Dict[str, Union[str, List[str]]]:
     """Extract specific information from CSV files in a zip archive.
 
@@ -318,7 +325,8 @@ def extract_info_from_zip(
 
 
 def read_and_validate_zip(
-    file_contents: str, file_name: str
+    file_contents: str,
+    file_name: str,
 ) -> zipfile.ZipFile:
     """Read and validate a zip file from base64 encoded contents.
 
@@ -343,7 +351,8 @@ def read_and_validate_zip(
 
 
 def get_csv_file_list(
-    zip_file: zipfile.ZipFile, filtering: Dict[str, Any]
+    zip_file: zipfile.ZipFile,
+    filtering: Dict[str, Any],
 ) -> List[str]:
     """Get a list of CSV files from the zip file, applying any filters.
 
@@ -608,7 +617,8 @@ def create_base_layout_configuration(
 
 
 def update_layout_with_y_axes(
-    layout_configuration: Dict[str, Any], filtering: Dict[str, Any]
+    layout_configuration: Dict[str, Any],
+    filtering: Dict[str, Any],
 ) -> None:
     """Update the layout configuration with multiple y-axes.
 
@@ -635,7 +645,8 @@ def update_layout_with_y_axes(
 
 
 def separate_left_right_axes(
-    y_selection: List[str], y_side: List[bool]
+    y_selection: List[str],
+    y_side: List[bool],
 ) -> Tuple[List[str], List[str]]:
     """Separate y-axes into left and right lists.
 
@@ -686,7 +697,8 @@ def update_x_axis_domain(
 
 
 def calculate_axis_positions(
-    left_list: List[str], right_list: List[str]
+    left_list: List[str],
+    right_list: List[str],
 ) -> Dict[str, float]:
     """Calculate the positions for each y-axis.
 
@@ -771,7 +783,8 @@ def create_y_axis_config(
 
 
 def get_csv_files_from_zip(
-    zip_file: zipfile.ZipFile, filtering: Dict[str, Any]
+    zip_file: zipfile.ZipFile,
+    filtering: Dict[str, Any],
 ) -> List[str]:
     """Get a list of CSV files from the zip file, applying any filters.
 
@@ -829,7 +842,9 @@ def process_csv_file_for_data_frame_extraction(
 
 
 def extract_data_frame_from_zip_contents(
-    file_contents: str, file_name: str, filtering: Dict[str, Any]
+    file_contents: str,
+    file_name: str,
+    filtering: Dict[str, Any],
 ) -> List[List[str]]:
     """Parse and extract contents of CSV files within an uploaded ZIP file.
 
