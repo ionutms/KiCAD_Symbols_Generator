@@ -1212,6 +1212,19 @@ tabs = dbc.Tabs(
                                         },
                                     )
                                 ),
+                                html.Div(
+                                    dcc.Link(
+                                        "Signal Data Generator",
+                                        href="/signal_data_generator",
+                                        style={
+                                            "display": "block",
+                                            "margin-bottom": "10px",
+                                            "color": "#007bff",
+                                            "text-decoration": "none",
+                                            "font-size": "16px",
+                                        },
+                                    )
+                                ),
                             ],
                             style={"padding": "20px"},
                         ),

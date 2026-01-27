@@ -1700,3 +1700,72 @@ def callback_update_range_slider_pushable_and_value(base_id: str) -> None:
         """
         slider_value[1] = slider_value[0] + int(current_count)
         return int(current_count), slider_value
+
+
+def create_labeled_input(
+    id_section: str, label: str, placeholder: str, value: Any, md: int = 3
+) -> dbc.Col:
+    """Create a labeled input column.
+
+    Args:
+        id_section: ID for the input element.
+        label: Text for the input label.
+        placeholder: Placeholder text for the input.
+        value: Default value for the input.
+        md: Column width for medium screens and up. Defaults to 3.
+
+    Returns:
+        A Bootstrap column containing a labeled input and horizontal rule.
+
+    """
+    labeled_input_column = dbc.Col(
+        [
+            dbc.Label(label, className=styles.CENTER_CLASS_NAME),
+            dbc.Input(
+                id=id_section,
+                type="text",
+                placeholder=placeholder,
+                value=value,
+                className="d-flex flex-wrap",
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=md,
+    )
+    return labeled_input_column
+
+
+def create_labeled_button(
+    id_section: str, label: str, button_label: str, md: int = 6
+) -> dbc.Col:
+    """Create a labeled button column.
+
+    Args:
+        id_section: ID for the button element.
+        label: Text for the button label.
+        button_label: Text for the button.
+        md: Column width for medium screens and up. Defaults to 6.
+
+    Returns:
+        A Bootstrap column containing a labeled button and horizontal rule.
+
+    """
+    labeled_button_column = dbc.Col(
+        [
+            dbc.Label(
+                label,
+                id=f"{id_section}_label",
+                className=styles.CENTER_CLASS_NAME,
+            ),
+            dbc.Button(
+                button_label,
+                id=f"{id_section}_button",
+                className=styles.CENTER_CLASS_NAME,
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=md,
+    )
+    return labeled_button_column
