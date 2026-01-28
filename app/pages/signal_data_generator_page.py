@@ -16,7 +16,6 @@ from typing import Any, Dict, List, Tuple, Union
 import dash_bootstrap_components as dbc
 import pages.utils.dash_component_utils as dcu
 import pages.utils.signal_processing_utils as spu
-import pages.utils.style_utils as styles
 import pandas as pd
 from dash import (
     callback,
@@ -75,12 +74,7 @@ layout = dbc.Container(
             [
                 dbc.Row([dbc.Col([dcc.Link("Go back Home", href="/")])]),
                 dbc.Row([
-                    dbc.Col([
-                        html.H3(
-                            f"{link_name.replace('_', ' ')}",
-                            style=styles.heading_3_style,
-                        )
-                    ])
+                    dbc.Col([html.H3(f"{link_name.replace('_', ' ')}")])
                 ]),
                 dbc.Row([
                     dcu.app_description(TITLE, ABOUT, features, usage_steps)
@@ -156,7 +150,6 @@ layout = dbc.Container(
                     className="h-100",
                 ),
             ],
-            style=styles.GLOBAL_STYLE,
         )
     ],
     fluid=True,
