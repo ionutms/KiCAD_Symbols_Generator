@@ -473,7 +473,7 @@ REPO_CONFIGS = [
     },
     {
         "name": "Minimal_AD74413R",
-        "colors": ["#6A4C93", "#9D4EDD"],
+        "colors": ["#D81B60", "#00897B"],
         "is_main": False,
         "has_project_links": True,
     },
@@ -527,19 +527,19 @@ REPO_CONFIGS = [
     },
     {
         "name": "PLC_SPOE_UPS",
-        "colors": ["#2A9D8F", "#FF9F1C"],
+        "colors": ["#1565C0", "#F57C00"],
         "is_main": False,
         "has_project_links": True,
     },
     {
         "name": "Minimal_LTC3350",
-        "colors": ["#2A9D8F", "#FF9F1C"],
+        "colors": ["#00897B", "#8E24AA"],
         "is_main": False,
         "has_project_links": True,
     },
     {
         "name": "Supercap_Bank",
-        "colors": ["#2A9D8F", "#FF9F1C"],
+        "colors": ["#FFB300", "#01579B"],
         "is_main": False,
         "has_project_links": True,
     },
