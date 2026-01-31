@@ -18596,7 +18596,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 15.24 50.8 0)
+			(at 15.24 55.88 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18605,7 +18605,7 @@
 			)
 		)
 		(property "Value" "LTC4296AUK-1-PBF"
-			(at 15.24 48.26 0)
+			(at 15.24 53.34 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18614,7 +18614,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:QFN48_05-08-7073_ADI"
-			(at 15.24 -53.34 0)
+			(at 15.24 -58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18625,7 +18625,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4296-1.pdf"
-			(at 15.24 -48.26 0)
+			(at 15.24 -53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18636,7 +18636,7 @@
 			)
 		)
 		(property "Description" "5-Port SPoE PSE Controller"
-			(at 15.24 -50.8 0)
+			(at 15.24 -55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18646,7 +18646,7 @@
 			)
 		)
 		(property "MPN" "LTC4296AUK-1-PBF"
-			(at 15.24 -55.88 0)
+			(at 15.24 -60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18666,7 +18666,7 @@
 		)
 		(symbol "U_LTC4296AUK-1-PBF_0_1"
 			(pin power_in line
-				(at -17.78 43.18 0)
+				(at -17.78 48.26 0)
 				(length 2.52)
 				(name "IN"
 					(effects
@@ -18684,7 +18684,7 @@
 				)
 			)
 			(pin output line
-				(at -17.78 33.02 0)
+				(at -17.78 38.1 0)
 				(length 2.52)
 				(name "CPO"
 					(effects
@@ -18766,24 +18766,6 @@
 					)
 				)
 				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -17.78 5.08 0)
-				(length 2.52)
-				(name "*CS"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "12"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -18935,24 +18917,6 @@
 					)
 				)
 			)
-			(pin power_out line
-				(at -17.78 -17.78 0)
-				(length 2.52)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "21"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin unspecified line
 				(at -17.78 -20.32 0)
 				(length 2.52)
@@ -18989,35 +18953,17 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at -17.78 -25.4 0)
+			(pin power_out line
+				(at -5.08 -53.34 90)
 				(length 2.52)
-				(name "LSRC"
+				(name "GND"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "24"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin no_connect line
-				(at -2.54 -48.26 90)
-				(length 2.52)
-				(name "DNC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -19026,7 +18972,7 @@
 				)
 			)
 			(pin power_out line
-				(at 0 -48.26 90)
+				(at 0 -53.34 90)
 				(length 2.52)
 				(name "GND"
 					(effects
@@ -19036,6 +18982,24 @@
 					)
 				)
 				(number "49"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 5.08 -53.34 90)
+				(length 2.52)
+				(name "LSRC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "24"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -19550,14 +19514,51 @@
 		)
 		(symbol "U_LTC4296AUK-1-PBF_1_1"
 			(rectangle
-				(start -15.24 45.72)
-				(end 15.24 -45.72)
+				(start -15.24 50.8)
+				(end 15.24 -50.8)
 				(stroke
 					(width 0)
 					(type default)
 				)
 				(fill
 					(type none)
+				)
+			)
+			(pin input line
+				(at -17.78 5.08 0)
+				(length 2.52)
+				(name "~{CS}"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin no_connect line
+				(at -10.16 -53.34 90)
+				(length 2.52)
+				(hide yes)
+				(name "DNC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
 				)
 			)
 		)
