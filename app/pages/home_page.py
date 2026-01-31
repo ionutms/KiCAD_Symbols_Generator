@@ -543,6 +543,12 @@ REPO_CONFIGS = [
         "is_main": False,
         "has_project_links": True,
     },
+    {
+        "name": "Minimal_LTC4296-1",
+        "colors": ["#2654EB", "#9CDD24"],
+        "is_main": False,
+        "has_project_links": True,
+    },
 ]
 
 MAIN_REPO = next(repo for repo in REPO_CONFIGS if repo["is_main"])
