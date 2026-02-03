@@ -18596,7 +18596,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 15.24 55.88 0)
+			(at 15.24 81.28 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18605,7 +18605,7 @@
 			)
 		)
 		(property "Value" "LTC4296AUK-1-PBF"
-			(at 15.24 53.34 0)
+			(at 15.24 78.74 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18614,7 +18614,7 @@
 			)
 		)
 		(property "Footprint" "analog_devices_footprints:QFN48_05-08-7073_ADI"
-			(at 15.24 -58.42 0)
+			(at 15.24 -83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18625,7 +18625,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4296-1.pdf"
-			(at 15.24 -53.34 0)
+			(at 15.24 -78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18636,7 +18636,7 @@
 			)
 		)
 		(property "Description" "5-Port SPoE PSE Controller"
-			(at 15.24 -55.88 0)
+			(at 15.24 -81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18646,7 +18646,7 @@
 			)
 		)
 		(property "MPN" "LTC4296AUK-1-PBF"
-			(at 15.24 -60.96 0)
+			(at 15.24 -86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18665,8 +18665,19 @@
 			)
 		)
 		(symbol "U_LTC4296AUK-1-PBF_0_1"
+			(rectangle
+				(start -15.24 76.2)
+				(end 15.24 -76.2)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
 			(pin power_in line
-				(at -17.78 48.26 0)
+				(at -17.78 73.66 0)
 				(length 2.52)
 				(name "IN"
 					(effects
@@ -18684,7 +18695,7 @@
 				)
 			)
 			(pin output line
-				(at -17.78 38.1 0)
+				(at -17.78 63.5 0)
 				(length 2.52)
 				(name "CPO"
 					(effects
@@ -18702,7 +18713,7 @@
 				)
 			)
 			(pin power_in line
-				(at -17.78 35.56 0)
+				(at -17.78 60.96 0)
 				(length 2.52)
 				(name "INT"
 					(effects
@@ -18720,7 +18731,7 @@
 				)
 			)
 			(pin input line
-				(at -17.78 5.08 0)
+				(at -17.78 30.48 0)
 				(length 2.52)
 				(name "SDI"
 					(effects
@@ -18738,7 +18749,7 @@
 				)
 			)
 			(pin output line
-				(at -17.78 2.54 0)
+				(at -17.78 27.94 0)
 				(length 2.52)
 				(name "SDO"
 					(effects
@@ -18756,7 +18767,7 @@
 				)
 			)
 			(pin input line
-				(at -17.78 0 0)
+				(at -17.78 25.4 0)
 				(length 2.52)
 				(name "SCK"
 					(effects
@@ -18774,7 +18785,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -17.78 -5.08 0)
+				(at -17.78 20.32 0)
 				(length 2.52)
 				(name "AUTO"
 					(effects
@@ -18792,7 +18803,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -17.78 -7.62 0)
+				(at -17.78 17.78 0)
 				(length 2.52)
 				(name "WAKEUP"
 					(effects
@@ -18900,7 +18911,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -17.78 -45.72 0)
+				(at -17.78 -71.12 0)
 				(length 2.52)
 				(name "RT"
 					(effects
@@ -18918,7 +18929,7 @@
 				)
 			)
 			(pin power_out line
-				(at -7.62 -53.34 90)
+				(at -7.62 -78.74 90)
 				(length 2.52)
 				(name "GND"
 					(effects
@@ -18936,7 +18947,7 @@
 				)
 			)
 			(pin power_out line
-				(at -2.54 -53.34 90)
+				(at -2.54 -78.74 90)
 				(length 2.52)
 				(name "GND"
 					(effects
@@ -18954,7 +18965,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 2.54 -53.34 90)
+				(at 2.54 -78.74 90)
 				(length 2.52)
 				(name "LSRC"
 					(effects
@@ -18972,7 +18983,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 7.62 -53.34 90)
+				(at 7.62 -78.74 90)
 				(length 2.52)
 				(name "LGATE"
 					(effects
@@ -19440,7 +19451,7 @@
 				)
 			)
 			(pin output line
-				(at 17.78 -38.1 180)
+				(at 17.78 -63.5 180)
 				(length 2.52)
 				(name "OUTM3"
 					(effects
@@ -19458,7 +19469,7 @@
 				)
 			)
 			(pin input line
-				(at 17.78 -40.64 180)
+				(at 17.78 -66.04 180)
 				(length 2.52)
 				(name "LSNS3/LSNS4"
 					(effects
@@ -19476,7 +19487,7 @@
 				)
 			)
 			(pin output line
-				(at 17.78 -43.18 180)
+				(at 17.78 -68.58 180)
 				(length 2.52)
 				(name "OUTM4"
 					(effects
@@ -19495,19 +19506,8 @@
 			)
 		)
 		(symbol "U_LTC4296AUK-1-PBF_1_1"
-			(rectangle
-				(start -15.24 50.8)
-				(end 15.24 -50.8)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(pin input line
-				(at -17.78 -2.54 0)
+				(at -17.78 22.86 0)
 				(length 2.52)
 				(name "~{CS}"
 					(effects
@@ -19525,7 +19525,7 @@
 				)
 			)
 			(pin no_connect line
-				(at -5.08 -53.34 90)
+				(at -5.08 -78.74 90)
 				(length 2.52)
 				(hide yes)
 				(name "DNC"
@@ -19544,7 +19544,7 @@
 				)
 			)
 			(pin no_connect line
-				(at 0 -53.34 90)
+				(at 0 -78.74 90)
 				(length 2.52)
 				(hide yes)
 				(name "DNC"
