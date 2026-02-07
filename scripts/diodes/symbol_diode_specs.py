@@ -667,6 +667,21 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Schottky",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "S1B-13-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="S1B-13-F",
+        footprint="diode_footprints:SMA",
+        datasheet=(
+            "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/"
+            "DIOD-S-A0007810797/DIOD-S-A0007810797-1.pdf?"
+            "hkey=CECEF36DEECDED6468708AAF2E19C0C6"
+        ),
+        voltage_rating=[100],
+        current_rating=[1],
+        package="SMA",
+        diode_type="Rectifier",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
     "BAT46WJ,115": SeriesSpec(
         manufacturer="Nexperia",
         base_series="BAT46WJ,115",
