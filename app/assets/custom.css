@@ -86,3 +86,28 @@
 .rc-slider-mark-text[style*="left: 100%"] {
     transform: translateX(-100%) !important;
 }
+
+/* AG Grid Theme Overrides */
+.ag-theme-quartz {
+    --ag-background-color: white;
+    --ag-foreground-color: #212529;
+    --ag-border-color: #dee2e6;
+    --ag-secondary-border-color: #e9ecef;
+    --ag-input-focus-border-color: #80bdff;
+    --ag-header-background-color: #f8f9fa;
+    --ag-header-foreground-color: #212529;
+    --ag-row-hover-color: #f8f9fa;
+    --ag-font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.ag-theme-quartz-dark {
+    --ag-background-color: #212529;
+    --ag-foreground-color: #f8f9fa;
+    --ag-border-color: #495057;
+    --ag-secondary-border-color: #343a40;
+    --ag-input-focus-border-color: #80bdff;
+    --ag-header-background-color: #343a40;
+    --ag-header-foreground-color: #f8f9fa;
+    --ag-row-hover-color: #343a40;
+    --ag-font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+}
