@@ -224,6 +224,7 @@ class PartInfo(NamedTuple):
             "ERJ-2GEJ",
             "ERJ-2GE0",
             "ERJ-3GEY0",
+            "ERJ-6GEY0",
             "ERJ-3GEYJ",
             "ERJ-6GEYJ",
             "ERJ-6DQJ",
@@ -1072,6 +1073,25 @@ PANASONIC_SYMBOLS_SPECS: Final[dict[str, SeriesSpec]] = {
         case_code_in="0603",
         case_code_mm="1608",
         power_rating="0.1W",
+        temperature_coefficient="200 ppm/°C",
+        resistance_range=[0, 1],
+        specified_values=[0],
+        tolerance_map={"E24": "5%"},
+        datasheet=(
+            "https://industrial.panasonic.com/cdbs/www-data/pdf/"
+            "RDA0000/AOA0000C301.pdf"
+        ),
+        trustedparts_url="https://www.trustedparts.com/en/search/",
+    ),
+    "ERJ-6GEY0": SeriesSpec(
+        manufacturer="Panasonic",
+        mpn_prefix="ERJ-6GEY0",
+        mpn_sufix="V",
+        footprint="resistor_footprints:R_0805_2012Metric",
+        voltage_rating="150V",
+        case_code_in="0805",
+        case_code_mm="2012",
+        power_rating="0.125W",
         temperature_coefficient="200 ppm/°C",
         resistance_range=[0, 1],
         specified_values=[0],
