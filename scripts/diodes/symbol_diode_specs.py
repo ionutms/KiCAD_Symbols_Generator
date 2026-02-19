@@ -707,4 +707,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         diode_type="Rectifier",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "BAT54WS-7-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="BAT54WS-7-F",
+        footprint="diode_footprints:SOD323F",
+        part_number_suffix="",
+        datasheet=(
+            "https://eu.mouser.com/ProductDetail/Diodes-Incorporated/"
+            "BAT54WS-7-F?qs=BJo294706GxanB6a%2FKrrdw%3D%3D"
+        ),
+        voltage_rating=[30.0],
+        current_rating=[0.6],
+        package="SOD323F",
+        diode_type="Schottky",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
