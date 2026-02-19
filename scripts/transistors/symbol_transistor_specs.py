@@ -717,4 +717,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="N-Channel",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "MMBTA06-7-F": SeriesSpec(
+        manufacturer="Diodes Incorporated",
+        base_series="MMBTA06-7-F",
+        footprint="transistor_footprints:SOT23-3",
+        datasheet=(
+            "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/"
+            "DIODS20593/DIODS20593-1.pdf?hkey=CECEF36DEECDED6468708AAF2E19C0C6"
+        ),
+        collector_emitter_voltage=[80],
+        collector_current=[0.5],
+        package="SOT23-3",
+        transistor_type="NPN",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
