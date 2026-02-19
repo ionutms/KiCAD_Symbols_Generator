@@ -731,4 +731,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         transistor_type="NPN",
         trustedparts_link="https://www.trustedparts.com/en/search",
     ),
+    "MMBT3904LT3G": SeriesSpec(
+        manufacturer="Onsemi",
+        base_series="MMBT3904LT3G",
+        footprint="transistor_footprints:SOT23-3",
+        datasheet=("https://www.onsemi.com/pdf/datasheet/mmbt3904lt1-d.pdf"),
+        collector_emitter_voltage=[40],
+        collector_current=[0.2],
+        package="SOT23-3",
+        transistor_type="NPN",
+        trustedparts_link="https://www.trustedparts.com/en/search",
+    ),
 }
