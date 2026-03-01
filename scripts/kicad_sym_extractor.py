@@ -90,6 +90,7 @@ if __name__ == "__main__":
         "UNITED_IC_NXP.kicad_sym",
         "UNITED_IC_ADI.kicad_sym",
         "UNITED_IC_TI.kicad_sym",
+        "UNITED_IC_ST.kicad_sym",
         "UNITED_IC_BOSCH.kicad_sym",
         "UNITED_SOLDER_JUMPERS.kicad_sym",
         "UNITED_TEST_POINTS.kicad_sym",
