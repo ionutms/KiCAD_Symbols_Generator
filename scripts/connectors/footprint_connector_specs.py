@@ -758,4 +758,23 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=2.286,
         ref_y=-2.286,
     ),
+    "T4145015051-001": FootprintSpecs(
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=13,
+            width_right=13,
+            height_top=9.75,
+            height_bottom=9.75,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-7.5, 0, 2.35],
+            [7.5, 0, 2.35],
+            [-7.5, 4, 2.8],
+            [7.5, 4, 2.8],
+        ]),
+        pad_size=2.1,
+        drill_size=1.4,
+        mpn_y=12.7,
+        ref_y=-12.7,
+    ),
 }

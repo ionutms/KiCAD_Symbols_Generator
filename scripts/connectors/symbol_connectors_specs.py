@@ -1123,4 +1123,24 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Gold",
     ),
+    "T4145015051-001": SeriesSpec(
+        manufacturer="TE Connectivity",
+        base_series="T4145015051-001",
+        footprint_pattern="connector_footprints:T4145015051-001",
+        datasheet=(
+            "https://www.te.com/commerce/DocumentDelivery/DDEController?"
+            "Action=srchrtrv&DocNm=T41450150X1001&DocType=Customer+"
+            "Drawing&DocLang=English&PartCntxt=T4145015051-001&DocFormat=pdf"
+        ),
+        pin_counts=[5],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Black",
+        pitch=3.54,
+        number_of_rows=1,
+        mounting_angle="Vertical",
+        current_rating="N/A",
+        voltage_rating="N/A",
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
