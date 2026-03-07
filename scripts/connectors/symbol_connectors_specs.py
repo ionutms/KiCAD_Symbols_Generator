@@ -9,6 +9,25 @@ from __future__ import annotations
 from typing import NamedTuple
 
 
+class PinPosition(NamedTuple):
+    """Defines the position and properties of a single symbol pin.
+
+    Attributes:
+        pin_number: Pin number or name (string)
+        x: X position relative to the symbol origin
+        y: Y position relative to the symbol origin
+        rotation: Pin rotation angle in degrees (0, 90, 180, 270)
+        length: Pin length in mm (optional, uses default if not specified)
+
+    """
+
+    pin_number: str
+    x: float
+    y: float
+    rotation: int
+    length: float | None = None
+
+
 class SeriesSpec(NamedTuple):
     """Connector series specifications.
 
@@ -37,6 +56,10 @@ class SeriesSpec(NamedTuple):
             (default: None)
         symbol_pin_length:
             Optional override for symbol pin length in mm (default: 2.54)
+        pin_positions_override:
+            Optional list of custom pin positions to override automatic
+            placement. When provided, these positions are used instead of
+            calculating positions from pin_count and pitch.
 
     """
 
@@ -58,6 +81,7 @@ class SeriesSpec(NamedTuple):
     rectangle_width: float = 5.08
     pin_names: dict[str, str] | None = None
     symbol_pin_length: float = 2.54
+    pin_positions_override: None | list[PinPosition] = None
 
 
 class PartInfo(NamedTuple):
@@ -1138,9 +1162,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         pitch=3.54,
         number_of_rows=1,
         mounting_angle="Vertical",
-        current_rating="N/A",
-        voltage_rating="N/A",
+        current_rating=4,
+        voltage_rating=60,
         mounting_style="Through Hole",
         contact_plating="Tin",
+        pin_positions_override=[
+            PinPosition(pin_number="1", x=-5.08, y=2.54, rotation=0),
+            PinPosition(pin_number="2", x=5.08, y=2.54, rotation=180),
+            PinPosition(pin_number="3", x=5.08, y=-2.54, rotation=180),
+            PinPosition(pin_number="4", x=-5.08, y=-2.54, rotation=0),
+            PinPosition(pin_number="5", x=0, y=-5.08, rotation=90),
+        ],
     ),
 }

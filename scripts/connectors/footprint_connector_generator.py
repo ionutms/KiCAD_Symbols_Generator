@@ -91,16 +91,24 @@ def generate_footprint(  # noqa: C901
             custom_pin_numbers = None
 
     if part_info.mounting_style == "Through Hole":
-        pads = footprint_utils.generate_thru_hole_pads(
-            part_info.pin_count,
-            footprint_specs.pad_pitch,
-            footprint_specs.pad_size,
-            footprint_specs.drill_size,
-            dimensions["start_pos"],
-            row_pitch=footprint_specs.row_pitch,
-            row_count=footprint_specs.number_of_rows,
-            pin_numbers=custom_pin_numbers,
-        )
+        if footprint_specs.pad_positions_override is not None:
+            pads = footprint_utils.generate_custom_thru_hole_pads(
+                footprint_specs.pad_positions_override,
+                pad_size=footprint_specs.pad_size,
+                drill_size=footprint_specs.drill_size,
+                pad1_square=footprint_specs.pad1_square,
+            )
+        else:
+            pads = footprint_utils.generate_thru_hole_pads(
+                part_info.pin_count,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
+                footprint_specs.drill_size,
+                dimensions["start_pos"],
+                row_pitch=footprint_specs.row_pitch,
+                row_count=footprint_specs.number_of_rows,
+                pin_numbers=custom_pin_numbers,
+            )
 
     f_silk_pin_1_indicator = ""
     f_fab_pin_1_indicator = ""

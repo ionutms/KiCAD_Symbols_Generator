@@ -900,24 +900,34 @@ def generate_thru_hole_pads(  # noqa: PLR0913
     return "\n".join(pads)
 
 
-def generate_custom_thru_hole_pads(pad_properties: list[NamedTuple]) -> str:
-    """Generate the pads section of the footprint.
+def generate_custom_thru_hole_pads(
+    pad_positions: list,
+    pad_size: float,
+    drill_size: float,
+    pad1_square: bool = True,
+) -> str:
+    """Generate custom through-hole pads with specified positions.
 
     Args:
-        pad_properties: TODO
+        pad_positions: List of PadPosition namedtuples containing
+            pad_number, x, y for each pad
+        pad_size: Diameter of the pads (from FootprintSpecs)
+        drill_size: Diameter of the drill holes (from FootprintSpecs)
+        pad1_square: Whether pad 1 should be rectangular (True) or circular (False)
 
     Returns:
         str: KiCad formatted pad definitions
 
     """
     pads = []
-    for pad_property in pad_properties:
-        pad_type = "rect" if pad_property.name == "1" else "circle"
+    for pad_index, pad_pos in enumerate(pad_positions):
+        is_first_pad = pad_index == 0
+        pad_type = "rect" if (is_first_pad and pad1_square) else "circle"
         pad = f"""
-            (pad "{pad_property.name}" thru_hole {pad_type}
-                (at {pad_property.x} {pad_property.y})
-                (size {pad_property.pad_size} {pad_property.pad_size})
-                (drill {pad_property.drill_size})
+            (pad "{pad_pos.pad_number}" thru_hole {pad_type}
+                (at {pad_pos.x:.3f} {pad_pos.y:.3f})
+                (size {pad_size} {pad_size})
+                (drill {drill_size})
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)

@@ -197,31 +197,56 @@ def write_symbol_drawing(
                 pin_type="passive",
             )
     else:
-        # Determine numbering order: use pin_names keys if provided
-        if series_spec.pin_names:
-            # Use provided order directly for single row
-            pin_numbers = list(series_spec.pin_names.keys())
+        # Check for custom pin positions override
+        if series_spec.pin_positions_override:
+            for pin_pos in series_spec.pin_positions_override:
+                pin_name = (
+                    series_spec.pin_names.get(pin_pos.pin_number, "")
+                    if series_spec.pin_names
+                    else ""
+                )
+                # Use override length if provided, otherwise use default
+                pin_len = (
+                    pin_pos.length
+                    if pin_pos.length is not None
+                    else pin_length
+                )
+                symbol_utils.write_pin(
+                    symbol_file,
+                    pin_pos.x,
+                    pin_pos.y,
+                    pin_pos.rotation,
+                    pin_pos.pin_number,
+                    pin_name,
+                    length=pin_len,
+                    pin_type="passive",
+                )
         else:
-            pin_numbers = list(range(1, pin_count + 1))
+            # Determine numbering order: use pin_names keys if provided
+            if series_spec.pin_names:
+                # Use provided order directly for single row
+                pin_numbers = list(series_spec.pin_names.keys())
+            else:
+                pin_numbers = list(range(1, pin_count + 1))
 
-        for index, pin_num in enumerate(pin_numbers):
-            y_pos = start_y - index * pin_spacing
-            key = str(pin_num)
-            pin_name = (
-                series_spec.pin_names.get(key, "")
-                if series_spec.pin_names
-                else ""
-            )
-            symbol_utils.write_pin(
-                symbol_file,
-                left_pin_x,
-                y_pos,
-                0,
-                str(pin_num),
-                pin_name,
-                length=pin_length,
-                pin_type="passive",
-            )
+            for index, pin_num in enumerate(pin_numbers):
+                y_pos = start_y - index * pin_spacing
+                key = str(pin_num)
+                pin_name = (
+                    series_spec.pin_names.get(key, "")
+                    if series_spec.pin_names
+                    else ""
+                )
+                symbol_utils.write_pin(
+                    symbol_file,
+                    left_pin_x,
+                    y_pos,
+                    0,
+                    str(pin_num),
+                    pin_name,
+                    length=pin_length,
+                    pin_type="passive",
+                )
 
     symbol_file.write("\t\t)\n")
 

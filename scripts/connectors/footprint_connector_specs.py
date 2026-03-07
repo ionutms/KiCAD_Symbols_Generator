@@ -85,6 +85,21 @@ class InternalCourtyard(NamedTuple):
     height_bottom: float
 
 
+class PadPosition(NamedTuple):
+    """Defines the position of a single pad.
+
+    Attributes:
+        pad_number: Pad number or name (string)
+        x: X position relative to the connector origin
+        y: Y position relative to the connector origin
+
+    """
+
+    pad_number: str
+    x: float
+    y: float
+
+
 class FootprintSpecs(NamedTuple):
     """Complete specifications for generating a connector footprint.
 
@@ -111,6 +126,13 @@ class FootprintSpecs(NamedTuple):
         non_plated_round_mounting_holes: Non-plated mounting holes
         plated_oval_mounting_holes: Plated oval mounting holes
         internal_courtyard: Internal courtyard dimensions
+        pad_positions_override:
+            Optional list of custom pad positions to override
+            automatic pad placement. When provided, these positions
+            are used instead of calculating positions from pad_pitch.
+        pad1_square:
+            Whether pad 1 should be square (rect) to indicate pin 1.
+            Set to False to make pad 1 circular like all other pads.
 
     """
 
@@ -131,6 +153,8 @@ class FootprintSpecs(NamedTuple):
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
     internal_courtyard: None | InternalCourtyard = None
     show_pin1_indicator: bool = True
+    pad_positions_override: None | list[PadPosition] = None
+    pad1_square: bool = True
 
 
 CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
@@ -759,12 +783,13 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-2.286,
     ),
     "T4145015051-001": FootprintSpecs(
+        show_pin1_indicator=False,
         pad_pitch=3.54,
         body_dimensions=BodyDimensions(
-            width_left=13,
-            width_right=13,
-            height_top=9.75,
-            height_bottom=9.75,
+            width_left=4.6,
+            width_right=4.6,
+            height_top=3.3,
+            height_bottom=8.6,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
             [-7.5, 0, 2.35],
@@ -772,9 +797,17 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             [-7.5, 4, 2.8],
             [7.5, 4, 2.8],
         ]),
-        pad_size=2.1,
-        drill_size=1.4,
-        mpn_y=12.7,
-        ref_y=-12.7,
+        pad_size=2,
+        drill_size=1.3,
+        mpn_y=9.652,
+        ref_y=-4.064,
+        pad_positions_override=[
+            PadPosition(pad_number="1", x=-1.77, y=-1.77),
+            PadPosition(pad_number="2", x=1.77, y=-1.77),
+            PadPosition(pad_number="5", x=0, y=0),
+            PadPosition(pad_number="3", x=1.77, y=1.77),
+            PadPosition(pad_number="4", x=-1.77, y=1.77),
+        ],
+        pad1_square=False,
     ),
 }
