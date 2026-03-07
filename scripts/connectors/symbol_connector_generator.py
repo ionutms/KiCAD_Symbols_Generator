@@ -112,6 +112,14 @@ def write_symbol_drawing(
     pin_spacing = 2.54
 
     series_name = component_data.get("Series", "")
+
+    if series_name == "T4145015051-001":
+        symbol_utils.write_connector_t4145015051_001_drawing(
+            symbol_file,
+            symbol_name,
+        )
+        return
+
     series_spec = symbol_connectors_specs.SYMBOLS_SPECS[series_name]
     rectangle_width = series_spec.rectangle_width
     rect_half_width = rectangle_width / 2

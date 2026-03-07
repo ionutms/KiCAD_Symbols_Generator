@@ -2564,6 +2564,82 @@ def write_rectangle(
         """)
 
 
+def write_connector_t4145015051_001_drawing(
+    symbol_file: TextIO,
+    symbol_name: str,
+) -> None:
+    """Write T4145015051-001 connector symbol.
+
+    Args:
+        symbol_file (TextIO): File object for writing the symbol file.
+        symbol_name (str): Name of the symbol.
+
+    Returns:
+        None
+
+    """
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+    write_pin(symbol_file, -5.08, 2.54, 0, "1", length=2.54)
+    write_pin(symbol_file, -5.08, 5.08, 0, "2", length=2.54)
+    write_pin(symbol_file, -5.08, -5.08, 0, "3", length=2.54)
+    write_pin(symbol_file, -5.08, -2.54, 0, "4", length=2.54)
+    write_pin(symbol_file, -5.08, 0, 0, "5", length=2.54)
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("""
+			(polyline
+				(pts (xy -1.778 1.778) (xy -2.54 2.54))
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(polyline
+				(pts (xy -1.778 -1.778) (xy -2.54 -2.54))
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center -1.27 1.27) (radius 0.635)
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center -1.27 -1.27) (radius 0.635)
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(polyline
+				(pts (xy -0.762 0) (xy -2.54 0))
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center 0 0) (radius 0.635)
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center 0 0) (radius 3.175)
+				(stroke (width 0.254) (type default)) (fill (type none))
+			)
+			(polyline
+				(pts (xy 0.762 1.778) (xy -2.54 5.08))
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(polyline
+				(pts (xy 0.762 -1.778) (xy -2.54 -5.08))
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center 1.27 1.27) (radius 0.635)
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(circle
+				(center 1.27 -1.27) (radius 0.635)
+				(stroke (width 0) (type default)) (fill (type none))
+			)
+			(arc
+				(start 0.762 3.048) (mid 0 2.3806) (end -0.762 3.048)
+				(stroke (width 0.254) (type solid)) (fill (type outline))
+			)
+        """)
+    symbol_file.write("\t\t)\n")
+
+
 def write_npn_transistor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,

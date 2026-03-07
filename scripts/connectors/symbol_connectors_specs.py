@@ -1166,12 +1166,5 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=60,
         mounting_style="Through Hole",
         contact_plating="Tin",
-        pin_positions_override=[
-            PinPosition(pin_number="1", x=-5.08, y=2.54, rotation=0),
-            PinPosition(pin_number="2", x=5.08, y=2.54, rotation=180),
-            PinPosition(pin_number="3", x=5.08, y=-2.54, rotation=180),
-            PinPosition(pin_number="4", x=-5.08, y=-2.54, rotation=0),
-            PinPosition(pin_number="5", x=0, y=-5.08, rotation=90),
-        ],
     ),
 }
