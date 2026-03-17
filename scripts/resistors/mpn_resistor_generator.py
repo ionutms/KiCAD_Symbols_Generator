@@ -235,12 +235,6 @@ if __name__ == "__main__":
             )
             generate_files_for_series(series, unified_parts)
 
-        # Generate unified files after all series are processed
-        UNIFIED_CSV = "UNITED_RESISTORS_DATA_BASE.csv"
-        UNIFIED_SYMBOL = "UNITED_RESISTORS_DATA_BASE.kicad_sym"
-        print_message_utilities.print_info("\nGenerating unified files:")
-        generate_unified_files(unified_parts, UNIFIED_CSV, UNIFIED_SYMBOL)
-
     except (OSError, csv.Error) as file_error:
         print_message_utilities.print_error(
             f"Error generating files: {file_error}",
