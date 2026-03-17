@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Compare STM32H562/H563 pin alternate and additional functions.
+"""Compare pin alternate and additional functions between a CSV and a symbol.
 
-Reads the ST datasheet pin-definition CSV (Table 14) and a KiCad
-``.kicad_sym`` symbol file, then reports any discrepancies between
-the alternate/additional functions listed in the datasheet and those
-stored as ``(alternate ...)`` entries in the symbol.
+Reads a datasheet pin-definition CSV and a KiCad ``.kicad_sym`` file,
+then reports discrepancies between the functions listed in the CSV and
+those stored as ``(alternate ...)`` entries in the symbol.
 """
 
 import csv
@@ -21,7 +20,7 @@ def normalize(text):
     """Return text lowercased with underscores, dashes, and spaces removed.
 
     Args:
-        text: Raw function-name string to normalise.
+        text: String to normalise.
 
     Returns:
         Normalised string used for fuzzy comparisons.
@@ -31,16 +30,15 @@ def normalize(text):
 
 
 def split_function_list(raw):
-    """Split a comma-separated function-name cell into a list.
+    """Split a comma-separated cell value into a list of strings.
 
-    Discards empty entries and bare dash placeholders that appear when
-    a pin has no functions of that type.
+    Discards empty entries and bare dash placeholders.
 
     Args:
-        raw: Raw cell text from the CSV, may be an en-dash or empty.
+        raw: Raw cell text, may be an en-dash or empty string.
 
     Returns:
-        List of stripped function-name strings.
+        List of stripped strings.
 
     """
     if raw in ("-", "", "\u2013"):
@@ -55,12 +53,13 @@ def split_function_list(raw):
 def expand_slash_names(function_set):
     """Expand slash-separated compound names into individual tokens.
 
-    Both KiCad and the datasheet use slash notation for dual-function
-    signals, e.g. ``TAMP_IN2/TAMP_OUT1``.  Each slash-split component
-    is added so comparisons work regardless of which form is used.
+    Slash notation is used for signals that share a pin, e.g.
+    ``TAMP_IN2/TAMP_OUT1``.  Each component is added individually so
+    comparisons work regardless of which form is used.
 
     Args:
-        function_set: Iterable of function-name strings.
+        function_set: Iterable of strings, some of which may contain
+            ``/`` separators.
 
     Returns:
         New set containing each slash-split component.
@@ -74,21 +73,23 @@ def expand_slash_names(function_set):
 
 
 def parse_csv(csv_path):
-    """Parse the ST datasheet pin-definition CSV (Table 14).
+    """Parse a pin-definition CSV into a dict keyed by primary pin name.
 
-    The primary GPIO name is extracted from the ``Pin name`` column by
-    stripping any dash-suffix or parenthetical reset-function
-    annotation, e.g. ``PC14-OSC32_IN (OSC32_IN)`` becomes ``PC14``.
+    The primary name is extracted from column 2 by stripping any
+    dash-suffix or parenthetical annotation, e.g.
+    ``PC14-OSC32_IN (OSC32_IN)`` becomes ``PC14``.  Rows whose name
+    cell is empty, matches a known column header, or is a package
+    section divider are skipped.
 
     Args:
         csv_path: Path to the CSV file.
 
     Returns:
-        Dict keyed by primary pin name (e.g. ``"PA0"``).  Each value
-        is a dict with the keys ``pin_numbers`` (list of LQFP pin
-        numbers seen), ``alternate_functions`` (list of AF strings
-        from column 3), ``additional_functions`` (list of strings from
-        column 4), and ``all_functions`` (set union of the two lists).
+        Dict keyed by primary pin name.  Each value is a dict with
+        ``pin_numbers`` (list of pin numbers seen for that name),
+        ``alternate_functions`` (list of strings from column 3),
+        ``additional_functions`` (list of strings from column 4), and
+        ``all_functions`` (set union of the two lists).
 
     """
     pins = {}
@@ -143,22 +144,21 @@ def parse_csv(csv_path):
 
 
 def parse_kicad_sym(sym_path):
-    """Parse pin definitions from a KiCad ``.kicad_sym`` symbol file.
+    """Parse pin definitions from a KiCad ``.kicad_sym`` file.
 
-    Alternate functions are stored as ``(alternate "NAME" ...)`` child
-    entries beneath each ``(pin ...)`` block.  Both the primary pin
-    name and all alternate entries are collected for each pin.
+    Each ``(pin ...)`` block is parsed for its name and number.
+    Alternate function names are read from ``(alternate "NAME" ...)``
+    child entries that follow each pin block.
 
     Args:
         sym_path: Path to the ``.kicad_sym`` file.
 
     Returns:
-        Dict keyed by pin number string (e.g. ``"34"``).  Each value
-        is a dict with the keys ``name`` (full name string as written
-        in the symbol), ``primary`` (first token before any ``/`` or
-        ``-``), ``alternates`` (set of raw alternate name strings), and
-        ``all_kicad_funcs`` (set of all function tokens with
-        slash-compound names expanded).
+        Dict keyed by pin number string.  Each value is a dict with
+        ``name`` (full pin name as written in the symbol), ``primary``
+        (first token before any ``/`` or ``-``), ``alternates`` (set
+        of raw alternate name strings), and ``all_kicad_funcs`` (set
+        of all function tokens with slash-compound names expanded).
 
     """
     with open(sym_path, encoding="utf-8") as sym_file:
@@ -215,8 +215,7 @@ def parse_kicad_sym(sym_path):
 def sort_key_for_pin(pin_item):
     """Return a sort key that orders pin numbers numerically.
 
-    Non-numeric pin references (e.g. BGA ball IDs) are placed after
-    all numeric ones.
+    Non-numeric references are placed after all numeric ones.
 
     Args:
         pin_item: A ``(pin_number_str, pin_dict)`` tuple.
@@ -232,25 +231,25 @@ def sort_key_for_pin(pin_item):
 
 
 def compare(csv_pins, kicad_pins):
-    """Cross-reference KiCad pins against the CSV datasheet entries.
+    """Cross-reference symbol pins against CSV entries and report differences.
 
-    Function sets are normalised (case-folded, punctuation stripped)
-    before comparison.  Slash-compound names such as
-    ``TAMP_IN2/TAMP_OUT1`` are expanded so each component can be
-    matched independently.
+    Both function sets are normalised before comparison so minor
+    formatting differences do not cause false positives.
+    Slash-compound names are expanded so each component is matched
+    independently.
 
     Args:
         csv_pins: Dict returned by ``parse_csv``.
         kicad_pins: Dict returned by ``parse_kicad_sym``.
 
     Returns:
-        List of result dicts, one per KiCad pin, each containing:
-        ``pin_number`` (str), ``kicad_name`` (str), ``csv_name``
-        (str), ``status`` (one of ``OK``, ``MISMATCH``,
-        ``MISSING_IN_KICAD``, ``EXTRA_IN_KICAD``, ``MISSING_IN_CSV``),
-        ``missing_in_kicad`` (sorted list of functions absent from
-        KiCad), ``extra_in_kicad`` (sorted list of functions absent
-        from the datasheet), and ``notes`` (str).
+        List of result dicts, one per pin, each with ``pin_number``
+        (str), ``kicad_name`` (str), ``csv_name`` (str), ``status``
+        (one of ``OK``, ``MISMATCH``, ``MISSING_IN_KICAD``,
+        ``EXTRA_IN_KICAD``, ``MISSING_IN_CSV``),
+        ``missing_in_kicad`` (sorted list of functions absent from the
+        symbol), ``extra_in_kicad`` (sorted list of functions absent
+        from the CSV), and ``notes`` (str).
 
     """
     results = []
@@ -265,7 +264,7 @@ def compare(csv_pins, kicad_pins):
             results.append({
                 "pin_number": pin_number,
                 "kicad_name": kicad_pin["name"],
-                "csv_name": "NOT FOUND",
+                "csv_name": "-",
                 "status": "MISSING_IN_CSV",
                 "missing_in_kicad": [],
                 "extra_in_kicad": [],
@@ -314,10 +313,10 @@ def compare(csv_pins, kicad_pins):
 
 
 def print_results(results):
-    """Print all issues and a summary table to stdout.
+    """Print a detailed issue list and a summary table to stdout.
 
-    Pins with status ``OK`` are omitted from the detailed listing but
-    are counted in the summary.
+    Entries with status ``OK`` are omitted from the detailed listing
+    but counted in the summary.
 
     Args:
         results: List of result dicts returned by ``compare``.
