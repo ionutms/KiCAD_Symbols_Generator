@@ -11,7 +11,7 @@ import re
 
 CSV_FILE = (
     "scripts/extract_pdf_tables/tables/stm32h562ag/"
-    "Table 14_ STM32H562xx and STM32H563xx pin_ball definition.csv"
+    "Table 14 STM32H562xx and STM32H563xx pin_ball definition LQFP144.csv"
 )
 KICAD_FILE = "symbols/UNITED_IC_ST.kicad_sym"
 
