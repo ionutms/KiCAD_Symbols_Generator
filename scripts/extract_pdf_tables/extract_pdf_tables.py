@@ -27,6 +27,13 @@ class TableConfig:
         header_rows: Number of rows forming the header block.
         exclude_column_names: List of column names to exclude.
             All header rows are searched for matching names.
+        output_filename: Optional filename stem for the output CSV.
+            When the same table is extracted multiple times with
+            different parameters (e.g. different packages), set this
+            to a unique name such as ``"Table 14_LQFP144"`` so each
+            extraction saves to its own file instead of overwriting.
+            The ``.csv`` extension is added automatically.
+            If omitted, the filename is derived from the table name.
 
     """
 
@@ -34,6 +41,7 @@ class TableConfig:
     page_range: str = "all"
     header_rows: int = 2
     exclude_column_names: list[str] = field(default_factory=list)
+    output_filename: str = ""
 
 
 def get_table_name(
@@ -328,11 +336,31 @@ def _collect_tables(
                 end="\r",
             )
 
-            tables = camelot.read_pdf(
-                pdf_path,
-                pages=str(page_num),
-                flavor="lattice",
-            )
+            tables = None
+            for attempt in range(1, 4):
+                try:
+                    tables = camelot.read_pdf(
+                        pdf_path,
+                        pages=str(page_num),
+                        flavor="lattice",
+                    )
+                    break
+                except KeyboardInterrupt:
+                    if attempt < 3:
+                        print(
+                            f"\n  Warning: pypdfium2 rendering error on"
+                            f" page {page_num}, retrying"
+                            f" ({attempt}/3)..."
+                        )
+                    else:
+                        print(
+                            f"\n  Warning: pypdfium2 rendering error on"
+                            f" page {page_num} after 3 attempts"
+                            f" — skipping."
+                        )
+
+            if tables is None:
+                continue
 
             page = pdf.pages[page_num - 1]
             page_height = page.height
@@ -442,6 +470,7 @@ def _save_to_csv(
     output_path: Path,
     exclude_column_names: list[str] | None = None,
     header_rows: int = 2,
+    output_filename: str = "",
 ) -> None:
     """Save merged tables to CSV files.
 
@@ -452,14 +481,25 @@ def _save_to_csv(
             exclude. All header rows are searched for matches.
         header_rows: Number of header rows to search for column
             names. Defaults to 2.
+        output_filename: Optional filename stem that overrides the
+            table name when naming the output file.  Useful when the
+            same table is extracted multiple times with different
+            parameters.  The ``.csv`` extension is added
+            automatically.
 
     """
     for table_idx, table in enumerate(merged_tables, start=1):
-        safe_name = "".join(
-            char if char.isalnum() or char in " _-" else "_"
-            for char in table["name"]
-        )
-        safe_name = safe_name.strip() or f"table{table_idx}"
+        if output_filename:
+            safe_name = "".join(
+                char if char.isalnum() or char in " _-" else "_"
+                for char in output_filename
+            ).strip()
+        else:
+            safe_name = "".join(
+                char if char.isalnum() or char in " _-" else "_"
+                for char in table["name"]
+            )
+            safe_name = safe_name.strip() or f"table{table_idx}"
 
         csv_file = output_path / f"{safe_name}.csv"
 
@@ -472,10 +512,33 @@ def _save_to_csv(
                 header_rows=header_rows,
             )
 
+        header = rows[:header_rows]
+        data = [
+            row
+            for row in rows[header_rows:]
+            if row and str(row[0]).strip() != "-"
+        ]
+        rows = header + data
+
         with open(csv_file, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerows(rows)
         print(f"  Saved: {csv_file} ({len(rows)} rows)")
+
+
+def _config_cache_key(config: TableConfig) -> tuple:
+    """Return a hashable key identifying the PDF parsing parameters.
+
+    Configs that share the same key can reuse a single parse result.
+
+    Args:
+        config: TableConfig to derive the key from.
+
+    Returns:
+        Tuple of ``(table_name_filter, page_range, header_rows)``.
+
+    """
+    return (config.table_name_filter, config.page_range, config.header_rows)
 
 
 def extract_tables_from_pdf(
@@ -485,9 +548,11 @@ def extract_tables_from_pdf(
 ) -> None:
     """Extract tables from a PDF file and save each as a CSV.
 
-    Each TableConfig defines a separate table to extract, with its
-    own filter, page range, header rows, and excluded columns.
-    Tables spanning multiple pages are merged into a single file.
+    Each TableConfig defines a separate output with its own column
+    exclusions and output filename.  Configs that share the same
+    table filter, page range, and header-row count are grouped so the
+    PDF is only parsed once per unique combination, avoiding redundant
+    passes through the file.
 
     Args:
         pdf_path: Path to the PDF file to extract tables from.
@@ -503,25 +568,38 @@ def extract_tables_from_pdf(
     if not table_configs:
         table_configs = [TableConfig(table_name_filter="")]
 
+    parse_cache: dict[tuple, list[dict]] = {}
+
     for config in table_configs:
-        print(
-            f"\n--- Extracting '{config.table_name_filter}' "
-            f"(pages: {config.page_range}) ---"
-        )
+        cache_key = _config_cache_key(config)
 
-        all_tables = _collect_tables(
-            pdf_path,
-            config.table_name_filter or None,
-            config.page_range,
-            config.header_rows,
-        )
+        if cache_key not in parse_cache:
+            print(
+                f"\n--- Extracting '{config.table_name_filter}' "
+                f"(pages: {config.page_range}) ---"
+            )
 
-        print(
-            f"\nFound {len(all_tables)} matching tables. "
-            f"Merging multi-page tables..."
-        )
+            all_tables = _collect_tables(
+                pdf_path,
+                config.table_name_filter or None,
+                config.page_range,
+                config.header_rows,
+            )
 
-        merged_tables = _merge_tables(all_tables, config.header_rows)
+            print(
+                f"\nFound {len(all_tables)} matching tables. "
+                f"Merging multi-page tables..."
+            )
+
+            merged_tables = _merge_tables(all_tables, config.header_rows)
+            parse_cache[cache_key] = merged_tables
+        else:
+            merged_tables = parse_cache[cache_key]
+            print(
+                f"\n--- Reusing cached parse for "
+                f"'{config.table_name_filter}' "
+                f"(pages: {config.page_range}) ---"
+            )
 
         print(f"\nSaving {len(merged_tables)} tables to '{output_path}'...")
 
@@ -530,6 +608,7 @@ def extract_tables_from_pdf(
             output_path,
             config.exclude_column_names or None,
             header_rows=config.header_rows,
+            output_filename=config.output_filename,
         )
 
     print(f"\nDone processing '{Path(pdf_path).name}'.")
@@ -545,6 +624,10 @@ if __name__ == "__main__":
                 table_name_filter="Table 14",
                 page_range="78-105",
                 header_rows=2,
+                output_filename=(
+                    "Table 14 STM32H562xx and STM32H563xx"
+                    " pin_ball definition LQFP144"
+                ),
                 exclude_column_names=[
                     "WLCSP80 SMPS",
                     "LQFP100 SMPS",
@@ -554,6 +637,33 @@ if __name__ == "__main__":
                     "UFBGA176+25 SMPS",
                     "TFBGA225 SMPS",
                     "LQFP64",
+                    "VFQFPN68",
+                    "LQFP100",
+                    "UFBGA169",
+                    "LQFP176",
+                    "UFBGA176+25",
+                    "Pin type",
+                    "I/O structure",
+                    "Notes",
+                ],
+            ),
+            TableConfig(
+                table_name_filter="Table 14",
+                page_range="78-105",
+                header_rows=2,
+                output_filename=(
+                    "Table 14 STM32H562xx and STM32H563xx"
+                    " pin_ball definition LQFP64"
+                ),
+                exclude_column_names=[
+                    "WLCSP80 SMPS",
+                    "LQFP100 SMPS",
+                    "LQFP144 SMPS",
+                    "UFBGA169 SMPS",
+                    "LQFP176 SMPS",
+                    "UFBGA176+25 SMPS",
+                    "TFBGA225 SMPS",
+                    "LQFP144",
                     "VFQFPN68",
                     "LQFP100",
                     "UFBGA169",
