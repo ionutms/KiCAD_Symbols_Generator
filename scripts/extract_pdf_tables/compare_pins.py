@@ -9,11 +9,26 @@ those stored as ``(alternate ...)`` entries in the symbol.
 import csv
 import re
 
-CSV_FILE = (
-    "scripts/extract_pdf_tables/tables/stm32h562ag/"
-    "Table 14 STM32H562xx and STM32H563xx pin_ball definition LQFP144.csv"
-)
-KICAD_FILE = "symbols/UNITED_IC_ST.kicad_sym"
+COMPARISONS = [
+    {
+        "csv_file": (
+            "scripts/extract_pdf_tables/tables/stm32h562ag/"
+            "Table 14 STM32H562xx and STM32H563xx "
+            "pin_ball definition LQFP64.csv"
+        ),
+        "kicad_file": "symbols/UNITED_IC_ST.kicad_sym",
+        "kicad_symbol": "U_STM32H563RGT6",
+    },
+    {
+        "csv_file": (
+            "scripts/extract_pdf_tables/tables/stm32h562ag/"
+            "Table 14 STM32H562xx and STM32H563xx "
+            "pin_ball definition LQFP144.csv"
+        ),
+        "kicad_file": "symbols/UNITED_IC_ST.kicad_sym",
+        "kicad_symbol": "U_STM32H563ZIT6",
+    },
+]
 
 
 def normalize(text):
@@ -143,7 +158,7 @@ def parse_csv(csv_path):
     return pins
 
 
-def parse_kicad_sym(sym_path):
+def parse_kicad_sym(sym_path, symbol_name=None):
     """Parse pin definitions from a KiCad ``.kicad_sym`` file.
 
     Each ``(pin ...)`` block is parsed for its name and number.
@@ -152,6 +167,9 @@ def parse_kicad_sym(sym_path):
 
     Args:
         sym_path: Path to the ``.kicad_sym`` file.
+        symbol_name: Optional name of the symbol to extract.  When
+            given, only pins belonging to that symbol are returned.
+            When omitted, all pins in the file are returned.
 
     Returns:
         Dict keyed by pin number string.  Each value is a dict with
@@ -163,6 +181,15 @@ def parse_kicad_sym(sym_path):
     """
     with open(sym_path, encoding="utf-8") as sym_file:
         content = sym_file.read()
+
+    if symbol_name:
+        sym_block_re = re.compile(
+            r'\(symbol\s+"' + re.escape(symbol_name) + r'"'
+            r"[\s\S]*?"
+            r'(?=\n\t\(symbol\s+"|\Z)',
+        )
+        sym_match = sym_block_re.search(content)
+        content = sym_match.group(0) if sym_match else ""
 
     pin_header_pattern = re.compile(
         r"\(pin\s+\w+\s+\w+\s*"
@@ -315,14 +342,21 @@ def compare(csv_pins, kicad_pins):
 def print_results(results):
     """Print a detailed issue list and a summary table to stdout.
 
-    Entries with status ``OK`` are omitted from the detailed listing
-    but counted in the summary.
+    Entries with status ``OK`` or ``MISSING_IN_CSV`` are omitted from
+    the detailed listing but ``OK`` pins are counted in the summary.
+    ``MISSING_IN_CSV`` entries are excluded entirely, as pins absent
+    from a CSV are expected when comparing a larger symbol against a
+    smaller package variant.
 
     Args:
         results: List of result dicts returned by ``compare``.
 
     """
-    issues = [row for row in results if row["status"] != "OK"]
+    issues = [
+        row
+        for row in results
+        if row["status"] not in ("OK", "MISSING_IN_CSV")
+    ]
 
     print(f"\n{'=' * 70}")
     print(f"  ISSUES  ({len(issues)} of {len(results)} pins)")
@@ -349,6 +383,8 @@ def print_results(results):
 
     counts = {}
     for row in results:
+        if row["status"] == "MISSING_IN_CSV":
+            continue
         counts[row["status"]] = counts.get(row["status"], 0) + 1
 
     print(f"{'=' * 70}")
@@ -361,13 +397,21 @@ def print_results(results):
 
 
 if __name__ == "__main__":
-    print(f"Parsing CSV   : {CSV_FILE}")
-    csv_pins = parse_csv(CSV_FILE)
-    print(f"  -> {len(csv_pins)} unique pins\n")
+    for entry in COMPARISONS:
+        csv_file = entry["csv_file"]
+        kicad_file = entry["kicad_file"]
+        symbol_name = entry.get("kicad_symbol")
 
-    print(f"Parsing KiCad : {KICAD_FILE}")
-    kicad_pins = parse_kicad_sym(KICAD_FILE)
-    print(f"  -> {len(kicad_pins)} pins in symbol")
+        print(f"\n{'=' * 70}")
+        print(f"CSV    : {csv_file}")
+        print(f"Symbol : {symbol_name or 'all'} ({kicad_file})")
+        print(f"{'=' * 70}")
 
-    results = compare(csv_pins, kicad_pins)
-    print_results(results)
+        csv_pins = parse_csv(csv_file)
+        print(f"  -> {len(csv_pins)} unique pins in CSV")
+
+        kicad_pins = parse_kicad_sym(kicad_file, symbol_name)
+        print(f"  -> {len(kicad_pins)} pins in symbol")
+
+        results = compare(csv_pins, kicad_pins)
+        print_results(results)
