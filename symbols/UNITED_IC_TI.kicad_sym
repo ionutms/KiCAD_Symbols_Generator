@@ -1,7 +1,469 @@
 (kicad_symbol_lib
-	(version 20231120)
+	(version 20241209)
 	(generator "kicad_symbol_editor")
-	(generator_version "8.0")
+	(generator_version "9.0")
+	(symbol "U_DRV8242SQRHLRQ1"
+		(pin_names
+			(offset 0.254)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 15.24 20.32 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DRV8242SQRHLRQ1"
+			(at 15.24 17.78 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "texas_instruments_footprints:VQFN20_RHL_TEX"
+			(at 15.24 -22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/drv8242-q1.pdf?ts=1774122828066&ref_url=https%253A%252F%252Fro.mouser.com%252F"
+			(at 15.24 -17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "Automotive H-Bridge Driver with Integrated Current Sense and Diagnostics"
+			(at 15.24 -20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "MPN" "DRV8242SQRHLRQ1"
+			(at 15.24 -25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(symbol "U_DRV8242SQRHLRQ1_0_1"
+			(rectangle
+				(start -15.24 15.24)
+				(end 15.24 -15.24)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin input line
+				(at -17.78 12.7 0)
+				(length 2.54)
+				(name "SCLK"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 7.62 0)
+				(length 2.54)
+				(name "SDI"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "20"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at -17.78 5.08 0)
+				(length 2.54)
+				(name "SDO"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "19"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at -17.78 -2.54 0)
+				(length 2.54)
+				(name "IPROPI"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 -7.62 0)
+				(length 2.54)
+				(name "IN2/PH"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 -10.16 0)
+				(length 2.54)
+				(name "IN1/EN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 -12.7 0)
+				(length 2.54)
+				(name "DRVOFF"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at -5.08 -17.78 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -2.54 17.78 270)
+				(length 2.54)
+				(name "VM"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at -2.54 -17.78 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "10"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 0 -17.78 90)
+				(length 2.54)
+				(name "EPAD"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "21"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 2.54 17.78 270)
+				(length 2.54)
+				(name "VM"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "15"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 2.54 -17.78 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 5.08 -17.78 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 17.78 5.08 180)
+				(length 2.54)
+				(name "OUT1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 17.78 2.54 180)
+				(length 2.54)
+				(name "OUT1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 17.78 -2.54 180)
+				(length 2.54)
+				(name "OUT2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "14"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 17.78 -5.08 180)
+				(length 2.54)
+				(name "OUT2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(symbol "U_DRV8242SQRHLRQ1_1_1"
+			(pin input line
+				(at -17.78 10.16 0)
+				(length 2.54)
+				(name "~{SCS}"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at -17.78 0 0)
+				(length 2.54)
+				(name "~{FAULT}"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "18"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 -5.08 0)
+				(length 2.54)
+				(name "~{SLEEP}"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "16"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	(symbol "U_MSPM0G3107SRHBR"
 		(pin_names
 			(offset 0.254)
@@ -56,6 +518,15 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+		(property "MPN" "MSPM0G3107SRHBR"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 				(hide yes)
 			)
 		)
@@ -146,77 +617,60 @@
 				)
 			)
 			(pin bidirectional line
-				(at 30.48 -33.02 180)
+				(at -30.48 20.32 0)
 				(length 5.08)
-				(name "PA0_FCC_IN"
+				(name "PA19_SWDIO"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "1"
+				(number "23"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate "FCC_IN" bidirectional line)
-				(alternate "I2C0_SDA" bidirectional line)
-				(alternate "TIMA0_C0" bidirectional line)
-				(alternate "TIMA_FAL1" bidirectional line)
-				(alternate "TIMG8_C1" bidirectional line)
-				(alternate "UART0_TX" bidirectional line)
+				(alternate "SWDIO" bidirectional line)
 			)
 			(pin bidirectional line
-				(at -30.48 7.62 0)
+				(at -30.48 17.78 0)
 				(length 5.08)
-				(name "PA6_HFCLK_IN_HFXOUT"
+				(name "PA20_SWCLK"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "10"
+				(number "24"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate " TIMG6_C1" bidirectional line)
-				(alternate "HFCLK_IN" bidirectional line)
-				(alternate "SPI0_SCK" bidirectional line)
-				(alternate "TIMA0_C2N" bidirectional line)
-				(alternate "TIMA_FAL0" bidirectional line)
-				(alternate "TIMG0_C1" bidirectional line)
-				(alternate "TIMG8_C1 " bidirectional line)
+				(alternate "SWCLK" bidirectional line)
 			)
-			(pin bidirectional line
-				(at -30.48 -2.54 0)
+			(pin input line
+				(at -30.48 15.24 0)
 				(length 5.08)
-				(name "PA7_CLK_OUT"
+				(name "~{RST}"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "11"
+				(number "3"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate "CLK_OUT" bidirectional line)
-				(alternate "TIMA0_C1" bidirectional line)
-				(alternate "TIMA0_C2" bidirectional line)
-				(alternate "TIMG7_C1" bidirectional line)
-				(alternate "TIMG8_C0" bidirectional line)
-				(alternate "TIMG8_IDX" bidirectional line)
 			)
 			(pin bidirectional line
 				(at -30.48 10.16 0)
@@ -242,56 +696,29 @@
 				(alternate "UART1_TX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at -30.48 -7.62 0)
+				(at -30.48 7.62 0)
 				(length 5.08)
-				(name "PA9_RTC_OUT_CLK_OUT"
+				(name "PA6_HFCLK_IN_HFXOUT"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "13"
+				(number "10"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate "CLK_OUT" bidirectional line)
-				(alternate "RTC_OUT" bidirectional line)
-				(alternate "SPI0_PICO" bidirectional line)
-				(alternate "TIMA0_C0N" bidirectional line)
-				(alternate "TIMA0_C1" bidirectional line)
-				(alternate "TIMA1_C1N" bidirectional line)
-				(alternate "UART0_CTS " bidirectional line)
-				(alternate "UART1_RX" bidirectional line)
-			)
-			(pin bidirectional line
-				(at -30.48 0 0)
-				(length 5.08)
-				(name "PA10_CLK_OUT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "14"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "CLK_OUT" bidirectional line)
-				(alternate "I2C0_SDA" bidirectional line)
-				(alternate "I2C1_SDA" bidirectional line)
-				(alternate "SPI0_POCI" bidirectional line)
-				(alternate "TIMA0_C2" bidirectional line)
-				(alternate "TIMA1_C0" bidirectional line)
-				(alternate "TIMG12_C0" bidirectional line)
-				(alternate "UART0_TX" bidirectional line)
+				(alternate " TIMG6_C1" bidirectional line)
+				(alternate "HFCLK_IN" bidirectional line)
+				(alternate "SPI0_SCK" bidirectional line)
+				(alternate "TIMA0_C2N" bidirectional line)
+				(alternate "TIMA_FAL0" bidirectional line)
+				(alternate "TIMG0_C1" bidirectional line)
+				(alternate "TIMG8_C1 " bidirectional line)
 			)
 			(pin bidirectional line
 				(at -30.48 5.08 0)
@@ -342,40 +769,16 @@
 				(alternate "UART3_CTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 -17.78 180)
+				(at -30.48 0 0)
 				(length 5.08)
-				(name "PA13"
+				(name "PA10_CLK_OUT"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "17"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "CAN_RX" bidirectional line)
-				(alternate "SPI0_POCI" bidirectional line)
-				(alternate "TIMA0_C3N" bidirectional line)
-				(alternate "TIMG0_C1" bidirectional line)
-				(alternate "UART3_RTS" bidirectional line)
-				(alternate "UART3_RX" bidirectional line)
-			)
-			(pin bidirectional line
-				(at 30.48 -5.08 180)
-				(length 5.08)
-				(name "PA14_CLK_OUT_A0_12"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
+				(number "14"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -383,10 +786,205 @@
 					)
 				)
 				(alternate "CLK_OUT" bidirectional line)
-				(alternate "SPI0_PICO" bidirectional line)
+				(alternate "I2C0_SDA" bidirectional line)
+				(alternate "I2C1_SDA" bidirectional line)
+				(alternate "SPI0_POCI" bidirectional line)
+				(alternate "TIMA0_C2" bidirectional line)
+				(alternate "TIMA1_C0" bidirectional line)
 				(alternate "TIMG12_C0" bidirectional line)
-				(alternate "UART0_CTS" bidirectional line)
+				(alternate "UART0_TX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at -30.48 -2.54 0)
+				(length 5.08)
+				(name "PA7_CLK_OUT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "CLK_OUT" bidirectional line)
+				(alternate "TIMA0_C1" bidirectional line)
+				(alternate "TIMA0_C2" bidirectional line)
+				(alternate "TIMG7_C1" bidirectional line)
+				(alternate "TIMG8_C0" bidirectional line)
+				(alternate "TIMG8_IDX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at -30.48 -5.08 0)
+				(length 5.08)
+				(name "PA5_HFXIN_FCC_IN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate " FCC_IN" bidirectional line)
+				(alternate "SPI0_PICO" bidirectional line)
+				(alternate "TIMA_FAL1" bidirectional line)
+				(alternate "TIMG0_C0" bidirectional line)
+				(alternate "TIMG6_C0" bidirectional line)
+				(alternate "TIMG8_C0" bidirectional line)
+			)
+			(pin bidirectional line
+				(at -30.48 -7.62 0)
+				(length 5.08)
+				(name "PA9_RTC_OUT_CLK_OUT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "CLK_OUT" bidirectional line)
+				(alternate "RTC_OUT" bidirectional line)
+				(alternate "SPI0_PICO" bidirectional line)
+				(alternate "TIMA0_C0N" bidirectional line)
+				(alternate "TIMA0_C1" bidirectional line)
+				(alternate "TIMA1_C1N" bidirectional line)
+				(alternate "UART0_CTS " bidirectional line)
+				(alternate "UART1_RX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at -30.48 -12.7 0)
+				(length 5.08)
+				(name "PA2_ROSC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "SPI0_CS0" bidirectional line)
+				(alternate "SPI1_CS0" bidirectional line)
+				(alternate "TIMG7_C1" bidirectional line)
+				(alternate "TIMG8_C1" bidirectional line)
+			)
+			(pin bidirectional line
+				(at 30.48 20.32 180)
+				(length 5.08)
+				(name "PA27_RTC_OUT_A0_0"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "31"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "CAN_RX" bidirectional line)
+				(alternate "RTC_OUT" bidirectional line)
+				(alternate "SPI1_CS1" bidirectional line)
+				(alternate "TIMA_FAL2" bidirectional line)
+				(alternate "TIMG7_C1" bidirectional line)
+				(alternate "TIMG8_C1" bidirectional line)
+			)
+			(pin bidirectional line
+				(at 30.48 17.78 180)
+				(length 5.08)
+				(name "PA26_A0_1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "30"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "CAN_TX" bidirectional line)
+				(alternate "SPI1_CS0" bidirectional line)
+				(alternate "TIMA_FAL0" bidirectional line)
+				(alternate "TIMG7_C0" bidirectional line)
+				(alternate "TIMG8_C0" bidirectional line)
 				(alternate "UART3_TX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at 30.48 15.24 180)
+				(length 5.08)
+				(name "PA25_A0_2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "29"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "SPI1_CS3" bidirectional line)
+				(alternate "TIMA0_C1N" bidirectional line)
+				(alternate "TIMA0_C3" bidirectional line)
+				(alternate "TIMG12_C1" bidirectional line)
+				(alternate "UART3_RX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at 30.48 12.7 180)
+				(length 5.08)
+				(name "PA24_A0_3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "28"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "SPI0_CS2" bidirectional line)
+				(alternate "TIMA0_C3N" bidirectional line)
+				(alternate "TIMA1_C1" bidirectional line)
+				(alternate "TIMG0_C1" bidirectional line)
+				(alternate "TIMG7_C1" bidirectional line)
+				(alternate "UART2_RX" bidirectional line)
+				(alternate "UART3_RTS" bidirectional line)
 			)
 			(pin bidirectional line
 				(at 30.48 7.62 180)
@@ -414,28 +1012,28 @@
 				(alternate "UART0_RTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 -35.56 180)
+				(at 30.48 5.08 180)
 				(length 5.08)
-				(name "PA1"
+				(name "PA17_A1_2"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "2"
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate "I2C0_SCL" bidirectional line)
-				(alternate "TIMA0_C1" bidirectional line)
-				(alternate "TIMA_FAL2" bidirectional line)
-				(alternate "TIMG8_C0" bidirectional line)
-				(alternate "TIMG8_IDX" bidirectional line)
-				(alternate "UART0_RX" bidirectional line)
+				(alternate "I2C1_SCL" bidirectional line)
+				(alternate "SPI1_SCK" bidirectional line)
+				(alternate "TIMA0_C3" bidirectional line)
+				(alternate "TIMA1_C0" bidirectional line)
+				(alternate "TIMG7_C0" bidirectional line)
+				(alternate "UART1_TX" bidirectional line)
 			)
 			(pin bidirectional line
 				(at 30.48 2.54 180)
@@ -462,30 +1060,6 @@
 				(alternate "TIMA1_C1N" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 5.08 180)
-				(length 5.08)
-				(name "PA17_A1_2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "21"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "I2C1_SCL" bidirectional line)
-				(alternate "SPI1_SCK" bidirectional line)
-				(alternate "TIMA0_C3" bidirectional line)
-				(alternate "TIMA1_C0" bidirectional line)
-				(alternate "TIMG7_C0" bidirectional line)
-				(alternate "UART1_TX" bidirectional line)
-			)
-			(pin bidirectional line
 				(at 30.48 0 180)
 				(length 5.08)
 				(name "PA18_A1_3"
@@ -510,42 +1084,27 @@
 				(alternate "UART1_RX" bidirectional line)
 			)
 			(pin bidirectional line
-				(at -30.48 20.32 0)
+				(at 30.48 -5.08 180)
 				(length 5.08)
-				(name "PA19_SWDIO"
+				(name "PA14_CLK_OUT_A0_12"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "23"
+				(number "18"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate "SWDIO" bidirectional line)
-			)
-			(pin bidirectional line
-				(at -30.48 17.78 0)
-				(length 5.08)
-				(name "PA20_SWCLK"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "24"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "SWCLK" bidirectional line)
+				(alternate "CLK_OUT" bidirectional line)
+				(alternate "SPI0_PICO" bidirectional line)
+				(alternate "TIMG12_C0" bidirectional line)
+				(alternate "UART0_CTS" bidirectional line)
+				(alternate "UART3_TX" bidirectional line)
 			)
 			(pin bidirectional line
 				(at 30.48 -7.62 180)
@@ -621,106 +1180,16 @@
 				(alternate "UART3_CTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at 30.48 12.7 180)
+				(at 30.48 -17.78 180)
 				(length 5.08)
-				(name "PA24_A0_3"
+				(name "PA13"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "28"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "SPI0_CS2" bidirectional line)
-				(alternate "TIMA0_C3N" bidirectional line)
-				(alternate "TIMA1_C1" bidirectional line)
-				(alternate "TIMG0_C1" bidirectional line)
-				(alternate "TIMG7_C1" bidirectional line)
-				(alternate "UART2_RX" bidirectional line)
-				(alternate "UART3_RTS" bidirectional line)
-			)
-			(pin bidirectional line
-				(at 30.48 15.24 180)
-				(length 5.08)
-				(name "PA25_A0_2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "29"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "SPI1_CS3" bidirectional line)
-				(alternate "TIMA0_C1N" bidirectional line)
-				(alternate "TIMA0_C3" bidirectional line)
-				(alternate "TIMG12_C1" bidirectional line)
-				(alternate "UART3_RX" bidirectional line)
-			)
-			(pin input line
-				(at -30.48 15.24 0)
-				(length 5.08)
-				(name "~{RST}"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at 30.48 17.78 180)
-				(length 5.08)
-				(name "PA26_A0_1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "30"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "CAN_TX" bidirectional line)
-				(alternate "SPI1_CS0" bidirectional line)
-				(alternate "TIMA_FAL0" bidirectional line)
-				(alternate "TIMG7_C0" bidirectional line)
-				(alternate "TIMG8_C0" bidirectional line)
-				(alternate "UART3_TX" bidirectional line)
-			)
-			(pin bidirectional line
-				(at 30.48 20.32 180)
-				(length 5.08)
-				(name "PA27_RTC_OUT_A0_0"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "31"
+				(number "17"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -728,33 +1197,11 @@
 					)
 				)
 				(alternate "CAN_RX" bidirectional line)
-				(alternate "RTC_OUT" bidirectional line)
-				(alternate "SPI1_CS1" bidirectional line)
-				(alternate "TIMA_FAL2" bidirectional line)
-				(alternate "TIMG7_C1" bidirectional line)
-				(alternate "TIMG8_C1" bidirectional line)
-			)
-			(pin bidirectional line
-				(at -30.48 -12.7 0)
-				(length 5.08)
-				(name "PA2_ROSC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "6"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(alternate "SPI0_CS0" bidirectional line)
-				(alternate "SPI1_CS0" bidirectional line)
-				(alternate "TIMG7_C1" bidirectional line)
-				(alternate "TIMG8_C1" bidirectional line)
+				(alternate "SPI0_POCI" bidirectional line)
+				(alternate "TIMA0_C3N" bidirectional line)
+				(alternate "TIMG0_C1" bidirectional line)
+				(alternate "UART3_RTS" bidirectional line)
+				(alternate "UART3_RX" bidirectional line)
 			)
 			(pin bidirectional line
 				(at 30.48 -25.4 180)
@@ -808,29 +1255,54 @@
 				(alternate "UART2_RTS" bidirectional line)
 			)
 			(pin bidirectional line
-				(at -30.48 -5.08 0)
+				(at 30.48 -33.02 180)
 				(length 5.08)
-				(name "PA5_HFXIN_FCC_IN"
+				(name "PA0_FCC_IN"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "9"
+				(number "1"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(alternate " FCC_IN" bidirectional line)
-				(alternate "SPI0_PICO" bidirectional line)
+				(alternate "FCC_IN" bidirectional line)
+				(alternate "I2C0_SDA" bidirectional line)
+				(alternate "TIMA0_C0" bidirectional line)
 				(alternate "TIMA_FAL1" bidirectional line)
-				(alternate "TIMG0_C0" bidirectional line)
-				(alternate "TIMG6_C0" bidirectional line)
+				(alternate "TIMG8_C1" bidirectional line)
+				(alternate "UART0_TX" bidirectional line)
+			)
+			(pin bidirectional line
+				(at 30.48 -35.56 180)
+				(length 5.08)
+				(name "PA1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(alternate "I2C0_SCL" bidirectional line)
+				(alternate "TIMA0_C1" bidirectional line)
+				(alternate "TIMA_FAL2" bidirectional line)
 				(alternate "TIMG8_C0" bidirectional line)
+				(alternate "TIMG8_IDX" bidirectional line)
+				(alternate "UART0_RX" bidirectional line)
 			)
 		)
+		(embedded_fonts no)
 	)
 )
