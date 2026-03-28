@@ -979,9 +979,10 @@ def generate_custom_thru_hole_pads(
 
     Args:
         pad_positions: List of PadPosition namedtuples containing
-            pad_number, x, y for each pad
-        pad_size: Diameter of the pads (from FootprintSpecs)
-        drill_size: Diameter of the drill holes (from FootprintSpecs)
+            pad_number, x, y for each pad. Can optionally include
+            pad_size and drill_size for custom sizes per pad.
+        pad_size: Default diameter of the pads (from FootprintSpecs)
+        drill_size: Default diameter of the drill holes (from FootprintSpecs)
         pad1_square:
             Whether pad 1 should be rectangular (True) or circular (False)
 
@@ -993,11 +994,29 @@ def generate_custom_thru_hole_pads(
     for pad_index, pad_pos in enumerate(pad_positions):
         is_first_pad = pad_index == 0
         pad_type = "rect" if (is_first_pad and pad1_square) else "circle"
+
+        # Use custom pad size if provided, otherwise use default
+        current_pad_size = (
+            pad_pos.pad_size if pad_pos.pad_size is not None else pad_size
+        )
+        # Handle both single value and list formats
+        if isinstance(current_pad_size, (int, float)):
+            size_x = size_y = current_pad_size
+        else:
+            size_x, size_y = current_pad_size[0], current_pad_size[1]
+
+        # Use custom drill size if provided, otherwise use default
+        current_drill_size = (
+            pad_pos.drill_size
+            if pad_pos.drill_size is not None
+            else drill_size
+        )
+
         pad = f"""
             (pad "{pad_pos.pad_number}" thru_hole {pad_type}
                 (at {pad_pos.x:.3f} {pad_pos.y:.3f})
-                (size {pad_size} {pad_size})
-                (drill {drill_size})
+                (size {size_x} {size_y})
+                (drill {current_drill_size})
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)

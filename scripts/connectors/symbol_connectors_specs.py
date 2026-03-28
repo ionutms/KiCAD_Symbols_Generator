@@ -1176,7 +1176,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "Action=srchrtrv&DocNm=2496699&DocType=Customer%20"
             "Drawing&DocLang=English&DocFormat=pdf&PartCntxt=2496699-2"
         ),
-        pin_counts=[8],
+        pin_counts=[14],
         trustedparts_link=(
             "https://www.trustedparts.com/en/search?q=2496699-2"
         ),
@@ -1188,6 +1188,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         voltage_rating=57,
         mounting_style="Through Hole",
         contact_plating="Gold",
+        symbol_pin_length=5.08,
         pin_names={
             "8": "",
             "7": "",
@@ -1201,6 +1202,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             "10": "",
             "11": "",
             "12": "",
+            "SH1": "",
+            "SH2": "",
         },
     ),
 }

@@ -92,12 +92,19 @@ class PadPosition(NamedTuple):
         pad_number: Pad number or name (string)
         x: X position relative to the connector origin
         y: Y position relative to the connector origin
+        pad_size: Optional pad size (diameter). If None, uses default pad_size
+            from FootprintSpecs. Can be float for circular pads or
+            list[float] for oval pads [width, height].
+        drill_size: Optional drill size (diameter). If None, uses default
+            drill_size from FootprintSpecs.
 
     """
 
     pad_number: str
     x: float
     y: float
+    pad_size: float | list[float] | None = None
+    drill_size: float | None = None
 
 
 class FootprintSpecs(NamedTuple):
@@ -824,8 +831,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             height_bottom=8.9,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-8.1, 0, 1.7],
-            [8.1, 0, 1.7],
             [-6.35, 3.43, 3.15],
             [6.35, 3.43, 3.15],
         ]),
@@ -842,6 +847,12 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             PadPosition(pad_number="9", x=6.86, y=-5.7),
             PadPosition(pad_number="11", x=-4.57, y=-5.7),
             PadPosition(pad_number="10", x=4.57, y=-5.7),
+            PadPosition(
+                pad_number="SH1", x=-8.1, y=0, pad_size=2.2, drill_size=1.7
+            ),
+            PadPosition(
+                pad_number="SH2", x=8.1, y=0, pad_size=2.2, drill_size=1.7
+            ),
         ],
         pad_size=1.2,
         drill_size=0.9,
