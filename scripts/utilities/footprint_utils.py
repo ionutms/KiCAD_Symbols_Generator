@@ -7,7 +7,6 @@ silkscreen lines, and component properties.
 
 from __future__ import annotations
 
-from typing import NamedTuple
 from uuid import uuid4
 
 
@@ -824,6 +823,76 @@ def generate_thermal_pad(
     return "\n".join(pads)
 
 
+def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
+    pin_count: int,
+    pad_pitch: float,
+    pad_size: float,
+    drill_size: float,
+    start_pos: float,
+    row_pitch: float,
+    mirror_y_position: bool = False,  # noqa: FBT001, FBT002
+    pin_numbers: list[str] | None = None,
+    pad1_square: bool = True,
+) -> str:
+    """Generate zig-zag through-hole pads.
+
+    Args:
+        pin_count: Number of pins in the connector
+        pad_pitch: Distance between adjacent pins
+        pad_size: Diameter of the pad
+        drill_size: Diameter of the drill hole
+        start_pos: X-coordinate of the first pad
+        row_pitch: Pitch between zig-zag rows
+        mirror_y_position: Mirror the Y-coordinate offset
+        pin_numbers: List of custom pin numbers
+        pad1_square:
+            Whether pad 1 should be rectangular (True) or circular (False)
+
+    Returns:
+        str: KiCad formatted pad definitions
+
+    """
+    xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
+
+    pads = []
+    # Validate custom numbering if provided
+    if pin_numbers is not None and len(pin_numbers) != pin_count:
+        msg = (
+            f"Number of pin numbers ({len(pin_numbers)}) "
+            f"must match pin_count ({pin_count})"
+        )
+        raise ValueError(msg)
+
+    for pin_index, pin_num in enumerate(range(pin_count)):
+        mirror_coefficient = -1 if mirror_y_position else 1
+        ypos = (
+            -1 * mirror_coefficient
+            if pin_num % 2 == 0
+            else 1 * mirror_coefficient
+        ) * (row_pitch / 2)
+
+        pad_label = (
+            str(pin_numbers[pin_index])
+            if pin_numbers is not None
+            else str(pin_num + 1)
+        )
+        # Check if pad_label is "1" and pad1_square is True to make it square
+        pad_type = "rect" if (pad_label == "1" and pad1_square) else "circle"
+        pad = f"""
+            (pad "{pad_label}" thru_hole {pad_type}
+                (at {xpos[pin_index]:.3f} {ypos:.3f})
+                (size {pad_size} {pad_size})
+                (drill {drill_size})
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "{uuid4()}")
+            )
+            """
+        pads.append(pad)
+    return "\n".join(pads)
+
+
 def generate_thru_hole_pads(  # noqa: PLR0913
     pin_count: int,
     pad_pitch: float,
@@ -913,7 +982,8 @@ def generate_custom_thru_hole_pads(
             pad_number, x, y for each pad
         pad_size: Diameter of the pads (from FootprintSpecs)
         drill_size: Diameter of the drill holes (from FootprintSpecs)
-        pad1_square: Whether pad 1 should be rectangular (True) or circular (False)
+        pad1_square:
+            Whether pad 1 should be rectangular (True) or circular (False)
 
     Returns:
         str: KiCad formatted pad definitions

@@ -1167,4 +1167,36 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "2496699-2": SeriesSpec(
+        manufacturer="TE Connectivity",
+        base_series="2496699-2",
+        footprint_pattern="connector_footprints:2496699-2",
+        datasheet=(
+            "https://www.te.com/commerce/DocumentDelivery/DDEController?"
+            "Action=srchrtrv&DocNm=2496699&DocType=Customer%20"
+            "Drawing&DocLang=English&DocFormat=pdf&PartCntxt=2496699-2"
+        ),
+        pin_counts=[8],
+        trustedparts_link=(
+            "https://www.trustedparts.com/en/search?q=2496699-2"
+        ),
+        color="Black",
+        pitch=1.02,
+        number_of_rows=1,
+        mounting_angle="Right Angle",
+        current_rating=1.5,
+        voltage_rating=57,
+        mounting_style="Through Hole",
+        contact_plating="Gold",
+        pin_names={
+            "8": "",
+            "7": "",
+            "6": "",
+            "5": "",
+            "4": "",
+            "3": "",
+            "2": "",
+            "1": "",
+        },
+    ),
 }

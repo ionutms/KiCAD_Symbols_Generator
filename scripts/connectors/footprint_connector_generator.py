@@ -98,6 +98,18 @@ def generate_footprint(  # noqa: C901
                 drill_size=footprint_specs.drill_size,
                 pad1_square=footprint_specs.pad1_square,
             )
+        elif getattr(footprint_specs, "zig_zag", False):
+            pads = footprint_utils.generate_zig_zag_thru_hole_pads(
+                part_info.pin_count,
+                footprint_specs.pad_pitch,
+                footprint_specs.pad_size,
+                footprint_specs.drill_size,
+                dimensions["start_pos"],
+                row_pitch=footprint_specs.row_pitch,
+                mirror_y_position=footprint_specs.miror_zig_zag,
+                pin_numbers=custom_pin_numbers,
+                pad1_square=footprint_specs.pad1_square,
+            )
         else:
             pads = footprint_utils.generate_thru_hole_pads(
                 part_info.pin_count,

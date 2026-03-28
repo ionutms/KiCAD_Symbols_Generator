@@ -123,6 +123,7 @@ class FootprintSpecs(NamedTuple):
         non_plated_drill_size: Diameter of non-plated drill holes
         non_plated_row_pitch: Additional height per row of non-plated pads
         miror_zig_zag: Mirror the zig-zag pattern
+        zig_zag: Use zig-zag pattern for through-hole pads
         non_plated_round_mounting_holes: Non-plated mounting holes
         plated_oval_mounting_holes: Plated oval mounting holes
         internal_courtyard: Internal courtyard dimensions
@@ -148,6 +149,7 @@ class FootprintSpecs(NamedTuple):
     non_plated_drill_size: None | float = None
     non_plated_row_pitch: float = 0
     miror_zig_zag: None | bool = None
+    zig_zag: bool = False
     mirror_x_pin_numbering: bool = False
     non_plated_round_mounting_holes: None | NonPlatedRoundMountingHoles = None
     plated_oval_mounting_holes: None | PlatedOvalMountingHoles = None
@@ -808,6 +810,30 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
             PadPosition(pad_number="3", x=1.77, y=1.77),
             PadPosition(pad_number="4", x=-1.77, y=1.77),
         ],
+        pad1_square=False,
+    ),
+    "2496699-2": FootprintSpecs(
+        pad_pitch=1.02,
+        row_pitch=1.78,
+        number_of_rows=1,
+        zig_zag=True,
+        body_dimensions=BodyDimensions(
+            width_left=6.2,
+            width_right=6.2,
+            height_top=7.1,
+            height_bottom=8.9,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-8.1, 0, 1.7],
+            [8.1, 0, 1.7],
+            [-6.35, 3.43, 3.15],
+            [6.35, 3.43, 3.15],
+        ]),
+        pad_size=1.2,
+        drill_size=0.9,
+        mpn_y=9.906,
+        ref_y=-8.128,
+        show_pin1_indicator=False,
         pad1_square=False,
     ),
 }
