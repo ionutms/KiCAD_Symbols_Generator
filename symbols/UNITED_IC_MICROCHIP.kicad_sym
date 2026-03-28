@@ -69,124 +69,16 @@
 		)
 		(symbol "U_LAN8742A-CZ-TR_0_0"
 			(pin bidirectional line
-				(at -20.32 22.86 0)
-				(length 2.54)
-				(name "TXEN"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "16"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -20.32 17.78 0)
-				(length 2.54)
-				(name "TXD0"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "17"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -20.32 15.24 0)
-				(length 2.54)
-				(name "TXD1"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -20.32 10.16 0)
-				(length 2.54)
-				(name "RXD0/MODE0"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -20.32 7.62 0)
-				(length 2.54)
-				(name "RXD1/MODE1"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
 				(at -20.32 5.08 0)
 				(length 2.54)
-				(name "RXER/PHYAD0"
+				(name "TXP"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "10"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at -20.32 0 0)
-				(length 2.54)
-				(name "CRS_DV/MODE2"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "11"
+				(number "21"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -195,16 +87,16 @@
 				)
 			)
 			(pin bidirectional line
-				(at -20.32 -7.62 0)
+				(at -20.32 2.54 0)
 				(length 2.54)
-				(name "MDIO"
+				(name "TXN"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "12"
+				(number "20"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -212,17 +104,53 @@
 					)
 				)
 			)
-			(pin input line
+			(pin bidirectional line
+				(at -20.32 -2.54 0)
+				(length 2.54)
+				(name "RXP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "23"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at -20.32 -5.08 0)
+				(length 2.54)
+				(name "RXN"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "22"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin passive line
 				(at -20.32 -12.7 0)
 				(length 2.54)
-				(name "~{RST}"
+				(name "LED1/~{INT}/PME/REGOFF"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "15"
+				(number "3"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -230,35 +158,17 @@
 					)
 				)
 			)
-			(pin output line
+			(pin passive line
 				(at -20.32 -15.24 0)
 				(length 2.54)
-				(name "~{INT}/REFCLKO"
+				(name "LED2/~{INT}/PME/NINTSEL"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "14"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -20.32 -20.32 0)
-				(length 2.54)
-				(name "XTAL2"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "4"
+				(number "2"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -269,14 +179,14 @@
 			(pin input line
 				(at -20.32 -22.86 0)
 				(length 2.54)
-				(name "XTAL1/CLKIN"
+				(name "RBIAS"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "5"
+				(number "24"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -375,34 +285,106 @@
 				)
 			)
 			(pin bidirectional line
+				(at 20.32 22.86 180)
+				(length 2.54)
+				(name "TXEN"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "16"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 17.78 180)
+				(length 2.54)
+				(name "TXD0"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 15.24 180)
+				(length 2.54)
+				(name "TXD1"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "18"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 10.16 180)
+				(length 2.54)
+				(name "RXD0/MODE0"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
+				(at 20.32 7.62 180)
+				(length 2.54)
+				(name "RXD1/MODE1"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin bidirectional line
 				(at 20.32 5.08 180)
 				(length 2.54)
-				(name "TXP"
+				(name "RXER/PHYAD0"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "21"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin bidirectional line
-				(at 20.32 2.54 180)
-				(length 2.54)
-				(name "TXN"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "20"
+				(number "10"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -411,16 +393,16 @@
 				)
 			)
 			(pin bidirectional line
-				(at 20.32 -2.54 180)
+				(at 20.32 0 180)
 				(length 2.54)
-				(name "RXP"
+				(name "CRS_DV/MODE2"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "23"
+				(number "11"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -429,16 +411,16 @@
 				)
 			)
 			(pin bidirectional line
-				(at 20.32 -5.08 180)
+				(at 20.32 -7.62 180)
 				(length 2.54)
-				(name "RXN"
+				(name "MDIO"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "22"
+				(number "12"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -446,17 +428,17 @@
 					)
 				)
 			)
-			(pin passive line
+			(pin input line
 				(at 20.32 -12.7 180)
 				(length 2.54)
-				(name "LED1/~{INT}/PME/REGOFF"
+				(name "~{RST}"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "3"
+				(number "15"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -464,17 +446,35 @@
 					)
 				)
 			)
-			(pin passive line
+			(pin output line
 				(at 20.32 -15.24 180)
 				(length 2.54)
-				(name "LED2/~{INT}/PME/NINTSEL"
+				(name "~{INT}/REFCLKO"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "2"
+				(number "14"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 20.32 -20.32 180)
+				(length 2.54)
+				(name "XTAL2"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "4"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -485,14 +485,14 @@
 			(pin input line
 				(at 20.32 -22.86 180)
 				(length 2.54)
-				(name "RBIAS"
+				(name "XTAL1/CLKIN"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "24"
+				(number "5"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -516,7 +516,7 @@
 		)
 		(symbol "U_LAN8742A-CZ-TR_1_0"
 			(pin input line
-				(at -20.32 -5.08 0)
+				(at 20.32 -5.08 180)
 				(length 2.54)
 				(name "MDC"
 					(effects
