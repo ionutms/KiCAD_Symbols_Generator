@@ -859,6 +859,6 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         mpn_y=9.906,
         ref_y=-8.128,
         show_pin1_indicator=False,
-        pad1_square=False,
+        pad1_square=True,
     ),
 }

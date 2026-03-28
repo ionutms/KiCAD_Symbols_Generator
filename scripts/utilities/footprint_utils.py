@@ -991,9 +991,10 @@ def generate_custom_thru_hole_pads(
 
     """
     pads = []
-    for pad_index, pad_pos in enumerate(pad_positions):
-        is_first_pad = pad_index == 0
-        pad_type = "rect" if (is_first_pad and pad1_square) else "circle"
+    for pad_pos in pad_positions:
+        # Check if this is pad "1" to make it square
+        is_pad_1 = pad_pos.pad_number == "1"
+        pad_type = "rect" if (is_pad_1 and pad1_square) else "circle"
 
         # Use custom pad size if provided, otherwise use default
         current_pad_size = (
