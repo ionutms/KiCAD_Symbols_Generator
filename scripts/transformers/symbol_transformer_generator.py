@@ -73,6 +73,7 @@ def convert_pin_config(
                 "pin_type": pin.pin_type,
                 "lenght": pin.lenght,
                 "hide": pin.hide,
+                "x_offset": pin.x_offset,
             }
             for pin in spec_config.left
         ],
@@ -83,6 +84,7 @@ def convert_pin_config(
                 "pin_type": pin.pin_type,
                 "lenght": pin.lenght,
                 "hide": pin.hide,
+                "x_offset": pin.x_offset,
             }
             for pin in spec_config.right
         ],
@@ -97,6 +99,7 @@ def convert_pin_config(
                 "pin_type": pin.pin_type,
                 "lenght": pin.lenght,
                 "hide": pin.hide,
+                "x_offset": pin.x_offset,
             }
             for pin in spec_config.right_alternative
         ]
@@ -186,6 +189,18 @@ def write_component(
             9,
         )
         symbol_utils.write_transformer_symbol_drawing_v5(
+            symbol_file,
+            symbol_name,
+            pin_config,
+        )
+    if component_data.get("Series") in ("HM1331NL"):
+        symbol_utils.write_properties(
+            symbol_file,
+            component_data,
+            property_order,
+            14,
+        )
+        symbol_utils.write_transformer_symbol_drawing_v6(
             symbol_file,
             symbol_name,
             pin_config,

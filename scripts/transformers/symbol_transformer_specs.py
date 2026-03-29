@@ -27,6 +27,7 @@ class PinConfig(NamedTuple):
         pin_type: Type of pin (e.g., "unspecified", "no_connect")
         lenght: Length of the pin in millimeters
         hide: Flag to hide the pin in the schematic (default: False)
+        x_offset: Horizontal offset for the pin position (default: 0.0)
 
     """
 
@@ -35,6 +36,7 @@ class PinConfig(NamedTuple):
     pin_type: str
     lenght: float
     hide: bool = False
+    x_offset: float = 0.0
 
 
 class SidePinConfig(NamedTuple):
@@ -472,6 +474,95 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                 PinConfig("9", 0, "passive", 5.08),
                 PinConfig("10", -10.16, "passive", 5.08),
                 PinConfig("11", -20.32, "passive", 5.08),
+            ],
+        ),
+    ),
+    "HM1331NL": SeriesSpec(
+        manufacturer="Coilcraft",
+        base_series="HM1331NL",
+        footprint="transformer_footprints:HM1331NL",
+        tolerance="±10%",
+        datasheet=("https://ro.mouser.com/datasheet/3/203/1/HM1331NL.pdf"),
+        turns_ratio={"pri1 : sec": "5 : 4", "pri2 : sec": "5 : 4"},
+        primary_inductance=350,
+        max_dc_resistance={"pri1": "0.009", "pri2": "0.009", "sec": "0.0042"},
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        pin_config=SidePinConfig(
+            left=[
+                PinConfig(
+                    "1", 2.54 * 13, "passive", 2.54, x_offset=-2.54 * 4
+                ),
+                PinConfig("2", 2.54 * 8, "passive", 2.54, x_offset=-2.54 * 4),
+                PinConfig("3", 2.54 * 3, "passive", 2.54, x_offset=-2.54 * 4),
+                PinConfig(
+                    "4",
+                    2.54 * 2,
+                    "no_connect",
+                    2.54,
+                    True,
+                    x_offset=-2.54 * 4,
+                ),
+                PinConfig(
+                    "5", 2.54, "no_connect", 2.54, True, x_offset=-2.54 * 4
+                ),
+                PinConfig(
+                    "6",
+                    -2.54 * 2,
+                    "no_connect",
+                    2.54,
+                    True,
+                    x_offset=-2.54 * 4,
+                ),
+                PinConfig(
+                    "7", -2.54, "no_connect", 2.54, True, x_offset=-2.54 * 4
+                ),
+                PinConfig(
+                    "8", -2.54 * 3, "passive", 2.54, x_offset=-2.54 * 4
+                ),
+                PinConfig(
+                    "9", -2.54 * 8, "passive", 2.54, x_offset=-2.54 * 4
+                ),
+                PinConfig(
+                    "10", -2.54 * 13, "passive", 2.54, x_offset=-2.54 * 4
+                ),
+            ],
+            right=[
+                PinConfig(
+                    "20", 2.54 * 13, "passive", 2.54, x_offset=2.54 * 4
+                ),
+                PinConfig("19", 2.54 * 8, "passive", 2.54, x_offset=2.54 * 4),
+                PinConfig("18", 2.54 * 3, "passive", 2.54, x_offset=2.54 * 4),
+                PinConfig(
+                    "17",
+                    2.54 * 2,
+                    "no_connect",
+                    2.54,
+                    True,
+                    x_offset=-2.54 * 4,
+                ),
+                PinConfig(
+                    "16", 2.54, "no_connect", 2.54, True, x_offset=2.54 * 4
+                ),
+                PinConfig(
+                    "15",
+                    -2.54 * 2,
+                    "no_connect",
+                    2.54,
+                    True,
+                    x_offset=2.54 * 4,
+                ),
+                PinConfig(
+                    "14", -2.54, "no_connect", 2.54, True, x_offset=2.54 * 4
+                ),
+                PinConfig(
+                    "13", -2.54 * 3, "passive", 2.54, x_offset=2.54 * 4
+                ),
+                PinConfig(
+                    "12", -2.54 * 8, "passive", 2.54, x_offset=2.54 * 4
+                ),
+                PinConfig(
+                    "11", -2.54 * 13, "passive", 2.54, x_offset=2.54 * 4
+                ),
             ],
         ),
     ),

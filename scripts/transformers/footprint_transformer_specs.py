@@ -184,4 +184,15 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs] = {
         ],
         ref_offset_y=-14.224,
     ),
+    "HM1331NL": FootprintSpecs(
+        body_dimensions=BodyDimensions(width=16.2, height=15.6),
+        pad_dimensions=PadDimensions(
+            width=1.46,
+            height=0.76,
+            center_x=7.205,
+            pitch_y=1.27,
+            pin_count=20,
+        ),
+        ref_offset_y=-8.636,
+    ),
 }
