@@ -708,6 +708,7 @@ def generate_range_slider(
             value=[0, step],
             marks=marks,
             step=step,
+            allow_direct_input=False,
         ),
     ])
 
