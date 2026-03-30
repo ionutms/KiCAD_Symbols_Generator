@@ -638,7 +638,7 @@ def generate_range_slider(
     module_name: str,
     dataframe: pd.DataFrame,
     step: int = 50,
-) -> dbc.Row:
+) -> tuple[dbc.Row, dict[int, float]]:
     """Generate a Dash RangeSlider component for exploring DataFrame values.
 
     Creates a range slider with marks at regular intervals, allowing users
@@ -653,9 +653,9 @@ def generate_range_slider(
             Controls the density of marks and initial range selection.
 
     Returns:
-        dbc.Row: A Dash Bootstrap Row containing:
-            - A dcc.Store component to persist slider state
-            - A dcc.RangeSlider for value selection
+        tuple[dbc.Row, dict[int, float]]: A tuple containing:
+            - A Dash Bootstrap Row with Store and RangeSlider components
+            - The initial marks dictionary for theme callback
 
     Raises:
         ValueError:
@@ -696,7 +696,7 @@ def generate_range_slider(
     # Always add the last value
     marks[len(values) - 1] = values[-1]
 
-    return dbc.Row([
+    slider_row = dbc.Row([
         dcc.Store(
             id=f"{module_name}_rangeslider_store",
             data=[0, step],
@@ -711,6 +711,8 @@ def generate_range_slider(
             allow_direct_input=False,
         ),
     ])
+
+    return slider_row, marks
 
 
 def extract_consecutive_value_groups(
@@ -792,6 +794,53 @@ def pad_values_and_counts(
             padded_specific_counts.append(0)
 
     return padded_specific_values, padded_specific_counts
+
+
+def callback_update_rangeslider_marks_theme(
+    rangeslider_id: str,
+    initial_marks: dict[int, float],
+) -> None:
+    """Create a callback to update RangeSlider marks color based on theme.
+
+    This callback updates the marks style of a RangeSlider component when
+    the theme switches between light and dark modes.
+
+    Args:
+        rangeslider_id (str): The ID of the RangeSlider component.
+        initial_marks (dict[int, float]):
+            The initial marks dictionary with index as key and value as label.
+
+    Returns:
+        None:
+            This function registers a callback with Dash and
+            doesn't return a value directly.
+
+    """
+
+    @callback(
+        Output(rangeslider_id, "marks"),
+        Input("theme_switch_value_store", "data"),
+    )
+    def update_rangeslider_marks_theme(
+        switch: bool,  # noqa: FBT001
+    ) -> dict[int, dict[str, Any]]:
+        """Update the RangeSlider marks style based on theme.
+
+        Args:
+            switch: True for light theme, False for dark theme.
+
+        Returns:
+            Dictionary with marks styled according to the current theme.
+
+        """
+        mark_color = "#000000" if switch else "#FFFFFF"
+        styled_marks = {}
+        for index, value in initial_marks.items():
+            styled_marks[index] = {
+                "label": str(value),
+                "style": {"color": mark_color},
+            }
+        return styled_marks
 
 
 def save_previous_slider_state_callback(

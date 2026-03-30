@@ -119,7 +119,7 @@ layout = dbc.Container(
                 dbc.Row([
                     dcu.app_description(TITLE, ABOUT, features, usage_steps),
                 ]),
-                dcu.generate_range_slider(module_name, ag_grid_data, 25),
+                dcu.generate_range_slider(module_name, ag_grid_data, 25)[0],
                 html.Hr(),
                 dbc.Row([
                     dcc.Loading(
@@ -162,6 +162,14 @@ dcu.callback_update_ag_grid_visible_table_columns(
 )
 
 dcu.callback_update_ag_grid_table_theme(f"{module_name}_ag_grid_table")
+
+_, initial_marks = dcu.generate_range_slider(
+    module_name, ag_grid_data, 25
+)
+dcu.callback_update_rangeslider_marks_theme(
+    f"{module_name}_value_rangeslider",
+    initial_marks,
+)
 
 dcu.save_previous_slider_state_callback(
     f"{module_name}_value_rangeslider",
