@@ -538,7 +538,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
                     "no_connect",
                     2.54,
                     True,
-                    x_offset=-2.54 * 4,
+                    x_offset=2.54 * 4,
                 ),
                 PinConfig(
                     "16", 2.54, "no_connect", 2.54, True, x_offset=2.54 * 4
