@@ -198,7 +198,7 @@ def write_component(
             symbol_file,
             component_data,
             property_order,
-            14,
+            9,
         )
         symbol_utils.write_transformer_symbol_drawing_v6(
             symbol_file,
