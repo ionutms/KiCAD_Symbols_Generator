@@ -23,20 +23,20 @@ class PinConfig(NamedTuple):
 
     Attributes:
         number: Pin number identifier
+        x_offset: Horizontal offset for the pin position
         y_pos: Vertical position of the pin on the component
         pin_type: Type of pin (e.g., "unspecified", "no_connect")
         lenght: Length of the pin in millimeters
         hide: Flag to hide the pin in the schematic (default: False)
-        x_offset: Horizontal offset for the pin position (default: 0.0)
 
     """
 
     number: str
+    x_offset: float
     y_pos: float
     pin_type: str
     lenght: float
     hide: bool = False
-    x_offset: float = 0.0
 
 
 class SidePinConfig(NamedTuple):
@@ -247,18 +247,18 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         turns_ratio={"pri : sec": "1 : 1"},
         pin_config=SidePinConfig(
             left=[
-                PinConfig("4", 5.08, "passive", 5.08),
-                PinConfig("5", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("3", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("1", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("2", -5.08, "passive", 5.08),
+                PinConfig("4", 0.0, 5.08, "passive", 5.08),
+                PinConfig("5", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("3", 0.0, 0.0, "no_connect", 2.54, True),
+                PinConfig("1", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("2", 0.0, -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("6", 5.08, "passive", 5.08),
-                PinConfig("7", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("9", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("10", -5.08, "passive", 5.08),
+                PinConfig("6", 0.0, 5.08, "passive", 5.08),
+                PinConfig("7", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("8", 0.0, 0.0, "no_connect", 2.54, True),
+                PinConfig("9", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("10", 0.0, -5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -278,16 +278,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "passive", 5.08),
-                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, 5.08, "passive", 5.08),
+                PinConfig("2", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("3", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("4", 0.0, -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("5", 5.08, "passive", 5.08),
-                PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("7", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("8", -5.08, "passive", 5.08),
+                PinConfig("5", 0.0, 5.08, "passive", 5.08),
+                PinConfig("6", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("7", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("8", 0.0, -5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -306,25 +306,25 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("3", 10.16, "passive", 5.08),
-                PinConfig("1", 5.08, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", 0.0, "passive", 5.08),
-                PinConfig("2", -5.08, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("5", -10.16, "passive", 5.08),
+                PinConfig("3", 0.0, 10.16, "passive", 5.08),
+                PinConfig("1", 0.0, 5.08, "no_connect", 2.54, True),
+                PinConfig("4", 0.0, 0.0, "passive", 5.08),
+                PinConfig("2", 0.0, -5.08, "no_connect", 2.54, True),
+                PinConfig("5", 0.0, -10.16, "passive", 5.08),
             ],
             right=[
-                PinConfig("9", 5.08, "passive", 5.08),
-                PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("10", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("7", -5.08, "passive", 5.08),
+                PinConfig("9", 0.0, 5.08, "passive", 5.08),
+                PinConfig("6", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("8", 0.0, 0.0, "no_connect", 2.54, True),
+                PinConfig("10", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("7", 0.0, -5.08, "passive", 5.08),
             ],
             right_alternative=[
-                PinConfig("9", -5.08, "passive", 5.08),
-                PinConfig("6", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("8", 0.0, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("10", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("7", 5.08, "passive", 5.08),
+                PinConfig("9", 0.0, -5.08, "passive", 5.08),
+                PinConfig("6", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("8", 0.0, 0.0, "no_connect", 2.54, True),
+                PinConfig("10", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("7", 0.0, 5.08, "passive", 5.08),
             ],
         ),
     ),
@@ -344,16 +344,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "passive", 5.08),
-                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, 5.08, "passive", 5.08),
+                PinConfig("2", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("3", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("4", 0.0, -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("8", 7.62, "passive", 2.54),
-                PinConfig("7", 5.08, "passive", 2.54),
-                PinConfig("5", -5.08, "passive", 2.54),
-                PinConfig("6", -7.62, "passive", 2.54),
+                PinConfig("8", 0.0, 7.62, "passive", 2.54),
+                PinConfig("7", 0.0, 5.08, "passive", 2.54),
+                PinConfig("5", 0.0, -5.08, "passive", 2.54),
+                PinConfig("6", 0.0, -7.62, "passive", 2.54),
             ],
         ),
     ),
@@ -373,16 +373,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "passive", 5.08),
-                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, 5.08, "passive", 5.08),
+                PinConfig("2", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("3", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("4", 0.0, -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("8", 12.7, "passive", 5.08),
-                PinConfig("7", 2.54, "passive", 5.08),
-                PinConfig("6", -2.54, "passive", 5.08),
-                PinConfig("5", -12.7, "passive", 5.08),
+                PinConfig("8", 0.0, 12.7, "passive", 5.08),
+                PinConfig("7", 0.0, 2.54, "passive", 5.08),
+                PinConfig("6", 0.0, -2.54, "passive", 5.08),
+                PinConfig("5", 0.0, -12.7, "passive", 5.08),
             ],
         ),
     ),
@@ -402,16 +402,16 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("1", 5.08, "passive", 5.08),
-                PinConfig("2", 2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("3", -2.54, "no_connect", 2.54, True),  # noqa: FBT003
-                PinConfig("4", -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, 5.08, "passive", 5.08),
+                PinConfig("2", 0.0, 2.54, "no_connect", 2.54, True),
+                PinConfig("3", 0.0, -2.54, "no_connect", 2.54, True),
+                PinConfig("4", 0.0, -5.08, "passive", 5.08),
             ],
             right=[
-                PinConfig("8", 12.7, "passive", 5.08),
-                PinConfig("7", 2.54, "passive", 5.08),
-                PinConfig("6", -2.54, "passive", 5.08),
-                PinConfig("5", -12.7, "passive", 5.08),
+                PinConfig("8", 0.0, 12.7, "passive", 5.08),
+                PinConfig("7", 0.0, 2.54, "passive", 5.08),
+                PinConfig("6", 0.0, -2.54, "passive", 5.08),
+                PinConfig("5", 0.0, -12.7, "passive", 5.08),
             ],
         ),
     ),
@@ -430,19 +430,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("2", 2.54 * 7, "passive", 5.08),
-                PinConfig("4", 2.54 * 3, "passive", 5.08),
-                PinConfig("3", 5.08, "passive", 5.08),
-                PinConfig("5", -5.08, "passive", 5.08),
-                PinConfig("1", -2.54 * 3, "passive", 5.08),
-                PinConfig("6", -2.54 * 7, "passive", 5.08),
+                PinConfig("2", 0.0, 17.78, "passive", 5.08),
+                PinConfig("4", 0.0, 7.62, "passive", 5.08),
+                PinConfig("3", 0.0, 5.08, "passive", 5.08),
+                PinConfig("5", 0.0, -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, -7.62, "passive", 5.08),
+                PinConfig("6", 0.0, -17.78, "passive", 5.08),
             ],
             right=[
-                PinConfig("7", 20.32, "passive", 5.08),
-                PinConfig("8", 10.16, "passive", 5.08),
-                PinConfig("9", 0, "passive", 5.08),
-                PinConfig("10", -10.16, "passive", 5.08),
-                PinConfig("11", -20.32, "passive", 5.08),
+                PinConfig("7", 0.0, 20.32, "passive", 5.08),
+                PinConfig("8", 0.0, 10.16, "passive", 5.08),
+                PinConfig("9", 0.0, 0, "passive", 5.08),
+                PinConfig("10", 0.0, -10.16, "passive", 5.08),
+                PinConfig("11", 0.0, -20.32, "passive", 5.08),
             ],
         ),
     ),
@@ -461,19 +461,19 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig("2", 2.54 * 7, "passive", 5.08),
-                PinConfig("4", 2.54 * 3, "passive", 5.08),
-                PinConfig("3", 5.08, "passive", 5.08),
-                PinConfig("5", -5.08, "passive", 5.08),
-                PinConfig("1", -2.54 * 3, "passive", 5.08),
-                PinConfig("6", -2.54 * 7, "passive", 5.08),
+                PinConfig("2", 0.0, 17.78, "passive", 5.08),
+                PinConfig("4", 0.0, 7.62, "passive", 5.08),
+                PinConfig("3", 0.0, 5.08, "passive", 5.08),
+                PinConfig("5", 0.0, -5.08, "passive", 5.08),
+                PinConfig("1", 0.0, -7.62, "passive", 5.08),
+                PinConfig("6", 0.0, -17.78, "passive", 5.08),
             ],
             right=[
-                PinConfig("7", 20.32, "passive", 5.08),
-                PinConfig("8", 10.16, "passive", 5.08),
-                PinConfig("9", 0, "passive", 5.08),
-                PinConfig("10", -10.16, "passive", 5.08),
-                PinConfig("11", -20.32, "passive", 5.08),
+                PinConfig("7", 0.0, 20.32, "passive", 5.08),
+                PinConfig("8", 0.0, 10.16, "passive", 5.08),
+                PinConfig("9", 0.0, 0, "passive", 5.08),
+                PinConfig("10", 0.0, -10.16, "passive", 5.08),
+                PinConfig("11", 0.0, -20.32, "passive", 5.08),
             ],
         ),
     ),
@@ -489,80 +489,28 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         trustedparts_link="https://www.trustedparts.com/en/search",
         pin_config=SidePinConfig(
             left=[
-                PinConfig(
-                    "1", 2.54 * 13, "passive", 2.54, x_offset=-2.54 * 4
-                ),
-                PinConfig("2", 2.54 * 8, "passive", 2.54, x_offset=-2.54 * 4),
-                PinConfig("3", 2.54 * 3, "passive", 2.54, x_offset=-2.54 * 4),
-                PinConfig(
-                    "4",
-                    2.54 * 2,
-                    "no_connect",
-                    2.54,
-                    True,
-                    x_offset=-2.54 * 4,
-                ),
-                PinConfig(
-                    "5", 2.54, "no_connect", 2.54, True, x_offset=-2.54 * 4
-                ),
-                PinConfig(
-                    "6",
-                    -2.54 * 2,
-                    "no_connect",
-                    2.54,
-                    True,
-                    x_offset=-2.54 * 4,
-                ),
-                PinConfig(
-                    "7", -2.54, "no_connect", 2.54, True, x_offset=-2.54 * 4
-                ),
-                PinConfig(
-                    "8", -2.54 * 3, "passive", 2.54, x_offset=-2.54 * 4
-                ),
-                PinConfig(
-                    "9", -2.54 * 8, "passive", 2.54, x_offset=-2.54 * 4
-                ),
-                PinConfig(
-                    "10", -2.54 * 13, "passive", 2.54, x_offset=-2.54 * 4
-                ),
+                PinConfig("1", -10.16, 33.02, "passive", 2.54),
+                PinConfig("2", -10.16, 20.32, "passive", 2.54),
+                PinConfig("3", -10.16, 7.62, "passive", 2.54),
+                PinConfig("4", -10.16, 5.08, "no_connect", 2.54, True),
+                PinConfig("5", -10.16, 2.54, "no_connect", 2.54, True),
+                PinConfig("6", -10.16, -5.08, "no_connect", 2.54, True),
+                PinConfig("7", -10.16, -2.54, "no_connect", 2.54, True),
+                PinConfig("8", -10.16, -7.62, "passive", 2.54),
+                PinConfig("9", -10.16, -20.32, "passive", 2.54),
+                PinConfig("10", -10.16, -33.02, "passive", 2.54),
             ],
             right=[
-                PinConfig(
-                    "20", 2.54 * 13, "passive", 2.54, x_offset=2.54 * 4
-                ),
-                PinConfig("19", 2.54 * 8, "passive", 2.54, x_offset=2.54 * 4),
-                PinConfig("18", 2.54 * 3, "passive", 2.54, x_offset=2.54 * 4),
-                PinConfig(
-                    "17",
-                    2.54 * 2,
-                    "no_connect",
-                    2.54,
-                    True,
-                    x_offset=2.54 * 4,
-                ),
-                PinConfig(
-                    "16", 2.54, "no_connect", 2.54, True, x_offset=2.54 * 4
-                ),
-                PinConfig(
-                    "15",
-                    -2.54 * 2,
-                    "no_connect",
-                    2.54,
-                    True,
-                    x_offset=2.54 * 4,
-                ),
-                PinConfig(
-                    "14", -2.54, "no_connect", 2.54, True, x_offset=2.54 * 4
-                ),
-                PinConfig(
-                    "13", -2.54 * 3, "passive", 2.54, x_offset=2.54 * 4
-                ),
-                PinConfig(
-                    "12", -2.54 * 8, "passive", 2.54, x_offset=2.54 * 4
-                ),
-                PinConfig(
-                    "11", -2.54 * 13, "passive", 2.54, x_offset=2.54 * 4
-                ),
+                PinConfig("20", 10.16, 33.02, "passive", 2.54),
+                PinConfig("19", 10.16, 20.32, "passive", 2.54),
+                PinConfig("18", 10.16, 7.62, "passive", 2.54),
+                PinConfig("17", 10.16, 5.08, "no_connect", 2.54, True),
+                PinConfig("16", 10.16, 2.54, "no_connect", 2.54, True),
+                PinConfig("15", 10.16, -5.08, "no_connect", 2.54, True),
+                PinConfig("14", 10.16, -2.54, "no_connect", 2.54, True),
+                PinConfig("13", 10.16, -7.62, "passive", 2.54),
+                PinConfig("12", 10.16, -20.32, "passive", 2.54),
+                PinConfig("11", 10.16, -33.02, "passive", 2.54),
             ],
         ),
     ),
