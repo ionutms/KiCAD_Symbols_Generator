@@ -686,6 +686,7 @@ def callback_update_slider_marks_theme(
         mark_color = "#000000" if switch else "#FFFFFF"
         tooltip_bg = "#FFFFFF" if switch else "#212529"
         tooltip_color = "#000000" if switch else "#FFFFFF"
+        tooltip_border = "#cccc00" if switch else "#4444ff"
 
         styled_marks = {}
         for value, label in initial_marks.items():
@@ -701,10 +702,11 @@ def callback_update_slider_marks_theme(
             "style": {
                 "backgroundColor": tooltip_bg,
                 "color": tooltip_color,
-                "border": "1px solid #ccc",
+                "border": f"1px solid {tooltip_border}",
                 "borderRadius": "4px",
                 "padding": "4px 8px",
                 "fontSize": "12px",
+                "boxShadow": "0 2px 8px rgba(0,0,0,0.15)",
             },
         }
 

@@ -87,6 +87,39 @@
     transform: translateX(-100%) !important;
 }
 
+/* Slider tooltip wrapper - removes default white box */
+.rc-slider-tooltip {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.rc-slider-tooltip-inner {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    min-height: auto !important;
+}
+
+.rc-slider-tooltip-placement-bottom {
+    background: transparent !important;
+}
+
+/* Target the tooltip arrow as well */
+.rc-slider-tooltip-arrow {
+    display: none !important;
+}
+
+/* Aggressive tooltip background override */
+div[class*="tooltip"],
+div[class*="Tooltip"],
+.rc-slider-tooltip div,
+.rc-slider-tooltip span {
+    background-color: transparent !important;
+    border: none !important;
+}
+
 /* AG Grid Theme Overrides */
 .ag-theme-quartz {
     --ag-background-color: white;
