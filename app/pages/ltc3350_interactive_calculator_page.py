@@ -631,10 +631,6 @@ def create_slider(
         step=step,
         value=default_val,
         marks=marks,
-        tooltip={
-            "placement": "bottom",
-            "always_visible": True,
-        },
     )
 
     if marks is not None:
@@ -642,7 +638,11 @@ def create_slider(
 
     return html.Div(
         [
-            dcc.Markdown(label, mathjax=use_mathjax),
+            dcc.Markdown(
+                label,
+                mathjax=use_mathjax,
+                style={"marginTop": "15px", "marginBottom": "15px"},
+            ),
             html.Div([slider]),
         ],
     )
@@ -686,7 +686,6 @@ def callback_update_slider_marks_theme(
         mark_color = "#000000" if switch else "#FFFFFF"
         tooltip_bg = "#FFFFFF" if switch else "#212529"
         tooltip_color = "#000000" if switch else "#FFFFFF"
-        tooltip_border = "#cccc00" if switch else "#4444ff"
 
         styled_marks = {}
         for value, label in initial_marks.items():
@@ -697,13 +696,13 @@ def callback_update_slider_marks_theme(
 
         # Tooltip styling with theme colors
         tooltip = {
-            "placement": "bottom",
+            "placement": "top",
             "always_visible": True,
             "style": {
                 "backgroundColor": tooltip_bg,
                 "color": tooltip_color,
-                "border": f"1px solid {tooltip_border}",
-                "borderRadius": "4px",
+                "border": "3px solid #7C3AED",
+                "borderRadius": "8px",
                 "padding": "4px 8px",
                 "fontSize": "12px",
                 "boxShadow": "0 2px 8px rgba(0,0,0,0.15)",
