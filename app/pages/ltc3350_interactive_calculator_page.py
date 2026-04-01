@@ -588,6 +588,9 @@ def create_slider(
         use_mathjax: Whether to render label with MathJax
         unit: forallpeople unit for mark formatting
 
+    Returns:
+        html.Div: Slider component with theme-aware marks and tooltip
+
     """
 
     def format_mark_value(mark, unit):
@@ -620,27 +623,92 @@ def create_slider(
     else:
         marks = None
 
+    slider = dcc.Slider(
+        id=slider_id,
+        min=min_val,
+        max=max_val,
+        allow_direct_input=False,
+        step=step,
+        value=default_val,
+        marks=marks,
+        tooltip={
+            "placement": "bottom",
+            "always_visible": True,
+        },
+    )
+
+    if marks is not None:
+        callback_update_slider_marks_theme(slider_id, marks)
+
     return html.Div(
         [
             dcc.Markdown(label, mathjax=use_mathjax),
-            html.Div(
-                [
-                    dcc.Slider(
-                        id=slider_id,
-                        min=min_val,
-                        max=max_val,
-                        step=step,
-                        value=default_val,
-                        marks=marks,
-                        tooltip={
-                            "placement": "bottom",
-                            "always_visible": True,
-                        },
-                    ),
-                ],
-            ),
+            html.Div([slider]),
         ],
     )
+
+
+def callback_update_slider_marks_theme(
+    slider_id: str, initial_marks: dict
+) -> None:
+    """Create callback to update Slider marks and tooltip based on theme.
+
+    This callback updates the marks style and tooltip color of a Slider
+    component when the theme switches between light and dark modes.
+
+    Args:
+        slider_id: The ID of the Slider component.
+        initial_marks:
+            The initial marks dictionary with value as key
+            and label as value.
+
+    """
+
+    @callback(
+        Output(slider_id, "marks"),
+        Output(slider_id, "tooltip"),
+        Input("theme_switch_value_store", "data"),
+    )
+    def update_slider_marks_and_tooltip_theme(
+        switch: bool,
+    ) -> tuple[dict, dict]:
+        """Update the Slider marks and tooltip style based on theme.
+
+        Args:
+            switch: True for light theme, False for dark theme.
+
+        Returns:
+            Tuple containing:
+                - Dictionary with marks styled for current theme
+                - Dictionary with tooltip config (colors via CSS)
+
+        """
+        mark_color = "#000000" if switch else "#FFFFFF"
+        tooltip_bg = "#FFFFFF" if switch else "#212529"
+        tooltip_color = "#000000" if switch else "#FFFFFF"
+
+        styled_marks = {}
+        for value, label in initial_marks.items():
+            styled_marks[value] = {
+                "label": str(label),
+                "style": {"color": mark_color},
+            }
+
+        # Tooltip styling with theme colors
+        tooltip = {
+            "placement": "bottom",
+            "always_visible": True,
+            "style": {
+                "backgroundColor": tooltip_bg,
+                "color": tooltip_color,
+                "border": "1px solid #ccc",
+                "borderRadius": "4px",
+                "padding": "4px 8px",
+                "fontSize": "12px",
+            },
+        }
+
+        return styled_marks, tooltip
 
 
 def calculate_backup_time(
