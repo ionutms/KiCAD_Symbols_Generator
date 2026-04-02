@@ -193,10 +193,10 @@ def create_selection_controls() -> List[dbc.Row]:
     )
 
     return [
-        file_selection,
-        frames_selection,
-        records_selection,
-        data_sets_selection,
+        dbc.Row(file_selection, className="mb-4"),
+        dbc.Row(frames_selection, className="mb-4"),
+        dbc.Row(records_selection, className="mb-4"),
+        dbc.Row(data_sets_selection, className="mb-4"),
     ]
 
 
