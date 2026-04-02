@@ -1001,7 +1001,7 @@ def labeled_range_slider(
 
     """
     tooltip_config = {
-        "placement": "topLeft",
+        "placement": "bottom",
         "always_visible": True,
         "style": {"fontSize": "12px"},
     }
@@ -1896,7 +1896,7 @@ def callback_update_range_slider_marks_theme(
             }
 
         tooltip = {
-            "placement": "topLeft",
+            "placement": "bottom",
             "always_visible": True,
             "style": {
                 "backgroundColor": tooltip_bg,
@@ -1972,7 +1972,7 @@ def callback_update_dynamic_range_slider_marks_theme(
                 }
 
         tooltip = {
-            "placement": "topLeft",
+            "placement": "bottom",
             "always_visible": True,
             "style": {
                 "backgroundColor": tooltip_bg,
@@ -1982,6 +1982,7 @@ def callback_update_dynamic_range_slider_marks_theme(
                 "padding": "4px 8px",
                 "fontSize": "12px",
                 "boxShadow": "0 2px 8px rgba(0,0,0,0.15)",
+                "transform": "translateY(20px)",
             },
         }
 
