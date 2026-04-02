@@ -980,6 +980,7 @@ def labeled_range_slider(
     default_value: list[int],
     min_value: int = 1,
     md=9,
+    marks: dict | None = None,
 ) -> dbc.Col:
     """Create a labeled range slider column.
 
@@ -992,28 +993,43 @@ def labeled_range_slider(
             Minimum value for the range slider. Defaults to 1.
         md (int, optional):
             Column width for medium and larger screens. Defaults to 9.
+        marks (dict | None, optional):
+            Dictionary of marks for the range slider. Defaults to None.
 
     Returns:
         dbc.Col: Dash Bootstrap column containing the labeled range slider.
 
     """
+    tooltip_config = {
+        "placement": "topLeft",
+        "always_visible": True,
+        "style": {"fontSize": "12px"},
+    }
+
+    slider = dcc.RangeSlider(
+        id=f"{id_section}_range_slider",
+        min=min_value,
+        value=default_value,
+        pushable=1,
+        step=1,
+        marks=marks,
+        tooltip=tooltip_config,
+        allow_direct_input=False,
+    )
+
+    if marks is not None:
+        callback_update_range_slider_marks_theme(
+            f"{id_section}_range_slider", marks
+        )
+    else:
+        callback_update_dynamic_range_slider_marks_theme(
+            f"{id_section}_range_slider"
+        )
+
     labeled_range_slider_column = dbc.Col(
         [
             dbc.Label(label, className=styles.CENTER_CLASS_NAME),
-            dcc.RangeSlider(
-                id=f"{id_section}_range_slider",
-                min=min_value,
-                value=default_value,
-                pushable=1,
-                step=1,
-                marks=None,
-                tooltip={
-                    "placement": "topLeft",
-                    "always_visible": False,
-                    "style": {"fontSize": "12px"},
-                },
-                allow_direct_input=False,
-            ),
+            slider,
             html.Br(),
         ],
         xs=12,
@@ -1171,7 +1187,10 @@ def callback_update_store_at_upload(
                     contents["content"], contents["filename"], global_store
                 )
                 store["max_count"] = len(names)
-                marks = dict(enumerate(names, 1))
+                marks = {
+                    i: {"label": str(name), "style": {"color": "#000000"}}
+                    for i, name in enumerate(names, 1)
+                }
                 return store, marks
         return no_update, no_update
 
@@ -1255,8 +1274,16 @@ def callbacks_radioitems(id_section: str, row_id: str) -> None:
         if values is None:
             raise PreventUpdate
 
+        def extract_label(mark_data):
+            """Extract label from styled mark or return as-is."""
+            if isinstance(mark_data, dict) and "label" in mark_data:
+                return mark_data["label"]
+            return mark_data
+
         columns = []
-        y_axis_channels = [marks[f"{position}"] for position in values[1:]]
+        y_axis_channels = [
+            extract_label(marks[f"{position}"]) for position in values[1:]
+        ]
         options = [
             {"label": f"y{index}" if index > 1 else "y", "value": index}
             for index, _ in enumerate(y_axis_channels, 1)
@@ -1820,3 +1847,142 @@ def create_labeled_button(
         md=md,
     )
     return labeled_button_column
+
+
+def callback_update_range_slider_marks_theme(
+    slider_id: str, initial_marks: dict
+) -> None:
+    """Create callback to update RangeSlider marks and tooltip based on theme.
+
+    This callback updates the marks style and tooltip color of a RangeSlider
+    component when the theme switches between light and dark modes.
+
+    Args:
+        slider_id: The ID of the RangeSlider component.
+        initial_marks:
+            The initial marks dictionary with value as key
+            and label as value.
+
+    """
+
+    @callback(
+        Output(slider_id, "marks"),
+        Output(slider_id, "tooltip"),
+        Input("theme_switch_value_store", "data"),
+    )
+    def update_range_slider_marks_and_tooltip_theme(
+        switch: bool,
+    ) -> tuple[dict, dict]:
+        """Update the RangeSlider marks and tooltip style based on theme.
+
+        Args:
+            switch: True for light theme, False for dark theme.
+
+        Returns:
+            Tuple containing:
+                - Dictionary with marks styled for current theme
+                - Dictionary with tooltip config (colors via CSS)
+
+        """
+        mark_color = "#000000" if switch else "#FFFFFF"
+        tooltip_bg = "#FFFFFF" if switch else "#212529"
+        tooltip_color = "#000000" if switch else "#FFFFFF"
+
+        styled_marks = {}
+        for value, label in initial_marks.items():
+            styled_marks[value] = {
+                "label": str(label),
+                "style": {"color": mark_color},
+            }
+
+        tooltip = {
+            "placement": "topLeft",
+            "always_visible": True,
+            "style": {
+                "backgroundColor": tooltip_bg,
+                "color": tooltip_color,
+                "border": "3px solid #7C3AED",
+                "borderRadius": "8px",
+                "padding": "4px 8px",
+                "fontSize": "12px",
+                "boxShadow": "0 2px 8px rgba(0,0,0,0.15)",
+            },
+        }
+
+        return styled_marks, tooltip
+
+
+def callback_update_dynamic_range_slider_marks_theme(
+    slider_id: str,
+) -> None:
+    """Create callback to update dynamic RangeSlider marks based on theme.
+
+    This callback updates the marks style and tooltip of a RangeSlider
+    component when the theme switches between light and dark modes.
+    It is designed for sliders where marks are generated dynamically
+    (e.g., from file uploads).
+
+    Args:
+        slider_id: The ID of the RangeSlider component.
+
+    """
+
+    @callback(
+        Output(slider_id, "marks"),
+        Output(slider_id, "tooltip"),
+        Input(slider_id, "marks"),
+        Input("theme_switch_value_store", "data"),
+        prevent_initial_call=False,
+    )
+    def update_dynamic_range_slider_marks_theme(
+        marks: dict,
+        switch: bool,
+    ) -> tuple[dict, dict]:
+        """Update dynamic RangeSlider marks and tooltip style based on theme.
+
+        Args:
+            marks: Current marks dictionary (may be None or unstyled).
+            switch: True for light theme, False for dark theme.
+
+        Returns:
+            Tuple containing:
+                - Dictionary with marks styled for current theme
+                - Dictionary with tooltip config (colors via CSS)
+
+        """
+        mark_color = "#000000" if switch else "#FFFFFF"
+        tooltip_bg = "#FFFFFF" if switch else "#212529"
+        tooltip_color = "#000000" if switch else "#FFFFFF"
+
+        if marks is None:
+            styled_marks = None
+        else:
+            styled_marks = {}
+            for value, mark_data in marks.items():
+                if isinstance(mark_data, dict):
+                    label = mark_data.get(
+                        "label", str(mark_data.get("value", ""))
+                    )
+                else:
+                    label = str(mark_data)
+
+                styled_marks[value] = {
+                    "label": label,
+                    "style": {"color": mark_color},
+                }
+
+        tooltip = {
+            "placement": "topLeft",
+            "always_visible": True,
+            "style": {
+                "backgroundColor": tooltip_bg,
+                "color": tooltip_color,
+                "border": "3px solid #7C3AED",
+                "borderRadius": "8px",
+                "padding": "4px 8px",
+                "fontSize": "12px",
+                "boxShadow": "0 2px 8px rgba(0,0,0,0.15)",
+            },
+        }
+
+        return styled_marks, tooltip

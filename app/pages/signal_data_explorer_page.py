@@ -418,11 +418,19 @@ def update_filtering_store(
         )
         horizontal_units, vertical_units = units_info.values()
 
+        def extract_label(mark_data):
+            """Extract label from styled mark or return as-is."""
+            if isinstance(mark_data, dict) and "label" in mark_data:
+                return mark_data["label"]
+            return mark_data
+
         filtering = {
             "files_to_keep": [file - 1 for file in files],
             "frames_to_keep": [frame - 1 for frame in frames],
-            "x_axis_data": marks[f"{value[0]}"],
-            "y_axis_data": [marks[f"{position}"] for position in value[1:]],
+            "x_axis_data": extract_label(marks[f"{value[0]}"]),
+            "y_axis_data": [
+                extract_label(marks[f"{position}"]) for position in value[1:]
+            ],
             "records_slice": records_range,
             "records_max": records_max,
             "Horizontal Units": horizontal_units,
