@@ -1012,6 +1012,7 @@ def labeled_range_slider(
                     "always_visible": False,
                     "style": {"fontSize": "12px"},
                 },
+                allow_direct_input=False,
             ),
             html.Br(),
         ],
