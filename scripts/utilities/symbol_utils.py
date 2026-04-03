@@ -623,33 +623,65 @@ def write_arcs(
     start_x: float,
     offset: list[float],
     num_arcs: int = 4,
+    arc_size: float = 2.54,
+    horizontal: bool = False,
 ) -> None:
-    """Write a set of inductor arcs for transformer symbol.
+    """Write a set of inductor arcs for a transformer symbol.
+
+    Arcs can be drawn vertically (default) or horizontally. In vertical mode,
+    arcs stack along the Y axis with the bulge facing left or right. In
+    horizontal mode, arcs progress along the X axis with the bulge facing
+    up or down.
 
     Args:
-        symbol_file: File to write to
-        start_x: X coordinate to start arcs from
-        offset: [x_offset, y_offset] for positioning the arcs
-        num_arcs: Number of arcs to draw (default 4)
+        symbol_file: File to write the arc definitions to.
+        start_x: X coordinate to start arcs from. Also controls bulge
+            direction: positive values bulge left/down, negative bulge
+            right/up.
+        offset: [x_offset, y_offset] translation applied to all arc points.
+        num_arcs: Number of arcs to draw (default 4).
+        arc_size: Height (vertical) or width (horizontal) of each arc in
+            units. Controls both the arc span and the bulge magnitude, keeping
+            arcs semicircular. Default 2.54 matches one KiCad grid unit.
+        horizontal: If True, arcs progress along the X axis (horizontal
+            inductor). If False (default), arcs stack along the Y axis
+            (vertical inductor).
 
     Returns:
         None
 
     """
     x_offset, y_offset = offset
-    for y_start in range(num_arcs):
-        y_pos = y_start * 2.54
-        symbol_file.write(f"""
-            (arc
-                (start {start_x + x_offset} {y_offset + y_pos})
-                (mid
-                    {start_x + x_offset + (-1.27 if start_x > 0 else 1.27)}
-                    {y_offset + y_pos + 1.27})
-                (end {start_x + x_offset} {y_offset + y_pos + 2.54})
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    half = arc_size / 2
+    direction = -1 if start_x > 0 else 1
+
+    for i in range(num_arcs):
+        if horizontal:
+            x_pos = i * arc_size
+            symbol_file.write(f"""
+                (arc
+                    (start {x_offset + x_pos} {start_x + y_offset})
+                    (mid
+                        {x_offset + x_pos + half}
+                        {start_x + y_offset + direction * half})
+                    (end {x_offset + x_pos + arc_size} {start_x + y_offset})
+                    (stroke (width 0) (type default))
+                    (fill (type none))
+                )
+                """)
+        else:
+            y_pos = i * arc_size
+            symbol_file.write(f"""
+                (arc
+                    (start {start_x + x_offset} {y_offset + y_pos})
+                    (mid
+                        {start_x + x_offset + direction * half}
+                        {y_offset + y_pos + half})
+                    (end {start_x + x_offset} {y_offset + y_pos + arc_size})
+                    (stroke (width 0) (type default))
+                    (fill (type none))
+                )
+                """)
 
 
 def write_transformer_symbol_drawing(
@@ -1104,6 +1136,42 @@ def write_transformer_symbol_drawing_v6(
 
     """
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
+    # Write left transformer arcs
+    write_arcs(symbol_file, -0.635 * 9, [0.0, 0.635 * 18], arc_size=1.27)
+    write_arcs(symbol_file, -0.635 * 9, [0.0, 0.635 * 6], arc_size=1.27)
+    write_arcs(symbol_file, -0.635 * 9, [0.0, -0.635 * 14], arc_size=1.27)
+    write_arcs(symbol_file, -0.635 * 9, [0.0, -0.635 * 26], arc_size=1.27)
+    # Write right transformer arcs
+    write_arcs(symbol_file, 0.635, [-2.54, 0.635 * 18], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, 0.635 * 6], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, -0.635 * 14], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, -0.635 * 26], arc_size=1.27)
+    # Write right horizontal transformer arcs
+    write_arcs(
+        symbol_file, 0.635, [1.27, 0.635 * 18], arc_size=1.27, horizontal=True
+    )
+    write_arcs(
+        symbol_file,
+        -0.635,
+        [1.27, 0.635 * 14],
+        arc_size=1.27,
+        horizontal=True,
+    )
+    write_arcs(
+        symbol_file,
+        0.635,
+        [1.27, -0.635 * 14],
+        arc_size=1.27,
+        horizontal=True,
+    )
+    write_arcs(
+        symbol_file,
+        -0.635,
+        [1.27, -0.635 * 18],
+        arc_size=1.27,
+        horizontal=True,
+    )
+
     symbol_file.write("""
 			(rectangle
 				(start -7.62 20.32)
@@ -1128,57 +1196,9 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -5.715 16.51)
-				(mid -5.08 15.875)
-				(end -5.715 15.24)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center -5.715 15.875)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 15.24)
-				(mid -5.08 14.605)
-				(end -5.715 13.97)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 13.97)
-				(mid -5.08 13.335)
-				(end -5.715 12.7)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 12.7)
-				(mid -5.08 12.065)
-				(end -5.715 11.43)
 				(stroke
 					(width 0)
 					(type default)
@@ -1222,57 +1242,9 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -5.715 8.89)
-				(mid -5.08 8.255)
-				(end -5.715 7.62)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center -5.715 8.255)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 7.62)
-				(mid -5.08 6.985)
-				(end -5.715 6.35)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 6.35)
-				(mid -5.08 5.715)
-				(end -5.715 5.08)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 5.08)
-				(mid -5.08 4.445)
-				(end -5.715 3.81)
 				(stroke
 					(width 0)
 					(type default)
@@ -1305,57 +1277,9 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -5.715 -3.81)
-				(mid -5.08 -4.445)
-				(end -5.715 -5.08)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center -5.715 -4.445)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -5.08)
-				(mid -5.08 -5.715)
-				(end -5.715 -6.35)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -6.35)
-				(mid -5.08 -6.985)
-				(end -5.715 -7.62)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -7.62)
-				(mid -5.08 -8.255)
-				(end -5.715 -8.89)
 				(stroke
 					(width 0)
 					(type default)
@@ -1399,57 +1323,9 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -5.715 -11.43)
-				(mid -5.08 -12.065)
-				(end -5.715 -12.7)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center -5.715 -12.065)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -12.7)
-				(mid -5.08 -13.335)
-				(end -5.715 -13.97)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -13.97)
-				(mid -5.08 -14.605)
-				(end -5.715 -15.24)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -5.715 -15.24)
-				(mid -5.08 -15.875)
-				(end -5.715 -16.51)
 				(stroke
 					(width 0)
 					(type default)
@@ -1542,54 +1418,6 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -1.905 15.24)
-				(mid -2.54 15.875)
-				(end -1.905 16.51)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 13.97)
-				(mid -2.54 14.605)
-				(end -1.905 15.24)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 12.7)
-				(mid -2.54 13.335)
-				(end -1.905 13.97)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 11.43)
-				(mid -2.54 12.065)
-				(end -1.905 12.7)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -1.905 11.43) (xy -1.905 8.89)
@@ -1616,54 +1444,6 @@ def write_transformer_symbol_drawing_v6(
 			(circle
 				(center -1.905 8.255)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 7.62)
-				(mid -2.54 8.255)
-				(end -1.905 8.89)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 6.35)
-				(mid -2.54 6.985)
-				(end -1.905 7.62)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 5.08)
-				(mid -2.54 5.715)
-				(end -1.905 6.35)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 3.81)
-				(mid -2.54 4.445)
-				(end -1.905 5.08)
 				(stroke
 					(width 0)
 					(type default)
@@ -1709,54 +1489,6 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start -1.905 -5.08)
-				(mid -2.54 -4.445)
-				(end -1.905 -3.81)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -6.35)
-				(mid -2.54 -5.715)
-				(end -1.905 -5.08)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -7.62)
-				(mid -2.54 -6.985)
-				(end -1.905 -6.35)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -8.89)
-				(mid -2.54 -8.255)
-				(end -1.905 -7.62)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -1.905 -8.89) (xy -1.905 -11.43)
@@ -1783,54 +1515,6 @@ def write_transformer_symbol_drawing_v6(
 			(circle
 				(center -1.905 -12.065)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -12.7)
-				(mid -2.54 -12.065)
-				(end -1.905 -11.43)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -13.97)
-				(mid -2.54 -13.335)
-				(end -1.905 -12.7)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -15.24)
-				(mid -2.54 -14.605)
-				(end -1.905 -13.97)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start -1.905 -16.51)
-				(mid -2.54 -15.875)
-				(end -1.905 -15.24)
 				(stroke
 					(width 0)
 					(type default)
@@ -1911,30 +1595,6 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 12.065)
-				(mid 1.905 11.43)
-				(end 1.27 12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 1.27 8.255)
-				(mid 1.905 8.89)
-				(end 2.54 8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center 1.905 8.255)
 				(radius 0.254)
@@ -1957,177 +1617,9 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(arc
-				(start 2.54 -8.255)
-				(mid 1.905 -8.89)
-				(end 1.27 -8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 1.27 -12.065)
-				(mid 1.905 -11.43)
-				(end 2.54 -12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(circle
 				(center 1.905 -12.065)
 				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 3.81 12.065)
-				(mid 3.175 11.43)
-				(end 2.54 12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 2.54 8.255)
-				(mid 3.175 8.89)
-				(end 3.81 8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 3.81 -8.255)
-				(mid 3.175 -8.89)
-				(end 2.54 -8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 2.54 -12.065)
-				(mid 3.175 -11.43)
-				(end 3.81 -12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 5.08 12.065)
-				(mid 4.445 11.43)
-				(end 3.81 12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 3.81 8.255)
-				(mid 4.445 8.89)
-				(end 5.08 8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 5.08 -8.255)
-				(mid 4.445 -8.89)
-				(end 3.81 -8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 3.81 -12.065)
-				(mid 4.445 -11.43)
-				(end 5.08 -12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 6.35 12.065)
-				(mid 5.715 11.43)
-				(end 5.08 12.065)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 5.08 8.255)
-				(mid 5.715 8.89)
-				(end 6.35 8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 6.35 -8.255)
-				(mid 5.715 -8.89)
-				(end 5.08 -8.255)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(arc
-				(start 5.08 -12.065)
-				(mid 5.715 -11.43)
-				(end 6.35 -12.065)
 				(stroke
 					(width 0)
 					(type default)
