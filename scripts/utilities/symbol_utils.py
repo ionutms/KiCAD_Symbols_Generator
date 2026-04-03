@@ -1046,9 +1046,9 @@ def write_transformer_symbol_drawing_v5(
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
     # Write left inductor arcs
-    write_arcs(symbol_file, -2.54, [0.0, 2.54 * 3])
-    write_arcs(symbol_file, -2.54, [0.0, -2.54 * 2])
-    write_arcs(symbol_file, -2.54, [0.0, -2.54 * 7])
+    write_arcs(symbol_file, -2.54, [0.0, 7.62])
+    write_arcs(symbol_file, -2.54, [0.0, -5.08])
+    write_arcs(symbol_file, -2.54, [0.0, -17.78])
 
     # Write right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, 10.16])
@@ -1137,39 +1137,27 @@ def write_transformer_symbol_drawing_v6(
     """
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
     # Write left transformer arcs
-    write_arcs(symbol_file, -0.635 * 9, [0.0, 0.635 * 18], arc_size=1.27)
-    write_arcs(symbol_file, -0.635 * 9, [0.0, 0.635 * 6], arc_size=1.27)
-    write_arcs(symbol_file, -0.635 * 9, [0.0, -0.635 * 14], arc_size=1.27)
-    write_arcs(symbol_file, -0.635 * 9, [0.0, -0.635 * 26], arc_size=1.27)
+    write_arcs(symbol_file, -5.715, [0.0, 11.43], arc_size=1.27)
+    write_arcs(symbol_file, -5.715, [0.0, 3.81], arc_size=1.27)
+    write_arcs(symbol_file, -5.715, [0.0, -8.89], arc_size=1.27)
+    write_arcs(symbol_file, -5.715, [0.0, -16.51], arc_size=1.27)
     # Write right transformer arcs
-    write_arcs(symbol_file, 0.635, [-2.54, 0.635 * 18], arc_size=1.27)
-    write_arcs(symbol_file, 0.635, [-2.54, 0.635 * 6], arc_size=1.27)
-    write_arcs(symbol_file, 0.635, [-2.54, -0.635 * 14], arc_size=1.27)
-    write_arcs(symbol_file, 0.635, [-2.54, -0.635 * 26], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, 11.43], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, 3.81], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, -8.89], arc_size=1.27)
+    write_arcs(symbol_file, 0.635, [-2.54, -16.51], arc_size=1.27)
     # Write right horizontal transformer arcs
     write_arcs(
-        symbol_file, 0.635, [1.27, 0.635 * 18], arc_size=1.27, horizontal=True
+        symbol_file, 0.635, [1.27, 11.43], arc_size=1.27, horizontal=True
     )
     write_arcs(
-        symbol_file,
-        -0.635,
-        [1.27, 0.635 * 14],
-        arc_size=1.27,
-        horizontal=True,
+        symbol_file, -0.635, [1.27, 8.89], arc_size=1.27, horizontal=True
     )
     write_arcs(
-        symbol_file,
-        0.635,
-        [1.27, -0.635 * 14],
-        arc_size=1.27,
-        horizontal=True,
+        symbol_file, 0.635, [1.27, -8.89], arc_size=1.27, horizontal=True
     )
     write_arcs(
-        symbol_file,
-        -0.635,
-        [1.27, -0.635 * 18],
-        arc_size=1.27,
-        horizontal=True,
+        symbol_file, -0.635, [1.27, -11.43], arc_size=1.27, horizontal=True
     )
 
     symbol_file.write("""
