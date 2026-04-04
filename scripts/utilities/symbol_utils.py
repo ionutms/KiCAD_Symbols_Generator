@@ -684,6 +684,27 @@ def write_arcs(
                 """)
 
 
+def write_circle(symbol_file, x, y, radius=0.0254, fill=False):
+    """Write a circle shape to a KiCad symbol file.
+
+    Args:
+        symbol_file: File object to write the circle definition to.
+        x (float): X coordinate of the circle center.
+        y (float): Y coordinate of the circle center.
+        radius (float): Radius of the circle. Defaults to 0.0254.
+        fill (bool): Whether to fill the circle. Defaults to False.
+
+    """
+    symbol_file.write(f"""
+        (circle
+            (center {x} {y})
+            (radius {radius})
+            (stroke (width 0) (type default))
+            (fill (type {"outline" if fill else "none"}))
+        )
+        """)
+
+
 def write_transformer_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
@@ -710,16 +731,8 @@ def write_transformer_symbol_drawing(
     write_arcs(symbol_file, -2.54, [0.0, -5.08])
     write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
-    # Write polarity dots
     for x, y in [(-2.54, 3.81), (2.54, -3.81)]:
-        symbol_file.write(f"""
-            (circle
-                (center {x} {y})
-                (radius 0.508)
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+        write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
     for x in [-0.254, 0.254]:
@@ -796,14 +809,7 @@ def write_transformer_symbol_drawing_v2(
             (-2.54, -1.27),
             (2.54, secondary_dot_y * 3.81),
         ]:
-            symbol_file.write(f"""
-                (circle
-                    (center {x} {y})
-                    (radius 0.508)
-                    (stroke (width 0) (type default))
-                    (fill (type none))
-                )
-                """)
+            write_circle(symbol_file, x, y, radius=0.508)
 
         # Write coupling lines
         for x in [-0.254, 0.254]:
@@ -894,14 +900,7 @@ def write_transformer_symbol_drawing_v3(
 
     # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, 3.81), (5.08, 3.81)]:
-        symbol_file.write(f"""
-            (circle
-                (center {x} {y})
-                (radius 0.508)
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+        write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
     for x in [-0.254, 0.254]:
@@ -975,14 +974,7 @@ def write_transformer_symbol_drawing_v4(
 
     # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, -3.81), (2.54, 11.43)]:
-        symbol_file.write(f"""
-            (circle
-                (center {x} {y})
-                (radius 0.508)
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+        write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
     for x in [-0.254, 0.254]:
@@ -1056,29 +1048,17 @@ def write_transformer_symbol_drawing_v5(
     write_arcs(symbol_file, 2.54, [0.0, -10.16])
     write_arcs(symbol_file, 2.54, [0.0, -20.32])
 
-    # Write bottom right inductor arcs
-    # write_arcs(symbol_file, 2.54, [0.0, -5.08])
-
-    # write_arcs(symbol_file, 2.54, [0.0, -12.7])
-
     # Write polarity dots
     for x, y in [
-        (-2.54, 1.27 * 13),
-        (-2.54, 1.27 * 3),
-        (-2.54, -1.27 * 7),
-        (2.54, 1.27 * 15),
-        (2.54, 1.27 * 7),
-        (2.54, -1.27 * 1),
-        (2.54, -1.27 * 9),
+        (-2.54, 16.51),
+        (-2.54, 3.81),
+        (-2.54, -8.89),
+        (2.54, 19.05),
+        (2.54, 8.89),
+        (2.54, -1.27),
+        (2.54, -11.43),
     ]:
-        symbol_file.write(f"""
-            (circle
-                (center {x} {y})
-                (radius 0.508)
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+        write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
     for x in [-0.254, 0.254]:
@@ -1160,6 +1140,32 @@ def write_transformer_symbol_drawing_v6(
         symbol_file, -0.635, [1.27, -11.43], arc_size=1.27, horizontal=True
     )
 
+    # Write polarity dots
+    for x, y in [
+        (-5.715, 15.875),
+        (-5.715, 8.255),
+        (-5.715, -4.445),
+        (-5.715, -12.065),
+        (-1.905, 15.875),
+        (-1.905, 8.255),
+        (-1.905, -4.445),
+        (-1.905, -12.065),
+        (1.905, 12.065),
+        (1.905, 8.255),
+        (1.905, -8.255),
+        (1.905, -12.065),
+    ]:
+        write_circle(symbol_file, x, y, radius=0.254)
+
+    # Write connections dots
+    for x, y in [
+        (-5.715, 10.16),
+        (-5.715, -10.16),
+        (-1.905, 10.16),
+        (-1.905, -10.16),
+    ]:
+        write_circle(symbol_file, x, y, radius=0.254, fill=True)
+
     symbol_file.write("""
 			(rectangle
 				(start -7.62 20.32)
@@ -1184,17 +1190,6 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -5.715 15.875)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -5.715 11.43) (xy -5.715 8.89)
@@ -1207,32 +1202,10 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -5.715 10.16)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
-			)
 			(polyline
 				(pts
 					(xy -5.715 10.16) (xy -7.62 10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center -5.715 8.255)
-				(radius 0.254)
 				(stroke
 					(width 0)
 					(type default)
@@ -1265,17 +1238,6 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -5.715 -4.445)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -5.715 -8.89) (xy -5.715 -11.43)
@@ -1288,32 +1250,10 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -5.715 -10.16)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
-			)
 			(polyline
 				(pts
 					(xy -5.715 -10.16) (xy -7.62 -10.16)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center -5.715 -12.065)
-				(radius 0.254)
 				(stroke
 					(width 0)
 					(type default)
@@ -1395,43 +1335,10 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -1.905 15.875)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -1.905 11.43) (xy -1.905 8.89)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center -1.905 10.16)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center -1.905 8.255)
-				(radius 0.254)
 				(stroke
 					(width 0)
 					(type default)
@@ -1466,43 +1373,10 @@ def write_transformer_symbol_drawing_v6(
 					(type none)
 				)
 			)
-			(circle
-				(center -1.905 -4.445)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(polyline
 				(pts
 					(xy -1.905 -8.89) (xy -1.905 -11.43)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center -1.905 -10.16)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type solid)
-				)
-				(fill
-					(type outline)
-				)
-			)
-			(circle
-				(center -1.905 -12.065)
-				(radius 0.254)
 				(stroke
 					(width 0)
 					(type default)
@@ -1564,50 +1438,6 @@ def write_transformer_symbol_drawing_v6(
 				(pts
 					(xy 1.27 -10.414) (xy 6.35 -10.414)
 				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 1.905 12.065)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 1.905 8.255)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 1.905 -8.255)
-				(radius 0.254)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(circle
-				(center 1.905 -12.065)
-				(radius 0.254)
 				(stroke
 					(width 0)
 					(type default)
@@ -2319,30 +2149,30 @@ def write_green_led_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
-def write_circle(
-    symbol_file: TextIO,
-    x_pos: float,
-    y_pos: float,
-) -> None:
-    """Write a circle to the symbol file.
+# def write_circle(
+#     symbol_file: TextIO,
+#     x_pos: float,
+#     y_pos: float,
+# ) -> None:
+#     """Write a circle to the symbol file.
 
-    Args:
-        symbol_file (TextIO): File object for writing the symbol file.
-        x_pos (float): X-coordinate of the circle.
-        y_pos (float): Y-coordinate of the circle.
+#     Args:
+#         symbol_file (TextIO): File object for writing the symbol file.
+#         x_pos (float): X-coordinate of the circle.
+#         y_pos (float): Y-coordinate of the circle.
 
-    Returns:
-        None
+#     Returns:
+#         None
 
-    """
-    symbol_file.write(f"""
-        (circle
-            (center {x_pos} {y_pos})
-            (radius 0.0254)
-            (stroke (width 0.381) (type default))
-            (fill (type none))
-        )
-    """)
+#     """
+#     symbol_file.write(f"""
+#         (circle
+#             (center {x_pos} {y_pos})
+#             (radius 0.0254)
+#             (stroke (width 0.381) (type default))
+#             (fill (type none))
+#         )
+#     """)
 
 
 def write_p_mos_transistor_symbol_drawing(
