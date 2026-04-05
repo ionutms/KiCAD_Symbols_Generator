@@ -705,6 +705,24 @@ def write_circle(symbol_file, x, y, radius=0.0254, fill=False):
         """)
 
 
+def write_polyline(symbol_file, points):
+    """Write a polyline shape to a KiCad symbol file.
+
+    Args:
+        symbol_file: File object to write the polyline definition to.
+        points (list[tuple[float, float]]): List of (x, y) coordinate pairs.
+
+    """
+    pts = " ".join(f"(xy {x} {y})" for x, y in points)
+    symbol_file.write(f"""
+        (polyline
+            (pts {pts})
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
+        """)
+
+
 def write_transformer_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
@@ -735,14 +753,8 @@ def write_transformer_symbol_drawing(
         write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
-    for x in [-0.254, 0.254]:
-        symbol_file.write(f"""
-            (polyline
-                (pts (xy {x} {max_y}) (xy {x} {min_y}))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    for x, y in ((-0.254, max_y), (0.254, min_y)):
+        write_polyline(symbol_file, [(x, -y), (x, y)])
 
     # Write left side pins
     for pin in pin_config["left"]:
@@ -812,14 +824,8 @@ def write_transformer_symbol_drawing_v2(
             write_circle(symbol_file, x, y, radius=0.508)
 
         # Write coupling lines
-        for x in [-0.254, 0.254]:
-            symbol_file.write(f"""
-                (polyline
-                    (pts (xy {x} -10.16) (xy {x} 10.16))
-                    (stroke (width 0) (type default))
-                    (fill (type none))
-                )
-                """)
+        for x, y in ((-0.254, 10.16), (0.254, -10.16)):
+            write_polyline(symbol_file, [(x, -y), (x, y)])
 
         # Write left side pins
         for pin in pin_config["left"]:
@@ -886,31 +892,22 @@ def write_transformer_symbol_drawing_v3(
     write_arcs(symbol_file, 5.08, [0.0, -5.08])
 
     for symbol in ["-", ""]:
-        symbol_file.write(f"""
-            (polyline
-                (pts
-                    (xy 2.54 {symbol}5.08)
-                    (xy 2.54 {symbol}7.62)
-                    (xy 5.08 {symbol}7.62)
-                )
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-        """)
+        write_polyline(
+            symbol_file,
+            [
+                (2.54, f"{symbol}5.08"),
+                (2.54, f"{symbol}7.62"),
+                (5.08, f"{symbol}7.62"),
+            ],
+        )
 
     # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, 3.81), (5.08, 3.81)]:
         write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
-    for x in [-0.254, 0.254]:
-        symbol_file.write(f"""
-            (polyline
-                (pts (xy {x} {max_y}) (xy {x} {min_y}))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    for x, y in ((-0.254, max_y), (0.254, min_y)):
+        write_polyline(symbol_file, [(x, -y), (x, y)])
 
     # Write left side pins
     for pin in pin_config["left"]:
@@ -977,14 +974,8 @@ def write_transformer_symbol_drawing_v4(
         write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
-    for x in [-0.254, 0.254]:
-        symbol_file.write(f"""
-            (polyline
-                (pts (xy {x} {max_y}) (xy {x} {min_y}))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    for x, y in ((-0.254, max_y), (0.254, min_y)):
+        write_polyline(symbol_file, [(x, -y), (x, y)])
 
     # Write left side pins
     for pin in pin_config["left"]:
@@ -1061,14 +1052,8 @@ def write_transformer_symbol_drawing_v5(
         write_circle(symbol_file, x, y, radius=0.508)
 
     # Write coupling lines
-    for x in [-0.254, 0.254]:
-        symbol_file.write(f"""
-            (polyline
-                (pts (xy {x} {max_y}) (xy {x} {min_y}))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            """)
+    for x, y in ((-0.254, max_y), (0.254, min_y)):
+        write_polyline(symbol_file, [(x, -y), (x, y)])
 
     # Write left side pins
     for pin in pin_config["left"]:
@@ -1157,7 +1142,7 @@ def write_transformer_symbol_drawing_v6(
     ]:
         write_circle(symbol_file, x, y, radius=0.254)
 
-    # Write connections dots
+    # Write connection dots
     for x, y in [
         (-5.715, 10.16),
         (-5.715, -10.16),
@@ -1166,361 +1151,79 @@ def write_transformer_symbol_drawing_v6(
     ]:
         write_circle(symbol_file, x, y, radius=0.254, fill=True)
 
-    symbol_file.write("""
-			(rectangle
-				(start -7.62 20.32)
-				(end 7.62 -20.32)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 16.51) (xy -5.715 17.78) (xy -7.62 17.78)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 11.43) (xy -5.715 8.89)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 10.16) (xy -7.62 10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 3.81) (xy -5.715 2.54) (xy -7.62 2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 -3.81) (xy -5.715 -2.54) (xy -7.62 -2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 -8.89) (xy -5.715 -11.43)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 -10.16) (xy -7.62 -10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -5.715 -16.51) (xy -5.715 -17.78) (xy -7.62 -17.78)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -4.064 17.78) (xy -4.064 2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -4.064 -2.54) (xy -4.064 -17.78)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -3.556 17.78) (xy -3.556 2.54)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -3.556 -2.54) (xy -3.556 -17.78)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 16.51) (xy -1.905 17.78)
-                    (xy 1.27 17.78) (xy 1.27 12.065)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 11.43) (xy -1.905 8.89)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 3.81) (xy -1.905 2.54)
-                    (xy 1.27 2.54) (xy 1.27 8.255)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 -3.81) (xy -1.905 -2.54)
-                    (xy 1.27 -2.54) (xy 1.27 -8.255)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 -8.89) (xy -1.905 -11.43)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.905 -16.51) (xy -1.905 -17.78)
-                    (xy 1.27 -17.78) (xy 1.27 -12.065)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 10.414) (xy 6.35 10.414)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 9.906) (xy 6.35 9.906)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 -9.906) (xy 6.35 -9.906)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 1.27 -10.414) (xy 6.35 -10.414)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 12.7) (xy 6.35 12.7) (xy 6.35 12.065)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 7.62) (xy 6.35 7.62) (xy 6.35 8.255)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 5.08) (xy -0.635 5.08)
-                    (xy -0.635 10.16) (xy -1.905 10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 -7.62) (xy 6.35 -7.62) (xy 6.35 -8.255)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 -12.7) (xy 6.35 -12.7) (xy 6.35 -12.065)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 -15.24) (xy -0.635 -15.24)
-                    (xy -0.635 -10.16) (xy -1.905 -10.16)
-				)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-        """)
+    # Write rectangle
+    write_rectangle(symbol_file, -7.62, 20.32, 7.62, -20.32)
+
+    # Write left winding connections
+    write_polyline(
+        symbol_file, [(-5.715, 16.51), (-5.715, 17.78), (-7.62, 17.78)]
+    )
+    write_polyline(symbol_file, [(-5.715, 11.43), (-5.715, 8.89)])
+    write_polyline(symbol_file, [(-5.715, 10.16), (-7.62, 10.16)])
+    write_polyline(
+        symbol_file, [(-5.715, 3.81), (-5.715, 2.54), (-7.62, 2.54)]
+    )
+    write_polyline(
+        symbol_file, [(-5.715, -3.81), (-5.715, -2.54), (-7.62, -2.54)]
+    )
+    write_polyline(symbol_file, [(-5.715, -8.89), (-5.715, -11.43)])
+    write_polyline(symbol_file, [(-5.715, -10.16), (-7.62, -10.16)])
+    write_polyline(
+        symbol_file, [(-5.715, -16.51), (-5.715, -17.78), (-7.62, -17.78)]
+    )
+
+    # Write coupling lines
+    write_polyline(symbol_file, [(-4.064, 17.78), (-4.064, 2.54)])
+    write_polyline(symbol_file, [(-4.064, -2.54), (-4.064, -17.78)])
+    write_polyline(symbol_file, [(-3.556, 17.78), (-3.556, 2.54)])
+    write_polyline(symbol_file, [(-3.556, -2.54), (-3.556, -17.78)])
+
+    # Write middle winding connections
+    write_polyline(
+        symbol_file,
+        [(-1.905, 16.51), (-1.905, 17.78), (1.27, 17.78), (1.27, 12.065)],
+    )
+    write_polyline(symbol_file, [(-1.905, 11.43), (-1.905, 8.89)])
+    write_polyline(
+        symbol_file,
+        [(-1.905, 3.81), (-1.905, 2.54), (1.27, 2.54), (1.27, 8.255)],
+    )
+    write_polyline(
+        symbol_file,
+        [(-1.905, -3.81), (-1.905, -2.54), (1.27, -2.54), (1.27, -8.255)],
+    )
+    write_polyline(symbol_file, [(-1.905, -8.89), (-1.905, -11.43)])
+    write_polyline(
+        symbol_file,
+        [(-1.905, -16.51), (-1.905, -17.78), (1.27, -17.78), (1.27, -12.065)],
+    )
+
+    # Write right winding connections
+    write_polyline(symbol_file, [(1.27, 10.414), (6.35, 10.414)])
+    write_polyline(symbol_file, [(1.27, 9.906), (6.35, 9.906)])
+    write_polyline(symbol_file, [(1.27, -9.906), (6.35, -9.906)])
+    write_polyline(symbol_file, [(1.27, -10.414), (6.35, -10.414)])
+    write_polyline(symbol_file, [(7.62, 12.7), (6.35, 12.7), (6.35, 12.065)])
+    write_polyline(symbol_file, [(7.62, 7.62), (6.35, 7.62), (6.35, 8.255)])
+    write_polyline(
+        symbol_file,
+        [(7.62, 5.08), (-0.635, 5.08), (-0.635, 10.16), (-1.905, 10.16)],
+    )
+    write_polyline(
+        symbol_file, [(7.62, -7.62), (6.35, -7.62), (6.35, -8.255)]
+    )
+    write_polyline(
+        symbol_file, [(7.62, -12.7), (6.35, -12.7), (6.35, -12.065)]
+    )
+    write_polyline(
+        symbol_file,
+        [
+            (7.62, -15.24),
+            (-0.635, -15.24),
+            (-0.635, -10.16),
+            (-1.905, -10.16),
+        ],
+    )
 
     # Write left side pins
     for pin in pin_config["left"]:
