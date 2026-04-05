@@ -480,18 +480,18 @@
             (fill (type none))
         )
         
-            (polyline
-                (pts (xy -0.254 20.32) (xy -0.254 -20.32))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            
-            (polyline
-                (pts (xy 0.254 20.32) (xy 0.254 -20.32))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            
+        (polyline
+            (pts (xy -0.254 -20.32) (xy -0.254 20.32))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
+        
+        (polyline
+            (pts (xy 0.254 20.32) (xy 0.254 -20.32))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
+        
         (pin passive line
             (at -7.62 17.78 0)
             (length 5.08)

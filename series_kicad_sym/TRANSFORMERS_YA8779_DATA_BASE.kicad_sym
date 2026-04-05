@@ -271,25 +271,17 @@
                     (fill (type none))
                 )
                 
-            (polyline
-                (pts
-                    (xy 2.54 -5.08)
-                    (xy 2.54 -7.62)
-                    (xy 5.08 -7.62)
-                )
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
+        (polyline
+            (pts (xy 2.54 -5.08) (xy 2.54 -7.62) (xy 5.08 -7.62))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
         
-            (polyline
-                (pts
-                    (xy 2.54 5.08)
-                    (xy 2.54 7.62)
-                    (xy 5.08 7.62)
-                )
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
+        (polyline
+            (pts (xy 2.54 5.08) (xy 2.54 7.62) (xy 5.08 7.62))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
         
         (circle
             (center -2.54 -3.81)
@@ -312,18 +304,18 @@
             (fill (type none))
         )
         
-            (polyline
-                (pts (xy -0.254 7.62) (xy -0.254 -7.62))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            
-            (polyline
-                (pts (xy 0.254 7.62) (xy 0.254 -7.62))
-                (stroke (width 0) (type default))
-                (fill (type none))
-            )
-            
+        (polyline
+            (pts (xy -0.254 -7.62) (xy -0.254 7.62))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
+        
+        (polyline
+            (pts (xy 0.254 7.62) (xy 0.254 -7.62))
+            (stroke (width 0) (type default))
+            (fill (type none))
+        )
+        
         (pin passive line
             (at -7.62 5.08 0)
             (length 5.08)
