@@ -37,14 +37,25 @@ def generate_footprint(  # noqa: C901
         Complete .kicad_mod file content as formatted string
 
     """
-    dimensions = footprint_utils.calculate_dimensions(
-        part_info.pin_count,
-        footprint_specs.pad_pitch,
-        footprint_specs.body_dimensions.width_left,
-        footprint_specs.body_dimensions.width_right,
-    )
-    width_left = dimensions["width_left"]
-    width_right = dimensions["width_right"]
+    if footprint_specs.pad_positions_override is not None:
+        width_left = footprint_specs.body_dimensions.width_left
+        width_right = footprint_specs.body_dimensions.width_right
+
+        dimensions = footprint_utils.calculate_dimensions(
+            part_info.pin_count,
+            footprint_specs.pad_pitch,
+            width_left,
+            width_right,
+        )
+    else:
+        dimensions = footprint_utils.calculate_dimensions(
+            part_info.pin_count,
+            footprint_specs.pad_pitch,
+            footprint_specs.body_dimensions.width_left,
+            footprint_specs.body_dimensions.width_right,
+        )
+        width_left = dimensions["width_left"]
+        width_right = dimensions["width_right"]
     height_top = footprint_specs.body_dimensions.height_top
     height_bottom = footprint_specs.body_dimensions.height_bottom
 

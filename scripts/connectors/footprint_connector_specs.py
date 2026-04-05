@@ -795,8 +795,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         show_pin1_indicator=False,
         pad_pitch=3.54,
         body_dimensions=BodyDimensions(
-            width_left=4.6,
-            width_right=4.6,
+            width_left=10,
+            width_right=10,
             height_top=3.3,
             height_bottom=8.6,
         ),
@@ -825,8 +825,8 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         number_of_rows=1,
         zig_zag=True,
         body_dimensions=BodyDimensions(
-            width_left=6.2,
-            width_right=6.2,
+            width_left=10,
+            width_right=10,
             height_top=7.1,
             height_bottom=8.9,
         ),
@@ -860,5 +860,81 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ref_y=-8.128,
         show_pin1_indicator=False,
         pad1_square=True,
+    ),
+    "1600130623": FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=21,
+            width_right=21,
+            height_top=25,
+            height_bottom=15,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-14.925, -13.3, 3.75],
+            [14.925, -13.3, 3.75],
+            [11.74, 9, 1.3],
+            [-7.74, 9, 1.3],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-27.94,
+        ref_y=16.002,
+        pad_positions_override=[
+            # Rows 0–2: 14 pads each, x from ±3.74–±15.74, size 1.5/1.1
+            *[
+                PadPosition(
+                    pad_number=str(row * 14 + col + 1),
+                    x=x,
+                    y=row * 3,
+                )
+                for row in range(3)
+                for col, x in enumerate([
+                    -15.74,
+                    -13.74,
+                    -11.74,
+                    -9.74,
+                    -7.74,
+                    -5.74,
+                    -3.74,
+                    3.74,
+                    5.74,
+                    7.74,
+                    9.74,
+                    11.74,
+                    13.74,
+                    15.74,
+                ])
+            ],
+            # Row 3 (y=9): 6 pads, size 1.7/1.3
+            *[
+                PadPosition(
+                    pad_number=str(n),
+                    x=x,
+                    y=9,
+                    pad_size=1.7,
+                    drill_size=1.3,
+                )
+                for n, x in zip(
+                    range(43, 49),
+                    [-15.74, -11.74, -3.74, 3.74, 7.74, 15.74],
+                )
+            ],
+            # Row 4 (y=12): 8 pads, size 1.7/1.3
+            *[
+                PadPosition(
+                    pad_number=str(n),
+                    x=x,
+                    y=12,
+                    pad_size=1.7,
+                    drill_size=1.3,
+                )
+                for n, x in zip(
+                    range(49, 57),
+                    [-15.74, -11.74, -7.74, -3.74, 3.74, 7.74, 11.74, 15.74],
+                )
+            ],
+        ],
+        pad1_square=False,
     ),
 }
