@@ -1301,4 +1301,23 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "1600133623": SeriesSpec(
+        manufacturer="Molex",
+        base_series="1600133623",
+        footprint_pattern="connector_footprints:1600133623",
+        datasheet=(
+            "https://www.molex.com/en-us/products/part-detail/"
+            "1600133623?display=pdf"
+        ),
+        pin_counts=[56],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Gray",
+        pitch=2.0,
+        number_of_rows=1,
+        mounting_angle="Right Angle",
+        current_rating=4,
+        voltage_rating=60,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
