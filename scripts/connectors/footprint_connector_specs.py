@@ -1687,4 +1687,46 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ],
         pad1_square=False,
     ),
+    "2005020121": FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=14, width_right=14, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-11.7, -3.8, 2.9],
+            [11.7, -3.8, 2.9],
+        ]),
+        pad_size=2.1,
+        drill_size=1.5,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Row 1
+            *[
+                PadPosition(pad_number=str(n), x=x, y=0)
+                for n, x in zip([1, 1, 2, 2], [-4.6, -0.6, 2.6, 6.6])
+            ],
+            # Row 2
+            *[
+                PadPosition(pad_number=str(n), x=x, y=3)
+                for n, x in zip([3, 3, 4, 4], [-6.6, -2.6, 0.6, 4.6])
+            ],
+            # Row 3
+            *[
+                PadPosition(
+                    pad_number=str(n), x=x, y=6, pad_size=1.9, drill_size=1.3
+                )
+                for n, x in zip(range(5, 9), [-6.6, -2.6, 2.6, 6.6])
+            ],
+            # Row 4
+            *[
+                PadPosition(
+                    pad_number=str(n), x=x, y=9, pad_size=1.9, drill_size=1.3
+                )
+                for n, x in zip(range(9, 13), [-6.6, -2.6, 2.6, 6.6])
+            ],
+        ],
+        pad1_square=False,
+    ),
 }
