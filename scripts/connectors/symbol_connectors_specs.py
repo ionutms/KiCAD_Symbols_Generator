@@ -1567,4 +1567,61 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
+    "2005020122": SeriesSpec(
+        manufacturer="Molex",
+        base_series="2005020122",
+        footprint_pattern="connector_footprints:2005020122",
+        datasheet=(
+            "https://www.molex.com/en-us/products/part-detail/"
+            "2005020122?display=pdf"
+        ),
+        pin_counts=[12],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Green",
+        pitch=2.0,
+        number_of_rows=1,
+        mounting_angle="Right Angle",
+        current_rating=4,
+        voltage_rating=60,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
+    "2005020123": SeriesSpec(
+        manufacturer="Molex",
+        base_series="2005020123",
+        footprint_pattern="connector_footprints:2005020123",
+        datasheet=(
+            "https://www.molex.com/en-us/products/part-detail/"
+            "2005020123?display=pdf"
+        ),
+        pin_counts=[12],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Purple",
+        pitch=2.0,
+        number_of_rows=1,
+        mounting_angle="Right Angle",
+        current_rating=4,
+        voltage_rating=60,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
+    "2005020124": SeriesSpec(
+        manufacturer="Molex",
+        base_series="2005020124",
+        footprint_pattern="connector_footprints:2005020124",
+        datasheet=(
+            "https://www.molex.com/en-us/products/part-detail/"
+            "2005020124?display=pdf"
+        ),
+        pin_counts=[12],
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        color="Gray",
+        pitch=2.0,
+        number_of_rows=1,
+        mounting_angle="Right Angle",
+        current_rating=4,
+        voltage_rating=60,
+        mounting_style="Through Hole",
+        contact_plating="Tin",
+    ),
 }
