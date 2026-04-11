@@ -1295,3 +1295,50 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005020281", "2005020282", "2005020283", "2005020284"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=14, width_right=14, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-11.7, -3.8, 2.9],
+            [11.7, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Rows 1–4
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=ypos)
+                for ypos, num_range in [
+                    (0, range(1, 8)),
+                    (3, range(8, 15)),
+                    (6, range(15, 22)),
+                    (9, range(22, 29)),
+                ]
+                for num, xpos in zip(
+                    num_range, [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6]
+                )
+            ],
+            # Rows 5
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.7,
+                    drill_size=1.3,
+                )
+                for ypos, num_range in [(12, range(29, 33))]
+                for num, xpos in zip(num_range, [-6.6, -2.6, 2.6, 6.6])
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005020321", "2005020322", "2005020323", "2005020324"]
+}
