@@ -1535,7 +1535,11 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         ],
         pad1_square=False,
     ),
-    "1600136601": FootprintSpecs(
+}
+
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
         show_pin1_indicator=False,
         pad_pitch=3.54,
         body_dimensions=BodyDimensions(
@@ -1552,141 +1556,40 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         pad_positions_override=[
             # Rows 1–3
             *[
-                PadPosition(pad_number=str(row * 7 + col + 1), x=x, y=row * 3)
+                PadPosition(
+                    pad_number=str(row * 7 + col + 1),
+                    x=xpos,
+                    y=row * 3,
+                )
                 for row in range(3)
-                for col, x in enumerate([*[-6, -4, -2, 0, 2, 4, 6]])
+                for col, xpos in enumerate([-6, -4, -2, 0, 2, 4, 6])
             ],
             # Row 4
             *[
                 PadPosition(
-                    pad_number=str(n), x=x, y=9, pad_size=1.7, drill_size=1.3
+                    pad_number=str(num),
+                    x=xpos,
+                    y=9,
+                    pad_size=1.7,
+                    drill_size=1.3,
                 )
-                for n, x in zip(range(22, 25), [-6, 2, 6])
+                for num, xpos in zip(range(22, 25), [-6, 2, 6])
             ],
             # Row 5
             *[
                 PadPosition(
-                    pad_number=str(n), x=x, y=12, pad_size=1.7, drill_size=1.3
+                    pad_number=str(num),
+                    x=xpos,
+                    y=12,
+                    pad_size=1.7,
+                    drill_size=1.3,
                 )
-                for n, x in zip(range(25, 29), [-6, -2, 2, 6])
+                for num, xpos in zip(range(25, 29), [-6, -2, 2, 6])
             ],
         ],
         pad1_square=False,
-    ),
-    "1600136602": FootprintSpecs(
-        show_pin1_indicator=False,
-        pad_pitch=3.54,
-        body_dimensions=BodyDimensions(
-            width_left=11, width_right=11, height_top=25, height_bottom=15
-        ),
-        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-7.05, -13.3, 3.75],
-            [7.05, -13.3, 3.75],
-        ]),
-        pad_size=1.5,
-        drill_size=1.1,
-        mpn_y=-27.94,
-        ref_y=16.002,
-        pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(row * 7 + col + 1), x=x, y=row * 3)
-                for row in range(3)
-                for col, x in enumerate([*[-6, -4, -2, 0, 2, 4, 6]])
-            ],
-            # Row 4
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=9, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(22, 25), [-6, 2, 6])
-            ],
-            # Row 5
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=12, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(25, 29), [-6, -2, 2, 6])
-            ],
-        ],
-        pad1_square=False,
-    ),
-    "1600136603": FootprintSpecs(
-        show_pin1_indicator=False,
-        pad_pitch=3.54,
-        body_dimensions=BodyDimensions(
-            width_left=11, width_right=11, height_top=25, height_bottom=15
-        ),
-        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-7.05, -13.3, 3.75],
-            [7.05, -13.3, 3.75],
-        ]),
-        pad_size=1.5,
-        drill_size=1.1,
-        mpn_y=-27.94,
-        ref_y=16.002,
-        pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(row * 7 + col + 1), x=x, y=row * 3)
-                for row in range(3)
-                for col, x in enumerate([*[-6, -4, -2, 0, 2, 4, 6]])
-            ],
-            # Row 4
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=9, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(22, 25), [-6, 2, 6])
-            ],
-            # Row 5
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=12, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(25, 29), [-6, -2, 2, 6])
-            ],
-        ],
-        pad1_square=False,
-    ),
-    "1600136604": FootprintSpecs(
-        show_pin1_indicator=False,
-        pad_pitch=3.54,
-        body_dimensions=BodyDimensions(
-            width_left=11, width_right=11, height_top=25, height_bottom=15
-        ),
-        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-7.05, -13.3, 3.75],
-            [7.05, -13.3, 3.75],
-        ]),
-        pad_size=1.5,
-        drill_size=1.1,
-        mpn_y=-27.94,
-        ref_y=16.002,
-        pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(row * 7 + col + 1), x=x, y=row * 3)
-                for row in range(3)
-                for col, x in enumerate([*[-6, -4, -2, 0, 2, 4, 6]])
-            ],
-            # Row 4
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=9, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(22, 25), [-6, 2, 6])
-            ],
-            # Row 5
-            *[
-                PadPosition(
-                    pad_number=str(n), x=x, y=12, pad_size=1.7, drill_size=1.3
-                )
-                for n, x in zip(range(25, 29), [-6, -2, 2, 6])
-            ],
-        ],
-        pad1_square=False,
-    ),
+    )
+    for mpn in ["1600136601", "1600136602", "1600136603", "1600136604"]
 }
 
 

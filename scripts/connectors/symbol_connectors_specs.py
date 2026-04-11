@@ -1472,82 +1472,28 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         mounting_style="Through Hole",
         contact_plating="Tin",
     ),
-    "1600136601": SeriesSpec(
-        manufacturer="Molex",
-        base_series="1600136601",
-        footprint_pattern="connector_footprints:1600136601",
-        datasheet=(
-            "https://www.molex.com/en-us/products/part-detail/"
-            "1600136601?display=pdf"
-        ),
-        pin_counts=[28],
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        color="Gray",
-        pitch=2.0,
-        number_of_rows=1,
-        mounting_angle="Right Angle",
-        current_rating=4,
-        voltage_rating=60,
-        mounting_style="Through Hole",
-        contact_plating="Tin",
-    ),
-    "1600136602": SeriesSpec(
-        manufacturer="Molex",
-        base_series="1600136602",
-        footprint_pattern="connector_footprints:1600136602",
-        datasheet=(
-            "https://www.molex.com/en-us/products/part-detail/"
-            "1600136602?display=pdf"
-        ),
-        pin_counts=[28],
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        color="Gray",
-        pitch=2.0,
-        number_of_rows=1,
-        mounting_angle="Right Angle",
-        current_rating=4,
-        voltage_rating=60,
-        mounting_style="Through Hole",
-        contact_plating="Tin",
-    ),
-    "1600136603": SeriesSpec(
-        manufacturer="Molex",
-        base_series="1600136603",
-        footprint_pattern="connector_footprints:1600136603",
-        datasheet=(
-            "https://www.molex.com/en-us/products/part-detail/"
-            "1600136603?display=pdf"
-        ),
-        pin_counts=[28],
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        color="Gray",
-        pitch=2.0,
-        number_of_rows=1,
-        mounting_angle="Right Angle",
-        current_rating=4,
-        voltage_rating=60,
-        mounting_style="Through Hole",
-        contact_plating="Tin",
-    ),
-    "1600136604": SeriesSpec(
-        manufacturer="Molex",
-        base_series="1600136604",
-        footprint_pattern="connector_footprints:1600136604",
-        datasheet=(
-            "https://www.molex.com/en-us/products/part-detail/"
-            "1600136604?display=pdf"
-        ),
-        pin_counts=[28],
-        trustedparts_link="https://www.trustedparts.com/en/search",
-        color="Gray",
-        pitch=2.0,
-        number_of_rows=1,
-        mounting_angle="Right Angle",
-        current_rating=4,
-        voltage_rating=60,
-        mounting_style="Through Hole",
-        contact_plating="Tin",
-    ),
+    **{
+        mpn: SeriesSpec(
+            manufacturer="Molex",
+            base_series=mpn,
+            footprint_pattern=f"connector_footprints:{mpn}",
+            datasheet=(
+                "https://www.molex.com/en-us/products/part-detail/"
+                f"{mpn}?display=pdf"
+            ),
+            pin_counts=[28],
+            trustedparts_link="https://www.trustedparts.com/en/search",
+            color="Gray",
+            pitch=2.0,
+            number_of_rows=5,
+            mounting_angle="Right Angle",
+            current_rating=4,
+            voltage_rating=60,
+            mounting_style="Through Hole",
+            contact_plating="Tin",
+        )
+        for mpn in ["1600136601", "1600136602", "1600136603", "1600136604"]
+    },
     **{
         mpn: SeriesSpec(
             manufacturer="Molex",
