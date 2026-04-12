@@ -1662,35 +1662,39 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
+            # Row 1 - left
             *[
                 PadPosition(pad_number=str(num), x=xpos, y=0)
                 for num, xpos in zip(
-                    [1, 1, 2, 2, 13, 13, 14, 14],
-                    [
-                        x + s
-                        for offset in [11.7]
-                        for coords in [[-4.6, -0.6, 2.6, 6.6]]
-                        for s in [-offset, offset]
-                        for x in coords
-                    ],
+                    [1, 1, 2, 2],
+                    [x - 11.7 for x in [-4.6, -0.6, 2.6, 6.6]],
                 )
             ],
-            # Row 2
+            # Row 1 - right
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [13, 13, 14, 14],
+                    [x + 11.7 for x in [-4.6, -0.6, 2.6, 6.6]],
+                )
+            ],
+            # Row 2 - left
             *[
                 PadPosition(pad_number=str(num), x=xpos, y=3)
                 for num, xpos in zip(
-                    [3, 3, 4, 4, 15, 15, 16, 16],
-                    [
-                        x + s
-                        for offset in [11.7]
-                        for coords in [[-6.6, -2.6, 0.6, 4.6]]
-                        for s in [-offset, offset]
-                        for x in coords
-                    ],
+                    [3, 3, 4, 4],
+                    [x - 11.7 for x in [-6.6, -2.6, 0.6, 4.6]],
                 )
             ],
-            # Rows 3–4
+            # Row 2 - right
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [15, 15, 16, 16],
+                    [x + 11.7 for x in [-6.6, -2.6, 0.6, 4.6]],
+                )
+            ],
+            # Rows 3–4 - left
             *[
                 PadPosition(
                     pad_number=str(num),
@@ -1700,18 +1704,30 @@ CONNECTOR_SPECS |= {
                     drill_size=1.1,
                 )
                 for ypos, num_range in [
-                    (6, [5, 6, 7, 8, 17, 18, 19, 20]),
-                    (9, [9, 10, 11, 12, 21, 22, 23, 24]),
+                    (6, [5, 6, 7, 8]),
+                    (9, [9, 10, 11, 12]),
                 ]
                 for num, xpos in zip(
                     num_range,
-                    [
-                        x + s
-                        for offset in [11.7]
-                        for coords in [[-6.6, -2.6, 2.6, 6.6]]
-                        for s in [-offset, offset]
-                        for x in coords
-                    ],
+                    [x - 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
+                )
+            ],
+            # Rows 3–4 - right
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, [17, 18, 19, 20]),
+                    (9, [21, 22, 23, 24]),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [x + 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
                 )
             ],
         ],
