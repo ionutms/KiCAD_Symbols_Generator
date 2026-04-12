@@ -1392,3 +1392,105 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005021121", "2005021122", "2005021123", "2005021124"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=14, width_right=14, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-11.7, -3.8, 2.9],
+            [11.7, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Rows 1–3
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=ypos)
+                for ypos, num_range in [
+                    (0, range(1, 8)),
+                    (3, range(8, 15)),
+                    (6, range(15, 22)),
+                ]
+                for num, xpos in zip(num_range, [-6, -4, -2, 0, 2, 4, 6])
+            ],
+            # Rows 4
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=2.1,
+                    drill_size=1.5,
+                )
+                for ypos, num_range in [(9.67, [22, 22, 22, 23, 23, 23])]
+                for num, xpos in zip(
+                    num_range, [-7.08, -4.54, -2, 0.92, 3.46, 6]
+                )
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005021231", "2005021232", "2005021233", "2005021234"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=14, width_right=14, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-11.7, -3.8, 2.9],
+            [11.7, -3.8, 2.9],
+        ]),
+        pad_size=2.1,
+        drill_size=1.5,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Row 1
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [1, 1, 2, 2],
+                    [-4.6, -0.6, 2.6, 6.6],
+                )
+            ],
+            # Row 2
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [3, 3, 4, 4],
+                    [-6.6, -2.6, 0.6, 4.6],
+                )
+            ],
+            # Rows 3–4
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, range(5, 12)),
+                    (9, range(12, 19)),
+                    (12, range(19, 26)),
+                ]
+                for num, xpos in zip(
+                    num_range, [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6]
+                )
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005021251", "2005021252", "2005021253", "2005021254"]
+}
