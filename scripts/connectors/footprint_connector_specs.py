@@ -1644,3 +1644,78 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005021321", "2005021322", "2005021323", "2005021324"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-23.4, -3.8, 2.9],
+            [0, -3.8, 2.9],
+            [23.4, -3.8, 2.9],
+        ]),
+        pad_size=2.1,
+        drill_size=1.5,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Row 1
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [1, 1, 2, 2, 13, 13, 14, 14],
+                    [
+                        x + s
+                        for offset in [11.7]
+                        for coords in [[-4.6, -0.6, 2.6, 6.6]]
+                        for s in [-offset, offset]
+                        for x in coords
+                    ],
+                )
+            ],
+            # Row 2
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [3, 3, 4, 4, 15, 15, 16, 16],
+                    [
+                        x + s
+                        for offset in [11.7]
+                        for coords in [[-6.6, -2.6, 0.6, 4.6]]
+                        for s in [-offset, offset]
+                        for x in coords
+                    ],
+                )
+            ],
+            # Rows 3–4
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, [5, 6, 7, 8, 17, 18, 19, 20]),
+                    (9, [9, 10, 11, 12, 21, 22, 23, 24]),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [
+                        x + s
+                        for offset in [11.7]
+                        for coords in [[-6.6, -2.6, 2.6, 6.6]]
+                        for s in [-offset, offset]
+                        for x in coords
+                    ],
+                )
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005062007", "2005062507"]
+}
