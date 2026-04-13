@@ -2454,3 +2454,109 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005062018", "2005062518"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-23.4, -3.8, 2.9],
+            [0, -3.8, 2.9],
+            [23.4, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Left side
+            PadPosition(
+                pad_number=str(pad_num),
+                x=pad_x - 11.7,
+                y=row_y,
+                **extra,
+            )
+            for pad_nums, row_y, x_positions, extra in [
+                (
+                    [1, 2],
+                    0,
+                    [-4.6, -0.6, 2.6, 6.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [3, 4],
+                    3,
+                    [-6.6, -2.6, 0.6, 4.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [5, 6, 7, 8, 9, 10, 11],
+                    6,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+                (
+                    [12, 13, 14, 15, 16, 17, 18],
+                    9,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+                (
+                    [19, 20, 21, 22, 23, 24, 25],
+                    12,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+            ]
+            for pad_num, pad_x in zip(
+                [num for num in pad_nums for _ in range(2)]
+                if len(pad_nums) == 2
+                else pad_nums,
+                x_positions,
+            )
+        ]
+        + [
+            # Right side
+            PadPosition(
+                pad_number=str(pad_base + pad_offset),
+                x=pad_x + 11.7,
+                y=row_y,
+                **extra,
+            )
+            for offsets, row_y, x_positions, extra in [
+                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
+                ([8, 9, 10, 11, 12, 13, 14], 3, [-6, -4, -2, 0, 2, 4, 6], {}),
+                (
+                    [15, 16, 17, 18, 19, 20, 21],
+                    6,
+                    [-6, -4, -2, 0, 2, 4, 6],
+                    {},
+                ),
+                (
+                    [22, 23, 24],
+                    9,
+                    [-6, 2, 6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [25, 26, 27, 28],
+                    12,
+                    [-6, -2, 2, 6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+            ]
+            for pad_offset, pad_x in zip(
+                [num for num in offsets for _ in range(2)]
+                if len(offsets) == 2
+                else offsets,
+                x_positions,
+            )
+            for pad_base in [25]
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005062004", "2005062504", "2005062027", "2005062527"]
+}
