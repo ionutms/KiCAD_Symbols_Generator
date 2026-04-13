@@ -1297,8 +1297,10 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             ("2005063510", "Gray, Purple & Green", [36], 4),
             ("2005062030", "Black & Green", [37], 5),
             ("2005062530", "Black & Green", [37], 5),
-            ("2005062005", "Black & Black", [37], 5),
-            ("2005062105", "Black & Black", [37], 5),
+            ("2005062005", "Black & Black", [39], 5),
+            ("2005062105", "Black & Black", [39], 5),
+            ("2005062015", "Gray & Black", [39], 5),
+            ("2005062515", "Gray & Black", [39], 5),
         ]
     },
 }
