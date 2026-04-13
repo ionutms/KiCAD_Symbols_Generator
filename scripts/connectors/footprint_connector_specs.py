@@ -1662,74 +1662,35 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [x - 11.7 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 1 - right
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [13, 13, 14, 14],
-                    [x + 11.7 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 2 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [x - 11.7 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Row 2 - right
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [15, 15, 16, 16],
-                    [x + 11.7 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Rows 3–4 - left
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, [5, 6, 7, 8]),
-                    (9, [9, 10, 11, 12]),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [x - 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
-            # Rows 3–4 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, [17, 18, 19, 20]),
-                    (9, [21, 22, 23, 24]),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [x + 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
+            PadPosition(
+                pad_number=str(pad_base + pad_offset),
+                x=pad_x + group_x_shift,
+                y=row_y,
+                **extra,
+            )
+            for group_x_shift, pad_base in zip([-11.7, 11.7], [0, 12])
+            for offsets, row_y, x_positions, extra in [
+                ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {}),
+                ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {}),
+                (
+                    [5, 6, 7, 8],
+                    6,
+                    [-6.6, -2.6, 2.6, 6.6],
+                    {"pad_size": 1.5, "drill_size": 1.1},
+                ),
+                (
+                    [9, 10, 11, 12],
+                    9,
+                    [-6.6, -2.6, 2.6, 6.6],
+                    {"pad_size": 1.5, "drill_size": 1.1},
+                ),
+            ]
+            for pad_offset, pad_x in zip(
+                [num for num in offsets for _ in range(2)]
+                if len(offsets) == 2
+                else offsets,
+                x_positions,
+            )
         ],
         pad1_square=False,
     )
@@ -1748,111 +1709,79 @@ CONNECTOR_SPECS |= {
             [0, -3.8, 2.9],
             [23.4, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [x - 11.7 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 1 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=0,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for num, xpos in zip(
+            # Left side
+            PadPosition(
+                pad_number=str(pad_base + pad_offset),
+                x=pad_x - 11.7,
+                y=row_y,
+                **extra,
+            )
+            for offsets, row_y, x_positions, extra in [
+                (
+                    [1, 2],
+                    0,
+                    [-4.6, -0.6, 2.6, 6.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [3, 4],
+                    3,
+                    [-6.6, -2.6, 0.6, 4.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
+                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
+            ]
+            for pad_offset, pad_x in zip(
+                [num for num in offsets for _ in range(2)]
+                if len(offsets) == 2
+                else offsets,
+                x_positions,
+            )
+            for pad_base in [
+                0
+            ]  # keeps left side self-contained in one comprehension
+        ]
+        + [
+            # Right side — asymmetric, listed explicitly per row
+            PadPosition(
+                pad_number=str(pad_num),
+                x=pad_x + 11.7,
+                y=row_y,
+                **extra,
+            )
+            for pad_nums, row_y, x_positions, extra in [
+                (
                     [13, 14, 15, 16, 17, 18, 19],
-                    [x + 11.7 for x in [-6, -4, -2, 0, 2, 4, 6]],
-                )
-            ],
-            # Row 2 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [x - 11.7 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Row 2 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=3,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for num, xpos in zip(
+                    0,
+                    [-6, -4, -2, 0, 2, 4, 6],
+                    {},
+                ),
+                (
                     [20, 21, 22, 23, 24, 25, 26],
-                    [x + 11.7 for x in [-6, -4, -2, 0, 2, 4, 6]],
-                )
-            ],
-            # Row 3 - left
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=6,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for num, xpos in zip(
-                    [5, 6, 7, 8],
-                    [x - 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 3 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=6,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for num, xpos in zip(
+                    3,
+                    [-6, -4, -2, 0, 2, 4, 6],
+                    {},
+                ),
+                (
                     [27, 28, 29, 30, 31, 32, 33],
-                    [x + 11.7 for x in [-6, -4, -2, 0, 2, 4, 6]],
-                )
-            ],
-            # Row 4 - left
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=9,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for num, xpos in zip(
-                    [9, 10, 11, 12],
-                    [x - 11.7 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 4 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=9.67,
-                    pad_size=2.1,
-                    drill_size=1.5,
-                )
-                for num, xpos in zip(
+                    6,
+                    [-6, -4, -2, 0, 2, 4, 6],
+                    {},
+                ),
+                (
                     [34, 34, 34, 35, 35, 35],
-                    [x + 11.7 for x in [-7.08, -4.54, -2, 0.92, 3.46, 6]],
-                )
-            ],
+                    9.67,
+                    [-7.08, -4.54, -2, 0.92, 3.46, 6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+            ]
+            for pad_num, pad_x in zip(pad_nums, x_positions)
         ],
         pad1_square=False,
     )
@@ -1877,108 +1806,38 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [x - 23.4 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 1 - Midle
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [13, 13, 14, 14],
-                    [x - 0 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 1 - right
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [25, 25, 26, 26],
-                    [x + 23.4 for x in [-4.6, -0.6, 2.6, 6.6]],
-                )
-            ],
-            # Row 2 - left
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [x - 23.4 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Row 2 - Midle
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [15, 15, 16, 16],
-                    [x - 0 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Row 2 - right
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [27, 27, 28, 28],
-                    [x + 23.4 for x in [-6.6, -2.6, 0.6, 4.6]],
-                )
-            ],
-            # Rows 3–4 - left
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, [5, 6, 7, 8]),
-                    (9, [9, 10, 11, 12]),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [x - 23.4 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
-            # Rows 3–4 - Midle
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, [17, 18, 19, 20]),
-                    (9, [21, 22, 23, 24]),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [x - 0 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
-            # Rows 3–4 - right
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, [29, 30, 31, 32]),
-                    (9, [33, 34, 35, 36]),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [x + 23.4 for x in [-6.6, -2.6, 2.6, 6.6]],
-                )
-            ],
+            PadPosition(
+                pad_number=str(pad_base + pad_offset),
+                x=pad_x + group_x_shift,
+                y=row_y,
+                **extra,
+            )
+            for group_x_shift, pad_base in zip(
+                [-23.4, 0.0, 23.4],
+                [0, 12, 24],
+            )
+            for offsets, row_y, x_positions, extra in [
+                ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {}),
+                ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {}),
+                (
+                    [5, 6, 7, 8],
+                    6,
+                    [-6.6, -2.6, 2.6, 6.6],
+                    {"pad_size": 1.5, "drill_size": 1.1},
+                ),
+                (
+                    [9, 10, 11, 12],
+                    9,
+                    [-6.6, -2.6, 2.6, 6.6],
+                    {"pad_size": 1.5, "drill_size": 1.1},
+                ),
+            ]
+            for pad_offset, pad_x in zip(
+                [num for num in offsets for _ in range(2)]
+                if len(offsets) == 2
+                else offsets,
+                x_positions,
+            )
         ],
         pad1_square=False,
     )
