@@ -1471,7 +1471,7 @@ CONNECTOR_SPECS |= {
                     [-6.6, -2.6, 0.6, 4.6],
                 )
             ],
-            # Rows 3–4
+            # Rows 3–5
             *[
                 PadPosition(
                     pad_number=str(num),
@@ -1842,4 +1842,101 @@ CONNECTOR_SPECS |= {
         pad1_square=False,
     )
     for mpn in ["2005063010", "2005063510"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-23.4, -3.8, 2.9],
+            [0, -3.8, 2.9],
+            [23.4, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Left side
+            PadPosition(
+                pad_number=str(pad_base + pad_offset),
+                x=pad_x - 11.7,
+                y=row_y,
+                **extra,
+            )
+            for offsets, row_y, x_positions, extra in [
+                (
+                    [1, 2],
+                    0,
+                    [-4.6, -0.6, 2.6, 6.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [3, 4],
+                    3,
+                    [-6.6, -2.6, 0.6, 4.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
+                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
+            ]
+            for pad_offset, pad_x in zip(
+                [num for num in offsets for _ in range(2)]
+                if len(offsets) == 2
+                else offsets,
+                x_positions,
+            )
+            for pad_base in [
+                0
+            ]  # keeps left side self-contained in one comprehension
+        ]
+        + [
+            # Right side — asymmetric, listed explicitly per row
+            PadPosition(
+                pad_number=str(pad_num),
+                x=pad_x + 11.7,
+                y=row_y,
+                **extra,
+            )
+            for pad_nums, row_y, x_positions, extra in [
+                (
+                    [13, 13, 14, 14],
+                    0,
+                    [-4.6, -0.6, 2.6, 6.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [15, 15, 16, 16],
+                    3,
+                    [-6.6, -2.6, 0.6, 4.6],
+                    {"pad_size": 2.1, "drill_size": 1.5},
+                ),
+                (
+                    [17, 18, 19, 20, 21, 22, 23],
+                    6,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+                (
+                    [24, 25, 26, 27, 28, 29, 30],
+                    9,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+                (
+                    [31, 32, 33, 34, 35, 36, 37],
+                    12,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                    {},
+                ),
+            ]
+            for pad_num, pad_x in zip(pad_nums, x_positions)
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005062030", "2005062530"]
 }
