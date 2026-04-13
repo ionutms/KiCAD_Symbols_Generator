@@ -1735,6 +1735,7 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005062007", "2005062507"]
 }
+
 CONNECTOR_SPECS |= {
     mpn: FootprintSpecs(
         show_pin1_indicator=False,
@@ -1856,4 +1857,130 @@ CONNECTOR_SPECS |= {
         pad1_square=False,
     )
     for mpn in ["2005062031", "2005062531"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=36.5, width_right=36.5, height_top=28, height_bottom=14
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-35.1, -3.8, 2.9],
+            [-11.7, -3.8, 2.9],
+            [11.7, -3.8, 2.9],
+            [35.1, -3.8, 2.9],
+        ]),
+        pad_size=2.1,
+        drill_size=1.5,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Row 1 - left
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [1, 1, 2, 2],
+                    [x - 23.4 for x in [-4.6, -0.6, 2.6, 6.6]],
+                )
+            ],
+            # Row 1 - Midle
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [13, 13, 14, 14],
+                    [x - 0 for x in [-4.6, -0.6, 2.6, 6.6]],
+                )
+            ],
+            # Row 1 - right
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=0)
+                for num, xpos in zip(
+                    [25, 25, 26, 26],
+                    [x + 23.4 for x in [-4.6, -0.6, 2.6, 6.6]],
+                )
+            ],
+            # Row 2 - left
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [3, 3, 4, 4],
+                    [x - 23.4 for x in [-6.6, -2.6, 0.6, 4.6]],
+                )
+            ],
+            # Row 2 - Midle
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [15, 15, 16, 16],
+                    [x - 0 for x in [-6.6, -2.6, 0.6, 4.6]],
+                )
+            ],
+            # Row 2 - right
+            *[
+                PadPosition(pad_number=str(num), x=xpos, y=3)
+                for num, xpos in zip(
+                    [27, 27, 28, 28],
+                    [x + 23.4 for x in [-6.6, -2.6, 0.6, 4.6]],
+                )
+            ],
+            # Rows 3–4 - left
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, [5, 6, 7, 8]),
+                    (9, [9, 10, 11, 12]),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [x - 23.4 for x in [-6.6, -2.6, 2.6, 6.6]],
+                )
+            ],
+            # Rows 3–4 - Midle
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, [17, 18, 19, 20]),
+                    (9, [21, 22, 23, 24]),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [x - 0 for x in [-6.6, -2.6, 2.6, 6.6]],
+                )
+            ],
+            # Rows 3–4 - right
+            *[
+                PadPosition(
+                    pad_number=str(num),
+                    x=xpos,
+                    y=ypos,
+                    pad_size=1.5,
+                    drill_size=1.1,
+                )
+                for ypos, num_range in [
+                    (6, [29, 30, 31, 32]),
+                    (9, [33, 34, 35, 36]),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [x + 23.4 for x in [-6.6, -2.6, 2.6, 6.6]],
+                )
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005063010", "2005063510"]
 }
