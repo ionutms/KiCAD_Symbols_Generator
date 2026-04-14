@@ -1221,8 +1221,8 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             pitch=2.0,
             number_of_rows=number_of_rows,
             mounting_angle="Right Angle",
-            current_rating=4,
-            voltage_rating=60,
+            current_rating=5,
+            voltage_rating=14,
             mounting_style="Through Hole",
             contact_plating="Tin",
         )
