@@ -3410,3 +3410,66 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["2005063018", "2005063518"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=25.5,
+            width_right=25.5,
+            height_top=28,
+            height_bottom=14,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-23.4, -3.8, 2.9],
+            [0, -3.8, 2.9],
+            [23.4, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            # Rows 1–4
+            *[
+                PadPosition(
+                    pad_number=str(pad_base + num),
+                    x=xpos + group_x_shift,
+                    y=ypos,
+                )
+                for group_x_shift, pad_base in [(-11.7, 0), (11.7, 32)]
+                for ypos, num_range in [
+                    (0, range(1, 8)),
+                    (3, range(8, 15)),
+                    (6, range(15, 22)),
+                    (9, range(22, 29)),
+                ]
+                for num, xpos in zip(
+                    num_range,
+                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
+                )
+            ],
+            # Row 5
+            *[
+                PadPosition(
+                    pad_number=str(pad_base + num),
+                    x=xpos + group_x_shift,
+                    y=12,
+                    pad_size=1.7,
+                    drill_size=1.3,
+                )
+                for group_x_shift, pad_base in [(-11.7, 0), (11.7, 32)]
+                for num, xpos in zip(
+                    range(29, 33),
+                    [-6.6, -2.6, 2.6, 6.6],
+                )
+            ],
+        ],
+        pad1_square=False,
+    )
+    for mpn in [
+        *["2005062008", "2005062026", "2005062013", "2005062513"],
+        *["2005062014", "2005062514", "2005062033", "2005062533"],
+    ]
+}
