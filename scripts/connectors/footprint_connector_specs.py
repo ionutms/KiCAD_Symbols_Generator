@@ -997,6 +997,25 @@ PADS_27_8PWR = [
 ]
 
 
+PADS_27_8PWR = [
+    ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
+    ([8, 9, 10, 11, 12, 13], 3, [-6, -4, -2, 2, 4, 6], {}),
+    ([14, 15, 16, 17, 18, 19], 6, [-6, -4, -2, 2, 4, 6], {}),
+    (
+        [20, 21, 22, 23],
+        9,
+        [-6, -2, 2, 6],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+    (
+        [24, 25, 26, 27],
+        12,
+        [-6, -2, 2, 6],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+
 CONNECTOR_SPECS |= {
     mpn: FootprintSpecs(
         show_pin1_indicator=False,
@@ -1937,43 +1956,14 @@ CONNECTOR_SPECS |= {
             [11.7, -3.8, 2.9],
             [35.1, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + group_x_shift,
-                y=row_y,
-                **extra,
-            )
-            for group_x_shift, pad_base in zip(
-                [-23.4, 0.0, 23.4],
-                [0, 12, 24],
-            )
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {}),
-                ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {}),
-                (
-                    [5, 6, 7, 8],
-                    6,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-                (
-                    [9, 10, 11, 12],
-                    9,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_12_4PWR, pad_base=12, x_offset=0.0),
+            *make_pad_group(PADS_12_4PWR, pad_base=24, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -1997,80 +1987,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [
-                0
-            ]  # keeps left side self-contained in one comprehension
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [13, 13, 14, 14],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [15, 15, 16, 16],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [17, 18, 19, 20, 21, 22, 23],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [24, 25, 26, 27, 28, 29, 30],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [31, 32, 33, 34, 35, 36, 37],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_25_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2094,63 +2012,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                ([8, 9, 10, 11, 12, 13], 3, [-6, -4, -2, 2, 4, 6], {}),
-                ([14, 15, 16, 17, 18, 19], 6, [-6, -4, -2, 2, 4, 6], {}),
-                (
-                    [20, 21, 22, 23],
-                    9,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [24, 25, 26, 27],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
-        ]
-        + [
-            # Right side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [27]
+            *make_pad_group(PADS_27_8PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_12_4PWR, pad_base=27, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2174,68 +2037,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [0]
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [13, 14, 15, 16, 17, 18, 19],
-                    0,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                ([20, 21, 22, 23, 24, 25], 3, [-6, -4, -2, 2, 4, 6], {}),
-                ([26, 27, 28, 29, 30, 31], 6, [-6, -4, -2, 2, 4, 6], {}),
-                (
-                    [32, 33, 34, 35],
-                    9,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [36, 37, 38, 39],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_27_8PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2259,78 +2062,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [0]
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [13, 14, 15, 16, 17, 18, 19],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [20, 21, 22, 23, 24, 25, 26],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [27, 28, 29, 30, 31, 32, 33],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [34, 35, 36, 37, 38, 39, 40],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [41, 42, 43, 44],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_32_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2354,78 +2087,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [1, 2, 3, 4, 5, 6, 7],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [8, 9, 10, 11, 12, 13, 14],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [22, 23, 24, 25, 26, 27, 28],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [29, 30, 31, 32],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
-        ]
-        + [
-            # Right side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [32]
+            *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_12_4PWR, pad_base=32, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2444,46 +2107,13 @@ CONNECTOR_SPECS |= {
             [0, -3.8, 2.9],
             [23.4, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + group_x_shift,
-                y=row_y,
-                **extra,
-            )
-            for group_x_shift, pad_base in zip([-11.7, 11.7], [0, 25])
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {}),
-                ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {}),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_25_4PWR, pad_base=25, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2507,84 +2137,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_num, pad_x in zip(
-                [num for num in pad_nums for _ in range(2)]
-                if len(pad_nums) == 2
-                else pad_nums,
-                x_positions,
-            )
-        ]
-        + [
-            # Right side
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                ([8, 9, 10, 11, 12, 13], 3, [-6, -4, -2, 2, 4, 6], {}),
-                ([14, 15, 16, 17, 18, 19], 6, [-6, -4, -2, 2, 4, 6], {}),
-                (
-                    [20, 21, 22, 23],
-                    9,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [24, 25, 26, 27],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [25]
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_27_8PWR, pad_base=25, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2608,89 +2162,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_num, pad_x in zip(
-                [num for num in pad_nums for _ in range(2)]
-                if len(pad_nums) == 2
-                else pad_nums,
-                x_positions,
-            )
-        ]
-        + [
-            # Right side
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                ([8, 9, 10, 11, 12, 13, 14], 3, [-6, -4, -2, 0, 2, 4, 6], {}),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [22, 23, 24],
-                    9,
-                    [-6, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [25, 26, 27, 28],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [25]
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_28_7PWR, pad_base=25, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2714,36 +2187,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + group_x_shift,
-                y=row_y,
-                **extra,
-            )
-            for group_x_shift, pad_base in zip([-11.7, 11.7], [0, 25])
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                ([8, 9, 10, 11, 12, 13], 3, [-6, -4, -2, 2, 4, 6], {}),
-                ([14, 15, 16, 17, 18, 19], 6, [-6, -4, -2, 2, 4, 6], {}),
-                (
-                    [20, 21],
-                    9,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [22, 23],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
+            *make_pad_group(PADS_27_8PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_27_8PWR, pad_base=27, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2767,41 +2212,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + group_x_shift,
-                y=row_y,
-                **extra,
-            )
-            for group_x_shift, pad_base in zip([-11.7, 11.7], [0, 28])
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                ([8, 9, 10, 11, 12, 13, 14], 3, [-6, -4, -2, 0, 2, 4, 6], {}),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [22, 23, 24],
-                    9,
-                    [-6, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [25, 26, 27, 28],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
+            *make_pad_group(PADS_28_7PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_28_7PWR, pad_base=28, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2825,94 +2237,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [1, 2, 3, 4, 5, 6, 7],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [8, 9, 10, 11, 12, 13, 14],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [22, 23, 24, 25, 26, 27, 28],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [29, 30, 31, 32],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
-        ]
-        + [
-            # Right side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [32]
+            *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_25_4PWR, pad_base=32, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -2936,94 +2262,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [0]
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [33, 34, 35, 36, 37, 38, 39],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [40, 41, 42, 43, 44, 45, 46],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [47, 48, 49, 50, 51, 52, 53],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [54, 55, 56, 57, 58, 59, 60],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [61, 62, 63, 64],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_32_4PWR, pad_base=25, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -3047,89 +2287,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                (
-                    [8, 9, 10, 11, 12, 13, 14],
-                    3,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [22, 23, 24],
-                    9,
-                    [-6, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [25, 26, 27, 28],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [0]
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [33, 34, 35, 36, 37, 38, 39],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [40, 41, 42, 43, 44, 45, 46],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [47, 48, 49, 50, 51, 52, 53],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [54, 55, 56, 57, 58, 59, 60],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [61, 62, 63, 64],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_28_7PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_32_4PWR, pad_base=28, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -3153,89 +2312,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Right side — generic doubling comprehension
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-                (
-                    [8, 9, 10, 11, 12, 13, 14],
-                    3,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [15, 16, 17, 18, 19, 20, 21],
-                    6,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [22, 23, 24],
-                    9,
-                    [-6, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [25, 26, 27, 28],
-                    12,
-                    [-6, -2, 2, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [0]
-        ]
-        + [
-            # Left side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [33, 34, 35, 36, 37, 38, 39],
-                    0,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [40, 41, 42, 43, 44, 45, 46],
-                    3,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [47, 48, 49, 50, 51, 52, 53],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [54, 55, 56, 57, 58, 59, 60],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [61, 62, 63, 64],
-                    12,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_28_7PWR, pad_base=32, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -3263,131 +2341,9 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Group 1 (left)
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x - 23.4,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_num, pad_x in zip(
-                [num for num in pad_nums for _ in range(2)]
-                if len(pad_nums) == 2
-                else pad_nums,
-                xpositions,
-            )
-        ]
-        + [
-            # Group 2 (center)
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x,
-                y=row_y,
-                **extra,
-            )
-            for pad_offsets, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in pad_offsets for _ in range(2)]
-                if len(pad_offsets) == 2
-                else pad_offsets,
-                xpositions,
-            )
-            for pad_base in [25]
-        ]
-        + [
-            # Group 3 (right)
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + 23.4,
-                y=row_y,
-                **extra,
-            )
-            for pad_offsets, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in pad_offsets for _ in range(2)]
-                if len(pad_offsets) == 2
-                else pad_offsets,
-                xpositions,
-            )
-            for pad_base in [50]
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_25_4PWR, pad_base=25, x_offset=0.0),
+            *make_pad_group(PADS_12_4PWR, pad_base=50, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -3415,131 +2371,9 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Group 1 (left)
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 23.4,
-                y=row_y,
-                **extra,
-            )
-            for pad_offsets, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in pad_offsets for _ in range(2)]
-                if len(pad_offsets) == 2
-                else pad_offsets,
-                xpositions,
-            )
-            for pad_base in [50]
-        ]
-        + [
-            # Group 2 (center)
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x,
-                y=row_y,
-                **extra,
-            )
-            for pad_offsets, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in pad_offsets for _ in range(2)]
-                if len(pad_offsets) == 2
-                else pad_offsets,
-                xpositions,
-            )
-            for pad_base in [25]
-        ]
-        + [
-            # Group 3 (right)
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 23.4,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, xpositions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [5, 6, 7, 8, 9, 10, 11],
-                    6,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [12, 13, 14, 15, 16, 17, 18],
-                    9,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-                (
-                    [19, 20, 21, 22, 23, 24, 25],
-                    12,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                    {},
-                ),
-            ]
-            for pad_num, pad_x in zip(
-                [num for num in pad_nums for _ in range(2)]
-                if len(pad_nums) == 2
-                else pad_nums,
-                xpositions,
-            )
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_25_4PWR, pad_base=12, x_offset=0.0),
+            *make_pad_group(PADS_25_4PWR, pad_base=37, x_offset=23.4),
         ],
         pad1_square=False,
     )
