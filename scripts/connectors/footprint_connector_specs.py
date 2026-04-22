@@ -1016,6 +1016,19 @@ PADS_27_8PWR = [
 ]
 
 
+PADS_23_2PWR = [
+    ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
+    ([8, 9, 10, 11, 12, 13, 14], 3, [-6, -4, -2, 0, 2, 4, 6], {}),
+    ([15, 16, 17, 18, 19, 20, 21], 6, [-6, -4, -2, 0, 2, 4, 6], {}),
+    (
+        [22, 22, 22, 23, 23, 23],
+        9.67,
+        [-7.08, -4.54, -2, 0.92, 3.46, 6],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+
 CONNECTOR_SPECS |= {
     mpn: FootprintSpecs(
         show_pin1_indicator=False,
@@ -1198,38 +1211,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-27.94,
         ref_y=16.002,
         pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(
-                    pad_number=str(row * 7 + col + 1),
-                    x=xpos,
-                    y=row * 3,
-                )
-                for row in range(3)
-                for col, xpos in enumerate([-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Row 4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=9,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for num, xpos in zip(range(22, 25), [-6, 2, 6])
-            ],
-            # Row 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=12,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for num, xpos in zip(range(25, 29), [-6, -2, 2, 6])
-            ],
+            *make_pad_group(PADS_28_7PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1247,42 +1229,12 @@ CONNECTOR_SPECS |= {
             [-11.7, -3.8, 2.9],
             [11.7, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [-4.6, -0.6, 2.6, 6.6],
-                )
-            ],
-            # Row 2
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [-6.6, -2.6, 0.6, 4.6],
-                )
-            ],
-            # Rows 3–4 (pad_size and drill_size vary per group)
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=pad_size,
-                    drill_size=drill_size,
-                )
-                for ypos, num_range, xpositions, pad_size, drill_size in [
-                    (6, range(5, 9), [-6.6, -2.6, 2.6, 6.6], 1.9, 1.3),
-                    (9, range(9, 13), [-6.6, -2.6, 2.6, 6.6], 1.9, 1.3),
-                ]
-                for num, xpos in zip(num_range, xpositions)
-            ],
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1300,46 +1252,12 @@ CONNECTOR_SPECS |= {
             [-11.7, -3.8, 2.9],
             [11.7, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [-4.6, -0.6, 2.6, 6.6],
-                )
-            ],
-            # Row 2
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [-6.6, -2.6, 0.6, 4.6],
-                )
-            ],
-            # Rows 3–5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, range(5, 12)),
-                    (9, range(12, 20)),
-                    (12, range(19, 26)),
-                ]
-                for num, xpos in zip(
-                    num_range,
-                    [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6],
-                )
-            ],
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1362,32 +1280,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(range(1, 8), [-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Rows 2–3
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [(3, range(8, 14)), (6, range(14, 20))]
-                for num, xpos in zip(num_range, [-6, -4, -2, 2, 4, 6])
-            ],
-            # Rows 4–5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [
-                    (9, range(20, 24)),
-                    (12, range(24, 28)),
-                ]
-                for num, xpos in zip(num_range, [-6, -2, 2, 6])
-            ],
+            *make_pad_group(PADS_27_8PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1410,40 +1303,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [
-                    (0, range(1, 8)),
-                    (3, range(8, 15)),
-                    (6, range(15, 22)),
-                ]
-                for num, xpos in zip(num_range, [-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Rows 4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(9, range(22, 25))]
-                for num, xpos in zip(num_range, [-6, 2, 6])
-            ],
-            # Rows 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(12, range(25, 29))]
-                for num, xpos in zip(num_range, [-6, -2, 2, 6])
-            ],
+            *make_pad_group(PADS_28_7PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1466,31 +1326,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Rows 1–4
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [
-                    (0, range(1, 8)),
-                    (3, range(8, 15)),
-                    (6, range(15, 22)),
-                    (9, range(22, 29)),
-                ]
-                for num, xpos in zip(
-                    num_range, [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6]
-                )
-            ],
-            # Rows 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(12, range(29, 33))]
-                for num, xpos in zip(num_range, [-6.6, -2.6, 2.6, 6.6])
-            ],
+            *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1508,39 +1344,12 @@ CONNECTOR_SPECS |= {
             [-11.7, -3.8, 2.9],
             [11.7, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [-4.6, -0.6, 2.6, 6.6],
-                )
-            ],
-            # Row 2
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [-6.6, -2.6, 0.6, 4.6],
-                )
-            ],
-            # Rows 3–4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [(6, range(5, 9)), (9, range(9, 13))]
-                for num, xpos in zip(num_range, [-6.6, -2.6, 2.6, 6.6])
-            ],
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1563,30 +1372,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [
-                    (0, range(1, 8)),
-                    (3, range(8, 15)),
-                    (6, range(15, 22)),
-                ]
-                for num, xpos in zip(num_range, [-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Rows 4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=2.1,
-                    drill_size=1.5,
-                )
-                for ypos, num_range in [(9.67, [22, 22, 22, 23, 23, 23])]
-                for num, xpos in zip(
-                    num_range, [-7.08, -4.54, -2, 0.92, 3.46, 6]
-                )
-            ],
+            *make_pad_group(PADS_23_2PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1604,45 +1390,12 @@ CONNECTOR_SPECS |= {
             [-11.7, -3.8, 2.9],
             [11.7, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(
-                    [1, 1, 2, 2],
-                    [-4.6, -0.6, 2.6, 6.6],
-                )
-            ],
-            # Row 2
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=3)
-                for num, xpos in zip(
-                    [3, 3, 4, 4],
-                    [-6.6, -2.6, 0.6, 4.6],
-                )
-            ],
-            # Rows 3–5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.5,
-                    drill_size=1.1,
-                )
-                for ypos, num_range in [
-                    (6, range(5, 12)),
-                    (9, range(12, 19)),
-                    (12, range(19, 26)),
-                ]
-                for num, xpos in zip(
-                    num_range, [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6]
-                )
-            ],
+            *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1665,32 +1418,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Row 1
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=0)
-                for num, xpos in zip(range(1, 8), [-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Rows 2–3
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [(3, range(8, 14)), (6, range(14, 20))]
-                for num, xpos in zip(num_range, [-6, -4, -2, 2, 4, 6])
-            ],
-            # Rows 4–5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [
-                    (9, range(20, 24)),
-                    (12, range(24, 28)),
-                ]
-                for num, xpos in zip(num_range, [-6, -2, 2, 6])
-            ],
+            *make_pad_group(PADS_27_8PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1713,40 +1441,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [
-                    (0, range(1, 8)),
-                    (3, range(8, 15)),
-                    (6, range(15, 22)),
-                ]
-                for num, xpos in zip(num_range, [-6, -4, -2, 0, 2, 4, 6])
-            ],
-            # Rows 4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(9, range(22, 25))]
-                for num, xpos in zip(num_range, [-6, 2, 6])
-            ],
-            # Rows 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(12, range(25, 29))]
-                for num, xpos in zip(num_range, [-6, -2, 2, 6])
-            ],
+            *make_pad_group(PADS_28_7PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1769,31 +1464,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Rows 1–4
-            *[
-                PadPosition(pad_number=str(num), x=xpos, y=ypos)
-                for ypos, num_range in [
-                    (0, range(1, 8)),
-                    (3, range(8, 15)),
-                    (6, range(15, 22)),
-                    (9, range(22, 29)),
-                ]
-                for num, xpos in zip(
-                    num_range, [-6.6, -4.6, -2.6, 0.6, 2.6, 4.6, 6.6]
-                )
-            ],
-            # Rows 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=ypos,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for ypos, num_range in [(12, range(29, 33))]
-                for num, xpos in zip(num_range, [-6.6, -2.6, 2.6, 6.6])
-            ],
+            *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1812,40 +1483,13 @@ CONNECTOR_SPECS |= {
             [0, -3.8, 2.9],
             [23.4, -3.8, 2.9],
         ]),
-        pad_size=2.1,
-        drill_size=1.5,
+        pad_size=1.5,
+        drill_size=1.1,
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x + group_x_shift,
-                y=row_y,
-                **extra,
-            )
-            for group_x_shift, pad_base in zip([-11.7, 11.7], [0, 12])
-            for offsets, row_y, x_positions, extra in [
-                ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {}),
-                ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {}),
-                (
-                    [5, 6, 7, 8],
-                    6,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-                (
-                    [9, 10, 11, 12],
-                    9,
-                    [-6.6, -2.6, 2.6, 6.6],
-                    {"pad_size": 1.5, "drill_size": 1.1},
-                ),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_12_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -1869,74 +1513,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            # Left side
-            PadPosition(
-                pad_number=str(pad_base + pad_offset),
-                x=pad_x - 11.7,
-                y=row_y,
-                **extra,
-            )
-            for offsets, row_y, x_positions, extra in [
-                (
-                    [1, 2],
-                    0,
-                    [-4.6, -0.6, 2.6, 6.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                (
-                    [3, 4],
-                    3,
-                    [-6.6, -2.6, 0.6, 4.6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-                ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
-                ([9, 10, 11, 12], 9, [-6.6, -2.6, 2.6, 6.6], {}),
-            ]
-            for pad_offset, pad_x in zip(
-                [num for num in offsets for _ in range(2)]
-                if len(offsets) == 2
-                else offsets,
-                x_positions,
-            )
-            for pad_base in [
-                0
-            ]  # keeps left side self-contained in one comprehension
-        ]
-        + [
-            # Right side — asymmetric, listed explicitly per row
-            PadPosition(
-                pad_number=str(pad_num),
-                x=pad_x + 11.7,
-                y=row_y,
-                **extra,
-            )
-            for pad_nums, row_y, x_positions, extra in [
-                (
-                    [13, 14, 15, 16, 17, 18, 19],
-                    0,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [20, 21, 22, 23, 24, 25, 26],
-                    3,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [27, 28, 29, 30, 31, 32, 33],
-                    6,
-                    [-6, -4, -2, 0, 2, 4, 6],
-                    {},
-                ),
-                (
-                    [34, 34, 34, 35, 35, 35],
-                    9.67,
-                    [-7.08, -4.54, -2, 0.92, 3.46, 6],
-                    {"pad_size": 2.1, "drill_size": 1.5},
-                ),
-            ]
-            for pad_num, pad_x in zip(pad_nums, x_positions)
+            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_23_2PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
