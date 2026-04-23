@@ -997,25 +997,6 @@ PADS_27_8PWR = [
 ]
 
 
-PADS_27_8PWR = [
-    ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
-    ([8, 9, 10, 11, 12, 13], 3, [-6, -4, -2, 2, 4, 6], {}),
-    ([14, 15, 16, 17, 18, 19], 6, [-6, -4, -2, 2, 4, 6], {}),
-    (
-        [20, 21, 22, 23],
-        9,
-        [-6, -2, 2, 6],
-        {"pad_size": 2.1, "drill_size": 1.5},
-    ),
-    (
-        [24, 25, 26, 27],
-        12,
-        [-6, -2, 2, 6],
-        {"pad_size": 2.1, "drill_size": 1.5},
-    ),
-]
-
-
 PADS_23_2PWR = [
     ([1, 2, 3, 4, 5, 6, 7], 0, [-6, -4, -2, 0, 2, 4, 6], {}),
     ([8, 9, 10, 11, 12, 13, 14], 3, [-6, -4, -2, 0, 2, 4, 6], {}),
@@ -1024,6 +1005,117 @@ PADS_23_2PWR = [
         [22, 22, 22, 23, 23, 23],
         9.67,
         [-7.08, -4.54, -2, 0.92, 3.46, 6],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+
+PADS_18_4PWR = [
+    (
+        [1, 2, 3, 4, 5, 6, 7],
+        0,
+        [-15.74, -13.74, -11.74, -9.74, -7.74, -5.74, -3.74],
+        {},
+    ),
+    (
+        [8, 9, 10, 11, 12, 13, 14],
+        6,
+        [-15.74, -13.74, -11.74, -9.74, -7.74, -5.74, -3.74],
+        {},
+    ),
+    (
+        [15, 16, 17, 18],
+        12,
+        [-15.74, -11.74, -7.74, -3.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+
+PADS_14_7PWR = [
+    (
+        [1, 2, 3, 4, 5, 6, 7],
+        0,
+        [3.74, 5.74, 7.74, 9.74, 11.74, 13.74, 15.74],
+        {},
+    ),
+    (
+        [8, 9, 10],
+        9,
+        [3.74, 11.74, 15.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+    (
+        [11, 12, 13, 14],
+        12,
+        [3.74, 7.74, 11.74, 15.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+
+PADS_28_7PWR_S_L = [
+    (
+        [1, 2, 3, 4, 5, 6, 7],
+        0,
+        [-15.74, -13.74, -11.74, -9.74, -7.74, -5.74, -3.74],
+        {},
+    ),
+    (
+        [8, 9, 10, 11, 12, 13, 14],
+        3,
+        [-15.74, -13.74, -11.74, -9.74, -7.74, -5.74, -3.74],
+        {},
+    ),
+    (
+        [15, 16, 17, 18, 19, 20, 21],
+        6,
+        [-15.74, -13.74, -11.74, -9.74, -7.74, -5.74, -3.74],
+        {},
+    ),
+    (
+        [22, 23, 24],
+        9,
+        [-15.74, -7.74, -3.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+    (
+        [25, 26, 27, 28],
+        12,
+        [-15.74, -11.74, -7.74, -3.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+]
+
+PADS_28_7PWR_S_R = [
+    (
+        [1, 2, 3, 4, 5, 6, 7],
+        0,
+        [3.74, 5.74, 7.74, 9.74, 11.74, 13.74, 15.74],
+        {},
+    ),
+    (
+        [8, 9, 10, 11, 12, 13, 14],
+        3,
+        [3.74, 5.74, 7.74, 9.74, 11.74, 13.74, 15.74],
+        {},
+    ),
+    (
+        [15, 16, 17, 18, 19, 20, 21],
+        6,
+        [3.74, 5.74, 7.74, 9.74, 11.74, 13.74, 15.74],
+        {},
+    ),
+    (
+        [22, 23, 24],
+        9,
+        [3.74, 11.74, 15.74],
+        {"pad_size": 2.1, "drill_size": 1.5},
+    ),
+    (
+        [25, 26, 27, 28],
+        12,
+        [3.74, 7.74, 11.74, 15.74],
         {"pad_size": 2.1, "drill_size": 1.5},
     ),
 ]
@@ -1045,155 +1137,42 @@ CONNECTOR_SPECS |= {
         mpn_y=-27.94,
         ref_y=16.002,
         pad_positions_override=[
-            # Rows 1–3
-            *[
-                PadPosition(
-                    pad_number=str(row * 14 + col + 1),
-                    x=xpos,
-                    y=row * 3,
-                )
-                for row in range(3)
-                for col, xpos in enumerate([
-                    -15.74,
-                    -13.74,
-                    -11.74,
-                    -9.74,
-                    -7.74,
-                    -5.74,
-                    -3.74,
-                    3.74,
-                    5.74,
-                    7.74,
-                    9.74,
-                    11.74,
-                    13.74,
-                    15.74,
-                ])
-            ],
-            # Row 4
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=9,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for num, xpos in zip(
-                    range(43, 49),
-                    [-15.74, -7.74, -3.74, 3.74, 11.74, 15.74],
-                )
-            ],
-            # Row 5
-            *[
-                PadPosition(
-                    pad_number=str(num),
-                    x=xpos,
-                    y=12,
-                    pad_size=1.7,
-                    drill_size=1.3,
-                )
-                for num, xpos in zip(
-                    range(49, 57),
-                    [-15.74, -11.74, -7.74, -3.74, 3.74, 7.74, 11.74, 15.74],
-                )
-            ],
+            *make_pad_group(PADS_28_7PWR_S_L, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_28_7PWR_S_R, pad_base=28, x_offset=0.0),
         ],
         pad1_square=False,
     )
     for mpn in [
-        "1600130623",
-        "1600130641",
-        "1600132623",
-        "1600132641",
-        "1600133623",
-        "1600133641",
-        "1600133724",
-        "1600133741",
-        "1600133841",
-        "1600133941",
-        "1600134141",
-        "1600134623",
-        "1600134641",
+        *["1600130623", "1600130641", "1600132623", "1600132641"],
+        *["1600133623", "1600133641", "1600133724", "1600133741"],
+        *["1600133841", "1600133941", "1600134141", "1600134623"],
+        *["1600134641"],
     ]
 }
 
-CONNECTOR_SPECS["1600131624"] = FootprintSpecs(
-    show_pin1_indicator=False,
-    pad_pitch=3.54,
-    body_dimensions=BodyDimensions(
-        width_left=21, width_right=21, height_top=25, height_bottom=15
-    ),
-    non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-        [-14.925, -13.3, 3.75],
-        [14.925, -13.3, 3.75],
-    ]),
-    pad_size=1.5,
-    drill_size=1.1,
-    mpn_y=-27.94,
-    ref_y=16.002,
-    pad_positions_override=[
-        # Row 1
-        *[
-            PadPosition(pad_number=str(col + 1), x=xpos, y=0)
-            for col, xpos in enumerate([
-                -15.74,
-                -13.74,
-                -11.74,
-                -9.74,
-                -7.74,
-                -5.74,
-                -3.74,
-                3.74,
-                5.74,
-                7.74,
-                9.74,
-                11.74,
-                13.74,
-                15.74,
-            ])
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=21, width_right=21, height_top=25, height_bottom=15
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-14.925, -13.3, 3.75],
+            [14.925, -13.3, 3.75],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-27.94,
+        ref_y=16.002,
+        pad_positions_override=[
+            *make_pad_group(PADS_18_4PWR, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_14_7PWR, pad_base=18, x_offset=0.0),
         ],
-        # Row 2
-        *[
-            PadPosition(pad_number=str(14 + col + 1), x=xpos, y=6)
-            for col, xpos in enumerate([
-                -15.74,
-                -13.74,
-                -11.74,
-                -9.74,
-                -7.74,
-                -5.74,
-                -3.74,
-            ])
-        ],
-        # Row 3
-        *[
-            PadPosition(
-                pad_number=str(num),
-                x=xpos,
-                y=9,
-                pad_size=1.7,
-                drill_size=1.3,
-            )
-            for num, xpos in zip(range(22, 25), [3.74, 11.74, 15.74])
-        ],
-        # Row 4
-        *[
-            PadPosition(
-                pad_number=str(num),
-                x=xpos,
-                y=12,
-                pad_size=1.7,
-                drill_size=1.3,
-            )
-            for num, xpos in zip(
-                range(25, 33),
-                [-15.74, -11.74, -7.74, -3.74, 3.74, 7.74, 11.74, 15.74],
-            )
-        ],
-    ],
-    pad1_square=False,
-)
+        pad1_square=False,
+    )
+    for mpn in ["1600131624"]
+}
 
 CONNECTOR_SPECS |= {
     mpn: FootprintSpecs(
