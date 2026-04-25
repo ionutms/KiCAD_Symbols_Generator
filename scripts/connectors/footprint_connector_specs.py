@@ -970,7 +970,7 @@ PADS_28_7PWR = [
     ),
 ]
 
-PADS_12_4PWR = [
+PADS_14_4PWR = [
     ([1, 2], 0, [-4.6, -0.6, 2.6, 6.6], {"pad_size": 2.1, "drill_size": 1.5}),
     ([3, 4], 3, [-6.6, -2.6, 0.6, 4.6], {"pad_size": 2.1, "drill_size": 1.5}),
     ([5, 6, 7, 8], 6, [-6.6, -2.6, 2.6, 6.6], {}),
@@ -1127,17 +1127,44 @@ PADS_8 = [
 ]
 
 
+PADS_12 = [
+    ([1, 2, 3, 4, 5, 6], 0, [-6.35, -3.81, -1.27, 1.27, 3.81, 6.35], {}),
+    (
+        [7, 8, 9, 10, 11, 12],
+        2.54,
+        [-6.35, -3.81, -1.27, 1.27, 3.81, 6.35],
+        {},
+    ),
+]
+
+
 PADS_10_4PWR = [
     (
-        [7, 7, 8, 8, 9, 9, 10, 10],
+        [1, 1, 2, 2, 3, 3, 4, 4],
         0,
         [-9.025, -6.725, -3.775, -1.475, 1.475, 3.775, 6.725, 9.025],
         {},
     ),
     (
-        [1, 2, 3, 4, 5, 6],
+        [5, 6, 7, 8, 9, 10],
         3.2,
         [-8.75, -5.25, -1.75, 1.75, 5.25, 8.75],
+        {},
+    ),
+]
+
+
+PADS_14_4PWR = [
+    (
+        [1, 1, 2, 2, 3, 3, 4, 4],
+        0,
+        [-9.025, -6.725, -3.775, -1.475, 1.475, 3.775, 6.725, 9.025],
+        {},
+    ),
+    (
+        [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        2.54,
+        [-11.43, -8.89, -6.35, -3.81, -1.27, 1.27, 3.81, 6.35, 8.89, 11.43],
         {},
     ),
 ]
@@ -1235,7 +1262,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1350,7 +1377,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -1489,8 +1516,8 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
-            *make_pad_group(PADS_12_4PWR, pad_base=12, x_offset=11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -1514,7 +1541,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-11.7),
             *make_pad_group(PADS_23_2PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
@@ -1540,9 +1567,9 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-23.4),
-            *make_pad_group(PADS_12_4PWR, pad_base=12, x_offset=0.0),
-            *make_pad_group(PADS_12_4PWR, pad_base=24, x_offset=23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=12, x_offset=0.0),
+            *make_pad_group(PADS_14_4PWR, pad_base=24, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -1566,7 +1593,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-11.7),
             *make_pad_group(PADS_25_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
@@ -1592,7 +1619,7 @@ CONNECTOR_SPECS |= {
         ref_y=14.986,
         pad_positions_override=[
             *make_pad_group(PADS_27_8PWR, pad_base=0, x_offset=-11.7),
-            *make_pad_group(PADS_12_4PWR, pad_base=27, x_offset=11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=27, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -1616,7 +1643,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-11.7),
             *make_pad_group(PADS_27_8PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
@@ -1641,7 +1668,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-11.7),
             *make_pad_group(PADS_32_4PWR, pad_base=12, x_offset=11.7),
         ],
         pad1_square=False,
@@ -1667,7 +1694,7 @@ CONNECTOR_SPECS |= {
         ref_y=14.986,
         pad_positions_override=[
             *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-11.7),
-            *make_pad_group(PADS_12_4PWR, pad_base=32, x_offset=11.7),
+            *make_pad_group(PADS_14_4PWR, pad_base=32, x_offset=11.7),
         ],
         pad1_square=False,
     )
@@ -1922,7 +1949,7 @@ CONNECTOR_SPECS |= {
         pad_positions_override=[
             *make_pad_group(PADS_25_4PWR, pad_base=0, x_offset=-23.4),
             *make_pad_group(PADS_25_4PWR, pad_base=25, x_offset=0.0),
-            *make_pad_group(PADS_12_4PWR, pad_base=50, x_offset=23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=50, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -1950,7 +1977,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-23.4),
             *make_pad_group(PADS_25_4PWR, pad_base=12, x_offset=0.0),
             *make_pad_group(PADS_25_4PWR, pad_base=37, x_offset=23.4),
         ],
@@ -2013,7 +2040,7 @@ CONNECTOR_SPECS |= {
         pad_positions_override=[
             *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-23.4),
             *make_pad_group(PADS_25_4PWR, pad_base=32, x_offset=0.0),
-            *make_pad_group(PADS_12_4PWR, pad_base=57, x_offset=23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=57, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -2041,7 +2068,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-30.48,
         ref_y=14.986,
         pad_positions_override=[
-            *make_pad_group(PADS_12_4PWR, pad_base=0, x_offset=-23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-23.4),
             *make_pad_group(PADS_27_8PWR, pad_base=12, x_offset=0.0),
             *make_pad_group(PADS_32_4PWR, pad_base=39, x_offset=23.4),
         ],
@@ -2073,7 +2100,7 @@ CONNECTOR_SPECS |= {
         pad_positions_override=[
             *make_pad_group(PADS_32_4PWR, pad_base=0, x_offset=-23.4),
             *make_pad_group(PADS_28_7PWR, pad_base=32, x_offset=0.0),
-            *make_pad_group(PADS_12_4PWR, pad_base=60, x_offset=23.4),
+            *make_pad_group(PADS_14_4PWR, pad_base=60, x_offset=23.4),
         ],
         pad1_square=False,
     )
@@ -2190,4 +2217,56 @@ CONNECTOR_SPECS |= {
         pad1_square=False,
     )
     for mpn in ["346960100"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=12,
+            width_right=12,
+            height_top=31,
+            height_bottom=5,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-1.27 * 7, 1.27, 3.05],
+            [1.27 * 7, 1.27, 3.05],
+        ]),
+        pad_size=1.6,
+        drill_size=1.2,
+        mpn_y=-33.274,
+        ref_y=5.842,
+        pad_positions_override=[
+            *make_pad_group(PADS_12, pad_base=0, x_offset=0.0),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["346910120"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=17.1,
+            width_right=17.1,
+            height_top=31,
+            height_bottom=5,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-13.97, 1.27, 3.05],
+            [13.97, 1.27, 3.05],
+        ]),
+        pad_size=1.9,
+        drill_size=1.48,
+        mpn_y=-33.274,
+        ref_y=5.842,
+        pad_positions_override=[
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=0.0),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["347730140"]
 }
