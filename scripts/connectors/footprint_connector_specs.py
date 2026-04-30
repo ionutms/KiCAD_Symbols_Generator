@@ -2470,3 +2470,61 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["347082020"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=28.5,
+            width_right=23.5,
+            height_top=31,
+            height_bottom=5,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-25.35, 1.27, 3.05],
+            [-2.45, 1.27, 3.05],
+            [2.5, 1.27, 3.05],
+            [20.25, 1.27, 3.05],
+        ]),
+        pad_size=1.9,
+        drill_size=1.48,
+        mpn_y=-33.274,
+        ref_y=5.842,
+        pad_positions_override=[
+            *make_pad_group(PADS_16, pad_base=0, x_offset=-13.85),
+            *make_pad_group(PADS_12, pad_base=16, x_offset=11.4),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["347082018"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=18.5,
+            width_right=33.5,
+            height_top=31,
+            height_bottom=5,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-15.25, 1.27, 3.05],
+            [-2.45, 1.27, 3.05],
+            [2.5, 1.27, 3.05],
+            [30.35, 1.27, 3.05],
+        ]),
+        pad_size=1.9,
+        drill_size=1.48,
+        mpn_y=-33.274,
+        ref_y=5.842,
+        pad_positions_override=[
+            *make_pad_group(PADS_8, pad_base=0, x_offset=-8.85),
+            *make_pad_group(PADS_20, pad_base=8, x_offset=16.4),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["347082040"]
+}
