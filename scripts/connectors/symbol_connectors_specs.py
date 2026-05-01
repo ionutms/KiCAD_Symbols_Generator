@@ -1367,7 +1367,7 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
             ("347082020", "Black & Black", [26], 2),
             ("347082018", "Black & Black", [28], 2),
             ("347082040", "Black & Black", [28], 2),
-            ("347082040", "Black & Black", [28], 2),
+            ("347082012", "Brown & Black", [30], 2),
         ]
     },
 }
