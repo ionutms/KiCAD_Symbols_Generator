@@ -2676,3 +2676,35 @@ CONNECTOR_SPECS |= {
     )
     for mpn in ["347083030"]
 }
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
+            width_left=37.5,
+            width_right=42.3,
+            height_top=31,
+            height_bottom=5,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-34.3, 1.27, 3.05],
+            [-16.53, 1.27, 3.05],
+            [-11.48, 1.27, 3.05],
+            [11.4, 1.27, 3.05],
+            [16.25, 1.27, 3.05],
+            [39.1, 1.27, 3.05],
+        ]),
+        pad_size=1.9,
+        drill_size=1.48,
+        mpn_y=-33.274,
+        ref_y=5.842,
+        pad_positions_override=[
+            *make_pad_group(PADS_12, pad_base=0, x_offset=-25.4),
+            *make_pad_group(PADS_16, pad_base=12, x_offset=0),
+            *make_pad_group(PADS_16, pad_base=28, x_offset=27.7),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["347083000"]
+}
