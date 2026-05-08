@@ -1186,7 +1186,7 @@ PADS_10_4PWR = [
 ]
 
 
-PADS_14_4PWR = [
+PADS_14_4PWR_v2 = [
     (
         [1, 1, 2, 2, 3, 3, 4, 4],
         0,
@@ -2384,6 +2384,42 @@ CONNECTOR_SPECS |= {
         show_pin1_indicator=False,
         pad_pitch=3.54,
         body_dimensions=BodyDimensions(
+            width_left=72,
+            width_right=72,
+            height_top=28,
+            height_bottom=14,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-70.2, -3.8, 2.9],
+            [-46.8, -3.8, 2.9],
+            [-23.4, -3.8, 2.9],
+            [0, -3.8, 2.9],
+            [23.4, -3.8, 2.9],
+            [46.8, -3.8, 2.9],
+            [70.2, -3.8, 2.9],
+        ]),
+        pad_size=1.5,
+        drill_size=1.1,
+        mpn_y=-30.48,
+        ref_y=14.986,
+        pad_positions_override=[
+            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=-58.5),
+            *make_pad_group(PADS_14_4PWR, pad_base=12, x_offset=-35.1),
+            *make_pad_group(PADS_14_4PWR, pad_base=24, x_offset=-11.7),
+            *make_pad_group(PADS_23_2PWR, pad_base=36, x_offset=11.7),
+            *make_pad_group(PADS_23_2PWR, pad_base=59, x_offset=35.1),
+            *make_pad_group(PADS_23_2PWR, pad_base=82, x_offset=58.5),
+        ],
+        pad1_square=False,
+    )
+    for mpn in ["2005066005", "2005066505"]
+}
+
+CONNECTOR_SPECS |= {
+    mpn: FootprintSpecs(
+        show_pin1_indicator=False,
+        pad_pitch=3.54,
+        body_dimensions=BodyDimensions(
             width_left=9.6,
             width_right=9.6,
             height_top=31,
@@ -2424,7 +2460,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-33.274,
         ref_y=5.842,
         pad_positions_override=[
-            *make_pad_group(PADS_10_4PWR, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_14_4PWR_v2, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -2476,7 +2512,7 @@ CONNECTOR_SPECS |= {
         mpn_y=-33.274,
         ref_y=5.842,
         pad_positions_override=[
-            *make_pad_group(PADS_14_4PWR, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_14_4PWR_v2, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
@@ -2789,7 +2825,7 @@ CONNECTOR_SPECS |= {
         ref_y=5.842,
         pad_positions_override=[
             *make_pad_group(PADS_20, pad_base=0, x_offset=-16.4),
-            *make_pad_group(PADS_14_4PWR, pad_base=20, x_offset=16.4),
+            *make_pad_group(PADS_14_4PWR_v2, pad_base=20, x_offset=16.4),
         ],
         pad1_square=False,
     )
