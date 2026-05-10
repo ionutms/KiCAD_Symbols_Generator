@@ -1202,6 +1202,47 @@ PADS_14_4PWR_v2 = [
 ]
 
 
+def make_mounting_holes_200502x(num_sections: int) -> list[list[float]]:
+    """Generate mounting hole triplets for the 200502x connector series.
+
+    Creates symmetrically spaced non-plated round mounting hole
+    triplets centered at x=0, with one more hole than the number
+    of sections. The result is intended to be unpacked with * into
+    the footprint_specs list of NonPlatedRoundMountingHoles.
+
+    All holes share the same y position and diameter, as defined
+    by the 200502x series specification:
+        - y = -3.8 mm
+        - diameter = 2.9 mm
+        - x spacing = 23.4 mm
+
+    Examples:
+        1 section  → 2 holes: [-11.7, 11.7]
+        2 sections → 3 holes: [-23.4, 0, 23.4]
+        3 sections → 4 holes: [-35.1, -11.7, 11.7, 35.1]
+
+    Args:
+        num_sections: Number of connector sections. Must be >= 1.
+            Determines the number of mounting holes, which equals
+            num_sections + 1.
+
+    Returns:
+        List of [x, y, diameter] triplets, evenly spaced at
+        23.4 mm intervals along the x axis.
+
+    """
+    spacing = 23.4
+    y = -3.8
+    diameter = 2.9
+
+    num_holes = num_sections + 1
+    half_span = (num_holes - 1) / 2
+    return [
+        [round((index - half_span) * spacing, 1), y, diameter]
+        for index in range(num_holes)
+    ]
+
+
 CONNECTOR_SPECS |= {
     mpn: FootprintSpecs(
         show_pin1_indicator=False,
@@ -1286,8 +1327,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1309,8 +1349,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1332,8 +1371,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1355,8 +1393,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1378,8 +1415,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1401,8 +1437,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1424,8 +1459,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1447,8 +1481,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1470,8 +1503,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1493,8 +1525,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1516,8 +1547,7 @@ CONNECTOR_SPECS |= {
             width_left=14, width_right=14, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
+            *make_mounting_holes_200502x(1),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1539,9 +1569,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1564,9 +1592,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1589,10 +1615,7 @@ CONNECTOR_SPECS |= {
             width_left=36.5, width_right=36.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1616,9 +1639,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1641,9 +1662,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1666,9 +1685,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1691,9 +1708,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1716,9 +1731,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1741,9 +1754,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1766,9 +1777,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1791,9 +1800,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1816,9 +1823,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1841,9 +1846,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1866,9 +1869,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1891,9 +1892,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1916,9 +1915,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1941,9 +1938,7 @@ CONNECTOR_SPECS |= {
             width_left=25.5, width_right=25.5, height_top=28, height_bottom=14
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1969,10 +1964,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -1999,10 +1991,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2029,9 +2018,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
+            *make_mounting_holes_200502x(2),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2060,10 +2047,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2090,10 +2074,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2120,10 +2101,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2150,10 +2128,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2180,10 +2155,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2210,10 +2182,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2240,11 +2209,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
+            *make_mounting_holes_200502x(4),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2272,10 +2237,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2302,10 +2264,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2332,10 +2291,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2362,10 +2318,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2392,10 +2345,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2422,10 +2372,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
+            *make_mounting_holes_200502x(3),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2452,13 +2399,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-70.2, -3.8, 2.9],
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
-            [70.2, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2488,11 +2429,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
+            *make_mounting_holes_200502x(4),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2520,13 +2457,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-70.2, -3.8, 2.9],
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
-            [70.2, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2556,11 +2487,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
+            *make_mounting_holes_200502x(4),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2588,13 +2515,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-70.2, -3.8, 2.9],
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
-            [70.2, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2624,12 +2545,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-58.5, -3.8, 2.9],
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
-            [58.5, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2658,12 +2574,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-58.5, -3.8, 2.9],
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
-            [58.5, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2692,12 +2603,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-58.5, -3.8, 2.9],
-            [-35.1, -3.8, 2.9],
-            [-11.7, -3.8, 2.9],
-            [11.7, -3.8, 2.9],
-            [35.1, -3.8, 2.9],
-            [58.5, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
@@ -2726,13 +2632,7 @@ CONNECTOR_SPECS |= {
             height_bottom=14,
         ),
         non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
-            [-70.2, -3.8, 2.9],
-            [-46.8, -3.8, 2.9],
-            [-23.4, -3.8, 2.9],
-            [0, -3.8, 2.9],
-            [23.4, -3.8, 2.9],
-            [46.8, -3.8, 2.9],
-            [70.2, -3.8, 2.9],
+            *make_mounting_holes_200502x(6),
         ]),
         pad_size=1.5,
         drill_size=1.1,
