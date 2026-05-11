@@ -2700,11 +2700,11 @@ CONNECTOR_SPECS |= {
         mpn_y=-33.274,
         ref_y=5.842,
         pad_positions_override=[
-            *make_pad_group(PADS_14_4PWR_v2, pad_base=0, x_offset=0.0),
+            *make_pad_group(PADS_10_4PWR, pad_base=0, x_offset=0.0),
         ],
         pad1_square=False,
     )
-    for mpn in ["346960100"]
+    for mpn in ["346960100", "346969100", "346960102", "346969102"]
 }
 
 CONNECTOR_SPECS |= {
