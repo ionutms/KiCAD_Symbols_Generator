@@ -2763,7 +2763,7 @@ CONNECTOR_SPECS |= {
         ],
         pad1_square=False,
     )
-    for mpn in ["347730140"]
+    for mpn in ["347730140", "347731140", "347738140", "347739140"]
 }
 
 CONNECTOR_SPECS |= {
