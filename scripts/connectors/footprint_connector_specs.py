@@ -861,6 +861,52 @@ CONNECTOR_SPECS: dict[str, FootprintSpecs] = {
         show_pin1_indicator=False,
         pad1_square=True,
     ),
+    "ARJM11D7-009-AB-EW2": FootprintSpecs(
+        pad_pitch=1.02,
+        row_pitch=1.78,
+        number_of_rows=1,
+        zig_zag=True,
+        body_dimensions=BodyDimensions(
+            width_left=10,
+            width_right=10,
+            height_top=11,
+            height_bottom=11,
+        ),
+        non_plated_round_mounting_holes=NonPlatedRoundMountingHoles([
+            [-5.715, 0, 3.25],
+            [5.715, 0, 3.25],
+        ]),
+        pad_positions_override=[
+            PadPosition(pad_number="1", x=-4.445, y=8.89),
+            PadPosition(pad_number="2", x=-3.175, y=6.35),
+            PadPosition(pad_number="3", x=-1.905, y=8.89),
+            PadPosition(pad_number="4", x=-0.635, y=6.35),
+            PadPosition(pad_number="5", x=0.635, y=8.89),
+            PadPosition(pad_number="6", x=1.905, y=6.35),
+            PadPosition(pad_number="7", x=3.175, y=8.89),
+            PadPosition(pad_number="8", x=4.445, y=6.35),
+            PadPosition(pad_number="12", x=-6.785, y=-4.57),
+            PadPosition(pad_number="11", x=-6.785, y=-2.54),
+            PadPosition(pad_number="9", x=6.785, y=-2.54),
+            PadPosition(pad_number="10", x=6.785, y=-4.57),
+            PadPosition(
+                pad_number="SH1",
+                x=-7.85,
+                y=3.05,
+                pad_size=2.1,
+                drill_size=1.6,
+            ),
+            PadPosition(
+                pad_number="SH2", x=7.85, y=3.05, pad_size=2.1, drill_size=1.6
+            ),
+        ],
+        pad_size=1.2,
+        drill_size=0.9,
+        mpn_y=-13.208,
+        ref_y=11.938,
+        show_pin1_indicator=False,
+        pad1_square=True,
+    ),
 }
 
 
@@ -2857,7 +2903,7 @@ CONNECTOR_SPECS |= {
         *["346910202", "346916202", "346919202", "346919266"],
         *["346910201", "346916201", "346919201", "346919256"],
         *["346910203", "346916203", "346919203", "346919276"],
-        ]
+    ]
 }
 
 CONNECTOR_SPECS |= {
