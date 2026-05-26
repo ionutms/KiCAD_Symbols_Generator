@@ -9,7 +9,93 @@
             (exclude_from_sim no)
             (in_bom yes)
             (on_board yes)
+        		(symbol "S_416131160802_0_0"
+
+        (pin passive line
+            (at -5.08 1.27 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
         
+        (pin passive line
+            (at -5.08 -1.27 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 -1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.54 1.27) (xy -1.27 1.27)
+                    (xy 1.27 2.54)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 1.27 1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 1.27) (xy 1.27 1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.54 -1.27) (xy -1.27 -1.27)
+                    (xy 1.27 0.0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)		)
+		(symbol "S_416131160802_1_0"
+		)
+
         (property "Reference" "S"
             (at 0 3.81 0)
             
@@ -149,90 +235,4 @@
                 (hide yes)
             )
         )
-        		(symbol "S_416131160802_0_0"
-
-        (pin passive line
-            (at -5.08 1.27 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at -5.08 -1.27 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "2"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 1.27 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 -1.27 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "3"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-			(polyline
-				(pts
-					(xy -2.54 1.27) (xy -1.27 1.27)
-                    (xy 1.27 2.54)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 1.27) (xy 1.27 1.27))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.27) (xy -1.27 -1.27)
-                    (xy 1.27 0.0)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)		)
-		(symbol "S_416131160802_1_0"
-		)
-))
+        ))

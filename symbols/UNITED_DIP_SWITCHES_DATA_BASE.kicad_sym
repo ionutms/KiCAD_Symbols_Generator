@@ -9,7 +9,52 @@
             (exclude_from_sim no)
             (in_bom yes)
             (on_board yes)
+        		(symbol "S_416131160801_0_0"
+
+        (pin passive line
+            (at -5.08 0.0 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
         
+        (pin passive line
+            (at 5.08 0.0 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+			(polyline
+				(pts
+					(xy -2.54 0.0) (xy -1.27 0.0)
+                    (xy 1.27 1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 0.0)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 1.27 0.0)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)		)
+		(symbol "S_416131160801_1_0"
+		)
+
         (property "Reference" "S"
             (at 0 2.54 0)
             
@@ -149,10 +194,16 @@
                 (hide yes)
             )
         )
-        		(symbol "S_416131160801_0_0"
+        )
+        (symbol "S_416131160802"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        		(symbol "S_416131160802_0_0"
 
         (pin passive line
-            (at -5.08 0.0 0)
+            (at -5.08 1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "1"(effects(font(size 1.27 1.27))))
@@ -160,47 +211,82 @@
         )
         
         (pin passive line
-            (at 5.08 0.0 180)
+            (at -5.08 -1.27 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "2"(effects(font(size 1.27 1.27))))
             
         )
         
+        (pin passive line
+            (at 5.08 1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 -1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
 			(polyline
 				(pts
-					(xy -2.54 0.0) (xy -1.27 0.0)
-                    (xy 1.27 1.27)
+					(xy -2.54 1.27) (xy -1.27 1.27)
+                    (xy 1.27 2.54)
 				)
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)
 			(circle
-				(center -1.27 0.0)
+				(center -1.27 1.27)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(circle
-				(center 1.27 0.0)
+				(center 1.27 1.27)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(polyline
-				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(pts (xy 2.54 1.27) (xy 1.27 1.27))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.54 -1.27) (xy -1.27 -1.27)
+                    (xy 1.27 0.0)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 1.27 -1.27)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)		)
-		(symbol "S_416131160801_1_0"
+		(symbol "S_416131160802_1_0"
 		)
-)
-        (symbol "S_416131160802"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
             (at 0 3.81 0)
             
@@ -340,10 +426,16 @@
                 (hide yes)
             )
         )
-        		(symbol "S_416131160802_0_0"
+        )
+        (symbol "S_416131160803"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        		(symbol "S_416131160803_0_0"
 
         (pin passive line
-            (at -5.08 1.27 0)
+            (at -5.08 2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "1"(effects(font(size 1.27 1.27))))
@@ -351,7 +443,7 @@
         )
         
         (pin passive line
-            (at -5.08 -1.27 0)
+            (at -5.08 0.0 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "2"(effects(font(size 1.27 1.27))))
@@ -359,80 +451,115 @@
         )
         
         (pin passive line
-            (at 5.08 1.27 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 -1.27 180)
+            (at -5.08 -2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "3"(effects(font(size 1.27 1.27))))
             
         )
         
+        (pin passive line
+            (at 5.08 2.54 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 0.0 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 -2.54 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
 			(polyline
 				(pts
-					(xy -2.54 1.27) (xy -1.27 1.27)
-                    (xy 1.27 2.54)
+					(xy -2.54 2.54) (xy -1.27 2.54)
+                    (xy 1.27 3.81)
 				)
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)
 			(circle
-				(center -1.27 1.27)
+				(center -1.27 2.54)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(circle
-				(center 1.27 1.27)
+				(center 1.27 2.54)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(polyline
-				(pts (xy 2.54 1.27) (xy 1.27 1.27))
+				(pts (xy 2.54 2.54) (xy 1.27 2.54))
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)
 			(polyline
 				(pts
-					(xy -2.54 -1.27) (xy -1.27 -1.27)
-                    (xy 1.27 0.0)
+					(xy -2.54 0.0) (xy -1.27 0.0)
+                    (xy 1.27 1.27)
 				)
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)
 			(circle
-				(center -1.27 -1.27)
+				(center -1.27 0.0)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(circle
-				(center 1.27 -1.27)
+				(center 1.27 0.0)
 				(radius 0.254)
 				(stroke (width 0) (type solid))
 				(fill (type outline))
 			)
 			(polyline
-				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+				(pts (xy 2.54 0.0) (xy 1.27 0.0))
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(polyline
+				(pts
+					(xy -2.54 -2.54) (xy -1.27 -2.54)
+                    (xy 1.27 -1.27)
+				)
+				(stroke (width 0) (type default))
+				(fill (type none))
+			)
+			(circle
+				(center -1.27 -2.54)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(circle
+				(center 1.27 -2.54)
+				(radius 0.254)
+				(stroke (width 0) (type solid))
+				(fill (type outline))
+			)
+			(polyline
+				(pts (xy 2.54 -2.54) (xy 1.27 -2.54))
 				(stroke (width 0) (type default))
 				(fill (type none))
 			)		)
-		(symbol "S_416131160802_1_0"
+		(symbol "S_416131160803_1_0"
 		)
-)
-        (symbol "S_416131160803"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
             (at 0 5.08 0)
             
@@ -572,279 +699,12 @@
                 (hide yes)
             )
         )
-        		(symbol "S_416131160803_0_0"
-
-        (pin passive line
-            (at -5.08 2.54 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
         )
-        
-        (pin passive line
-            (at -5.08 0.0 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "2"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at -5.08 -2.54 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "3"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 2.54 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "6"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 0.0 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "5"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 -2.54 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-			(polyline
-				(pts
-					(xy -2.54 2.54) (xy -1.27 2.54)
-                    (xy 1.27 3.81)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 2.54)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 2.54)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 2.54) (xy 1.27 2.54))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 0.0) (xy -1.27 0.0)
-                    (xy 1.27 1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 0.0)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 0.0)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 0.0) (xy 1.27 0.0))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 -2.54) (xy -1.27 -2.54)
-                    (xy 1.27 -1.27)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 -2.54)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 -2.54)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 -2.54) (xy 1.27 -2.54))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)		)
-		(symbol "S_416131160803_1_0"
-		)
-)
         (symbol "S_416131160804"
             (pin_names(offset 0.254))
             (exclude_from_sim no)
             (in_bom yes)
             (on_board yes)
-        
-        (property "Reference" "S"
-            (at 0 6.35 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Value" "416131160804"
-            (at 0 -6.35 0)
-            
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                
-            )
-        )
-        
-        (property "Footprint" "dip_switches_footprints:416131160804"
-            (at 0 -8.89 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160804.pdf"
-            (at 0 -11.43 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0 -13.97 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "MPN" "416131160804"
-            (at 0 -16.51 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Manufacturer" "Wurth Elektronik"
-            (at 0 -19.05 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Angle" "Vertical"
-            (at 0 -21.59 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Mounting Style" "Surface Mount"
-            (at 0 -24.13 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Number of Rows" "2"
-            (at 0 -26.669999999999998 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Pin Count" "4"
-            (at 0 -29.209999999999997 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Series" "416131160804"
-            (at 0 -31.749999999999996 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Symbol Name" "S_416131160804"
-            (at 0 -34.29 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160804"
-            (at 0 -36.83 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
         		(symbol "S_416131160804_0_0"
 
         (pin passive line
@@ -1013,15 +873,9 @@
 			)		)
 		(symbol "S_416131160804_1_0"
 		)
-)
-        (symbol "S_416131160805"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
-            (at 0 7.62 0)
+            (at 0 6.35 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1030,8 +884,8 @@
             )
         )
         
-        (property "Value" "416131160805"
-            (at 0 -7.62 0)
+        (property "Value" "416131160804"
+            (at 0 -6.35 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1040,8 +894,8 @@
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160805"
-            (at 0 -10.16 0)
+        (property "Footprint" "dip_switches_footprints:416131160804"
+            (at 0 -8.89 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1050,8 +904,8 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160805.pdf"
-            (at 0 -12.7 0)
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160804.pdf"
+            (at 0 -11.43 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1061,7 +915,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0 -15.24 0)
+            (at 0 -13.97 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1070,8 +924,8 @@
             )
         )
         
-        (property "MPN" "416131160805"
-            (at 0 -17.78 0)
+        (property "MPN" "416131160804"
+            (at 0 -16.51 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1081,7 +935,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0 -20.32 0)
+            (at 0 -19.05 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1091,7 +945,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0 -22.86 0)
+            (at 0 -21.59 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1101,7 +955,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0 -25.4 0)
+            (at 0 -24.13 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1111,7 +965,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0 -27.939999999999998 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1120,8 +974,8 @@
             )
         )
         
-        (property "Pin Count" "5"
-            (at 0 -30.479999999999997 0)
+        (property "Pin Count" "4"
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1130,8 +984,8 @@
             )
         )
         
-        (property "Series" "416131160805"
-            (at 0 -33.019999999999996 0)
+        (property "Series" "416131160804"
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1140,8 +994,8 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160805"
-            (at 0 -35.559999999999995 0)
+        (property "Symbol Name" "S_416131160804"
+            (at 0 -34.29 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1150,8 +1004,8 @@
             )
         )
         
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160805"
-            (at 0 -38.099999999999994 0)
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160804"
+            (at 0 -36.83 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1159,6 +1013,12 @@
                 (hide yes)
             )
         )
+        )
+        (symbol "S_416131160805"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
         		(symbol "S_416131160805_0_0"
 
         (pin passive line
@@ -1368,15 +1228,9 @@
 			)		)
 		(symbol "S_416131160805_1_0"
 		)
-)
-        (symbol "S_416131160806"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
-            (at 0 8.89 0)
+            (at 0 7.62 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1385,8 +1239,8 @@
             )
         )
         
-        (property "Value" "416131160806"
-            (at 0 -8.89 0)
+        (property "Value" "416131160805"
+            (at 0 -7.62 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1395,8 +1249,8 @@
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160806"
-            (at 0 -11.43 0)
+        (property "Footprint" "dip_switches_footprints:416131160805"
+            (at 0 -10.16 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1405,8 +1259,8 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160806.pdf"
-            (at 0 -13.97 0)
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160805.pdf"
+            (at 0 -12.7 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1416,7 +1270,7 @@
         )
         
         (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
-            (at 0 -16.51 0)
+            (at 0 -15.24 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1425,8 +1279,8 @@
             )
         )
         
-        (property "MPN" "416131160806"
-            (at 0 -19.05 0)
+        (property "MPN" "416131160805"
+            (at 0 -17.78 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1436,7 +1290,7 @@
         )
         
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0 -21.59 0)
+            (at 0 -20.32 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1446,7 +1300,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0 -24.13 0)
+            (at 0 -22.86 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1456,7 +1310,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0 -26.669999999999998 0)
+            (at 0 -25.4 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1466,7 +1320,7 @@
         )
         
         (property "Number of Rows" "2"
-            (at 0 -29.209999999999997 0)
+            (at 0 -27.939999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1475,8 +1329,8 @@
             )
         )
         
-        (property "Pin Count" "6"
-            (at 0 -31.749999999999996 0)
+        (property "Pin Count" "5"
+            (at 0 -30.479999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1485,8 +1339,8 @@
             )
         )
         
-        (property "Series" "416131160806"
-            (at 0 -34.29 0)
+        (property "Series" "416131160805"
+            (at 0 -33.019999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1495,8 +1349,8 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160806"
-            (at 0 -36.83 0)
+        (property "Symbol Name" "S_416131160805"
+            (at 0 -35.559999999999995 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1505,8 +1359,8 @@
             )
         )
         
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160806"
-            (at 0 -39.37 0)
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160805"
+            (at 0 -38.099999999999994 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -1514,6 +1368,12 @@
                 (hide yes)
             )
         )
+        )
+        (symbol "S_416131160806"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
         		(symbol "S_416131160806_0_0"
 
         (pin passive line
@@ -1764,15 +1624,9 @@
 			)		)
 		(symbol "S_416131160806_1_0"
 		)
-)
-        (symbol "S_416131160808"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
-            (at 0 11.43 0)
+            (at 0 8.89 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -1781,17 +1635,27 @@
             )
         )
         
-        (property "Value" "416131160808"
+        (property "Value" "416131160806"
+            (at 0 -8.89 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "dip_switches_footprints:416131160806"
             (at 0 -11.43 0)
-            
+            (show_name)
             (effects
                 (font(size 1.27 1.27))
                 (justify left)
-                
+                (hide yes)
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160808"
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160806.pdf"
             (at 0 -13.97 0)
             (show_name)
             (effects
@@ -1801,7 +1665,7 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160808.pdf"
+        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
             (at 0 -16.51 0)
             (show_name)
             (effects
@@ -1811,7 +1675,7 @@
             )
         )
         
-        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
+        (property "MPN" "416131160806"
             (at 0 -19.05 0)
             (show_name)
             (effects
@@ -1821,7 +1685,7 @@
             )
         )
         
-        (property "MPN" "416131160808"
+        (property "Manufacturer" "Wurth Elektronik"
             (at 0 -21.59 0)
             (show_name)
             (effects
@@ -1831,7 +1695,7 @@
             )
         )
         
-        (property "Manufacturer" "Wurth Elektronik"
+        (property "Mounting Angle" "Vertical"
             (at 0 -24.13 0)
             (show_name)
             (effects
@@ -1841,7 +1705,7 @@
             )
         )
         
-        (property "Mounting Angle" "Vertical"
+        (property "Mounting Style" "Surface Mount"
             (at 0 -26.669999999999998 0)
             (show_name)
             (effects
@@ -1851,7 +1715,7 @@
             )
         )
         
-        (property "Mounting Style" "Surface Mount"
+        (property "Number of Rows" "2"
             (at 0 -29.209999999999997 0)
             (show_name)
             (effects
@@ -1861,7 +1725,7 @@
             )
         )
         
-        (property "Number of Rows" "2"
+        (property "Pin Count" "6"
             (at 0 -31.749999999999996 0)
             (show_name)
             (effects
@@ -1871,7 +1735,7 @@
             )
         )
         
-        (property "Pin Count" "8"
+        (property "Series" "416131160806"
             (at 0 -34.29 0)
             (show_name)
             (effects
@@ -1881,7 +1745,7 @@
             )
         )
         
-        (property "Series" "416131160808"
+        (property "Symbol Name" "S_416131160806"
             (at 0 -36.83 0)
             (show_name)
             (effects
@@ -1891,7 +1755,7 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160808"
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160806"
             (at 0 -39.37 0)
             (show_name)
             (effects
@@ -1900,16 +1764,12 @@
                 (hide yes)
             )
         )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160808"
-            (at 0 -41.91 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
         )
+        (symbol "S_416131160808"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
         		(symbol "S_416131160808_0_0"
 
         (pin passive line
@@ -2242,15 +2102,9 @@
 			)		)
 		(symbol "S_416131160808_1_0"
 		)
-)
-        (symbol "S_416131160810"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
-            (at 0 13.97 0)
+            (at 0 11.43 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2259,17 +2113,27 @@
             )
         )
         
-        (property "Value" "416131160810"
+        (property "Value" "416131160808"
+            (at 0 -11.43 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "dip_switches_footprints:416131160808"
             (at 0 -13.97 0)
-            
+            (show_name)
             (effects
                 (font(size 1.27 1.27))
                 (justify left)
-                
+                (hide yes)
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160810"
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160808.pdf"
             (at 0 -16.51 0)
             (show_name)
             (effects
@@ -2279,7 +2143,7 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160810.pdf"
+        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
             (at 0 -19.05 0)
             (show_name)
             (effects
@@ -2289,7 +2153,7 @@
             )
         )
         
-        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
+        (property "MPN" "416131160808"
             (at 0 -21.59 0)
             (show_name)
             (effects
@@ -2299,7 +2163,7 @@
             )
         )
         
-        (property "MPN" "416131160810"
+        (property "Manufacturer" "Wurth Elektronik"
             (at 0 -24.13 0)
             (show_name)
             (effects
@@ -2309,7 +2173,7 @@
             )
         )
         
-        (property "Manufacturer" "Wurth Elektronik"
+        (property "Mounting Angle" "Vertical"
             (at 0 -26.669999999999998 0)
             (show_name)
             (effects
@@ -2319,7 +2183,7 @@
             )
         )
         
-        (property "Mounting Angle" "Vertical"
+        (property "Mounting Style" "Surface Mount"
             (at 0 -29.209999999999997 0)
             (show_name)
             (effects
@@ -2329,7 +2193,7 @@
             )
         )
         
-        (property "Mounting Style" "Surface Mount"
+        (property "Number of Rows" "2"
             (at 0 -31.749999999999996 0)
             (show_name)
             (effects
@@ -2339,7 +2203,7 @@
             )
         )
         
-        (property "Number of Rows" "2"
+        (property "Pin Count" "8"
             (at 0 -34.29 0)
             (show_name)
             (effects
@@ -2349,7 +2213,7 @@
             )
         )
         
-        (property "Pin Count" "10"
+        (property "Series" "416131160808"
             (at 0 -36.83 0)
             (show_name)
             (effects
@@ -2359,7 +2223,7 @@
             )
         )
         
-        (property "Series" "416131160810"
+        (property "Symbol Name" "S_416131160808"
             (at 0 -39.37 0)
             (show_name)
             (effects
@@ -2369,7 +2233,7 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160810"
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160808"
             (at 0 -41.91 0)
             (show_name)
             (effects
@@ -2378,16 +2242,12 @@
                 (hide yes)
             )
         )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160810"
-            (at 0 -44.449999999999996 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
         )
+        (symbol "S_416131160810"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
         		(symbol "S_416131160810_0_0"
 
         (pin passive line
@@ -2802,15 +2662,9 @@
 			)		)
 		(symbol "S_416131160810_1_0"
 		)
-)
-        (symbol "S_416131160812"
-            (pin_names(offset 0.254))
-            (exclude_from_sim no)
-            (in_bom yes)
-            (on_board yes)
-        
+
         (property "Reference" "S"
-            (at 0 16.51 0)
+            (at 0 13.97 0)
             
             (effects
                 (font(size 1.27 1.27))
@@ -2819,17 +2673,27 @@
             )
         )
         
-        (property "Value" "416131160812"
+        (property "Value" "416131160810"
+            (at 0 -13.97 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "dip_switches_footprints:416131160810"
             (at 0 -16.51 0)
-            
+            (show_name)
             (effects
                 (font(size 1.27 1.27))
                 (justify left)
-                
+                (hide yes)
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160812"
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160810.pdf"
             (at 0 -19.05 0)
             (show_name)
             (effects
@@ -2839,7 +2703,7 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160812.pdf"
+        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
             (at 0 -21.59 0)
             (show_name)
             (effects
@@ -2849,7 +2713,7 @@
             )
         )
         
-        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
+        (property "MPN" "416131160810"
             (at 0 -24.13 0)
             (show_name)
             (effects
@@ -2859,18 +2723,8 @@
             )
         )
         
-        (property "MPN" "416131160812"
-            (at 0 -26.67 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
-        )
-        
         (property "Manufacturer" "Wurth Elektronik"
-            (at 0 -29.21 0)
+            (at 0 -26.669999999999998 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2880,7 +2734,7 @@
         )
         
         (property "Mounting Angle" "Vertical"
-            (at 0 -31.75 0)
+            (at 0 -29.209999999999997 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2890,7 +2744,7 @@
         )
         
         (property "Mounting Style" "Surface Mount"
-            (at 0 -34.29 0)
+            (at 0 -31.749999999999996 0)
             (show_name)
             (effects
                 (font(size 1.27 1.27))
@@ -2900,6 +2754,16 @@
         )
         
         (property "Number of Rows" "2"
+            (at 0 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "10"
             (at 0 -36.83 0)
             (show_name)
             (effects
@@ -2909,7 +2773,7 @@
             )
         )
         
-        (property "Pin Count" "12"
+        (property "Series" "416131160810"
             (at 0 -39.37 0)
             (show_name)
             (effects
@@ -2919,7 +2783,7 @@
             )
         )
         
-        (property "Series" "416131160812"
+        (property "Symbol Name" "S_416131160810"
             (at 0 -41.91 0)
             (show_name)
             (effects
@@ -2929,7 +2793,7 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160812"
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160810"
             (at 0 -44.449999999999996 0)
             (show_name)
             (effects
@@ -2938,16 +2802,12 @@
                 (hide yes)
             )
         )
-        
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160812"
-            (at 0 -46.989999999999995 0)
-            (show_name)
-            (effects
-                (font(size 1.27 1.27))
-                (justify left)
-                (hide yes)
-            )
         )
+        (symbol "S_416131160812"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
         		(symbol "S_416131160812_0_0"
 
         (pin passive line
@@ -3444,4 +3304,422 @@
 			)		)
 		(symbol "S_416131160812_1_0"
 		)
-))
+
+        (property "Reference" "S"
+            (at 0 16.51 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "416131160812"
+            (at 0 -16.51 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "dip_switches_footprints:416131160812"
+            (at 0 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160812.pdf"
+            (at 0 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
+            (at 0 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "416131160812"
+            (at 0 -26.67 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Wurth Elektronik"
+            (at 0 -29.21 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 0 -31.75 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Surface Mount"
+            (at 0 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 0 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "12"
+            (at 0 -39.37 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "416131160812"
+            (at 0 -41.91 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_416131160812"
+            (at 0 -44.449999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160812"
+            (at 0 -46.989999999999995 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        )
+        (symbol "S_CAS-D20TA"
+            (pin_names(offset 0.254))
+            (exclude_from_sim no)
+            (in_bom yes)
+            (on_board yes)
+        		(symbol "S_CAS-D20TA_0_0"
+
+        (pin passive line
+            (at -5.08 2.54 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "2"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 3.81 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "3"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at -5.08 -2.54 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 -1.27 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "6"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at 5.08 -3.81 180)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+            (polyline
+                (pts
+                    (xy -2.54 2.54) (xy -1.27 2.54)
+                )
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (circle
+                (center -1.27 2.54)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 3.81)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 1.27)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (polyline
+                (pts (xy -1.27 2.54) (xy 1.27 3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 3.81) (xy 1.27 3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 1.27) (xy 1.27 1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts
+                    (xy -2.54 -2.54) (xy -1.27 -2.54)
+                )
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (circle
+                (center -1.27 -2.54)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 -1.27)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 -3.81)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (polyline
+                (pts (xy -1.27 -2.54) (xy 1.27 -1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 -3.81) (xy 1.27 -3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )		)
+		(symbol "S_CAS-D20TA_1_0"
+		)
+
+        (property "Reference" "S"
+            (at 0 6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Value" "CAS-D20TA"
+            (at 0 -6.35 0)
+            
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                
+            )
+        )
+        
+        (property "Footprint" "dip_switches_footprints:CAS-D20TA"
+            (at 0 -8.89 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Datasheet" "https://www.nidec-components.com/e/catalog/switch/cas.pdf"
+            (at 0 -11.43 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Description" "Nidec Components Vertical mounting,  Surface Mount, "
+            (at 0 -13.97 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "MPN" "CAS-D20TA"
+            (at 0 -16.51 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Manufacturer" "Nidec Components"
+            (at 0 -19.05 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Angle" "Vertical"
+            (at 0 -21.59 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Mounting Style" "Surface Mount"
+            (at 0 -24.13 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Number of Rows" "2"
+            (at 0 -26.669999999999998 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Pin Count" "2"
+            (at 0 -29.209999999999997 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Series" "CAS-D20TA"
+            (at 0 -31.749999999999996 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Symbol Name" "S_CAS-D20TA"
+            (at 0 -34.29 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/CAS-D20TA"
+            (at 0 -36.83 0)
+            (show_name)
+            (effects
+                (font(size 1.27 1.27))
+                (justify left)
+                (hide yes)
+            )
+        )
+        ))

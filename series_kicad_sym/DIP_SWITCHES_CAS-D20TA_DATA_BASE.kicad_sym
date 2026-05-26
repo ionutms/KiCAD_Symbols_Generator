@@ -4,23 +4,15 @@
             (generator kicad_symbol_editor)
             (generator_version 8.0)
         
-        (symbol "S_416131160804"
+        (symbol "S_CAS-D20TA"
             (pin_names(offset 0.254))
             (exclude_from_sim no)
             (in_bom yes)
             (on_board yes)
-        		(symbol "S_416131160804_0_0"
+        		(symbol "S_CAS-D20TA_0_0"
 
         (pin passive line
-            (at -5.08 3.81 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "1"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at -5.08 1.27 0)
+            (at -5.08 2.54 0)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "2"(effects(font(size 1.27 1.27))))
@@ -28,7 +20,7 @@
         )
         
         (pin passive line
-            (at -5.08 -1.27 0)
+            (at 5.08 3.81 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
             (number "3"(effects(font(size 1.27 1.27))))
@@ -36,26 +28,18 @@
         )
         
         (pin passive line
-            (at -5.08 -3.81 0)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "4"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
-            (at 5.08 3.81 180)
-            (length 2.54)
-            (name ""(effects(font(size 1.27 1.27))))
-            (number "8"(effects(font(size 1.27 1.27))))
-            
-        )
-        
-        (pin passive line
             (at 5.08 1.27 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
-            (number "7"(effects(font(size 1.27 1.27))))
+            (number "1"(effects(font(size 1.27 1.27))))
+            
+        )
+        
+        (pin passive line
+            (at -5.08 -2.54 0)
+            (length 2.54)
+            (name ""(effects(font(size 1.27 1.27))))
+            (number "5"(effects(font(size 1.27 1.27))))
             
         )
         
@@ -71,111 +55,91 @@
             (at 5.08 -3.81 180)
             (length 2.54)
             (name ""(effects(font(size 1.27 1.27))))
-            (number "5"(effects(font(size 1.27 1.27))))
+            (number "4"(effects(font(size 1.27 1.27))))
             
         )
         
-			(polyline
-				(pts
-					(xy -2.54 3.81) (xy -1.27 3.81)
-                    (xy 1.27 5.08)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 3.81)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 3.81)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 3.81) (xy 1.27 3.81))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 1.27) (xy -1.27 1.27)
-                    (xy 1.27 2.54)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 1.27) (xy 1.27 1.27))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 -1.27) (xy -1.27 -1.27)
-                    (xy 1.27 0.0)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 -1.27)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 -1.27) (xy 1.27 -1.27))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(polyline
-				(pts
-					(xy -2.54 -3.81) (xy -1.27 -3.81)
-                    (xy 1.27 -2.54)
-				)
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)
-			(circle
-				(center -1.27 -3.81)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(circle
-				(center 1.27 -3.81)
-				(radius 0.254)
-				(stroke (width 0) (type solid))
-				(fill (type outline))
-			)
-			(polyline
-				(pts (xy 2.54 -3.81) (xy 1.27 -3.81))
-				(stroke (width 0) (type default))
-				(fill (type none))
-			)		)
-		(symbol "S_416131160804_1_0"
+            (polyline
+                (pts
+                    (xy -2.54 2.54) (xy -1.27 2.54)
+                )
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (circle
+                (center -1.27 2.54)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 3.81)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 1.27)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (polyline
+                (pts (xy -1.27 2.54) (xy 1.27 3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 3.81) (xy 1.27 3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 1.27) (xy 1.27 1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts
+                    (xy -2.54 -2.54) (xy -1.27 -2.54)
+                )
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (circle
+                (center -1.27 -2.54)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 -1.27)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 -3.81)
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (polyline
+                (pts (xy -1.27 -2.54) (xy 1.27 -1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 -1.27) (xy 1.27 -1.27))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 -3.81) (xy 1.27 -3.81))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )		)
+		(symbol "S_CAS-D20TA_1_0"
 		)
 
         (property "Reference" "S"
@@ -188,7 +152,7 @@
             )
         )
         
-        (property "Value" "416131160804"
+        (property "Value" "CAS-D20TA"
             (at 0 -6.35 0)
             
             (effects
@@ -198,7 +162,7 @@
             )
         )
         
-        (property "Footprint" "dip_switches_footprints:416131160804"
+        (property "Footprint" "dip_switches_footprints:CAS-D20TA"
             (at 0 -8.89 0)
             (show_name)
             (effects
@@ -208,7 +172,7 @@
             )
         )
         
-        (property "Datasheet" "https://www.we-online.com/components/products/datasheet/416131160804.pdf"
+        (property "Datasheet" "https://www.nidec-components.com/e/catalog/switch/cas.pdf"
             (at 0 -11.43 0)
             (show_name)
             (effects
@@ -218,7 +182,7 @@
             )
         )
         
-        (property "Description" "Wurth Elektronik Vertical mounting,  Surface Mount, "
+        (property "Description" "Nidec Components Vertical mounting,  Surface Mount, "
             (at 0 -13.97 0)
             (show_name)
             (effects
@@ -228,7 +192,7 @@
             )
         )
         
-        (property "MPN" "416131160804"
+        (property "MPN" "CAS-D20TA"
             (at 0 -16.51 0)
             (show_name)
             (effects
@@ -238,7 +202,7 @@
             )
         )
         
-        (property "Manufacturer" "Wurth Elektronik"
+        (property "Manufacturer" "Nidec Components"
             (at 0 -19.05 0)
             (show_name)
             (effects
@@ -278,7 +242,7 @@
             )
         )
         
-        (property "Pin Count" "4"
+        (property "Pin Count" "2"
             (at 0 -29.209999999999997 0)
             (show_name)
             (effects
@@ -288,7 +252,7 @@
             )
         )
         
-        (property "Series" "416131160804"
+        (property "Series" "CAS-D20TA"
             (at 0 -31.749999999999996 0)
             (show_name)
             (effects
@@ -298,7 +262,7 @@
             )
         )
         
-        (property "Symbol Name" "S_416131160804"
+        (property "Symbol Name" "S_CAS-D20TA"
             (at 0 -34.29 0)
             (show_name)
             (effects
@@ -308,7 +272,7 @@
             )
         )
         
-        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/416131160804"
+        (property "Trustedparts Search" "https://www.trustedparts.com/en/search/CAS-D20TA"
             (at 0 -36.83 0)
             (show_name)
             (effects
