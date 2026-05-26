@@ -3074,6 +3074,114 @@ def write_dip_switch_symbol_drawing(
     symbol_file.write("\t\t)\n")
 
 
+def write_dip_switch_symbol_spdt_drawing(
+    *,
+    symbol_file: TextIO,
+    symbol_name: str,
+    component_data: dict[str, str],
+    number_of_rows: int,
+    specs_dict: dict,
+    anti_clockwise_numbering: bool = False,
+) -> None:
+    """Write the drawing for a SPDT dip switch symbol.
+
+    Creates KiCad symbol definition with appropriate pin layout and
+    SPDT dip switch graphical representation including switch
+    contacts and actuator mechanism.
+
+    Args:
+        symbol_file: File object for writing the symbol file.
+        symbol_name: Name identifier for the symbol.
+        component_data: Dictionary containing component specifications.
+        number_of_rows: Number of pin rows in the component layout.
+        specs_dict: Dictionary containing component specifications.
+        anti_clockwise_numbering: Use anti-clockwise pin numbering scheme.
+
+    """
+    pin_count = int(component_data.get("Pin Count", "2"))
+    num_switches = pin_count
+    pin_spacing = 2.54 * 2
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
+
+    override_pins = get_override_pins_specs(
+        component_data.get("Series", ""),
+        specs_dict,
+    )
+
+    if override_pins:
+        for pin_num, x_pos, y_pos, angle in override_pins:
+            write_pin(symbol_file, x_pos, y_pos, angle, pin_num)
+    else:
+        start_y = (num_switches - 1) * pin_spacing / 2
+
+        for i in range(num_switches):
+            y_offset = start_y - i * pin_spacing
+
+            no_pin = i * 3 + 3
+            com_pin = i * 3 + 2
+            nc_pin = i * 3 + 1
+
+            # Common pin on left
+            write_pin(symbol_file, -5.08, y_offset, 0, str(com_pin))
+            # NO pin on right (upper)
+            write_pin(symbol_file, 5.08, y_offset + 1.27, 180, str(no_pin))
+            # NC pin on right (lower)
+            write_pin(symbol_file, 5.08, y_offset - 1.27, 180, str(nc_pin))
+
+    start_y = (num_switches - 1) * pin_spacing / 2
+
+    for switch_idx in range(num_switches):
+        y_offset = start_y - switch_idx * pin_spacing
+
+        symbol_file.write(f"""
+            (polyline
+                (pts
+                    (xy -2.54 {y_offset}) (xy -1.27 {y_offset})
+                )
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (circle
+                (center -1.27 {y_offset})
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 {y_offset + 1.27})
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (circle
+                (center 1.27 {y_offset - 1.27})
+                (radius 0.254)
+                (stroke (width 0) (type solid))
+                (fill (type outline))
+            )
+            (polyline
+                (pts (xy -1.27 {y_offset}) (xy 1.27 {y_offset + 1.27}))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 {y_offset + 1.27}) (xy 1.27 {y_offset + 1.27}))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )
+            (polyline
+                (pts (xy 2.54 {y_offset - 1.27}) (xy 1.27 {y_offset - 1.27}))
+                (stroke (width 0) (type default))
+                (fill (type none))
+            )""")
+
+    symbol_file.write("\t\t)\n")
+
+    symbol_file.write(f'\t\t(symbol "{symbol_name}_1_0"\n')
+    symbol_file.write("\t\t)\n")
+
+
 def write_slide_switch_symbol_drawing(
     *,
     symbol_file: TextIO,

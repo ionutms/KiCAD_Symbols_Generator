@@ -196,4 +196,15 @@ SYMBOLS_SPECS: dict[str, SeriesSpec] = {
         )
         for switches_number in _SWITCHES_NUMBER
     },
+    "CAS-D20TA": SeriesSpec(
+        manufacturer="Nidec Components",
+        base_series="CAS-D20TA",
+        footprint_name="CAS-D20TA",
+        datasheet="https://www.nidec-components.com/e/catalog/switch/cas.pdf",
+        pin_count=2,
+        trustedparts_link="https://www.trustedparts.com/en/search",
+        number_of_rows=2,
+        mounting_angle="Vertical",
+        mounting_style="Surface Mount",
+    ),
 }

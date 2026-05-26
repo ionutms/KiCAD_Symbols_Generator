@@ -203,17 +203,26 @@ TACTILE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
             row_pitch=7.62,
             number_of_rows=2,
             body_dimensions=BodyDimensions(
-                width_left=2,
-                width_right=2,
-                height_top=4.8,
-                height_bottom=4.8,
+                width_left=2, width_right=2, height_top=4.8, height_bottom=4.8
             ),
             pad_size=[0.76, 1.27],
-            drill_size=0.787,
             mpn_y=5.588,
             ref_y=-5.588,
             mirror_x_pin_numbering=True,
         )
         for switches_number in _SWITCHES_NUMBER
     },
+    "CAS-D20TA": FootprintSpecs(
+        model_name="CAS-D20TA",
+        pad_pitch=1.75,
+        row_pitch=3.7,
+        number_of_rows=2,
+        body_dimensions=BodyDimensions(
+            width_left=2, width_right=2, height_top=3, height_bottom=3
+        ),
+        pad_size=[1, 1.6],
+        mpn_y=3.81,
+        ref_y=-3.81,
+        mirror_x_pin_numbering=True,
+    ),
 }
