@@ -79,7 +79,6 @@ def write_component(
             symbol_file=symbol_file,
             symbol_name=symbol_name,
             component_data=component_data,
-            number_of_rows=number_of_rows,
             specs_dict=SYMBOLS_SPECS,
         )
         extra_offset = (
@@ -87,8 +86,6 @@ def write_component(
             if row_count == 1
             else ((pin_count / row_count) + 1)
         )
-
-        print(extra_offset)
     symbol_utils.write_properties(
         symbol_file, component_data, property_order, 0.5 + extra_offset
     )

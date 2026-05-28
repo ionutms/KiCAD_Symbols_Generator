@@ -3079,9 +3079,7 @@ def write_dip_switch_symbol_spdt_drawing(
     symbol_file: TextIO,
     symbol_name: str,
     component_data: dict[str, str],
-    number_of_rows: int,
     specs_dict: dict,
-    anti_clockwise_numbering: bool = False,
 ) -> None:
     """Write the drawing for a SPDT dip switch symbol.
 
@@ -3093,9 +3091,7 @@ def write_dip_switch_symbol_spdt_drawing(
         symbol_file: File object for writing the symbol file.
         symbol_name: Name identifier for the symbol.
         component_data: Dictionary containing component specifications.
-        number_of_rows: Number of pin rows in the component layout.
         specs_dict: Dictionary containing component specifications.
-        anti_clockwise_numbering: Use anti-clockwise pin numbering scheme.
 
     """
     pin_count = int(component_data.get("Pin Count", "2"))
@@ -3115,18 +3111,15 @@ def write_dip_switch_symbol_spdt_drawing(
     else:
         start_y = (num_switches - 1) * pin_spacing / 2
 
-        for i in range(num_switches):
-            y_offset = start_y - i * pin_spacing
+        for switch_index in range(num_switches):
+            y_offset = start_y - switch_index * pin_spacing
 
-            no_pin = i * 3 + 3
-            com_pin = i * 3 + 2
-            nc_pin = i * 3 + 1
+            no_pin = switch_index * 3 + 3
+            com_pin = switch_index * 3 + 2
+            nc_pin = switch_index * 3 + 1
 
-            # Common pin on left
             write_pin(symbol_file, -5.08, y_offset, 0, str(com_pin))
-            # NO pin on right (upper)
             write_pin(symbol_file, 5.08, y_offset + 1.27, 180, str(no_pin))
-            # NC pin on right (lower)
             write_pin(symbol_file, 5.08, y_offset - 1.27, 180, str(nc_pin))
 
     start_y = (num_switches - 1) * pin_spacing / 2
