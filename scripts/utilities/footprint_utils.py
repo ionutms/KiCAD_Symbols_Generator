@@ -7,7 +7,27 @@ silkscreen lines, and component properties.
 
 from __future__ import annotations
 
-from uuid import uuid4
+from uuid import UUID, uuid5
+
+_KICAD_UUID_NAMESPACE = UUID("7a3f2e1d-bc94-4c8a-9f05-d6e8b1234567")
+
+
+def make_uuid(seed: str) -> str:
+    """Return a deterministic UUID derived from *seed*.
+
+    Using uuid5 (SHA-1 based) with a fixed namespace ensures the same seed
+    always produces the same UUID, so regenerating footprint files does not
+    produce spurious git diffs.
+
+    Args:
+        seed: A string that uniquely identifies this element within the
+            footprint (e.g. ``"thru_hole_pad:1:-3.81:3.81"``).
+
+    Returns:
+        Lowercase hyphenated UUID string.
+
+    """
+    return str(uuid5(_KICAD_UUID_NAMESPACE, seed))
 
 
 def generate_header(model_name: str) -> str:
@@ -82,7 +102,7 @@ def generate_courtyard(width: float, height: float) -> str:
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"courtyard:{width}:{height}")}")
         )
         """
 
@@ -109,7 +129,7 @@ def generate_circular_courtyard(diameter: float) -> str:
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"circular_courtyard:{diameter}")}")
         )
         """
 
@@ -135,7 +155,7 @@ def generate_circular_silkscreen(diameter: float) -> str:
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"circular_silkscreen:{diameter}")}")
         )
         """
 
@@ -161,7 +181,7 @@ def generate_circular_fab(diameter: float) -> str:
             (stroke (width 0.0254) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"circular_fab:{diameter}")}")
         )
         """
 
@@ -188,7 +208,7 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
             (end {x + line_length / 2} {y})
             (stroke (width {line_width}) (type solid))
             (layer "F.SilkS")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"plus_silkscreen_h:{x}:{y}")}")
         )
         """
 
@@ -199,7 +219,7 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
             (end {x} {y + line_length / 2})
             (stroke (width {line_width}) (type solid))
             (layer "F.SilkS")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"plus_silkscreen_v:{x}:{y}")}")
         )
         """
 
@@ -229,7 +249,7 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
             (stroke (width {line_width}) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"plus_fab_h:{x}:{y}")}")
         )
         """
 
@@ -241,7 +261,7 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
             (stroke (width {line_width}) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"plus_fab_v:{x}:{y}")}")
         )
         """
 
@@ -284,7 +304,7 @@ def generate_chamfered_shape(
             (stroke (width {stroke_width}) (type solid))
             (fill none)
             (layer "{layer}")
-            (uuid "{uuid4()}"))
+            (uuid "{make_uuid(f"chamfered:{width}:{height}:{layer}")}"))
         """
 
 
@@ -316,7 +336,7 @@ def generate_courtyard_2(
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"courtyard2:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
         )
         """
 
@@ -349,7 +369,7 @@ def generate_user_comment_courtyard(
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "Cmts.User")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"user_comment:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
         )
         """
 
@@ -382,7 +402,7 @@ def generate_silkscreen_rectangle(
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"silkscreen_rect:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
         )
         """
 
@@ -415,7 +435,7 @@ def generate_fabrication_rectangle(
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"fab_rect:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
         )
         """
 
@@ -461,7 +481,7 @@ def generate_silkscreen_lines(
                 (end -{silkscreen_x} {symbol}{half_height})
                 (stroke (width 0.1524) (type solid))
                 (layer "F.SilkS")
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"silkscreen_line:{height}:{center_x}:{pad_width}:{symbol}")}")
             )
             """
     return shapes
@@ -491,7 +511,7 @@ def generate_fab_rectangle(width: float, height: float) -> str:
             (stroke (width 0.0254) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"fab_rectangle:{width}:{height}")}")
         )
         """
 
@@ -536,7 +556,7 @@ def generate_fab_diode(
             (stroke (width 0.1) (type solid))
             (fill solid)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"fab_diode:{width}:{height}:{anode_center_x}:{cathode_center_x}")}")
         )
         """
 
@@ -574,28 +594,28 @@ def generate_properties(
             (at 0 {ref_y} 0)
             (unlocked yes)
             (layer "F.SilkS")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"prop_ref:{ref_y}:{value}")}")
             {font_props}
         )
         (property "Value" "{value}"
             (at 0 {ref} 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"prop_val:{ref_y}:{value}")}")
             {font_props}
         )
         (property "Footprint" ""
             (at 0 0 0)
             (layer "F.Fab")
             (hide yes)
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"prop_fp:{ref_y}:{value}")}")
             {font_props}
         )
         (fp_text user "${{REFERENCE}}"
             (at 0 {ref + 1.27} 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"prop_text:{ref_y}:{value}")}")
             {font_props}
         )
         """
@@ -655,7 +675,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
             (stroke (width 0.1524) (type solid))
             (fill solid)
             (layer {layer})
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"pin1_ind:{body_width}:{pins_per_side}:{pitch_y}:{layer}")}")
         )
         """)
 
@@ -760,7 +780,7 @@ def generate_pads(  # noqa: D417, PLR0913
                 (layers "F.Cu" "F.Paste" "F.Mask")
                 (roundrect_rratio 0.25)
                 {zone_connect}
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"pad:{pad_number}:{x_pos}:{y_pos}")}")
             )
             """)
 
@@ -816,7 +836,7 @@ def generate_thermal_pad(
             (layers "F.Cu" "F.Paste" "F.Mask")
             (roundrect_rratio 0.05)
             {zone_connect}
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"thermal_pad:{pad_number}:{pad_x[index]}:{pad_y[index]}")}")
         )
         """)
 
@@ -886,7 +906,7 @@ def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"zig_zag_thru:{pad_label}:{xpos[pin_index]:.3f}:{ypos:.3f}")}")
             )
             """
         pads.append(pad)
@@ -962,7 +982,7 @@ def generate_thru_hole_pads(  # noqa: PLR0913
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"thru_hole_pad:{pad_label}:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
             )
             """
         pads.append(pad)
@@ -1021,7 +1041,7 @@ def generate_custom_thru_hole_pads(
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"custom_thru:{pad_pos.pad_number}:{pad_pos.x:.3f}:{pad_pos.y:.3f}")}")
             )
             """
         pads.append(pad)
@@ -1108,7 +1128,7 @@ def generate_surface_mount_pads(  # noqa: PLR0913
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
                 (roundrect_rratio 0.25)
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"smd_pad:{pin_number}:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
             )
             """
         pads.append(pad)
@@ -1168,7 +1188,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
                 (roundrect_rratio 0.25)
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"zig_zag_smd:{xpos[pin_index]:.3f}:{ypos:.3f}")}")
             )
             """
         pads.append(pad)
@@ -1225,7 +1245,7 @@ def generate_non_plated_through_holes(  # noqa: PLR0913
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
                 (layers "F&B.Cu" "*.Mask")
-                (uuid "{uuid4()}")
+                (uuid "{make_uuid(f"np_thru:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
             )
             """
         pads.append(pad)
@@ -1254,7 +1274,7 @@ def generate_non_plated_through_hole(
             (size {diameter} {diameter})
             (drill {diameter})
             (layers "F&B.Cu" "*.Mask")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"np_thru_hole:{x}:{y}:{diameter}")}")
         )
         """
     pads.append(pad)
@@ -1285,7 +1305,7 @@ def generate_oval_plated_through_hole(
             (size {pad_size_x} {pad_size_y})
             (drill oval {dril_size_x} {dril_size_y})
             (layers "F&B.Cu" "*.Mask")
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"oval_plated:{x}:{y}:{pad_size_x}:{pad_size_y}")}")
         )
         """
     pads.append(pad)
@@ -1314,7 +1334,7 @@ def generate_mounting_pads(
             (size {pad_size_x} {pad_size_y})
             (layers "F.Cu" "F.Paste")
             (roundrect_rratio 0.25)
-            (uuid "{uuid4()}")
+            (uuid "{make_uuid(f"mounting_pad:{x}:{y}:{pad_size_x}:{pad_size_y}")}")
         )
         """
     pads.append(pad)
