@@ -329,6 +329,9 @@ def generate_courtyard_2(
         str: KiCad format courtyard outline specification.
 
     """
+    uid = make_uuid(
+        f"courtyard2:{width_left}:{width_right}:{height_top}:{height_bottom}"
+    )
     return f"""
         (fp_rect
             (start -{width_left} {height_bottom})
@@ -336,7 +339,7 @@ def generate_courtyard_2(
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "{make_uuid(f"courtyard2:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
+            (uuid "{uid}")
         )
         """
 
@@ -362,6 +365,10 @@ def generate_user_comment_courtyard(
         str: KiCad format courtyard outline specification.
 
     """
+    uid = make_uuid(
+        f"user_comment:{width_left}:{width_right}"
+        f":{height_top}:{height_bottom}"
+    )
     return f"""
         (fp_rect
             (start -{width_left} {height_bottom})
@@ -369,7 +376,7 @@ def generate_user_comment_courtyard(
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "Cmts.User")
-            (uuid "{make_uuid(f"user_comment:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
+            (uuid "{uid}")
         )
         """
 
@@ -395,6 +402,10 @@ def generate_silkscreen_rectangle(
         str: KiCad format courtyard outline specification.
 
     """
+    uid = make_uuid(
+        f"silkscreen_rect:{width_left}:{width_right}"
+        f":{height_top}:{height_bottom}"
+    )
     return f"""
         (fp_rect
             (start -{width_left} {height_bottom})
@@ -402,7 +413,7 @@ def generate_silkscreen_rectangle(
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
-            (uuid "{make_uuid(f"silkscreen_rect:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
+            (uuid "{uid}")
         )
         """
 
@@ -428,6 +439,9 @@ def generate_fabrication_rectangle(
         str: KiCad format courtyard outline specification.
 
     """
+    uid = make_uuid(
+        f"fab_rect:{width_left}:{width_right}:{height_top}:{height_bottom}"
+    )
     return f"""
         (fp_rect
             (start -{width_left} {height_bottom})
@@ -435,7 +449,7 @@ def generate_fabrication_rectangle(
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.Fab")
-            (uuid "{make_uuid(f"fab_rect:{width_left}:{width_right}:{height_top}:{height_bottom}")}")
+            (uuid "{uid}")
         )
         """
 
@@ -475,13 +489,16 @@ def generate_silkscreen_lines(
     shapes: str = ""
 
     for symbol in ["-", ""]:
+        uid = make_uuid(
+            f"silkscreen_line:{height}:{center_x}:{pad_width}:{symbol}"
+        )
         shapes += f"""
             (fp_line
                 (start {silkscreen_x} {symbol}{half_height})
                 (end -{silkscreen_x} {symbol}{half_height})
                 (stroke (width 0.1524) (type solid))
                 (layer "F.SilkS")
-                (uuid "{make_uuid(f"silkscreen_line:{height}:{center_x}:{pad_width}:{symbol}")}")
+                (uuid "{uid}")
             )
             """
     return shapes
@@ -537,6 +554,9 @@ def generate_fab_diode(
         str: KiCad formatted fabrication layer diode polygon.
 
     """
+    uid = make_uuid(
+        f"fab_diode:{width}:{height}:{anode_center_x}:{cathode_center_x}"
+    )
     return f"""
         (fp_poly
             (pts
@@ -556,7 +576,7 @@ def generate_fab_diode(
             (stroke (width 0.1) (type solid))
             (fill solid)
             (layer "F.Fab")
-            (uuid "{make_uuid(f"fab_diode:{width}:{height}:{anode_center_x}:{cathode_center_x}")}")
+            (uuid "{uid}")
         )
         """
 
@@ -667,6 +687,9 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     )
 
     radius = 0.2
+    uid = make_uuid(
+        f"pin1_ind:{body_width}:{pins_per_side}:{pitch_y}:{layer}"
+    )
 
     shapes.append(f"""
         (fp_circle
@@ -675,7 +698,7 @@ def generate_pin_1_indicator(  # noqa: PLR0913
             (stroke (width 0.1524) (type solid))
             (fill solid)
             (layer {layer})
-            (uuid "{make_uuid(f"pin1_ind:{body_width}:{pins_per_side}:{pitch_y}:{layer}")}")
+            (uuid "{uid}")
         )
         """)
 
@@ -829,6 +852,9 @@ def generate_thermal_pad(
             if int(pad_number) in solid_pad_numbers
             else ""
         )
+        uid = make_uuid(
+            f"thermal_pad:{pad_number}:{pad_x[index]}:{pad_y[index]}"
+        )
         pads.append(f"""
         (pad "{pad_number}" smd roundrect
             (at {pad_x[index]} {pad_y[index]})
@@ -836,7 +862,7 @@ def generate_thermal_pad(
             (layers "F.Cu" "F.Paste" "F.Mask")
             (roundrect_rratio 0.05)
             {zone_connect}
-            (uuid "{make_uuid(f"thermal_pad:{pad_number}:{pad_x[index]}:{pad_y[index]}")}")
+            (uuid "{uid}")
         )
         """)
 
@@ -898,15 +924,17 @@ def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
         )
         # Check if pad_label is "1" and pad1_square is True to make it square
         pad_type = "rect" if (pad_label == "1" and pad1_square) else "circle"
+        x = xpos[pin_index]
+        uid = make_uuid(f"zig_zag_thru:{pad_label}:{x:.3f}:{ypos:.3f}")
         pad = f"""
             (pad "{pad_label}" thru_hole {pad_type}
-                (at {xpos[pin_index]:.3f} {ypos:.3f})
+                (at {x:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{make_uuid(f"zig_zag_thru:{pad_label}:{xpos[pin_index]:.3f}:{ypos:.3f}")}")
+                (uuid "{uid}")
             )
             """
         pads.append(pad)
@@ -974,15 +1002,17 @@ def generate_thru_hole_pads(  # noqa: PLR0913
             if pin_numbers is not None
             else str(pin_num + 1)
         )
+        x = final_xpos[pin_index]
+        uid = make_uuid(f"thru_hole_pad:{pad_label}:{x:.3f}:{ypos:.3f}")
         pad = f"""
             (pad "{pad_label}" thru_hole {pad_type}
-                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (at {x:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{make_uuid(f"thru_hole_pad:{pad_label}:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
+                (uuid "{uid}")
             )
             """
         pads.append(pad)
@@ -1033,6 +1063,10 @@ def generate_custom_thru_hole_pads(
             else drill_size
         )
 
+        uid = make_uuid(
+            f"custom_thru:{pad_pos.pad_number}"
+            f":{pad_pos.x:.3f}:{pad_pos.y:.3f}"
+        )
         pad = f"""
             (pad "{pad_pos.pad_number}" thru_hole {pad_type}
                 (at {pad_pos.x:.3f} {pad_pos.y:.3f})
@@ -1041,7 +1075,7 @@ def generate_custom_thru_hole_pads(
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "{make_uuid(f"custom_thru:{pad_pos.pad_number}:{pad_pos.x:.3f}:{pad_pos.y:.3f}")}")
+                (uuid "{uid}")
             )
             """
         pads.append(pad)
@@ -1122,13 +1156,15 @@ def generate_surface_mount_pads(  # noqa: PLR0913
             # Default sequential numbering
             pin_number = pin_num + 1
 
+        x = final_xpos[pin_index]
+        uid = make_uuid(f"smd_pad:{pin_number}:{x:.3f}:{ypos:.3f}")
         pad = f"""
             (pad "{pin_number}" smd roundrect
-                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (at {x:.3f} {ypos:.3f})
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
                 (roundrect_rratio 0.25)
-                (uuid "{make_uuid(f"smd_pad:{pin_number}:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
+                (uuid "{uid}")
             )
             """
         pads.append(pad)
@@ -1188,7 +1224,9 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
                 (size {pad_size[0]} {pad_size[1]})
                 (layers "F.Cu" "F.Paste")
                 (roundrect_rratio 0.25)
-                (uuid "{make_uuid(f"zig_zag_smd:{xpos[pin_index]:.3f}:{ypos:.3f}")}")
+                (uuid "{
+            make_uuid(f"zig_zag_smd:{xpos[pin_index]:.3f}:{ypos:.3f}")
+        }")
             )
             """
         pads.append(pad)
@@ -1239,13 +1277,15 @@ def generate_non_plated_through_holes(  # noqa: PLR0913
         if row_count == 1:
             ypos = row_pitch
 
+        x = final_xpos[pin_index]
+        uid = make_uuid(f"np_thru:{x:.3f}:{ypos:.3f}")
         pad = f"""
             (pad None np_thru_hole circle
-                (at {final_xpos[pin_index]:.3f} {ypos:.3f})
+                (at {x:.3f} {ypos:.3f})
                 (size {pad_size} {pad_size})
                 (drill {drill_size})
                 (layers "F&B.Cu" "*.Mask")
-                (uuid "{make_uuid(f"np_thru:{final_xpos[pin_index]:.3f}:{ypos:.3f}")}")
+                (uuid "{uid}")
             )
             """
         pads.append(pad)
@@ -1299,13 +1339,14 @@ def generate_oval_plated_through_hole(
         mounting_holes_specs
     )
 
+    uid = make_uuid(f"oval_plated:{x}:{y}:{pad_size_x}:{pad_size_y}")
     pad = f"""
         (pad "" thru_hole oval
             (at {x} {y})
             (size {pad_size_x} {pad_size_y})
             (drill oval {dril_size_x} {dril_size_y})
             (layers "F&B.Cu" "*.Mask")
-            (uuid "{make_uuid(f"oval_plated:{x}:{y}:{pad_size_x}:{pad_size_y}")}")
+            (uuid "{uid}")
         )
         """
     pads.append(pad)
@@ -1328,13 +1369,14 @@ def generate_mounting_pads(
 
     x, y, pad_size_x, pad_size_y = mounting_pads_specs
 
+    uid = make_uuid(f"mounting_pad:{x}:{y}:{pad_size_x}:{pad_size_y}")
     pad = f"""
         (pad "" smd roundrect
             (at {x} {y})
             (size {pad_size_x} {pad_size_y})
             (layers "F.Cu" "F.Paste")
             (roundrect_rratio 0.25)
-            (uuid "{make_uuid(f"mounting_pad:{x}:{y}:{pad_size_x}:{pad_size_y}")}")
+            (uuid "{uid}")
         )
         """
     pads.append(pad)
