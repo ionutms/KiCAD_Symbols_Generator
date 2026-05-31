@@ -62,6 +62,8 @@ def generate_footprint(  # noqa: C901
         if footprint_specs.pad_properties is not None:
             pads = footprint_utils.generate_custom_thru_hole_pads(
                 footprint_specs.pad_properties,
+                footprint_specs.pad_size,
+                footprint_specs.drill_size,
             )
         else:
             pads = footprint_utils.generate_thru_hole_pads(

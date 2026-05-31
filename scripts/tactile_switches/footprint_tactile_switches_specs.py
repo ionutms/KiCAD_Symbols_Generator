@@ -133,7 +133,7 @@ class Pad(NamedTuple):
 
     """
 
-    name: str
+    pad_number: str
     x: float
     y: float
     pad_size: float
@@ -270,14 +270,42 @@ TACTILE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
             ref_y=-5.588,
             mirror_x_pin_numbering=True,
             pad_properties=[
-                Pad(name="1", x=2.54, y=2.25, pad_size=2, drill_size=1.2),
-                Pad(name="2", x=-2.54, y=2.25, pad_size=2, drill_size=1.2),
-                Pad(name="3", x=2.54, y=-2.25, pad_size=2, drill_size=1.2),
-                Pad(name="4", x=-2.54, y=-2.25, pad_size=2, drill_size=1.2),
-                Pad(name="5", x=0, y=3.15, pad_size=2, drill_size=1.2),
-                Pad(name="6", x=0, y=-3.15, pad_size=2, drill_size=1.2),
-                Pad(name="7", x=5.84, y=2.54, pad_size=2, drill_size=1.2),
-                Pad(name="8", x=5.84, y=-2.54, pad_size=2, drill_size=1.2),
+                Pad(
+                    pad_number="1", x=2.54, y=2.25, pad_size=2, drill_size=1.2
+                ),
+                Pad(
+                    pad_number="2",
+                    x=-2.54,
+                    y=2.25,
+                    pad_size=2,
+                    drill_size=1.2,
+                ),
+                Pad(
+                    pad_number="3",
+                    x=2.54,
+                    y=-2.25,
+                    pad_size=2,
+                    drill_size=1.2,
+                ),
+                Pad(
+                    pad_number="4",
+                    x=-2.54,
+                    y=-2.25,
+                    pad_size=2,
+                    drill_size=1.2,
+                ),
+                Pad(pad_number="5", x=0, y=3.15, pad_size=2, drill_size=1.2),
+                Pad(pad_number="6", x=0, y=-3.15, pad_size=2, drill_size=1.2),
+                Pad(
+                    pad_number="7", x=5.84, y=2.54, pad_size=2, drill_size=1.2
+                ),
+                Pad(
+                    pad_number="8",
+                    x=5.84,
+                    y=-2.54,
+                    pad_size=2,
+                    drill_size=1.2,
+                ),
             ],
         )
         for color in _TS28_COLORS
@@ -301,12 +329,34 @@ TACTILE_SWITCHES_SPECS: dict[str, FootprintSpecs] = {
             mirror_x_pin_numbering=True,
             non_plated_mounting_holes=[[0, 4.4, 1.8], [0, -4.4, 1.8]],
             pad_properties=[
-                Pad(name="1", x=6.2, y=2.5, pad_size=2.4, drill_size=1.4),
-                Pad(name="2", x=-6.2, y=2.5, pad_size=2.4, drill_size=1.4),
-                Pad(name="3", x=6.2, y=-2.5, pad_size=2.4, drill_size=1.4),
-                Pad(name="4", x=-6.2, y=-2.5, pad_size=2.4, drill_size=1.4),
-                Pad(name="5", x=0, y=6.6, pad_size=2.3, drill_size=1.3),
-                Pad(name="6", x=0, y=-6.6, pad_size=2.3, drill_size=1.3),
+                Pad(
+                    pad_number="1", x=6.2, y=2.5, pad_size=2.4, drill_size=1.4
+                ),
+                Pad(
+                    pad_number="2",
+                    x=-6.2,
+                    y=2.5,
+                    pad_size=2.4,
+                    drill_size=1.4,
+                ),
+                Pad(
+                    pad_number="3",
+                    x=6.2,
+                    y=-2.5,
+                    pad_size=2.4,
+                    drill_size=1.4,
+                ),
+                Pad(
+                    pad_number="4",
+                    x=-6.2,
+                    y=-2.5,
+                    pad_size=2.4,
+                    drill_size=1.4,
+                ),
+                Pad(pad_number="5", x=0, y=6.6, pad_size=2.3, drill_size=1.3),
+                Pad(
+                    pad_number="6", x=0, y=-6.6, pad_size=2.3, drill_size=1.3
+                ),
             ],
         )
         for color in _TS29_COLORS
