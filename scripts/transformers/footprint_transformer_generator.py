@@ -42,7 +42,6 @@ def generate_footprint(
                 (at {pad_property.x} {pad_property.y})
                 (size {pad_property.pad_size} {pad_property.pad_size})
                 (layers "F.Cu" "F.Paste" "F.Mask")
-                (uuid "{footprint_utils.uuid4()}")
             )
             """
             pads.append(pad)
