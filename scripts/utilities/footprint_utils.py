@@ -52,7 +52,7 @@ def generate_header(model_name: str) -> str:
 def associate_3d_model(
     file_path: str,
     file_name: str,
-    hide: bool = False,  # noqa: FBT001, FBT002
+    hide: bool = False,
 ) -> str:
     """Generate the 3D model section for a KiCad footprint.
 
@@ -197,11 +197,9 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
         str: KiCad format plus sign specification for silkscreen
 
     """
-    # Define dimensions for the plus sign (twice as big)
-    line_length = 1.0  # Length of each line of the plus sign (was 0.5)
-    line_width = 0.1524  # Width of the line
+    line_length = 1.0
+    line_width = 0.1524
 
-    # Horizontal line
     horizontal_line = f"""
         (fp_line
             (start {x - line_length / 2} {y})
@@ -212,7 +210,6 @@ def generate_plus_sign_silkscreen(x: float, y: float) -> str:
         )
         """
 
-    # Vertical line
     vertical_line = f"""
         (fp_line
             (start {x} {y - line_length / 2})
@@ -237,11 +234,9 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
         str: KiCad format plus sign specification for fabrication layer
 
     """
-    # Define dimensions for the plus sign (twice as big)
-    line_length = 1.0  # Length of each line of the plus sign (was 0.5)
-    line_width = 0.0254  # Width of the line
+    line_length = 1.0
+    line_width = 0.0254
 
-    # Horizontal line
     horizontal_line = f"""
         (fp_line
             (start {x - line_length / 2} {y})
@@ -253,7 +248,6 @@ def generate_plus_sign_fab(x: float, y: float) -> str:
         )
         """
 
-    # Vertical line
     vertical_line = f"""
         (fp_line
             (start {x} {y - line_length / 2})
@@ -641,15 +635,15 @@ def generate_properties(
         """
 
 
-def generate_pin_1_indicator(  # noqa: PLR0913
-    body_width: float,  # Width of the component body
+def generate_pin_1_indicator(
+    body_width: float,
     pins_per_side: float = 1,
     pitch_y: float = 0,
     layer: str = "F.SilkS",
-    mirror_y_coordonate: bool = False,  # noqa: FBT001, FBT002
-    mirror_x_coordonate: bool = False,  # noqa: FBT001, FBT002
-    margin_offset: float = 0.4,  # Distance from body edge
-    custom_pin_1_y: float | None = None,  # Custom y coordinate for pin 1
+    mirror_y_coordonate: bool = False,
+    mirror_x_coordonate: bool = False,
+    margin_offset: float = 0.4,
+    custom_pin_1_y: float | None = None,
 ) -> str:
     """Generate the pin 1 indicator for a component.
 
@@ -671,7 +665,6 @@ def generate_pin_1_indicator(  # noqa: PLR0913
     """
     shapes = []
 
-    # Use custom pin 1 y coordinate if provided, otherwise calculate it
     if custom_pin_1_y is not None:
         circle_y = custom_pin_1_y
     else:
@@ -725,12 +718,10 @@ def calculate_pad_positions(
 
     positions = []
 
-    # Left side pads (top to bottom)
     for pin_index in range(pins_per_side):
         y_pos = -total_height / 2 + pin_index * pad_pitch_y
         positions.append((-pad_center_x, y_pos))
 
-    # Right side pads (bottom to top)
     for pin_index in range(pins_per_side):
         y_pos = total_height / 2 - pin_index * pad_pitch_y
         positions.append((pad_center_x, y_pos))
@@ -738,15 +729,15 @@ def calculate_pad_positions(
     return positions
 
 
-def generate_pads(  # noqa: D417, PLR0913
+def generate_pads(
     pad_width: float,
     pad_height: float,
     pad_center_x: float,
     pad_pitch_y: float = 0,
     pins_per_side: int = 1,
-    pin_numbers: list = None,  # noqa: RUF013
-    reverse_pin_numbering: bool = False,  # noqa: FBT001, FBT002
-    solid_pad_numbers: list[int] | None = None,  # noqa: RUF013
+    pin_numbers: list = None,
+    reverse_pin_numbering: bool = False,
+    solid_pad_numbers: list[int] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
 
@@ -757,6 +748,7 @@ def generate_pads(  # noqa: D417, PLR0913
         pad_pitch_y: Distance between adjacent pads
         pins_per_side: Number of pins on each side
         pin_numbers: List of custom pin numbers
+        reverse_pin_numbering: Whether to reverse the default pin numbering
         solid_pad_numbers:
             List of pad numbers that should have solid connection to zones
 
@@ -771,14 +763,11 @@ def generate_pads(  # noqa: D417, PLR0913
         pins_per_side,
     )
 
-    # Determine pin numbering
     if pin_numbers is None:
-        # Default: use sequential numbering from 1
         pin_numbers = list(range(1, len(pad_positions) + 1))
         if reverse_pin_numbering:
             pin_numbers = list(reversed(pin_numbers))
 
-    # Validate that we have enough custom pin numbers
     if len(pin_numbers) != len(pad_positions):
         msg = (
             f"Number of pin numbers ({len(pin_numbers)}) "
@@ -786,7 +775,6 @@ def generate_pads(  # noqa: D417, PLR0913
         )
         raise ValueError(msg)
 
-    # Default to empty list if solid_pad_numbers is None
     if solid_pad_numbers is None:
         solid_pad_numbers = []
 
@@ -816,7 +804,7 @@ def generate_thermal_pad(
     pad_x: float | list[float],
     pad_y: list[float],
     thermal_pad_numbers: list[int],
-    solid_pad_numbers: list[int] | None = None,  # noqa: RUF013
+    solid_pad_numbers: list[int] | None = None,
 ) -> str:
     """Generate the thermal pads section of the footprint.
 
@@ -833,7 +821,6 @@ def generate_thermal_pad(
         str: KiCad formatted thermal pad definitions
 
     """
-    # Convert single values to lists if needed
     if isinstance(pad_width, (int, float)):
         pad_width = [pad_width] * len(thermal_pad_numbers)
     if isinstance(pad_heigh, (int, float)):
@@ -841,7 +828,6 @@ def generate_thermal_pad(
     if isinstance(pad_x, (int, float)):
         pad_x = [pad_x] * len(thermal_pad_numbers)
 
-    # Default to empty list if solid_pad_numbers is None
     if solid_pad_numbers is None:
         solid_pad_numbers = []
 
@@ -869,14 +855,14 @@ def generate_thermal_pad(
     return "\n".join(pads)
 
 
-def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
+def generate_zig_zag_thru_hole_pads(
     pin_count: int,
     pad_pitch: float,
     pad_size: float,
     drill_size: float,
     start_pos: float,
     row_pitch: float,
-    mirror_y_position: bool = False,  # noqa: FBT001, FBT002
+    mirror_y_position: bool = False,
     pin_numbers: list[str] | None = None,
     pad1_square: bool = True,
 ) -> str:
@@ -901,7 +887,6 @@ def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
     xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
 
     pads = []
-    # Validate custom numbering if provided
     if pin_numbers is not None and len(pin_numbers) != pin_count:
         msg = (
             f"Number of pin numbers ({len(pin_numbers)}) "
@@ -922,7 +907,6 @@ def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
             if pin_numbers is not None
             else str(pin_num + 1)
         )
-        # Check if pad_label is "1" and pad1_square is True to make it square
         pad_type = "rect" if (pad_label == "1" and pad1_square) else "circle"
         x = xpos[pin_index]
         uid = make_uuid(f"zig_zag_thru:{pad_label}:{x:.3f}:{ypos:.3f}")
@@ -941,7 +925,7 @@ def generate_zig_zag_thru_hole_pads(  # noqa: PLR0913
     return "\n".join(pads)
 
 
-def generate_thru_hole_pads(  # noqa: PLR0913
+def generate_thru_hole_pads(
     pin_count: int,
     pad_pitch: float,
     pad_size: float,
@@ -973,13 +957,11 @@ def generate_thru_hole_pads(  # noqa: PLR0913
     ]
 
     final_xpos = xpos
-    if row_count == 2:  # noqa: PLR2004
-        # duplicate each position
+    if row_count == 2:
         final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
     total_pins = pin_count * row_count
 
-    # Prepare custom numbering if provided
     if pin_numbers is not None:
         if len(pin_numbers) != total_pins:
             msg = (
@@ -1042,21 +1024,17 @@ def generate_custom_thru_hole_pads(
     """
     pads = []
     for pad_pos in pad_positions:
-        # Check if this is pad "1" to make it square
         is_pad_1 = pad_pos.pad_number == "1"
         pad_type = "rect" if (is_pad_1 and pad1_square) else "circle"
 
-        # Use custom pad size if provided, otherwise use default
         current_pad_size = (
             pad_pos.pad_size if pad_pos.pad_size is not None else pad_size
         )
-        # Handle both single value and list formats
         if isinstance(current_pad_size, (int, float)):
             size_x = size_y = current_pad_size
         else:
             size_x, size_y = current_pad_size[0], current_pad_size[1]
 
-        # Use custom drill size if provided, otherwise use default
         current_drill_size = (
             pad_pos.drill_size
             if pad_pos.drill_size is not None
@@ -1082,15 +1060,15 @@ def generate_custom_thru_hole_pads(
     return "\n".join(pads)
 
 
-def generate_surface_mount_pads(  # noqa: PLR0913
+def generate_surface_mount_pads(
     pin_count: int,
     pad_pitch: float,
     pad_size: list[float],
     start_pos: float,
     row_pitch: float,
     row_count: int,
-    mirror_x_pin_numbering: bool,  # noqa: FBT001
-    anti_clockwise_numbering: bool = False,  # noqa: FBT001
+    mirror_x_pin_numbering: bool,
+    anti_clockwise_numbering: bool = False,
     pin_numbers: list[str] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
@@ -1116,14 +1094,12 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     ]
 
     final_xpos = xpos
-    if row_count == 2:  # noqa: PLR2004
-        # duplicate each position
+    if row_count == 2:
         final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
     pads = []
     total_pins = pin_count * row_count
 
-    # Validate custom numbering if provided
     if pin_numbers is not None and len(pin_numbers) != total_pins:
         msg = (
             f"Number of pin numbers ({len(pin_numbers)}) "
@@ -1142,18 +1118,13 @@ def generate_surface_mount_pads(  # noqa: PLR0913
         if pin_numbers is not None:
             pin_number = pin_numbers[pin_index]
         elif anti_clockwise_numbering and row_count == 2:
-            # Anti-clockwise numbering for dual row
             if pin_index % 2 == 0:
-                # Bottom row: 1, 2, 3, ... (left to right)
                 pin_number = (pin_index // 2) + 1
             else:
-                # Top row: ..., 6, 5, 4 (right to left)
                 pin_number = total_pins - (pin_index // 2)
         elif anti_clockwise_numbering and row_count == 1:
-            # Single row anti-clockwise: reverse order
             pin_number = total_pins - pin_index
         else:
-            # Default sequential numbering
             pin_number = pin_num + 1
 
         x = final_xpos[pin_index]
@@ -1171,13 +1142,13 @@ def generate_surface_mount_pads(  # noqa: PLR0913
     return "\n".join(pads)
 
 
-def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
+def generate_zig_zag_surface_mount_pads(
     pin_count: int,
     pad_pitch: float,
     pad_size: list[float],
     start_pos: float,
     row_pitch: float,
-    mirror_y_position: bool = False,  # noqa: FBT001, FBT002
+    mirror_y_position: bool = False,
     pin_numbers: list[str] | None = None,
 ) -> str:
     """Generate the pads section of the footprint.
@@ -1198,7 +1169,6 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     xpos = [start_pos + (pin_num * pad_pitch) for pin_num in range(pin_count)]
 
     pads = []
-    # Validate custom numbering if provided
     if pin_numbers is not None and len(pin_numbers) != pin_count:
         msg = (
             f"Number of pin numbers ({len(pin_numbers)}) "
@@ -1233,7 +1203,7 @@ def generate_zig_zag_surface_mount_pads(  # noqa: PLR0913
     return "\n".join(pads)
 
 
-def generate_non_plated_through_holes(  # noqa: PLR0913
+def generate_non_plated_through_holes(
     pin_count: int,
     pad_pitch: float,
     pad_size: float,
@@ -1263,8 +1233,7 @@ def generate_non_plated_through_holes(  # noqa: PLR0913
     ]
 
     final_xpos = xpos
-    if row_count == 2:  # noqa: PLR2004
-        # duplicate each position
+    if row_count == 2:
         final_xpos = [x_position for x_position in xpos for _ in range(2)]
 
     pads = []

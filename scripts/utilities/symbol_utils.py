@@ -73,7 +73,6 @@ def get_all_properties(
     """
     all_properties = set()
 
-    # Priority properties that should always come first
     priority_properties = [
         "Reference",
         "Value",
@@ -81,15 +80,11 @@ def get_all_properties(
         "Datasheet",
     ]
 
-    # Collect all unique properties
     for component in component_data_list:
         all_properties.update(component.keys())
 
-    # Create final sorted list:
-    # 1. Start with priority properties (if they exist in the data)
     result = [prop for prop in priority_properties if prop in all_properties]
 
-    # 2. Add remaining properties in alphabetical order
     remaining_props = sorted(
         prop for prop in all_properties if prop not in priority_properties
     )
@@ -98,15 +93,15 @@ def get_all_properties(
     return result
 
 
-def write_property(  # noqa: PLR0913
+def write_property(
     symbol_file: TextIO,
     property_name: str,
     property_value: str,
     x_offset: float,
     y_offset: float,
     font_size: float,
-    show_name: bool,  # noqa: FBT001
-    hide: bool,  # noqa: FBT001
+    show_name: bool,
+    hide: bool,
 ) -> None:
     """Write a single property for a symbol.
 
@@ -282,7 +277,6 @@ def write_capacitor_symbol_drawing(
         )
     """)
 
-    # Write pins
     write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
     write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
 
@@ -328,7 +322,6 @@ def write_polarised_capacitor_symbol_drawing(
         )
     """)
 
-    # Write pins
     write_pin(symbol_file, -3.81, 0, 0, "1", length=2.8)
     write_pin(symbol_file, 3.81, 0, 180, "2", length=2.8)
 
@@ -386,7 +379,6 @@ def write_resistor_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, -5.08, 0, 0, "1")
     write_pin(symbol_file, 5.08, 0, 180, "2")
 
@@ -472,7 +464,6 @@ def write_thermistor_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, -5.08, 0, 0, "1")
     write_pin(symbol_file, 5.08, 0, 180, "2")
 
@@ -522,10 +513,8 @@ def write_inductor_symbol_drawing(
             )
             """)
 
-    # Write symbol drawing section
     symbol_file.write(f'\t\t(symbol "{symbol_name}_1_1"\n')
 
-    # Write arcs
     arc_params = [
         (-2.54, -3.81, -5.08),
         (0, -1.27, -2.54),
@@ -535,11 +524,9 @@ def write_inductor_symbol_drawing(
     for start_x, mid_x, end_x in arc_params:
         write_arc(symbol_file, start_x, mid_x, end_x)
 
-    # Write standard pins
     write_pin(symbol_file, -7.62, 0, 0, "1")
     write_pin(symbol_file, 7.62, 0, 180, "2")
 
-    # Write additional pins if they exist
     if pin_config and "additional_pins" in pin_config:
         for pin in pin_config["additional_pins"]:
             write_pin(
@@ -593,7 +580,7 @@ def write_ferrite_bead_symbol_drawing(
 			)
         )
         """)
-    # Write pins
+
     write_pin(symbol_file, -5.08, 0, 0, "1")
     write_pin(symbol_file, 5.08, 0, 180, "2")
 
@@ -739,24 +726,19 @@ def write_transformer_symbol_drawing(
         None
 
     """
-    # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
-    # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
-    # Write left and right inductor arcs
     write_arcs(symbol_file, -2.54, [0.0, -5.08])
     write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
     for x, y in [(-2.54, 3.81), (2.54, -3.81)]:
         write_circle(symbol_file, x, y, radius=0.508)
 
-    # Write coupling lines
     for x, y in ((-0.254, max_y), (0.254, min_y)):
         write_polyline(symbol_file, [(x, -y), (x, y)])
 
-    # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
             symbol_file=symbol_file,
@@ -769,7 +751,6 @@ def write_transformer_symbol_drawing(
             length=pin["lenght"],
         )
 
-    # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
             symbol_file=symbol_file,
@@ -802,20 +783,16 @@ def write_transformer_symbol_drawing_v2(
 
     """
     for symbol_number in range(1, 3):
-        # Write symbol drawing section
         symbol_file.write(
             f'        (symbol "{symbol_name}_1_{symbol_number}"\n',
         )
 
-        # Write left inductor arcs
         write_arcs(symbol_file, -2.54, [0.0, -10.16], num_arcs=8)
 
-        # Write right inductor arcs
         write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
         secondary_dot_y = -1 if symbol_number == 1 else 1
 
-        # Write polarity dots
         for x, y in [
             (-2.54, 8.89),
             (-2.54, -1.27),
@@ -823,11 +800,9 @@ def write_transformer_symbol_drawing_v2(
         ]:
             write_circle(symbol_file, x, y, radius=0.508)
 
-        # Write coupling lines
         for x, y in ((-0.254, 10.16), (0.254, -10.16)):
             write_polyline(symbol_file, [(x, -y), (x, y)])
 
-        # Write left side pins
         for pin in pin_config["left"]:
             write_pin(
                 symbol_file=symbol_file,
@@ -840,7 +815,6 @@ def write_transformer_symbol_drawing_v2(
                 length=pin["lenght"],
             )
 
-        # Write right side pins
         for pin in (
             pin_config["right"]
             if symbol_number == 1
@@ -876,19 +850,14 @@ def write_transformer_symbol_drawing_v3(
         None
 
     """
-    # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
-    # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
-    # Write left inductor arcs
     write_arcs(symbol_file, -2.54, [0.0, -5.08])
 
-    # Write first right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
-    # Write second right inductor arcs
     write_arcs(symbol_file, 5.08, [0.0, -5.08])
 
     for symbol in ["-", ""]:
@@ -901,15 +870,12 @@ def write_transformer_symbol_drawing_v3(
             ],
         )
 
-    # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, 3.81), (5.08, 3.81)]:
         write_circle(symbol_file, x, y, radius=0.508)
 
-    # Write coupling lines
     for x, y in ((-0.254, max_y), (0.254, min_y)):
         write_polyline(symbol_file, [(x, -y), (x, y)])
 
-    # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
             symbol_file=symbol_file,
@@ -922,7 +888,6 @@ def write_transformer_symbol_drawing_v3(
             length=pin["lenght"],
         )
 
-    # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
             symbol_file=symbol_file,
@@ -954,30 +919,20 @@ def write_transformer_symbol_drawing_v4(
         None
 
     """
-    # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
-    # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
-    # Write left inductor arcs
     write_arcs(symbol_file, -2.54, [0.0, -5.08])
-
-    # Write top right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, 2.54])
-
-    # Write bottom right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, -12.7])
 
-    # Write polarity dots
     for x, y in [(-2.54, -3.81), (2.54, -3.81), (2.54, 11.43)]:
         write_circle(symbol_file, x, y, radius=0.508)
 
-    # Write coupling lines
     for x, y in ((-0.254, max_y), (0.254, min_y)):
         write_polyline(symbol_file, [(x, -y), (x, y)])
 
-    # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
             symbol_file=symbol_file,
@@ -990,7 +945,6 @@ def write_transformer_symbol_drawing_v4(
             length=pin["lenght"],
         )
 
-    # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
             symbol_file=symbol_file,
@@ -1022,24 +976,19 @@ def write_transformer_symbol_drawing_v5(
         None
 
     """
-    # Calculate symbol bounds
     min_y, max_y = get_symbol_bounds(pin_config)
 
-    # Write symbol drawing section - split into two units
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
 
-    # Write left inductor arcs
     write_arcs(symbol_file, -2.54, [0.0, 7.62])
     write_arcs(symbol_file, -2.54, [0.0, -5.08])
     write_arcs(symbol_file, -2.54, [0.0, -17.78])
 
-    # Write right inductor arcs
     write_arcs(symbol_file, 2.54, [0.0, 10.16])
     write_arcs(symbol_file, 2.54, [0.0, 0.0])
     write_arcs(symbol_file, 2.54, [0.0, -10.16])
     write_arcs(symbol_file, 2.54, [0.0, -20.32])
 
-    # Write polarity dots
     for x, y in [
         (-2.54, 16.51),
         (-2.54, 3.81),
@@ -1051,11 +1000,9 @@ def write_transformer_symbol_drawing_v5(
     ]:
         write_circle(symbol_file, x, y, radius=0.508)
 
-    # Write coupling lines
     for x, y in ((-0.254, max_y), (0.254, min_y)):
         write_polyline(symbol_file, [(x, -y), (x, y)])
 
-    # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
             symbol_file=symbol_file,
@@ -1068,7 +1015,6 @@ def write_transformer_symbol_drawing_v5(
             length=pin["lenght"],
         )
 
-    # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
             symbol_file=symbol_file,
@@ -1101,17 +1047,17 @@ def write_transformer_symbol_drawing_v6(
 
     """
     symbol_file.write(f'        (symbol "{symbol_name}_0_1"\n')
-    # Write left transformer arcs
+
     write_arcs(symbol_file, -5.715, [0.0, 11.43], arc_size=1.27)
     write_arcs(symbol_file, -5.715, [0.0, 3.81], arc_size=1.27)
     write_arcs(symbol_file, -5.715, [0.0, -8.89], arc_size=1.27)
     write_arcs(symbol_file, -5.715, [0.0, -16.51], arc_size=1.27)
-    # Write right transformer arcs
+
     write_arcs(symbol_file, 0.635, [-2.54, 11.43], arc_size=1.27)
     write_arcs(symbol_file, 0.635, [-2.54, 3.81], arc_size=1.27)
     write_arcs(symbol_file, 0.635, [-2.54, -8.89], arc_size=1.27)
     write_arcs(symbol_file, 0.635, [-2.54, -16.51], arc_size=1.27)
-    # Write right horizontal transformer arcs
+
     write_arcs(
         symbol_file, 0.635, [1.27, 11.43], arc_size=1.27, horizontal=True
     )
@@ -1125,7 +1071,6 @@ def write_transformer_symbol_drawing_v6(
         symbol_file, -0.635, [1.27, -11.43], arc_size=1.27, horizontal=True
     )
 
-    # Write polarity dots
     for x, y in [
         (-5.715, 15.875),
         (-5.715, 8.255),
@@ -1142,7 +1087,6 @@ def write_transformer_symbol_drawing_v6(
     ]:
         write_circle(symbol_file, x, y, radius=0.254)
 
-    # Write connection dots
     for x, y in [
         (-5.715, 10.16),
         (-5.715, -10.16),
@@ -1151,10 +1095,8 @@ def write_transformer_symbol_drawing_v6(
     ]:
         write_circle(symbol_file, x, y, radius=0.254, fill=True)
 
-    # Write rectangle
     write_rectangle(symbol_file, -7.62, 20.32, 7.62, -20.32)
 
-    # Write left winding connections
     write_polyline(
         symbol_file, [(-5.715, 16.51), (-5.715, 17.78), (-7.62, 17.78)]
     )
@@ -1172,13 +1114,11 @@ def write_transformer_symbol_drawing_v6(
         symbol_file, [(-5.715, -16.51), (-5.715, -17.78), (-7.62, -17.78)]
     )
 
-    # Write coupling lines
     write_polyline(symbol_file, [(-4.064, 17.78), (-4.064, 2.54)])
     write_polyline(symbol_file, [(-4.064, -2.54), (-4.064, -17.78)])
     write_polyline(symbol_file, [(-3.556, 17.78), (-3.556, 2.54)])
     write_polyline(symbol_file, [(-3.556, -2.54), (-3.556, -17.78)])
 
-    # Write middle winding connections
     write_polyline(
         symbol_file,
         [(-1.905, 16.51), (-1.905, 17.78), (1.27, 17.78), (1.27, 12.065)],
@@ -1198,7 +1138,6 @@ def write_transformer_symbol_drawing_v6(
         [(-1.905, -16.51), (-1.905, -17.78), (1.27, -17.78), (1.27, -12.065)],
     )
 
-    # Write right winding connections
     write_polyline(symbol_file, [(1.27, 10.414), (6.35, 10.414)])
     write_polyline(symbol_file, [(1.27, 9.906), (6.35, 9.906)])
     write_polyline(symbol_file, [(1.27, -9.906), (6.35, -9.906)])
@@ -1225,7 +1164,6 @@ def write_transformer_symbol_drawing_v6(
         ],
     )
 
-    # Write left side pins
     for pin in pin_config["left"]:
         write_pin(
             symbol_file=symbol_file,
@@ -1238,7 +1176,6 @@ def write_transformer_symbol_drawing_v6(
             length=pin["lenght"],
         )
 
-    # Write right side pins
     for pin in pin_config["right"]:
         write_pin(
             symbol_file=symbol_file,
@@ -1271,19 +1208,15 @@ def write_coupled_inductor_symbol_drawing(
 
     """
     for symbol_number in range(1, 3):
-        # Write symbol drawing section
         symbol_file.write(
             f'        (symbol "{symbol_name}_1_{symbol_number}"\n',
         )
 
-        # Write left inductor arcs
         write_arcs(symbol_file, -2.54, [0.0, -5.08])
-
-        # Write right inductor arcs
         write_arcs(symbol_file, 2.54, [0.0, -5.08])
 
         secondary_dot_y = -1 if symbol_number == 1 else 1
-        # Write polarity dots
+
         for x, y in [(-2.54, 3.81), (2.54, secondary_dot_y * 3.81)]:
             symbol_file.write(f"""
                 (circle
@@ -1293,7 +1226,6 @@ def write_coupled_inductor_symbol_drawing(
                     (fill (type none))
                 )""")
 
-        # Write coupling lines
         for x in [-0.254, 0.254]:
             symbol_file.write(f"""
                 (polyline
@@ -1302,7 +1234,6 @@ def write_coupled_inductor_symbol_drawing(
                     (fill (type none))
                 )""")
 
-        # Write left side pins
         for pin in pin_config["left"]:
             write_pin(
                 symbol_file=symbol_file,
@@ -1315,7 +1246,6 @@ def write_coupled_inductor_symbol_drawing(
                 length=pin["lenght"],
             )
 
-        # Write right side pins
         for pin in (
             pin_config["right"]
             if symbol_number == 1
@@ -1363,7 +1293,6 @@ def write_schottky_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
@@ -1398,7 +1327,6 @@ def write_zener_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
@@ -1432,7 +1360,6 @@ def write_rectifier_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
@@ -1467,7 +1394,6 @@ def write_unidirectional_tvs_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
@@ -1541,7 +1467,6 @@ def write_unidirectional_tvs_symbol_drawing_v2(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
 
@@ -1578,7 +1503,6 @@ def write_bidirectional_tvs_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=1.27)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=1.27)
 
@@ -1657,7 +1581,6 @@ def write_bidirectional_tvs_symbol_drawing_v2(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 10.16, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -10.16, 0, 0, "2", length=3.81)
 
@@ -1700,7 +1623,6 @@ def write_dual_small_signal_diodes_symbol_drawing_v1(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
     write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
     write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
@@ -1744,7 +1666,6 @@ def write_small_signal_schottky_diodes_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, -10.16, 0, 0, "1", length=3.81)
     write_pin(symbol_file, 10.16, 0, 180, "2", length=3.81)
     write_pin(symbol_file, 0, 5.08, 270, "3", length=3.81)
@@ -1795,7 +1716,6 @@ def write_red_led_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
@@ -1845,37 +1765,10 @@ def write_green_led_symbol_drawing(
         )
         """)
 
-    # Write pins
     write_pin(symbol_file, 5.08, 0, 180, "1", length=3.81)
     write_pin(symbol_file, -5.08, 0, 0, "2", length=3.81)
 
     symbol_file.write("\t\t)\n")
-
-
-# def write_circle(
-#     symbol_file: TextIO,
-#     x_pos: float,
-#     y_pos: float,
-# ) -> None:
-#     """Write a circle to the symbol file.
-
-#     Args:
-#         symbol_file (TextIO): File object for writing the symbol file.
-#         x_pos (float): X-coordinate of the circle.
-#         y_pos (float): Y-coordinate of the circle.
-
-#     Returns:
-#         None
-
-#     """
-#     symbol_file.write(f"""
-#         (circle
-#             (center {x_pos} {y_pos})
-#             (radius 0.0254)
-#             (stroke (width 0.381) (type default))
-#             (fill (type none))
-#         )
-#     """)
 
 
 def write_p_mos_transistor_symbol_drawing(
@@ -1945,12 +1838,10 @@ def write_p_mos_transistor_symbol_drawing(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
@@ -2028,12 +1919,10 @@ def write_p_mos_transistor_symbol_drawing_2(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "1", "D", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(-1.27), 0, "2", "D", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(-3.81), 0, "5", "D", length=2.54)
@@ -2111,12 +2000,10 @@ def write_p_mos_transistor_symbol_drawing_3(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
@@ -2198,12 +2085,10 @@ def write_n_mos_transistor_symbol_drawing(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "5", "D", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(1.27), 180, "1", "S", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(-1.27), 180, "2", "S", length=2.54)
@@ -2276,12 +2161,10 @@ def write_n_mos_transistor_symbol_drawing_v2(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, -7.62, offset_y(3.81), 0, "1", "D", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "2", "D", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(-1.27), 0, "5", "D", length=2.54)
@@ -2368,12 +2251,10 @@ def write_n_mos_basic_transistor_symbol_drawing(
         )
         """)
 
-    # Write symbol circles with vertical offset
     write_circle(symbol_file, -2.54, offset_y(0))
     write_circle(symbol_file, 2.032, offset_y(0))
     write_circle(symbol_file, 2.54, offset_y(0))
 
-    # Write pins with vertical offset
     write_pin(symbol_file, 2.54, offset_y(-6.35), 180, "1", "G", length=2.54)
     write_pin(symbol_file, 7.62, offset_y(1.27), 180, "2", "S", length=2.54)
     write_pin(symbol_file, -7.62, offset_y(1.27), 0, "3", "D", length=2.54)
@@ -2490,12 +2371,10 @@ def write_n_mos_dual_transistor_symbol_drawing(
                 )
             """)
 
-        # Write symbol circles with vertical offset
         write_circle(symbol_file, -2.54, offset_y(1.27))
         write_circle(symbol_file, 2.032, offset_y(1.27))
         write_circle(symbol_file, 2.54, offset_y(1.27))
 
-        # Write pins with vertical offset
         write_pin(
             symbol_file,
             10.16,
@@ -2636,12 +2515,10 @@ def write_p_mos_dual_transistor_symbol_drawing(
                 )
             """)
 
-        # Write symbol circles with vertical offset
         write_circle(symbol_file, -2.54, offset_y(1.27))
         write_circle(symbol_file, 2.032, offset_y(1.27))
         write_circle(symbol_file, 2.54, offset_y(1.27))
 
-        # Write pins with vertical offset
         write_pin(
             symbol_file,
             10.16,
@@ -2870,16 +2747,12 @@ def write_npn_transistor_symbol_drawing(
 def write_pnp_transistor_symbol_drawing(
     symbol_file: TextIO,
     symbol_name: str,
-    vertical_offset: float = 0.0,
 ) -> None:
     """Write the graphical representation of a P-MOS transistor symbol.
 
     Args:
         symbol_file: File object for writing the symbol file.
         symbol_name: Name of the symbol.
-        vertical_offset:
-            Vertical translation in units.
-            Positive moves up, negative moves down. Defaults to 0.0.
 
     Returns:
         None
@@ -3202,7 +3075,6 @@ def write_slide_switch_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # Check for override pin specs
     override_pins = get_override_pins_specs(
         component_data.get("Series", ""),
         specs_dict,
@@ -3217,18 +3089,16 @@ def write_slide_switch_symbol_drawing(
         def toggle_angle(current):
             return 90 if current == 270 else 270
 
-        if number_of_rows == 2:  # noqa: PLR2004
-            angle = 270  # Start with 270
+        if number_of_rows == 2:
+            angle = 270
             for pin_num in range(1, pin_count * 2, 2):
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
-                # Both pins in this row use the same angle
                 write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
                     symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
-                # Toggle angle for next row
                 angle = toggle_angle(angle)
         else:
             for pin_num in range(1, pin_count + 1):
@@ -3294,7 +3164,6 @@ def write_tactile_switch_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # Check for override pin specs
     override_pins = get_override_pins_specs(
         component_data.get("Series", ""),
         specs_dict,
@@ -3309,18 +3178,16 @@ def write_tactile_switch_symbol_drawing(
         def toggle_angle(current):
             return 90 if current == 270 else 270
 
-        if number_of_rows == 2:  # noqa: PLR2004
-            angle = 270  # Start with 270
+        if number_of_rows == 2:
+            angle = 270
             for pin_num in range(1, pin_count * 2, 2):
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
-                # Both pins in this row use the same angle
                 write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
                     symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
-                # Toggle angle for next row
                 angle = toggle_angle(angle)
         else:
             for pin_num in range(1, pin_count + 1):
@@ -3399,7 +3266,6 @@ def write_tactile_switch_with_led_symbol_drawing(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # Check for override pin specs
     override_pins = get_override_pins_specs(
         component_data.get("Series", ""),
         specs_dict,
@@ -3414,18 +3280,16 @@ def write_tactile_switch_with_led_symbol_drawing(
         def toggle_angle(current):
             return 90 if current == 270 else 270
 
-        if number_of_rows == 2:  # noqa: PLR2004
-            angle = 270  # Start with 270
+        if number_of_rows == 2:
+            angle = 270
             for pin_num in range(1, pin_count * 2, 2):
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
-                # Both pins in this row use the same angle
                 write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
                     symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
-                # Toggle angle for next row
                 angle = toggle_angle(angle)
         else:
             for pin_num in range(1, pin_count + 1):
@@ -3537,7 +3401,6 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
 
     symbol_file.write(f'\t\t(symbol "{symbol_name}_0_0"\n')
 
-    # Check for override pin specs
     override_pins = get_override_pins_specs(
         component_data.get("Series", ""),
         specs_dict,
@@ -3552,18 +3415,16 @@ def write_tactile_switch_with_led_symbol_drawing_v2(
         def toggle_angle(current):
             return 90 if current == 270 else 270
 
-        if number_of_rows == 2:  # noqa: PLR2004
-            angle = 270  # Start with 270
+        if number_of_rows == 2:
+            angle = 270
             for pin_num in range(1, pin_count * 2, 2):
                 y_pos = start_y - (pin_num - 1) * pin_spacing / 2
 
-                # Both pins in this row use the same angle
                 write_pin(symbol_file, -2.54 / 2, y_pos, angle, str(pin_num))
                 write_pin(
                     symbol_file, 2.54 / 2, y_pos, angle, str(pin_num + 1)
                 )
 
-                # Toggle angle for next row
                 angle = toggle_angle(angle)
         else:
             for pin_num in range(1, pin_count + 1):
