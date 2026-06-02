@@ -26,7 +26,6 @@ import symbol_capacitor_generator
 import symbol_capacitors_specs
 from utilities import file_handler_utilities, print_message_utilities
 
-# Global header to attribute mapping
 HEADER_MAPPING: Final[dict] = {
     "Symbol Name": lambda part: part.symbol_name,
     "Reference": lambda part: part.reference,
@@ -77,7 +76,6 @@ def generate_files_for_series(
     specs = symbol_capacitors_specs.SERIES_SPECS[series_name]
     series_code = series_name.replace("-", "")
 
-    # Ensure required directories exist
     file_handler_utilities.ensure_directory_exists("app/data")
     file_handler_utilities.ensure_directory_exists("series_kicad_sym")
     file_handler_utilities.ensure_directory_exists("symbols")
@@ -89,7 +87,6 @@ def generate_files_for_series(
     csv_filepath = f"app/data/{csv_filename}"
     symbol_filename = f"CAPACITORS_{series_code}_DATA_BASE.kicad_sym"
 
-    # Generate part numbers and sort by value
     parts_list = symbol_capacitors_specs.PartInfo.generate_part_numbers(specs)
     parts_list.sort(key=lambda part: part.value)
 
@@ -102,7 +99,6 @@ def generate_files_for_series(
         f"Generated {len(parts_list)} part numbers in '{csv_filepath}'",
     )
 
-    # Generate KiCad symbol file
     try:
         symbol_capacitor_generator.generate_kicad_symbol(
             csv_filepath,
@@ -124,7 +120,6 @@ def generate_files_for_series(
             f"I/O error when generating KiCad symbol file: {io_error}",
         )
 
-    # Generate KiCad footprint file
     try:
         footprint_capacitor_generator.generate_footprint_file(
             series_name,
@@ -144,7 +139,6 @@ def generate_files_for_series(
             f"I/O error when generating footprint file: {io_error}",
         )
 
-    # Add parts to unified list
     unified_parts_list.extend(parts_list)
 
 
@@ -172,10 +166,8 @@ def generate_unified_files(
         3. A complete footprint library for all series
 
     """
-    # Sort all parts by value before writing
     all_parts.sort(key=lambda part: part.value)
 
-    # Write unified CSV file with new app/data path
     unified_csv_path = f"app/data/{unified_csv}"
     file_handler_utilities.write_to_csv(
         all_parts,
@@ -186,7 +178,6 @@ def generate_unified_files(
         f"Generated unified CSV file with {len(all_parts)} part numbers",
     )
 
-    # Generate unified KiCad symbol file
     try:
         symbol_capacitor_generator.generate_kicad_symbol(
             unified_csv_path,
@@ -219,7 +210,6 @@ if __name__ == "__main__":
             )
             generate_files_for_series(series, unified_parts)
 
-        # Generate unified files after all series are processed
         UNIFIED_CSV = "UNITED_CAPACITORS_DATA_BASE.csv"
         UNIFIED_SYMBOL = "UNITED_CAPACITORS_DATA_BASE.kicad_sym"
         print_message_utilities.print_info("\nGenerating unified files:")
