@@ -669,10 +669,29 @@ MURATA_DOC_BASE = (
 )
 
 MURATA_SYMBOLS_SPECS = {
+    "GJM1555C1H": SeriesSpec(
+        manufacturer="Murata Electronics",
+        mpn_prefix="GJM1555C1H",
+        value_range={"C0G (NP0)": (5.6e-12, 43e-12)},
+        tolerance_map={"C0G (NP0)": {"F": "1%"}},
+        characteristic_codes={5.6e-12: "B01"},
+        mpn_sufix=["D"],
+        footprint="capacitor_footprints:C_0402_1005Metric",
+        voltage_rating="50V",
+        case_code_in="0402",
+        case_code_mm="1005",
+        excluded_values={6.8e-12},
+        additional_values={
+            *{8e-12, 9e-12, 11e-12, 13e-12, 14e-12, 16e-12},
+            *{19e-12, 20e-12, 24e-12, 30e-12, 36e-12, 43e-12},
+        },
+        datasheet_url=f"{MURATA_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
     "GCM155R71H": SeriesSpec(
         manufacturer="Murata Electronics",
         mpn_prefix="GCM155R71H",
-        value_range={"X7R": (220e-12, 0.1e-6)},  # 220pF to 0.1µF
+        value_range={"X7R": (220e-12, 0.1e-6)},
         tolerance_map={"X7R": {"K": "10%"}},
         characteristic_codes={22e-9: "E02", 4.7e-9: "A55", 0: "A37"},
         mpn_sufix=["D", "J"],
