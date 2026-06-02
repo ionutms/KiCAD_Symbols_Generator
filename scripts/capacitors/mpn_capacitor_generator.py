@@ -1,17 +1,19 @@
-"""Murata GCM Series Capacitor Part Number Generator.
+"""Capacitor Part Number Generator.
 
-A module for generating standardized part numbers for Murata GCM series
-capacitors. Supports multiple series types and specifications, producing both
-individual series files and unified output in CSV and KiCad symbol formats.
+This module generates standardized part numbers, CSV data files, KiCad
+symbol libraries, and KiCad footprint modules for a family of capacitor
+series. It processes series specifications defined in
+``symbol_capacitors_specs`` to produce:
 
-Features:
-    - Generates part numbers for GCM155, GCM188, GCM216, GCM31M,
-        and GCM31C series
-    - Supports X7R dielectric type
-    - Creates individual series and unified output files
-    - Produces both CSV and KiCad symbol format outputs
-    - Handles standard E12 series values with exclusions
-    - Generates KiCad footprint files for each series
+* Individual CSV files for each series.
+* KiCad ``.kicad_sym`` symbol libraries per series.
+* A unified CSV database and combined KiCad symbol library covering all
+  series.
+* Corresponding KiCad footprint modules.
+
+The generated outputs follow the project's naming conventions and are
+placed in the appropriate ``app/data``, ``series_kicad_sym``,
+``symbols``, and ``footprints`` directories.
 """
 
 import csv
