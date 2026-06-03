@@ -466,11 +466,7 @@ class PartInfo(NamedTuple):
         elif specs.manufacturer == "Wurth Elektronik":
             mpn = f"{specs.mpn_prefix}"
         elif specs.manufacturer == "Panasonic":
-            mpn = (
-                f"{specs.mpn_prefix}"
-                f"{formatted_value.split(' ')[0]}"
-                f"{specs.mpn_sufix}"
-            )
+            mpn = f"{specs.mpn_prefix}{specs.mpn_sufix}"
         elif specs.manufacturer == "Eaton Electronics":
             capacitance_code = cls.generate_eaton_capacitance_code(
                 capacitance
@@ -816,18 +812,8 @@ MURATA_SYMBOLS_SPECS = {
         case_code_in="0603",
         case_code_mm="1608",
         excluded_values={
-            1.2e-9,
-            1.8e-9,
-            3.9e-9,
-            5.6e-9,
-            8.2e-9,
-            12e-9,
-            18e-9,
-            27e-9,
-            56e-9,
-            82e-9,
-            120e-9,
-            180e-9,
+            *{1.2e-9, 1.8e-9, 3.9e-9, 5.6e-9, 8.2e-9, 12e-9},
+            *{18e-9, 27e-9, 56e-9, 82e-9, 120e-9, 180e-9},
         },
         datasheet_url=f"{MURATA_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
