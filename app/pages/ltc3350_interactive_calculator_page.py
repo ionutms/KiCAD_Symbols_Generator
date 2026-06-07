@@ -694,7 +694,6 @@ def callback_update_slider_marks_theme(
                 "style": {"color": mark_color},
             }
 
-        # Tooltip styling with theme colors
         tooltip = {
             "placement": "top",
             "always_visible": True,
@@ -1085,12 +1084,8 @@ interactive_calculator = html.Div([
                         step=100,
                         default_val=71500,
                         marks_list=[
-                            53600,
-                            100000,
-                            150000,
-                            200000,
-                            250000,
-                            267000,
+                            *[53600, 100000, 150000],
+                            *[200000, 250000, 267000],
                         ],
                         use_mathjax=True,
                         unit=si.Ohm,
@@ -1524,7 +1519,52 @@ def calculate_values(
     c_out_slider_value,
     r_esr_slider_value,
 ):
-    """TODO."""
+    """Recompute all derived parameters and return formatted HTML components.
+
+    Triggered whenever any slider changes. Runs the full calculation chain
+    (core parameters → current limits → stack voltages → backup time →
+    voltage thresholds → switching frequency → inductance → output ripple)
+    and packages each result group into a Dash HTML Div for display.
+
+    Args:
+        p_backup_slider_value: Backup power in W.
+        t_backup_slider_value: Backup duration in s.
+        n_slider_value: Number of capacitor cells in series.
+        eta_slider_value: Converter efficiency (0–1).
+        v_cell_max_slider_value: Maximum cell voltage in V.
+        alpha_b_slider_value: Voltage derating factor.
+        r_snsc_slider_value: Charge sense resistor in Ω.
+        r_snsi_slider_value: Input current sense resistor in Ω.
+        esr_eol_selected_slider_value: User-selected EOL ESR in Ω.
+        c_eol_selected_slider_value: User-selected EOL capacitance in F.
+        r_fbc_top_slider_value: Charge feedback top resistor in Ω.
+        r_fbc_bottom_slider_value: Charge feedback bottom resistor in Ω.
+        capfbref_slider_value: Capacitor feedback reference voltage in V.
+        r_pf_top_slider_value: Power-fail comparator top resistor in Ω.
+        r_pf_bottom_slider_value: Power-fail comparator bottom resistor in Ω.
+        r_pf_bottom_2_slider_value: Power-fail hysteresis resistor in Ω.
+        r_fbo_top_slider_value: Output feedback top resistor in Ω.
+        r_fbo_bottom_slider_value: Output feedback bottom resistor in Ω.
+        r_t_slider_value: Switching frequency set resistor in Ω.
+        v_in_max_slider_value: Maximum input voltage in V.
+        c_out_slider_value: Output capacitance in µF.
+        r_esr_slider_value: Output capacitor ESR in mΩ.
+
+    Returns:
+        A tuple of nine ``html.Div`` components in this order:
+
+        0. **calculated_values_output** – I_PEAK, I_IN(MAX), I_CHG(MAX),
+           V_STK(MIN) variants, γ_MAX/MIN, V_LOSS², t_BACKUP.
+        1. **calculated_values_between_sliders** – C_EOL and ESR_EOL.
+        2. **backup_time_table** – capacitor selection table from CSV.
+        3. **v_out_display** – V_OUT.
+        4. **v_in_display** – V_IN power-fail and power-good thresholds.
+        5. **v_cap_display** – V_CAP.
+        6. **f_sw_display** – f_SW and inductance bounds.
+        7. **v_in_max_display** – inductance for V_IN(MAX) ≤/≥ 2·V_CAP.
+        8. **delta_v_out_display** – ΔV_OUT for both step-up modes.
+
+    """
     p_backup = p_backup_slider_value * si.W
     t_backup = t_backup_slider_value * si.s
     v_cell_max = v_cell_max_slider_value * si.V
