@@ -92,7 +92,7 @@ def generate_radial_footprint(
 
         # Create a temporary NamedTuple class to match the expected format
         class PadProperty(NamedTuple):
-            name: str
+            pad_number: str
             x: float
             y: float
             pad_size: float
@@ -100,7 +100,7 @@ def generate_radial_footprint(
 
         pad_properties = [
             PadProperty(
-                name=pad.name,
+                pad_number=pad.name,
                 x=pad.x,
                 y=pad.y,
                 pad_size=pad.pad_diameter,
@@ -110,9 +110,13 @@ def generate_radial_footprint(
         ]
 
         additional_pads_section = (
-            footprint_utils.generate_custom_thru_hole_pads(pad_properties)
+            footprint_utils.generate_custom_thru_hole_pads(
+                pad_properties,
+                pad_properties[0].pad_size,
+                pad_properties[0].drill_size,
+            )
         )
-        sections.insert(-2, additional_pads_section)
+        sections.append(additional_pads_section)
 
     sections.extend([
         footprint_utils.associate_3d_model(
