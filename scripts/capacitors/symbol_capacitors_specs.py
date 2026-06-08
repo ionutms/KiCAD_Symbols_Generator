@@ -1691,6 +1691,46 @@ EATON_ELECTRONICS_SYMBOLS_SPECS = {
         datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
         trustedparts_url="https://www.trustedparts.com/en/search",
     ),
+    "XV": SeriesSpec(
+        mpn_prefix="XV3550-2R7",
+        manufacturer="Eaton Electronics",
+        footprint="capacitor_footprints:C_138x315_3_5x8Metric",
+        voltage_rating="2.7V",
+        capacitor_type="Supercapacitor",
+        case_code_in="138x315",
+        case_code_mm="3_5x8",
+        tolerance_map={"Supercapacitor": {"": "10%"}},
+        value_range={"Supercapacitor": (300, 600)},
+        specified_values=[300, 400, 600],
+        additional_values=[300, 400, 600],
+        value_based_mpn_prefix_map={
+            (300,): "XV3550-2R7",
+            (400,): "XV3560-2R7",
+            (600,): "XV3585-2R7",
+        },
+        value_footprints={
+            300: "capacitor_footprints:C_953x1378_H53_24_2x35Metric",
+            400: "capacitor_footprints:C_953x1378_H63_24_2x35Metric",
+            600: "capacitor_footprints:C_953x1378_H87_5_24_2x35Metric",
+        },
+        value_case_codes_in={
+            300: "953x1378_H53",
+            400: "953x1378_H63",
+            600: "953x1378_H87_5",
+        },
+        value_case_codes_mm={
+            300: "24_2x35",
+            400: "24_2x35",
+            600: "24_2x35",
+        },
+        value_3d_models={
+            300: "capacitor_3d_models:C_953x1378_H53",
+            400: "capacitor_3d_models:C_953x1378_H63",
+            600: "capacitor_3d_models:C_953x1378_H87_5",
+        },
+        datasheet_url=f"{EATON_ELECTRONICS_DOC_BASE}",
+        trustedparts_url="https://www.trustedparts.com/en/search",
+    ),
 }
 
 # Combined specifications dictionary

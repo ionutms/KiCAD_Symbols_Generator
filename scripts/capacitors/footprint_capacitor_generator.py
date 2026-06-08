@@ -267,51 +267,40 @@ def generate_footprint_file(
     with Path.open(default_file_path, "w", encoding="utf-8") as file_handle:
         file_handle.write(default_footprint_content)
 
-    # If the series has value_footprints, generate additional footprints
     if series_spec.value_footprints:
-        for (
-            capacitance_value,
-            footprint_name,
-        ) in series_spec.value_footprints.items():
-            if ":" in footprint_name:
-                footprint_part = footprint_name.split(":")[1]
-                parts = footprint_part.replace("C_", "").split("_")
-                if len(parts) >= 2:
-                    case_code_in = parts[0]
-                    case_code_mm = parts[1].replace("Metric", "")
+        for capacitance_value, _ in series_spec.value_footprints.items():
+            case_code_in = series_spec.value_case_codes_in.get(
+                capacitance_value
+            )
+            case_code_mm = series_spec.value_case_codes_mm.get(
+                capacitance_value
+            )
 
-                    step_file_name = None
-                    if (
-                        series_spec.value_3d_models
-                        and capacitance_value in series_spec.value_3d_models
-                    ):
-                        # Extract the model name from the full path if needed
-                        model_path = series_spec.value_3d_models[
-                            capacitance_value
-                        ]
-                        if ":" in model_path:
-                            step_file_name = model_path.split(":")[1]
-                        else:
-                            step_file_name = model_path
+            if not case_code_in or case_code_in not in FOOTPRINTS_SPECS:
+                continue
 
-                    if case_code_in in FOOTPRINTS_SPECS:
-                        specific_capacitor_specs = FOOTPRINTS_SPECS[
-                            case_code_in
-                        ]
-                        specific_footprint_content: str = generate_footprint(
-                            series_spec,
-                            specific_capacitor_specs,
-                            case_code_in,
-                            case_code_mm,
-                            step_file_name,
-                        )
+            step_file_name = None
+            if (
+                series_spec.value_3d_models
+                and capacitance_value in series_spec.value_3d_models
+            ):
+                model_path = series_spec.value_3d_models[capacitance_value]
+                step_file_name = (
+                    model_path.split(":")[1]
+                    if ":" in model_path
+                    else model_path
+                )
 
-                        specific_filename: str = f"{footprint_part}.kicad_mod"
-                        specific_file_path: str = (
-                            f"{output_path}/{specific_filename}"
-                        )
+            specific_capacitor_specs = FOOTPRINTS_SPECS[case_code_in]
+            specific_footprint_content = generate_footprint(
+                series_spec,
+                specific_capacitor_specs,
+                case_code_in,
+                case_code_mm,
+                step_file_name,
+            )
 
-                        with Path.open(
-                            specific_file_path, "w", encoding="utf-8"
-                        ) as file_handle:
-                            file_handle.write(specific_footprint_content)
+            footprint_part = f"C_{case_code_in}_{case_code_mm}Metric"
+            specific_file_path = f"{output_path}/{footprint_part}.kicad_mod"
+            with Path.open(specific_file_path, "w", encoding="utf-8") as fh:
+                fh.write(specific_footprint_content)

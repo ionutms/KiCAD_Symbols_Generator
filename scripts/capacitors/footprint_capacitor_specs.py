@@ -326,4 +326,31 @@ FOOTPRINTS_SPECS: dict[str, FootprintSpecs | RadialFootprintSpecs] = {
         ),
         ref_offset_y=-18.542,
     ),
+    "953x1378_H53": RadialFootprintSpecs(
+        body_dimensions=RadialBodyDimensions(diameter=35.0),
+        pad_dimensions=RadialPadDimensions(
+            pad_diameter=4.0,
+            drill_size=2.0,
+            pad_distance=12.1,
+        ),
+        ref_offset_y=-19.05,
+    ),
+    "953x1378_H63": RadialFootprintSpecs(
+        body_dimensions=RadialBodyDimensions(diameter=35.0),
+        pad_dimensions=RadialPadDimensions(
+            pad_diameter=4.0,
+            drill_size=2.0,
+            pad_distance=12.1,
+        ),
+        ref_offset_y=-19.05,
+    ),
+    "953x1378_H87_5": RadialFootprintSpecs(
+        body_dimensions=RadialBodyDimensions(diameter=35.0),
+        pad_dimensions=RadialPadDimensions(
+            pad_diameter=4.0,
+            drill_size=2.0,
+            pad_distance=12.1,
+        ),
+        ref_offset_y=-19.05,
+    ),
 }
