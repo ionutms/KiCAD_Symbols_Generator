@@ -1,4 +1,4 @@
-(footprint "C_138x315_H21_3_5x8Metric"
+(footprint "C_953x1378_H63_24_2x35Metric"
     (version 20240108)
     (generator "pcbnew")
     (generator_version "8.0")
@@ -6,10 +6,10 @@
     
 
         (property "Reference" "REF**"
-            (at 0 -6.096 0)
+            (at 0 -19.05 0)
             (unlocked yes)
             (layer "F.SilkS")
-            (uuid "c97a6d18-b6d9-5325-ad29-60433a584b96")
+            (uuid "8b0265a8-6ce4-587c-a9af-0a167bb9bb54")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -17,11 +17,11 @@
         )
         
         )
-        (property "Value" "C_138x315_H21_3_5x8Metric"
-            (at 0 6.096 0)
+        (property "Value" "C_953x1378_H63_24_2x35Metric"
+            (at 0 19.05 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "2a7e0e5b-e865-59f2-a36d-7b003a62a511")
+            (uuid "e5b02702-3be3-5d29-a115-e3a66f567668")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -33,7 +33,7 @@
             (at 0 0 0)
             (layer "F.Fab")
             (hide yes)
-            (uuid "a661d8fb-597a-54c9-a9f3-5da9f35dfe58")
+            (uuid "09dfc76b-0fb1-5252-b20b-7b0e2e58e1f8")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -42,10 +42,10 @@
         
         )
         (fp_text user "${REFERENCE}"
-            (at 0 7.366 0)
+            (at 0 20.32 0)
             (unlocked yes)
             (layer "F.Fab")
-            (uuid "735fa2d0-b4e8-56f6-8e9d-0c61dd2e9a3f")
+            (uuid "8da89042-430d-53b4-97a4-b246604955e2")
             
         (effects
             (font (size 0.762 0.762) (thickness 0.1524))
@@ -57,93 +57,115 @@
 
         (fp_circle
             (center 0 0)
-            (end 4.0 0)
+            (end 18.0 0)
             (stroke (width 0.00635) (type solid))
             (fill none)
             (layer "F.CrtYd")
-            (uuid "50569488-1e3d-5cdc-b4ef-dbc9bd8e7c03")
+            (uuid "7ecf6ce6-9b75-5cc0-919d-32294aee7355")
         )
         
 
         (fp_circle
             (center 0 0)
-            (end 4.0 0)
+            (end 18.0 0)
             (stroke (width 0.0254) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "8d4125c9-0de8-5497-aadc-b535c49972e1")
+            (uuid "e2acd8da-a5b1-565f-b651-ae3fbda425bb")
         )
         
 
         (fp_circle
             (center 0 0)
-            (end 4.0 0)
+            (end 18.0 0)
             (stroke (width 0.1524) (type solid))
             (fill none)
             (layer "F.SilkS")
-            (uuid "8cf00633-1ab1-522c-bdc0-790bbb4b1e63")
+            (uuid "cbf8ad14-f97e-5c02-ac2c-b2d23fc3f694")
         )
         
 
         (fp_line
-            (start -5.25 0)
-            (end -4.25 0)
+            (start -19.25 0)
+            (end -18.25 0)
             (stroke (width 0.1524) (type solid))
             (layer "F.SilkS")
-            (uuid "bb60939e-e5c5-5325-a7fd-f722c4735dbb")
+            (uuid "d834d01e-eb64-59c0-a50c-31e0e3711f27")
         )
         
         (fp_line
-            (start -4.75 -0.5)
-            (end -4.75 0.5)
+            (start -18.75 -0.5)
+            (end -18.75 0.5)
             (stroke (width 0.1524) (type solid))
             (layer "F.SilkS")
-            (uuid "b3fe8667-1f3a-5cd0-9ed7-049ec363091d")
+            (uuid "9f640113-7a2b-5f46-bd16-1d732f98cc08")
         )
         
 
         (fp_line
-            (start -5.25 0)
-            (end -4.25 0)
+            (start -19.25 0)
+            (end -18.25 0)
             (stroke (width 0.0254) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "bf3f68b6-18d3-5be9-9d5e-f87ec3603cd9")
+            (uuid "e3830f50-1b3a-56b6-873e-8b7479be9f0c")
         )
         
         (fp_line
-            (start -4.75 -0.5)
-            (end -4.75 0.5)
+            (start -18.75 -0.5)
+            (end -18.75 0.5)
             (stroke (width 0.0254) (type default))
             (fill none)
             (layer "F.Fab")
-            (uuid "00c25e33-3729-56f5-938e-943360c5b39a")
+            (uuid "d4f886b5-fe08-52cf-a8cf-3a6402bee5e9")
         )
         
 
             (pad "1" thru_hole rect
-                (at -1.750 -0.000)
-                (size 2.0 2.0)
-                (drill 1.0)
+                (at -12.100 -0.000)
+                (size 4.0 4.0)
+                (drill 2.0)
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "799ef23d-0248-52af-ac5a-982b82907573")
+                (uuid "96931c23-3159-5c97-8274-e8217a001bba")
             )
             
 
             (pad "2" thru_hole circle
-                (at 1.750 0.000)
-                (size 2.0 2.0)
-                (drill 1.0)
+                (at 12.100 0.000)
+                (size 4.0 4.0)
+                (drill 2.0)
                 (layers "*.Cu" "*.Mask")
                 (remove_unused_layers no)
                 (solder_mask_margin 0.102)
-                (uuid "09dc8280-a15e-564c-9737-479e63f1e2da")
+                (uuid "86f14aed-89a4-54cb-bc69-2f43375abb14")
             )
             
 
-        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors/C_138x315_H21.step"
+            (pad "MP" thru_hole circle
+                (at -5.750 9.959)
+                (size 4.0 4.0)
+                (drill 2.0)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "f07c034f-f773-5930-92ea-235278c5b086")
+            )
+            
+
+            (pad "MP" thru_hole circle
+                (at -5.750 -9.959)
+                (size 4.0 4.0)
+                (drill 2.0)
+                (layers "*.Cu" "*.Mask")
+                (remove_unused_layers no)
+                (solder_mask_margin 0.102)
+                (uuid "2bcd82de-cfa6-54f4-b865-34ee57af492a")
+            )
+            
+
+        (model "${KICAD9_3D_MODELS_VAULT}/3D_models/capacitors/C_953x1378_H63.step"
             
             (offset (xyz 0 0 0))
             (scale (xyz 1 1 1))
