@@ -157,7 +157,6 @@ def create_zip_file(
         ):
             csv_buffer = io.StringIO()
 
-            # Create DataFrame with channel data
             channel_df = pd.DataFrame(data=channel_data["channel_data"])
             column_names = [
                 col_info["name"][0] for col_info in channel_data["columns"]
@@ -165,7 +164,6 @@ def create_zip_file(
             channel_df.columns = column_names
             write_data_frame_to_buffer(channel_df, csv_buffer)
 
-            # Generate and add sine wave data
             sine_wave_df = generate_sine_wave_data(
                 int(app_state[f"{module_prefix}_records_button"]),
                 int(app_state[f"{module_prefix}_channels_button"]),
@@ -180,7 +178,6 @@ def create_zip_file(
             )
             write_data_frame_to_buffer(repeated_sine_df, csv_buffer)
 
-            # Add CSV content to zip file
             output_filename = (
                 f"{base_filename.split('.')[0]}_{file_index + 1}.csv"
             )

@@ -105,7 +105,7 @@ def callback_update_table_style_and_visibility(
         Input("theme_switch_value_store", "data"),
     )
     def update_table_style_and_visibility(
-        switch: bool,  # noqa: FBT001
+        switch: bool,
     ) -> tuple[
         dict[str, str],
         dict[str, str],
@@ -144,9 +144,7 @@ def callback_update_table_style_and_visibility(
         )
 
 
-def callback_update_ag_grid_table_theme(
-    table_id: str,
-) -> None:
+def callback_update_ag_grid_table_theme(table_id: str) -> None:
     """Create a callback function to update AG Grid table theme.
 
     This is a factory function that generates a callback for updating the
@@ -169,9 +167,7 @@ def callback_update_ag_grid_table_theme(
         Output(table_id, "className"),
         Input("theme_switch_value_store", "data"),
     )
-    def update_table_style_and_visibility(
-        switch: bool,  # noqa: FBT001
-    ) -> str:
+    def update_table_style_and_visibility(switch: bool) -> str:
         """Update the styles of the AG Grid table based on the theme switch.
 
         Args:
@@ -369,7 +365,7 @@ def callback_update_ag_grid_visible_table_columns(
 
 def create_column_definitions(
     dataframe: pd.DataFrame,
-    visible_columns: list[str] = None,  # noqa: RUF013
+    visible_columns: list[str] = None,
 ) -> list[dict[str, Any]]:
     """Create column definitions for the Dash DataTable.
 
@@ -489,7 +485,7 @@ def callback_update_dropdown_style(dropdown_id: str) -> None:
         Output(dropdown_id, "style"),
         Input("theme_switch_value_store", "data"),
     )
-    def update_dropdown_style(switch: bool) -> dict:  # noqa: FBT001
+    def update_dropdown_style(switch: bool) -> dict:
         """Update the dropdown styling based on the theme.
 
         Args:
@@ -532,7 +528,6 @@ def table_controls_row(
         dbc.Row: A Dash Bootstrap Components row with table control elements.
 
     """
-    # Use all columns if no visible columns are specified
     if visible_columns is None:
         visible_columns = list(dataframe.columns)
 
@@ -608,7 +603,6 @@ def ag_grid_table_controls_row(
         dbc.Row: A Dash Bootstrap Components row with table control elements.
 
     """
-    # Use all columns if no visible columns are specified
     if visible_columns is None:
         visible_columns = list(dataframe.columns)
 
@@ -669,7 +663,6 @@ def generate_range_slider(
             to the step-th index
 
     """
-    # Validate input DataFrame
     if dataframe is None or dataframe.empty:
         msg = "Input DataFrame cannot be None or empty"
         raise ValueError(msg)
@@ -678,22 +671,17 @@ def generate_range_slider(
         msg = "DataFrame must contain a 'Value' column"
         raise ValueError(msg)
 
-    # Extract consecutive value groups (assuming this function exists)
     values, _ = extract_consecutive_value_groups(dataframe["Value"].to_list())
 
-    # Validate values list
     if not values:
         msg = "No values found in the 'Value' column"
         raise ValueError(msg)
 
-    # Create marks with specified step increments, avoiding duplicates
     marks: dict[int, float] = {}
 
-    # Add intermediary marks at step increments
     for mark_index in range(0, len(values), step):
         marks[mark_index] = values[mark_index]
 
-    # Always add the last value
     marks[len(values) - 1] = values[-1]
 
     slider_row = dbc.Row([
@@ -778,18 +766,15 @@ def pad_values_and_counts(
         - A list of corresponding counts (with zero for missing values)
 
     """
-    # Add missing values with zero count
     padded_specific_values = []
     padded_specific_counts = []
 
     for val in values:
         if val in specific_values:
-            # If the value exists in specific values, use its count
             index = specific_values.index(val)
             padded_specific_values.append(val)
             padded_specific_counts.append(specific_counts[index])
         else:
-            # If the value doesn't exist, add it with a zero count
             padded_specific_values.append(val)
             padded_specific_counts.append(0)
 
@@ -822,7 +807,7 @@ def callback_update_rangeslider_marks_theme(
         Input("theme_switch_value_store", "data"),
     )
     def update_rangeslider_marks_theme(
-        switch: bool,  # noqa: FBT001
+        switch: bool,
     ) -> dict[int, dict[str, Any]]:
         """Update the RangeSlider marks style based on theme.
 
@@ -893,14 +878,11 @@ def save_previous_slider_state_callback(
             List[int]: Adjusted slider values with consistent step size.
 
         """
-        # Use empty list as default if stored_value is None
         stored_value = stored_value or [0, 0]
 
-        # If upper bound changed, adjust lower bound
         if current_value[1] != stored_value[1]:
             current_value[0] = current_value[1] - step
 
-        # If lower bound changed, adjust upper bound
         if current_value[0] != stored_value[0]:
             current_value[1] = current_value[0] + step
 

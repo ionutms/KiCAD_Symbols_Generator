@@ -32,6 +32,7 @@ Functions:
     generate_style_filter: Generate style for table filters.
     style_accordionitem_title: Create a styled accordion item title.
 """
+
 from dash import html
 
 heading_3_style = {"font-size": "30px", "font-weight": "bold"}
@@ -102,7 +103,7 @@ TABLE_GLOBAL_STYLES = {
 }
 
 
-def generate_css(switch: bool) -> list[dict[str, str]]:  # noqa: FBT001
+def generate_css(switch: bool) -> list[dict[str, str]]:
     """Generate CSS rules for the DataTable based on the theme switch value.
 
     Args:
@@ -155,7 +156,7 @@ def generate_css(switch: bool) -> list[dict[str, str]]:  # noqa: FBT001
     ]
 
 
-def generate_style_data(switch: bool) -> dict[str, str]:  # noqa: FBT001
+def generate_style_data(switch: bool) -> dict[str, str]:
     """Generate style for table cells based on the theme switch value.
 
     Args:
@@ -184,7 +185,7 @@ def generate_style_data(switch: bool) -> dict[str, str]:  # noqa: FBT001
     }
 
 
-def generate_style_header(switch: bool) -> dict[str, str]:  # noqa: FBT001
+def generate_style_header(switch: bool) -> dict[str, str]:
     """Generate style for table header based on the theme switch value.
 
     Args:
@@ -216,7 +217,7 @@ def generate_style_header(switch: bool) -> dict[str, str]:  # noqa: FBT001
 
 
 def generate_style_data_conditional(
-    switch: bool,  # noqa: FBT001
+    switch: bool,
 ) -> list[dict[str, dict[str, str]]]:
     """Generate conditional styles for table rows based on the theme switch.
 
@@ -279,7 +280,7 @@ def generate_style_cell() -> dict[str, str]:
     }
 
 
-def generate_style_filter(switch: bool) -> dict[str, str]:  # noqa: FBT001
+def generate_style_filter(switch: bool) -> dict[str, str]:
     """Generate style for table filters based on the theme switch value.
 
     Args:
