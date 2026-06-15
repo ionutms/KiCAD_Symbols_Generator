@@ -576,11 +576,52 @@ PROJECT_REPOS_WITHOUT_LINKS = [
 ]
 
 
-def create_repo_link_column(project_name: str) -> dbc.Col:
-    """Create a right-side column with a GitHub link for a repository."""
+def create_graph_time_range_controls(name_suffix: str) -> html.Div:
+    """Create independent time-range controls for a repo's graph pair.
+
+    Registers the visibility-toggle and offset-update callbacks for the
+    period navigator and returns a small control block (range-type
+    buttons + previous/next period navigator) that can be placed next to
+    a repository's clones/visitors graphs.
+
+    Args:
+        name_suffix (str): Unique suffix matching the one used for the
+            repository's graph IDs (see ``create_repo_graphs``).
+
+    Returns:
+        html.Div: Div containing the time-range controls.
+
+    """
+    time_range_id = f"{name_suffix}_time_range"
+    dcu.callback_toggle_period_nav_visibility(time_range_id)
+    dcu.callback_update_period_offset(time_range_id)
+
+    return html.Div(
+        [
+            html.H6("Time Range", style={"marginBottom": "4px"}),
+            dcu.create_time_range_selector(time_range_id),
+        ],
+        style={"marginBottom": "10px"},
+    )
+
+
+def create_repo_link_column(project_name: str, name_suffix: str) -> dbc.Col:
+    """Create a right-side column with a GitHub link for a repository.
+
+    Args:
+        project_name (str): Name of the repository.
+        name_suffix (str): Unique suffix matching the repository's graph
+            IDs, used to wire up independent time-range controls.
+
+    Returns:
+        dbc.Col: Column containing the time-range controls and a
+            GitHub link for the repository.
+
+    """
     return dbc.Col(
         [
             html.H4("Repository"),
+            create_graph_time_range_controls(name_suffix),
             html.Div(
                 children=[
                     html.A(
@@ -945,6 +986,7 @@ def create_main_repo_section(
             dbc.Col(
                 [
                     html.H4("Repository"),
+                    create_graph_time_range_controls(f"{module_name}"),
                     html.Div(
                         children=[
                             html.A(
@@ -977,30 +1019,32 @@ def create_main_repo_section(
 def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
     """Create a section for an individual project with graphs and links."""
     project_name = repo_config["name"]
+    name_suffix = f"{module_name}_{project_name}"
 
     if not repo_config["has_project_links"]:
         if repo_config.get("show_simple_link"):
             return [
                 dbc.Row([
                     dbc.Col(
-                        children=create_repo_graphs(
-                            f"{module_name}_{project_name}"
-                        ),
+                        children=create_repo_graphs(name_suffix),
                         xs=12,
                         md=9,
                     ),
-                    create_repo_link_column(project_name),
+                    create_repo_link_column(project_name, name_suffix),
                 ]),
                 html.Hr(),
             ]
         return [
             dbc.Row([
                 dbc.Col(
-                    children=create_repo_graphs(
-                        f"{module_name}_{project_name}"
-                    ),
+                    children=create_repo_graphs(name_suffix),
                     xs=12,
-                    md=12,
+                    md=9,
+                ),
+                dbc.Col(
+                    create_graph_time_range_controls(name_suffix),
+                    xs=12,
+                    md=3,
                 ),
             ]),
             html.Hr(),
@@ -1009,13 +1053,14 @@ def create_project_section(module_name: str, repo_config: dict) -> list[Any]:
     return [
         dbc.Row([
             dbc.Col(
-                children=create_repo_graphs(f"{module_name}_{project_name}"),
+                children=create_repo_graphs(name_suffix),
                 xs=12,
                 md=8,
             ),
             dbc.Col(
                 [
                     html.H4("Project Pages"),
+                    create_graph_time_range_controls(name_suffix),
                     create_project_links(project_name, GITHUB_USERNAME),
                 ],
                 xs=12,
@@ -1043,13 +1088,14 @@ def create_learning_project_section(
 
     """
     project_name = repo_config["name"]
+    name_suffix = f"{module_name}_{project_name}"
 
     has_pages = repo_config.get("has_github_pages")
     show_simple_link = repo_config.get("show_simple_link")
     graphs_col = dbc.Col(
-        children=create_repo_graphs(f"{module_name}_{project_name}"),
+        children=create_repo_graphs(name_suffix),
         xs=12,
-        md=9 if (has_pages or show_simple_link) else 12,
+        md=9,
     )
 
     cols = [graphs_col]
@@ -1081,6 +1127,7 @@ def create_learning_project_section(
         links_col = dbc.Col(
             [
                 html.H4("Project Links"),
+                create_graph_time_range_controls(name_suffix),
                 html.Div(
                     children=links,
                     style={
@@ -1095,7 +1142,15 @@ def create_learning_project_section(
         )
         cols.append(links_col)
     elif show_simple_link:
-        cols.append(create_repo_link_column(project_name))
+        cols.append(create_repo_link_column(project_name, name_suffix))
+    else:
+        cols.append(
+            dbc.Col(
+                create_graph_time_range_controls(name_suffix),
+                xs=12,
+                md=3,
+            )
+        )
 
     return [
         dbc.Row(cols),
@@ -1587,142 +1642,228 @@ def load_traffic_data(
     return data_frame
 
 
-@callback(
-    Output(f"{module_name}_repo_clones_graph", "figure"),
-    Output(f"{module_name}_repo_visitors_graph", "figure"),
-    *[
-        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
-        for repo in PROJECT_REPOS_WITHOUT_LINKS
-        for graph in ["clones", "visitors"]
-    ],
-    *[
-        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
-        for repo in LEARNING_PROJECTS
-        for graph in ["clones", "visitors"]
-    ],
-    *[
-        Output(f"{module_name}_{repo['name']}_repo_{graph}_graph", "figure")
-        for repo in PROJECT_REPOS_WITH_LINKS
-        for graph in ["clones", "visitors"]
-    ],
-    Input("theme_switch_value_store", "data"),
-    Input("repository_tabs", "active_tab"),
+def get_period_bounds(
+    data_frame: pd.DataFrame,
+    range_type: str,
+    offset: int,
+) -> tuple[pd.Timestamp | None, pd.Timestamp | None, str]:
+    """Compute the start/end timestamps and label for a period offset.
+
+    Periods are ordered from most recent (offset 0) to oldest. If the
+    requested offset is beyond the oldest available period, it is
+    clamped to that oldest period.
+
+    Args:
+        data_frame: DataFrame containing a "clone_timestamp" column.
+        range_type: One of "week", "month", or "all".
+        offset: 0 for the most recent period, 1 for the previous one,
+            and so on.
+
+    Returns:
+        Tuple of ``(start, end, label)``. For "all" range type (or empty
+        data, or no periods available), ``start`` and ``end`` are ``None``
+        and ``label`` is an empty string.
+
+    """
+    if data_frame.empty or range_type not in ("week", "month"):
+        return None, None, ""
+
+    timestamps = pd.to_datetime(data_frame["clone_timestamp"])
+
+    if range_type == "week":
+        periods = sorted(
+            timestamps.dt.to_period("W-SUN").unique(), reverse=True
+        )
+        if not periods:
+            return None, None, ""
+
+        period = periods[min(max(offset, 0), len(periods) - 1)]
+        start, end = period.start_time, period.end_time
+        label = f"{start.strftime('%b %d')} - {end.strftime('%b %d, %Y')}"
+        return start, end, label
+
+    periods = sorted(timestamps.dt.to_period("M").unique(), reverse=True)
+    if not periods:
+        return None, None, ""
+
+    period = periods[min(max(offset, 0), len(periods) - 1)]
+    return period.start_time, period.end_time, period.strftime("%B %Y")
+
+
+def filter_dataframe_by_range(
+    data_frame: pd.DataFrame,
+    range_type: str,
+    offset: int,
+) -> pd.DataFrame:
+    """Filter a traffic DataFrame down to the selected time range.
+
+    Args:
+        data_frame: DataFrame containing a "clone_timestamp" column.
+        range_type: One of "week", "month", or "all".
+        offset: 0 for the most recent week/month, 1 for the previous
+            one, and so on. Ignored when ``range_type`` is "all".
+
+    Returns:
+        A filtered (and re-indexed) copy of the DataFrame.
+
+    """
+    if data_frame.empty or range_type == "all":
+        return data_frame
+
+    start, end, _ = get_period_bounds(data_frame, range_type, offset)
+    if start is None:
+        return data_frame
+
+    timestamps = pd.to_datetime(data_frame["clone_timestamp"])
+    mask = (timestamps >= start) & (timestamps <= end)
+    return data_frame.loc[mask].reset_index(drop=True)
+
+
+BASE_GITHUB_URL = (
+    f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
+    "KiCAD_Symbols_Generator/main"
 )
-def update_graph_with_uploaded_file(
-    theme_switch: bool, active_tab: str
-) -> tuple[Any, ...]:
-    """Update graphs based on the selected tab and theme."""
-    base_github_url = (
-        f"https://raw.githubusercontent.com/{GITHUB_USERNAME}/"
-        "KiCAD_Symbols_Generator/main"
+
+
+def load_repo_data(repo_config: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Load clones and visitors data for a repository.
+
+    Args:
+        repo_config: Repository configuration dictionary, must contain
+            a "name" key.
+
+    Returns:
+        Tuple of (clones DataFrame, visitors DataFrame).
+
+    """
+    repo_name = repo_config["name"]
+    clones_csv = f"{repo_name.lower()}_clones_history.csv"
+    visitors_csv = f"{repo_name.lower()}_visitors_history.csv"
+
+    clones_source = {
+        "github_url": f"{BASE_GITHUB_URL}/repo_traffic_data/{clones_csv}",
+        "local_file": f"repo_traffic_data/{clones_csv}",
+        "rename_columns": None,
+    }
+
+    visitors_source = {
+        "github_url": (f"{BASE_GITHUB_URL}/repo_traffic_data/{visitors_csv}"),
+        "local_file": f"repo_traffic_data/{visitors_csv}",
+        "rename_columns": {
+            "visitor_timestamp": "clone_timestamp",
+            "total_visitors": "total_clones",
+            "unique_visitors": "unique_clones",
+        },
+    }
+
+    return (
+        load_traffic_data(**clones_source),
+        load_traffic_data(**visitors_source),
     )
 
-    def load_repo_data(
-        repo_config: dict,
-    ) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Load clones and visitors data for a repository."""
+
+def register_repo_graphs_callback(
+    name_suffix: str, repo_config: dict, tab_id: str
+) -> None:
+    """Register a callback to update a repository's pair of graphs.
+
+    Each repository gets its own callback driven by its own time-range
+    controls (created via ``create_graph_time_range_controls``), so the
+    "Week"/"Month"/"All" selection and the previous/next period
+    navigation act independently per graph pair. Data is only loaded
+    when the repository's tab is the active one.
+
+    Args:
+        name_suffix (str): Unique suffix matching the repository's graph
+            and time-range control IDs.
+        repo_config (dict): Repository configuration dictionary
+            (must contain "name" and "colors").
+        tab_id (str): The "active_tab" value for which this repository's
+            graphs are visible.
+
+    Returns:
+        None: Registers the callback with Dash.
+
+    """
+    range_type_id = f"{name_suffix}_time_range_range_type"
+    period_offset_id = f"{name_suffix}_time_range_period_offset"
+    period_label_id = f"{name_suffix}_time_range_period_label"
+
+    @callback(
+        Output(f"{name_suffix}_repo_clones_graph", "figure"),
+        Output(f"{name_suffix}_repo_visitors_graph", "figure"),
+        Output(period_label_id, "children"),
+        Input("theme_switch_value_store", "data"),
+        Input("repository_tabs", "active_tab"),
+        Input(range_type_id, "value"),
+        Input(period_offset_id, "data"),
+    )
+    def update_repo_graphs(
+        theme_switch: bool,
+        active_tab: str,
+        range_type: str,
+        period_offset: int | None,
+    ) -> tuple[Any, Any, str]:
+        """Update this repository's graphs and period label."""
+        if active_tab != tab_id:
+            return dash.no_update, dash.no_update, dash.no_update
+
         repo_name = repo_config["name"]
-        clones_csv = f"{repo_name.lower()}_clones_history.csv"
-        visitors_csv = f"{repo_name.lower()}_visitors_history.csv"
-
-        clones_source = {
-            "github_url": f"{base_github_url}/repo_traffic_data/{clones_csv}",
-            "local_file": f"repo_traffic_data/{clones_csv}",
-            "rename_columns": None,
-        }
-
-        visitors_source = {
-            "github_url": (
-                f"{base_github_url}/repo_traffic_data/{visitors_csv}"
-            ),
-            "local_file": f"repo_traffic_data/{visitors_csv}",
-            "rename_columns": {
-                "visitor_timestamp": "clone_timestamp",
-                "total_visitors": "total_clones",
-                "unique_visitors": "unique_clones",
-            },
-        }
-
-        return (
-            load_traffic_data(**clones_source),
-            load_traffic_data(**visitors_source),
-        )
-
-    all_repos = (
-        [MAIN_REPO]
-        + PROJECT_REPOS_WITHOUT_LINKS
-        + LEARNING_PROJECTS
-        + PROJECT_REPOS_WITH_LINKS
-    )
-    repo_to_index = {repo["name"]: i for i, repo in enumerate(all_repos)}
-
-    num_figures = len(all_repos) * 2
-    figures = [dash.no_update] * num_figures
-
-    repos_to_update_configs = []
-    if active_tab == "learning_tab":
-        repos_to_update_configs = LEARNING_PROJECTS
-    elif active_tab == "additional_tab":
-        repos_to_update_configs = PROJECT_REPOS_WITH_LINKS
-    elif active_tab and active_tab.startswith("tab_"):
-        repo_name = active_tab.split("tab_", 1)[1]
-        repo_config = next(
-            (repo for repo in all_repos if repo["name"] == repo_name), None
-        )
-        if repo_config:
-            repos_to_update_configs = [repo_config]
-
-    if not repos_to_update_configs:
-        return tuple(figures)
-
-    repo_data_map = {}
-    for repo_config in repos_to_update_configs:
         clones_df, visitors_df = load_repo_data(repo_config)
-        repo_data_map[repo_config["name"]] = {
-            "clones": clones_df,
-            "visitors": visitors_df,
-            "colors": repo_config["colors"],
-        }
 
-    def create_figure_for_repo(repo_name: str, data_type: str) -> Any:
-        """Create a figure for a specific repository and data type."""
-        repo_data = repo_data_map[repo_name]
-        data_frame = repo_data[data_type]
-        colors = repo_data["colors"]
+        offset = period_offset or 0
 
-        if data_type == "clones":
-            titles = (
+        filtered_clones = filter_dataframe_by_range(
+            clones_df, range_type, offset
+        )
+        filtered_visitors = filter_dataframe_by_range(
+            visitors_df, range_type, offset
+        )
+        _, _, period_label = get_period_bounds(clones_df, range_type, offset)
+
+        clones_figure = create_figure(
+            theme_switch=theme_switch,
+            data_frames=[filtered_clones],
+            trace_colors=repo_config["colors"],
+            titles=(
                 f"{repo_name} Git Clones",
                 "Clones",
                 "Unique Clones",
                 repo_name,
                 repo_name,
-            )
-        else:
-            titles = (
+            ),
+        )
+        visitors_figure = create_figure(
+            theme_switch=theme_switch,
+            data_frames=[filtered_visitors],
+            trace_colors=repo_config["colors"],
+            titles=(
                 f"{repo_name} Visitors",
                 "Views",
                 "Unique Views",
                 repo_name,
                 repo_name,
-            )
-
-        return create_figure(
-            theme_switch=theme_switch,
-            data_frames=[data_frame],
-            trace_colors=colors,
-            titles=titles,
+            ),
         )
 
-    for repo_config in repos_to_update_configs:
-        repo_name = repo_config["name"]
-        repo_index = repo_to_index.get(repo_name)
-        if repo_index is not None:
-            figures[repo_index * 2] = create_figure_for_repo(
-                repo_name, "clones"
-            )
-            figures[repo_index * 2 + 1] = create_figure_for_repo(
-                repo_name, "visitors"
-            )
+        return clones_figure, visitors_figure, period_label
 
-    return tuple(figures)
+
+register_repo_graphs_callback(
+    f"{module_name}", MAIN_REPO, f"tab_{MAIN_REPO['name']}"
+)
+
+for _repo in PROJECT_REPOS_WITHOUT_LINKS:
+    register_repo_graphs_callback(
+        f"{module_name}_{_repo['name']}", _repo, f"tab_{_repo['name']}"
+    )
+
+for _repo in LEARNING_PROJECTS:
+    register_repo_graphs_callback(
+        f"{module_name}_{_repo['name']}", _repo, "learning_tab"
+    )
+
+for _repo in PROJECT_REPOS_WITH_LINKS:
+    register_repo_graphs_callback(
+        f"{module_name}_{_repo['name']}", _repo, "additional_tab"
+    )

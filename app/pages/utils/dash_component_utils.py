@@ -1969,3 +1969,160 @@ def callback_update_dynamic_range_slider_marks_theme(
         }
 
         return styled_marks, tooltip
+
+
+def create_time_range_selector(component_id: str) -> dbc.Row:
+    """Create a compact selector for the graphs' displayed time range.
+
+    Renders a small button-group offering "Week", "Month", and "All" view
+    options, plus (shown only for "Week"/"Month") a previous/next period
+    navigator: a label showing the currently selected week or month and
+    two buttons to step back and forth through the available periods.
+
+    Args:
+        component_id (str): Base ID used to build the IDs of the
+            generated components (e.g. "graphs_time_range").
+
+    Returns:
+        dbc.Row: Row containing the range-type button group and the
+            period navigation controls.
+
+    """
+    return dbc.Row(
+        [
+            dbc.Col(
+                dbc.RadioItems(
+                    id=f"{component_id}_range_type",
+                    className="btn-group",
+                    inputClassName="btn-check",
+                    labelClassName="btn btn-outline-primary btn-sm",
+                    labelCheckedClassName="active",
+                    options=[
+                        {"label": "Week", "value": "week"},
+                        {"label": "Month", "value": "month"},
+                        {"label": "All", "value": "all"},
+                    ],
+                    value="all",
+                    inline=True,
+                ),
+                width="auto",
+            ),
+            dbc.Col(
+                html.Div(
+                    [
+                        dbc.Button(
+                            "Previous",
+                            id=f"{component_id}_period_prev_button",
+                            size="sm",
+                            color="primary",
+                            outline=True,
+                            n_clicks=0,
+                        ),
+                        html.Span(
+                            id=f"{component_id}_period_label",
+                            style={
+                                "margin": "0 8px",
+                                "fontWeight": "bold",
+                                "minWidth": "150px",
+                                "textAlign": "center",
+                                "display": "inline-block",
+                            },
+                        ),
+                        dbc.Button(
+                            "Next",
+                            id=f"{component_id}_period_next_button",
+                            size="sm",
+                            color="primary",
+                            outline=True,
+                            n_clicks=0,
+                        ),
+                    ],
+                    id=f"{component_id}_period_nav",
+                    style={"display": "none", "alignItems": "center"},
+                ),
+                width="auto",
+            ),
+            dcc.Store(id=f"{component_id}_period_offset", data=0),
+        ],
+        className="g-2 align-items-center mb-3",
+        style={"flexWrap": "wrap"},
+    )
+
+
+def callback_toggle_period_nav_visibility(component_id: str) -> None:
+    """Create a callback that shows/hides the period navigation controls.
+
+    The previous/next period navigator is only shown when the "Week" or
+    "Month" range type is selected; it stays hidden for "All".
+
+    Args:
+        component_id (str): Base ID matching the one used in
+            ``create_time_range_selector``.
+
+    Returns:
+        None: Registers the callback with Dash.
+
+    """
+
+    @callback(
+        Output(f"{component_id}_period_nav", "style"),
+        Input(f"{component_id}_range_type", "value"),
+    )
+    def toggle_period_nav_visibility(range_type: str) -> dict[str, str]:
+        """Show the period navigator only for "week" or "month" views."""
+        if range_type in ("week", "month"):
+            return {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "4px",
+            }
+        return {"display": "none"}
+
+
+def callback_update_period_offset(component_id: str) -> None:
+    """Create a callback that updates the selected-period offset.
+
+    The offset is 0 for the most recent week/month, 1 for the previous
+    one, and so on. Clicking the "previous" button increases it (moves
+    further back in time); clicking "next" decreases it (moves toward the
+    present), down to a minimum of 0. Switching the range type resets the
+    offset back to the most recent period.
+
+    Args:
+        component_id (str): Base ID matching the one used in
+            ``create_time_range_selector``.
+
+    Returns:
+        None: Registers the callback with Dash.
+
+    """
+
+    @callback(
+        Output(f"{component_id}_period_offset", "data"),
+        Input(f"{component_id}_period_prev_button", "n_clicks"),
+        Input(f"{component_id}_period_next_button", "n_clicks"),
+        Input(f"{component_id}_range_type", "value"),
+        State(f"{component_id}_period_offset", "data"),
+        prevent_initial_call=True,
+    )
+    def update_period_offset(
+        _prev_clicks: int,
+        _next_clicks: int,
+        _range_type: str,
+        current_offset: int | None,
+    ) -> int:
+        """Step the period offset based on which input triggered it."""
+        triggered_id = ctx.triggered_id
+
+        if triggered_id == f"{component_id}_range_type":
+            return 0
+
+        current_offset = current_offset or 0
+
+        if triggered_id == f"{component_id}_period_prev_button":
+            return current_offset + 1
+
+        if triggered_id == f"{component_id}_period_next_button":
+            return max(current_offset - 1, 0)
+
+        return current_offset
