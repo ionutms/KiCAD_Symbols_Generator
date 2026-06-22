@@ -1218,19 +1218,111 @@ def extract_info_from_zip_as_int(
     return no_update
 
 
+_CARD_STYLE = {
+    "border": "1px dashed",
+    "border-radius": "10px",
+    "padding": "1px",
+    "background-color": "transparent",
+}
+
+
+def _extract_label(mark_data: dict | str) -> str:
+    """Extract label from styled mark or return as-is."""
+    if isinstance(mark_data, dict):
+        return mark_data.get("label", mark_data)
+    return mark_data
+
+
+def _build_side_col(index: int) -> dbc.Col:
+    """Build the left/right switch column."""
+    return dbc.Col(
+        [
+            dbc.Label(
+                "Left",
+                id={"type": "label side", "index": index},
+            ),
+            dbc.Switch(
+                id={"type": "switch", "index": index},
+                value=False,
+                className=("d-flex justify-content-center"),
+            ),
+        ],
+        xs=2,
+        md=2,
+        className=styles.FLEX_CENTER_COLUMN,
+    )
+
+
+def _build_radio_col(
+    index: int,
+    y_axis_data: str,
+    options: list[dict],
+) -> dbc.Col:
+    """Build the label and radio items column."""
+    return dbc.Col(
+        [
+            dbc.Label(
+                f"{y_axis_data} axis selection",
+                id={
+                    "type": "label selection",
+                    "index": index,
+                },
+                className=styles.CENTER_CLASS_NAME,
+            ),
+            dbc.RadioItems(
+                options=options,
+                value=options[0]["value"],
+                id={
+                    "type": "radioitems",
+                    "index": index,
+                },
+                className=styles.CENTER_CLASS_NAME,
+                inline=True,
+            ),
+        ],
+        xs=10,
+        md=10,
+    )
+
+
+def _build_column(
+    index: int,
+    y_axis_data: str,
+    options: list[dict],
+) -> dbc.Col:
+    """Build a single radio item column card."""
+    return dbc.Col(
+        [
+            dbc.Card(
+                dbc.Row([
+                    _build_radio_col(index, y_axis_data, options),
+                    _build_side_col(index),
+                ]),
+                body=True,
+                style=_CARD_STYLE,
+            ),
+            html.Br(),
+        ],
+        xs=12,
+        md=4,
+    )
+
+
 def callbacks_radioitems(id_section: str, row_id: str) -> None:
     """Generate callbacks for radio items in a section.
 
-    This function sets up three callback functions for handling radio items
-    in a specific section of a Dash application. The callbacks are registered
-    with the Dash app and do not need to be returned.
+    This function sets up three callback functions for
+    handling radio items in a specific section of a Dash
+    application. The callbacks are registered with the
+    Dash app and do not need to be returned.
 
     Args:
         id_section: The ID of the section.
         row_id: The ID of the row.
 
     Returns:
-        None. The function registers callbacks with the Dash app.
+        None. The function registers callbacks with the
+        Dash app.
 
     """
 
@@ -1241,111 +1333,39 @@ def callbacks_radioitems(id_section: str, row_id: str) -> None:
         prevent_initial_call=True,
     )
     def generate_radioitems(
-        values: list[int], marks: dict[str, str]
+        values: list[int],
+        marks: dict[str, str],
     ) -> list[dbc.Col]:
         """Generate radio items based on range slider values.
 
         Args:
-            values: The selected values from the range slider.
+            values: The selected values from the range
+                slider.
             marks: The marks on the range slider.
 
         Returns:
-            A list of Column components containing radio items.
+            A list of Column components containing radio
+            items.
 
         """
         if values is None:
             raise PreventUpdate
 
-        def extract_label(mark_data):
-            """Extract label from styled mark or return as-is."""
-            if isinstance(mark_data, dict) and "label" in mark_data:
-                return mark_data["label"]
-            return mark_data
-
-        columns = []
         y_axis_channels = [
-            extract_label(marks[f"{position}"]) for position in values[1:]
+            _extract_label(marks[str(pos)]) for pos in values[1:]
         ]
         options = [
-            {"label": f"y{index}" if index > 1 else "y", "value": index}
-            for index, _ in enumerate(y_axis_channels, 1)
+            {
+                "label": "y" if i == 1 else f"y{i}",
+                "value": i,
+            }
+            for i in range(1, len(y_axis_channels) + 1)
         ]
 
-        for index, y_axis_data in enumerate(y_axis_channels[1:], 1):
-            columns.append(
-                dbc.Col(
-                    [
-                        dbc.Card(
-                            [
-                                dbc.Row([
-                                    dbc.Col(
-                                        [
-                                            dbc.Label(
-                                                f"{y_axis_data} "
-                                                "axis selection",
-                                                id={
-                                                    "type": "label selection",
-                                                    "index": index,
-                                                },
-                                                className=styles.CENTER_CLASS_NAME,
-                                            ),
-                                            dbc.RadioItems(
-                                                options=options,
-                                                value=options[0]["value"],
-                                                id={
-                                                    "type": "radioitems",
-                                                    "index": index,
-                                                },
-                                                className=styles.CENTER_CLASS_NAME,
-                                                inline=True,
-                                            ),
-                                        ],
-                                        xs=10,
-                                        md=10,
-                                    ),
-                                    dbc.Col(
-                                        [
-                                            dbc.Label(
-                                                "Left",
-                                                id={
-                                                    "type": "label side",
-                                                    "index": index,
-                                                },
-                                            ),
-                                            dbc.Switch(
-                                                id={
-                                                    "type": "switch",
-                                                    "index": index,
-                                                },
-                                                value=False,
-                                                className=(
-                                                    "d-flex "
-                                                    "justify-content-center"
-                                                ),
-                                            ),
-                                        ],
-                                        xs=2,
-                                        md=2,
-                                        className=styles.FLEX_CENTER_COLUMN,
-                                    ),
-                                ])
-                            ],
-                            body=True,
-                            style={
-                                "border": "1px dashed",
-                                "border-radius": "10px",
-                                "padding": "1px",
-                                "background-color": "transparent",
-                            },
-                        ),
-                        html.Br(),
-                    ],
-                    xs=12,
-                    md=4,
-                )
-            )
-
-        return columns
+        return [
+            _build_column(index, label, options)
+            for index, label in enumerate(y_axis_channels[1:], 1)
+        ]
 
     @callback(
         Output("filtering_store", "data", allow_duplicate=True),
@@ -1356,7 +1376,7 @@ def callbacks_radioitems(id_section: str, row_id: str) -> None:
     def update_filtering_store_2(
         legend_group_switch: bool, filtering: dict[str, Any]
     ) -> dict[str, Any]:
-        """Update the filtering store with the legend group switch state.
+        """Update the filtering store with legend group switch state.
 
         This function adds or updates the 'legend_group' key in the filtering
         dictionary based on the state of the legend group switch.
@@ -1369,7 +1389,7 @@ def callbacks_radioitems(id_section: str, row_id: str) -> None:
             Dict[str, Any]: The updated filtering dictionary.
 
         Note:
-            If filtering is None or not a dictionary, an empty dictionary
+            If filtering is None or not a dictionary, an  empty dictionary
             is returned with only the 'legend_group' key.
 
         """
