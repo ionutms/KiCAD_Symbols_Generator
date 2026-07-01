@@ -238,7 +238,6 @@ def create_project_links(
             )
         )
 
-    # Add internal app page link for Minimal_LTC3350
     if project_name == "Minimal_LTC3350":
         links.append(
             html.A(
@@ -1299,15 +1298,10 @@ tabs = dbc.Tabs(
     active_tab="components_db_tab",
 )
 
-# Main layout construction
 layout = dbc.Container(
     [
         *create_header_section(
-            link_name,
-            TITLE,
-            ABOUT,
-            features,
-            usage_steps,
+            link_name, TITLE, ABOUT, features, usage_steps
         ),
         tabs,
     ],
@@ -1316,7 +1310,7 @@ layout = dbc.Container(
 
 
 def create_figure(
-    theme_switch: bool,  # noqa: FBT001
+    theme_switch: bool,
     data_frames: list[pd.DataFrame],
     trace_colors: list[str],
     titles: tuple[str, str, str],
