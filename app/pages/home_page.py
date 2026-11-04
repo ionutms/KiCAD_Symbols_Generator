@@ -416,6 +416,20 @@ REPO_CONFIGS = [
         "show_simple_link": True,
     },
     {
+        "name": "freecad-jumper-wire-pen",
+        "colors": ["#E63946", "#457B9D"],
+        "is_main": False,
+        "has_project_links": False,
+        "show_simple_link": True,
+    },
+    {
+        "name": "freecad-wire-harness",
+        "colors": ["#F4A261", "#264653"],
+        "is_main": False,
+        "has_project_links": False,
+        "show_simple_link": True,
+    },
+    {
         "name": "Minimal_AD74416H",
         "colors": ["#6029E0", "#870BDA"],
         "is_main": False,
