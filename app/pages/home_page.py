@@ -430,6 +430,13 @@ REPO_CONFIGS = [
         "show_simple_link": True,
     },
     {
+        "name": "freecad-scope-probe-arm",
+        "colors": ["#06D6A0", "#EF476F"],
+        "is_main": False,
+        "has_project_links": False,
+        "show_simple_link": True,
+    },
+    {
         "name": "Minimal_AD74416H",
         "colors": ["#6029E0", "#870BDA"],
         "is_main": False,
