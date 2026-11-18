@@ -133,11 +133,13 @@ formula_c_end_of_life = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ C_{EOL} = \frac{4 \cdot P_{BACKUP} \cdot t_{BACKUP}}
+            $$
+            C_{EOL} = \frac{4 \cdot P_{BACKUP} \cdot t_{BACKUP}}
             {n \cdot \eta \cdot V_{CELL(MAX)}^2} \cdot
             \left[\alpha_B + \sqrt{\alpha_B} -
-            (1-\alpha_B)\log\left(\frac{1+\sqrt{\alpha_B}}
-            {\sqrt{1-\sqrt{\alpha_B}}}\right)\right]^{-1} $$
+            (1-\alpha_B)\ln\left(\frac{1+\sqrt{\alpha_B}}
+            {\sqrt{1-\alpha_B}}\right)\right]^{-1}
+            $$
             """,
             mathjax=True,
         )
@@ -159,8 +161,10 @@ formula_esr_end_of_life = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ ESR_{EOL} = \frac{\eta \cdot (1-\alpha_B) \cdot n
-            \cdot V_{CELL(MAX)}^2}{4 \cdot P_{BACKUP}} $$
+            $$
+            ESR_{EOL} = \frac{\eta \cdot (1-\alpha_B) \cdot n
+            \cdot V_{CELL(MAX)}^2}{4 \cdot P_{BACKUP}}
+            $$
             """,
             mathjax=True,
         )
@@ -190,8 +194,10 @@ formula_v_stk_min_at_max_power = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{STK(MIN)} = \sqrt{\frac{4 \cdot ESR_{EOL} \cdot n
-            \cdot P_{BACKUP}}{\eta}} $$
+            $$
+            V_{STK(MIN)} = \sqrt{\frac{4 \cdot ESR_{EOL} \cdot n
+            \cdot P_{BACKUP}}{\eta}}
+            $$
             """,
             mathjax=True,
         )
@@ -210,8 +216,10 @@ formula_v_stk_min_at_crt_lim = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{STK(MIN)} = {\frac{P_{BACKUP}}{\eta \cdot I_{LMAX}}}
-            + n \cdot ESR_{EOL} \cdot I_{LMAX} $$
+            $$
+            V_{STK(MIN)} = {\frac{P_{BACKUP}}{\eta \cdot I_{LMAX}}}
+            + n \cdot ESR_{EOL} \cdot I_{LMAX}
+            $$
             """,
             mathjax=True,
         )
@@ -235,10 +243,12 @@ formula_t_backup = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ t_{BACKUP} = \frac{\eta \cdot C_{STK}}
+            $$
+            t_{BACKUP} = \frac{\eta \cdot C_{STK}}
             {4 \cdot P_{BACKUP}} \cdot
             \left[\gamma_{(MAX)} \cdot V_{STK(MAX)}^2 -
-            \gamma_{(MIN)} \cdot V_{STK(MIN)}^2 - V_{LOSS}^2\right] $$
+            \gamma_{(MIN)} \cdot V_{STK(MIN)}^2 - V_{LOSS}^2\right]
+            $$
             """,
             mathjax=True,
         )
@@ -257,8 +267,10 @@ formula_gamma_max = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ \gamma_{(MAX)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
-            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MAX)}^2}} \text{ , } $$
+            $$
+            \gamma_{(MAX)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
+            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MAX)}^2}}
+            $$
             """,
             mathjax=True,
         )
@@ -270,8 +282,10 @@ formula_gamma_min = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ \gamma_{(MIN)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
-            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MIN)}^2}} \text{ and } $$
+            $$
+            \gamma_{(MIN)} = 1+\sqrt{1-\frac{4 \cdot n \cdot ESR_{EOL}
+            \cdot P_{BACKUP}}{\eta \cdot V_{STK(MIN)}^2}}
+            $$
             """,
             mathjax=True,
         )
@@ -283,9 +297,11 @@ formula_v_square_loss = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{LOSS}^2 = \frac{4 \cdot n \cdot ESR_{EOL} P_{BACKUP}}
-            {\eta} \cdot \log{\left(\frac{\gamma_{(MAX)} \cdot V_{STK(MAX)}}
-            {\gamma_{(MIN)} \cdot V_{STK(MIN)}}\right)} $$
+            $$
+            V_{LOSS}^2 = \frac{4 \cdot n \cdot ESR_{EOL} \cdot P_{BACKUP}}
+            {\eta} \cdot \ln{\left(\frac{\gamma_{(MAX)} \cdot V_{STK(MAX)}}
+            {\gamma_{(MIN)} \cdot V_{STK(MIN)}}\right)}
+            $$
             """,
             mathjax=True,
         )
@@ -308,8 +324,10 @@ paragraph_14 = dcc.Markdown(
 formula_i_in_max = html.Div(
     dcc.Markdown(
         r"""
-        $$ I_{IN(MAX)} = \frac{32mV}
-        {R_{SNSI}} $$
+        $$
+        I_{IN(MAX)} = \frac{32\,mV}
+        {R_{SNSI}}
+        $$
         """,
         mathjax=True,
     ),
@@ -319,8 +337,10 @@ formula_i_in_max = html.Div(
 formula_i_chg_max = html.Div(
     dcc.Markdown(
         r"""
-        $$ I_{CHG(MAX)} = \frac{32mV}
-        {R_{SNSC}} $$
+        $$
+        I_{CHG(MAX)} = \frac{32\,mV}
+        {R_{SNSC}}
+        $$
         """,
         mathjax=True,
     ),
@@ -330,8 +350,10 @@ formula_i_chg_max = html.Div(
 formula_i_peak = html.Div(
     dcc.Markdown(
         r"""
-        $$ I_{PEAK} = \frac{58mV}
-        {R_{SNSC}} $$
+        $$
+        I_{PEAK} = \frac{58\,mV}
+        {R_{SNSC}}
+        $$
         """,
         mathjax=True,
     ),
@@ -350,8 +372,10 @@ formula_v_cap = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{CAP} = 1 + \left( \frac{R_{FBC\ TOP}}
-            {R_{FBC\ BOTTOM}} \right) \cdot CAPFBREF $$
+            $$
+            V_{CAP} = \left(1 + \frac{R_{FBC\ TOP}}
+            {R_{FBC\ BOTTOM}} \right) \cdot CAPFBREF
+            $$
             """,
             mathjax=True,
         )
@@ -374,8 +398,10 @@ formula_v_in_step_up_mode = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{IN\_STEP\_UP} = 1 + \left( \frac{R_{PF\_TOP}}
-            {R_{PF\_BOTTOM}} \right) \cdot V_{PFI(TH)} $$
+            $$
+            V_{IN\_STEP\_UP} = \left(1 + \frac{R_{PF\ TOP}}
+            {R_{PF\ BOTTOM}} \right) \cdot V_{PFI(TH)}
+            $$
             """,
             mathjax=True,
         )
@@ -400,8 +426,10 @@ formula_v_in_step_down_mode = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{IN\_STEP\_DOWN} = 1 + \left( \frac{R_{PF\ TOP}}
-            {R_{PF\ BOTTOM}} \right) \cdot (V_{PFI(TH)} + V_{PFI(HYS)}) $$
+            $$
+            V_{IN\_STEP\_DOWN} = \left(1 + \frac{R_{PF\ TOP}}
+            {R_{PF\ BOTTOM}} \right) \cdot (V_{PFI(TH)} + V_{PFI(HYS)})
+            $$
             """,
             mathjax=True,
         )
@@ -413,9 +441,11 @@ formula_v_in_step_down_mode_additional = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{IN\_STEP\_DOWN\_ADDITIONAL} = \left(1 + \frac{R_{PF\ TOP}}
+            $$
+            V_{IN\_STEP\_DOWN\_ADDITIONAL} = \left(1 + \frac{R_{PF\ TOP}}
             {R_{PF\ BOTTOM}} + \frac{R_{PF\ TOP}} {R_{PF\ BOTTOM\ 2}} \right)
-            \cdot (V_{PFI(TH)} + V_{PFI(HYS)}) $$
+            \cdot (V_{PFI(TH)} + V_{PFI(HYS)})
+            $$
             """,
             mathjax=True,
         )
@@ -433,8 +463,10 @@ formula_v_out = html.Div(
     [
         dcc.Markdown(
             r"""
-            $$ V_{OUT} = 1 + \left( \frac{R_{FBO\ TOP}}
-            {R_{PBO\ BOTTOM}} \right) \cdot 1.2V $$
+            $$
+            V_{OUT} = \left(1 + \frac{R_{FBO\ TOP}}
+            {R_{FBO\ BOTTOM}} \right) \cdot 1.2V
+            $$
             """,
             mathjax=True,
         )
@@ -460,7 +492,7 @@ formula_f_sw = html.Div(
         dcc.Markdown(
             r"""
             $$
-            F_{SW}(MHz) = \frac{53.5}{R_{T}(kHz)}
+            f_{SW}(MHz) = \frac{53.5}{R_{T}(k\Omega)}
             $$
             """,
             mathjax=True,
@@ -1274,7 +1306,7 @@ def calculate_voltage_thresholds(
     r_fbo_bottom,
 ):
     """Calculate voltage threshold parameters."""
-    v_cap = 1 + (r_fbc_top / r_fbc_bottom) * capfbref
+    v_cap = (1 + r_fbc_top / r_fbc_bottom) * capfbref
 
     v_in_power_fail = (1 + (r_pf_top / r_pf_bottom)) * (1.17 * si.V)
 
@@ -1286,7 +1318,7 @@ def calculate_voltage_thresholds(
         1 + (r_pf_top / r_pf_bottom) + (r_pf_top / r_pf_bottom_2)
     ) * (1.17 * si.V + 0.03 * si.V)
 
-    v_out = 1 + (r_fbo_top / r_fbo_bottom) * 1.2 * si.V
+    v_out = (1 + r_fbo_top / r_fbo_bottom) * 1.2 * si.V
 
     return (
         v_cap,
@@ -1313,20 +1345,22 @@ def calculate_switching_and_inductance(i_chg_max, v_in_max, v_cap, f_sw):
 
 def calculate_output_ripple(v_cap, v_out, c_out, f_sw, r_esr, i_chg_max):
     """Calculate output voltage ripple for both scenarios."""
+    # 100 µF of bulk capacitance per 2 A of backup current
+    i_out_backup = (c_out / (100 * 1e-6 * si.F)) * 2 * si.A
+
     delta_v_out_step_up_used = abs(
         (
-            (1 - (v_cap / v_out))
-            * (1 / (c_out * f_sw) + ((v_out / v_cap) * r_esr))
+            (1 - (v_cap / v_out)) / (c_out * f_sw)
+            + (v_out / v_cap) * r_esr
         )
-        * ((c_out / (100 * 1e-6 * si.F)) * 2 * si.A)
+        * i_out_backup
     )
 
     delta_v_out_step_up_unused = abs(
         (v_cap / v_out)
-        * (
-            (1 - (v_cap / v_out)) * (i_chg_max / (c_out * f_sw))
-            + i_chg_max * r_esr
-        )
+        * (1 - (v_cap / v_out))
+        * (i_chg_max / (c_out * f_sw))
+        + i_chg_max * r_esr
     )
 
     return delta_v_out_step_up_used, delta_v_out_step_up_unused
